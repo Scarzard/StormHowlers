@@ -18,13 +18,11 @@ assignees: ''
 - Critical []
 - Major []
 - Minor []
-   
 
 ### Reproduction steps
 1. 
 2.
 3.
-
 
 ### Reproducibility
 - Always []
