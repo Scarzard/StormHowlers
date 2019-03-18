@@ -132,6 +132,18 @@ bool Scene::Update(float dt)
 	//	App->fpsCapON = !App->fpsCapON;
 	//}
 
+	if (App->input->controller1[JOY_UP] == KEY_REPEAT)
+		App->render->camera.y += 150.0*dt;
+
+	if (App->input->controller1[JOY_DOWN] == KEY_REPEAT)
+		App->render->camera.y -= 150.0*dt;
+
+	if (App->input->controller1[JOY_RIGHT] == KEY_REPEAT)
+		App->render->camera.x -= 150.0*dt;
+
+	if (App->input->controller1[JOY_LEFT] == KEY_REPEAT)
+		App->render->camera.x += 150.0*dt;
+
 	//----
 	App->map->Draw(dt);
 	//App->entitymanager->Draw(dt);
@@ -145,6 +157,9 @@ bool Scene::PostUpdate()
 	BROFILER_CATEGORY("Scene PostUpdate", Profiler::Color::DarkOrange);
 
 	bool ret = true;
+
+	if (App->input->controller1[BUTTON_B] == KEY_DOWN)
+		ret = false;
 
 	if (to_end == true && App->scenechange->IsChanging() == false)
 	{

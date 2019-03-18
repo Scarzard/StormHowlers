@@ -7,6 +7,7 @@
 #include "SDL/include/SDL.h"
 
 #define MAX_KEYS 300
+#define DEATH_ZONE 6400
 
 Input::Input() : Module()
 {
@@ -184,6 +185,75 @@ bool Input::PreUpdate()
 				}
 			}
 		}
+	}
+
+	for (int i = 0; i < MAX_BUTTONS; ++i)
+	{
+		if (controller1_state[i] == 1) {
+			if (controller1[i] == KEY_IDLE)
+				controller1[i] = KEY_DOWN;
+			else
+				controller1[i] = KEY_REPEAT;
+		}
+		else
+		{
+			if (controller1[i] == KEY_REPEAT || controller1[i] == KEY_DOWN)
+				controller1[i] = KEY_UP;
+			else
+				controller1[i] = KEY_IDLE;
+		}
+
+		if (controller2_state[i] == 1) {
+			if (controller2[i] == KEY_IDLE)
+				controller2[i] = KEY_DOWN;
+			else
+				controller2[i] = KEY_REPEAT;
+		}
+		else
+		{
+			if (controller2[i] == KEY_REPEAT || controller2[i] == KEY_DOWN)
+				controller2[i] = KEY_UP;
+			else
+				controller2[i] = KEY_IDLE;
+		}
+	}
+
+	//CHECK Left Axis X & Y
+	if (P1LAxisX > DEATH_ZONE)
+	{
+		controller1[JOY_RIGHT] = KEY_REPEAT;
+	}
+	else if (P1LAxisX < -DEATH_ZONE)
+	{
+		controller1[JOY_LEFT] = KEY_REPEAT;
+	}
+
+	if (P1LAxisY < -DEATH_ZONE)
+	{
+		controller1[JOY_UP] = KEY_REPEAT;
+	}
+	else if (P1LAxisY > DEATH_ZONE)
+	{
+		controller1[JOY_DOWN] = KEY_REPEAT;
+	}
+
+	//CHECK P2 Left Axis X & Y
+	if (P2LAxisX > DEATH_ZONE)
+	{
+		controller2[JOY_RIGHT] = KEY_REPEAT;
+	}
+	else if (P2LAxisX < -DEATH_ZONE)
+	{
+		controller2[JOY_LEFT] = KEY_REPEAT;
+	}
+
+	if (P2LAxisY < -DEATH_ZONE)
+	{
+		controller2[JOY_UP] = KEY_REPEAT;
+	}
+	else if (P2LAxisY > DEATH_ZONE)
+	{
+		controller2[JOY_DOWN] = KEY_REPEAT;
 	}
 
 
