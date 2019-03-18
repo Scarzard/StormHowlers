@@ -44,6 +44,21 @@ enum CONTROLLER_BUTTONS {
 	JOY_RIGHT
 };
 
+struct GamePad
+{
+	SDL_GameController* GameController = nullptr;
+	SDL_Joystick* joy = nullptr;
+
+	bool Connected = false;
+	bool State[MAX_BUTTONS];
+
+	j1KeyState Controller[MAX_BUTTONS]; //This is the one you check. EXAMPLE: App->input->name.Controller[JOY_RIGHT] == KEY_REPEAT 
+
+	int LeftAxisX = 0;
+	int LeftAxisY = 0;
+
+};
+
 
 class Input : public Module
 {
@@ -99,27 +114,8 @@ private:
 
 public:
 
-	//CONTROLLER 1 --------------------------------------------
-	SDL_GameController* GameController1 = nullptr;
-	SDL_Joystick* joy1 = nullptr;
-	bool P1connected = false;
-
-	bool controller1_state[MAX_BUTTONS];
-	j1KeyState controller1[MAX_BUTTONS];
-
-	int P1LAxisX = 0;
-	int P1LAxisY = 0;
-
-	//CONTYTOLER 2 -----------------------------------------------
-	SDL_GameController* GameController2 = nullptr;
-	SDL_Joystick* joy2 = nullptr;
-	bool P2connected = false;
-
-	bool controller2_state[MAX_BUTTONS];
-	j1KeyState controller2[MAX_BUTTONS];
-
-	int P2LAxisX = 0;
-	int P2LAxisY = 0;
+	GamePad P1; //Player 1 Controller
+	GamePad P2; //Player 2 Controller
 
 };
 

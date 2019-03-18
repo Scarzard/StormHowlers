@@ -47,17 +47,17 @@ bool Input::Awake(pugi::xml_node& config)
 		if (SDL_NumJoysticks() == 2) //Here we have to put instead of a 2 a 1 (im doing it with ps4 controllers and its bugged, with XBOX controllers will work with a 1) 
 		{
 			//If therre is only 1 controller connected
-			GameController1 = SDL_GameControllerOpen(0);
-			joy1 = SDL_JoystickOpen(0);
+			P1.GameController = SDL_GameControllerOpen(0);
+			P1.joy = SDL_JoystickOpen(0);
 		}
 		else if (SDL_NumJoysticks() == 4) //Here we have to put instead of a 4 a 2 (im doing it with ps4 controllers and its bugged, with XBOX controllers will work with a 2)
 		{
 			// If there are 2 controllers connected
-			GameController1 = SDL_GameControllerOpen(0);
-			joy1 = SDL_JoystickOpen(0);
+			P1.GameController = SDL_GameControllerOpen(0);
+			P1.joy = SDL_JoystickOpen(0);
 
-			GameController2 = SDL_GameControllerOpen(1);
-			joy2 = SDL_JoystickOpen(1);
+			P2.GameController = SDL_GameControllerOpen(1);
+			P2.joy = SDL_JoystickOpen(1);
 		}
 
 
@@ -117,70 +117,70 @@ bool Input::PreUpdate()
 			{
 				if (SDL_IsGameController(i))
 				{
-					GameController1 = SDL_GameControllerOpen(i);
-					joy1 = SDL_JoystickOpen(i);
-					if (SDL_GameControllerGetAttached(GameController1))
+					P1.GameController = SDL_GameControllerOpen(i);
+					P1.joy = SDL_JoystickOpen(i);
+					if (SDL_GameControllerGetAttached(P1.GameController))
 					{
 						// CONTROLLER 1 ----------------------------------------------------------------------------------------
-						controller1_state[UP] = SDL_GameControllerGetButton(GameController1, SDL_CONTROLLER_BUTTON_DPAD_UP);
-						controller1_state[DOWN] = SDL_GameControllerGetButton(GameController1, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
-						controller1_state[LEFT] = SDL_GameControllerGetButton(GameController1, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
-						controller1_state[RIGHT] = SDL_GameControllerGetButton(GameController1, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
-						controller1_state[BUTTON_A] = SDL_GameControllerGetButton(GameController1, SDL_CONTROLLER_BUTTON_A);
-						controller1_state[BUTTON_B] = SDL_GameControllerGetButton(GameController1, SDL_CONTROLLER_BUTTON_B);
-						controller1_state[BUTTON_X] = SDL_GameControllerGetButton(GameController1, SDL_CONTROLLER_BUTTON_X);
-						controller1_state[BUTTON_Y] = SDL_GameControllerGetButton(GameController1, SDL_CONTROLLER_BUTTON_Y);
-						controller1_state[START] = SDL_GameControllerGetButton(GameController1, SDL_CONTROLLER_BUTTON_START);
+						P1.State[UP] = SDL_GameControllerGetButton(P1.GameController, SDL_CONTROLLER_BUTTON_DPAD_UP);
+						P1.State[DOWN] = SDL_GameControllerGetButton(P1.GameController, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
+						P1.State[LEFT] = SDL_GameControllerGetButton(P1.GameController, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
+						P1.State[RIGHT] = SDL_GameControllerGetButton(P1.GameController, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+						P1.State[BUTTON_A] = SDL_GameControllerGetButton(P1.GameController, SDL_CONTROLLER_BUTTON_A);
+						P1.State[BUTTON_B] = SDL_GameControllerGetButton(P1.GameController, SDL_CONTROLLER_BUTTON_B);
+						P1.State[BUTTON_X] = SDL_GameControllerGetButton(P1.GameController, SDL_CONTROLLER_BUTTON_X);
+						P1.State[BUTTON_Y] = SDL_GameControllerGetButton(P1.GameController, SDL_CONTROLLER_BUTTON_Y);
+						P1.State[START] = SDL_GameControllerGetButton(P1.GameController, SDL_CONTROLLER_BUTTON_START);
 
-						P1LAxisX = SDL_JoystickGetAxis(joy1, SDL_CONTROLLER_AXIS_LEFTX);
-						P1LAxisY = SDL_JoystickGetAxis(joy1, SDL_CONTROLLER_AXIS_LEFTY);
-						P1connected = true;
+						P1.LeftAxisX = SDL_JoystickGetAxis(P1.joy, SDL_CONTROLLER_AXIS_LEFTX);
+						P1.LeftAxisY = SDL_JoystickGetAxis(P1.joy, SDL_CONTROLLER_AXIS_LEFTY);
+						P1.Connected = true;
 
 					}
 					else
 					{
-						SDL_GameControllerClose(GameController1);
-						GameController1 = nullptr;
-						P1connected = false;
+						SDL_GameControllerClose(P1.GameController);
+						P1.GameController = nullptr;
+						P1.Connected = false;
 					}
 				}
 			}
 			else if (i < 1)
 			{
-				P2connected = false;
-				SDL_GameControllerClose(GameController2);
-				GameController2 = nullptr;
+				P2.Connected = false;
+				SDL_GameControllerClose(P2.GameController);
+				P2.GameController = nullptr;
 			}
-			else if (i == 1 || i == 0 && P1connected == false)
+			else if (i == 1 || i == 0 && P1.Connected == false)
 			{
 				if (SDL_IsGameController(i))
 				{
-					GameController2 = SDL_GameControllerOpen(1);
-					joy2 = SDL_JoystickOpen(1);
-					if (SDL_GameControllerGetAttached(GameController2))
+					P2.GameController = SDL_GameControllerOpen(1);
+					P2.joy = SDL_JoystickOpen(1);
+					if (SDL_GameControllerGetAttached(P2.GameController))
 					{
 						// CONTROLLER 2 ------------------------------------------------------------------------------------------
 
-						controller2_state[UP] = SDL_GameControllerGetButton(GameController2, SDL_CONTROLLER_BUTTON_DPAD_UP);
-						controller2_state[DOWN] = SDL_GameControllerGetButton(GameController2, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
-						controller2_state[LEFT] = SDL_GameControllerGetButton(GameController2, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
-						controller2_state[RIGHT] = SDL_GameControllerGetButton(GameController2, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
-						controller2_state[BUTTON_A] = SDL_GameControllerGetButton(GameController2, SDL_CONTROLLER_BUTTON_A);
-						controller2_state[BUTTON_B] = SDL_GameControllerGetButton(GameController2, SDL_CONTROLLER_BUTTON_B);
-						controller2_state[BUTTON_X] = SDL_GameControllerGetButton(GameController2, SDL_CONTROLLER_BUTTON_X);
-						controller2_state[BUTTON_Y] = SDL_GameControllerGetButton(GameController2, SDL_CONTROLLER_BUTTON_Y);
-						controller2_state[START] = SDL_GameControllerGetButton(GameController2, SDL_CONTROLLER_BUTTON_START);
+						P2.State[UP] = SDL_GameControllerGetButton(P2.GameController, SDL_CONTROLLER_BUTTON_DPAD_UP);
+						P2.State[DOWN] = SDL_GameControllerGetButton(P2.GameController, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
+						P2.State[LEFT] = SDL_GameControllerGetButton(P2.GameController, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
+						P2.State[RIGHT] = SDL_GameControllerGetButton(P2.GameController, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+						P2.State[BUTTON_A] = SDL_GameControllerGetButton(P2.GameController, SDL_CONTROLLER_BUTTON_A);
+						P2.State[BUTTON_B] = SDL_GameControllerGetButton(P2.GameController, SDL_CONTROLLER_BUTTON_B);
+						P2.State[BUTTON_X] = SDL_GameControllerGetButton(P2.GameController, SDL_CONTROLLER_BUTTON_X);
+						P2.State[BUTTON_Y] = SDL_GameControllerGetButton(P2.GameController, SDL_CONTROLLER_BUTTON_Y);
+						P2.State[START] = SDL_GameControllerGetButton(P2.GameController, SDL_CONTROLLER_BUTTON_START);
 
-						P2LAxisX = SDL_JoystickGetAxis(joy2, SDL_CONTROLLER_AXIS_LEFTX);
-						P2LAxisY = SDL_JoystickGetAxis(joy2, SDL_CONTROLLER_AXIS_LEFTY);
+						P2.LeftAxisX = SDL_JoystickGetAxis(P2.joy, SDL_CONTROLLER_AXIS_LEFTX);
+						P2.LeftAxisY = SDL_JoystickGetAxis(P2.joy, SDL_CONTROLLER_AXIS_LEFTY);
 
-						P2connected = true;
+						P2.Connected = true;
 					}
 					else
 					{
-						SDL_GameControllerClose(GameController2);
-						GameController2 = nullptr;
-						P2connected = false;
+						SDL_GameControllerClose(P2.GameController);
+						P2.GameController = nullptr;
+						P2.Connected = false;
 					}
 				}
 			}
@@ -189,71 +189,72 @@ bool Input::PreUpdate()
 
 	for (int i = 0; i < MAX_BUTTONS; ++i)
 	{
-		if (controller1_state[i] == 1) {
-			if (controller1[i] == KEY_IDLE)
-				controller1[i] = KEY_DOWN;
+		if (P1.State[i] == 1) {
+			if (P1.Controller[i] == KEY_IDLE)
+				P1.Controller[i] = KEY_DOWN;
 			else
-				controller1[i] = KEY_REPEAT;
+				P1.Controller[i] = KEY_REPEAT;
 		}
 		else
 		{
-			if (controller1[i] == KEY_REPEAT || controller1[i] == KEY_DOWN)
-				controller1[i] = KEY_UP;
+			if (P1.Controller[i] == KEY_REPEAT || P1.Controller[i] == KEY_DOWN)
+				P1.Controller[i] = KEY_UP;
 			else
-				controller1[i] = KEY_IDLE;
+				P1.Controller[i] = KEY_IDLE;
 		}
 
-		if (controller2_state[i] == 1) {
-			if (controller2[i] == KEY_IDLE)
-				controller2[i] = KEY_DOWN;
+		if (P2.State[i] == 1) {
+			if (P2.Controller[i] == KEY_IDLE)
+				P2.Controller[i] = KEY_DOWN;
 			else
-				controller2[i] = KEY_REPEAT;
+				P2.Controller[i] = KEY_REPEAT;
 		}
 		else
 		{
-			if (controller2[i] == KEY_REPEAT || controller2[i] == KEY_DOWN)
-				controller2[i] = KEY_UP;
+			if (P2.Controller[i] == KEY_REPEAT || P2.Controller[i] == KEY_DOWN)
+				P2.Controller[i] = KEY_UP;
 			else
-				controller2[i] = KEY_IDLE;
+				P2.Controller[i] = KEY_IDLE;
 		}
+
 	}
 
 	//CHECK Left Axis X & Y
-	if (P1LAxisX > DEATH_ZONE)
+	if (P1.LeftAxisX > DEATH_ZONE)
 	{
-		controller1[JOY_RIGHT] = KEY_REPEAT;
+		P1.Controller[JOY_RIGHT] = KEY_REPEAT;
 	}
-	else if (P1LAxisX < -DEATH_ZONE)
+	else if (P1.LeftAxisX < -DEATH_ZONE)
 	{
-		controller1[JOY_LEFT] = KEY_REPEAT;
+		P1.Controller[JOY_LEFT] = KEY_REPEAT;
 	}
 
-	if (P1LAxisY < -DEATH_ZONE)
+	if (P1.LeftAxisY < -DEATH_ZONE)
 	{
-		controller1[JOY_UP] = KEY_REPEAT;
+		P1.Controller[JOY_UP] = KEY_REPEAT;
 	}
-	else if (P1LAxisY > DEATH_ZONE)
+	else if (P1.LeftAxisY > DEATH_ZONE)
 	{
-		controller1[JOY_DOWN] = KEY_REPEAT;
+		P1.Controller[JOY_DOWN] = KEY_REPEAT;
 	}
 
 	//CHECK P2 Left Axis X & Y
-	if (P2LAxisX > DEATH_ZONE)
+	if (P2.LeftAxisX > DEATH_ZONE)
 	{
-		controller2[JOY_RIGHT] = KEY_REPEAT;
+		P2.Controller[JOY_RIGHT] = KEY_REPEAT;
 	}
-	else if (P2LAxisX < -DEATH_ZONE)
+	else if (P2.LeftAxisX < -DEATH_ZONE)
 	{
-		controller2[JOY_LEFT] = KEY_REPEAT;
+		P2.Controller[JOY_LEFT] = KEY_REPEAT;
 	}
 
-	if (P2LAxisY < -DEATH_ZONE)
+	if (P2.LeftAxisY < -DEATH_ZONE)
 	{
-		controller2[JOY_UP] = KEY_REPEAT;
+		P2.Controller[JOY_UP] = KEY_REPEAT;
 	}
-	else if (P2LAxisY > DEATH_ZONE)
+	else if (P2.LeftAxisY > DEATH_ZONE)
 	{
-		controller2[JOY_DOWN] = KEY_REPEAT;
+		P2.Controller[JOY_DOWN] = KEY_REPEAT;
 	}
 
 
@@ -314,6 +315,13 @@ bool Input::CleanUp()
 {
 	LOG("Quitting SDL event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
+
+	SDL_GameControllerClose(P1.GameController);
+	P1.GameController = NULL;
+
+	SDL_GameControllerClose(P2.GameController);
+	P2.GameController = NULL;
+
 	return true;
 }
 
