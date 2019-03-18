@@ -2,9 +2,11 @@
 #define __Input_H__
 
 #include "Module.h"
+#include "SDL\include\SDL_gamecontroller.h"
 
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
+#define MAX_BUTTONS 13
 //#define LAST_KEYS_PRESSED_BUFFER 50
 
 struct SDL_Rect;
@@ -24,6 +26,24 @@ enum j1KeyState
 	KEY_REPEAT,
 	KEY_UP
 };
+
+enum CONTROLLER_BUTTONS {
+	UP = 0,
+	DOWN,
+	LEFT,
+	RIGHT,
+	START,
+	BACK,
+	BUTTON_A,
+	BUTTON_B,
+	BUTTON_X,
+	BUTTON_Y,
+	JOY_UP,
+	JOY_DOWN,
+	JOY_LEFT,
+	JOY_RIGHT
+};
+
 
 class Input : public Module
 {
@@ -76,6 +96,31 @@ private:
 	int			mouse_motion_y;
 	int			mouse_x;
 	int			mouse_y;
+
+public:
+
+	//CONTROLLER 1 --------------------------------------------
+	SDL_GameController* GameController1 = nullptr;
+	SDL_Joystick* joy1 = nullptr;
+	bool P1connected = false;
+
+	bool controller1_state[MAX_BUTTONS];
+	j1KeyState controller1[MAX_BUTTONS];
+
+	int P1LAxisX = 0;
+	int P1LAxisY = 0;
+
+	//CONTYTOLER 2 -----------------------------------------------
+	SDL_GameController* GameController2 = nullptr;
+	SDL_Joystick* joy2 = nullptr;
+	bool P2connected = false;
+
+	bool controller2_state[MAX_BUTTONS];
+	j1KeyState controller2[MAX_BUTTONS];
+
+	int P2LAxisX = 0;
+	int P2LAxisY = 0;
+
 };
 
 #endif // __Input_H__

@@ -134,7 +134,7 @@ bool Scene::Update(float dt)
 
 	//----
 	App->map->Draw(dt);
-	App->entitymanager->Draw(dt);
+	//App->entitymanager->Draw(dt);
 
 	return true;
 }

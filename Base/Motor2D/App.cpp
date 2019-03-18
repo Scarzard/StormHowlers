@@ -50,8 +50,8 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(pathfinding);
-	AddModule(main_menu);
-	AddModule(scene,false);
+	AddModule(main_menu, false);
+	AddModule(scene);
 	AddModule(scenechange);
 	AddModule(entitymanager);
 	AddModule(font);
