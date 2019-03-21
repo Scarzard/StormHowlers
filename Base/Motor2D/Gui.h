@@ -37,6 +37,7 @@ public:
 	bool CheckMousePos(UI_Element* data);
 	bool CheckClick(UI_Element* data);
 	void UpdateChildren();
+	void UpdateState(UI_Element* data);
 
 	// Gui creation functions
 	UI_Element* AddUIElement(UI_Element::UI_type Type, UI_Element::Action Action, pair<int,int> pos, pair<int,int> size, UI_Element* parent = nullptr, bool visible = false, Dragable dragable = { false, false }, const char* label = nullptr);

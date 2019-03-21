@@ -1,7 +1,7 @@
 #ifndef __DEFS_H__
 #define __DEFS_H__
 
-#include <stdio.h>
+#include <cstdio>
 
 //  NULL just in case ----------------------
 

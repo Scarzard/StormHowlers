@@ -17,7 +17,7 @@
 #include "pugixml.hpp"
 
 #include <stdlib.h>
-#include <stdio.h>
+#include <cstdio>
 #include <string.h>
 #include <assert.h>
 

@@ -13,7 +13,7 @@
 #include "Fonts.h"
 #include "UI_Element.h"
 
-#include <stdio.h>
+#include <cstdio>
 #include "Brofiler\Brofiler.h"
 
 MainMenu::MainMenu() : Module()

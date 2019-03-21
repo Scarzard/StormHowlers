@@ -17,7 +17,6 @@
 #include "Audio.h"
 
 #include "Brofiler\Brofiler.h"
-#include <stdio.h>
 
 Scene::Scene() : Module()
 {
@@ -33,15 +32,14 @@ bool Scene::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
 	LOG("Loading Scene");
-	fade_time = config.child("fade_time").attribute("value").as_float();
 
 	for (pugi::xml_node map = config.child("map_name"); map; map = map.next_sibling("map_name"))
 	{
 		string* data = new string;
-
 		data->assign(map.attribute("name").as_string());
 		map_names.push_back(data);
 	}
+	fade_time = config.child("fade_time").attribute("value").as_float();
 
 	return ret;
 }
@@ -51,13 +49,17 @@ bool Scene::Start()
 {
 	bool ret = false;
 
+	App->map->Load(map_names.front()->data());
+
+	// Variables init
 	current_track = App->audio->tracks_path.front();
 	App->audio->PlayMusic(PATH(App->audio->folder_music.data(), current_track.data()));
-
-	pause = false;
-	to_end = false;
-	App->map->Load(map_names.front()->data());
 	currentMap = 0;
+	currentUI = CURR_MAIN;
+	pause = false;
+	godmode = false;
+	to_end = false;
+	change = false;
 
 	//walkability map
 	int w, h;
@@ -71,6 +73,49 @@ bool Scene::Start()
 	RELEASE_ARRAY(data);
 	debug_tex = App->tex->Load("maps/pathfinding.png");
 
+
+	// Create gui  ////(Falta poner position y size
+	//Health_UI = App->gui->AddUIElement(UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
+	//Gold_UI = App->gui->AddUIElement(UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
+
+	//Main_UI = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
+	//Build_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_BUILD, { x,y }, { w,h }, Main_UI, true);
+	//Deploy_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { x,y }, { w,h }, Main_UI, true);
+	//Cast_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { x,y }, { w,h }, Main_UI, true);
+
+	//Build_UI = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, false);
+	//Def_AOE_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { x,y }, { w,h }, Build_UI, false);
+	//Def_Target_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { x,y }, { w,h }, Build_UI, false);
+	//Mines_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { x,y }, { w,h }, Build_UI, false);
+	//Barracks_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { x,y }, { w,h }, Build_UI, false);
+
+	//Deploy_UI = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, false);
+	//Soldier_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_SOLDIER, { x,y }, { w,h }, Deploy_UI, false);
+	//Tankman_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_TANKMAN, { x,y }, { w,h }, Deploy_UI, false);
+	//Infiltrator_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { x,y }, { w,h }, Deploy_UI, false);
+	//Engineer_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_ENGINEER, { x,y }, { w,h }, Deploy_UI, false);
+	//War_hound_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { x,y }, { w,h }, Deploy_UI, false);
+
+	//Cast_UI = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, false);
+	//Missiles_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_MISSILES, { x,y }, { w,h }, Cast_UI, false);
+	//Cast2_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_2, { x,y }, { w,h }, Cast_UI, false);
+	//Cast3_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_3, { x,y }, { w,h }, Cast_UI, false);
+
+
+	//General_UI = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, false);
+	//Upgrade_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_UPGRADE, { x,y }, { w,h }, General_UI, false);
+	//Repair_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_REPAIR, { x,y }, { w,h }, General_UI, false);
+
+	////falta poner los pointer a los datos del edificio seleccionado (ahora esta como "data") 
+	//Name_text = App->gui->AddUIElement(UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, General_UI, false, { false, false }, "data");
+	//Level_text = App->gui->AddUIElement(UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, General_UI, false, { false, false }, "data");
+	//Health_text = App->gui->AddUIElement(UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, General_UI, false, { false, false }, "data");
+	//Damage_text = App->gui->AddUIElement(UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, General_UI, false, { false, false }, "data");
+	//Prod_text = App->gui->AddUIElement(UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, General_UI, false, { false, false }, "data");
+	//Capacity_text = App->gui->AddUIElement(UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, General_UI, false, { false, false }, "data");
+
+
+	// ---------------
 	SpawnEntities();
 
 	return true;
@@ -184,8 +229,54 @@ bool Scene::PostUpdate()
 
 	if (App->input->P2.Controller[BUTTON_B] == KEY_DOWN)
 		ret = false;
+	
 	// ------------------------------------------------------------------------------------------------
 
+	////--- Update GUI Visibility
+	//switch (currentUI)
+	//{
+	//case::Scene::CURRENT_UI::CURR_MAIN:
+	//	Main_UI->visible = true;
+	//	Build_UI->visible = false;
+	//	Deploy_UI->visible = false;
+	//	Cast_UI->visible = false;
+	//	General_UI->visible = false;
+	//	break;
+
+	//case::Scene::CURRENT_UI::CURR_BUILD:
+	//	Main_UI->visible = false;
+	//	Build_UI->visible = true;
+	//	Deploy_UI->visible = false;
+	//	Cast_UI->visible = false;
+	//	General_UI->visible = false;
+	//	break;
+
+	//case::Scene::CURRENT_UI::CURR_DEPLOY:
+	//	Main_UI->visible = false;
+	//	Build_UI->visible = false;
+	//	Deploy_UI->visible = true;
+	//	Cast_UI->visible = false;
+	//	General_UI->visible = false;
+	//	break;
+
+	//case::Scene::CURRENT_UI::CURR_CAST:
+	//	Main_UI->visible = false;
+	//	Build_UI->visible = false;
+	//	Deploy_UI->visible = false;
+	//	Cast_UI->visible = true;
+	//	General_UI->visible = false;
+	//	break;
+
+	//case::Scene::CURRENT_UI::CURR_GENERAL:
+	//	Main_UI->visible = false;
+	//	Build_UI->visible = false;
+	//	Deploy_UI->visible = false;
+	//	Cast_UI->visible = false;
+	//	General_UI->visible = true;
+	//	break;
+	//}
+
+	//--- Change map with fade
 	if (to_end == true && App->scenechange->IsChanging() == false)
 	{
 		if (currentMap < map_names.size() - 1)
@@ -242,7 +333,7 @@ bool Scene::Load_level(int map)
 	return true;
 }
 
-void Scene::SpawnEntities()
+void Scene::SpawnEntities() //
 {
 	App->entitymanager->DeleteEntities();
 	SpawnEnemies();
@@ -258,7 +349,7 @@ void Scene::SpawnEntities()
 }
 
 
-void Scene::SpawnEnemies()
+void Scene::SpawnEnemies() //
 {
 	//for (p2List_item<ObjectsGroup*>* object = App->map->data.objLayers.start; object; object = object->next)
 	//{
