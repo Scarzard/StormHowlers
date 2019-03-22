@@ -3,6 +3,7 @@
 #include "App.h"
 #include "Render.h"
 #include "Textures.h"
+#include "Window.h"
 #include "Fonts.h"
 #include "Input.h"
 #include "Gui.h"
@@ -42,108 +43,6 @@ bool Gui::Start()
 // Update all guis
 bool Gui::PreUpdate()
 {
-	list<UI_Element*>::reverse_iterator item = UI_elements.rbegin();
-	while (item != UI_elements.rend())
-	{
-		if ((*item)->visible == true)
-		{
-			if (CheckMousePos(*item) == true && (*item)->dragging == false && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) //hovering
-			{
-				(*item)->state = UI_Element::State::HOVER;
-			}
-			if (CheckClick(*item) == true && (*item)->state == UI_Element::State::HOVER) //on-click
-			{
-				if ((*item)->dragable.x == false && (*item)->dragable.y == false) //if not dragable
-				{
-					(*item)->state = UI_Element::State::LOGIC; //do logic
-					if ((*item)->locked == true) //if locked
-					{
-						//App->audio->PlayFx(LOCKED);
-					}
-					else
-					{
-						//App->audio->PlayFx(CLICK);
-
-						//--- Do logic
-						if ((*item)->action == UI_Element::Action::ACT_GOTO_MAIN) { App->scene->currentUI = Scene::CURRENT_UI::CURR_MAIN; }
-						else if ((*item)->action == UI_Element::Action::ACT_GOTO_BUILD) { App->scene->currentUI = Scene::CURRENT_UI::CURR_BUILD; }
-						else if ((*item)->action == UI_Element::Action::ACT_GOTO_DEPLOY) { App->scene->currentUI = Scene::CURRENT_UI::CURR_DEPLOY; }
-						else if ((*item)->action == UI_Element::Action::ACT_GOTO_CAST) { App->scene->currentUI = Scene::CURRENT_UI::CURR_CAST; }
-
-						else if ((*item)->action == UI_Element::Action::ACT_BUILD_AOE)
-						{
-						}
-						else if ((*item)->action == UI_Element::Action::ACT_BUILD_TARGET)
-						{
-						}
-						else if ((*item)->action == UI_Element::Action::ACT_BUILD_MINE)
-						{
-						}
-						else if ((*item)->action == UI_Element::Action::ACT_BUILD_BARRACKS)
-						{
-						}
-						else if ((*item)->action == UI_Element::Action::ACT_BUILD_TARGET)
-						{
-						}
-						else if ((*item)->action == UI_Element::Action::ACT_DEPLOY_SOLDIER)
-						{
-						}
-						else if ((*item)->action == UI_Element::Action::ACT_DEPLOY_TANKMAN)
-						{
-						}
-						else if ((*item)->action == UI_Element::Action::ACT_DEPLOY_INFILTRATOR)
-						{
-						}
-						else if ((*item)->action == UI_Element::Action::ACT_DEPLOY_ENGINEER)
-						{
-						}
-						else if ((*item)->action == UI_Element::Action::ACT_DEPLOY_WARHOUND)
-						{
-						}
-						else if ((*item)->action == UI_Element::Action::ACT_CAST_MISSILES)
-						{
-						}
-						else if ((*item)->action == UI_Element::Action::ACT_CAST_2)
-						{
-						}
-						else if ((*item)->action == UI_Element::Action::ACT_CAST_3)
-						{
-						}
-						else if ((*item)->action == UI_Element::Action::ACT_UPGRADE)
-						{
-						}
-						else if ((*item)->action == UI_Element::Action::ACT_REPAIR)
-						{
-						}
-					}
-				}
-				else //drag
-				{
-					(*item)->dragging = true;
-					(*item)->Drag();
-
-					////--- Do logic
-					//if ((*item)->action == UI_Element::Action::ADJUST_VOL)
-					//{
-					//}
-
-					////--- Check limits
-					//if ((*item)->globalpos.first <= limit) //left limit
-					//	(*item)->globalpos.first = limit;
-					//else if ((*item)->globalpos.first >= limit) //right limit
-					//	(*item)->globalpos.first = limit;
-
-					UpdateChildren();
-				}
-			}
-			else if (App->gui->CheckMousePos(*item) == false && (*item)->state != UI_Element::State::DRAG) //change to idle
-			{
-				(*item)->state = UI_Element::State::IDLE;
-			}
-		}
-		UpdateState(*item);
-		item++;
-	}
 	return true;
 }
 
@@ -295,9 +194,9 @@ void Gui::UpdateChildren()
 	{
 		if ((*item)->parent != nullptr)
 		{
-			if ((*item)->parent->visible == false)
+			if ((*item)->parent->visible != (*item)->visible)
 			{
-				(*item)->visible = false; //update visibility
+				(*item)->visible = (*item)->parent->visible; //update visibility
 			}
 			(*item)->globalpos.first = (*item)->parent->globalpos.first + (*item)->position.first; //update position x
 			(*item)->globalpos.second = (*item)->parent->globalpos.second + (*item)->position.second; //update position y
@@ -316,18 +215,69 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 	case UI_Element::State::IDLE:
 		switch (data->action)
 		{
-		case UI_Element::Action::ACT_GOTO_BUILD: 
-				data->rect = {};
-				break;
+		case UI_Element::Action::ACT_GOTO_BUILD:
+			data->rect = { 332,0,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_GOTO_DEPLOY:
+			data->rect = { 371,0,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_GOTO_CAST:
+			data->rect = { 410,0,39,40 };
+			break;
 		}
 		break;
 
 	case UI_Element::State::HOVER:
-		data->rect = {};
+		switch (data->action)
+		{
+		case UI_Element::Action::ACT_GOTO_BUILD:
+			data->rect = { 449,0,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_GOTO_DEPLOY:
+			data->rect = { 488,0,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_GOTO_CAST:
+			data->rect = { 527,0,39,40 };
+			break;
+		}
 		break;
 
 	case UI_Element::State::LOGIC:
-		data->rect = {};
+		switch (data->action)
+		{
+		case UI_Element::Action::ACT_GOTO_BUILD:
+			data->rect = { 449,80,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_GOTO_DEPLOY:
+			data->rect = { 488,80,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_GOTO_CAST:
+			data->rect = { 527,80,39,40 };
+			break;
+		}
+		break;
+
+	case UI_Element::State::LOCKED:
+		switch (data->action)
+		{
+		case UI_Element::Action::ACT_GOTO_BUILD:
+			data->rect = { 332,80,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_GOTO_DEPLOY:
+			data->rect = { 371,80,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_GOTO_CAST:
+			data->rect = { 410,80,39,40 };
+			break;
+		}
 		break;
 	}
 }

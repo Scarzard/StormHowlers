@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "UI_Element.h"
+#include "Scene.h"
 #include "SDL/include/SDL_rect.h"
 
 #define CURSOR_WIDTH 2
@@ -34,8 +35,10 @@ public:
 	bool CleanUp();
 
 	bool Draw();
-	bool CheckMousePos(UI_Element* data);
-	bool CheckClick(UI_Element* data);
+
+	bool CheckMousePos(UI_Element* data); //(check joystick)
+	bool CheckClick(UI_Element* data); //(check X)
+
 	void UpdateChildren();
 	void UpdateState(UI_Element* data);
 
@@ -48,6 +51,7 @@ private:
 
 	string atlas_file_name;
 	SDL_Texture* atlas;
+	PlayerUI player;
 
 public:
 

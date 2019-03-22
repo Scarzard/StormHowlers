@@ -58,6 +58,7 @@ public:
 		IDLE,
 		HOVER,
 		LOGIC,
+		LOCKED,
 		DRAG
 	};
 

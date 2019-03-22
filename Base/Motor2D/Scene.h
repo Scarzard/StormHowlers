@@ -37,67 +37,10 @@ struct GeneralUI
 	uint level, health, unique;
 };
 
-class Scene : public Module
+struct PlayerUI
 {
-public:
-	enum CURRENT_UI
-	{
-		CURR_MAIN = 1,
-		CURR_BUILD,
-		CURR_DEPLOY,
-		CURR_CAST,
-		CURR_GENERAL
-	};
-
-	Scene();
-
-	// Destructor
-	virtual ~Scene();
-
-	// Called before render is available
-	bool Awake(pugi::xml_node&);
-
-	// Called before the first frame
-	bool Start();
-
-	// Called before all Updates
-	bool PreUpdate();
-
-	// Called each loop iteration
-	bool Update(float dt);
-
-	// Called before all Updates
-	bool PostUpdate();
-
-	// Called before quitting
-	bool CleanUp();
-
-	bool Load(pugi::xml_node& data);
-	bool Save(pugi::xml_node& data) const;
-
-	bool Load_level(int map);
-	void SpawnEnemies();
-	void SpawnEntities();
-
-public:
-
-	vector<string*> map_names;
-	float fade_time;
-
-	uint currentMap;
+	bool isPlayer1;
 	uint currentUI;
-
-	bool pause;
-	bool godmode;
-	bool to_end;
-	bool change;
-
-	string current_track;
-	string current_fx;
-
-
-private:
-	SDL_Texture* debug_tex;
 
 	// Main UI
 	UI_Element* Health_UI;
@@ -136,6 +79,60 @@ private:
 	UI_Element* Damage_text; //only for defense buildings
 	UI_Element* Prod_text; //only for townhall & mines
 	UI_Element* Capacity_text; //only for barracks
+};
+
+
+class Scene : public Module
+{
+public:
+	enum CURRENT_UI
+	{
+		CURR_MAIN = 1,
+		CURR_BUILD,
+		CURR_DEPLOY,
+		CURR_CAST,
+		CURR_GENERAL
+	};
+
+	Scene();
+	virtual ~Scene();
+
+	bool Awake(pugi::xml_node&);
+	bool Start();
+	bool PreUpdate();
+	bool Update(float dt);
+	bool PostUpdate();
+	bool CleanUp();
+
+	bool Load(pugi::xml_node& data);
+	bool Save(pugi::xml_node& data) const;
+
+	bool Load_level(int map);
+	void SpawnEnemies();
+	void SpawnEntities();
+
+	void UpdateVisibility(PlayerUI player);
+	void DoLogic(PlayerUI player, UI_Element* data);
+
+public:
+
+	vector<string*> map_names;
+	float fade_time;
+
+	uint currentMap;
+
+	bool pause;
+	bool godmode;
+	bool to_end;
+	bool change;
+
+	string current_track;
+	string current_fx;
+
+	PlayerUI P1, P2;
+
+private:
+	SDL_Texture* debug_tex;
 };
 
 #endif // __Scene_H__
