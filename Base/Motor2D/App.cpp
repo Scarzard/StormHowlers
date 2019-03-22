@@ -18,6 +18,7 @@
 #include "EntityManager.h"
 #include "Fonts.h"
 #include "Gui.h"
+#include "CursorModule.h"
 #include "App.h"
 #include "Brofiler\Brofiler.h"
 
@@ -41,6 +42,7 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	entitymanager = new EntityManager();
 	font = new Fonts();
 	gui = new Gui();
+	cursor = new CursorModule();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -54,6 +56,7 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(scenechange);
 	AddModule(entitymanager);
+	AddModule(cursor);
 	AddModule(font);
 	AddModule(gui);
 

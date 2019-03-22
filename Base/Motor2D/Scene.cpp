@@ -226,36 +226,6 @@ bool Scene::Update(float dt)
 	//}
 
 
-	//----------------------------- Just to test the Controllers -----------------------------------
-	//-- Player 1
-	if (App->input->P1.Controller[JOY_UP] == KEY_REPEAT)
-		App->render->camera.y += 150.0*dt;
-
-	if (App->input->P1.Controller[JOY_DOWN] == KEY_REPEAT)
-		App->render->camera.y -= 150.0*dt;
-
-	if (App->input->P1.Controller[JOY_RIGHT] == KEY_REPEAT)
-		App->render->camera.x -= 150.0*dt;
-
-	if (App->input->P1.Controller[JOY_LEFT] == KEY_REPEAT)
-		App->render->camera.x += 150.0*dt;
-
-	//-- Player 2
-
-	if (App->input->P2.Controller[JOY_UP] == KEY_REPEAT)
-		App->render->camera.y += 150.0*dt;
-
-	if (App->input->P2.Controller[JOY_DOWN] == KEY_REPEAT)
-		App->render->camera.y -= 150.0*dt;
-
-	if (App->input->P2.Controller[JOY_RIGHT] == KEY_REPEAT)
-		App->render->camera.x -= 150.0*dt;
-
-	if (App->input->P2.Controller[JOY_LEFT] == KEY_REPEAT)
-		App->render->camera.x += 150.0*dt;
-
-	// ------------------------------------------------------------------------------------------------
-
 	//----
 	App->map->Draw(dt);
 	//App->entitymanager->Draw(dt);
@@ -271,16 +241,6 @@ bool Scene::PostUpdate()
 
 	bool ret = true;
 
-	//----------------------------- Just to test the Controllers -----------------------------------
-
-	if (App->input->P1.Controller[BUTTON_B] == KEY_DOWN)
-		ret = false;
-
-	if (App->input->P2.Controller[BUTTON_B] == KEY_DOWN)
-		ret = false;
-	
-	// ------------------------------------------------------------------------------------------------
-	
 	//--- Update GUI
 	list<UI_Element*>::reverse_iterator item = App->gui->UI_elements.rbegin();
 	while (item != App->gui->UI_elements.rend())
