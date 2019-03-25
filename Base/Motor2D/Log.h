@@ -2,7 +2,7 @@
 #define __Log_H__
 
 #include <windows.h>
-#include <stdio.h>
+#include <cstdio>
 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__)
 

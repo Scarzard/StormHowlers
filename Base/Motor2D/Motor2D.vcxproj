@@ -76,6 +76,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CursorModule.cpp" />
+    <ClCompile Include="OtherUI.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Fonts.cpp" />
@@ -90,6 +92,7 @@
     <ClCompile Include="PerfTimer.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SimpleUI.cpp" />
     <ClCompile Include="Transitions.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Log.cpp" />
@@ -99,6 +102,8 @@
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CursorModule.h" />
+    <ClInclude Include="OtherUI.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Fonts.h" />
@@ -109,6 +114,7 @@
     <ClInclude Include="PerfTimer.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SimpleUI.h" />
     <ClInclude Include="Transitions.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Animation.h" />

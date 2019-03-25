@@ -46,7 +46,7 @@ bool Input::Awake(pugi::xml_node& config)
 	{
 		if (SDL_NumJoysticks() == 2) //Here we have to put instead of a 2 a 1 (im doing it with ps4 controllers and its bugged, with XBOX controllers will work with a 1) 
 		{
-			//If therre is only 1 controller connected
+			//If there is only 1 controller connected
 			P1.GameController = SDL_GameControllerOpen(0);
 			P1.joy = SDL_JoystickOpen(0);
 		}

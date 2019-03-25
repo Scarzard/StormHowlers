@@ -3,10 +3,14 @@
 #include "App.h"
 #include "Render.h"
 #include "Textures.h"
+#include "Window.h"
 #include "Fonts.h"
 #include "Input.h"
+#include "CursorModule.h"
 #include "Gui.h"
 #include "UI_Element.h"
+#include "SimpleUI.h"
+#include "OtherUI.h"
 #include "Scene.h"
 
 Gui::Gui() : Module()
@@ -60,6 +64,7 @@ bool Gui::CleanUp()
 	list<UI_Element*>::iterator item = UI_elements.begin();
 	while (item != UI_elements.end())
 	{
+		(*item)->children.clear();
 		RELEASE(*item);
 		item++;
 	}
@@ -82,8 +87,24 @@ UI_Element* Gui::AddUIElement(UI_Element::UI_type type, UI_Element::Action actio
 
 	switch (type)
 	{
-	case UI_Element::UI_type::TEXT:
-		//UI_elem = new SimpleUI(type, pos, size, parent, visible, dragable, label, action);
+	case UI_Element::UI_type::LABEL:
+		UI_elem = new SimpleUI(type, pos, size, parent, visible, dragable);
+		break;
+
+	case UI_Element::UI_type::IMAGE:
+		UI_elem = new OtherUI(type, action, pos, size, parent, visible, dragable);
+		break;
+
+	case UI_Element::UI_type::PUSHBUTTON:
+		UI_elem = new OtherUI(type, action, pos, size, parent, visible, dragable);
+		break;
+
+	case UI_Element::UI_type::SLIDER:
+		UI_elem = new OtherUI(type, action, pos, size, parent, visible, dragable);
+		break;
+
+	case UI_Element::UI_type::WINDOW:
+		UI_elem = new OtherUI(type, action, pos, size, parent, visible, dragable);
 		break;
 	}
 
@@ -102,7 +123,7 @@ bool Gui::Draw()
 	{
 		if ((*UI_elem)->visible == true)
 		{
-			if ((*UI_elem)->type == UI_Element::UI_type::TEXT) //text
+			if ((*UI_elem)->type == UI_Element::UI_type::LABEL) //text
 			{
 				App->tex->UnLoad((*UI_elem)->texture);
 				(*UI_elem)->texture = App->font->Print((*UI_elem)->label, (*UI_elem)->color);
@@ -110,7 +131,7 @@ bool Gui::Draw()
 
 				App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
 			}
-			else if ((*UI_elem)->type != UI_Element::UI_type::BACKGROUND) //rest of ui
+			else //rest of ui
 			{
 				App->render->Blit(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, &(*UI_elem)->rect, SDL_FLIP_NONE, 0);
 			}
@@ -142,6 +163,22 @@ bool Gui::CheckMousePos(UI_Element* data)
 	return ret;
 }
 
+bool Gui::CheckCursorPos(UI_Element* data)
+{
+	bool ret = false;
+
+	int x, y;
+	App->cursor->GetCursor1_Position(x, y);
+	SDL_Rect MouseCollider = { x,y,1,1 };
+	if (SDL_HasIntersection(&MouseCollider, &data->collider))
+	{
+		ret = true;
+	}
+
+	return ret;
+}
+
+
 bool Gui::CheckClick(UI_Element* data)
 {
 	bool ret = false;
@@ -167,6 +204,31 @@ bool Gui::CheckClick(UI_Element* data)
 	return ret;
 }
 
+bool Gui::CheckCursorClick(UI_Element* data)
+{
+	bool ret = false;
+
+	if (App->input->P1.Controller[BUTTON_A] == KEY_DOWN)
+	{
+		App->cursor->GetCursor1_Position(data->click_pos.first, data->click_pos.second);
+		data->start_drag_pos = data->globalpos;
+
+		ret = true;
+	}
+	if (App->input->P1.Controller[BUTTON_A] == KEY_REPEAT)
+	{
+		ret = true;
+	}
+
+	if (App->input->P1.Controller[BUTTON_A] == KEY_UP)
+	{
+		data->dragging = false;
+		return false;
+	}
+
+	return ret;
+}
+
 void Gui::UpdateChildren()
 {
 	list<UI_Element*>::iterator item = UI_elements.begin();
@@ -174,7 +236,7 @@ void Gui::UpdateChildren()
 	{
 		if ((*item)->parent != nullptr)
 		{
-			if ((*item)->parent->visible == false)
+			if ((*item)->parent->visible != (*item)->visible)
 			{
 				(*item)->visible = (*item)->parent->visible; //update visibility
 			}
@@ -187,3 +249,78 @@ void Gui::UpdateChildren()
 		item++;
 	}
 }
+
+void Gui::UpdateState(UI_Element* data) //change sprites depending on current state
+{
+	switch (data->state) //(estaria bien poner los sprites en un xml o algo para hacer mas eficiente esta funcion)
+	{
+	case UI_Element::State::IDLE:
+		switch (data->action)
+		{
+		case UI_Element::Action::ACT_GOTO_BUILD:
+			data->rect = { 332,0,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_GOTO_DEPLOY:
+			data->rect = { 371,0,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_GOTO_CAST:
+			data->rect = { 410,0,39,40 };
+			break;
+		}
+		break;
+
+	case UI_Element::State::HOVER:
+		switch (data->action)
+		{
+		case UI_Element::Action::ACT_GOTO_BUILD:
+			data->rect = { 449,0,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_GOTO_DEPLOY:
+			data->rect = { 488,0,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_GOTO_CAST:
+			data->rect = { 527,0,39,40 };
+			break;
+		}
+		break;
+
+	case UI_Element::State::LOGIC:
+		switch (data->action)
+		{
+		case UI_Element::Action::ACT_GOTO_BUILD:
+			data->rect = { 449,80,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_GOTO_DEPLOY:
+			data->rect = { 488,80,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_GOTO_CAST:
+			data->rect = { 527,80,39,40 };
+			break;
+		}
+		break;
+
+	case UI_Element::State::LOCKED:
+		switch (data->action)
+		{
+		case UI_Element::Action::ACT_GOTO_BUILD:
+			data->rect = { 332,80,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_GOTO_DEPLOY:
+			data->rect = { 371,80,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_GOTO_CAST:
+			data->rect = { 410,80,39,40 };
+			break;
+		}
+		break;
+	}
+}
+
