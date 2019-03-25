@@ -47,43 +47,30 @@ bool CursorModule::Start()
 
 bool CursorModule::Update(float dt)
 {
-	if (App->input->P1.Controller[JOY_UP] == KEY_REPEAT)
+	if (App->input->P1.Controller[JOY_UP] == KEY_REPEAT || App->input->P1.Controller[UP] == KEY_REPEAT)
 		cP1.position.second -= 6;
 
-	if (App->input->P1.Controller[JOY_DOWN] == KEY_REPEAT)
+	if (App->input->P1.Controller[JOY_DOWN] == KEY_REPEAT || App->input->P1.Controller[DOWN] == KEY_REPEAT)
 		cP1.position.second += 6;
 
-	if (App->input->P1.Controller[JOY_RIGHT] == KEY_REPEAT)
+	if (App->input->P1.Controller[JOY_RIGHT] == KEY_REPEAT || App->input->P1.Controller[RIGHT] == KEY_REPEAT)
 		cP1.position.first += 6;
 
-	if (App->input->P1.Controller[JOY_LEFT] == KEY_REPEAT)
+	if (App->input->P1.Controller[JOY_LEFT] == KEY_REPEAT || App->input->P1.Controller[LEFT] == KEY_REPEAT)
 		cP1.position.first -= 6;
 
-	/* TRY CURSOR WITH KEYBOARD 
+	
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-		cP1.position.second -= 6;
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		cP1.position.second += 6;
-
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		cP1.position.first += 6;
-
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		cP1.position.first -= 6; */
-
-
-	if (App->input->P2.Controller[JOY_UP] == KEY_REPEAT)
+	if (App->input->P2.Controller[JOY_UP] == KEY_REPEAT || App->input->P2.Controller[UP] == KEY_REPEAT)
 		cP2.position.second -= 6;
 
-	if (App->input->P2.Controller[JOY_DOWN] == KEY_REPEAT)
+	if (App->input->P2.Controller[JOY_DOWN] == KEY_REPEAT || App->input->P2.Controller[DOWN] == KEY_REPEAT)
 		cP2.position.second += 6;
 
-	if (App->input->P2.Controller[JOY_RIGHT] == KEY_REPEAT)
+	if (App->input->P2.Controller[JOY_RIGHT] == KEY_REPEAT || App->input->P2.Controller[RIGHT] == KEY_REPEAT)
 		cP2.position.first += 6;
 
-	if (App->input->P2.Controller[JOY_LEFT] == KEY_REPEAT)
+	if (App->input->P2.Controller[JOY_LEFT] == KEY_REPEAT || App->input->P2.Controller[LEFT] == KEY_REPEAT)
 		cP2.position.first -= 6;
 
 	return true;
@@ -103,4 +90,16 @@ bool CursorModule::CleanUp()
 	graphics = nullptr;
 
 	return true;
+}
+
+void CursorModule::GetCursor1_Position(int& x, int& y)
+{
+	x = cP1.position.first;
+	y = cP1.position.second;
+}
+
+void CursorModule::GetCursor2_Position(int& x, int& y)
+{
+	x = cP2.position.first;
+	y = cP2.position.second;
 }

@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Fonts.h"
 #include "Input.h"
+#include "CursorModule.h"
 #include "Gui.h"
 #include "UI_Element.h"
 #include "SimpleUI.h"
@@ -162,6 +163,22 @@ bool Gui::CheckMousePos(UI_Element* data)
 	return ret;
 }
 
+bool Gui::CheckCursorPos(UI_Element* data)
+{
+	bool ret = false;
+
+	int x, y;
+	App->cursor->GetCursor1_Position(x, y);
+	SDL_Rect MouseCollider = { x,y,1,1 };
+	if (SDL_HasIntersection(&MouseCollider, &data->collider))
+	{
+		ret = true;
+	}
+
+	return ret;
+}
+
+
 bool Gui::CheckClick(UI_Element* data)
 {
 	bool ret = false;
@@ -179,6 +196,31 @@ bool Gui::CheckClick(UI_Element* data)
 	}
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+	{
+		data->dragging = false;
+		return false;
+	}
+
+	return ret;
+}
+
+bool Gui::CheckCursorClick(UI_Element* data)
+{
+	bool ret = false;
+
+	if (App->input->P1.Controller[BUTTON_A] == KEY_DOWN)
+	{
+		App->cursor->GetCursor1_Position(data->click_pos.first, data->click_pos.second);
+		data->start_drag_pos = data->globalpos;
+
+		ret = true;
+	}
+	if (App->input->P1.Controller[BUTTON_A] == KEY_REPEAT)
+	{
+		ret = true;
+	}
+
+	if (App->input->P1.Controller[BUTTON_A] == KEY_UP)
 	{
 		data->dragging = false;
 		return false;

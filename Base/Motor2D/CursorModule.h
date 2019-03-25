@@ -33,6 +33,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void GetCursor1_Position(int& x, int& y);
+	void GetCursor2_Position(int& x, int& y);
+
 private:
 
 	Cursor cP1, cP2;

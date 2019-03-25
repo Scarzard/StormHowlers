@@ -247,11 +247,11 @@ bool Scene::PostUpdate()
 	{
 		if ((*item)->visible == true)
 		{
-			if (App->gui->CheckMousePos(*item) == true && (*item)->dragging == false && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) //hovering
+			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) || (App->gui->CheckCursorPos(*item) == true && App->input->P1.Controller[BUTTON_A] != KEY_REPEAT))  && (*item)->dragging == false ) //hovering
 			{
 				(*item)->state = UI_Element::State::HOVER;
 			}
-			if (App->gui->CheckClick(*item) == true && (*item)->state == UI_Element::State::HOVER) //on-click
+			if (((App->gui->CheckClick(*item) == true && App->gui->CheckMousePos(*item) == true) || (App->gui->CheckCursorClick(*item) == true && App->gui->CheckCursorPos(*item) == true)) && (*item)->state == UI_Element::State::HOVER) //on-click
 			{
 				if ((*item)->dragable.x == false && (*item)->dragable.y == false) //if not dragable
 				{
@@ -292,7 +292,7 @@ bool Scene::PostUpdate()
 					App->gui->UpdateChildren();
 				}
 			}
-			else if (App->gui->CheckMousePos(*item) == false && (*item)->state != UI_Element::State::DRAG) //change to idle
+			else if (App->gui->CheckMousePos(*item) == false  && App->gui->CheckCursorPos(*item) == false && (*item)->state != UI_Element::State::DRAG) //change to idle
 			{
 				(*item)->state = UI_Element::State::IDLE;
 			}

@@ -37,7 +37,10 @@ public:
 	bool Draw();
 
 	bool CheckMousePos(UI_Element* data); //(check joystick)
+	bool CheckCursorPos(UI_Element* data);
+
 	bool CheckClick(UI_Element* data); //(check X)
+	bool CheckCursorClick(UI_Element* data);
 
 	void UpdateChildren();
 	void UpdateState(UI_Element* data);
