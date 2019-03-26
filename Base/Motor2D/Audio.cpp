@@ -73,7 +73,7 @@ bool Audio::Awake(pugi::xml_node& config)
 		i++;
 	}
 
-	for (int i = 0; i < fx_path.size(); i++)
+	for (uint i = 0; i < fx_path.size(); i++)
 	{
 		LoadFx(PATH(folder_fx.data(), fx_path[i].data()));
 	}

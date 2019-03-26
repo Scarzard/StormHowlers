@@ -18,7 +18,6 @@
 #include "EntityManager.h"
 #include "Fonts.h"
 #include "Gui.h"
-#include "CursorModule.h"
 #include "Player.h"
 #include "App.h"
 #include "Brofiler\Brofiler.h"
@@ -43,8 +42,8 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	entitymanager = new EntityManager();
 	font = new Fonts();
 	gui = new Gui();
-	cursor = new CursorModule();
-	player = new Player();
+	player1 = new Player();
+	player2 = new Player();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -58,10 +57,10 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(scenechange);
 	AddModule(entitymanager);
-	AddModule(cursor);
 	AddModule(font);
 	AddModule(gui);
 	AddModule(player1);
+	AddModule(player2);
 
 	// render last to swap buffer
 	AddModule(render);

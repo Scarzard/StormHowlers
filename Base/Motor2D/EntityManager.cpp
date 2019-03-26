@@ -115,10 +115,10 @@ bool EntityManager::Load(pugi::xml_node& file)
 
 	while (tmp != Entities.end())
 	{
-		if ((*tmp)->type == Entity::entityType::PLAYER)
-		{
-			(*tmp)->Load(file.child("player"));
-		}
+		//if ((*tmp)->type == Entity::entityType::PLAYER)
+		//{
+		//	(*tmp)->Load(file.child("player"));
+		//}
 		tmp++;
 	}
 	return ret;
@@ -133,11 +133,11 @@ bool EntityManager::Restart()
 	list<Entity*>::reverse_iterator tmp = Entities.rbegin();
 	while (tmp != Entities.rend())
 	{
-		if ((*tmp)->type == Entity::entityType::PLAYER)
-		{
-			(*tmp)->Restart();
-			break;
-		}
+		//if ((*tmp)->type == Entity::entityType::PLAYER)
+		//{
+		//	(*tmp)->Restart();
+		//	break;
+		//}
 		tmp++;
 	}
 	return ret;
@@ -148,11 +148,11 @@ void EntityManager::DeleteEnemies()
 	list<Entity*>::reverse_iterator tmp = Entities.rbegin();
 	while (tmp != Entities.rend())
 	{
-		if ((*tmp)->type != Entity::entityType::PLAYER)
-		{
-			Entities.remove(*tmp);
-			RELEASE(*tmp);
-		}
+		//if ((*tmp)->type != Entity::entityType::PLAYER)
+		//{
+		//	Entities.remove(*tmp);
+		//	RELEASE(*tmp);
+		//}
 		tmp++;
 	}
 }
@@ -203,12 +203,12 @@ Entity* EntityManager::AddEntity(Entity::entityType type, pair<int,int> position
 {
 	Entity* tmp = nullptr;
 
-	switch (type)
-	{
-	case Entity::entityType::PLAYER:
-		//tmp = new Player();
-		break;
-	}
+	//switch (type)
+	//{
+	//case Entity::entityType::PLAYER:
+	//	//tmp = new Player();
+	//	break;
+	//}
 
 	if (tmp)
 		Entities.push_back(tmp);

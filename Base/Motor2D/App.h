@@ -20,7 +20,6 @@ class Transitions;
 class EntityManager;
 class Fonts;
 class Gui;
-class CursorModule;
 class Player;
 
 class MainApp
@@ -98,8 +97,8 @@ public:
 	EntityManager*	entitymanager = NULL;
 	Fonts*			font = NULL;
 	Gui*			gui = NULL;
-	CursorModule*	cursor = NULL;
-	Player*			player = NULL;
+	Player*			player1 = NULL;
+	Player*			player2 = NULL;
 
 	bool			fpsCapON = true;
 	bool			vsyncON = false;

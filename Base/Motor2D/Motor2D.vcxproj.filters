@@ -64,9 +64,6 @@
     <ClCompile Include="OtherUI.cpp">
       <Filter>Desenvolupament  ========\UI</Filter>
     </ClCompile>
-    <ClCompile Include="CursorModule.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Textures.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
@@ -155,9 +152,6 @@
     </ClInclude>
     <ClInclude Include="OtherUI.h">
       <Filter>Desenvolupament  ========\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="CursorModule.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="BuildModule.h">
       <Filter>Desenvolupament  ========\Actions</Filter>
