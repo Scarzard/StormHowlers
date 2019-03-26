@@ -215,6 +215,29 @@
     <tower x="1500" y="865" width="82" height="84"/>
     <tower x="1660" y="865" width="82" height="84"/>
     <tower x="859"  y="991" width="82" height="84"/>
+
+
+    <townhall x="1949" y="2638" width="188" height="166"/>
+    <townhall x="2187" y="2638" width="188" height="166"/>
+    <townhall x="2425" y="2638" width="188" height="166"/>
+    <townhall x="2663" y="2638" width="188" height="166"/>
+    <townhall x="1949" y="2816" width="188" height="166"/>
+    <townhall x="2187" y="2816" width="188" height="166"/>
+    <townhall x="2425" y="2816" width="188" height="166"/>
+    <townhall x="2663" y="2816" width="188" height="166"/>
+    <townhall x="1949" y="2994" width="188" height="166"/>
+    <townhall x="2187" y="2994" width="188" height="166"/>
+    <townhall x="2425" y="2994" width="188" height="166"/>
+    <townhall x="2663" y="2994" width="188" height="166"/>
+    <townhall x="1949" y="3172" width="188" height="166"/>
+    <townhall x="2187" y="3172" width="188" height="166"/>
+    <townhall x="2425" y="3172" width="188" height="166"/>
+    <townhall x="2663" y="3172" width="188" height="166"/>
+    <townhall x="1949" y="3350" width="188" height="166"/>
+    <townhall x="2187" y="3350" width="188" height="166"/>
+    <townhall x="2425" y="3350" width="188" height="166"/>
+    <townhall x="2663" y="3350" width="188" height="166"/>
+    <townhall x="1949" y="3528" width="188" height="166"/>
     
   </buildings>
 
