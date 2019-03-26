@@ -12,8 +12,14 @@ class Entity
 public:
 	enum entityType
 	{
-		NO_TYPE,
-		PLAYER,
+		TOWNHALL = 1,
+		MAIN_DEFENSE,
+		COMMAND_CENTER,
+		WALLS,
+		DEFENSE_AOE,
+		DEFENSE_TARGET,
+		MINES,
+		BARRACKS
 	};
 
 public:

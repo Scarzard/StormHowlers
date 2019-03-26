@@ -24,7 +24,7 @@ public:
 	bool Draw(float dt);
 	bool DebugDraw();
 
-	Entity* AddEntity(Entity::entityType type, pair<int,int> position, pair<int,int> Size, string Type = "0", string Side = "0");
+	Entity* AddEntity(Entity::entityType type, pair<int,int> position);
 	bool DeleteEntity(Entity* entity);
 	void DeleteEntities();
 

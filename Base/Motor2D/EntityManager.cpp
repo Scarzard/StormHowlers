@@ -199,14 +199,14 @@ bool EntityManager::DebugDraw()
 	return true;
 }
 
-Entity* EntityManager::AddEntity(Entity::entityType type, pair<int,int> position, pair<int,int> Size, string Type, string side)
+Entity* EntityManager::AddEntity(Entity::entityType type, pair<int,int> position)
 {
 	Entity* tmp = nullptr;
 
 	switch (type)
 	{
 	case Entity::entityType::PLAYER:
-		tmp = new Player();
+		//tmp = new Player();
 		break;
 	}
 

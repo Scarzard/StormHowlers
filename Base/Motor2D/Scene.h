@@ -6,14 +6,6 @@
 
 struct SDL_Texture;
 
-enum BUILD
-{
-	BUILD_DEFENSE_AOE = 1,
-	BUILD_DEFENSE_TARGET,
-	BUILD_MINES,
-	BUILD_BARRACKS
-};
-
 enum DEPLOY
 {
 	DEPLOY_SOLDIER = 1,

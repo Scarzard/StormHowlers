@@ -19,6 +19,7 @@
 #include "Fonts.h"
 #include "Gui.h"
 #include "CursorModule.h"
+#include "Player.h"
 #include "App.h"
 #include "Brofiler\Brofiler.h"
 
@@ -43,6 +44,7 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	font = new Fonts();
 	gui = new Gui();
 	cursor = new CursorModule();
+	player = new Player();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -59,6 +61,7 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(cursor);
 	AddModule(font);
 	AddModule(gui);
+	AddModule(player1);
 
 	// render last to swap buffer
 	AddModule(render);

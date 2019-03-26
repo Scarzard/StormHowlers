@@ -13,7 +13,7 @@
 #include "Brofiler\Brofiler.h"
 
 
-Player::Player() : Entity(entityType::PLAYER)
+Player::Player() : Module()
 {
 }
 
@@ -33,7 +33,7 @@ bool Player::Awake(pugi::xml_node & config)
 }
 
 bool Player::Start()
-{	
+{
 	return true;
 }
 
@@ -50,21 +50,6 @@ bool Player::PostUpdate()
 
 	return true;
 }
-
-void Player::Load(pugi::xml_node& data)
-{
-	
-	LOG("--- Player Loaded");
-}
-
-// Save Game State
-void Player::Save(pugi::xml_node& data) const
-{
-	pugi::xml_node player = data.append_child("player");
-
-	LOG("---Player Saved");
-}
-
 
 void Player::CleanUp()
 {
