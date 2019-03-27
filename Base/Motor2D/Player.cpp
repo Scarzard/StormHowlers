@@ -43,16 +43,16 @@ bool Player::Update(float dt)
 
 	//--- Update Cursor
 	if (gamepad.Controller[JOY_UP] == KEY_REPEAT || gamepad.Controller[UP] == KEY_REPEAT)
-		cursor.position.second -= 6 * dt;
+		cursor.position.second -= 500 * dt;
 
 	if (gamepad.Controller[JOY_DOWN] == KEY_REPEAT || gamepad.Controller[DOWN] == KEY_REPEAT)
-		cursor.position.second += 6 * dt;
+		cursor.position.second += 500 * dt;
 
 	if (gamepad.Controller[JOY_RIGHT] == KEY_REPEAT || gamepad.Controller[RIGHT] == KEY_REPEAT)
-		cursor.position.first += 6 * dt;
+		cursor.position.first += 500 * dt;
 
 	if (gamepad.Controller[JOY_LEFT] == KEY_REPEAT || gamepad.Controller[LEFT] == KEY_REPEAT)
-		cursor.position.first -= 6 * dt;
+		cursor.position.first -= 500 * dt;
 
 	return true;
 }

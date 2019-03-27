@@ -196,12 +196,12 @@ bool Scene::Update(float dt)
 {
 	BROFILER_CATEGORY("Scene Update", Profiler::Color::DarkOrange);
 
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) //return to main_ui player1
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || App->player1->gamepad.Controller[BUTTON_B] == KEY_DOWN) //return to main_ui player1 
 	{
 		App->player1->currentUI = Player::CURRENT_UI::CURR_MAIN;
 		App->player1->UpdateVisibility();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) //return to main_ui player2
+	else if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || App->player2->gamepad.Controller[BUTTON_B] == KEY_DOWN) //return to main_ui player2
 	{
 		App->player2->currentUI = Player::CURRENT_UI::CURR_MAIN;
 		App->player2->UpdateVisibility();
