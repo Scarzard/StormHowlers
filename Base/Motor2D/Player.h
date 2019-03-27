@@ -50,7 +50,6 @@ public:
 	Player();
 	~Player();
 
-	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool Update(float dt);
 	bool PostUpdate();
@@ -64,6 +63,14 @@ public:
 	bool CheckCursorClick(UI_Element* data);
 
 public:
+	bool isBuilding;
+	bool isDeploying;
+	bool isCasting;
+
+	SDL_Rect col;
+	pair<int, int> quadSize;
+	Entity::entityType type;
+
 	bool isPlayer1;
 	string team;
 	uint gold;
@@ -73,8 +80,6 @@ public:
 	GamePad gamepad;
 
 	list<UI_Element*> UI_elements;
-	list<Entity*> Buildings;
-	list<Entity*> Troops;
 
 	// --- UI --- //
 	UI_Element* Health_UI;

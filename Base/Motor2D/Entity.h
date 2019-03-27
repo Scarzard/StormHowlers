@@ -6,7 +6,6 @@
 #include "Map.h"
 #include "App.h"
 
-
 class Entity
 {
 public:
@@ -39,13 +38,17 @@ public:
 	virtual void LoadAnimations() {};
 	virtual void ChangeAnimation() {};
 
+	pair<int, int> GetSize(Entity* entity) { return entity->size; };
+	pair<int, int> GetPos(Entity* entity) { return entity->position; };
+
 	void Collider_Overlay();
 	void PositionCollider();
-	void Draw(float dt);
 
 public:
 	Animation* Current_Animation = nullptr;
 	entityType type;
+
+	bool fromPlayer1;
 	
 	pair<int, int> position;
 	pair<int,int> size;

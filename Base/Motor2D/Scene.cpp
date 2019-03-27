@@ -60,6 +60,8 @@ bool Scene::Start()
 	godmode = false;
 	to_end = false;
 	change = false;
+	App->player1->isPlayer1 = true;
+	App->player2->isPlayer1 = false;
 
 	//walkability map
 	int w, h;
@@ -73,8 +75,22 @@ bool Scene::Start()
 	RELEASE_ARRAY(data);
 	debug_tex = App->tex->Load("maps/pathfinding.png");
 
+	//--------- CREATE MAIN BUILDINGS -------------// (falta cambiar posicion)
 
-	//--------- CREATE GUI ----------  //(Falta poner position y size)
+	//--- PLAYER 1
+	App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 50,50 });
+	App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, { 50,50 });
+	App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, { 50,50 });
+	App->entitymanager->AddEntity(true, Entity::entityType::WALLS, { 50,50 });
+
+	//--- PLAYER 1
+	App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, { 50,50 });
+	App->entitymanager->AddEntity(false, Entity::entityType::MAIN_DEFENSE, { 50,50 });
+	App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, { 50,50 });
+	App->entitymanager->AddEntity(false, Entity::entityType::WALLS, { 50,50 });
+
+
+	//--------- CREATE GUI -----------//  (Falta poner position y size)
 
 	//--- PLAYER 1
 	//App->player1->Health_UI = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
@@ -87,7 +103,7 @@ bool Scene::Start()
 
 	App->player1->Build_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, false);
 	App->player1->Build_UI->rect = { 166,79,166,79 };
-	//App->player1->Def_AOE_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { x,y }, { 39,40 } , App->player1->Build_UI, false);
+	App->player1->Def_AOE_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { 13,2 }, { 39,40 } , App->player1->Build_UI, false);
 	//App->player1->Def_Target_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { x,y }, { 39,40 }, App->player1->Build_UI, false);
 	//App->player1->Mines_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { x,y }, { 39,40 }, App->player1->Build_UI, false);
 	//App->player1->Barracks_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { x,y }, { 39,40 }, App->player1->Build_UI, false);
@@ -158,20 +174,34 @@ bool Scene::Start()
 	//App->player2->Damage_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, player.General_UI, false, { false, false }, "data");
 	//App->player2->Prod_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
 	//App->player2->Capacity_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
-	
+
 	// --- CURSORS
 	//Cursor player 1 ------------
-	App->player1->cursor.position.first = 300;
-	App->player1->cursor.position.second = 300;
-	App->player1->cursor.area.x = App->player1->cursor.area.y = 0;
-	App->player1->cursor.area.w = App->player1->cursor.area.h = 25;
+	if (App->player1->gamepad.Connected == true)
+	{
+		App->player1->cursor.position.first = 300;
+		App->player1->cursor.position.second = 300;
+		App->player1->cursor.area.x = App->player1->cursor.area.y = 0;
+		App->player1->cursor.area.w = App->player1->cursor.area.h = 25;
+	}
+	else
+	{
+		LOG("...Player1 GamePad Not Connected");
+	}
 
 	//Cursor player 2 ------------
-	App->player2->cursor.position.first = 500;
-	App->player2->cursor.position.second = 300;
-	App->player2->cursor.area.x = 27;
-	App->player2->cursor.area.y = 0;
-	App->player2->cursor.area.w = App->player2->cursor.area.h = 25;
+	if (App->player2->gamepad.Connected == true)
+	{
+		App->player2->cursor.position.first = 500;
+		App->player2->cursor.position.second = 300;
+		App->player2->cursor.area.x = 27;
+		App->player2->cursor.area.y = 0;
+		App->player2->cursor.area.w = App->player2->cursor.area.h = 25;
+	}
+	else
+	{
+		LOG("...Player2 GamePad Not Connected");
+	}
 
 	if (cursor_tex == nullptr)
 	{
@@ -200,11 +230,13 @@ bool Scene::Update(float dt)
 	{
 		App->player1->currentUI = Player::CURRENT_UI::CURR_MAIN;
 		App->player1->UpdateVisibility();
+		App->player1->isBuilding = false;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || App->player2->gamepad.Controller[BUTTON_B] == KEY_DOWN) //return to main_ui player2
 	{
 		App->player2->currentUI = Player::CURRENT_UI::CURR_MAIN;
 		App->player2->UpdateVisibility();
+		App->player2->isBuilding = false;
 	}
 	//else if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) //Start from second level
 	//{
@@ -257,14 +289,20 @@ bool Scene::PostUpdate()
 
 	bool ret = true;
 
+	//--- Pause
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
+		pause = !pause;
+	}
+
 	//--- Update Player 1 GUI
 	list<UI_Element*>::reverse_iterator item = App->player1->UI_elements.rbegin();
 	while (item != App->player1->UI_elements.rend())
 	{
 		if ((*item)->visible == true)
 		{
-			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) || 
-				 (App->player1->CheckCursorPos(*item) == true && App->player1->gamepad.Controller[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
+			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) ||
+				(App->player1->CheckCursorPos(*item) == true && App->player1->gamepad.Controller[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
 			{
 				(*item)->state = UI_Element::State::HOVER;
 			}
@@ -363,8 +401,11 @@ bool Scene::PostUpdate()
 	App->gui->UpdateChildren();
 
 	//--- Draw Cursors
-	App->render->Blit(cursor_tex, App->player1->cursor.position.first, App->player1->cursor.position.second, &App->player1->cursor.area);
-	App->render->Blit(cursor_tex, App->player2->cursor.position.first, App->player2->cursor.position.second, &App->player2->cursor.area);
+	if (App->player1->gamepad.Connected == true)
+		App->render->Blit(cursor_tex, App->player1->cursor.position.first, App->player1->cursor.position.second, &App->player1->cursor.area);
+
+	if (App->player2->gamepad.Connected == true)
+		App->render->Blit(cursor_tex, App->player2->cursor.position.first, App->player2->cursor.position.second, &App->player2->cursor.area);
 
 	//--- Change map with fade
 	if (to_end == true && App->scenechange->IsChanging() == false)
@@ -394,7 +435,7 @@ bool Scene::CleanUp()
 
 	debug_tex = nullptr;
 	cursor_tex = nullptr;
-	
+
 	return true;
 }
 
@@ -460,4 +501,20 @@ void Scene::SpawnEnemies() //
 	//		}
 	//	}
 	//}
+}
+
+bool Scene::CheckBuildingPos(SDL_Rect collider) //check collider with walkability map
+{
+	bool ret = false;
+
+	//if (!colision)
+	//{
+	//	ret = true;
+	//}
+
+	return true; //return ret
+}
+
+void Scene::UpdateWalkabilityMap()
+{
 }

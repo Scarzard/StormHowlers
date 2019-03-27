@@ -6,8 +6,9 @@
 #include "Gui.h"
 #include "Input.h"
 #include "Window.h"
+#include "EntityManager.h"
+#include "Render.h"
 
-#include "SDL/include/SDL.h"
 #include "Brofiler\Brofiler.h"
 
 
@@ -19,20 +20,13 @@ Player::~Player()
 {
 }
 
-bool Player::Awake(pugi::xml_node & config)
-{
-	LOG("Loading Player");
-	bool ret = true;
-
-	// Load Main Buildings starting position
-	config = config.child("player");
-
-	return ret;
-}
-
 bool Player::Start()
 {
-	// Create Main Buildings
+	gold = 0;
+	currentUI = CURR_MAIN;
+	isBuilding = false;
+	col = { 0,0,0,0 };
+	quadSize = { 0,0 };
 
 	return true;
 }
@@ -41,7 +35,7 @@ bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("Player Update", Profiler::Color::Black);
 
-	//--- Update Cursor
+	//--- Cursor Movement
 	if (gamepad.Controller[JOY_UP] == KEY_REPEAT || gamepad.Controller[UP] == KEY_REPEAT)
 		cursor.position.second -= 500 * dt;
 
@@ -54,12 +48,69 @@ bool Player::Update(float dt)
 	if (gamepad.Controller[JOY_LEFT] == KEY_REPEAT || gamepad.Controller[LEFT] == KEY_REPEAT)
 		cursor.position.first -= 500 * dt;
 
+	//--- Press A
+	if (gamepad.Controller[BUTTON_A] == KEY_DOWN)
+	{
+		if (isBuilding) //Building
+		{
+			col = { cursor.position.first, cursor.position.second, quadSize.first, quadSize.second };
+			if (App->scene->CheckBuildingPos(col) == true) // Can build
+			{
+				//play fx (build)
+				App->entitymanager->AddEntity(isPlayer1, type, { col.x, col.y });
+				App->scene->UpdateWalkabilityMap();
+			}
+			else
+			{
+				//play fx (error)
+			}
+		}
+	}
+
+	//--- Press B
+	if (gamepad.Controller[BUTTON_B] == KEY_DOWN)
+	{
+		if (currentUI == CURR_BUILD)
+		{
+			if (isBuilding == true)
+			{
+				isBuilding = false;
+			}
+			else if (isBuilding == false)
+			{
+				currentUI = CURR_MAIN;
+				UpdateVisibility();
+			}
+		}
+	}
+
 	return true;
 }
 
 bool Player::PostUpdate()
 {
 	BROFILER_CATEGORY("Player PostUpdate", Profiler::Color::Black);
+
+	if (isBuilding)
+	{
+		Def_AOE_icon->visible = true;
+		if (gamepad.Connected == false)
+		{
+			int x, y;
+			App->input->GetMousePosition(x, y);
+			col = { x, y, quadSize.first, quadSize.second };
+		}
+		else
+		{
+			col = { cursor.position.first, cursor.position.second, quadSize.first, quadSize.second };
+		}
+
+		if (App->scene->CheckBuildingPos(col) == true)
+			App->render->DrawQuad(col, 0, 255, 0, 50); //green
+		else
+			App->render->DrawQuad(col, 255, 0, 0, 50); //red	
+	}
+
 	return true;
 }
 
@@ -67,6 +118,7 @@ bool Player::CleanUp()
 {
 	LOG("---Player Deleted");
 
+	//Clear UI elements
 	list<UI_Element*>::iterator item = UI_elements.begin();
 	while (item != UI_elements.end())
 	{
@@ -194,7 +246,9 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_AOE:
-		//
+		isBuilding = true;
+		type = Entity::entityType::DEFENSE_AOE;
+		quadSize = { 50, 50 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_TARGET:

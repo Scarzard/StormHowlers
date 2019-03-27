@@ -244,7 +244,10 @@ void MainApp::FinishUpdate()
 	}
 
 	framerate = 1000.0f / ptimer.ReadMs();
-	dt = 1.0f / framerate;
+	if (App->scene->pause == true)
+		dt = 0.0f;
+	else
+		dt = 1.0f / framerate;
 
 	static char title[128];
 	sprintf_s(title, 128, "FPS: %i | Av.FPS: %.2f | MsLastFrame: %02u ms | Last dt: %.5f | FPS_Cap: %i | Vsync: %i",

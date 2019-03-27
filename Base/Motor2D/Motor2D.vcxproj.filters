@@ -67,9 +67,6 @@
     <ClCompile Include="Textures.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="BuildModule.cpp">
-      <Filter>Desenvolupament  ========\Actions</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
@@ -153,9 +150,6 @@
     <ClInclude Include="OtherUI.h">
       <Filter>Desenvolupament  ========\UI</Filter>
     </ClInclude>
-    <ClInclude Include="BuildModule.h">
-      <Filter>Desenvolupament  ========\Actions</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
@@ -184,9 +178,6 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Entities">
       <UniqueIdentifier>{8985fa2d-dc54-4a8e-9052-8e4d52a7e5e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Actions">
-      <UniqueIdentifier>{4b5b5e67-fbd7-46fa-85e0-908671c00dee}</UniqueIdentifier>
     </Filter>
     <Filter Include="Desenvolupament  ========\Entities\Buildings">
       <UniqueIdentifier>{77a8885a-ba6b-4de9-8594-dd1664db242a}</UniqueIdentifier>
