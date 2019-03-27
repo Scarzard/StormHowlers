@@ -93,7 +93,6 @@ bool Player::PostUpdate()
 
 	if (isBuilding)
 	{
-		Def_AOE_icon->visible = true;
 		if (gamepad.Connected == false)
 		{
 			int x, y;
