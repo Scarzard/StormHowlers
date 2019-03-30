@@ -58,6 +58,8 @@ public:
 	string current_track;
 	string current_fx;
 
+	Timer world_clock;
+
 private:
 	SDL_Texture* debug_tex;
 	SDL_Texture* cursor_tex;

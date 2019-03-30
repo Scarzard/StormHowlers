@@ -203,6 +203,8 @@ bool Scene::Start()
 	//-----------
 	SpawnEntities();
 
+	world_clock.Start();
+
 	return true;
 }
 
