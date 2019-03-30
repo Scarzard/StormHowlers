@@ -73,6 +73,8 @@ public:
 	pair<int, int> quadSize;
 	Entity::entityType type;
 
+	SDL_Texture* tex;
+
 	bool isPlayer1;
 	string team;
 	uint gold;

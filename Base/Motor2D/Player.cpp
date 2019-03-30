@@ -28,6 +28,7 @@ bool Player::Start()
 	isBuilding = false;
 	col = { 0,0,0,0 };
 	quadSize = { 0,0 };
+	tex = App->tex->Load("maps/pathfinding.png");
 
 	return true;
 }
@@ -105,7 +106,7 @@ bool Player::PostUpdate()
 		}
 
 		if (CheckBuildingPos(col) == true)
-			App->render->DrawQuad(col, 0, 255, 0, 50); //green
+			SDL_RenderCopyEx(App->render->renderer, tex, &col, &col, 45.0, NULL, SDL_FLIP_NONE);
 		else
 			App->render->DrawQuad(col, 255, 0, 0, 50); //red	
 	}
@@ -126,6 +127,8 @@ bool Player::CleanUp()
 		item++;
 	}
 	UI_elements.clear();
+
+	App->tex->UnLoad(tex);
 
 	return true;
 }
