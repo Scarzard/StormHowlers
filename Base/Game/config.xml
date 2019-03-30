@@ -14,7 +14,7 @@
     <resolution width="1024" height="708" scale="1"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
-    <resizable value="false"/>
+    <resizable value="true"/>
     <fullscreen_window value="false"/>
   </window>
 
@@ -248,7 +248,7 @@
   </buildings_animations>
 
   <scene>
-    <map_name name="level1.tmx"></map_name>
+    <map_name name="map.tmx"></map_name>
     <map_name name="level2.tmx"></map_name>
     <fade_time value="1"/>
   </scene>

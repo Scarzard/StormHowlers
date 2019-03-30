@@ -59,7 +59,6 @@ bool Player::Update(float dt)
 			{
 				//play fx (build)
 				App->entitymanager->AddEntity(isPlayer1, type, { col.x, col.y });
-				UpdateWalkabilityMap();
 			}
 			else
 			{
