@@ -106,7 +106,7 @@ bool Player::PostUpdate()
 		}
 
 		if (CheckBuildingPos(col) == true)
-			SDL_RenderCopyEx(App->render->renderer, tex, &col, &col, 45.0, NULL, SDL_FLIP_NONE);
+			App->render->DrawQuad(col, 0, 255, 0, 50); //green	
 		else
 			App->render->DrawQuad(col, 255, 0, 0, 50); //red	
 	}
@@ -127,8 +127,6 @@ bool Player::CleanUp()
 		item++;
 	}
 	UI_elements.clear();
-
-	App->tex->UnLoad(tex);
 
 	return true;
 }
