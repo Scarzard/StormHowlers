@@ -64,15 +64,13 @@ bool Scene::Start()
 	App->player2->isPlayer1 = false;
 
 	//walkability map
+	Wmap = NULL;
 	int w, h;
-	uchar* data = NULL;
-	if (App->map->CreateWalkabilityMap(w, h, &data))
+	if (App->map->CreateWalkabilityMap(w, h, &Wmap))
 	{
-		App->pathfinding->SetMap(w, h, data);
-
-		LOG("Create walkability");
+		App->pathfinding->SetMap(w, h, Wmap);
+		LOG("Create walkability map");
 	}
-	RELEASE_ARRAY(data);
 	debug_tex = App->tex->Load("maps/pathfinding.png");
 
 	//--------- CREATE MAIN BUILDINGS -------------// (falta cambiar posicion)
@@ -185,9 +183,7 @@ bool Scene::Start()
 		App->player1->cursor.area.w = App->player1->cursor.area.h = 25;
 	}
 	else
-	{
 		LOG("...Player1 GamePad Not Connected");
-	}
 
 	//Cursor player 2 ------------
 	if (App->player2->gamepad.Connected == true)
@@ -199,14 +195,10 @@ bool Scene::Start()
 		App->player2->cursor.area.w = App->player2->cursor.area.h = 25;
 	}
 	else
-	{
 		LOG("...Player2 GamePad Not Connected");
-	}
 
 	if (cursor_tex == nullptr)
-	{
 		cursor_tex = App->tex->Load("textures/Cursors.png");
-	}
 
 	//-----------
 	SpawnEntities();
@@ -259,11 +251,11 @@ bool Scene::Update(float dt)
 	//{
 	//	App->gui->UI_Debug = !App->gui->UI_Debug;
 	//}
-	//else if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) //View colliders
-	//{
-	//	App->map->debug = !App->map->debug;
-	//	App->entitymanager->draw_path = !App->entitymanager->draw_path;
-	//}
+	else if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) //View colliders
+	{
+		App->map->debug = !App->map->debug;
+		App->entitymanager->draw_path = !App->entitymanager->draw_path;
+	}
 	//else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) //Godmode
 	//{
 	//	godmode = !godmode;
@@ -436,6 +428,8 @@ bool Scene::CleanUp()
 	debug_tex = nullptr;
 	cursor_tex = nullptr;
 
+	RELEASE_ARRAY(Wmap);
+
 	return true;
 }
 
@@ -501,20 +495,4 @@ void Scene::SpawnEnemies() //
 	//		}
 	//	}
 	//}
-}
-
-bool Scene::CheckBuildingPos(SDL_Rect collider) //check collider with walkability map
-{
-	bool ret = false;
-
-	//if (!colision)
-	//{
-	//	ret = true;
-	//}
-
-	return true; //return ret
-}
-
-void Scene::UpdateWalkabilityMap()
-{
 }

@@ -8,6 +8,7 @@
 #include "Window.h"
 #include "EntityManager.h"
 #include "Render.h"
+#include "Pathfinding.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -54,11 +55,11 @@ bool Player::Update(float dt)
 		if (isBuilding) //Building
 		{
 			col = { cursor.position.first, cursor.position.second, quadSize.first, quadSize.second };
-			if (App->scene->CheckBuildingPos(col) == true) // Can build
+			if (CheckBuildingPos(col) == true) // Can build
 			{
 				//play fx (build)
 				App->entitymanager->AddEntity(isPlayer1, type, { col.x, col.y });
-				App->scene->UpdateWalkabilityMap();
+				UpdateWalkabilityMap();
 			}
 			else
 			{
@@ -104,7 +105,7 @@ bool Player::PostUpdate()
 			col = { cursor.position.first, cursor.position.second, quadSize.first, quadSize.second };
 		}
 
-		if (App->scene->CheckBuildingPos(col) == true)
+		if (CheckBuildingPos(col) == true)
 			App->render->DrawQuad(col, 0, 255, 0, 50); //green
 		else
 			App->render->DrawQuad(col, 255, 0, 0, 50); //red	
@@ -171,6 +172,36 @@ bool Player::CheckCursorClick(UI_Element* data)
 	}
 
 	return ret;
+}
+
+bool Player::CheckBuildingPos(SDL_Rect collider) //check collider with walkability map
+{
+	//check with preset objects in map
+	SDL_Rect collisions;
+	for (list<ObjectsGroup*>::iterator object = App->map->data.objLayers.begin(); object != App->map->data.objLayers.end(); object++)
+	{
+		if ((*object)->name == ("Collision"))
+		{
+			for (list<ObjectsData*>::iterator objectdata = (*object)->objects.begin(); objectdata != (*object)->objects.end(); objectdata++)
+			{
+				collisions.x = (*objectdata)->x;
+				collisions.y = (*objectdata)->y;
+				collisions.w = (*objectdata)->width;
+				collisions.h = (*objectdata)->height;
+
+				if (SDL_HasIntersection(&collisions, &collider) == true)
+					return false;
+			}
+		}
+	}
+	//check with list of entities
+	for (list<Entity*>::iterator item = App->entitymanager->Entities.begin(); item != App->entitymanager->Entities.end(); item++)
+	{
+		if (SDL_HasIntersection(&(*item)->Collider, &collider) == true)
+			return false;
+	}
+
+	return true;
 }
 
 void Player::UpdateVisibility() // Update GUI Visibility

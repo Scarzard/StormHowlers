@@ -43,14 +43,12 @@ public:
 	void SpawnEnemies();
 	void SpawnEntities();
 
-	bool CheckBuildingPos(SDL_Rect collider);
-	void UpdateWalkabilityMap();
-
 public:
 	vector<string*> map_names;
 	float fade_time;
 
 	uint currentMap;
+	uchar* Wmap;
 
 	bool pause;
 	bool godmode;

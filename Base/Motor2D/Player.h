@@ -62,6 +62,8 @@ public:
 	bool CheckCursorPos(UI_Element* data);
 	bool CheckCursorClick(UI_Element* data);
 
+	bool CheckBuildingPos(SDL_Rect collider);
+
 public:
 	bool isBuilding;
 	bool isDeploying;

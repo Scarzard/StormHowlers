@@ -144,6 +144,7 @@ public:
 
 	// Called each loop iteration
 	void Draw(float dt);
+	void DebugDraw(float dt);
 
 	// Called before quitting
 	bool CleanUp();
