@@ -78,11 +78,7 @@ bool Scene::Start()
 
 
 	//--------- CREATE GUI ----------  //(Falta poner position y size)
-	pair<uint, uint> screen_size;
-	App->win->GetWindowSize(screen_size.first, screen_size.second);
-	//---- Main menu
-	mainmenu.mainmenu_bg = App->gui->AddUIElement(UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 0, 0 }, { screen_size.first, screen_size.second }, nullptr, false);
-
+	
 	//--- PLAYER 1
 	//P1.Health_UI = App->gui->AddUIElement(UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
 	//P1.Gold_UI = App->gui->AddUIElement(UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");

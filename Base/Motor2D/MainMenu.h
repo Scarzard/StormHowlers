@@ -33,8 +33,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+
+
 public:
-	string menu_bg_file_name;
+	const char* menu_bg_file_name;
 	string credits_file_name;
 
 	UI_Element* menu_background;

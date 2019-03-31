@@ -30,14 +30,18 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 {
 	LOG("Loading Main Menu");
 
-	menu_bg_file_name = conf.child("mainmenu").attribute("file").as_string("");
-	current_track = App->audio->tracks_path[1];
+	menu_bg_file_name = conf.child("menu_bg").attribute("file").as_string("");
+	// current_track = App->audio->tracks_path[1];
 	return true;
 }
 
 // Called before the first frame
 bool MainMenu::Start()
 {
+	menu_background = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { App->win->width, App->win->height }, nullptr, true);
+	menu_background->texture = App->tex->Load(menu_bg_file_name);
+	menu_background->rect = { 0, 0,  App->win->width, App->win->height };
+
 	return true;
 }
 
@@ -59,6 +63,9 @@ bool MainMenu::Update(float dt)
 	{
 		App->gui->UI_Debug = !App->gui->UI_Debug;
 	}
+
+	App->render->Blit(menu_background->texture, 0, 0, &menu_background->rect, SDL_FLIP_NONE, 0);
+	
 	return true;
 }
 

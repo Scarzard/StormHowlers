@@ -249,7 +249,6 @@
 
   <main_menu>
     <menu_bg file="gui/mainmenu.png"/>
-    <credits file="gui/credits.png"/>
     <music vol="40" sfx="100"/>
   </main_menu>
 
