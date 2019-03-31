@@ -65,6 +65,12 @@ bool MainMenu::Update(float dt)
 	}
 
 	App->render->Blit(menu_background->texture, 0, 0, &menu_background->rect, SDL_FLIP_NONE, 0);
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		App->scenechange->ContinueGame = true;
+		App->scenechange->SwitchScene(App->scene, App->main_menu);
+	}
 	
 	return true;
 }
