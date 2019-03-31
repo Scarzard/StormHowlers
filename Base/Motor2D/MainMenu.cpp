@@ -30,7 +30,7 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 {
 	LOG("Loading Main Menu");
 
-	menu_bg_file_name = conf.child("menu_bg").attribute("file").as_string("");
+	menu_bg_file_name = conf.child("mainmenu").attribute("file").as_string("");
 	current_track = App->audio->tracks_path[1];
 	return true;
 }
