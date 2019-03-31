@@ -32,6 +32,11 @@ enum CAST
 
 struct GeneralUI
 {
+
+	//Main menu UI
+	UI_Element* mainmenu_bg;
+	UI_Element* play_button;
+
 	bool upgrade, repair;
 	string name;
 	uint level, health, unique;
@@ -128,6 +133,8 @@ public:
 
 	string current_track;
 	string current_fx;
+
+	GeneralUI mainmenu;
 
 	PlayerUI P1, P2;
 
