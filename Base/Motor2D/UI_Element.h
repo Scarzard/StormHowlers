@@ -49,7 +49,13 @@ public:
 		ACT_CAST_3,
 
 		ACT_UPGRADE,
-		ACT_REPAIR
+		ACT_REPAIR,
+
+		//MainMenu Buttons
+		NEW_GAME,
+		CONTINUE,
+		SETTINGS,
+		WEBPAGE,
 	};
 
 	enum State

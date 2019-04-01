@@ -519,5 +519,26 @@ void Scene::DoLogic(PlayerUI player, UI_Element* data)
 	case::UI_Element::Action::ACT_REPAIR:
 		//
 		break;
+
+	//---- Main menu buttons
+	case::UI_Element::Action::NEW_GAME:
+		App->scenechange->ContinueGame = true;
+		App->scenechange->SwitchScene(App->scene, App->main_menu);
+		break;
+
+	case::UI_Element::Action::CONTINUE:
+		//
+		break;
+
+	case::UI_Element::Action::SETTINGS:
+		//
+		break;
+
+	case::UI_Element::Action::WEBPAGE:
+		ShellExecuteA(NULL, "open", "https://github.com/Scarzard/StormHowlers");
+		break;
 	}
+
 }
+
+

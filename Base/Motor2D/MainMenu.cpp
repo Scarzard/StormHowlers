@@ -42,6 +42,8 @@ bool MainMenu::Start()
 	menu_background->texture = App->tex->Load(menu_bg_file_name);
 	menu_background->rect = { 0, 0,  App->win->width, App->win->height };
 
+	new_game_button = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 13,2 }, { 39,40 }, menu_background, true);
+
 	return true;
 }
 
