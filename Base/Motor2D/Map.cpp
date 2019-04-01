@@ -74,8 +74,8 @@ void Map::Draw(float dt)
 
 	
 
-	//testing animation
-	App->render->Blit(App->scene->spritesheet123, 600, 200, &idleRight123->GetCurrentFrame(dt));
+	//testing animation uncoment to blit example
+	//App->render->Blit(App->scene->spritesheet123, 600, 200, &idleRight123->GetCurrentFrame(dt));
 }
 
 void Map::DebugDraw(float dt)
