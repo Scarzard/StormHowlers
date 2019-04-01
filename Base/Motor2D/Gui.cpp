@@ -268,6 +268,10 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::ACT_GOTO_CAST:
 			data->rect = { 410,0,39,40 };
 			break;
+			//-----Needs to be changed
+		case UI_Element::Action::NEW_GAME:
+			data->rect = { 410,0,39,40 };
+			break;
 		}
 		break;
 
@@ -283,6 +287,10 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			break;
 
 		case UI_Element::Action::ACT_GOTO_CAST:
+			data->rect = { 527,0,39,40 };
+			break;
+			//-----Needs to be changed
+		case UI_Element::Action::NEW_GAME:
 			data->rect = { 527,0,39,40 };
 			break;
 		}
@@ -302,6 +310,10 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::ACT_GOTO_CAST:
 			data->rect = { 527,80,39,40 };
 			break;
+			//-----Needs to be changed
+		case UI_Element::Action::NEW_GAME:
+			data->rect = { 527,80,39,40 };
+			break;
 		}
 		break;
 
@@ -317,6 +329,10 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			break;
 
 		case UI_Element::Action::ACT_GOTO_CAST:
+			data->rect = { 410,80,39,40 };
+			break;
+			//-----Needs to be changed
+		case UI_Element::Action::NEW_GAME:
 			data->rect = { 410,80,39,40 };
 			break;
 		}

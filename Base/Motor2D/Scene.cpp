@@ -84,7 +84,7 @@ bool Scene::Start()
 	//P1.Gold_UI = App->gui->AddUIElement(UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
 	P1.Main_UI = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, true);
 	P1.Main_UI->rect = { 0,79,166,79 };
-	P1.Build_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_BUILD, { 13,2 }, { 39,40 }, P1.Main_UI, true);
+	P1.Build_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::CONTINUE, { 13,2 }, { 39,40 }, P1.Main_UI, true);
 	P1.Deploy_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 64,2 }, { 39,40 }, P1.Main_UI, true);
 	P1.Cast_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 115,2 }, { 39,40 }, P1.Main_UI, true);
 
@@ -535,7 +535,8 @@ void Scene::DoLogic(PlayerUI player, UI_Element* data)
 		break;
 
 	case::UI_Element::Action::WEBPAGE:
-		ShellExecuteA(NULL, "open", "https://github.com/Scarzard/StormHowlers");
+		ShellExecuteA(NULL, "open", "https://github.com/Scarzard/StormHowlers",
+		NULL, NULL, SW_SHOWNORMAL);
 		break;
 	}
 
