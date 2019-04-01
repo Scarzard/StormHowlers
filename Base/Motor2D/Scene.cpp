@@ -73,6 +73,10 @@ bool Scene::Start()
 	}
 	debug_tex = App->tex->Load("maps/pathfinding.png");
 
+	//animation testing
+	if (spritesheet123 == nullptr)
+		spritesheet123 = App->tex->Load("textures/prueba.png");
+
 	//--------- CREATE MAIN BUILDINGS -------------// (falta cambiar posicion)
 
 	//--- PLAYER 1
@@ -455,7 +459,7 @@ bool Scene::Save(pugi::xml_node& data) const
 
 bool Scene::Load_level(int map)
 {
-	App->entitymanager->DeleteEntities();
+	//App->entitymanager->DeleteEntities();
 	App->map->SwitchMaps(map_names[map]);
 	SpawnEntities();
 
@@ -464,7 +468,7 @@ bool Scene::Load_level(int map)
 
 void Scene::SpawnEntities() //
 {
-	App->entitymanager->DeleteEntities();
+	//App->entitymanager->DeleteEntities();
 	SpawnEnemies();
 
 	pugi::xml_document	config_file;

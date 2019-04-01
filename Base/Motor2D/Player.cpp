@@ -28,7 +28,7 @@ bool Player::Start()
 	isBuilding = false;
 	col = { 0,0,0,0 };
 	quadSize = { 0,0 };
-	tex = App->tex->Load("maps/pathfinding.png");
+	//tex = App->tex->Load("maps/pathfinding.png");
 
 	return true;
 }

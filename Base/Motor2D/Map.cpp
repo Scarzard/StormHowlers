@@ -27,6 +27,12 @@ bool Map::Awake(pugi::xml_node& config)
 
 	folder.assign(config.child("folder").child_value());
 
+	
+
+
+	idleRight123 = idleRight123->LoadAnimation("animation/player.tmx", "idle right");
+	idleRight123->speed = 50;
+
 	return ret;
 }
 
@@ -65,6 +71,11 @@ void Map::Draw(float dt)
 	{
 		DebugDraw(dt);
 	}
+
+	
+
+	//testing animation uncoment to blit example
+	//App->render->Blit(App->scene->spritesheet123, 600, 200, &idleRight123->GetCurrentFrame(dt));
 }
 
 void Map::DebugDraw(float dt)
