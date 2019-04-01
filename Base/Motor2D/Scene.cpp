@@ -203,6 +203,7 @@ bool Scene::Start()
 	//-----------
 	SpawnEntities();
 
+	// timer start
 	world_clock.Start();
 
 	return true;
@@ -267,7 +268,18 @@ bool Scene::Update(float dt)
 	//	App->fpsCapON = !App->fpsCapON;
 	//}
 
-
+	// testing timer
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		if (world_clock.runningRead() == true)
+		{
+			world_clock.Stop();
+		}
+		else
+		{
+			world_clock.Start();
+		}
+	}
 	//----
 	App->map->Draw(dt);
 	//App->entitymanager->Draw(dt);
