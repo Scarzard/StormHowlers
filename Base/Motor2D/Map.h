@@ -4,6 +4,9 @@
 #include "PugiXml/src/pugixml.hpp"
 #include "Module.h"
 #include "SDL\include\SDL_rect.h"
+//testing animation
+#include "Animation.h"
+
 
 struct SDL_Texture;
 
@@ -170,6 +173,10 @@ private:
 	bool LoadObjectLayers(pugi::xml_node& node, ObjectsGroup* group);
 
 	TileSet* GetTilesetFromTileId(int id) const;
+
+	//testing animation
+	Animation* idleRight123 = nullptr;
+	
 
 public:
 

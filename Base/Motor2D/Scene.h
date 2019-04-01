@@ -58,6 +58,9 @@ public:
 	string current_track;
 	string current_fx;
 
+	//testing animation
+	SDL_Texture* spritesheet123 = nullptr;
+
 private:
 	SDL_Texture* debug_tex;
 	SDL_Texture* cursor_tex;
