@@ -157,18 +157,23 @@ bool Player::CheckCursorClick(UI_Element* data)
 	return ret;
 }
 
-bool Player::CheckBuildingPos(Collider collider) //check collider with walkability map
+bool Player::CheckBuildingPos(Collider collider) // Check collider with walkability map
 {
 	bool ret = true;
 
-	//get tile on mouse
+	// Get tile on mouse/cursor
 	pair<int, int> pos, real_pos;
-	App->input->GetMousePosition(pos.first, pos.second);
-
-
+	if (gamepad.Connected == true)
+	{
+		pos = cursor.position;
+	}
+	else
+	{
+		App->input->GetMousePosition(pos.first, pos.second);
+	}
 	pos = App->map->WorldToMap(pos.first, pos.second);
 
-	// check what tiles is the collider occupying
+	// Check what tiles is the collider occupying
 	int cont;
 	for (int i = 0; i < collider.dimensions.first; ++i)
 	{
@@ -186,9 +191,12 @@ bool Player::CheckBuildingPos(Collider collider) //check collider with walkabili
 	// compare tiles with walkability map
 	for (int i = 0; i < collider.tiles.size(); ++i)
 	{
-		//recorrer Wmap;
-		//comprobar si tiles[i] == Wmap[j] && Wmap[j] == !walkable;
-		//if true -> ret = false; break;
+		pos = App->map->WorldToMap(collider.tiles[i].first, collider.tiles[i].second);
+		if (App->pathfinding->IsWalkable(pos) == false)
+		{
+			ret = false;
+			break;
+		}
 	}
 
 	// Draw Collider
@@ -205,12 +213,15 @@ bool Player::CheckBuildingPos(Collider collider) //check collider with walkabili
 	return ret;
 }
 
-void Player::UpdateWalkabilityMap(vector<pair<int, int>> tiles, bool isWalkable) //update non walkable tiles
+void Player::UpdateWalkabilityMap(vector<pair<int, int>> tiles, bool isWalkable) //update walkable tiles
 {
 	for (int i = 0; i < tiles.size(); ++i)
 	{
-		//if (isWalkable) -> map[tiles[i]] = 0;
-		//else -> map[tiles[i]] = 1;
+		pair <int,int> pos = App->map->WorldToMap(collider.tiles[i].first, collider.tiles[i].second);
+		if (App->pathfinding->GetTileAt(pos) != isWalkable)
+		{
+			//WalkMap[tiles[i]] = 1;
+		}
 	}
 }
 

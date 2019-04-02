@@ -147,7 +147,6 @@ public:
 
 	// Called each loop iteration
 	void Draw(float dt);
-	void DebugDraw(float dt);
 
 	// Called before quitting
 	bool CleanUp();
@@ -179,16 +178,10 @@ private:
 	
 
 public:
-
 	MapData				data;
 	bool				debug = false;
-	bool				rotate = false;
-	bool				rotate_back = false;
-	bool				rotated = false;
-	bool				rotate_end = true;
-	double				angle = 0.0;
-private:
 
+private:
 	pugi::xml_document	map_file;
 	string				folder;
 	bool				map_loaded;

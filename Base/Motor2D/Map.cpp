@@ -49,6 +49,9 @@ void Map::Draw(float dt)
 	for (lay = data.layers.begin(); lay != data.layers.end(); ++lay)
 	{
 		MapLayer* layer = *lay;
+		if (layer->properties.Get("Navigation") == 1 && debug == false) // debug draw
+			continue;
+
 		for (set = data.tilesets.begin(); set != data.tilesets.end(); ++set)
 		{
 			for (int y = 0; y < data.height; ++y)
@@ -67,59 +70,9 @@ void Map::Draw(float dt)
 			}
 		}
 	}
-	if (debug == true) //debug draw
-	{
-		DebugDraw(dt);
-	}
-
-	
 
 	//testing animation uncoment to blit example
 	//App->render->Blit(App->scene->spritesheet123, 600, 200, &idleRight123->GetCurrentFrame(dt));
-}
-
-void Map::DebugDraw(float dt)
-{
-	SDL_Rect collisions;
-	list<ObjectsGroup*>::iterator object = data.objLayers.begin();
-	list<ObjectsData*>::iterator objectdata;
-
-	while (object != data.objLayers.end())
-	{
-		if ((*object)->name == ("Collision"))
-		{
-			objectdata = (*object)->objects.begin();
-			while (objectdata != (*object)->objects.end())
-			{
-				collisions.x = (*objectdata)->x;
-				collisions.y = (*objectdata)->y;
-				collisions.w = (*objectdata)->width;
-				collisions.h = (*objectdata)->height;
-				if ((*objectdata)->name == "Floor") //green
-				{
-					App->render->DrawQuad(collisions, 0, 255, 0, 50);
-				}
-				else if ((*objectdata)->name == "Spikes") //red
-				{
-					App->render->DrawQuad(collisions, 255, 0, 0, 50);
-				}
-				else if ((*objectdata)->name == "Wall") //yellow
-				{
-					App->render->DrawQuad(collisions, 255, 255, 0, 50);
-				}
-				else if ((*objectdata)->name == "Grid" && (*objectdata)->type == "Static") //blue
-				{
-					App->render->DrawQuad(collisions, 0, 0, 255, 50);
-				}
-				else if ((*objectdata)->name == "Ceiling") //black
-				{
-					App->render->DrawQuad(collisions, 0, 0, 0, 50);
-				}
-				objectdata++;
-			}
-		}
-		object++;
-	}
 }
 
 int Properties::Get(const char* value, int default_value) const
