@@ -26,9 +26,7 @@ bool Player::Start()
 	gold = 0;
 	currentUI = CURR_MAIN;
 	isBuilding = false;
-	col = { 0,0,0,0 };
-	quadSize = { 0,0 };
-	//tex = App->tex->Load("maps/pathfinding.png");
+	tex = App->tex->Load("maps/meta.png");
 
 	return true;
 }
@@ -50,26 +48,29 @@ bool Player::Update(float dt)
 	if (gamepad.Controller[JOY_LEFT] == KEY_REPEAT || gamepad.Controller[LEFT] == KEY_REPEAT)
 		cursor.position.first -= 500 * dt;
 
-	//--- Press A
-	if (gamepad.Controller[BUTTON_A] == KEY_DOWN)
+	//--- Building ---------------------
+	if (isBuilding)
 	{
-		if (isBuilding) //Building
+		if (CheckBuildingPos(collider) == true) // Can build
 		{
-			col = { cursor.position.first, cursor.position.second, quadSize.first, quadSize.second };
-			if (CheckBuildingPos(col) == true) // Can build
+			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
-				//play fx (build)
-				App->entitymanager->AddEntity(isPlayer1, type, { col.x, col.y });
+				//play fx (build);
+				//App->entitymanager->AddEntity(isPlayer1, type, { collider.x, collider.y });
+				UpdateWalkabilityMap(collider.tiles, false);
 			}
-			else
+		}
+		else
+		{
+			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
-				//play fx (error)
+				//play fx (error);
 			}
 		}
 	}
 
-	//--- Press B
-	if (gamepad.Controller[BUTTON_B] == KEY_DOWN)
+	//--- Press B --------------------
+	if (gamepad.Controller[BUTTON_B] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
 		if (currentUI == CURR_BUILD)
 		{
@@ -92,24 +93,6 @@ bool Player::PostUpdate()
 {
 	BROFILER_CATEGORY("Player PostUpdate", Profiler::Color::Black);
 
-	if (isBuilding)
-	{
-		if (gamepad.Connected == false)
-		{
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			col = { x, y, quadSize.first, quadSize.second };
-		}
-		else
-		{
-			col = { cursor.position.first, cursor.position.second, quadSize.first, quadSize.second };
-		}
-
-		if (CheckBuildingPos(col) == true)
-			App->render->DrawQuad(col, 0, 255, 0, 50); //green	
-		else
-			App->render->DrawQuad(col, 255, 0, 0, 50); //red	
-	}
 
 	return true;
 }
@@ -174,34 +157,61 @@ bool Player::CheckCursorClick(UI_Element* data)
 	return ret;
 }
 
-bool Player::CheckBuildingPos(SDL_Rect collider) //check collider with walkability map
+bool Player::CheckBuildingPos(Collider collider) //check collider with walkability map
 {
-	//check with preset objects in map
-	SDL_Rect collisions;
-	for (list<ObjectsGroup*>::iterator object = App->map->data.objLayers.begin(); object != App->map->data.objLayers.end(); object++)
+	bool ret = true;
+
+	//get tile on mouse
+	pair<int, int> pos, real_pos;
+	App->input->GetMousePosition(pos.first, pos.second);
+
+
+	pos = App->map->WorldToMap(pos.first, pos.second);
+
+	// check what tiles is the collider occupying
+	int cont;
+	for (int i = 0; i < collider.dimensions.first; ++i)
 	{
-		if ((*object)->name == ("Collision"))
+		for (int j = 0; j < collider.dimensions.second; ++j)
 		{
-			for (list<ObjectsData*>::iterator objectdata = (*object)->objects.begin(); objectdata != (*object)->objects.end(); objectdata++)
-			{
-				collisions.x = (*objectdata)->x;
-				collisions.y = (*objectdata)->y;
-				collisions.w = (*objectdata)->width;
-				collisions.h = (*objectdata)->height;
-
-				if (SDL_HasIntersection(&collisions, &collider) == true)
-					return false;
-			}
+			real_pos = App->map->MapToWorld(pos.first, pos.second);
+			collider.tiles.push_back(real_pos); //add tile to collider.tiles
+			pos.second++;
+			cont = j;
 		}
-	}
-	//check with list of entities
-	for (list<Entity*>::iterator item = App->entitymanager->Entities.begin(); item != App->entitymanager->Entities.end(); item++)
-	{
-		if (SDL_HasIntersection(&(*item)->Collider, &collider) == true)
-			return false;
+		pos.first++;
+		pos.second -= cont + 1;
 	}
 
-	return true;
+	// compare tiles with walkability map
+	for (int i = 0; i < collider.tiles.size(); ++i)
+	{
+		//recorrer Wmap;
+		//comprobar si tiles[i] == Wmap[j] && Wmap[j] == !walkable;
+		//if true -> ret = false; break;
+	}
+
+	// Draw Collider
+	SDL_Rect rect;
+	for (int i = 0; i < collider.tiles.size(); ++i)
+	{
+		if (ret == true)
+			rect = { 0,0,60,29 }; //green
+		else
+			rect = { 60,0,60,29 }; //red
+
+		App->render->Blit(tex, collider.tiles[i].first, collider.tiles[i].second, &rect);
+	}
+	return ret;
+}
+
+void Player::UpdateWalkabilityMap(vector<pair<int, int>> tiles, bool isWalkable) //update non walkable tiles
+{
+	for (int i = 0; i < tiles.size(); ++i)
+	{
+		//if (isWalkable) -> map[tiles[i]] = 0;
+		//else -> map[tiles[i]] = 1;
+	}
 }
 
 void Player::UpdateVisibility() // Update GUI Visibility
@@ -278,7 +288,7 @@ void Player::DoLogic(UI_Element* data)
 	case::UI_Element::Action::ACT_BUILD_AOE:
 		isBuilding = true;
 		type = Entity::entityType::DEFENSE_AOE;
-		quadSize = { 50, 50 };
+		collider.dimensions = { 3,4 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_TARGET:

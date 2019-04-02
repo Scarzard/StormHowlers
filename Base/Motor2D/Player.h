@@ -34,6 +34,12 @@ struct GeneralUI
 	uint level, health, unique;
 };
 
+struct Collider
+{
+	pair<int, int> dimensions;
+	vector<pair<int,int>> tiles;
+};
+
 
 class Player : public Module
 {
@@ -62,16 +68,18 @@ public:
 	bool CheckCursorPos(UI_Element* data);
 	bool CheckCursorClick(UI_Element* data);
 
-	bool CheckBuildingPos(SDL_Rect collider);
+	bool CheckBuildingPos(Collider collider);
+	void UpdateWalkabilityMap(vector<pair<int, int>> tiles, bool isWalkable);
 
 public:
 	bool isBuilding;
 	bool isDeploying;
 	bool isCasting;
 
-	SDL_Rect col;
-	pair<int, int> quadSize;
+	Collider collider;
 	Entity::entityType type;
+
+	SDL_Texture* tex;
 
 	bool isPlayer1;
 	string team;
