@@ -2,6 +2,7 @@
 #define __Input_H__
 
 #include "Module.h"
+#include "SDL\include\SDL_gamecontroller.h"
 
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
@@ -42,6 +43,22 @@ enum CONTROLLER_BUTTONS {
 	JOY_LEFT,
 	JOY_RIGHT
 };
+
+struct GamePad
+{
+	SDL_GameController* GameController = nullptr;
+	SDL_Joystick* joy = nullptr;
+
+	bool Connected = false;
+	bool State[MAX_BUTTONS];
+
+	j1KeyState Controller[MAX_BUTTONS]; //This is the one you check. EXAMPLE: App->input->name.Controller[JOY_RIGHT] == KEY_REPEAT 
+
+	int LeftAxisX = 0;
+	int LeftAxisY = 0;
+
+};
+
 
 class Input : public Module
 {
@@ -94,6 +111,12 @@ private:
 	int			mouse_motion_y;
 	int			mouse_x;
 	int			mouse_y;
+
+public:
+
+	GamePad P1; //Player 1 Controller
+	GamePad P2; //Player 2 Controller
+
 };
 
 #endif // __Input_H__

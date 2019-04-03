@@ -4,9 +4,6 @@
 #include "PugiXml/src/pugixml.hpp"
 #include "Module.h"
 #include "SDL\include\SDL_rect.h"
-//testing animation
-#include "Animation.h"
-
 
 struct SDL_Texture;
 
@@ -173,16 +170,17 @@ private:
 
 	TileSet* GetTilesetFromTileId(int id) const;
 
-	//testing animation
-	Animation* idleRight123 = nullptr;
-	
-
 public:
+
 	MapData				data;
 	bool				debug = false;
-	SDL_Texture*		debug_tex;
-
+	bool				rotate = false;
+	bool				rotate_back = false;
+	bool				rotated = false;
+	bool				rotate_end = true;
+	double				angle = 0.0;
 private:
+
 	pugi::xml_document	map_file;
 	string				folder;
 	bool				map_loaded;

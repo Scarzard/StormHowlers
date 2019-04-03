@@ -34,6 +34,7 @@ bool EntityManager::Start()
 {
 	bool ret = true;
 	texture = App->tex->Load(PATH(folder.data(), texture_path.data()));
+	debug_tex = App->tex->Load("maps/pathfinding.png");
 
 	return ret;
 }
@@ -49,7 +50,7 @@ bool EntityManager::Update(float dt)
 		DebugDraw();
 	}
 
-	if (App->scene->pause == false)
+	if (App->scene->change == false && App->scene->pause == false)
 	{
 		list<Entity*>::const_iterator tmp = Entities.begin();
 		while (tmp != Entities.end())
@@ -85,8 +86,75 @@ bool EntityManager::CleanUp()
 {
 	DeleteEntities();
 	App->tex->UnLoad(texture);
+	App->tex->UnLoad(debug_tex);
 
 	return true;
+}
+
+bool EntityManager::Save(pugi::xml_node& file) const
+{
+	bool ret = true;
+	list<Entity*>::const_iterator tmp = Entities.begin();
+	while (tmp != Entities.end())
+	{
+		(*tmp)->Save(file);
+		tmp++;
+	}
+	return ret;
+}
+
+bool EntityManager::Load(pugi::xml_node& file)
+{
+	bool ret = true;
+
+	DeleteEntities();
+	App->scene->SpawnEntities();
+
+	list<Entity*>::iterator tmp = Entities.begin();
+	pugi::xml_node box = file.child("box");
+
+	while (tmp != Entities.end())
+	{
+		if ((*tmp)->type == Entity::entityType::PLAYER)
+		{
+			(*tmp)->Load(file.child("player"));
+		}
+		tmp++;
+	}
+	return ret;
+}
+
+bool EntityManager::Restart()
+{
+	bool ret = true;
+
+	DeleteEnemies();
+	App->scene->SpawnEnemies();
+	list<Entity*>::reverse_iterator tmp = Entities.rbegin();
+	while (tmp != Entities.rend())
+	{
+		if ((*tmp)->type == Entity::entityType::PLAYER)
+		{
+			(*tmp)->Restart();
+			break;
+		}
+		tmp++;
+	}
+	return ret;
+}
+
+void EntityManager::DeleteEnemies()
+{
+	list<Entity*>::reverse_iterator tmp = Entities.rbegin();
+	while (tmp != Entities.rend())
+	{
+		if ((*tmp)->type != Entity::entityType::PLAYER)
+		{
+			Entities.remove(*tmp);
+			RELEASE(*tmp);
+		}
+		tmp++;
+	}
 }
 
 void EntityManager::DeleteEntities()
@@ -107,14 +175,7 @@ bool EntityManager::Draw(float dt) //modificar segun posicion en el mapa
 
 	while (tmp != Entities.end())
 	{
-		if ((*tmp)->flip)
-		{
-			App->render->Blit(texture, (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_HORIZONTAL);
-		}
-		else
-		{
-			App->render->Blit(texture, (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
-		}
+		(*tmp)->Draw(dt);
 		tmp++;
 	}
 	return ret;
@@ -134,45 +195,18 @@ bool EntityManager::DebugDraw()
 
 		tmp++;
 	}
+
 	return true;
 }
 
-Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<int, int> position)
+Entity* EntityManager::AddEntity(Entity::entityType type, pair<int,int> position, pair<int,int> Size, string Type, string side)
 {
 	Entity* tmp = nullptr;
 
 	switch (type)
 	{
-	case Entity::entityType::TOWNHALL:
-		//tmp = new TownHall(isPlayer1, position);
-		break;
-
-	case Entity::entityType::MAIN_DEFENSE:
-		//tmp = new Main_Defense(isPlayer1, position);
-		break;
-
-	case Entity::entityType::COMMAND_CENTER:
-		//tmp = new Command_Center(isPlayer1, position);
-		break;
-
-	case Entity::entityType::WALLS:
-		//tmp = new Wall(isPlayer1, position);
-		break;
-
-	case Entity::entityType::DEFENSE_AOE:
-		//tmp = new Defense_AOE(isPlayer1, position);
-		break;
-
-	case Entity::entityType::DEFENSE_TARGET:
-		//tmp = new Defense_Target(isPlayer1, position);
-		break;
-
-	case Entity::entityType::MINES:
-		//tmp = new Mines(isPlayer1, position);
-		break;
-
-	case Entity::entityType::BARRACKS:
-		//tmp = new Barracks(isPlayer1, position);
+	case Entity::entityType::PLAYER:
+		tmp = new Player();
 		break;
 	}
 
@@ -185,12 +219,6 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 bool EntityManager::DeleteEntity(Entity * entity)
 {
 	entity->CleanUp();
-
-	list<Entity*> ::iterator item = Entities.begin(); //main entities list
-	while (item != Entities.end())
-	{
-		if ((*item) == entity)
-			Entities.erase(item);
-	}
+	//Entities.del(Entities.At(Entities.find(entity)));
 	return true;
 }

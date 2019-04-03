@@ -22,51 +22,6 @@ private:
 
 public:
 
-	Animation * LoadAnimation(const char* animationPath, const char* animationName)
-	{
-
-		Animation* animation = new Animation();
-
-		bool anim = false;
-
-		pugi::xml_document animationDocument;
-		pugi::xml_parse_result result = animationDocument.load_file(animationPath);
-
-
-		if (result == NULL)
-		{
-			LOG("Issue loading animation");
-		}
-
-		pugi::xml_node objgroup;
-		for (objgroup = animationDocument.child("map").child("objectgroup"); objgroup; objgroup = objgroup.next_sibling("objectgroup"))
-		{
-			string name = objgroup.attribute("name").as_string();
-			if (name == animationName)
-			{
-				anim = true;
-				int x, y, h, w;
-
-				for (pugi::xml_node sprite = objgroup.child("object"); sprite; sprite = sprite.next_sibling("object"))
-				{
-					x = sprite.attribute("x").as_int();
-					y = sprite.attribute("y").as_int();
-					w = sprite.attribute("width").as_int();
-					h = sprite.attribute("height").as_int();
-
-					animation->PushBack({ x, y, w, h });
-				}
-
-			}
-		}
-		if (anim = true)
-			return animation;
-		else
-			return nullptr;
-
-	}
-
-
 	void PushBack(const SDL_Rect& rect)
 	{
 		if (last_frame < MAX_FRAMES)
@@ -77,7 +32,7 @@ public:
 	SDL_Rect& GetCurrentFrame(float dt)
 	{
 		float tmp = speed;
-		
+
 		if (App->scene->pause == false)
 		{
 			current_frame += tmp*dt;

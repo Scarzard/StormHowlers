@@ -86,15 +86,6 @@ void Pathfinding::ResetPath(vector<pair<int,int>>& path_to_reset)
 	last_path.clear();
 }
 
-void Pathfinding::ChangeWalkability(const pair<int, int>& pos, bool isWalkable) const
-{
-	if (isWalkable == true)
-		map[(pos.second*width) + pos.first] = 1;
-	else
-		map[(pos.second*width) + pos.first] = 0;
-}
-
-
 // PathList ------------------------------------------------------------------------
 // Looks for a node in this list and returns it's list node or NULL
 // ---------------------------------------------------------------------------------

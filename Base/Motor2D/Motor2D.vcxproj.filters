@@ -13,6 +13,9 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Desenvolupament  ========\Entities</Filter>
+    </ClCompile>
     <ClCompile Include="Fonts.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
@@ -32,6 +35,9 @@
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Transitions.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">
@@ -64,10 +70,7 @@
     <ClCompile Include="OtherUI.cpp">
       <Filter>Desenvolupament  ========\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Textures.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="CursorModule.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
   </ItemGroup>
@@ -88,6 +91,9 @@
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
+      <Filter>Desenvolupament  ========\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Fonts.h">
@@ -150,7 +156,7 @@
     <ClInclude Include="OtherUI.h">
       <Filter>Desenvolupament  ========\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="CursorModule.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
@@ -170,20 +176,14 @@
     <Filter Include="Desenvolupament  ========\Tools\PuguiXML">
       <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Desenvolupament  ========\Entities">
+      <UniqueIdentifier>{8985fa2d-dc54-4a8e-9052-8e4d52a7e5e9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Desenvolupament  ========\UI">
       <UniqueIdentifier>{083de17b-ef77-4977-990b-42b1a669d73f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Containers">
       <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Entities">
-      <UniqueIdentifier>{8985fa2d-dc54-4a8e-9052-8e4d52a7e5e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Entities\Buildings">
-      <UniqueIdentifier>{77a8885a-ba6b-4de9-8594-dd1664db242a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Entities\Troops">
-      <UniqueIdentifier>{09b60214-5efb-46e2-bb27-876d56110c60}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -17,11 +17,14 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
-
+	bool Save(pugi::xml_node&) const;
+	bool Load(pugi::xml_node&);
+	bool Restart();
+	void DeleteEnemies();
 	bool Draw(float dt);
 	bool DebugDraw();
 
-	Entity* AddEntity(bool player1, Entity::entityType type, pair<int,int> position);
+	Entity* AddEntity(Entity::entityType type, pair<int,int> position, pair<int,int> Size, string Type = "0", string Side = "0");
 	bool DeleteEntity(Entity* entity);
 	void DeleteEntities();
 
@@ -30,6 +33,8 @@ public:
 	string			texture_path;
 	SDL_Texture*	texture;
 	list<Entity*>	Entities;
+
+	SDL_Texture*	debug_tex;
 
 	bool draw_path = false;
 	bool godmode = false;

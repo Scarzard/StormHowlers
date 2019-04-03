@@ -46,8 +46,6 @@ public:
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const pair<int,int>& pos) const;
 
-	void ChangeWalkability(const pair<int, int>& pos, bool isWalkable) const;
-
 private:
 
 	// size of the map
