@@ -47,42 +47,74 @@
     <folder>maps/</folder>
   </map>
 
-  <entitycontroller>
+  <entitymanager>
     <folder>textures/</folder>
     <sprite_sheet source="Entities.png"/>
-    <player>
-      <size width="32" height="32"/>
-      <position x="64" y="500"/>
-      <gravity value="250"/>
-      <speed x="150" y="500"/>
-      <grounded value ="false"/>
-      <sliding value="false"/>
-      <jumping value="true"/>
-      <grid value="false"/>
-      <gravity_active value="true"/>
-    </player>
-    <grid>
-      <speed x="30" y="30"/>
-    </grid>
-    <flying_enemy>
-      <size width="32" height="32"/>
-      <speed x="80" y="80"/>
-      <sightCollider width ="192" height="192"/>
-      <dead value="false"/>
-    </flying_enemy>
-    <land_enemy>
-      <size width="32" height="32"/>
-      <speed x="60" y="60"/>
-      <sightCollider width ="192" height="96"/>
-      <gravity value="250"/>
-      <dead value="false"/>
-      <lives value="2"/>
-    </land_enemy>
-    <box>
-      <speed x="50" y="50"/>
-    </box>
-  </entitycontroller>
-  <buildings>
+  
+    <buildings>
+      <townhall>
+        <name string="townhall"/>
+        <health lvl1="5000" lvl2="6000" lvl3="7500"/>
+        <size width="10" height="10"/>
+        <production lvl1="1000" lvl2="1500" lvl3="2000"/>
+      </townhall>
+    
+      <main_defense>
+        <name string="main_defense"/>
+        <health lvl1="500" lvl2="600" lvl3="750"/>
+        <size width="10" height="10"/>
+        <damage lvl1="300" lvl2="400" lvl3="500"/>
+        <range value="50"/>
+      </main_defense>
+
+      <command_center>
+        <name string="command_center"/>
+        <health lvl1="1000" lvl2="1500" lvl3="2000"/>
+        <size width="211" height="213"/>
+        <damage_missiles lvl1="1000" lvl2="1200" lvl3="1500"/>
+        <damage_cast2 lvl1="1000" lvl2="1200" lvl3="1500"/>
+        <damage_cast3 lvl1="1000" lvl2="1200" lvl3="1500"/>
+      </command_center>
+
+      <walls>
+        <name string="walls"/>
+        <health value="100"/>
+        <size width="10" height="10"/>
+      </walls>
+
+      <barracks>
+        <name string="barracks"/>
+        <health lvl1="500" lvl2="600" lvl3="750"/>
+        <size width="10" height="10"/>
+        <capacity lvl1="100" lvl2="150" lvl3="200"/>
+      </barracks>
+   
+      <mine>
+        <name string="mine"/>
+        <health lvl1="500" lvl2="600" lvl3="750"/>
+        <size width="187" height="142"/>
+        <production lvl1="1000" lvl2="1500" lvl3="2000"/>
+      </mine>
+ 
+      <defense_aoe>
+        <name string="defense_aoe"/>
+        <health lvl1="100" lvl2="120" lvl3="150"/>
+        <size width="106" height="92"/>
+        <damage lvl1="100" lvl2="150" lvl3="200"/>
+        <range value="50"/>
+      </defense_aoe>
+   
+      <defense_target>
+        <name string="defense_target"/>
+        <health lvl1="100" lvl2="120" lvl3="150"/>
+        <size width="82" height="84"/>
+        <damage lvl1="100" lvl2="150" lvl3="200"/>
+        <range value="75"/>
+      </defense_target>
+    </buildings>
+  </entitymanager>
+  
+  <buildings_animations>
     <command_center x="132" y="135"  width="211" height="213"/>
     <command_center x="478" y="135"  width="211" height="213"/>
     <command_center x="132" y="435"  width="211" height="213"/>
@@ -162,7 +194,6 @@
     <aoe_tower x="1137" y="394" width="106" height="92"/>
     <aoe_tower x="1279" y="394" width="106" height="92"/>
 
-
     <barracks x="1978" y="1252" width="154" height="134"/>
     <barracks x="2192" y="1252" width="154" height="134"/>
     <barracks x="2406" y="1252" width="154" height="134"/>
@@ -189,7 +220,6 @@
     <barracks x="2620" y="2122" width="154" height="134"/>
     <barracks x="1978" y="2296" width="154" height="134"/>
 
-
     <tower x="859"  y="487" width="82" height="84"/>
     <tower x="1020" y="487" width="82" height="84"/>
     <tower x="1180" y="487" width="82" height="84"/>
@@ -215,34 +245,10 @@
     <tower x="1500" y="865" width="82" height="84"/>
     <tower x="1660" y="865" width="82" height="84"/>
     <tower x="859"  y="991" width="82" height="84"/>
-
-
-    <townhall x="1949" y="2638" width="188" height="166"/>
-    <townhall x="2187" y="2638" width="188" height="166"/>
-    <townhall x="2425" y="2638" width="188" height="166"/>
-    <townhall x="2663" y="2638" width="188" height="166"/>
-    <townhall x="1949" y="2816" width="188" height="166"/>
-    <townhall x="2187" y="2816" width="188" height="166"/>
-    <townhall x="2425" y="2816" width="188" height="166"/>
-    <townhall x="2663" y="2816" width="188" height="166"/>
-    <townhall x="1949" y="2994" width="188" height="166"/>
-    <townhall x="2187" y="2994" width="188" height="166"/>
-    <townhall x="2425" y="2994" width="188" height="166"/>
-    <townhall x="2663" y="2994" width="188" height="166"/>
-    <townhall x="1949" y="3172" width="188" height="166"/>
-    <townhall x="2187" y="3172" width="188" height="166"/>
-    <townhall x="2425" y="3172" width="188" height="166"/>
-    <townhall x="2663" y="3172" width="188" height="166"/>
-    <townhall x="1949" y="3350" width="188" height="166"/>
-    <townhall x="2187" y="3350" width="188" height="166"/>
-    <townhall x="2425" y="3350" width="188" height="166"/>
-    <townhall x="2663" y="3350" width="188" height="166"/>
-    <townhall x="1949" y="3528" width="188" height="166"/>
-    
-  </buildings>
+  </buildings_animations>
 
   <scene>
-    <map_name name="level1.tmx"></map_name>
+    <map_name name="map.tmx"></map_name>
     <map_name name="level2.tmx"></map_name>
     <fade_time value="1"/>
   </scene>
