@@ -6,8 +6,8 @@
 #include "Window.h"
 #include "Fonts.h"
 #include "Input.h"
-#include "CursorModule.h"
 #include "Gui.h"
+#include "Player.h"
 #include "UI_Element.h"
 #include "SimpleUI.h"
 #include "OtherUI.h"
@@ -29,7 +29,7 @@ bool Gui::Awake(pugi::xml_node& conf)
 	bool ret = true;
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
-
+	
 	return ret;
 }
 
@@ -37,7 +37,6 @@ bool Gui::Awake(pugi::xml_node& conf)
 bool Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.data());
-
 	return true;
 }
 
@@ -58,18 +57,8 @@ bool Gui::PostUpdate()
 bool Gui::CleanUp()
 {
 	LOG("Freeing GUI");
-	
+
 	App->tex->UnLoad(atlas);
-
-	list<UI_Element*>::iterator item = UI_elements.begin();
-	while (item != UI_elements.end())
-	{
-		(*item)->children.clear();
-		RELEASE(*item);
-		item++;
-	}
-	UI_elements.clear();
-
 	return true;
 }
 
@@ -81,7 +70,7 @@ SDL_Texture* Gui::GetAtlas() const
 
 // class Gui ---------------------------------------------------
 
-UI_Element* Gui::AddUIElement(UI_Element::UI_type type, UI_Element::Action action, pair<int,int> pos, pair<int,int> size, UI_Element* parent, bool visible, Dragable dragable, const char* label)
+UI_Element* Gui::AddUIElement(bool player1, UI_Element::UI_type type, UI_Element::Action action, pair<int, int> pos, pair<int, int> size, UI_Element* parent, bool visible, Dragable dragable, const char* label)
 {
 	UI_Element* UI_elem = nullptr;
 
@@ -108,18 +97,48 @@ UI_Element* Gui::AddUIElement(UI_Element::UI_type type, UI_Element::Action actio
 		break;
 	}
 
-	if (UI_elem)
-		UI_elements.push_back(UI_elem);
+	if (UI_elem && player1 == true)
+		App->player1->UI_elements.push_back(UI_elem);
 
-		return UI_elem;
+	else if (UI_elem && player1 == false)
+		App->player2->UI_elements.push_back(UI_elem);
+
+	return UI_elem;
 }
 
 bool Gui::Draw()
 {
 	bool ret = true;
-	list<UI_Element*>::iterator UI_elem = UI_elements.begin();
 
-	while (UI_elem != UI_elements.end())
+	//Player 1
+	list<UI_Element*>::iterator UI_elem = App->player1->UI_elements.begin();
+	while (UI_elem != App->player1->UI_elements.end())
+	{
+		if ((*UI_elem)->visible == true)
+		{
+			if ((*UI_elem)->type == UI_Element::UI_type::LABEL) //text
+			{
+				App->tex->UnLoad((*UI_elem)->texture);
+				(*UI_elem)->texture = App->font->Print((*UI_elem)->label, (*UI_elem)->color);
+				App->font->CalcSize((*UI_elem)->label, (*UI_elem)->size.first, (*UI_elem)->size.second);
+
+				App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
+			}
+			else //rest of ui
+			{
+				App->render->Blit(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, &(*UI_elem)->rect, SDL_FLIP_NONE, 0);
+			}
+		}
+		if (UI_Debug == true)
+		{
+			App->render->DrawQuad((*UI_elem)->collider, 255, 0, 0, 255, false, false);
+		}
+		UI_elem++;
+	}
+
+	//Player 2
+	UI_elem = App->player2->UI_elements.begin();
+	while (UI_elem != App->player2->UI_elements.end())
 	{
 		if ((*UI_elem)->visible == true)
 		{
@@ -141,8 +160,9 @@ bool Gui::Draw()
 			App->render->DrawQuad((*UI_elem)->collider, 255, 0, 0, 255, false, false);
 		}
 
-			UI_elem++;
+		UI_elem++;
 	}
+
 
 	return ret;
 }
@@ -162,22 +182,6 @@ bool Gui::CheckMousePos(UI_Element* data)
 
 	return ret;
 }
-
-bool Gui::CheckCursorPos(UI_Element* data)
-{
-	bool ret = false;
-
-	int x, y;
-	App->cursor->GetCursor1_Position(x, y);
-	SDL_Rect MouseCollider = { x,y,1,1 };
-	if (SDL_HasIntersection(&MouseCollider, &data->collider))
-	{
-		ret = true;
-	}
-
-	return ret;
-}
-
 
 bool Gui::CheckClick(UI_Element* data)
 {
@@ -204,35 +208,11 @@ bool Gui::CheckClick(UI_Element* data)
 	return ret;
 }
 
-bool Gui::CheckCursorClick(UI_Element* data)
-{
-	bool ret = false;
-
-	if (App->input->P1.Controller[BUTTON_A] == KEY_DOWN)
-	{
-		App->cursor->GetCursor1_Position(data->click_pos.first, data->click_pos.second);
-		data->start_drag_pos = data->globalpos;
-
-		ret = true;
-	}
-	if (App->input->P1.Controller[BUTTON_A] == KEY_REPEAT)
-	{
-		ret = true;
-	}
-
-	if (App->input->P1.Controller[BUTTON_A] == KEY_UP)
-	{
-		data->dragging = false;
-		return false;
-	}
-
-	return ret;
-}
-
 void Gui::UpdateChildren()
 {
-	list<UI_Element*>::iterator item = UI_elements.begin();
-	while (item != UI_elements.end())
+	//Player 1
+	list<UI_Element*>::iterator item = App->player1->UI_elements.begin();
+	while (item != App->player1->UI_elements.end())
 	{
 		if ((*item)->parent != nullptr)
 		{
@@ -243,11 +223,27 @@ void Gui::UpdateChildren()
 			(*item)->globalpos.first = (*item)->parent->globalpos.first + (*item)->position.first; //update position x
 			(*item)->globalpos.second = (*item)->parent->globalpos.second + (*item)->position.second; //update position y
 		}
-
 		(*item)->collider = { (*item)->globalpos.first, (*item)->globalpos.second, (*item)->size.first, (*item)->size.second }; //update collider
-
 		item++;
 	}
+
+	//Player 2
+	item = App->player2->UI_elements.begin();
+	while (item != App->player2->UI_elements.end())
+	{
+		if ((*item)->parent != nullptr)
+		{
+			if ((*item)->parent->visible != (*item)->visible)
+			{
+				(*item)->visible = (*item)->parent->visible; //update visibility
+			}
+			(*item)->globalpos.first = (*item)->parent->globalpos.first + (*item)->position.first; //update position x
+			(*item)->globalpos.second = (*item)->parent->globalpos.second + (*item)->position.second; //update position y
+		}
+		(*item)->collider = { (*item)->globalpos.first, (*item)->globalpos.second, (*item)->size.first, (*item)->size.second }; //update collider
+		item++;
+	}
+
 }
 
 void Gui::UpdateState(UI_Element* data) //change sprites depending on current state
@@ -268,6 +264,10 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::ACT_GOTO_CAST:
 			data->rect = { 410,0,39,40 };
 			break;
+
+		case UI_Element::Action::ACT_BUILD_AOE:
+			data->rect = { 332,0,39,40 };
+			break;
 		}
 		break;
 
@@ -285,6 +285,10 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::ACT_GOTO_CAST:
 			data->rect = { 527,0,39,40 };
 			break;
+
+		case UI_Element::Action::ACT_BUILD_AOE:
+			data->rect = { 449,0,39,40 };
+			break;
 		}
 		break;
 
@@ -301,6 +305,10 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 
 		case UI_Element::Action::ACT_GOTO_CAST:
 			data->rect = { 527,80,39,40 };
+			break;
+
+		case UI_Element::Action::ACT_BUILD_AOE:
+			data->rect = { 449,80,39,40 };
 			break;
 		}
 		break;

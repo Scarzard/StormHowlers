@@ -20,7 +20,7 @@ class Transitions;
 class EntityManager;
 class Fonts;
 class Gui;
-class CursorModule;
+class Player;
 
 class MainApp
 {
@@ -97,7 +97,8 @@ public:
 	EntityManager*	entitymanager = NULL;
 	Fonts*			font = NULL;
 	Gui*			gui = NULL;
-	CursorModule*	cursor = NULL;
+	Player*			player1 = NULL;
+	Player*			player2 = NULL;
 
 	bool			fpsCapON = true;
 	bool			vsyncON = false;
@@ -109,8 +110,8 @@ private:
 	int					argc;
 	char**				args;
 
-	string			title;
-	string			organization;
+	string				title;
+	string				organization;
 
 	mutable bool		want_to_save = false;
 	bool				want_to_load = false;

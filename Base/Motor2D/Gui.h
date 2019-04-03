@@ -37,28 +37,21 @@ public:
 	bool Draw();
 
 	bool CheckMousePos(UI_Element* data); //(check joystick)
-	bool CheckCursorPos(UI_Element* data);
-
 	bool CheckClick(UI_Element* data); //(check X)
-	bool CheckCursorClick(UI_Element* data);
 
 	void UpdateChildren();
 	void UpdateState(UI_Element* data);
 
 	// Gui creation functions
-	UI_Element* AddUIElement(UI_Element::UI_type Type, UI_Element::Action Action, pair<int,int> pos, pair<int,int> size, UI_Element* parent = nullptr, bool visible = false, Dragable dragable = { false, false }, const char* label = nullptr);
+	UI_Element* AddUIElement(bool player1, UI_Element::UI_type Type, UI_Element::Action Action, pair<int,int> pos, pair<int,int> size, UI_Element* parent = nullptr, bool visible = false, Dragable dragable = { false, false }, const char* label = nullptr);
 
 	SDL_Texture* GetAtlas() const;
 
 private:
-
 	string atlas_file_name;
 	SDL_Texture* atlas;
-	PlayerUI player;
 
 public:
-
-	list<UI_Element*> UI_elements;
 	bool UI_Debug = false;
 
 };

@@ -18,7 +18,7 @@
 #include "EntityManager.h"
 #include "Fonts.h"
 #include "Gui.h"
-#include "CursorModule.h"
+#include "Player.h"
 #include "App.h"
 #include "Brofiler\Brofiler.h"
 
@@ -42,7 +42,8 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	entitymanager = new EntityManager();
 	font = new Fonts();
 	gui = new Gui();
-	cursor = new CursorModule();
+	player1 = new Player();
+	player2 = new Player();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -56,9 +57,10 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(scenechange);
 	AddModule(entitymanager);
-	AddModule(cursor);
 	AddModule(font);
 	AddModule(gui);
+	AddModule(player1);
+	AddModule(player2);
 
 	// render last to swap buffer
 	AddModule(render);
@@ -242,11 +244,19 @@ void MainApp::FinishUpdate()
 	}
 
 	framerate = 1000.0f / ptimer.ReadMs();
-	dt = 1.0f / framerate;
+	if (App->scene->pause == true)
+		dt = 0.0f;
+	else
+		dt = 1.0f / framerate;
+
+
+	pair<int, int> pos;
+	App->input->GetMousePosition(pos.first, pos.second);
+	pos = App->map->WorldToMap(pos.first, pos.second);
 
 	static char title[128];
-	sprintf_s(title, 128, "FPS: %i | Av.FPS: %.2f | MsLastFrame: %02u ms | Last dt: %.5f | FPS_Cap: %i | Vsync: %i",
-		prev_last_sec_frame_count, avg_fps, last_frame_ms, dt,  fpsCapON, vsyncON);
+	sprintf_s(title, 128, "FPS: %i | Av.FPS: %.2f | MsLastFrame: %02u ms | Last dt: %.5f | FPS_Cap: %i | Vsync: %i | Tile: %i, %i",
+		prev_last_sec_frame_count, avg_fps, last_frame_ms, dt,  fpsCapON, vsyncON, pos.first, pos.second);
 	App->win->SetTitle(title);
 }
 
