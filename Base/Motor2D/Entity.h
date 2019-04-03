@@ -6,14 +6,19 @@
 #include "Map.h"
 #include "App.h"
 
-
 class Entity
 {
 public:
 	enum entityType
 	{
-		NO_TYPE,
-		PLAYER,
+		TOWNHALL = 1,
+		MAIN_DEFENSE,
+		COMMAND_CENTER,
+		WALLS,
+		DEFENSE_AOE,
+		DEFENSE_TARGET,
+		MINES,
+		BARRACKS
 	};
 
 public:
@@ -33,13 +38,17 @@ public:
 	virtual void LoadAnimations() {};
 	virtual void ChangeAnimation() {};
 
+	pair<int, int> GetSize(Entity* entity) { return entity->size; };
+	pair<int, int> GetPos(Entity* entity) { return entity->position; };
+
 	void Collider_Overlay();
 	void PositionCollider();
-	void Draw(float dt);
 
 public:
 	Animation* Current_Animation = nullptr;
 	entityType type;
+
+	bool fromPlayer1;
 	
 	pair<int, int> position;
 	pair<int,int> size;
