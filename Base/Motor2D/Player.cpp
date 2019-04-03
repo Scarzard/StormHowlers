@@ -50,6 +50,7 @@ bool Player::Update(float dt)
 	//--- Building ---------------------
 	if (isBuilding)
 	{
+		App->map->debug = true;
 		if (CheckBuildingPos() == true) // Can build
 		{
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || 
@@ -79,6 +80,7 @@ bool Player::Update(float dt)
 			if (isBuilding == true)
 			{
 				isBuilding = false;
+				App->map->debug = false;
 			}
 			else if (isBuilding == false)
 			{
