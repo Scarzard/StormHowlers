@@ -62,6 +62,7 @@ bool Scene::Start()
 	change = false;
 	App->player1->isPlayer1 = true;
 	App->player2->isPlayer1 = false;
+	App->map->debug_tex = App->tex->Load("maps/meta.png");
 
 	//walkability map
 	Wmap = NULL;

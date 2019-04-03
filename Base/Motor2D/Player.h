@@ -68,8 +68,8 @@ public:
 	bool CheckCursorPos(UI_Element* data);
 	bool CheckCursorClick(UI_Element* data);
 
-	bool CheckBuildingPos(Collider collider);
-	void UpdateWalkabilityMap(vector<pair<int, int>> tiles, bool isWalkable);
+	bool CheckBuildingPos();
+	void UpdateWalkabilityMap(bool isWalkable);
 
 public:
 	bool isBuilding;
@@ -78,8 +78,6 @@ public:
 
 	Collider collider;
 	Entity::entityType type;
-
-	SDL_Texture* tex;
 
 	bool isPlayer1;
 	string team;

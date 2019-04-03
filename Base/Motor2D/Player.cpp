@@ -26,7 +26,6 @@ bool Player::Start()
 	gold = 0;
 	currentUI = CURR_MAIN;
 	isBuilding = false;
-	tex = App->tex->Load("maps/meta.png");
 
 	return true;
 }
@@ -51,18 +50,20 @@ bool Player::Update(float dt)
 	//--- Building ---------------------
 	if (isBuilding)
 	{
-		if (CheckBuildingPos(collider) == true) // Can build
+		if (CheckBuildingPos() == true) // Can build
 		{
-			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || 
+				App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				//play fx (build);
 				//App->entitymanager->AddEntity(isPlayer1, type, { collider.x, collider.y });
-				UpdateWalkabilityMap(collider.tiles, false);
+				UpdateWalkabilityMap(false);
 			}
 		}
 		else
 		{
-			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || 
+				App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				//play fx (error);
 			}
@@ -70,7 +71,8 @@ bool Player::Update(float dt)
 	}
 
 	//--- Press B --------------------
-	if (gamepad.Controller[BUTTON_B] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+	if (gamepad.Controller[BUTTON_B] == KEY_DOWN || 
+		App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
 		if (currentUI == CURR_BUILD)
 		{
@@ -157,7 +159,7 @@ bool Player::CheckCursorClick(UI_Element* data)
 	return ret;
 }
 
-bool Player::CheckBuildingPos(Collider collider) // Check collider with walkability map
+bool Player::CheckBuildingPos() // Check collider with walkability map
 {
 	bool ret = true;
 
@@ -172,9 +174,11 @@ bool Player::CheckBuildingPos(Collider collider) // Check collider with walkabil
 		App->input->GetMousePosition(pos.first, pos.second);
 	}
 	pos = App->map->WorldToMap(pos.first, pos.second);
+	pos.first--;
 
 	// Check what tiles is the collider occupying
 	int cont;
+	collider.tiles.resize(0); //reset vector
 	for (int i = 0; i < collider.dimensions.first; ++i)
 	{
 		for (int j = 0; j < collider.dimensions.second; ++j)
@@ -208,19 +212,19 @@ bool Player::CheckBuildingPos(Collider collider) // Check collider with walkabil
 		else
 			rect = { 60,0,60,29 }; //red
 
-		App->render->Blit(tex, collider.tiles[i].first, collider.tiles[i].second, &rect);
+		App->render->Blit(App->map->debug_tex, collider.tiles[i].first, collider.tiles[i].second, &rect);
 	}
 	return ret;
 }
 
-void Player::UpdateWalkabilityMap(vector<pair<int, int>> tiles, bool isWalkable) //update walkable tiles
+void Player::UpdateWalkabilityMap(bool isWalkable) //update walkable tiles
 {
-	for (int i = 0; i < tiles.size(); ++i)
+	for (int i = 0; i < collider.tiles.size(); ++i)
 	{
 		pair <int,int> pos = App->map->WorldToMap(collider.tiles[i].first, collider.tiles[i].second);
 		if (App->pathfinding->GetTileAt(pos) != isWalkable)
 		{
-			//WalkMap[tiles[i]] = 1;
+			App->pathfinding->ChangeWalkability(pos, isWalkable);
 		}
 	}
 }

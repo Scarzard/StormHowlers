@@ -5,6 +5,7 @@
 #include "Textures.h"
 #include "Window.h"
 #include "Map.h"
+#include "Pathfinding.h"
 #include "Scene.h"
 #include "Brofiler\Brofiler.h"
 #include <cmath>
@@ -26,12 +27,12 @@ bool Map::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	folder.assign(config.child("folder").child_value());
+	debug = false;
 
-	
-
-
+	//-----
 	idleRight123 = idleRight123->LoadAnimation("animation/player.tmx", "idle right");
 	idleRight123->speed = 50;
+	//-----
 
 	return ret;
 }
@@ -45,15 +46,13 @@ void Map::Draw(float dt)
 
 	list<MapLayer*>::const_iterator lay;
 	list<TileSet*>::const_iterator set;
-
 	for (lay = data.layers.begin(); lay != data.layers.end(); ++lay)
 	{
 		MapLayer* layer = *lay;
-		if (layer->properties.Get("Navigation") == 1 && debug == false) // debug draw
-			continue;
-
 		for (set = data.tilesets.begin(); set != data.tilesets.end(); ++set)
 		{
+			if (layer->properties.Get("Navigation") == 1)
+				continue;
 			for (int y = 0; y < data.height; ++y)
 			{
 				for (int x = 0; x < data.width; ++x)
@@ -65,6 +64,17 @@ void Map::Draw(float dt)
 						SDL_Rect r = tileset->GetTileRect(tile_id);
 						pair<int, int> pos = MapToWorld(x, y);
 						App->render->Blit(tileset->texture, pos.first, pos.second, &r, SDL_FLIP_NONE);
+
+						if (debug == true)
+						{
+							pos = WorldToMap(pos.first, pos.second);
+							if (App->pathfinding->IsWalkable(pos) == false)
+							{
+								pos = MapToWorld(pos.first, pos.second);
+								r = { 60,0,60,29 };
+								App->render->Blit(debug_tex, pos.first, pos.second, &r, SDL_FLIP_NONE);
+							}
+						}
 					}
 				}
 			}

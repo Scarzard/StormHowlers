@@ -180,6 +180,7 @@ private:
 public:
 	MapData				data;
 	bool				debug = false;
+	SDL_Texture*		debug_tex;
 
 private:
 	pugi::xml_document	map_file;
