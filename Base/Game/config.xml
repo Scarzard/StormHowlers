@@ -56,6 +56,7 @@
         <name string="townhall"/>
         <health lvl1="5000" lvl2="6000" lvl3="7500"/>
         <size width="10" height="10"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <production lvl1="1000" lvl2="1500" lvl3="2000"/>
       </townhall>
     
@@ -63,6 +64,7 @@
         <name string="main_defense"/>
         <health lvl1="500" lvl2="600" lvl3="750"/>
         <size width="10" height="10"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <damage lvl1="300" lvl2="400" lvl3="500"/>
         <range value="50"/>
       </main_defense>
@@ -71,6 +73,7 @@
         <name string="command_center"/>
         <health lvl1="1000" lvl2="1500" lvl3="2000"/>
         <size width="211" height="213"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <damage_missiles lvl1="1000" lvl2="1200" lvl3="1500"/>
         <damage_cast2 lvl1="1000" lvl2="1200" lvl3="1500"/>
         <damage_cast3 lvl1="1000" lvl2="1200" lvl3="1500"/>
@@ -86,6 +89,7 @@
         <name string="barracks"/>
         <health lvl1="500" lvl2="600" lvl3="750"/>
         <size width="10" height="10"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <capacity lvl1="100" lvl2="150" lvl3="200"/>
       </barracks>
    
@@ -93,6 +97,7 @@
         <name string="mine"/>
         <health lvl1="500" lvl2="600" lvl3="750"/>
         <size width="187" height="142"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <production lvl1="1000" lvl2="1500" lvl3="2000"/>
       </mine>
  
@@ -100,6 +105,7 @@
         <name string="defense_aoe"/>
         <health lvl1="100" lvl2="120" lvl3="150"/>
         <size width="106" height="92"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <damage lvl1="100" lvl2="150" lvl3="200"/>
         <range value="50"/>
       </defense_aoe>
@@ -108,6 +114,7 @@
         <name string="defense_target"/>
         <health lvl1="100" lvl2="120" lvl3="150"/>
         <size width="82" height="84"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <damage lvl1="100" lvl2="150" lvl3="200"/>
         <range value="75"/>
       </defense_target>

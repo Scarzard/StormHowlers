@@ -123,6 +123,8 @@ public:
 	UI_Element* Name_text;
 	UI_Element* Level_text;
 	UI_Element* Health_text;
+	UI_Element* UpgradeCost_text;
+	UI_Element* RepairCost_text;
 	UI_Element* Damage_text; //only for defense buildings
 	UI_Element* Prod_text; //only for townhall & mines
 	UI_Element* Capacity_text; //only for barracks

@@ -8,6 +8,14 @@
 #include "Entity.h"
 #include "Player.h"
 #include "Textures.h"
+#include "Barracks.h"
+#include "CommandCenter.h"
+#include "DefenseAOE.h"
+#include "DefenseTarget.h"
+#include "MainDefense.h"
+#include "Mines.h"
+#include "Townhall.h"
+#include "Walls.h"
 
 #include "Brofiler\Brofiler.h"
 #include "PugiXml/src/pugixml.hpp"
@@ -44,11 +52,6 @@ bool EntityManager::Update(float dt)
 
 	bool ret = true;
 
-	if (App->map->debug)
-	{
-		DebugDraw();
-	}
-
 	if (App->scene->pause == false)
 	{
 		list<Entity*>::const_iterator tmp = Entities.begin();
@@ -83,13 +86,13 @@ bool EntityManager::PostUpdate()
 
 bool EntityManager::CleanUp()
 {
-	DeleteEntities();
+	DeleteAllEntities();
 	App->tex->UnLoad(texture);
 
 	return true;
 }
 
-void EntityManager::DeleteEntities()
+void EntityManager::DeleteAllEntities()
 {
 	list<Entity*>::iterator tmp = Entities.begin();
 	while (tmp != Entities.end())
@@ -120,23 +123,6 @@ bool EntityManager::Draw(float dt) //modificar segun posicion en el mapa
 	return ret;
 }
 
-bool EntityManager::DebugDraw()
-{
-	list<Entity*>::iterator tmp = Entities.begin();
-	SDL_Rect col;
-	while (tmp != Entities.end())
-	{
-		col.x = (*tmp)->Collider.x;
-		col.y = (*tmp)->Collider.y;
-		col.h = (*tmp)->Collider.h;
-		col.w = (*tmp)->Collider.w;
-		App->render->DrawQuad(col, 0, 0, 255, 50); //blue
-
-		tmp++;
-	}
-	return true;
-}
-
 Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<int, int> position)
 {
 	Entity* tmp = nullptr;
@@ -144,15 +130,15 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 	switch (type)
 	{
 	case Entity::entityType::TOWNHALL:
-		//tmp = new TownHall(isPlayer1, position);
+		tmp = new Townhall(isPlayer1, position);
 		break;
 
 	case Entity::entityType::MAIN_DEFENSE:
-		//tmp = new Main_Defense(isPlayer1, position);
+		//tmp = new MainDefense(isPlayer1, position);
 		break;
 
 	case Entity::entityType::COMMAND_CENTER:
-		//tmp = new Command_Center(isPlayer1, position);
+		//tmp = new CommandCenter(isPlayer1, position);
 		break;
 
 	case Entity::entityType::WALLS:
@@ -160,11 +146,11 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		break;
 
 	case Entity::entityType::DEFENSE_AOE:
-		//tmp = new Defense_AOE(isPlayer1, position);
+		//tmp = new DefenseAOE(isPlayer1, position);
 		break;
 
 	case Entity::entityType::DEFENSE_TARGET:
-		//tmp = new Defense_Target(isPlayer1, position);
+		//tmp = new DefenseTarget(isPlayer1, position);
 		break;
 
 	case Entity::entityType::MINES:

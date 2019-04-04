@@ -19,11 +19,10 @@ public:
 	bool CleanUp();
 
 	bool Draw(float dt);
-	bool DebugDraw();
 
 	Entity* AddEntity(bool player1, Entity::entityType type, pair<int,int> position);
 	bool DeleteEntity(Entity* entity);
-	void DeleteEntities();
+	void DeleteAllEntities();
 
 public:
 	string			folder;

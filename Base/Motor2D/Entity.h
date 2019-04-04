@@ -22,9 +22,9 @@ public:
 	};
 
 public:
-	Entity();
-	Entity(entityType type);
-	~Entity();
+	Entity() {};
+	Entity(entityType type) {};
+	~Entity() {};
 	virtual bool Awake(pugi::xml_node & config) { return true; };
 	virtual bool Start() { return true; };
 	virtual bool PreUpdate() { return true; };
@@ -41,20 +41,16 @@ public:
 	pair<int, int> GetSize(Entity* entity) { return entity->size; };
 	pair<int, int> GetPos(Entity* entity) { return entity->position; };
 
-	void Collider_Overlay();
-	void PositionCollider();
-
 public:
 	Animation* Current_Animation = nullptr;
 	entityType type;
+	bool upgrade, repair;
 
 	bool fromPlayer1;
-	
+	string name;
+	int health, level;
 	pair<int, int> position;
 	pair<int,int> size;
-
-	SDL_Rect Collider;
-	SDL_Rect SightCollider;
 	
 	bool flip = false;
 	int frame = 0;
