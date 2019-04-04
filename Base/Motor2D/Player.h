@@ -62,6 +62,7 @@ public:
 	bool CleanUp();
 
 	void GetCursorPos(int& x, int& y);
+	bool DeleteEntity(Entity* entity);
 
 	void UpdateVisibility(); //update gui visibility
 	void DoLogic(UI_Element* data); //gui actions
@@ -87,9 +88,10 @@ public:
 	Cursor cursor;
 	GamePad gamepad;
 
+	list<Entity*> buildings, troops;
+
 	list<UI_Element*> UI_elements;
 
-	// --- UI --- //
 	UI_Element* Health_UI;
 	UI_Element* Gold_UI;
 

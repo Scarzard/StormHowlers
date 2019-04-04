@@ -16,7 +16,7 @@ public:
 	void ChangeAnimation();
 
 public:
-	vector<uint> production, health_lv, upgrade_cost;
+	vector<uint> production_lv, health_lv, upgrade_cost;
 
 	Animation	building;
 	Animation	level1;

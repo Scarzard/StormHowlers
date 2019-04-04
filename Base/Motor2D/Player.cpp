@@ -361,3 +361,28 @@ void Player::DoLogic(UI_Element* data)
 		break;
 	}
 }
+
+bool Player::DeleteEntity(Entity* entity)
+{
+	entity->CleanUp();
+
+	if (entity->type >= Entity::entityType::TOWNHALL && entity->type <= Entity::entityType::BARRACKS) //if entity = building
+	{
+		list<Entity*>::iterator item = buildings.begin();
+		while (item != buildings.end())
+		{
+			if ((*item) == entity)
+				buildings.erase(item);
+		}
+	}
+	else if (type > Entity::entityType::BARRACKS) //if entity = troop
+	{
+		list<Entity*>::iterator item = troops.begin();
+		while (item != troops.end())
+		{
+			if ((*item) == entity)
+				troops.erase(item);
+		}
+	}
+	return true;
+}

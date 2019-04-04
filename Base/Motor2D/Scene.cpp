@@ -78,8 +78,8 @@ bool Scene::Start()
 	if (spritesheet123 == nullptr)
 		spritesheet123 = App->tex->Load("textures/prueba.png");
 
-	//--------- CREATE MAIN BUILDINGS -------------// (falta cambiar posicion)
 
+	//--------- CREATE MAIN BUILDINGS -------------// (falta cambiar posicion)
 	//--- PLAYER 1
 	App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 50,50 });
 	App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, { 50,50 });
@@ -94,8 +94,7 @@ bool Scene::Start()
 
 
 	//--------- CREATE GUI -----------//  (Falta poner position y size)
-
-	//--- PLAYER 1
+	//--- PLAYER 1 -----
 	//App->player1->Health_UI = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
 	//App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
 	App->player1->Main_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, true);
@@ -139,7 +138,7 @@ bool Scene::Start()
 	//App->player1->Capacity_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 
 
-	//--- PLAYER 2
+	//--- PLAYER 2 -----
 	//App->player2->Health_UI = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
 	//App->player2->Gold_UI = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
 	App->player2->Main_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 166,App->win->height - 79 }, { 166,79 }, nullptr, true);
@@ -219,6 +218,29 @@ bool Scene::Start()
 bool Scene::PreUpdate()
 {
 	BROFILER_CATEGORY("Scene PreUpdate", Profiler::Color::DarkOrange);
+
+	// Gold Player 1 ------------
+	list<Entity*>::iterator item = App->player1->buildings.begin();
+	for (item; item != App->player1->buildings.end(); ++item)
+	{
+		if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
+		{
+			App->player1->gold += (*item)->production;
+		}
+	}
+
+	// Gold Player 2 -----------
+	item = App->player2->buildings.begin();
+	for (item; item != App->player2->buildings.end(); ++item)
+	{
+		if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
+		{
+			App->player2->gold += (*item)->production;
+		}
+	}
+	//----
+
+
 	return true;
 }
 

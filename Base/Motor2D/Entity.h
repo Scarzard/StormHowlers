@@ -48,7 +48,7 @@ public:
 
 	bool fromPlayer1;
 	string name;
-	int health, level;
+	int health, level, production, damage, capacity, range;
 	pair<int, int> position;
 	pair<int,int> size;
 	

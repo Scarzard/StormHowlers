@@ -54,12 +54,23 @@ bool EntityManager::Update(float dt)
 
 	if (App->scene->pause == false)
 	{
-		list<Entity*>::const_iterator tmp = Entities.begin();
-		while (tmp != Entities.end())
+		// Player 1 Buildings
+		list<Entity*>::const_iterator tmp = App->player1->buildings.begin();
+		while (tmp != App->player1->buildings.end())
 		{
 			ret = (*tmp)->Update(dt);
 			tmp++;
 		}
+
+		// Player 2 Buildings
+		tmp = App->player2->buildings.begin();
+		while (tmp != App->player2->buildings.end())
+		{
+			ret = (*tmp)->Update(dt);
+			tmp++;
+		}
+
+
 	}
 
 	return ret;
@@ -73,12 +84,23 @@ bool EntityManager::PostUpdate()
 
 	if (App->scene->pause == false)
 	{
-		list<Entity*>::const_iterator tmp = Entities.begin();
-		while (tmp != Entities.end())
+		// Player 1 Buildings
+		list<Entity*>::const_iterator tmp = App->player1->buildings.begin();
+		while (tmp != App->player1->buildings.end())
 		{
-			(*tmp)->PostUpdate();
+			ret = (*tmp)->PostUpdate();
 			tmp++;
 		}
+
+		// Player 2 Buildings
+		tmp = App->player2->buildings.begin();
+		while (tmp != App->player2->buildings.end())
+		{
+			ret = (*tmp)->PostUpdate();
+			tmp++;
+		}
+
+
 	}
 	
 	return ret;
@@ -94,32 +116,42 @@ bool EntityManager::CleanUp()
 
 void EntityManager::DeleteAllEntities()
 {
-	list<Entity*>::iterator tmp = Entities.begin();
-	while (tmp != Entities.end())
+	// Player 1 Buildings
+	list<Entity*>::iterator	tmp = App->player1->buildings.begin();
+	while (tmp != App->player1->buildings.end())
 	{
 		RELEASE(*tmp);
 		tmp++;
 	}
-	Entities.clear();
-}
+	App->player1->buildings.clear();
 
-bool EntityManager::Draw(float dt) //modificar segun posicion en el mapa
-{
-	bool ret = true;
-	list<Entity*>::iterator tmp = Entities.begin();
-
-	while (tmp != Entities.end())
+	// Player 2 Buildings
+	tmp = App->player2->buildings.begin();
+	while (tmp != App->player2->buildings.end())
 	{
-		if ((*tmp)->flip)
-		{
-			App->render->Blit(texture, (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_HORIZONTAL);
-		}
-		else
-		{
-			App->render->Blit(texture, (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
-		}
+		RELEASE(*tmp);
 		tmp++;
 	}
+	App->player2->buildings.clear();
+}
+
+bool EntityManager::Draw(float dt)
+{
+	bool ret = true;
+	//list<Entity*>::iterator tmp = Entities.begin();
+
+	//while (tmp != Entities.end())
+	//{
+	//	if ((*tmp)->flip)
+	//	{
+	//		App->render->Blit(texture, (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_HORIZONTAL);
+	//	}
+	//	else
+	//	{
+	//		App->render->Blit(texture, (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
+	//	}
+	//	tmp++;
+	//}
 	return ret;
 }
 
@@ -163,20 +195,29 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 	}
 
 	if (tmp)
-		Entities.push_back(tmp);
-
-	return tmp;
-}
-
-bool EntityManager::DeleteEntity(Entity * entity)
-{
-	entity->CleanUp();
-
-	list<Entity*> ::iterator item = Entities.begin(); //main entities list
-	while (item != Entities.end())
 	{
-		if ((*item) == entity)
-			Entities.erase(item);
+		if (isPlayer1 == true)
+		{
+			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building
+			{
+				App->player1->buildings.push_back(tmp);
+			}
+			else if (type > Entity::entityType::BARRACKS) //if troops
+			{
+				App->player1->troops.push_back(tmp);
+			}
+		}
+		else // Player 2 -------------------------------
+		{
+			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS)
+			{
+				App->player2->buildings.push_back(tmp);
+			}
+			else if (type > Entity::entityType::BARRACKS)
+			{
+				App->player2->troops.push_back(tmp);
+			}
+		}
 	}
-	return true;
+	return tmp;
 }

@@ -30,10 +30,10 @@ Townhall::Townhall(bool isPlayer1, pair<int,int> pos) : Entity(entityType::TOWNH
 	health_lv.push_back(config.child("health").attribute("lvl2").as_uint());
 	health_lv.push_back(config.child("health").attribute("lvl3").as_uint());
 
-	production.push_back(0);
-	production.push_back(config.child("production").attribute("lvl1").as_uint());
-	production.push_back(config.child("production").attribute("lvl2").as_uint());
-	production.push_back(config.child("production").attribute("lvl3").as_uint());
+	production_lv.push_back(0);
+	production_lv.push_back(config.child("production").attribute("lvl1").as_uint());
+	production_lv.push_back(config.child("production").attribute("lvl2").as_uint());
+	production_lv.push_back(config.child("production").attribute("lvl3").as_uint());
 
 	upgrade_cost.push_back(0);
 	upgrade_cost.push_back(config.child("upgrade_cost").attribute("ToLvl2").as_int());
@@ -47,6 +47,7 @@ Townhall::Townhall(bool isPlayer1, pair<int,int> pos) : Entity(entityType::TOWNH
 	fromPlayer1 = isPlayer1;
 	position = pos;
 	upgrade = repair = false;
+	damage = capacity = range = 0;
 
 	LoadAnimations();
 	ChangeAnimation();
@@ -66,7 +67,7 @@ bool Townhall::Update(float dt)
 				level++;
 				upgrade = false;
 			}
-			App->player1->gold += production[level]; //add gold to player 1
+			production = production_lv[level]; //update production
 		}
 		else
 		{
@@ -83,7 +84,7 @@ bool Townhall::Update(float dt)
 				level++;
 				upgrade = false;
 			}
-			App->player2->gold += production[level]; //add gold to player 2
+			production = production_lv[level]; //update production
 		}
 		else
 		{
@@ -99,8 +100,8 @@ void Townhall::CleanUp()
 {
 	LOG("---Townhall Deleted");
 
-	production.clear();
-	production.resize(0);
+	production_lv.clear();
+	production_lv.resize(0);
 
 	health_lv.clear();
 	health_lv.resize(0);

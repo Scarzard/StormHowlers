@@ -21,14 +21,12 @@ public:
 	bool Draw(float dt);
 
 	Entity* AddEntity(bool player1, Entity::entityType type, pair<int,int> position);
-	bool DeleteEntity(Entity* entity);
 	void DeleteAllEntities();
 
 public:
 	string			folder;
 	string			texture_path;
 	SDL_Texture*	texture;
-	list<Entity*>	Entities;
 
 	bool draw_path = false;
 	bool godmode = false;
