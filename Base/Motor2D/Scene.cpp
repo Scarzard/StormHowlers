@@ -89,6 +89,8 @@ bool Scene::Start()
 
 
 	//--------- CREATE GUI -----------//  (Falta poner position y size)
+	ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 950,100 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
+	ui_timer->color = { 250,250,250,250 };
 
 	//--- PLAYER 1
 	//App->player1->Health_UI = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
@@ -307,6 +309,22 @@ bool Scene::PostUpdate()
 	{
 		if ((*item)->visible == true)
 		{
+			// timer test
+			if ((*item) == ui_timer /*&& pause == false*/) //timer
+			{
+			
+
+				if (world_clock.ReadSec() >= 1)
+				{
+					world_clock.Start();
+					countdown++;
+				}
+				
+				sprintf_s(current_time, "TIME: %u", countdown);
+				(*item)->label = current_time;
+				break;
+			}
+			//
 			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) ||
 				(App->player1->CheckCursorPos(*item) == true && App->player1->gamepad.Controller[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
 			{
@@ -359,6 +377,7 @@ bool Scene::PostUpdate()
 	{
 		if ((*item)->visible == true)
 		{
+
 			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) ||
 				(App->player2->CheckCursorPos(*item) == true && App->player2->gamepad.Controller[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
 			{

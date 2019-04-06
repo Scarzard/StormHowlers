@@ -3,6 +3,9 @@
 
 #include "Module.h"
 #include "UI_Element.h"
+#include <stdio.h>
+
+
 
 struct SDL_Texture;
 
@@ -58,7 +61,11 @@ public:
 	string current_track;
 	string current_fx;
 
+	UI_Element* ui_timer;
+
 	Timer world_clock;
+	char current_time[20] = "TIME: 000";
+	uint countdown=0;
 
 private:
 	SDL_Texture* debug_tex;
