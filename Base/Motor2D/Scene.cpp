@@ -89,7 +89,7 @@ bool Scene::Start()
 
 
 	//--------- CREATE GUI -----------//  (Falta poner position y size)
-	ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 950,100 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
+	ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 525,10 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
 	ui_timer->color = { 250,250,250,250 };
 
 	//--- PLAYER 1
@@ -207,6 +207,7 @@ bool Scene::Start()
 
 	// timer start
 	world_clock.Start();
+	world_seconds.Start();
 
 	return true;
 }
@@ -282,6 +283,15 @@ bool Scene::Update(float dt)
 			world_clock.Start();
 		}
 	}
+	if (world_clock.ReadSec() >= 5 && world_clock.ReadSec() <= 8)
+	{
+		ui_timer->visible = false;
+	}
+	if (world_clock.ReadSec() >= 8)
+	{
+		ui_timer->visible = true;
+	}
+
 	//----
 	App->map->Draw(dt);
 	//App->entitymanager->Draw(dt);
@@ -314,9 +324,9 @@ bool Scene::PostUpdate()
 			{
 			
 
-				if (world_clock.ReadSec() >= 1)
+				if (world_seconds.ReadSec() >= 1)
 				{
-					world_clock.Start();
+					world_seconds.Start();
 					countdown++;
 				}
 				

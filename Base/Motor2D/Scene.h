@@ -64,6 +64,7 @@ public:
 	UI_Element* ui_timer;
 
 	Timer world_clock;
+	Timer world_seconds;
 	char current_time[20] = "TIME: 000";
 	uint countdown=0;
 
