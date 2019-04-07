@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Base", "Motor2D\Motor2D.vcxproj", "{2AF9969B-F202-497B-AF30-7BEF9CE8005E}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "Installer\Installer.vdproj", "{1C1DB322-A220-4AE1-86B4-7CF69C435969}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,6 +17,8 @@ Global
 		{2AF9969B-F202-497B-AF30-7BEF9CE8005E}.Debug|x86.Build.0 = Debug|Win32
 		{2AF9969B-F202-497B-AF30-7BEF9CE8005E}.Release|x86.ActiveCfg = Release|Win32
 		{2AF9969B-F202-497B-AF30-7BEF9CE8005E}.Release|x86.Build.0 = Release|Win32
+		{1C1DB322-A220-4AE1-86B4-7CF69C435969}.Debug|x86.ActiveCfg = Debug
+		{1C1DB322-A220-4AE1-86B4-7CF69C435969}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
