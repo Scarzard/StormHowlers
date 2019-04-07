@@ -70,12 +70,14 @@ public:
 	Timer world_seconds;
 	Timer size_timer;
 	char current_time[20] = "TIME: 000";
-	uint minutes=0;
-	uint countdown=0;
+	uint worldminutes=0;
+	uint worldseconds=0;
+	uint size_timer_count = 0;
 	int increase_decresease = 0;
 	bool increase_size = true;
 	bool change_font_size = false;
-	bool refrence_active = false;
+	bool reference_active = false;
+	bool pausetimer = false;
 
 private:
 	SDL_Texture* debug_tex;

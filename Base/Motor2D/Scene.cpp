@@ -89,7 +89,7 @@ bool Scene::Start()
 
 
 	//--------- CREATE GUI -----------//  (Falta poner position y size)
-	ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 525,10 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
+	ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 400,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
 	ui_timer->color = { 250,250,250,250 };
 
 	//--- PLAYER 1
@@ -274,23 +274,28 @@ bool Scene::Update(float dt)
 	//}
 
 	// testing timer
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 	{
-		if (world_clock.runningRead() == true)
+		if (pausetimer == false)
 		{
-			world_clock.Stop();
+			//if the pause timer is false, the clock is running and you want to stop it
+			pausetimer=true;
+			world_seconds.Stop();
 		}
-		else
+		else if (pausetimer == true)
 		{
-			world_clock.Start();
+			//if the pause timer is true, the clock is stop and you want to start it
+			pausetimer = false;
+			world_seconds.Start();
+			
 		}
 	}
 
 	ui_timer->visible = false;
-	refrence_active = change_font_size;
+	reference_active = change_font_size;
 	
 
-	if ((world_clock.ReadSec() >= 0 && world_clock.ReadSec() <= 10) || (world_clock.ReadSec() >= 20 && world_clock.ReadSec() <= 30) || (world_clock.ReadSec() >= 40 && world_clock.ReadSec() <= 80))
+	if ((worldseconds >= 0 && worldseconds <= 10) || (worldseconds >= 20 && worldseconds <= 30) || (worldseconds >= 40 && worldseconds <= 60) && pausetimer==false)
 	{
 		change_font_size = true;
 		ui_timer->visible = true;
@@ -299,28 +304,28 @@ bool Scene::Update(float dt)
 	}
 	
 	
-	if (ui_timer->visible == true && change_font_size == true)
+	if (ui_timer->visible == true && change_font_size == true && pausetimer ==false)
 	{
 		
-		if (refrence_active != change_font_size)
+		if (reference_active != change_font_size)
 		{
 			size_timer.Start();
 			increase_size = true;
-			if ((world_clock.ReadSec() >= 0 && world_clock.ReadSec() <= 10))
+			if ((worldseconds >= 0 && worldseconds <= 10))
 			{
-				//App->audio->PlayFx(MIN10);
+				App->audio->PlayFx(MIN10);
 			}
-			else if ((world_clock.ReadSec() >= 20 && world_clock.ReadSec() <= 30))
+			else if ((worldseconds >= 20 && worldseconds <= 30))
 			{
-				//App->audio->PlayFx(MIN5);
+				App->audio->PlayFx(MIN5);
 			}
-			else if ((world_clock.ReadSec() >= 40 && world_clock.ReadSec() <= 80))
+			else if ((worldseconds >= 40 && worldseconds <= 60))
 			{
 				App->audio->PlayFx(MIN1);
 			}
 		}
 
-		if (size_timer.ReadSec() <=11)
+		if (size_timer_count<=11)
 		{
 			if (increase_size == true && App->font->size < 60)
 			{
@@ -339,11 +344,12 @@ bool Scene::Update(float dt)
 			}
 
 
-			if (size_timer.ReadSec() >= 9 && increase_size==true)
+			if (size_timer_count >= 9 && increase_size==true)
 			{
 				size_timer.Start();
 				increase_size = !increase_size;
 				increase_decresease++;
+				size_timer_count = 0;
 				if (increase_size == true)
 				{
 					App->font->size = 0;
@@ -353,11 +359,12 @@ bool Scene::Update(float dt)
 					App->font->size = 60;
 				}
 			}
-			else if (size_timer.ReadSec() >= 3 && increase_size == false)
+			else if (size_timer_count >= 3 && increase_size == false)
 			{
 				size_timer.Start();
 				increase_size = !increase_size;
 				increase_decresease++;
+				size_timer_count = 0;
 				if (increase_size == true)
 				{
 					App->font->size = 0;
@@ -371,6 +378,7 @@ bool Scene::Update(float dt)
 			 if (increase_decresease>=2)
 			{
 				change_font_size = false;
+				reference_active = false;
 				increase_size = true;
 				increase_decresease = 0;
 				
@@ -408,23 +416,29 @@ bool Scene::PostUpdate()
 	while (item != App->player1->UI_elements.rend())
 	{
 		// timer test
-		if ((*item) == ui_timer /*&& pause == false*/) //timer
+		if ((*item) == ui_timer && pausetimer == false) //timer
 		{
 
 
 			if (world_seconds.ReadSec() >= 1)
 			{
 				world_seconds.Start();
-				countdown++;
+				worldseconds++;
 
-				if (countdown >= 60)
+				if (worldseconds >= 60)
 				{
-					countdown = 0;
-					minutes++;
+					worldseconds = 0;
+					worldminutes++;
 				}
+
+				if (size_timer.runningRead() == true && size_timer.ReadSec() >=1)
+				{
+					size_timer_count++;
+				}
+
 			}
 
-			sprintf_s(current_time, "TIME: %u:%u",minutes, countdown);
+			sprintf_s(current_time, "TIME: %u:%u",worldminutes, worldseconds);
 			(*item)->label = current_time;
 			break;
 		}
