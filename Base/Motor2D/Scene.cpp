@@ -210,6 +210,7 @@ bool Scene::Start()
 	world_seconds.Start();
 	size_timer.Start();
 
+
 	return true;
 }
 
@@ -285,49 +286,88 @@ bool Scene::Update(float dt)
 		}
 	}
 
-	ui_timer->visible = true;
+	ui_timer->visible = false;
+	refrence_active = change_font_size;
+	
 
-	if (ui_timer->visible == true && change_font_size==true)
+	if ((world_clock.ReadSec() >= 0 && world_clock.ReadSec() <= 10) || (world_clock.ReadSec() >= 20 && world_clock.ReadSec() <= 30) || (world_clock.ReadSec() >= 40 && world_clock.ReadSec() <= 50))
 	{
-		if (increase_size == true && App->font->size<60 )
-		{
-			App->font->size++;
-			App->font->default = App->font->Load(App->font->path, App->font->size);
-			
-		}
-		else if(increase_size == false && App->font->size >=0 )
-		{
-			App->font->size--;
-			App->font->default = App->font->Load(App->font->path, App->font->size);
+		change_font_size = true;
+		ui_timer->visible = true;
+	
+	}
+	
+	
+	if (ui_timer->visible == true && change_font_size == true)
+	{
 		
-		}
-		
-		
-		if (size_timer.ReadSec() >= 5)
+		if (refrence_active != change_font_size)
 		{
 			size_timer.Start();
-			increase_size = !increase_size;
-			if (increase_size == true)
+			increase_size = true;
+		}
+
+		else if (size_timer.ReadSec() <=11)
+		{
+			if (increase_size == true && App->font->size < 60)
 			{
-				App->font->size = 0;
+				App->font->size++;
+				App->font->default = App->font->Load(App->font->path, App->font->size);
+				//unload?
+
 			}
-			else if (increase_size==false)
+			else if (increase_size == false && App->font->size >= 0)
 			{
-				App->font->size = 60;
+				App->font->size--;
+				App->font->default = App->font->Load(App->font->path, App->font->size);
+
+				//unload?
+
+			}
+
+
+			if (size_timer.ReadSec() >= 9 && increase_size==true)
+			{
+				size_timer.Start();
+				increase_size = !increase_size;
+				increase_decresease++;
+				if (increase_size == true)
+				{
+					App->font->size = 0;
+				}
+				else if (increase_size == false)
+				{
+					App->font->size = 60;
+				}
+			}
+			else if (size_timer.ReadSec() >= 3 && increase_size == false)
+			{
+				size_timer.Start();
+				increase_size = !increase_size;
+				increase_decresease++;
+				if (increase_size == true)
+				{
+					App->font->size = 0;
+				}
+				else if (increase_size == false)
+				{
+					App->font->size = 60;
+				}
+			}
+
+			 if (increase_decresease>=2)
+			{
+				change_font_size = false;
+				increase_size = true;
+				increase_decresease = 0;
+				
 			}
 		}
-		
+
 	}
 
 
-	/*if ((world_clock.ReadSec() >= 6 && world_clock.ReadSec() <= 10) || (world_clock.ReadSec() >= 16 && world_clock.ReadSec() <= 20 ))
-	{
-		ui_timer->visible = false;
-		App->font->size = App->font->default_size;
-		increase_size = true;
-	}*/
-	
-		
+
 
 	//----
 	App->map->Draw(dt);

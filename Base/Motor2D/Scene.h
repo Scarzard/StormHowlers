@@ -71,8 +71,10 @@ public:
 	Timer size_timer;
 	char current_time[20] = "TIME: 000";
 	uint countdown=0;
+	int increase_decresease = 0;
 	bool increase_size = true;
 	bool change_font_size = true;
+	bool refrence_active = false;
 
 private:
 	SDL_Texture* debug_tex;
