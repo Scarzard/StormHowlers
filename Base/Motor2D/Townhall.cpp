@@ -64,11 +64,11 @@ bool Townhall::Update(float dt)
 		{
 			if (upgrade == true) //upgrade
 			{
-				App->player1->gold -= upgrade_cost[level];
+				App->player1->gold -= upgrade_cost[level]; //pay costs
+				production = production_lv[level]; //update production
 				level++;
 				upgrade = false;
 			}
-			production = production_lv[level]; //update production
 		}
 		else
 		{
@@ -81,11 +81,11 @@ bool Townhall::Update(float dt)
 		{
 			if (upgrade == true) //upgrade
 			{
-				App->player2->gold -= upgrade_cost[level];
+				App->player2->gold -= upgrade_cost[level]; //pay costs
+				production = production_lv[level]; //update production
 				level++;
 				upgrade = false;
 			}
-			production = production_lv[level]; //update production
 		}
 		else
 		{

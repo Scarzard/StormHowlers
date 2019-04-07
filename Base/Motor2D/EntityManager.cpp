@@ -168,11 +168,11 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		break;
 
 	case Entity::entityType::MAIN_DEFENSE:
-		//tmp = new MainDefense(isPlayer1, position);
+		tmp = new MainDefense(isPlayer1, position);
 		break;
 
 	case Entity::entityType::COMMAND_CENTER:
-		//tmp = new CommandCenter(isPlayer1, position);
+		tmp = new CmdCenter(isPlayer1, position);
 		break;
 
 	case Entity::entityType::WALLS:

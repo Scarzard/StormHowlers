@@ -18,7 +18,6 @@ public:
 public:
 	vector<uint> production_lv, health_lv, upgrade_cost;
 
-	Animation	building;
 	Animation	level1;
 	Animation	level2;
 	Animation	level3;

@@ -53,8 +53,7 @@ bool Player::Update(float dt)
 		App->map->debug = true;
 		if (CheckBuildingPos() == true) // Can build
 		{
-			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || 
-				App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				//play fx (build);
 				//App->entitymanager->AddEntity(isPlayer1, type, { collider.x, collider.y });
@@ -63,8 +62,7 @@ bool Player::Update(float dt)
 		}
 		else
 		{
-			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || 
-				App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				//play fx (error);
 			}
@@ -72,8 +70,7 @@ bool Player::Update(float dt)
 	}
 
 	//--- Press B --------------------
-	if (gamepad.Controller[BUTTON_B] == KEY_DOWN || 
-		App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+	if (gamepad.Controller[BUTTON_B] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
 		if (currentUI == CURR_BUILD)
 		{

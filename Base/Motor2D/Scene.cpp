@@ -72,7 +72,6 @@ bool Scene::Start()
 		App->pathfinding->SetMap(w, h, Wmap);
 		LOG("Create walkability map");
 	}
-	debug_tex = App->tex->Load("maps/pathfinding.png");
 
 	//animation testing
 	if (spritesheet123 == nullptr)
@@ -453,10 +452,7 @@ bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
-	App->tex->UnLoad(debug_tex);
 	App->tex->UnLoad(cursor_tex);
-
-	debug_tex = nullptr;
 	cursor_tex = nullptr;
 
 	RELEASE_ARRAY(Wmap);
