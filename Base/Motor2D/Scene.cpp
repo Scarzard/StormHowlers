@@ -290,7 +290,7 @@ bool Scene::Update(float dt)
 	refrence_active = change_font_size;
 	
 
-	if ((world_clock.ReadSec() >= 0 && world_clock.ReadSec() <= 10) || (world_clock.ReadSec() >= 20 && world_clock.ReadSec() <= 30) || (world_clock.ReadSec() >= 40 && world_clock.ReadSec() <= 50))
+	if ((world_clock.ReadSec() >= 0 && world_clock.ReadSec() <= 10) || (world_clock.ReadSec() >= 20 && world_clock.ReadSec() <= 30) || (world_clock.ReadSec() >= 40 && world_clock.ReadSec() <= 80))
 	{
 		change_font_size = true;
 		ui_timer->visible = true;
@@ -403,9 +403,15 @@ bool Scene::PostUpdate()
 			{
 				world_seconds.Start();
 				countdown++;
+
+				if (countdown >= 60)
+				{
+					countdown = 0;
+					minutes++;
+				}
 			}
 
-			sprintf_s(current_time, "TIME: %u", countdown);
+			sprintf_s(current_time, "TIME: %u:%u",minutes, countdown);
 			(*item)->label = current_time;
 			break;
 		}
