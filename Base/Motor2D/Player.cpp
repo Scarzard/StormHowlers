@@ -23,9 +23,9 @@ Player::~Player()
 
 bool Player::Start()
 {
-	gold = 0;
+	gold = actual_capacity = 0;
 	currentUI = CURR_MAIN;
-	isBuilding = false;
+	isBuilding = isDeploying = isCasting = false;
 
 	return true;
 }
@@ -105,13 +105,33 @@ bool Player::CleanUp()
 {
 	LOG("---Player Deleted");
 
-	//Clear UI elements
-	list<UI_Element*>::iterator item = UI_elements.begin();
-	while (item != UI_elements.end())
+	//Clear buildings
+	list<Entity*>::iterator item = buildings.begin();
+	while (item != buildings.end())
 	{
-		(*item)->children.clear();
+		(*item)->CleanUp();
 		RELEASE(*item);
 		item++;
+	}
+	buildings.clear();
+
+	//Clear troops
+	item = troops.begin();
+	while (item != troops.end())
+	{
+		(*item)->CleanUp();
+		RELEASE(*item);
+		item++;
+	}
+	troops.clear();
+
+	//Clear UI elements
+	list<UI_Element*>::iterator item2 = UI_elements.begin();
+	while (item2 != UI_elements.end())
+	{
+		(*item2)->children.clear();
+		RELEASE(*item2);
+		item2++;
 	}
 	UI_elements.clear();
 
@@ -309,15 +329,21 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_TARGET:
-		//
+		isBuilding = true;
+		type = Entity::entityType::DEFENSE_TARGET;
+		//collider.dimensions = { 3,4 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_MINE:
-		//
+		isBuilding = true;
+		type = Entity::entityType::MINES;
+		//collider.dimensions = { 3,4 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_BARRACKS:
-		//
+		isBuilding = true;
+		type = Entity::entityType::BARRACKS;
+		//collider.dimensions = { 3,4 };
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:

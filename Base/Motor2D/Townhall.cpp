@@ -42,7 +42,8 @@ Townhall::Townhall(bool isPlayer1, pair<int,int> pos) : Entity(entityType::TOWNH
 	size.first = config.child("size").attribute("width").as_int();
 	size.first = config.child("size").attribute("height").as_int();
 
-	name = "Townhall";
+	name = config.child("name").attribute("string").as_string();
+
 	level = 1;
 	fromPlayer1 = isPlayer1;
 	position = pos;

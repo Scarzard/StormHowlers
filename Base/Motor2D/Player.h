@@ -84,6 +84,7 @@ public:
 	string team;
 	uint gold;
 	uint currentUI;
+	int actual_capacity;
 
 	Cursor cursor;
 	GamePad gamepad;

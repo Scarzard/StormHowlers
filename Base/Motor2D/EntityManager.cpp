@@ -120,6 +120,7 @@ void EntityManager::DeleteAllEntities()
 	list<Entity*>::iterator	tmp = App->player1->buildings.begin();
 	while (tmp != App->player1->buildings.end())
 	{
+		(*tmp)->CleanUp();
 		RELEASE(*tmp);
 		tmp++;
 	}
@@ -129,6 +130,7 @@ void EntityManager::DeleteAllEntities()
 	tmp = App->player2->buildings.begin();
 	while (tmp != App->player2->buildings.end())
 	{
+		(*tmp)->CleanUp();
 		RELEASE(*tmp);
 		tmp++;
 	}
@@ -174,7 +176,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		break;
 
 	case Entity::entityType::WALLS:
-		//tmp = new Wall(isPlayer1, position);
+		tmp = new Walls(isPlayer1, position);
 		break;
 
 	case Entity::entityType::DEFENSE_AOE:
@@ -186,11 +188,11 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		break;
 
 	case Entity::entityType::MINES:
-		//tmp = new Mines(isPlayer1, position);
+		tmp = new Mines(isPlayer1, position);
 		break;
 
 	case Entity::entityType::BARRACKS:
-		//tmp = new Barracks(isPlayer1, position);
+		tmp = new Barracks(isPlayer1, position);
 		break;
 	}
 
