@@ -208,6 +208,7 @@ bool Scene::Start()
 	// timer start
 	world_clock.Start();
 	world_seconds.Start();
+	size_timer.Start();
 
 	return true;
 }
@@ -283,14 +284,50 @@ bool Scene::Update(float dt)
 			world_clock.Start();
 		}
 	}
-	if (world_clock.ReadSec() >= 5 && world_clock.ReadSec() <= 8)
+
+	ui_timer->visible = true;
+
+	if (ui_timer->visible == true && change_font_size==true)
+	{
+		if (increase_size == true && App->font->size<60 )
+		{
+			App->font->size++;
+			App->font->default = App->font->Load(App->font->path, App->font->size);
+			
+		}
+		else if(increase_size == false && App->font->size >=0 )
+		{
+			App->font->size--;
+			App->font->default = App->font->Load(App->font->path, App->font->size);
+		
+		}
+		
+		
+		if (size_timer.ReadSec() >= 5)
+		{
+			size_timer.Start();
+			increase_size = !increase_size;
+			if (increase_size == true)
+			{
+				App->font->size = 0;
+			}
+			else if (increase_size==false)
+			{
+				App->font->size = 60;
+			}
+		}
+		
+	}
+
+
+	/*if ((world_clock.ReadSec() >= 6 && world_clock.ReadSec() <= 10) || (world_clock.ReadSec() >= 16 && world_clock.ReadSec() <= 20 ))
 	{
 		ui_timer->visible = false;
-	}
-	if (world_clock.ReadSec() >= 8)
-	{
-		ui_timer->visible = true;
-	}
+		App->font->size = App->font->default_size;
+		increase_size = true;
+	}*/
+	
+		
 
 	//----
 	App->map->Draw(dt);
@@ -317,24 +354,26 @@ bool Scene::PostUpdate()
 	list<UI_Element*>::reverse_iterator item = App->player1->UI_elements.rbegin();
 	while (item != App->player1->UI_elements.rend())
 	{
-		if ((*item)->visible == true)
+		// timer test
+		if ((*item) == ui_timer /*&& pause == false*/) //timer
 		{
-			// timer test
-			if ((*item) == ui_timer /*&& pause == false*/) //timer
-			{
-			
 
-				if (world_seconds.ReadSec() >= 1)
-				{
-					world_seconds.Start();
-					countdown++;
-				}
-				
-				sprintf_s(current_time, "TIME: %u", countdown);
-				(*item)->label = current_time;
-				break;
+
+			if (world_seconds.ReadSec() >= 1)
+			{
+				world_seconds.Start();
+				countdown++;
 			}
-			//
+
+			sprintf_s(current_time, "TIME: %u", countdown);
+			(*item)->label = current_time;
+			break;
+		}
+		//
+		
+		else if ((*item)->visible == true)
+		{
+			
 			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) ||
 				(App->player1->CheckCursorPos(*item) == true && App->player1->gamepad.Controller[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
 			{
@@ -519,6 +558,11 @@ void Scene::SpawnEntities() //
 	//player->Awake(config.child(App->entitymanager->name.data()));
 	//player->Start();
 }
+
+//void Scene::changeSize(float time, int maxsize)
+//{
+//	Timer time
+//}
 
 
 void Scene::SpawnEnemies() //

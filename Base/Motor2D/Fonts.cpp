@@ -30,8 +30,9 @@ bool Fonts::Awake(pugi::xml_node& conf)
 	}
 	else
 	{
-		const char* path = conf.child("default_font").attribute("file").as_string(DEFAULT_FONT);
-		int size = conf.child("default_font").attribute("size").as_int(DEFAULT_FONT_SIZE);
+		path = conf.child("default_font").attribute("file").as_string(DEFAULT_FONT);
+		size = conf.child("default_font").attribute("size").as_int(DEFAULT_FONT_SIZE);
+		default_size = size;
 		default = Load(path, size);
 	}
 
@@ -103,3 +104,4 @@ bool Fonts::CalcSize(const char* text, int& width, int& height, _TTF_Font* font)
 
 	return ret;
 }
+

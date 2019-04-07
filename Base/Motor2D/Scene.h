@@ -46,6 +46,9 @@ public:
 	void SpawnEnemies();
 	void SpawnEntities();
 
+
+	//void changeSize(float time, int maxsize);
+
 public:
 	vector<string*> map_names;
 	float fade_time;
@@ -65,8 +68,11 @@ public:
 
 	Timer world_clock;
 	Timer world_seconds;
+	Timer size_timer;
 	char current_time[20] = "TIME: 000";
 	uint countdown=0;
+	bool increase_size = true;
+	bool change_font_size = true;
 
 private:
 	SDL_Texture* debug_tex;
