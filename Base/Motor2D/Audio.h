@@ -10,12 +10,12 @@ struct Mix_Chunk;
 
 enum FX
 {
-	WIN = 1,
-	DEAD,
-	GAME_OVER,
-	COIN,
-	CLICK,
-	LOCKED
+	MIN10 = 1,
+	MIN5,
+	MIN1,
+	TIMERSTART,
+	TIMERSTOP,
+	MIN3
 };
 
 class Audio : public Module

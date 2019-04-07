@@ -294,6 +294,7 @@ bool Scene::Update(float dt)
 	{
 		change_font_size = true;
 		ui_timer->visible = true;
+		
 	
 	}
 	
@@ -305,9 +306,21 @@ bool Scene::Update(float dt)
 		{
 			size_timer.Start();
 			increase_size = true;
+			if ((world_clock.ReadSec() >= 0 && world_clock.ReadSec() <= 10))
+			{
+				//App->audio->PlayFx(MIN10);
+			}
+			else if ((world_clock.ReadSec() >= 20 && world_clock.ReadSec() <= 30))
+			{
+				//App->audio->PlayFx(MIN5);
+			}
+			else if ((world_clock.ReadSec() >= 40 && world_clock.ReadSec() <= 80))
+			{
+				App->audio->PlayFx(MIN1);
+			}
 		}
 
-		else if (size_timer.ReadSec() <=11)
+		if (size_timer.ReadSec() <=11)
 		{
 			if (increase_size == true && App->font->size < 60)
 			{
