@@ -78,6 +78,7 @@ public:
 	bool change_font_size = false;
 	bool reference_active = false;
 	bool pausetimer = false;
+	
 
 private:
 	SDL_Texture* debug_tex;

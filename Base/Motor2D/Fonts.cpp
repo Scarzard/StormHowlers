@@ -33,7 +33,17 @@ bool Fonts::Awake(pugi::xml_node& conf)
 		path = conf.child("default_font").attribute("file").as_string(DEFAULT_FONT);
 		size = conf.child("default_font").attribute("size").as_int(DEFAULT_FONT_SIZE);
 		default_size = size;
-		default = Load(path, size);
+		
+		for (int i = 1; i<=60; i++)
+		{
+			Load(path, i);
+			if (i == DEFAULT_FONT_SIZE)
+			{
+				default = Load(path, size);
+				actual_font = default;
+			}
+		}
+		
 	}
 
 	return ret;

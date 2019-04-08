@@ -205,6 +205,7 @@ bool Scene::Start()
 	//-----------
 	SpawnEntities();
 
+	App->font->font_iterator = App->font->fonts.begin();
 	// timer start
 	world_clock.Start();
 	world_seconds.Start();
@@ -311,6 +312,8 @@ bool Scene::Update(float dt)
 		{
 			size_timer.Start();
 			increase_size = true;
+			App->font->font_iterator = App->font->fonts.begin();
+			App->font->size = 17;
 			if ((worldseconds >= 0 && worldseconds <= 10))
 			{
 				App->audio->PlayFx(MIN10);
@@ -327,19 +330,22 @@ bool Scene::Update(float dt)
 
 		if (size_timer_count<=11)
 		{
-			if (increase_size == true && App->font->size < 60)
+			if (increase_size == true && App->font->size < 61)
 			{
 				App->font->size++;
-				App->font->default = App->font->Load(App->font->path, App->font->size);
-				//unload?
+				//App->font->default = App->font->Load(App->font->path, App->font->size);
+				
+				App->font->actual_font = *App->font->font_iterator;
+				App->font->font_iterator++;
 
 			}
-			else if (increase_size == false && App->font->size >= 0)
+			else if (increase_size == false && App->font->size > 15)
 			{
 				App->font->size--;
-				App->font->default = App->font->Load(App->font->path, App->font->size);
+				//App->font->default = App->font->Load(App->font->path, App->font->size);
 
-				//unload?
+				App->font->actual_font = *App->font->font_iterator;
+				App->font->font_iterator--;
 
 			}
 

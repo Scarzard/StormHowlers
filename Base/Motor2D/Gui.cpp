@@ -116,7 +116,15 @@ bool Gui::Draw()
 	{
 		if ((*UI_elem)->visible == true)
 		{
-			if ((*UI_elem)->type == UI_Element::UI_type::LABEL) //text
+			if ((*UI_elem)->type == UI_Element::UI_type::LABEL && (*UI_elem)==App->scene->ui_timer) //timer
+			{
+				App->tex->UnLoad((*UI_elem)->texture);
+				(*UI_elem)->texture = App->font->Print((*UI_elem)->label, (*UI_elem)->color,App->font->actual_font);
+				App->font->CalcSize((*UI_elem)->label, (*UI_elem)->size.first, (*UI_elem)->size.second);
+
+				App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
+			}
+			else if ((*UI_elem)->type == UI_Element::UI_type::LABEL) //text
 			{
 				App->tex->UnLoad((*UI_elem)->texture);
 				(*UI_elem)->texture = App->font->Print((*UI_elem)->label, (*UI_elem)->color);

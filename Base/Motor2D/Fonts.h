@@ -37,6 +37,8 @@ public:
 
 	list<_TTF_Font*>	fonts;
 	_TTF_Font*			default;
+	_TTF_Font*			actual_font = nullptr;
+	list<_TTF_Font*>::iterator font_iterator;
 	unsigned int size = 0;
 	int default_size = 0;
 	const char* path = nullptr;
