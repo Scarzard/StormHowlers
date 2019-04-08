@@ -292,11 +292,10 @@ bool Scene::Update(float dt)
 		}
 	}
 
-	ui_timer->visible = false;
 	reference_active = change_font_size;
 	
 
-	if ((worldseconds >= 0 && worldseconds <= 10) || (worldseconds >= 20 && worldseconds <= 30) || (worldseconds >= 40 && worldseconds <= 60) && pausetimer==false)
+	if (((worldseconds >= 0 && worldseconds <= 1) && worldminutes==0) || ((worldseconds >= 0 && worldseconds <= 1) && worldminutes == 5 ) || (worldseconds >=0 && worldseconds <= 1 && worldminutes == 7) || (worldseconds >= 0 && worldseconds <= 1 && worldminutes == 9) && pausetimer==false)
 	{
 		change_font_size = true;
 		ui_timer->visible = true;
@@ -305,36 +304,39 @@ bool Scene::Update(float dt)
 	}
 	
 	
+	
 	if (ui_timer->visible == true && change_font_size == true && pausetimer ==false)
 	{
 		
 		if (reference_active != change_font_size)
 		{
-			size_timer.Start();
+			
 			increase_size = true;
 			App->font->font_iterator = App->font->fonts.begin();
 			App->font->size = 17;
-			if ((worldseconds >= 0 && worldseconds <= 10))
+			if ((worldseconds <= 1) && worldminutes==0 )
 			{
 				App->audio->PlayFx(MIN10);
 			}
-			else if ((worldseconds >= 20 && worldseconds <= 30))
+			else if ((worldseconds <= 1) && worldminutes == 5)
 			{
 				App->audio->PlayFx(MIN5);
 			}
-			else if ((worldseconds >= 40 && worldseconds <= 60))
+			else if ((worldseconds <= 1) && worldminutes == 7)
+			{
+				App->audio->PlayFx(MIN3);
+			} 
+			else if ((worldseconds <= 1)&& worldminutes == 9)
 			{
 				App->audio->PlayFx(MIN1);
 			}
 		}
 
-		if (size_timer_count<=11)
+		if (worldseconds <=15)
 		{
 			if (increase_size == true && App->font->size < 61)
 			{
 				App->font->size++;
-				//App->font->default = App->font->Load(App->font->path, App->font->size);
-				
 				App->font->actual_font = *App->font->font_iterator;
 				App->font->font_iterator++;
 
@@ -342,20 +344,17 @@ bool Scene::Update(float dt)
 			else if (increase_size == false && App->font->size > 15)
 			{
 				App->font->size--;
-				//App->font->default = App->font->Load(App->font->path, App->font->size);
-
 				App->font->actual_font = *App->font->font_iterator;
 				App->font->font_iterator--;
 
 			}
 
 
-			if (size_timer_count >= 9 && increase_size==true)
+			if (worldseconds >= 10 && increase_size==true)
 			{
-				size_timer.Start();
+				
 				increase_size = !increase_size;
 				increase_decresease++;
-				size_timer_count = 0;
 				if (increase_size == true)
 				{
 					App->font->size = 0;
@@ -365,28 +364,20 @@ bool Scene::Update(float dt)
 					App->font->size = 60;
 				}
 			}
-			else if (size_timer_count >= 3 && increase_size == false)
+			else if (worldseconds >= 15 && increase_size == false)
 			{
-				size_timer.Start();
-				increase_size = !increase_size;
 				increase_decresease++;
-				size_timer_count = 0;
-				if (increase_size == true)
-				{
-					App->font->size = 0;
-				}
-				else if (increase_size == false)
-				{
-					App->font->size = 60;
-				}
 			}
+			
 
-			 if (increase_decresease>=2)
+			 if (increase_decresease>=2 )
 			{
 				change_font_size = false;
 				reference_active = false;
 				increase_size = true;
 				increase_decresease = 0;
+				ui_timer->visible = false;
+			
 				
 			}
 		}
@@ -421,8 +412,8 @@ bool Scene::PostUpdate()
 	list<UI_Element*>::reverse_iterator item = App->player1->UI_elements.rbegin();
 	while (item != App->player1->UI_elements.rend())
 	{
-		// timer test
-		if ((*item) == ui_timer && pausetimer == false) //timer
+		// timer 
+		if ((*item) == ui_timer && pausetimer == false) 
 		{
 
 
@@ -440,6 +431,7 @@ bool Scene::PostUpdate()
 				if (size_timer.runningRead() == true && size_timer.ReadSec() >=1)
 				{
 					size_timer_count++;
+					size_timer.Start();
 				}
 
 			}
