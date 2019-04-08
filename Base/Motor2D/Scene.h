@@ -3,6 +3,9 @@
 
 #include "Module.h"
 #include "UI_Element.h"
+#include <stdio.h>
+
+
 
 struct SDL_Texture;
 
@@ -43,6 +46,9 @@ public:
 	void SpawnEnemies();
 	void SpawnEntities();
 
+
+	//void changeSize(float time, int maxsize);
+
 public:
 	vector<string*> map_names;
 	float fade_time;
@@ -58,8 +64,27 @@ public:
 	string current_track;
 	string current_fx;
 
+
 	//testing animation
 	SDL_Texture* spritesheet123 = nullptr;
+
+//timer elements
+	UI_Element* ui_timer;
+
+	Timer world_clock;
+	Timer world_seconds;
+	Timer size_timer;
+	char current_time[20] = "TIME: 000";
+	uint worldminutes=0;
+	uint worldseconds=0;
+	uint size_timer_count = 0;
+	int increase_decresease = 0;
+	bool increase_size = true;
+	bool change_font_size = false;
+	bool reference_active = false;
+	bool pausetimer = false;
+	
+
 
 private:
 	SDL_Texture* debug_tex;
