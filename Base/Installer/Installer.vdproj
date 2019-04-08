@@ -76,12 +76,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_4718C63521184378BD0B94E235519EAB"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_4BBE32302726438F97EEF9847D5A006F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -178,6 +172,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_BA13D6D9A25A48F4A4F20E168A2CC6A1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_CF2CE6988CEC4C75BB786B621D602F5C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -215,6 +215,12 @@
         "Entry"
         {
         "MsmKey" = "8:_DE897933BFF04E2DA26E004D959EDFB4"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DF64CDDF367940CD997AE1ADF3D04136"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -535,26 +541,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4718C63521184378BD0B94E235519EAB"
-            {
-            "SourcePath" = "8:..\\Game\\textures\\CNCRA2.ico"
-            "TargetName" = "8:CNCRA2.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_120E0BD35E284DB98BB5A7BBA1277E2F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4CBB235B239B4062BD69F462F4C4AC29"
             {
             "SourcePath" = "8:..\\Game\\libmodplug-1.dll"
@@ -855,6 +841,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BA13D6D9A25A48F4A4F20E168A2CC6A1"
+            {
+            "SourcePath" = "8:..\\Game\\textures\\CNCRA2.ico"
+            "TargetName" = "8:CNCRA2.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_C6989611AF0B424EA67EBA1A31AF5B7A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CF2CE6988CEC4C75BB786B621D602F5C"
             {
             "SourcePath" = "8:..\\Game\\textures\\Cursors.png"
@@ -979,6 +985,26 @@
             {
             "SourcePath" = "8:..\\Game\\SDL2_image.dll"
             "TargetName" = "8:SDL2_image.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_120E0BD35E284DB98BB5A7BBA1277E2F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DF64CDDF367940CD997AE1ADF3D04136"
+            {
+            "SourcePath" = "8:..\\Game\\License.rtf"
+            "TargetName" = "8:License.rtf"
             "Tag" = "8:"
             "Folder" = "8:_120E0BD35E284DB98BB5A7BBA1277E2F"
             "Condition" = "8:"
@@ -1205,7 +1231,7 @@
             {
             "Name" = "8:#1916"
             "AlwaysCreate" = "11:FALSE"
-            "Condition" = "8:"
+            "Condition" = "8:CHECKBOXA1"
             "Transitive" = "11:FALSE"
             "Property" = "8:DesktopFolder"
                 "Folders"
@@ -1225,7 +1251,7 @@
                     {
                     "Name" = "8:CommandandConquerRedAlert2"
                     "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
+                    "Condition" = "8:Checkbox1"
                     "Transitive" = "11:FALSE"
                     "Property" = "8:_651C3E3957EB49A594F9DE87DC653F6F"
                         "Folders"
@@ -1251,7 +1277,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Command And Conquer Red Alert 2"
         "ProductCode" = "8:{E2816032-0AAE-45C8-A25E-FCDCC2FC6D9B}"
-        "PackageCode" = "8:{C91C0E70-D4D7-4140-90CA-0274AE4B270C}"
+        "PackageCode" = "8:{1918F3A7-3210-40F5-B6BF-D073E1B9787C}"
         "UpgradeCode" = "8:{0516C8FC-694E-471F-BFDE-7230462B0796}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -1268,7 +1294,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:Command and Conquer Red Alert 2"
         "ARPURLINFOABOUT" = "8:https://github.com/Scarzard/StormHowlers"
-        "ARPPRODUCTICON" = "8:_4718C63521184378BD0B94E235519EAB"
+        "ARPPRODUCTICON" = "8:_BA13D6D9A25A48F4A4F20E168A2CC6A1"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -1382,7 +1408,7 @@
             "Target" = "8:_4BBE32302726438F97EEF9847D5A006F"
             "Folder" = "8:_31E426CDBA994932B22638F0FC3F2899"
             "WorkingFolder" = "8:_120E0BD35E284DB98BB5A7BBA1277E2F"
-            "Icon" = "8:_4718C63521184378BD0B94E235519EAB"
+            "Icon" = "8:_BA13D6D9A25A48F4A4F20E168A2CC6A1"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_AF922DB3FD284640A98695DB660423FE"
@@ -1396,7 +1422,7 @@
             "Target" = "8:_4BBE32302726438F97EEF9847D5A006F"
             "Folder" = "8:_374F7636F4424F6B82D2E10FC0249AA1"
             "WorkingFolder" = "8:_120E0BD35E284DB98BB5A7BBA1277E2F"
-            "Icon" = "8:_4718C63521184378BD0B94E235519EAB"
+            "Icon" = "8:_BA13D6D9A25A48F4A4F20E168A2CC6A1"
             "Feature" = "8:"
             }
         }
@@ -1604,6 +1630,53 @@
             "Attributes" = "3:1"
                 "Dialogs"
                 {
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_1ABC40847DBE458381DB6949B3D81B65"
+                    {
+                    "Sequence" = "3:110"
+                    "DisplayName" = "8:License Agreement"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdLicenseDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "EulaText"
+                            {
+                            "Name" = "8:EulaText"
+                            "DisplayName" = "8:#1008"
+                            "Description" = "8:#1108"
+                            "Type" = "3:6"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:_DF64CDDF367940CD997AE1ADF3D04136"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Sunken"
+                            {
+                            "Name" = "8:Sunken"
+                            "DisplayName" = "8:#1007"
+                            "Description" = "8:#1107"
+                            "Type" = "3:5"
+                            "ContextData" = "8:4;True=4;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:4"
+                            "DefaultValue" = "3:4"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_863D9E2DB8FE483786C1F08BB27BFCA2"
                     {
                     "Sequence" = "3:100"
@@ -1800,7 +1873,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4BBE32302726438F97EEF9847D5A006F"
             {
-            "SourcePath" = "8:..\\Debug\\Base.exe"
+            "SourcePath" = "8:..\\Release\\Base.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_120E0BD35E284DB98BB5A7BBA1277E2F"
