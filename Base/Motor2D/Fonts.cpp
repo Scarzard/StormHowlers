@@ -36,12 +36,17 @@ bool Fonts::Awake(pugi::xml_node& conf)
 		
 		for (int i = 1; i<=60; i++)
 		{
-			Load(path, i);
+			
 			if (i == DEFAULT_FONT_SIZE)
 			{
 				default = Load(path, size);
 				actual_font = default;
 			}
+			else
+			{
+				Load(path, i);
+			}
+
 		}
 		
 	}
