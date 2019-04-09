@@ -175,6 +175,7 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 	{
 		App->input->GetMousePosition(pos.first, pos.second);
 	}
+	pos = App -> render->ScreenToWorld(pos.first, pos.second);
 	pos = App->map->WorldToMap(pos.first, pos.second);
 	pos.first--;
 

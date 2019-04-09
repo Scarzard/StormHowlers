@@ -252,6 +252,7 @@ void MainApp::FinishUpdate()
 
 	pair<int, int> pos;
 	App->input->GetMousePosition(pos.first, pos.second);
+	pos = App -> render->ScreenToWorld(pos.first, pos.second);
 	pos = App->map->WorldToMap(pos.first, pos.second);
 
 	static char title[128];

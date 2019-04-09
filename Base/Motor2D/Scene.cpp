@@ -272,6 +272,10 @@ bool Scene::Update(float dt)
 		App->map->debug = !App->map->debug;
 		App->entitymanager->draw_path = !App->entitymanager->draw_path;
 	}
+	else if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT) //View colliders
+	{
+		App->render->camera.x+=5;
+	}
 	//else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) //Godmode
 	//{
 	//	godmode = !godmode;
