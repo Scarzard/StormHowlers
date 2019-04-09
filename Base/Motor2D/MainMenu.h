@@ -49,8 +49,13 @@ public:
 	UI_Element* new_game_button;
 	UI_Element* new_game_text;
 
+	UI_Element* exit_button;
+	UI_Element* exit_text;
+
 	string current_track;
 	string current_fx;
+private:
+	bool close_app = true;
 };
 
 #endif // __j1MAIN_MENU_H__

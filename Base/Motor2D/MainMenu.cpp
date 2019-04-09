@@ -38,11 +38,13 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool MainMenu::Start()
 {
-	menu_background = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { App->win->width, App->win->height }, nullptr, true);
+	menu_background = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
 	menu_background->texture = App->tex->Load(menu_bg_file_name);
 	menu_background->rect = { 0, 0,  App->win->width, App->win->height };
 
-	new_game_button = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 115,2 }, { 39,40 }, menu_background, true);
+	new_game_button = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 115, 2 }, { 39, 40 }, menu_background, true);
+
+	exit_button = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 0, 0 }, { 39, 40 }, menu_background, true);
 
 	return true;
 }
@@ -71,7 +73,6 @@ bool MainMenu::Update(float dt)
 		App->scenechange->SwitchScene(App->scene, App->main_menu);
 	}
 
-
 	App->render->Blit(menu_background->texture, 0, 0, &menu_background->rect, SDL_FLIP_NONE, 0);
 
 	App->gui->Draw();
@@ -83,8 +84,7 @@ bool MainMenu::Update(float dt)
 bool MainMenu::PostUpdate()
 {
 	BROFILER_CATEGORY("Main Menu PostUpdate", Profiler::Color::AliceBlue);
-	bool ret = true;
-
+	
 	//--- Update GUI
 	list<UI_Element*>::reverse_iterator item = App->gui->UI_elements.rbegin();
 	while (item != App->gui->UI_elements.rend())
@@ -146,7 +146,7 @@ bool MainMenu::PostUpdate()
 	}
 
 
-	return ret;
+	return close_app;
 }
 
 // Called before quitting
@@ -186,12 +186,11 @@ void MainMenu::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::EXIT:
-		
+		close_app = false;
 		break;
 
 	case::UI_Element::Action::WEBPAGE:
-		ShellExecuteA(NULL, "open", "https://github.com/Scarzard/StormHowlers",
-			NULL, NULL, SW_SHOWNORMAL);
+		ShellExecuteA(NULL, "open", "https://github.com/Scarzard/StormHowlers", NULL, NULL, SW_SHOWNORMAL);
 		break;
 	}
 }
