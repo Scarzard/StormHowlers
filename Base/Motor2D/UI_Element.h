@@ -56,6 +56,7 @@ public:
 		CONTINUE,
 		SETTINGS,
 		WEBPAGE,
+		EXIT
 	};
 
 	enum State

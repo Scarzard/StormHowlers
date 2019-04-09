@@ -33,6 +33,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void UpdateVisibility(PlayerUI player);
+	void DoLogic(UI_Element* data);
 
 
 public:

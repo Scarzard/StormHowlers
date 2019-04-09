@@ -74,7 +74,6 @@ bool MainMenu::Update(float dt)
 
 	App->render->Blit(menu_background->texture, 0, 0, &menu_background->rect, SDL_FLIP_NONE, 0);
 
-	
 	App->gui->Draw();
 	
 	return true;
@@ -105,7 +104,18 @@ bool MainMenu::PostUpdate()
 					{
 						//App->audio->PlayFx(LOCKED);
 					}
-					
+					else
+					{
+						//App->audio->PlayFx(CLICK);
+						if ((*item)->globalpos.second < App->win->height / 2) //is in top of the screen = P1
+						{
+							DoLogic(*item);
+						}
+						else if ((*item)->globalpos.second > App->win->height / 2) //is in bottom of the screen = P2
+						{
+							DoLogic(*item);
+						}
+					}
 				}
 				else //drag
 				{
@@ -145,4 +155,43 @@ bool MainMenu::CleanUp()
 	LOG("Freeing Main Menu");
 
 	return true;
+}
+
+void MainMenu::UpdateVisibility(PlayerUI player) // Update GUI Visibility
+{
+	/*switch (player.currentUI)
+	{
+	case::Scene::CURRENT_UI::CURR_MAIN:
+
+	}*/
+	App->gui->UpdateChildren();
+}
+
+void MainMenu::DoLogic(UI_Element* data)
+{
+	switch (data->action)
+	{
+		//---- Main menu buttons
+	case::UI_Element::Action::NEW_GAME:
+		App->scenechange->ContinueGame = true;
+		App->scenechange->SwitchScene(App->scene, App->main_menu);
+		break;
+
+	case::UI_Element::Action::CONTINUE:
+		//
+		break;
+
+	case::UI_Element::Action::SETTINGS:
+		//
+		break;
+
+	case::UI_Element::Action::EXIT:
+		
+		break;
+
+	case::UI_Element::Action::WEBPAGE:
+		ShellExecuteA(NULL, "open", "https://github.com/Scarzard/StormHowlers",
+			NULL, NULL, SW_SHOWNORMAL);
+		break;
+	}
 }
