@@ -276,6 +276,15 @@ bool Scene::Update(float dt)
 	{
 		App->render->camera.x+=5;
 	}
+	else if (App->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT) //View colliders
+	{
+		App->render->zoom += 0.01f;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) //View colliders
+	{
+		App->render->zoom -= 0.01f;
+	}
+
 	//else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) //Godmode
 	//{
 	//	godmode = !godmode;

@@ -50,6 +50,8 @@ public:
 	SDL_Rect		camera;
 	SDL_Rect		viewport;
 	SDL_Color		background;
+
+	float			zoom = 1.0f;
 };
 
 #endif // __Render_H__

@@ -139,8 +139,8 @@ pair<int,int> Render::ScreenToWorld(int x, int y) const
 {
 	pair<int,int> ret;
 	int scale = App->win->GetScale();
-	ret.first = (x - camera.x / scale);
-	ret.second = (y - camera.y / scale);
+	ret.first = (x - camera.x / scale)/zoom;
+	ret.second = (y - camera.y / scale)/zoom;
 	return ret;
 }
 
@@ -151,8 +151,8 @@ bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, S
 	uint scale = App->win->GetScale();
 
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x * scale;
-	rect.y = (int)(camera.y * speed) + y * scale;
+	rect.x = (int)(camera.x * speed) + x * scale * zoom;
+	rect.y = (int)(camera.y * speed) + y * scale * zoom;
 
 	if(section != NULL)
 	{
@@ -164,8 +164,8 @@ bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, S
 		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 	}
 
-	rect.w *= scale;
-	rect.h *= scale;
+	rect.w *= scale * zoom;
+	rect.h *= scale * zoom;
 
 	SDL_Point* p = NULL;
 	SDL_Point pivot;
