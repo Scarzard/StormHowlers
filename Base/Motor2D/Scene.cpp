@@ -92,7 +92,9 @@ bool Scene::Start()
 	App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, { 50,50 });
 	App->entitymanager->AddEntity(false, Entity::entityType::WALLS, { 50,50 });
 
-	
+	string track = App->audio->folder_music + "/Test.ogg"; 
+	App->audio->PlayMusic(track.c_str()); 
+
 	//--------- CREATE GUI -----------//  (Falta poner position y size)
 	ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { App->win->width / 2 - 80 ,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
 	ui_timer->color = { 250,250,250,250 };

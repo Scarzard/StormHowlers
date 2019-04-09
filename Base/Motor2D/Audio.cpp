@@ -1,11 +1,16 @@
 #include "Defs.h"
 #include "Log.h"
 #include "App.h"
+#include "Scene.h"
 #include "Audio.h"
 
 #include "SDL/include/SDL.h"
 #include "SDL_mixer\include\SDL_mixer.h"
 #pragma comment( lib, "SDL_mixer/libx86/SDL2_mixer.lib" )
+
+#define SONG0_BEGIN_TIME 0
+#define SONG1_BEGIN_TIME 3
+#define SONG3_BEGIN_TIME 5
 
 Audio::Audio() : Module()
 {
@@ -79,6 +84,20 @@ bool Audio::Awake(pugi::xml_node& config)
 	}
 
 	return ret;
+}
+
+bool Audio::Update(float dt)
+{
+	if (App->scene->worldseconds > SONG1_BEGIN_TIME && App->scene->worldseconds < SONG3_BEGIN_TIME && song1played == false) {
+		string track = App->audio->folder_music + "/Test2.ogg"; 
+		App->audio->PlayMusic(track.c_str());
+		song1played = true; 
+	}
+
+
+
+
+	return true;
 }
 
 // Called before quitting

@@ -30,6 +30,9 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 
+	// Called every frame 
+	bool Update(float dt); 
+
 	// Called before quitting
 	bool CleanUp();
 
@@ -45,6 +48,9 @@ public:
 	void AdjustMusicVol(int value);
 	void AdjustSoundVol(int value);
 	void PauseMusic();
+
+	bool song1played = false;
+	bool song2played = false;
 
 public:
 	string			folder_music;
