@@ -107,11 +107,7 @@ bool MainMenu::PostUpdate()
 					else
 					{
 						//App->audio->PlayFx(CLICK);
-						if ((*item)->globalpos.second < App->win->height / 2) //is in top of the screen = P1
-						{
-							DoLogic(*item);
-						}
-						else if ((*item)->globalpos.second > App->win->height / 2) //is in bottom of the screen = P2
+						if ((*item)->globalpos.second < App->win->height) 
 						{
 							DoLogic(*item);
 						}
