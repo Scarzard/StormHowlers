@@ -1,0 +1,103 @@
+\hypertarget{class_animation}{}\section{Animation Class Reference}
+\label{class_animation}\index{Animation@{Animation}}
+
+
+{\ttfamily \#include $<$Animation.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_animation}{Animation}} $\ast$ \mbox{\hyperlink{class_animation_a0d759aa2e42ea4f5192be298a8806d00}{Load\+Animation}} (const char $\ast$animation\+Path, const char $\ast$animation\+Name)
+\item 
+void \mbox{\hyperlink{class_animation_adff0991c58fb4e828ac9e4be2c05721a}{Push\+Back}} (const S\+D\+L\+\_\+\+Rect \&rect)
+\item 
+S\+D\+L\+\_\+\+Rect \& \mbox{\hyperlink{class_animation_a5d5417269b6065e251830ff1b8eaaf7e}{Get\+Current\+Frame}} (float dt)
+\item 
+bool \mbox{\hyperlink{class_animation_a792f854c907ce8ff6124d52aaad29277}{Finished}} () const
+\item 
+void \mbox{\hyperlink{class_animation_aa78f45d8a9f69eaed31031febb722594}{Reset}} ()
+\item 
+void \mbox{\hyperlink{class_animation_a31c11cf5d995a649502f26725f30670d}{Reset\+Loops}} ()
+\item 
+int \mbox{\hyperlink{class_animation_af2eaa1fed2dd359a1aa1743e204e9b30}{Get\+Last\+Frame}} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_animation_a951ff207e048c16b7c5dde293eb5419b}{loop}} = true
+\item 
+float \mbox{\hyperlink{class_animation_a68079384a94a0ebdba03241f1937608e}{speed}} = 1.\+0f
+\item 
+S\+D\+L\+\_\+\+Rect \mbox{\hyperlink{class_animation_af42671d4f015c2a11bf4af178ed357e0}{frames}} \mbox{[}\mbox{\hyperlink{_animation_8h_a5b4055201d2d8170e179b1ceaa438b9c}{M\+A\+X\+\_\+\+F\+R\+A\+M\+ES}}\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_animation_a792f854c907ce8ff6124d52aaad29277}\label{class_animation_a792f854c907ce8ff6124d52aaad29277}} 
+\index{Animation@{Animation}!Finished@{Finished}}
+\index{Finished@{Finished}!Animation@{Animation}}
+\subsubsection{\texorpdfstring{Finished()}{Finished()}}
+{\footnotesize\ttfamily bool Animation\+::\+Finished (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_animation_a5d5417269b6065e251830ff1b8eaaf7e}\label{class_animation_a5d5417269b6065e251830ff1b8eaaf7e}} 
+\index{Animation@{Animation}!GetCurrentFrame@{GetCurrentFrame}}
+\index{GetCurrentFrame@{GetCurrentFrame}!Animation@{Animation}}
+\subsubsection{\texorpdfstring{GetCurrentFrame()}{GetCurrentFrame()}}
+{\footnotesize\ttfamily S\+D\+L\+\_\+\+Rect\& Animation\+::\+Get\+Current\+Frame (\begin{DoxyParamCaption}\item[{float}]{dt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_animation_af2eaa1fed2dd359a1aa1743e204e9b30}\label{class_animation_af2eaa1fed2dd359a1aa1743e204e9b30}} 
+\index{Animation@{Animation}!GetLastFrame@{GetLastFrame}}
+\index{GetLastFrame@{GetLastFrame}!Animation@{Animation}}
+\subsubsection{\texorpdfstring{GetLastFrame()}{GetLastFrame()}}
+{\footnotesize\ttfamily int Animation\+::\+Get\+Last\+Frame (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_animation_a0d759aa2e42ea4f5192be298a8806d00}\label{class_animation_a0d759aa2e42ea4f5192be298a8806d00}} 
+\index{Animation@{Animation}!LoadAnimation@{LoadAnimation}}
+\index{LoadAnimation@{LoadAnimation}!Animation@{Animation}}
+\subsubsection{\texorpdfstring{LoadAnimation()}{LoadAnimation()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_animation}{Animation}}$\ast$ Animation\+::\+Load\+Animation (\begin{DoxyParamCaption}\item[{const char $\ast$}]{animation\+Path,  }\item[{const char $\ast$}]{animation\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_animation_adff0991c58fb4e828ac9e4be2c05721a}\label{class_animation_adff0991c58fb4e828ac9e4be2c05721a}} 
+\index{Animation@{Animation}!PushBack@{PushBack}}
+\index{PushBack@{PushBack}!Animation@{Animation}}
+\subsubsection{\texorpdfstring{PushBack()}{PushBack()}}
+{\footnotesize\ttfamily void Animation\+::\+Push\+Back (\begin{DoxyParamCaption}\item[{const S\+D\+L\+\_\+\+Rect \&}]{rect }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_animation_aa78f45d8a9f69eaed31031febb722594}\label{class_animation_aa78f45d8a9f69eaed31031febb722594}} 
+\index{Animation@{Animation}!Reset@{Reset}}
+\index{Reset@{Reset}!Animation@{Animation}}
+\subsubsection{\texorpdfstring{Reset()}{Reset()}}
+{\footnotesize\ttfamily void Animation\+::\+Reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_animation_a31c11cf5d995a649502f26725f30670d}\label{class_animation_a31c11cf5d995a649502f26725f30670d}} 
+\index{Animation@{Animation}!ResetLoops@{ResetLoops}}
+\index{ResetLoops@{ResetLoops}!Animation@{Animation}}
+\subsubsection{\texorpdfstring{ResetLoops()}{ResetLoops()}}
+{\footnotesize\ttfamily void Animation\+::\+Reset\+Loops (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_animation_af42671d4f015c2a11bf4af178ed357e0}\label{class_animation_af42671d4f015c2a11bf4af178ed357e0}} 
+\index{Animation@{Animation}!frames@{frames}}
+\index{frames@{frames}!Animation@{Animation}}
+\subsubsection{\texorpdfstring{frames}{frames}}
+{\footnotesize\ttfamily S\+D\+L\+\_\+\+Rect Animation\+::frames\mbox{[}\mbox{\hyperlink{_animation_8h_a5b4055201d2d8170e179b1ceaa438b9c}{M\+A\+X\+\_\+\+F\+R\+A\+M\+ES}}\mbox{]}}
+
+\mbox{\Hypertarget{class_animation_a951ff207e048c16b7c5dde293eb5419b}\label{class_animation_a951ff207e048c16b7c5dde293eb5419b}} 
+\index{Animation@{Animation}!loop@{loop}}
+\index{loop@{loop}!Animation@{Animation}}
+\subsubsection{\texorpdfstring{loop}{loop}}
+{\footnotesize\ttfamily bool Animation\+::loop = true}
+
+\mbox{\Hypertarget{class_animation_a68079384a94a0ebdba03241f1937608e}\label{class_animation_a68079384a94a0ebdba03241f1937608e}} 
+\index{Animation@{Animation}!speed@{speed}}
+\index{speed@{speed}!Animation@{Animation}}
+\subsubsection{\texorpdfstring{speed}{speed}}
+{\footnotesize\ttfamily float Animation\+::speed = 1.\+0f}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_animation_8h}{Animation.\+h}}\end{DoxyCompactItemize}

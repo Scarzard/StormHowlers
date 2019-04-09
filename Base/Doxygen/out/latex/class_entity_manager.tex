@@ -1,0 +1,197 @@
+\hypertarget{class_entity_manager}{}\section{Entity\+Manager Class Reference}
+\label{class_entity_manager}\index{EntityManager@{EntityManager}}
+
+
+{\ttfamily \#include $<$Entity\+Manager.\+h$>$}
+
+Inheritance diagram for Entity\+Manager\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_entity_manager}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_entity_manager_a7555637657d090171be6ceee8451de0a}{Entity\+Manager}} ()
+\item 
+\mbox{\hyperlink{class_entity_manager_a71a36c9fb8d579a1a1ec108e0fccf175}{$\sim$\+Entity\+Manager}} ()
+\item 
+bool \mbox{\hyperlink{class_entity_manager_ada35a7fdb9b3bbaaee41a9451c94c1f9}{Awake}} (pugi\+::xml\+\_\+node \&config)
+\item 
+bool \mbox{\hyperlink{class_entity_manager_ac2cdeaf31edc0c79e0a05f4da05d5351}{Start}} ()
+\item 
+bool \mbox{\hyperlink{class_entity_manager_ab86bf1458923878536cf87792ded0a9b}{Update}} (float dt)
+\item 
+bool \mbox{\hyperlink{class_entity_manager_a1ad9ecfb4c966a1b399146d5a9209425}{Post\+Update}} ()
+\item 
+bool \mbox{\hyperlink{class_entity_manager_abe98672d529a2abf89bba1204338b6c0}{Clean\+Up}} ()
+\item 
+bool \mbox{\hyperlink{class_entity_manager_a14dcddc0ebfa5b4c4536e4d019d7ae07}{Draw}} (float dt)
+\item 
+bool \mbox{\hyperlink{class_entity_manager_a779c63016dbe34a2587838dba7011601}{Debug\+Draw}} ()
+\item 
+\mbox{\hyperlink{class_entity}{Entity}} $\ast$ \mbox{\hyperlink{class_entity_manager_a9199d9019f4825766b376db5edc77b94}{Add\+Entity}} (bool player1, \mbox{\hyperlink{class_entity_afd4a8ca3ac152f193c21d6a5100f1192}{Entity\+::entity\+Type}} type, pair$<$ int, int $>$ position)
+\item 
+bool \mbox{\hyperlink{class_entity_manager_a87f90f44445959b021c31d62506f1aa4}{Delete\+Entity}} (\mbox{\hyperlink{class_entity}{Entity}} $\ast$entity)
+\item 
+void \mbox{\hyperlink{class_entity_manager_af67721fd911b6284b3f8581a75dc8d64}{Delete\+Entities}} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_entity_manager_aca6f046da49e1c17f9ba3061f6180752}{folder}}
+\item 
+string \mbox{\hyperlink{class_entity_manager_a2dbc8776addfb76925b05afc712b34f7}{texture\+\_\+path}}
+\item 
+S\+D\+L\+\_\+\+Texture $\ast$ \mbox{\hyperlink{class_entity_manager_a87bae2d70d4acbf8aa4e22c412a01f65}{texture}}
+\item 
+list$<$ \mbox{\hyperlink{class_entity}{Entity}} $\ast$ $>$ \mbox{\hyperlink{class_entity_manager_afddbd7d396bbcf51f63c05102da4dbf9}{Entities}}
+\item 
+bool \mbox{\hyperlink{class_entity_manager_a388b254709bddf12a82709b671a43d28}{draw\+\_\+path}} = false
+\item 
+bool \mbox{\hyperlink{class_entity_manager_ada03c701dcfe1a2751be416cdd42b556}{godmode}} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_entity_manager_a7555637657d090171be6ceee8451de0a}\label{class_entity_manager_a7555637657d090171be6ceee8451de0a}} 
+\index{EntityManager@{EntityManager}!EntityManager@{EntityManager}}
+\index{EntityManager@{EntityManager}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{EntityManager()}{EntityManager()}}
+{\footnotesize\ttfamily Entity\+Manager\+::\+Entity\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_entity_manager_a71a36c9fb8d579a1a1ec108e0fccf175}\label{class_entity_manager_a71a36c9fb8d579a1a1ec108e0fccf175}} 
+\index{EntityManager@{EntityManager}!````~EntityManager@{$\sim$EntityManager}}
+\index{````~EntityManager@{$\sim$EntityManager}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{$\sim$EntityManager()}{~EntityManager()}}
+{\footnotesize\ttfamily Entity\+Manager\+::$\sim$\+Entity\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_entity_manager_a9199d9019f4825766b376db5edc77b94}\label{class_entity_manager_a9199d9019f4825766b376db5edc77b94}} 
+\index{EntityManager@{EntityManager}!AddEntity@{AddEntity}}
+\index{AddEntity@{AddEntity}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{AddEntity()}{AddEntity()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_entity}{Entity}} $\ast$ Entity\+Manager\+::\+Add\+Entity (\begin{DoxyParamCaption}\item[{bool}]{player1,  }\item[{\mbox{\hyperlink{class_entity_afd4a8ca3ac152f193c21d6a5100f1192}{Entity\+::entity\+Type}}}]{type,  }\item[{pair$<$ int, int $>$}]{position }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_entity_manager_ada35a7fdb9b3bbaaee41a9451c94c1f9}\label{class_entity_manager_ada35a7fdb9b3bbaaee41a9451c94c1f9}} 
+\index{EntityManager@{EntityManager}!Awake@{Awake}}
+\index{Awake@{Awake}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{Awake()}{Awake()}}
+{\footnotesize\ttfamily bool Entity\+Manager\+::\+Awake (\begin{DoxyParamCaption}\item[{pugi\+::xml\+\_\+node \&}]{config }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_a4a283650cf8a73aa0b5599106bc2ba6c}{Module}}.
+
+\mbox{\Hypertarget{class_entity_manager_abe98672d529a2abf89bba1204338b6c0}\label{class_entity_manager_abe98672d529a2abf89bba1204338b6c0}} 
+\index{EntityManager@{EntityManager}!CleanUp@{CleanUp}}
+\index{CleanUp@{CleanUp}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{CleanUp()}{CleanUp()}}
+{\footnotesize\ttfamily bool Entity\+Manager\+::\+Clean\+Up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_a77d7a006e42c0bd10110e1adbd4598cb}{Module}}.
+
+\mbox{\Hypertarget{class_entity_manager_a779c63016dbe34a2587838dba7011601}\label{class_entity_manager_a779c63016dbe34a2587838dba7011601}} 
+\index{EntityManager@{EntityManager}!DebugDraw@{DebugDraw}}
+\index{DebugDraw@{DebugDraw}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{DebugDraw()}{DebugDraw()}}
+{\footnotesize\ttfamily bool Entity\+Manager\+::\+Debug\+Draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_entity_manager_af67721fd911b6284b3f8581a75dc8d64}\label{class_entity_manager_af67721fd911b6284b3f8581a75dc8d64}} 
+\index{EntityManager@{EntityManager}!DeleteEntities@{DeleteEntities}}
+\index{DeleteEntities@{DeleteEntities}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{DeleteEntities()}{DeleteEntities()}}
+{\footnotesize\ttfamily void Entity\+Manager\+::\+Delete\+Entities (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_entity_manager_a87f90f44445959b021c31d62506f1aa4}\label{class_entity_manager_a87f90f44445959b021c31d62506f1aa4}} 
+\index{EntityManager@{EntityManager}!DeleteEntity@{DeleteEntity}}
+\index{DeleteEntity@{DeleteEntity}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{DeleteEntity()}{DeleteEntity()}}
+{\footnotesize\ttfamily bool Entity\+Manager\+::\+Delete\+Entity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_entity}{Entity}} $\ast$}]{entity }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_entity_manager_a14dcddc0ebfa5b4c4536e4d019d7ae07}\label{class_entity_manager_a14dcddc0ebfa5b4c4536e4d019d7ae07}} 
+\index{EntityManager@{EntityManager}!Draw@{Draw}}
+\index{Draw@{Draw}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{Draw()}{Draw()}}
+{\footnotesize\ttfamily bool Entity\+Manager\+::\+Draw (\begin{DoxyParamCaption}\item[{float}]{dt }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_entity_manager_a1ad9ecfb4c966a1b399146d5a9209425}\label{class_entity_manager_a1ad9ecfb4c966a1b399146d5a9209425}} 
+\index{EntityManager@{EntityManager}!PostUpdate@{PostUpdate}}
+\index{PostUpdate@{PostUpdate}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{PostUpdate()}{PostUpdate()}}
+{\footnotesize\ttfamily bool Entity\+Manager\+::\+Post\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_afc355df351a4483850c3f512823ceebd}{Module}}.
+
+\mbox{\Hypertarget{class_entity_manager_ac2cdeaf31edc0c79e0a05f4da05d5351}\label{class_entity_manager_ac2cdeaf31edc0c79e0a05f4da05d5351}} 
+\index{EntityManager@{EntityManager}!Start@{Start}}
+\index{Start@{Start}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{Start()}{Start()}}
+{\footnotesize\ttfamily bool Entity\+Manager\+::\+Start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_aaf67046743296e8de310039a1dc95d86}{Module}}.
+
+\mbox{\Hypertarget{class_entity_manager_ab86bf1458923878536cf87792ded0a9b}\label{class_entity_manager_ab86bf1458923878536cf87792ded0a9b}} 
+\index{EntityManager@{EntityManager}!Update@{Update}}
+\index{Update@{Update}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily bool Entity\+Manager\+::\+Update (\begin{DoxyParamCaption}\item[{float}]{dt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_ac1a7b6dca73586b9cce2e67647af58d8}{Module}}.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_entity_manager_a388b254709bddf12a82709b671a43d28}\label{class_entity_manager_a388b254709bddf12a82709b671a43d28}} 
+\index{EntityManager@{EntityManager}!draw\_path@{draw\_path}}
+\index{draw\_path@{draw\_path}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{draw\_path}{draw\_path}}
+{\footnotesize\ttfamily bool Entity\+Manager\+::draw\+\_\+path = false}
+
+\mbox{\Hypertarget{class_entity_manager_afddbd7d396bbcf51f63c05102da4dbf9}\label{class_entity_manager_afddbd7d396bbcf51f63c05102da4dbf9}} 
+\index{EntityManager@{EntityManager}!Entities@{Entities}}
+\index{Entities@{Entities}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{Entities}{Entities}}
+{\footnotesize\ttfamily list$<$\mbox{\hyperlink{class_entity}{Entity}}$\ast$$>$ Entity\+Manager\+::\+Entities}
+
+\mbox{\Hypertarget{class_entity_manager_aca6f046da49e1c17f9ba3061f6180752}\label{class_entity_manager_aca6f046da49e1c17f9ba3061f6180752}} 
+\index{EntityManager@{EntityManager}!folder@{folder}}
+\index{folder@{folder}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{folder}{folder}}
+{\footnotesize\ttfamily string Entity\+Manager\+::folder}
+
+\mbox{\Hypertarget{class_entity_manager_ada03c701dcfe1a2751be416cdd42b556}\label{class_entity_manager_ada03c701dcfe1a2751be416cdd42b556}} 
+\index{EntityManager@{EntityManager}!godmode@{godmode}}
+\index{godmode@{godmode}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{godmode}{godmode}}
+{\footnotesize\ttfamily bool Entity\+Manager\+::godmode = false}
+
+\mbox{\Hypertarget{class_entity_manager_a87bae2d70d4acbf8aa4e22c412a01f65}\label{class_entity_manager_a87bae2d70d4acbf8aa4e22c412a01f65}} 
+\index{EntityManager@{EntityManager}!texture@{texture}}
+\index{texture@{texture}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{texture}{texture}}
+{\footnotesize\ttfamily S\+D\+L\+\_\+\+Texture$\ast$ Entity\+Manager\+::texture}
+
+\mbox{\Hypertarget{class_entity_manager_a2dbc8776addfb76925b05afc712b34f7}\label{class_entity_manager_a2dbc8776addfb76925b05afc712b34f7}} 
+\index{EntityManager@{EntityManager}!texture\_path@{texture\_path}}
+\index{texture\_path@{texture\_path}!EntityManager@{EntityManager}}
+\subsubsection{\texorpdfstring{texture\_path}{texture\_path}}
+{\footnotesize\ttfamily string Entity\+Manager\+::texture\+\_\+path}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_entity_manager_8h}{Entity\+Manager.\+h}}\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_entity_manager_8cpp}{Entity\+Manager.\+cpp}}\end{DoxyCompactItemize}

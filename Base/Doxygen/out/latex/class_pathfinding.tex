@@ -1,0 +1,128 @@
+\hypertarget{class_pathfinding}{}\section{Pathfinding Class Reference}
+\label{class_pathfinding}\index{Pathfinding@{Pathfinding}}
+
+
+{\ttfamily \#include $<$Pathfinding.\+h$>$}
+
+Inheritance diagram for Pathfinding\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_pathfinding}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_pathfinding_aae14d204c5f9ee6b184764f874711341}{Pathfinding}} ()
+\item 
+\mbox{\hyperlink{class_pathfinding_a1869823af12d301105cf1cedbe9a8dc5}{$\sim$\+Pathfinding}} ()
+\item 
+bool \mbox{\hyperlink{class_pathfinding_ac377b4477dad76360fdb4c64e52d80f6}{Clean\+Up}} ()
+\item 
+void \mbox{\hyperlink{class_pathfinding_a375f914454c44e1ca70545853a950efe}{Set\+Map}} (\mbox{\hyperlink{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} width, \mbox{\hyperlink{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} height, \mbox{\hyperlink{_defs_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} $\ast$data)
+\item 
+int \mbox{\hyperlink{class_pathfinding_a81f4b825973f68ff3e0c984eee049309}{Create\+Path}} (const pair$<$ int, int $>$ \&origin, const pair$<$ int, int $>$ \&destination, vector$<$ pair$<$ int, int $>$$>$ \&path\+\_\+to\+\_\+fill)
+\item 
+const vector$<$ pair$<$ int, int $>$ $>$ $\ast$ \mbox{\hyperlink{class_pathfinding_aabee4bd29cea753c592a5fe9d595608a}{Get\+Last\+Path}} () const
+\item 
+void \mbox{\hyperlink{class_pathfinding_ae4aeb687f1532dcd340204e35a415d9e}{Reset\+Path}} (vector$<$ pair$<$ int, int $>$$>$ \&path\+\_\+to\+\_\+reset)
+\item 
+bool \mbox{\hyperlink{class_pathfinding_a07821f23e40533dead35728d058d8136}{Check\+Boundaries}} (const pair$<$ int, int $>$ \&pos) const
+\item 
+bool \mbox{\hyperlink{class_pathfinding_a26965e2ab0d36f45e82642e14a853b2d}{Is\+Touching\+Ground}} (pair$<$ int, int $>$ coords) const
+\item 
+bool \mbox{\hyperlink{class_pathfinding_adb3abbc864c78d5f3acbf7dda6c9cf7b}{Is\+Walkable}} (const pair$<$ int, int $>$ \&pos) const
+\item 
+\mbox{\hyperlink{_defs_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} \mbox{\hyperlink{class_pathfinding_a531ff73d3dcc30449d706ab441552654}{Get\+Tile\+At}} (const pair$<$ int, int $>$ \&pos) const
+\item 
+void \mbox{\hyperlink{class_pathfinding_a8bbd828bcabd0d5f2cf271053cc76a36}{Change\+Walkability}} (const pair$<$ int, int $>$ \&pos, bool is\+Walkable) const
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_pathfinding_aae14d204c5f9ee6b184764f874711341}\label{class_pathfinding_aae14d204c5f9ee6b184764f874711341}} 
+\index{Pathfinding@{Pathfinding}!Pathfinding@{Pathfinding}}
+\index{Pathfinding@{Pathfinding}!Pathfinding@{Pathfinding}}
+\subsubsection{\texorpdfstring{Pathfinding()}{Pathfinding()}}
+{\footnotesize\ttfamily Pathfinding\+::\+Pathfinding (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pathfinding_a1869823af12d301105cf1cedbe9a8dc5}\label{class_pathfinding_a1869823af12d301105cf1cedbe9a8dc5}} 
+\index{Pathfinding@{Pathfinding}!````~Pathfinding@{$\sim$Pathfinding}}
+\index{````~Pathfinding@{$\sim$Pathfinding}!Pathfinding@{Pathfinding}}
+\subsubsection{\texorpdfstring{$\sim$Pathfinding()}{~Pathfinding()}}
+{\footnotesize\ttfamily Pathfinding\+::$\sim$\+Pathfinding (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_pathfinding_a8bbd828bcabd0d5f2cf271053cc76a36}\label{class_pathfinding_a8bbd828bcabd0d5f2cf271053cc76a36}} 
+\index{Pathfinding@{Pathfinding}!ChangeWalkability@{ChangeWalkability}}
+\index{ChangeWalkability@{ChangeWalkability}!Pathfinding@{Pathfinding}}
+\subsubsection{\texorpdfstring{ChangeWalkability()}{ChangeWalkability()}}
+{\footnotesize\ttfamily void Pathfinding\+::\+Change\+Walkability (\begin{DoxyParamCaption}\item[{const pair$<$ int, int $>$ \&}]{pos,  }\item[{bool}]{is\+Walkable }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{class_pathfinding_a07821f23e40533dead35728d058d8136}\label{class_pathfinding_a07821f23e40533dead35728d058d8136}} 
+\index{Pathfinding@{Pathfinding}!CheckBoundaries@{CheckBoundaries}}
+\index{CheckBoundaries@{CheckBoundaries}!Pathfinding@{Pathfinding}}
+\subsubsection{\texorpdfstring{CheckBoundaries()}{CheckBoundaries()}}
+{\footnotesize\ttfamily bool Pathfinding\+::\+Check\+Boundaries (\begin{DoxyParamCaption}\item[{const pair$<$ int, int $>$ \&}]{pos }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{class_pathfinding_ac377b4477dad76360fdb4c64e52d80f6}\label{class_pathfinding_ac377b4477dad76360fdb4c64e52d80f6}} 
+\index{Pathfinding@{Pathfinding}!CleanUp@{CleanUp}}
+\index{CleanUp@{CleanUp}!Pathfinding@{Pathfinding}}
+\subsubsection{\texorpdfstring{CleanUp()}{CleanUp()}}
+{\footnotesize\ttfamily bool Pathfinding\+::\+Clean\+Up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_a77d7a006e42c0bd10110e1adbd4598cb}{Module}}.
+
+\mbox{\Hypertarget{class_pathfinding_a81f4b825973f68ff3e0c984eee049309}\label{class_pathfinding_a81f4b825973f68ff3e0c984eee049309}} 
+\index{Pathfinding@{Pathfinding}!CreatePath@{CreatePath}}
+\index{CreatePath@{CreatePath}!Pathfinding@{Pathfinding}}
+\subsubsection{\texorpdfstring{CreatePath()}{CreatePath()}}
+{\footnotesize\ttfamily int Pathfinding\+::\+Create\+Path (\begin{DoxyParamCaption}\item[{const pair$<$ int, int $>$ \&}]{origin,  }\item[{const pair$<$ int, int $>$ \&}]{destination,  }\item[{vector$<$ pair$<$ int, int $>$$>$ \&}]{path\+\_\+to\+\_\+fill }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pathfinding_aabee4bd29cea753c592a5fe9d595608a}\label{class_pathfinding_aabee4bd29cea753c592a5fe9d595608a}} 
+\index{Pathfinding@{Pathfinding}!GetLastPath@{GetLastPath}}
+\index{GetLastPath@{GetLastPath}!Pathfinding@{Pathfinding}}
+\subsubsection{\texorpdfstring{GetLastPath()}{GetLastPath()}}
+{\footnotesize\ttfamily const vector$<$ pair$<$ int, int $>$ $>$ $\ast$ Pathfinding\+::\+Get\+Last\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{class_pathfinding_a531ff73d3dcc30449d706ab441552654}\label{class_pathfinding_a531ff73d3dcc30449d706ab441552654}} 
+\index{Pathfinding@{Pathfinding}!GetTileAt@{GetTileAt}}
+\index{GetTileAt@{GetTileAt}!Pathfinding@{Pathfinding}}
+\subsubsection{\texorpdfstring{GetTileAt()}{GetTileAt()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_defs_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} Pathfinding\+::\+Get\+Tile\+At (\begin{DoxyParamCaption}\item[{const pair$<$ int, int $>$ \&}]{pos }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{class_pathfinding_a26965e2ab0d36f45e82642e14a853b2d}\label{class_pathfinding_a26965e2ab0d36f45e82642e14a853b2d}} 
+\index{Pathfinding@{Pathfinding}!IsTouchingGround@{IsTouchingGround}}
+\index{IsTouchingGround@{IsTouchingGround}!Pathfinding@{Pathfinding}}
+\subsubsection{\texorpdfstring{IsTouchingGround()}{IsTouchingGround()}}
+{\footnotesize\ttfamily bool Pathfinding\+::\+Is\+Touching\+Ground (\begin{DoxyParamCaption}\item[{pair$<$ int, int $>$}]{coords }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{class_pathfinding_adb3abbc864c78d5f3acbf7dda6c9cf7b}\label{class_pathfinding_adb3abbc864c78d5f3acbf7dda6c9cf7b}} 
+\index{Pathfinding@{Pathfinding}!IsWalkable@{IsWalkable}}
+\index{IsWalkable@{IsWalkable}!Pathfinding@{Pathfinding}}
+\subsubsection{\texorpdfstring{IsWalkable()}{IsWalkable()}}
+{\footnotesize\ttfamily bool Pathfinding\+::\+Is\+Walkable (\begin{DoxyParamCaption}\item[{const pair$<$ int, int $>$ \&}]{pos }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{class_pathfinding_ae4aeb687f1532dcd340204e35a415d9e}\label{class_pathfinding_ae4aeb687f1532dcd340204e35a415d9e}} 
+\index{Pathfinding@{Pathfinding}!ResetPath@{ResetPath}}
+\index{ResetPath@{ResetPath}!Pathfinding@{Pathfinding}}
+\subsubsection{\texorpdfstring{ResetPath()}{ResetPath()}}
+{\footnotesize\ttfamily void Pathfinding\+::\+Reset\+Path (\begin{DoxyParamCaption}\item[{vector$<$ pair$<$ int, int $>$$>$ \&}]{path\+\_\+to\+\_\+reset }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pathfinding_a375f914454c44e1ca70545853a950efe}\label{class_pathfinding_a375f914454c44e1ca70545853a950efe}} 
+\index{Pathfinding@{Pathfinding}!SetMap@{SetMap}}
+\index{SetMap@{SetMap}!Pathfinding@{Pathfinding}}
+\subsubsection{\texorpdfstring{SetMap()}{SetMap()}}
+{\footnotesize\ttfamily void Pathfinding\+::\+Set\+Map (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}]{width,  }\item[{\mbox{\hyperlink{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}]{height,  }\item[{\mbox{\hyperlink{_defs_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} $\ast$}]{data }\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_pathfinding_8h}{Pathfinding.\+h}}\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_pathfinding_8cpp}{Pathfinding.\+cpp}}\end{DoxyCompactItemize}

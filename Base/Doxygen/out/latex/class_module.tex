@@ -1,0 +1,176 @@
+\hypertarget{class_module}{}\section{Module Class Reference}
+\label{class_module}\index{Module@{Module}}
+
+
+{\ttfamily \#include $<$Module.\+h$>$}
+
+Inheritance diagram for Module\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=12.000000cm]{class_module}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_module_a5a240a8a9ab1813b17bcb810b24ceaea}{Module}} ()
+\item 
+void \mbox{\hyperlink{class_module_ad755410a1c48d3e6dc755c4ebd29f348}{Init}} (bool check\+\_\+active)
+\item 
+virtual bool \mbox{\hyperlink{class_module_a4a283650cf8a73aa0b5599106bc2ba6c}{Awake}} (pugi\+::xml\+\_\+node \&)
+\item 
+virtual bool \mbox{\hyperlink{class_module_aaf67046743296e8de310039a1dc95d86}{Start}} ()
+\item 
+virtual bool \mbox{\hyperlink{class_module_a2c64af5917825500cf6f0497258bc398}{Pre\+Update}} ()
+\item 
+virtual bool \mbox{\hyperlink{class_module_ac1a7b6dca73586b9cce2e67647af58d8}{Update}} (float dt)
+\item 
+virtual bool \mbox{\hyperlink{class_module_afc355df351a4483850c3f512823ceebd}{Post\+Update}} ()
+\item 
+virtual bool \mbox{\hyperlink{class_module_a77d7a006e42c0bd10110e1adbd4598cb}{Clean\+Up}} ()
+\item 
+virtual bool \mbox{\hyperlink{class_module_adf4ae9320f5f244c47b472348fb3c1f9}{Load}} (pugi\+::xml\+\_\+node \&)
+\item 
+virtual bool \mbox{\hyperlink{class_module_aae4bfdba7949d0f94bd8073b3a27dc3d}{Save}} (pugi\+::xml\+\_\+node \&) const
+\item 
+void \mbox{\hyperlink{class_module_a549c4b33f582f353436b57de5dfd39da}{Enable}} ()
+\item 
+void \mbox{\hyperlink{class_module_a18ea1b1701a3d4e26ff77400a85b6916}{Disable}} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_module_a06c326572272c938b3f2a01ee75e56c9}{name}}
+\item 
+bool \mbox{\hyperlink{class_module_a59cb26d32bc36a6c3415572fb46d9be5}{active}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_module_a5a240a8a9ab1813b17bcb810b24ceaea}\label{class_module_a5a240a8a9ab1813b17bcb810b24ceaea}} 
+\index{Module@{Module}!Module@{Module}}
+\index{Module@{Module}!Module@{Module}}
+\subsubsection{\texorpdfstring{Module()}{Module()}}
+{\footnotesize\ttfamily Module\+::\+Module (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_module_a4a283650cf8a73aa0b5599106bc2ba6c}\label{class_module_a4a283650cf8a73aa0b5599106bc2ba6c}} 
+\index{Module@{Module}!Awake@{Awake}}
+\index{Awake@{Awake}!Module@{Module}}
+\subsubsection{\texorpdfstring{Awake()}{Awake()}}
+{\footnotesize\ttfamily virtual bool Module\+::\+Awake (\begin{DoxyParamCaption}\item[{pugi\+::xml\+\_\+node \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{class_map_a6b7219ea01063fe83b7fa13e196a17cd}{Map}}, \mbox{\hyperlink{class_input_a9876d33805a73bbb895eb453f5c492ec}{Input}}, \mbox{\hyperlink{class_scene_a03ed816e27ef7dced05082d214f554f1}{Scene}}, \mbox{\hyperlink{class_audio_a642fa346ae3e6658ad8c6b06c1da1f19}{Audio}}, \mbox{\hyperlink{class_fonts_aee8000727dca2b84dc46dacc35a9667b}{Fonts}}, \mbox{\hyperlink{class_gui_adcbbb73f8357c13664a1638857683e00}{Gui}}, \mbox{\hyperlink{class_transitions_a7280d32c9949be8e1211f945df187e15}{Transitions}}, \mbox{\hyperlink{class_main_menu_a0b45e9eb6945b2d26f54d708c24fb924}{Main\+Menu}}, \mbox{\hyperlink{class_textures_a3956f023ff27addfed10285805ee7f61}{Textures}}, \mbox{\hyperlink{class_window_a0b02015257037d885d85afb77d0a3605}{Window}}, \mbox{\hyperlink{class_render_a8a61f512aafe184f4d322433e5f695a4}{Render}}, and \mbox{\hyperlink{class_entity_manager_ada35a7fdb9b3bbaaee41a9451c94c1f9}{Entity\+Manager}}.
+
+\mbox{\Hypertarget{class_module_a77d7a006e42c0bd10110e1adbd4598cb}\label{class_module_a77d7a006e42c0bd10110e1adbd4598cb}} 
+\index{Module@{Module}!CleanUp@{CleanUp}}
+\index{CleanUp@{CleanUp}!Module@{Module}}
+\subsubsection{\texorpdfstring{CleanUp()}{CleanUp()}}
+{\footnotesize\ttfamily virtual bool Module\+::\+Clean\+Up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{class_map_acc2cb08f31839bf0545d7b47100b3884}{Map}}, \mbox{\hyperlink{class_input_a6cad2fca1092afa12ae299dcc4fe7c49}{Input}}, \mbox{\hyperlink{class_player_aebe8ef704dff5d2b676144c36f4217d8}{Player}}, \mbox{\hyperlink{class_scene_aac06490e9440c38b6970740a099ad14a}{Scene}}, \mbox{\hyperlink{class_gui_aefd3608cd8ada040443efcffb1f316f3}{Gui}}, \mbox{\hyperlink{class_audio_a15ae1aa195c9c5f754850e5884bd2dc9}{Audio}}, \mbox{\hyperlink{class_main_menu_a87852de56aa660cfd0c2f578f9114773}{Main\+Menu}}, \mbox{\hyperlink{class_render_a96a6770025fabf47750ef73600b3d58e}{Render}}, \mbox{\hyperlink{class_fonts_afc4912317ca40199a71f7db1024c006d}{Fonts}}, \mbox{\hyperlink{class_pathfinding_ac377b4477dad76360fdb4c64e52d80f6}{Pathfinding}}, \mbox{\hyperlink{class_textures_ae1e354e40c2ead6427152e70b92ad43e}{Textures}}, \mbox{\hyperlink{class_window_aed8304cc37c842ff56f5428524163fea}{Window}}, and \mbox{\hyperlink{class_entity_manager_abe98672d529a2abf89bba1204338b6c0}{Entity\+Manager}}.
+
+\mbox{\Hypertarget{class_module_a18ea1b1701a3d4e26ff77400a85b6916}\label{class_module_a18ea1b1701a3d4e26ff77400a85b6916}} 
+\index{Module@{Module}!Disable@{Disable}}
+\index{Disable@{Disable}!Module@{Module}}
+\subsubsection{\texorpdfstring{Disable()}{Disable()}}
+{\footnotesize\ttfamily void Module\+::\+Disable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_module_a549c4b33f582f353436b57de5dfd39da}\label{class_module_a549c4b33f582f353436b57de5dfd39da}} 
+\index{Module@{Module}!Enable@{Enable}}
+\index{Enable@{Enable}!Module@{Module}}
+\subsubsection{\texorpdfstring{Enable()}{Enable()}}
+{\footnotesize\ttfamily void Module\+::\+Enable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_module_ad755410a1c48d3e6dc755c4ebd29f348}\label{class_module_ad755410a1c48d3e6dc755c4ebd29f348}} 
+\index{Module@{Module}!Init@{Init}}
+\index{Init@{Init}!Module@{Module}}
+\subsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily void Module\+::\+Init (\begin{DoxyParamCaption}\item[{bool}]{check\+\_\+active }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_module_adf4ae9320f5f244c47b472348fb3c1f9}\label{class_module_adf4ae9320f5f244c47b472348fb3c1f9}} 
+\index{Module@{Module}!Load@{Load}}
+\index{Load@{Load}!Module@{Module}}
+\subsubsection{\texorpdfstring{Load()}{Load()}}
+{\footnotesize\ttfamily virtual bool Module\+::\+Load (\begin{DoxyParamCaption}\item[{pugi\+::xml\+\_\+node \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{class_scene_aabbd7af9c75ded5b555170426259699e}{Scene}}, and \mbox{\hyperlink{class_render_a47a72b2f12ff4a24eb4bf98d9b617434}{Render}}.
+
+\mbox{\Hypertarget{class_module_afc355df351a4483850c3f512823ceebd}\label{class_module_afc355df351a4483850c3f512823ceebd}} 
+\index{Module@{Module}!PostUpdate@{PostUpdate}}
+\index{PostUpdate@{PostUpdate}!Module@{Module}}
+\subsubsection{\texorpdfstring{PostUpdate()}{PostUpdate()}}
+{\footnotesize\ttfamily virtual bool Module\+::\+Post\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{class_player_a1defee0e5f5a011305ae00d3a022af18}{Player}}, \mbox{\hyperlink{class_scene_a0e0ffba2fc23c7cb61242e99e59e4c68}{Scene}}, \mbox{\hyperlink{class_gui_a49d5bf6fa118544dd5827f0412d5968d}{Gui}}, \mbox{\hyperlink{class_main_menu_a39f02a2a3397937781de079abba13a5a}{Main\+Menu}}, \mbox{\hyperlink{class_render_a87fd5693f0ece06ba67ab57534b65dc6}{Render}}, and \mbox{\hyperlink{class_entity_manager_a1ad9ecfb4c966a1b399146d5a9209425}{Entity\+Manager}}.
+
+\mbox{\Hypertarget{class_module_a2c64af5917825500cf6f0497258bc398}\label{class_module_a2c64af5917825500cf6f0497258bc398}} 
+\index{Module@{Module}!PreUpdate@{PreUpdate}}
+\index{PreUpdate@{PreUpdate}!Module@{Module}}
+\subsubsection{\texorpdfstring{PreUpdate()}{PreUpdate()}}
+{\footnotesize\ttfamily virtual bool Module\+::\+Pre\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{class_input_a850eff60334f4057e5cb579892d7cf06}{Input}}, \mbox{\hyperlink{class_scene_aec633b956df0e05760f2274b5816d321}{Scene}}, \mbox{\hyperlink{class_gui_a0909298219825317830f462bec002d5b}{Gui}}, \mbox{\hyperlink{class_main_menu_aba12dda658020b2394ec3449c92ae16e}{Main\+Menu}}, and \mbox{\hyperlink{class_render_a96d1311a9bc190d2a1dd669bb3c56ab4}{Render}}.
+
+\mbox{\Hypertarget{class_module_aae4bfdba7949d0f94bd8073b3a27dc3d}\label{class_module_aae4bfdba7949d0f94bd8073b3a27dc3d}} 
+\index{Module@{Module}!Save@{Save}}
+\index{Save@{Save}!Module@{Module}}
+\subsubsection{\texorpdfstring{Save()}{Save()}}
+{\footnotesize\ttfamily virtual bool Module\+::\+Save (\begin{DoxyParamCaption}\item[{pugi\+::xml\+\_\+node \&}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{class_scene_a99b7629c7c9affe3fc2bd24a8c45bed4}{Scene}}, and \mbox{\hyperlink{class_render_a8a7339d22cc1019c02dd4778f4f36593}{Render}}.
+
+\mbox{\Hypertarget{class_module_aaf67046743296e8de310039a1dc95d86}\label{class_module_aaf67046743296e8de310039a1dc95d86}} 
+\index{Module@{Module}!Start@{Start}}
+\index{Start@{Start}!Module@{Module}}
+\subsubsection{\texorpdfstring{Start()}{Start()}}
+{\footnotesize\ttfamily virtual bool Module\+::\+Start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{class_input_a8519ba5884a6ea0d3ef332788ee248a8}{Input}}, \mbox{\hyperlink{class_player_a797198656a642b66fd8ec656153d8595}{Player}}, \mbox{\hyperlink{class_scene_a4be9030f1269eb74266ea1067d07f56f}{Scene}}, \mbox{\hyperlink{class_gui_ab62e1b47c26df1e5a69932becb0cc1de}{Gui}}, \mbox{\hyperlink{class_transitions_abc46bf6e67d0936641cc1d41c20e8be9}{Transitions}}, \mbox{\hyperlink{class_main_menu_a02d38874242aae89ce95925b5fad05f4}{Main\+Menu}}, \mbox{\hyperlink{class_textures_a15ed80517d40c16e670a9d968ce0944e}{Textures}}, \mbox{\hyperlink{class_render_afe6d22551e6d5bbcc55cdd20ab23afde}{Render}}, and \mbox{\hyperlink{class_entity_manager_ac2cdeaf31edc0c79e0a05f4da05d5351}{Entity\+Manager}}.
+
+\mbox{\Hypertarget{class_module_ac1a7b6dca73586b9cce2e67647af58d8}\label{class_module_ac1a7b6dca73586b9cce2e67647af58d8}} 
+\index{Module@{Module}!Update@{Update}}
+\index{Update@{Update}!Module@{Module}}
+\subsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily virtual bool Module\+::\+Update (\begin{DoxyParamCaption}\item[{float}]{dt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{class_player_a637908f123cba18727999783a7534459}{Player}}, \mbox{\hyperlink{class_scene_a3b7592b8a1ec0317edad4f694ea2d99c}{Scene}}, \mbox{\hyperlink{class_main_menu_a0c2e38b67627d0ac2315c82ae46cd8ef}{Main\+Menu}}, \mbox{\hyperlink{class_transitions_acd6dd9daa6a80dd1b1e8330aa06c21c9}{Transitions}}, \mbox{\hyperlink{class_render_a7172f5776000ed7c973a26e35536f2d6}{Render}}, and \mbox{\hyperlink{class_entity_manager_ab86bf1458923878536cf87792ded0a9b}{Entity\+Manager}}.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_module_a59cb26d32bc36a6c3415572fb46d9be5}\label{class_module_a59cb26d32bc36a6c3415572fb46d9be5}} 
+\index{Module@{Module}!active@{active}}
+\index{active@{active}!Module@{Module}}
+\subsubsection{\texorpdfstring{active}{active}}
+{\footnotesize\ttfamily bool Module\+::active}
+
+\mbox{\Hypertarget{class_module_a06c326572272c938b3f2a01ee75e56c9}\label{class_module_a06c326572272c938b3f2a01ee75e56c9}} 
+\index{Module@{Module}!name@{name}}
+\index{name@{name}!Module@{Module}}
+\subsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily string Module\+::name}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_module_8h}{Module.\+h}}\end{DoxyCompactItemize}

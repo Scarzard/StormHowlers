@@ -1,0 +1,197 @@
+\hypertarget{_defs_8h}{}\section{C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\+Defs.h File Reference}
+\label{_defs_8h}\index{C:/Users/Johan/Documents/GitHub/StormHowlers/Base/Motor2D/Defs.h@{C:/Users/Johan/Documents/GitHub/StormHowlers/Base/Motor2D/Defs.h}}
+{\ttfamily \#include $<$cstdio$>$}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_defs_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{N\+U\+LL}}~0
+\item 
+\#define \mbox{\hyperlink{_defs_8h_a3fd6948289253a5d8e497c1016fb035d}{R\+E\+L\+E\+A\+SE}}(x)
+\item 
+\#define \mbox{\hyperlink{_defs_8h_a007985a7dd5cba07f4ce9331fbb01425}{R\+E\+L\+E\+A\+S\+E\+\_\+\+A\+R\+R\+AY}}(x)
+\item 
+\#define \mbox{\hyperlink{_defs_8h_ac7de4dbcd63ded32013b148c533ea6d3}{I\+N\+\_\+\+R\+A\+N\+GE}}(value,  min,  max)~( ((value) $>$= (min) \&\& (value) $<$= (max)) ? 1 \+: 0 )
+\item 
+\#define \mbox{\hyperlink{_defs_8h_a3acffbd305ee72dcd4593c0d8af64a4f}{M\+IN}}(a,  b)~( ((a) $<$ (b)) ? (a) \+: (b) )
+\item 
+\#define \mbox{\hyperlink{_defs_8h_afa99ec4acc4ecb2dc3c2d05da15d0e3f}{M\+AX}}(a,  b)~( ((a) $>$ (b)) ? (a) \+: (b) )
+\item 
+\#define \mbox{\hyperlink{_defs_8h_a649c67a18d8b923e379e00feb9f4dd05}{T\+O\+\_\+\+B\+O\+OL}}(a)~( (a != 0) ? true \+: false )
+\item 
+\#define \mbox{\hyperlink{_defs_8h_a94948df56deeeae2a3df3f626c910193}{S\+H\+O\+R\+T\+\_\+\+S\+TR}}~32
+\item 
+\#define \mbox{\hyperlink{_defs_8h_a95808cc784c5bb37d4896ef057a084cd}{M\+I\+D\+\_\+\+S\+TR}}~255
+\item 
+\#define \mbox{\hyperlink{_defs_8h_add203f6b9ab3130a30ec11aaa820f571}{H\+U\+G\+E\+\_\+\+S\+TR}}~8192
+\item 
+\#define \mbox{\hyperlink{_defs_8h_a598a3330b3c21701223ee0ca14316eca}{PI}}~3.\+14159265359
+\item 
+\#define \mbox{\hyperlink{_defs_8h_accdd577afc3e541bc028d20903a17c5d}{P\+E\+R\+F\+\_\+\+S\+T\+A\+RT}}(timer)~timer.\+Start()
+\item 
+\#define \mbox{\hyperlink{_defs_8h_a00176f7cd4315431b47315a2eed33f07}{P\+E\+R\+F\+\_\+\+P\+E\+EK}}(timer)~\mbox{\hyperlink{_log_8h_a018a1fe4b078f1a684610657a5848860}{L\+OG}}(\char`\"{}\%s took \%f ms\char`\"{}, \+\_\+\+\_\+\+F\+U\+N\+C\+T\+I\+O\+N\+\_\+\+\_\+, timer.\+Read\+Ms())
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef unsigned int \mbox{\hyperlink{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}
+\item 
+typedef unsigned \+\_\+\+\_\+int32 \mbox{\hyperlink{_defs_8h_ada4c95a4173a4bb540c8a7f80f3665d2}{uint32}}
+\item 
+typedef unsigned \+\_\+\+\_\+int64 \mbox{\hyperlink{_defs_8h_ac6afe794ed283c11fb63426a58188e5e}{uint64}}
+\item 
+typedef unsigned char \mbox{\hyperlink{_defs_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE $>$ }\\void \mbox{\hyperlink{_defs_8h_a04fcdc38ae7f7a629f82a04072c91d6a}{S\+W\+AP}} (V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE \&a, V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE \&b)
+\item 
+const char $\ast$const \mbox{\hyperlink{_defs_8h_aaf00478ddcdeafb5a100904ed2782e89}{P\+A\+TH}} (const char $\ast$folder, const char $\ast$file)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_defs_8h_add203f6b9ab3130a30ec11aaa820f571}\label{_defs_8h_add203f6b9ab3130a30ec11aaa820f571}} 
+\index{Defs.h@{Defs.h}!HUGE\_STR@{HUGE\_STR}}
+\index{HUGE\_STR@{HUGE\_STR}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{HUGE\_STR}{HUGE\_STR}}
+{\footnotesize\ttfamily \#define H\+U\+G\+E\+\_\+\+S\+TR~8192}
+
+\mbox{\Hypertarget{_defs_8h_ac7de4dbcd63ded32013b148c533ea6d3}\label{_defs_8h_ac7de4dbcd63ded32013b148c533ea6d3}} 
+\index{Defs.h@{Defs.h}!IN\_RANGE@{IN\_RANGE}}
+\index{IN\_RANGE@{IN\_RANGE}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{IN\_RANGE}{IN\_RANGE}}
+{\footnotesize\ttfamily \#define I\+N\+\_\+\+R\+A\+N\+GE(\begin{DoxyParamCaption}\item[{}]{value,  }\item[{}]{min,  }\item[{}]{max }\end{DoxyParamCaption})~( ((value) $>$= (min) \&\& (value) $<$= (max)) ? 1 \+: 0 )}
+
+\mbox{\Hypertarget{_defs_8h_afa99ec4acc4ecb2dc3c2d05da15d0e3f}\label{_defs_8h_afa99ec4acc4ecb2dc3c2d05da15d0e3f}} 
+\index{Defs.h@{Defs.h}!MAX@{MAX}}
+\index{MAX@{MAX}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{MAX}{MAX}}
+{\footnotesize\ttfamily \#define M\+AX(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b }\end{DoxyParamCaption})~( ((a) $>$ (b)) ? (a) \+: (b) )}
+
+\mbox{\Hypertarget{_defs_8h_a95808cc784c5bb37d4896ef057a084cd}\label{_defs_8h_a95808cc784c5bb37d4896ef057a084cd}} 
+\index{Defs.h@{Defs.h}!MID\_STR@{MID\_STR}}
+\index{MID\_STR@{MID\_STR}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{MID\_STR}{MID\_STR}}
+{\footnotesize\ttfamily \#define M\+I\+D\+\_\+\+S\+TR~255}
+
+\mbox{\Hypertarget{_defs_8h_a3acffbd305ee72dcd4593c0d8af64a4f}\label{_defs_8h_a3acffbd305ee72dcd4593c0d8af64a4f}} 
+\index{Defs.h@{Defs.h}!MIN@{MIN}}
+\index{MIN@{MIN}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{MIN}{MIN}}
+{\footnotesize\ttfamily \#define M\+IN(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b }\end{DoxyParamCaption})~( ((a) $<$ (b)) ? (a) \+: (b) )}
+
+\mbox{\Hypertarget{_defs_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}\label{_defs_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}} 
+\index{Defs.h@{Defs.h}!NULL@{NULL}}
+\index{NULL@{NULL}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{NULL}{NULL}}
+{\footnotesize\ttfamily \#define N\+U\+LL~0}
+
+\mbox{\Hypertarget{_defs_8h_a00176f7cd4315431b47315a2eed33f07}\label{_defs_8h_a00176f7cd4315431b47315a2eed33f07}} 
+\index{Defs.h@{Defs.h}!PERF\_PEEK@{PERF\_PEEK}}
+\index{PERF\_PEEK@{PERF\_PEEK}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{PERF\_PEEK}{PERF\_PEEK}}
+{\footnotesize\ttfamily \#define P\+E\+R\+F\+\_\+\+P\+E\+EK(\begin{DoxyParamCaption}\item[{}]{timer }\end{DoxyParamCaption})~\mbox{\hyperlink{_log_8h_a018a1fe4b078f1a684610657a5848860}{L\+OG}}(\char`\"{}\%s took \%f ms\char`\"{}, \+\_\+\+\_\+\+F\+U\+N\+C\+T\+I\+O\+N\+\_\+\+\_\+, timer.\+Read\+Ms())}
+
+\mbox{\Hypertarget{_defs_8h_accdd577afc3e541bc028d20903a17c5d}\label{_defs_8h_accdd577afc3e541bc028d20903a17c5d}} 
+\index{Defs.h@{Defs.h}!PERF\_START@{PERF\_START}}
+\index{PERF\_START@{PERF\_START}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{PERF\_START}{PERF\_START}}
+{\footnotesize\ttfamily \#define P\+E\+R\+F\+\_\+\+S\+T\+A\+RT(\begin{DoxyParamCaption}\item[{}]{timer }\end{DoxyParamCaption})~timer.\+Start()}
+
+\mbox{\Hypertarget{_defs_8h_a598a3330b3c21701223ee0ca14316eca}\label{_defs_8h_a598a3330b3c21701223ee0ca14316eca}} 
+\index{Defs.h@{Defs.h}!PI@{PI}}
+\index{PI@{PI}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{PI}{PI}}
+{\footnotesize\ttfamily \#define PI~3.\+14159265359}
+
+\mbox{\Hypertarget{_defs_8h_a3fd6948289253a5d8e497c1016fb035d}\label{_defs_8h_a3fd6948289253a5d8e497c1016fb035d}} 
+\index{Defs.h@{Defs.h}!RELEASE@{RELEASE}}
+\index{RELEASE@{RELEASE}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{RELEASE}{RELEASE}}
+{\footnotesize\ttfamily \#define R\+E\+L\+E\+A\+SE(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{                        \(\backslash\)}
+\DoxyCodeLine{    if( x != \mbox{\hyperlink{_defs_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}} )        \(\backslash\)}
+\DoxyCodeLine{        \{                      \(\backslash\)}
+\DoxyCodeLine{      delete x;            \(\backslash\)}
+\DoxyCodeLine{      x = \mbox{\hyperlink{_defs_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};              \(\backslash\)}
+\DoxyCodeLine{        \}                      \(\backslash\)}
+\DoxyCodeLine{    \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{_defs_8h_a007985a7dd5cba07f4ce9331fbb01425}\label{_defs_8h_a007985a7dd5cba07f4ce9331fbb01425}} 
+\index{Defs.h@{Defs.h}!RELEASE\_ARRAY@{RELEASE\_ARRAY}}
+\index{RELEASE\_ARRAY@{RELEASE\_ARRAY}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{RELEASE\_ARRAY}{RELEASE\_ARRAY}}
+{\footnotesize\ttfamily \#define R\+E\+L\+E\+A\+S\+E\+\_\+\+A\+R\+R\+AY(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{                              \(\backslash\)}
+\DoxyCodeLine{    if( x != \mbox{\hyperlink{_defs_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}} )              \(\backslash\)}
+\DoxyCodeLine{        \{                            \(\backslash\)}
+\DoxyCodeLine{      delete[] x;                \(\backslash\)}
+\DoxyCodeLine{      x = \mbox{\hyperlink{_defs_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};                    \(\backslash\)}
+\DoxyCodeLine{        \}                            \(\backslash\)}
+\DoxyCodeLine{                              \(\backslash\)}
+\DoxyCodeLine{    \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{_defs_8h_a94948df56deeeae2a3df3f626c910193}\label{_defs_8h_a94948df56deeeae2a3df3f626c910193}} 
+\index{Defs.h@{Defs.h}!SHORT\_STR@{SHORT\_STR}}
+\index{SHORT\_STR@{SHORT\_STR}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{SHORT\_STR}{SHORT\_STR}}
+{\footnotesize\ttfamily \#define S\+H\+O\+R\+T\+\_\+\+S\+TR~32}
+
+\mbox{\Hypertarget{_defs_8h_a649c67a18d8b923e379e00feb9f4dd05}\label{_defs_8h_a649c67a18d8b923e379e00feb9f4dd05}} 
+\index{Defs.h@{Defs.h}!TO\_BOOL@{TO\_BOOL}}
+\index{TO\_BOOL@{TO\_BOOL}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{TO\_BOOL}{TO\_BOOL}}
+{\footnotesize\ttfamily \#define T\+O\+\_\+\+B\+O\+OL(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})~( (a != 0) ? true \+: false )}
+
+
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{_defs_8h_a65f85814a8290f9797005d3b28e7e5fc}\label{_defs_8h_a65f85814a8290f9797005d3b28e7e5fc}} 
+\index{Defs.h@{Defs.h}!uchar@{uchar}}
+\index{uchar@{uchar}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{uchar}{uchar}}
+{\footnotesize\ttfamily typedef unsigned char \mbox{\hyperlink{_defs_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}}}
+
+\mbox{\Hypertarget{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}\label{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}} 
+\index{Defs.h@{Defs.h}!uint@{uint}}
+\index{uint@{uint}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{uint}{uint}}
+{\footnotesize\ttfamily typedef unsigned int \mbox{\hyperlink{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}
+
+\mbox{\Hypertarget{_defs_8h_ada4c95a4173a4bb540c8a7f80f3665d2}\label{_defs_8h_ada4c95a4173a4bb540c8a7f80f3665d2}} 
+\index{Defs.h@{Defs.h}!uint32@{uint32}}
+\index{uint32@{uint32}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{uint32}{uint32}}
+{\footnotesize\ttfamily typedef unsigned \+\_\+\+\_\+int32 \mbox{\hyperlink{_defs_8h_ada4c95a4173a4bb540c8a7f80f3665d2}{uint32}}}
+
+\mbox{\Hypertarget{_defs_8h_ac6afe794ed283c11fb63426a58188e5e}\label{_defs_8h_ac6afe794ed283c11fb63426a58188e5e}} 
+\index{Defs.h@{Defs.h}!uint64@{uint64}}
+\index{uint64@{uint64}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{uint64}{uint64}}
+{\footnotesize\ttfamily typedef unsigned \+\_\+\+\_\+int64 \mbox{\hyperlink{_defs_8h_ac6afe794ed283c11fb63426a58188e5e}{uint64}}}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{_defs_8h_aaf00478ddcdeafb5a100904ed2782e89}\label{_defs_8h_aaf00478ddcdeafb5a100904ed2782e89}} 
+\index{Defs.h@{Defs.h}!PATH@{PATH}}
+\index{PATH@{PATH}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{PATH()}{PATH()}}
+{\footnotesize\ttfamily const char$\ast$ const P\+A\+TH (\begin{DoxyParamCaption}\item[{const char $\ast$}]{folder,  }\item[{const char $\ast$}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{_defs_8h_a04fcdc38ae7f7a629f82a04072c91d6a}\label{_defs_8h_a04fcdc38ae7f7a629f82a04072c91d6a}} 
+\index{Defs.h@{Defs.h}!SWAP@{SWAP}}
+\index{SWAP@{SWAP}!Defs.h@{Defs.h}}
+\subsubsection{\texorpdfstring{SWAP()}{SWAP()}}
+{\footnotesize\ttfamily template$<$class V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE $>$ \\
+void S\+W\+AP (\begin{DoxyParamCaption}\item[{V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE \&}]{a,  }\item[{V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE \&}]{b }\end{DoxyParamCaption})}
+

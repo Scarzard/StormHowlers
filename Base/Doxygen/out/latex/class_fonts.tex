@@ -1,0 +1,113 @@
+\hypertarget{class_fonts}{}\section{Fonts Class Reference}
+\label{class_fonts}\index{Fonts@{Fonts}}
+
+
+{\ttfamily \#include $<$Fonts.\+h$>$}
+
+Inheritance diagram for Fonts\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_fonts}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_fonts_a45eefc38057ad57973216627645d60c9}{Fonts}} ()
+\item 
+virtual \mbox{\hyperlink{class_fonts_ac49e1c3974a649f120cfb46feb221d33}{$\sim$\+Fonts}} ()
+\item 
+bool \mbox{\hyperlink{class_fonts_aee8000727dca2b84dc46dacc35a9667b}{Awake}} (pugi\+::xml\+\_\+node \&)
+\item 
+bool \mbox{\hyperlink{class_fonts_afc4912317ca40199a71f7db1024c006d}{Clean\+Up}} ()
+\item 
+\+\_\+\+T\+T\+F\+\_\+\+Font $\ast$const \mbox{\hyperlink{class_fonts_aa8f815fd37417b05870d1719c42c249f}{Load}} (const char $\ast$path, int size=12)
+\item 
+S\+D\+L\+\_\+\+Texture $\ast$ \mbox{\hyperlink{class_fonts_ad027839894083559beb914ec51c6c5ac}{Print}} (const char $\ast$text, S\+D\+L\+\_\+\+Color color=\{ 255, 255, 255, 255 \}, \+\_\+\+T\+T\+F\+\_\+\+Font $\ast$font=\mbox{\hyperlink{_defs_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{N\+U\+LL}})
+\item 
+bool \mbox{\hyperlink{class_fonts_a5210938601222509c4fd3756e2be59ae}{Calc\+Size}} (const char $\ast$text, int \&width, int \&height, \+\_\+\+T\+T\+F\+\_\+\+Font $\ast$font=\mbox{\hyperlink{_defs_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{N\+U\+LL}}) const
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+list$<$ \+\_\+\+T\+T\+F\+\_\+\+Font $\ast$ $>$ \mbox{\hyperlink{class_fonts_a6384a64519f8c48889c8c1e00ca502d5}{fonts}}
+\item 
+\+\_\+\+T\+T\+F\+\_\+\+Font $\ast$ \mbox{\hyperlink{class_fonts_a8bc38464637e59ffe0e57b8f7c8c39ca}{default}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_fonts_a45eefc38057ad57973216627645d60c9}\label{class_fonts_a45eefc38057ad57973216627645d60c9}} 
+\index{Fonts@{Fonts}!Fonts@{Fonts}}
+\index{Fonts@{Fonts}!Fonts@{Fonts}}
+\subsubsection{\texorpdfstring{Fonts()}{Fonts()}}
+{\footnotesize\ttfamily Fonts\+::\+Fonts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_fonts_ac49e1c3974a649f120cfb46feb221d33}\label{class_fonts_ac49e1c3974a649f120cfb46feb221d33}} 
+\index{Fonts@{Fonts}!````~Fonts@{$\sim$Fonts}}
+\index{````~Fonts@{$\sim$Fonts}!Fonts@{Fonts}}
+\subsubsection{\texorpdfstring{$\sim$Fonts()}{~Fonts()}}
+{\footnotesize\ttfamily Fonts\+::$\sim$\+Fonts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_fonts_aee8000727dca2b84dc46dacc35a9667b}\label{class_fonts_aee8000727dca2b84dc46dacc35a9667b}} 
+\index{Fonts@{Fonts}!Awake@{Awake}}
+\index{Awake@{Awake}!Fonts@{Fonts}}
+\subsubsection{\texorpdfstring{Awake()}{Awake()}}
+{\footnotesize\ttfamily bool Fonts\+::\+Awake (\begin{DoxyParamCaption}\item[{pugi\+::xml\+\_\+node \&}]{conf }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_a4a283650cf8a73aa0b5599106bc2ba6c}{Module}}.
+
+\mbox{\Hypertarget{class_fonts_a5210938601222509c4fd3756e2be59ae}\label{class_fonts_a5210938601222509c4fd3756e2be59ae}} 
+\index{Fonts@{Fonts}!CalcSize@{CalcSize}}
+\index{CalcSize@{CalcSize}!Fonts@{Fonts}}
+\subsubsection{\texorpdfstring{CalcSize()}{CalcSize()}}
+{\footnotesize\ttfamily bool Fonts\+::\+Calc\+Size (\begin{DoxyParamCaption}\item[{const char $\ast$}]{text,  }\item[{int \&}]{width,  }\item[{int \&}]{height,  }\item[{\+\_\+\+T\+T\+F\+\_\+\+Font $\ast$}]{font = {\ttfamily \mbox{\hyperlink{_defs_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{N\+U\+LL}}} }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{class_fonts_afc4912317ca40199a71f7db1024c006d}\label{class_fonts_afc4912317ca40199a71f7db1024c006d}} 
+\index{Fonts@{Fonts}!CleanUp@{CleanUp}}
+\index{CleanUp@{CleanUp}!Fonts@{Fonts}}
+\subsubsection{\texorpdfstring{CleanUp()}{CleanUp()}}
+{\footnotesize\ttfamily bool Fonts\+::\+Clean\+Up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_a77d7a006e42c0bd10110e1adbd4598cb}{Module}}.
+
+\mbox{\Hypertarget{class_fonts_aa8f815fd37417b05870d1719c42c249f}\label{class_fonts_aa8f815fd37417b05870d1719c42c249f}} 
+\index{Fonts@{Fonts}!Load@{Load}}
+\index{Load@{Load}!Fonts@{Fonts}}
+\subsubsection{\texorpdfstring{Load()}{Load()}}
+{\footnotesize\ttfamily T\+T\+F\+\_\+\+Font $\ast$const Fonts\+::\+Load (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path,  }\item[{int}]{size = {\ttfamily 12} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_fonts_ad027839894083559beb914ec51c6c5ac}\label{class_fonts_ad027839894083559beb914ec51c6c5ac}} 
+\index{Fonts@{Fonts}!Print@{Print}}
+\index{Print@{Print}!Fonts@{Fonts}}
+\subsubsection{\texorpdfstring{Print()}{Print()}}
+{\footnotesize\ttfamily S\+D\+L\+\_\+\+Texture $\ast$ Fonts\+::\+Print (\begin{DoxyParamCaption}\item[{const char $\ast$}]{text,  }\item[{S\+D\+L\+\_\+\+Color}]{color = {\ttfamily \{~255,~255,~255,~255~\}},  }\item[{\+\_\+\+T\+T\+F\+\_\+\+Font $\ast$}]{font = {\ttfamily \mbox{\hyperlink{_defs_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{N\+U\+LL}}} }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_fonts_a8bc38464637e59ffe0e57b8f7c8c39ca}\label{class_fonts_a8bc38464637e59ffe0e57b8f7c8c39ca}} 
+\index{Fonts@{Fonts}!default@{default}}
+\index{default@{default}!Fonts@{Fonts}}
+\subsubsection{\texorpdfstring{default}{default}}
+{\footnotesize\ttfamily \+\_\+\+T\+T\+F\+\_\+\+Font$\ast$ Fonts\+::default}
+
+\mbox{\Hypertarget{class_fonts_a6384a64519f8c48889c8c1e00ca502d5}\label{class_fonts_a6384a64519f8c48889c8c1e00ca502d5}} 
+\index{Fonts@{Fonts}!fonts@{fonts}}
+\index{fonts@{fonts}!Fonts@{Fonts}}
+\subsubsection{\texorpdfstring{fonts}{fonts}}
+{\footnotesize\ttfamily list$<$\+\_\+\+T\+T\+F\+\_\+\+Font$\ast$$>$ Fonts\+::fonts}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_fonts_8h}{Fonts.\+h}}\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_fonts_8cpp}{Fonts.\+cpp}}\end{DoxyCompactItemize}

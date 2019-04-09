@@ -1,0 +1,107 @@
+\hypertarget{struct_path_node}{}\section{Path\+Node Struct Reference}
+\label{struct_path_node}\index{PathNode@{PathNode}}
+
+
+{\ttfamily \#include $<$Pathfinding.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_path_node_a8407a02423706e133bfea2b4c872289a}{Path\+Node}} ()
+\item 
+\mbox{\hyperlink{struct_path_node_af400d4d6c48f5a19aa392ca9a64e6927}{Path\+Node}} (int \mbox{\hyperlink{struct_path_node_a97de9a75f550007643f5df2629d207de}{g}}, int \mbox{\hyperlink{struct_path_node_a87bfefc8a3eac26d0de524bf03a43d31}{h}}, const pair$<$ int, int $>$ \&\mbox{\hyperlink{struct_path_node_a942fdbe2451e6bc1ecd921c7083f7b69}{pos}}, const \mbox{\hyperlink{struct_path_node}{Path\+Node}} $\ast$\mbox{\hyperlink{struct_path_node_a6f659ad1091d0f1dfe18c55114d5f6be}{parent}})
+\item 
+\mbox{\hyperlink{struct_path_node_af7a498e596d25ff091e493c54f1edf05}{Path\+Node}} (const \mbox{\hyperlink{struct_path_node}{Path\+Node}} \&node)
+\item 
+\mbox{\hyperlink{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{struct_path_node_ae6a1d0ee4c3bc067ac41478feb367ce2}{Find\+Walkable\+Adjacents}} (\mbox{\hyperlink{struct_path_list}{Path\+List}} \&list\+\_\+to\+\_\+fill) const
+\item 
+int \mbox{\hyperlink{struct_path_node_ac9ab212cdf4e4fd2fa50143cd94869da}{Score}} () const
+\item 
+int \mbox{\hyperlink{struct_path_node_ab7dec4b7f3c35b0ea6188884fe6b1859}{CalculateF}} (const pair$<$ int, int $>$ \&destination)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{struct_path_node_a97de9a75f550007643f5df2629d207de}{g}}
+\item 
+int \mbox{\hyperlink{struct_path_node_a87bfefc8a3eac26d0de524bf03a43d31}{h}}
+\item 
+pair$<$ int, int $>$ \mbox{\hyperlink{struct_path_node_a942fdbe2451e6bc1ecd921c7083f7b69}{pos}}
+\item 
+const \mbox{\hyperlink{struct_path_node}{Path\+Node}} $\ast$ \mbox{\hyperlink{struct_path_node_a6f659ad1091d0f1dfe18c55114d5f6be}{parent}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{struct_path_node_a8407a02423706e133bfea2b4c872289a}\label{struct_path_node_a8407a02423706e133bfea2b4c872289a}} 
+\index{PathNode@{PathNode}!PathNode@{PathNode}}
+\index{PathNode@{PathNode}!PathNode@{PathNode}}
+\subsubsection{\texorpdfstring{PathNode()}{PathNode()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Path\+Node\+::\+Path\+Node (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{struct_path_node_af400d4d6c48f5a19aa392ca9a64e6927}\label{struct_path_node_af400d4d6c48f5a19aa392ca9a64e6927}} 
+\index{PathNode@{PathNode}!PathNode@{PathNode}}
+\index{PathNode@{PathNode}!PathNode@{PathNode}}
+\subsubsection{\texorpdfstring{PathNode()}{PathNode()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Path\+Node\+::\+Path\+Node (\begin{DoxyParamCaption}\item[{int}]{g,  }\item[{int}]{h,  }\item[{const pair$<$ int, int $>$ \&}]{pos,  }\item[{const \mbox{\hyperlink{struct_path_node}{Path\+Node}} $\ast$}]{parent }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{struct_path_node_af7a498e596d25ff091e493c54f1edf05}\label{struct_path_node_af7a498e596d25ff091e493c54f1edf05}} 
+\index{PathNode@{PathNode}!PathNode@{PathNode}}
+\index{PathNode@{PathNode}!PathNode@{PathNode}}
+\subsubsection{\texorpdfstring{PathNode()}{PathNode()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Path\+Node\+::\+Path\+Node (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_path_node}{Path\+Node}} \&}]{node }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{struct_path_node_ab7dec4b7f3c35b0ea6188884fe6b1859}\label{struct_path_node_ab7dec4b7f3c35b0ea6188884fe6b1859}} 
+\index{PathNode@{PathNode}!CalculateF@{CalculateF}}
+\index{CalculateF@{CalculateF}!PathNode@{PathNode}}
+\subsubsection{\texorpdfstring{CalculateF()}{CalculateF()}}
+{\footnotesize\ttfamily int Path\+Node\+::\+CalculateF (\begin{DoxyParamCaption}\item[{const pair$<$ int, int $>$ \&}]{destination }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{struct_path_node_ae6a1d0ee4c3bc067ac41478feb367ce2}\label{struct_path_node_ae6a1d0ee4c3bc067ac41478feb367ce2}} 
+\index{PathNode@{PathNode}!FindWalkableAdjacents@{FindWalkableAdjacents}}
+\index{FindWalkableAdjacents@{FindWalkableAdjacents}!PathNode@{PathNode}}
+\subsubsection{\texorpdfstring{FindWalkableAdjacents()}{FindWalkableAdjacents()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} Path\+Node\+::\+Find\+Walkable\+Adjacents (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_path_list}{Path\+List}} \&}]{list\+\_\+to\+\_\+fill }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{struct_path_node_ac9ab212cdf4e4fd2fa50143cd94869da}\label{struct_path_node_ac9ab212cdf4e4fd2fa50143cd94869da}} 
+\index{PathNode@{PathNode}!Score@{Score}}
+\index{Score@{Score}!PathNode@{PathNode}}
+\subsubsection{\texorpdfstring{Score()}{Score()}}
+{\footnotesize\ttfamily int Path\+Node\+::\+Score (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{struct_path_node_a97de9a75f550007643f5df2629d207de}\label{struct_path_node_a97de9a75f550007643f5df2629d207de}} 
+\index{PathNode@{PathNode}!g@{g}}
+\index{g@{g}!PathNode@{PathNode}}
+\subsubsection{\texorpdfstring{g}{g}}
+{\footnotesize\ttfamily int Path\+Node\+::g}
+
+\mbox{\Hypertarget{struct_path_node_a87bfefc8a3eac26d0de524bf03a43d31}\label{struct_path_node_a87bfefc8a3eac26d0de524bf03a43d31}} 
+\index{PathNode@{PathNode}!h@{h}}
+\index{h@{h}!PathNode@{PathNode}}
+\subsubsection{\texorpdfstring{h}{h}}
+{\footnotesize\ttfamily int Path\+Node\+::h}
+
+\mbox{\Hypertarget{struct_path_node_a6f659ad1091d0f1dfe18c55114d5f6be}\label{struct_path_node_a6f659ad1091d0f1dfe18c55114d5f6be}} 
+\index{PathNode@{PathNode}!parent@{parent}}
+\index{parent@{parent}!PathNode@{PathNode}}
+\subsubsection{\texorpdfstring{parent}{parent}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{struct_path_node}{Path\+Node}}$\ast$ Path\+Node\+::parent}
+
+\mbox{\Hypertarget{struct_path_node_a942fdbe2451e6bc1ecd921c7083f7b69}\label{struct_path_node_a942fdbe2451e6bc1ecd921c7083f7b69}} 
+\index{PathNode@{PathNode}!pos@{pos}}
+\index{pos@{pos}!PathNode@{PathNode}}
+\subsubsection{\texorpdfstring{pos}{pos}}
+{\footnotesize\ttfamily pair$<$int,int$>$ Path\+Node\+::pos}
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_pathfinding_8h}{Pathfinding.\+h}}\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_pathfinding_8cpp}{Pathfinding.\+cpp}}\end{DoxyCompactItemize}

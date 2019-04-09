@@ -1,0 +1,173 @@
+\hypertarget{class_gui}{}\section{Gui Class Reference}
+\label{class_gui}\index{Gui@{Gui}}
+
+
+{\ttfamily \#include $<$Gui.\+h$>$}
+
+Inheritance diagram for Gui\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_gui}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_gui_ab2655dbb6d3a91d7e90cb83dad6c0450}{Gui}} ()
+\item 
+virtual \mbox{\hyperlink{class_gui_a4fd8485d226f9b8a2ac2d81d7f0f3598}{$\sim$\+Gui}} ()
+\item 
+bool \mbox{\hyperlink{class_gui_adcbbb73f8357c13664a1638857683e00}{Awake}} (pugi\+::xml\+\_\+node \&)
+\item 
+bool \mbox{\hyperlink{class_gui_ab62e1b47c26df1e5a69932becb0cc1de}{Start}} ()
+\item 
+bool \mbox{\hyperlink{class_gui_a0909298219825317830f462bec002d5b}{Pre\+Update}} ()
+\item 
+bool \mbox{\hyperlink{class_gui_a49d5bf6fa118544dd5827f0412d5968d}{Post\+Update}} ()
+\item 
+bool \mbox{\hyperlink{class_gui_aefd3608cd8ada040443efcffb1f316f3}{Clean\+Up}} ()
+\item 
+bool \mbox{\hyperlink{class_gui_a87a850ab175f2ccb095fd2c033b4780c}{Draw}} ()
+\item 
+bool \mbox{\hyperlink{class_gui_ab0a87905fba215e5334f80cb94fe9f77}{Check\+Mouse\+Pos}} (\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$data)
+\item 
+bool \mbox{\hyperlink{class_gui_a77030d749cc47c605b43e2212596c90f}{Check\+Click}} (\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$data)
+\item 
+void \mbox{\hyperlink{class_gui_a2e8ad76d16dbdf87bc4f2a77dc759613}{Update\+Children}} ()
+\item 
+void \mbox{\hyperlink{class_gui_a8b39af1511a827ff4d3d4dbdd4cb7576}{Update\+State}} (\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$data)
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_gui_acc48dc0f342bdb1c94a7cf29bc0ede2d}{Add\+U\+I\+Element}} (bool player1, \mbox{\hyperlink{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1e}{U\+I\+\_\+\+Element\+::\+U\+I\+\_\+type}} Type, \mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6}{U\+I\+\_\+\+Element\+::\+Action}} Action, pair$<$ int, int $>$ pos, pair$<$ int, int $>$ size, \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$parent=nullptr, bool visible=false, \mbox{\hyperlink{struct_dragable}{Dragable}} dragable=\{ false, false \}, const char $\ast$label=nullptr)
+\item 
+S\+D\+L\+\_\+\+Texture $\ast$ \mbox{\hyperlink{class_gui_a950aff1c9c025edbf3b765ff77ec4c5d}{Get\+Atlas}} () const
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_gui_a0bbff076275c1bb854048a0048d5eeeb}{U\+I\+\_\+\+Debug}} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_gui_ab2655dbb6d3a91d7e90cb83dad6c0450}\label{class_gui_ab2655dbb6d3a91d7e90cb83dad6c0450}} 
+\index{Gui@{Gui}!Gui@{Gui}}
+\index{Gui@{Gui}!Gui@{Gui}}
+\subsubsection{\texorpdfstring{Gui()}{Gui()}}
+{\footnotesize\ttfamily Gui\+::\+Gui (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_gui_a4fd8485d226f9b8a2ac2d81d7f0f3598}\label{class_gui_a4fd8485d226f9b8a2ac2d81d7f0f3598}} 
+\index{Gui@{Gui}!````~Gui@{$\sim$Gui}}
+\index{````~Gui@{$\sim$Gui}!Gui@{Gui}}
+\subsubsection{\texorpdfstring{$\sim$Gui()}{~Gui()}}
+{\footnotesize\ttfamily Gui\+::$\sim$\+Gui (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_gui_acc48dc0f342bdb1c94a7cf29bc0ede2d}\label{class_gui_acc48dc0f342bdb1c94a7cf29bc0ede2d}} 
+\index{Gui@{Gui}!AddUIElement@{AddUIElement}}
+\index{AddUIElement@{AddUIElement}!Gui@{Gui}}
+\subsubsection{\texorpdfstring{AddUIElement()}{AddUIElement()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ Gui\+::\+Add\+U\+I\+Element (\begin{DoxyParamCaption}\item[{bool}]{player1,  }\item[{\mbox{\hyperlink{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1e}{U\+I\+\_\+\+Element\+::\+U\+I\+\_\+type}}}]{Type,  }\item[{\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6}{U\+I\+\_\+\+Element\+::\+Action}}}]{Action,  }\item[{pair$<$ int, int $>$}]{pos,  }\item[{pair$<$ int, int $>$}]{size,  }\item[{\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$}]{parent = {\ttfamily nullptr},  }\item[{bool}]{visible = {\ttfamily false},  }\item[{\mbox{\hyperlink{struct_dragable}{Dragable}}}]{dragable = {\ttfamily \{~false,~false~\}},  }\item[{const char $\ast$}]{label = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_gui_adcbbb73f8357c13664a1638857683e00}\label{class_gui_adcbbb73f8357c13664a1638857683e00}} 
+\index{Gui@{Gui}!Awake@{Awake}}
+\index{Awake@{Awake}!Gui@{Gui}}
+\subsubsection{\texorpdfstring{Awake()}{Awake()}}
+{\footnotesize\ttfamily bool Gui\+::\+Awake (\begin{DoxyParamCaption}\item[{pugi\+::xml\+\_\+node \&}]{conf }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_a4a283650cf8a73aa0b5599106bc2ba6c}{Module}}.
+
+\mbox{\Hypertarget{class_gui_a77030d749cc47c605b43e2212596c90f}\label{class_gui_a77030d749cc47c605b43e2212596c90f}} 
+\index{Gui@{Gui}!CheckClick@{CheckClick}}
+\index{CheckClick@{CheckClick}!Gui@{Gui}}
+\subsubsection{\texorpdfstring{CheckClick()}{CheckClick()}}
+{\footnotesize\ttfamily bool Gui\+::\+Check\+Click (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$}]{data }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_gui_ab0a87905fba215e5334f80cb94fe9f77}\label{class_gui_ab0a87905fba215e5334f80cb94fe9f77}} 
+\index{Gui@{Gui}!CheckMousePos@{CheckMousePos}}
+\index{CheckMousePos@{CheckMousePos}!Gui@{Gui}}
+\subsubsection{\texorpdfstring{CheckMousePos()}{CheckMousePos()}}
+{\footnotesize\ttfamily bool Gui\+::\+Check\+Mouse\+Pos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$}]{data }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_gui_aefd3608cd8ada040443efcffb1f316f3}\label{class_gui_aefd3608cd8ada040443efcffb1f316f3}} 
+\index{Gui@{Gui}!CleanUp@{CleanUp}}
+\index{CleanUp@{CleanUp}!Gui@{Gui}}
+\subsubsection{\texorpdfstring{CleanUp()}{CleanUp()}}
+{\footnotesize\ttfamily bool Gui\+::\+Clean\+Up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_a77d7a006e42c0bd10110e1adbd4598cb}{Module}}.
+
+\mbox{\Hypertarget{class_gui_a87a850ab175f2ccb095fd2c033b4780c}\label{class_gui_a87a850ab175f2ccb095fd2c033b4780c}} 
+\index{Gui@{Gui}!Draw@{Draw}}
+\index{Draw@{Draw}!Gui@{Gui}}
+\subsubsection{\texorpdfstring{Draw()}{Draw()}}
+{\footnotesize\ttfamily bool Gui\+::\+Draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_gui_a950aff1c9c025edbf3b765ff77ec4c5d}\label{class_gui_a950aff1c9c025edbf3b765ff77ec4c5d}} 
+\index{Gui@{Gui}!GetAtlas@{GetAtlas}}
+\index{GetAtlas@{GetAtlas}!Gui@{Gui}}
+\subsubsection{\texorpdfstring{GetAtlas()}{GetAtlas()}}
+{\footnotesize\ttfamily S\+D\+L\+\_\+\+Texture $\ast$ Gui\+::\+Get\+Atlas (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{class_gui_a49d5bf6fa118544dd5827f0412d5968d}\label{class_gui_a49d5bf6fa118544dd5827f0412d5968d}} 
+\index{Gui@{Gui}!PostUpdate@{PostUpdate}}
+\index{PostUpdate@{PostUpdate}!Gui@{Gui}}
+\subsubsection{\texorpdfstring{PostUpdate()}{PostUpdate()}}
+{\footnotesize\ttfamily bool Gui\+::\+Post\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_afc355df351a4483850c3f512823ceebd}{Module}}.
+
+\mbox{\Hypertarget{class_gui_a0909298219825317830f462bec002d5b}\label{class_gui_a0909298219825317830f462bec002d5b}} 
+\index{Gui@{Gui}!PreUpdate@{PreUpdate}}
+\index{PreUpdate@{PreUpdate}!Gui@{Gui}}
+\subsubsection{\texorpdfstring{PreUpdate()}{PreUpdate()}}
+{\footnotesize\ttfamily bool Gui\+::\+Pre\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_a2c64af5917825500cf6f0497258bc398}{Module}}.
+
+\mbox{\Hypertarget{class_gui_ab62e1b47c26df1e5a69932becb0cc1de}\label{class_gui_ab62e1b47c26df1e5a69932becb0cc1de}} 
+\index{Gui@{Gui}!Start@{Start}}
+\index{Start@{Start}!Gui@{Gui}}
+\subsubsection{\texorpdfstring{Start()}{Start()}}
+{\footnotesize\ttfamily bool Gui\+::\+Start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_aaf67046743296e8de310039a1dc95d86}{Module}}.
+
+\mbox{\Hypertarget{class_gui_a2e8ad76d16dbdf87bc4f2a77dc759613}\label{class_gui_a2e8ad76d16dbdf87bc4f2a77dc759613}} 
+\index{Gui@{Gui}!UpdateChildren@{UpdateChildren}}
+\index{UpdateChildren@{UpdateChildren}!Gui@{Gui}}
+\subsubsection{\texorpdfstring{UpdateChildren()}{UpdateChildren()}}
+{\footnotesize\ttfamily void Gui\+::\+Update\+Children (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_gui_a8b39af1511a827ff4d3d4dbdd4cb7576}\label{class_gui_a8b39af1511a827ff4d3d4dbdd4cb7576}} 
+\index{Gui@{Gui}!UpdateState@{UpdateState}}
+\index{UpdateState@{UpdateState}!Gui@{Gui}}
+\subsubsection{\texorpdfstring{UpdateState()}{UpdateState()}}
+{\footnotesize\ttfamily void Gui\+::\+Update\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$}]{data }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_gui_a0bbff076275c1bb854048a0048d5eeeb}\label{class_gui_a0bbff076275c1bb854048a0048d5eeeb}} 
+\index{Gui@{Gui}!UI\_Debug@{UI\_Debug}}
+\index{UI\_Debug@{UI\_Debug}!Gui@{Gui}}
+\subsubsection{\texorpdfstring{UI\_Debug}{UI\_Debug}}
+{\footnotesize\ttfamily bool Gui\+::\+U\+I\+\_\+\+Debug = false}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_gui_8h}{Gui.\+h}}\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_gui_8cpp}{Gui.\+cpp}}\end{DoxyCompactItemize}

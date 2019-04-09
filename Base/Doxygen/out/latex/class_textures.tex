@@ -1,0 +1,125 @@
+\hypertarget{class_textures}{}\section{Textures Class Reference}
+\label{class_textures}\index{Textures@{Textures}}
+
+
+{\ttfamily \#include $<$Textures.\+h$>$}
+
+Inheritance diagram for Textures\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_textures}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_textures_a43eceaf4fb6fa052e1c41cebb7b18189}{Textures}} ()
+\item 
+virtual \mbox{\hyperlink{class_textures_aa1480566dae8b3a6de5e6c98d9fdc225}{$\sim$\+Textures}} ()
+\item 
+bool \mbox{\hyperlink{class_textures_a3956f023ff27addfed10285805ee7f61}{Awake}} (pugi\+::xml\+\_\+node \&)
+\item 
+bool \mbox{\hyperlink{class_textures_a15ed80517d40c16e670a9d968ce0944e}{Start}} ()
+\item 
+bool \mbox{\hyperlink{class_textures_ae1e354e40c2ead6427152e70b92ad43e}{Clean\+Up}} ()
+\item 
+S\+D\+L\+\_\+\+Texture $\ast$const \mbox{\hyperlink{class_textures_a97f7d4971861a4b24b9756d6f85c0424}{Load}} (const char $\ast$path)
+\item 
+bool \mbox{\hyperlink{class_textures_a97ee35678d1bae2eb558c993bc2dce34}{Un\+Load}} (S\+D\+L\+\_\+\+Texture $\ast$texture)
+\item 
+S\+D\+L\+\_\+\+Texture $\ast$const \mbox{\hyperlink{class_textures_ae0e82cc315fb823f23ae1b63c6da5a68}{Load\+Surface}} (S\+D\+L\+\_\+\+Surface $\ast$surface)
+\item 
+void \mbox{\hyperlink{class_textures_a3cac54c5bd4925d4527860ca0a816dab}{Get\+Size}} (const S\+D\+L\+\_\+\+Texture $\ast$texture, \mbox{\hyperlink{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \&width, \mbox{\hyperlink{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \&height) const
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+list$<$ S\+D\+L\+\_\+\+Texture $\ast$ $>$ \mbox{\hyperlink{class_textures_ad7467bd1532706adc0a2ee0db1c227c6}{textures}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_textures_a43eceaf4fb6fa052e1c41cebb7b18189}\label{class_textures_a43eceaf4fb6fa052e1c41cebb7b18189}} 
+\index{Textures@{Textures}!Textures@{Textures}}
+\index{Textures@{Textures}!Textures@{Textures}}
+\subsubsection{\texorpdfstring{Textures()}{Textures()}}
+{\footnotesize\ttfamily Textures\+::\+Textures (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_textures_aa1480566dae8b3a6de5e6c98d9fdc225}\label{class_textures_aa1480566dae8b3a6de5e6c98d9fdc225}} 
+\index{Textures@{Textures}!````~Textures@{$\sim$Textures}}
+\index{````~Textures@{$\sim$Textures}!Textures@{Textures}}
+\subsubsection{\texorpdfstring{$\sim$Textures()}{~Textures()}}
+{\footnotesize\ttfamily Textures\+::$\sim$\+Textures (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_textures_a3956f023ff27addfed10285805ee7f61}\label{class_textures_a3956f023ff27addfed10285805ee7f61}} 
+\index{Textures@{Textures}!Awake@{Awake}}
+\index{Awake@{Awake}!Textures@{Textures}}
+\subsubsection{\texorpdfstring{Awake()}{Awake()}}
+{\footnotesize\ttfamily bool Textures\+::\+Awake (\begin{DoxyParamCaption}\item[{pugi\+::xml\+\_\+node \&}]{config }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_a4a283650cf8a73aa0b5599106bc2ba6c}{Module}}.
+
+\mbox{\Hypertarget{class_textures_ae1e354e40c2ead6427152e70b92ad43e}\label{class_textures_ae1e354e40c2ead6427152e70b92ad43e}} 
+\index{Textures@{Textures}!CleanUp@{CleanUp}}
+\index{CleanUp@{CleanUp}!Textures@{Textures}}
+\subsubsection{\texorpdfstring{CleanUp()}{CleanUp()}}
+{\footnotesize\ttfamily bool Textures\+::\+Clean\+Up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_a77d7a006e42c0bd10110e1adbd4598cb}{Module}}.
+
+\mbox{\Hypertarget{class_textures_a3cac54c5bd4925d4527860ca0a816dab}\label{class_textures_a3cac54c5bd4925d4527860ca0a816dab}} 
+\index{Textures@{Textures}!GetSize@{GetSize}}
+\index{GetSize@{GetSize}!Textures@{Textures}}
+\subsubsection{\texorpdfstring{GetSize()}{GetSize()}}
+{\footnotesize\ttfamily void Textures\+::\+Get\+Size (\begin{DoxyParamCaption}\item[{const S\+D\+L\+\_\+\+Texture $\ast$}]{texture,  }\item[{\mbox{\hyperlink{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \&}]{width,  }\item[{\mbox{\hyperlink{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \&}]{height }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{class_textures_a97f7d4971861a4b24b9756d6f85c0424}\label{class_textures_a97f7d4971861a4b24b9756d6f85c0424}} 
+\index{Textures@{Textures}!Load@{Load}}
+\index{Load@{Load}!Textures@{Textures}}
+\subsubsection{\texorpdfstring{Load()}{Load()}}
+{\footnotesize\ttfamily S\+D\+L\+\_\+\+Texture $\ast$const Textures\+::\+Load (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_textures_ae0e82cc315fb823f23ae1b63c6da5a68}\label{class_textures_ae0e82cc315fb823f23ae1b63c6da5a68}} 
+\index{Textures@{Textures}!LoadSurface@{LoadSurface}}
+\index{LoadSurface@{LoadSurface}!Textures@{Textures}}
+\subsubsection{\texorpdfstring{LoadSurface()}{LoadSurface()}}
+{\footnotesize\ttfamily S\+D\+L\+\_\+\+Texture $\ast$const Textures\+::\+Load\+Surface (\begin{DoxyParamCaption}\item[{S\+D\+L\+\_\+\+Surface $\ast$}]{surface }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_textures_a15ed80517d40c16e670a9d968ce0944e}\label{class_textures_a15ed80517d40c16e670a9d968ce0944e}} 
+\index{Textures@{Textures}!Start@{Start}}
+\index{Start@{Start}!Textures@{Textures}}
+\subsubsection{\texorpdfstring{Start()}{Start()}}
+{\footnotesize\ttfamily bool Textures\+::\+Start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_aaf67046743296e8de310039a1dc95d86}{Module}}.
+
+\mbox{\Hypertarget{class_textures_a97ee35678d1bae2eb558c993bc2dce34}\label{class_textures_a97ee35678d1bae2eb558c993bc2dce34}} 
+\index{Textures@{Textures}!UnLoad@{UnLoad}}
+\index{UnLoad@{UnLoad}!Textures@{Textures}}
+\subsubsection{\texorpdfstring{UnLoad()}{UnLoad()}}
+{\footnotesize\ttfamily bool Textures\+::\+Un\+Load (\begin{DoxyParamCaption}\item[{S\+D\+L\+\_\+\+Texture $\ast$}]{texture }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_textures_ad7467bd1532706adc0a2ee0db1c227c6}\label{class_textures_ad7467bd1532706adc0a2ee0db1c227c6}} 
+\index{Textures@{Textures}!textures@{textures}}
+\index{textures@{textures}!Textures@{Textures}}
+\subsubsection{\texorpdfstring{textures}{textures}}
+{\footnotesize\ttfamily list$<$S\+D\+L\+\_\+\+Texture$\ast$$>$ Textures\+::textures}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_textures_8h}{Textures.\+h}}\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_textures_8cpp}{Textures.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,440 @@
+\hypertarget{class_u_i___element}{}\section{U\+I\+\_\+\+Element Class Reference}
+\label{class_u_i___element}\index{UI\_Element@{UI\_Element}}
+
+
+{\ttfamily \#include $<$U\+I\+\_\+\+Element.\+h$>$}
+
+Inheritance diagram for U\+I\+\_\+\+Element\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_u_i___element}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1e}{U\+I\+\_\+type}} \{ \newline
+\mbox{\hyperlink{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1ea752f8d3f27ea487de93c4187186a3d47}{U\+N\+K\+N\+O\+WN}} = 0, 
+\mbox{\hyperlink{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1ea1366cd18c85cdc7a06a324fd835db204}{L\+A\+B\+EL}}, 
+\mbox{\hyperlink{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1ea186f605abe12a6100b44fefb7e2d1894}{I\+M\+A\+GE}}, 
+\mbox{\hyperlink{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1eaae2177567bc3047aa17e6dd39a4424d0}{P\+U\+S\+H\+B\+U\+T\+T\+ON}}, 
+\newline
+\mbox{\hyperlink{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1ea62c4475f8079e559a56371f15496754f}{S\+L\+I\+D\+ER}}, 
+\mbox{\hyperlink{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1eaec8239005a8af522445d233047e0020f}{W\+I\+N\+D\+OW}}
+ \}
+\item 
+enum \mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6}{Action}} \{ \newline
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6ab1de6ce7d75a73e3c304ff52bfca03c1}{N\+O\+NE}} = 0, 
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a8616f5c7484ef4b8ef88dcc2a5772d96}{A\+C\+T\+\_\+\+G\+O\+T\+O\+\_\+\+M\+A\+IN}}, 
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6abdb39003abe5c5655eed3a345560626f}{A\+C\+T\+\_\+\+G\+O\+T\+O\+\_\+\+B\+U\+I\+LD}}, 
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6aed244f4f6ce65df6d468ac568bff13c6}{A\+C\+T\+\_\+\+G\+O\+T\+O\+\_\+\+D\+E\+P\+L\+OY}}, 
+\newline
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a5eb0473778c626e127f1a519c761dc02}{A\+C\+T\+\_\+\+G\+O\+T\+O\+\_\+\+C\+A\+ST}}, 
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a66a505166ece8355e4433dca0eee0058}{A\+C\+T\+\_\+\+B\+U\+I\+L\+D\+\_\+\+A\+OE}}, 
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a6c733f7166c2fd2bd3d0723c6ae287ec}{A\+C\+T\+\_\+\+B\+U\+I\+L\+D\+\_\+\+T\+A\+R\+G\+ET}}, 
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6ab40b06c499faee6d142dae756d72076c}{A\+C\+T\+\_\+\+B\+U\+I\+L\+D\+\_\+\+M\+I\+NE}}, 
+\newline
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a48cdac8358144827e598ac36f14096a2}{A\+C\+T\+\_\+\+B\+U\+I\+L\+D\+\_\+\+B\+A\+R\+R\+A\+C\+KS}}, 
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a0e94b271467c86a88a60f70f12e7471f}{A\+C\+T\+\_\+\+D\+E\+P\+L\+O\+Y\+\_\+\+S\+O\+L\+D\+I\+ER}}, 
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a98cc49e78a8c7aefe9123437528ad0e1}{A\+C\+T\+\_\+\+D\+E\+P\+L\+O\+Y\+\_\+\+T\+A\+N\+K\+M\+AN}}, 
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a7e939b37ab0c34d6645ca6a15561a70a}{A\+C\+T\+\_\+\+D\+E\+P\+L\+O\+Y\+\_\+\+I\+N\+F\+I\+L\+T\+R\+A\+T\+OR}}, 
+\newline
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a608c93d04463dab5cd267ff49f4440ef}{A\+C\+T\+\_\+\+D\+E\+P\+L\+O\+Y\+\_\+\+E\+N\+G\+I\+N\+E\+ER}}, 
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6af58afbd9b42353020f248985fc2a059c}{A\+C\+T\+\_\+\+D\+E\+P\+L\+O\+Y\+\_\+\+W\+A\+R\+H\+O\+U\+ND}}, 
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6aaf28e1b8b2c41978b04fd0a5e4feb370}{A\+C\+T\+\_\+\+C\+A\+S\+T\+\_\+\+M\+I\+S\+S\+I\+L\+ES}}, 
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a47687f4f7ef9589de6b9e02dd06f71da}{A\+C\+T\+\_\+\+C\+A\+S\+T\+\_\+2}}, 
+\newline
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a1c5dd1af35910a113a3fb9bd6ef7fdfe}{A\+C\+T\+\_\+\+C\+A\+S\+T\+\_\+3}}, 
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6abeeedbdca7bd60aa4e23bf43a36ce4b2}{A\+C\+T\+\_\+\+U\+P\+G\+R\+A\+DE}}, 
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a12068251c6090dad2eb681acd60593ec}{A\+C\+T\+\_\+\+R\+E\+P\+A\+IR}}
+ \}
+\item 
+enum \mbox{\hyperlink{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61a}{State}} \{ \newline
+\mbox{\hyperlink{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aa1205b2dfe239cf0b6040c846dd8b2d34}{N\+O\+T\+H\+I\+NG}} = 0, 
+\mbox{\hyperlink{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aaaa17b0241b201b3ba100b13fa06b65ab}{I\+D\+LE}}, 
+\mbox{\hyperlink{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aa57996f22d47e4cbbd32959bfcc4c78b6}{H\+O\+V\+ER}}, 
+\mbox{\hyperlink{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aa942359d6df5742f2145e0a8f9d108f3b}{L\+O\+G\+IC}}, 
+\newline
+\mbox{\hyperlink{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aabc44e4718803f6315c00494b43e1102a}{L\+O\+C\+K\+ED}}, 
+\mbox{\hyperlink{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aa3b2f0b57bbef90ffea30a6f6cbc109e1}{D\+R\+AG}}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_u_i___element_a4b337671cff586ef9c8bcbcd06a08356}{U\+I\+\_\+\+Element}} ()
+\item 
+\mbox{\hyperlink{class_u_i___element_ad7184033dd8aff731f4a4f555bded9c8}{U\+I\+\_\+\+Element}} (\mbox{\hyperlink{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1e}{U\+I\+\_\+type}} \mbox{\hyperlink{class_u_i___element_ad40069673afbc9b0fbd596ef164e8e92}{type}}, \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$\mbox{\hyperlink{class_u_i___element_a3e9ec27fe0cc3d30c351a9405733439f}{parent}}, bool \mbox{\hyperlink{class_u_i___element_a78aac2800a8d8db3ab76caddf3ece0c4}{visible}}, \mbox{\hyperlink{struct_dragable}{Dragable}} \mbox{\hyperlink{class_u_i___element_ac2b4266648ab33c1a486bfa8fd79d474}{dragable}})
+\item 
+\mbox{\hyperlink{class_u_i___element_aad1976da74baf5d57087f27ad43d1401}{$\sim$\+U\+I\+\_\+\+Element}} ()
+\item 
+virtual void \mbox{\hyperlink{class_u_i___element_aef56a211bea0e79047fb2d382789ff90}{Do\+Logic}} (\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6}{Action}} \mbox{\hyperlink{class_u_i___element_a1d416dd216b21b0cfd8e234edad2b472}{action}})
+\item 
+void \mbox{\hyperlink{class_u_i___element_af6d7b22a1dcb4e2d07e6b28585f5ae48}{Center}} (bool x, bool y)
+\item 
+void \mbox{\hyperlink{class_u_i___element_a6b950c18db35c9328a3463860dcbcd04}{Set\+Dragable}} (bool x, bool y)
+\item 
+void \mbox{\hyperlink{class_u_i___element_a331ca65f09fc4651681cf0126d1f4bbc}{Drag}} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+S\+D\+L\+\_\+\+Texture $\ast$ \mbox{\hyperlink{class_u_i___element_a3247f386f99b334223a67a7000d821fb}{texture}}
+\item 
+S\+D\+L\+\_\+\+Rect \mbox{\hyperlink{class_u_i___element_a2dba8ecd63b5095e8dd9d4d53fd98b32}{rect}}
+\item 
+S\+D\+L\+\_\+\+Color \mbox{\hyperlink{class_u_i___element_acc8601d91ea8749d14bf8b03c1a18f6e}{color}}
+\item 
+\mbox{\hyperlink{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1e}{U\+I\+\_\+type}} \mbox{\hyperlink{class_u_i___element_ad40069673afbc9b0fbd596ef164e8e92}{type}}
+\item 
+\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6}{Action}} \mbox{\hyperlink{class_u_i___element_a1d416dd216b21b0cfd8e234edad2b472}{action}}
+\item 
+\mbox{\hyperlink{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61a}{State}} \mbox{\hyperlink{class_u_i___element_a8ddf6ebdd05ecb2f5ad174c29064b604}{state}}
+\item 
+\mbox{\hyperlink{struct_dragable}{Dragable}} \mbox{\hyperlink{class_u_i___element_ac2b4266648ab33c1a486bfa8fd79d474}{dragable}}
+\item 
+pair$<$ int, int $>$ \mbox{\hyperlink{class_u_i___element_a47f8f59e3f076f611948eb7aee09d943}{position}}
+\item 
+pair$<$ int, int $>$ \mbox{\hyperlink{class_u_i___element_abb7953fd50dc002b8bec9d85db0b6ade}{globalpos}}
+\item 
+pair$<$ int, int $>$ \mbox{\hyperlink{class_u_i___element_aac94828dd8f149e69391b89b384d15b7}{start\+\_\+drag\+\_\+pos}}
+\item 
+pair$<$ int, int $>$ \mbox{\hyperlink{class_u_i___element_a6a5d2f29f12914f3806a82c4834746e6}{size}}
+\item 
+S\+D\+L\+\_\+\+Rect \mbox{\hyperlink{class_u_i___element_ab6dbc2e018fde1df8970ecb18e4dc366}{collider}}
+\item 
+const char $\ast$ \mbox{\hyperlink{class_u_i___element_ad7c19958ef5519d577f543676235bf93}{label}} = nullptr
+\item 
+bool \mbox{\hyperlink{class_u_i___element_a78aac2800a8d8db3ab76caddf3ece0c4}{visible}} = true
+\item 
+bool \mbox{\hyperlink{class_u_i___element_abadfcba029a7bf8d9c0463c4803f9c36}{locked}} = false
+\item 
+bool \mbox{\hyperlink{class_u_i___element_a7a889ccdc3ba79a8542d64fa60f6aaa2}{dragging}} = false
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_u_i___element_a3e9ec27fe0cc3d30c351a9405733439f}{parent}}
+\item 
+list$<$ \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ $>$ \mbox{\hyperlink{class_u_i___element_a5630a07d31524e06d15aae288c4fbb1f}{children}}
+\item 
+pair$<$ int, int $>$ \mbox{\hyperlink{class_u_i___element_afe2217f1c77e887e24844af36c2ccfc8}{click\+\_\+pos}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6}} 
+\index{UI\_Element@{UI\_Element}!Action@{Action}}
+\index{Action@{Action}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{Action}{Action}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6}{U\+I\+\_\+\+Element\+::\+Action}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NONE@{NONE}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!NONE@{NONE}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6ab1de6ce7d75a73e3c304ff52bfca03c1}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6ab1de6ce7d75a73e3c304ff52bfca03c1}} 
+N\+O\+NE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_GOTO\_MAIN@{ACT\_GOTO\_MAIN}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_GOTO\_MAIN@{ACT\_GOTO\_MAIN}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a8616f5c7484ef4b8ef88dcc2a5772d96}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a8616f5c7484ef4b8ef88dcc2a5772d96}} 
+A\+C\+T\+\_\+\+G\+O\+T\+O\+\_\+\+M\+A\+IN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_GOTO\_BUILD@{ACT\_GOTO\_BUILD}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_GOTO\_BUILD@{ACT\_GOTO\_BUILD}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6abdb39003abe5c5655eed3a345560626f}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6abdb39003abe5c5655eed3a345560626f}} 
+A\+C\+T\+\_\+\+G\+O\+T\+O\+\_\+\+B\+U\+I\+LD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_GOTO\_DEPLOY@{ACT\_GOTO\_DEPLOY}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_GOTO\_DEPLOY@{ACT\_GOTO\_DEPLOY}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6aed244f4f6ce65df6d468ac568bff13c6}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6aed244f4f6ce65df6d468ac568bff13c6}} 
+A\+C\+T\+\_\+\+G\+O\+T\+O\+\_\+\+D\+E\+P\+L\+OY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_GOTO\_CAST@{ACT\_GOTO\_CAST}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_GOTO\_CAST@{ACT\_GOTO\_CAST}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a5eb0473778c626e127f1a519c761dc02}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a5eb0473778c626e127f1a519c761dc02}} 
+A\+C\+T\+\_\+\+G\+O\+T\+O\+\_\+\+C\+A\+ST&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_BUILD\_AOE@{ACT\_BUILD\_AOE}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_BUILD\_AOE@{ACT\_BUILD\_AOE}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a66a505166ece8355e4433dca0eee0058}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a66a505166ece8355e4433dca0eee0058}} 
+A\+C\+T\+\_\+\+B\+U\+I\+L\+D\+\_\+\+A\+OE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_BUILD\_TARGET@{ACT\_BUILD\_TARGET}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_BUILD\_TARGET@{ACT\_BUILD\_TARGET}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a6c733f7166c2fd2bd3d0723c6ae287ec}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a6c733f7166c2fd2bd3d0723c6ae287ec}} 
+A\+C\+T\+\_\+\+B\+U\+I\+L\+D\+\_\+\+T\+A\+R\+G\+ET&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_BUILD\_MINE@{ACT\_BUILD\_MINE}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_BUILD\_MINE@{ACT\_BUILD\_MINE}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6ab40b06c499faee6d142dae756d72076c}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6ab40b06c499faee6d142dae756d72076c}} 
+A\+C\+T\+\_\+\+B\+U\+I\+L\+D\+\_\+\+M\+I\+NE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_BUILD\_BARRACKS@{ACT\_BUILD\_BARRACKS}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_BUILD\_BARRACKS@{ACT\_BUILD\_BARRACKS}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a48cdac8358144827e598ac36f14096a2}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a48cdac8358144827e598ac36f14096a2}} 
+A\+C\+T\+\_\+\+B\+U\+I\+L\+D\+\_\+\+B\+A\+R\+R\+A\+C\+KS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_DEPLOY\_SOLDIER@{ACT\_DEPLOY\_SOLDIER}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_DEPLOY\_SOLDIER@{ACT\_DEPLOY\_SOLDIER}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a0e94b271467c86a88a60f70f12e7471f}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a0e94b271467c86a88a60f70f12e7471f}} 
+A\+C\+T\+\_\+\+D\+E\+P\+L\+O\+Y\+\_\+\+S\+O\+L\+D\+I\+ER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_DEPLOY\_TANKMAN@{ACT\_DEPLOY\_TANKMAN}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_DEPLOY\_TANKMAN@{ACT\_DEPLOY\_TANKMAN}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a98cc49e78a8c7aefe9123437528ad0e1}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a98cc49e78a8c7aefe9123437528ad0e1}} 
+A\+C\+T\+\_\+\+D\+E\+P\+L\+O\+Y\+\_\+\+T\+A\+N\+K\+M\+AN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_DEPLOY\_INFILTRATOR@{ACT\_DEPLOY\_INFILTRATOR}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_DEPLOY\_INFILTRATOR@{ACT\_DEPLOY\_INFILTRATOR}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a7e939b37ab0c34d6645ca6a15561a70a}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a7e939b37ab0c34d6645ca6a15561a70a}} 
+A\+C\+T\+\_\+\+D\+E\+P\+L\+O\+Y\+\_\+\+I\+N\+F\+I\+L\+T\+R\+A\+T\+OR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_DEPLOY\_ENGINEER@{ACT\_DEPLOY\_ENGINEER}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_DEPLOY\_ENGINEER@{ACT\_DEPLOY\_ENGINEER}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a608c93d04463dab5cd267ff49f4440ef}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a608c93d04463dab5cd267ff49f4440ef}} 
+A\+C\+T\+\_\+\+D\+E\+P\+L\+O\+Y\+\_\+\+E\+N\+G\+I\+N\+E\+ER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_DEPLOY\_WARHOUND@{ACT\_DEPLOY\_WARHOUND}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_DEPLOY\_WARHOUND@{ACT\_DEPLOY\_WARHOUND}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6af58afbd9b42353020f248985fc2a059c}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6af58afbd9b42353020f248985fc2a059c}} 
+A\+C\+T\+\_\+\+D\+E\+P\+L\+O\+Y\+\_\+\+W\+A\+R\+H\+O\+U\+ND&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_CAST\_MISSILES@{ACT\_CAST\_MISSILES}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_CAST\_MISSILES@{ACT\_CAST\_MISSILES}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6aaf28e1b8b2c41978b04fd0a5e4feb370}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6aaf28e1b8b2c41978b04fd0a5e4feb370}} 
+A\+C\+T\+\_\+\+C\+A\+S\+T\+\_\+\+M\+I\+S\+S\+I\+L\+ES&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_CAST\_2@{ACT\_CAST\_2}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_CAST\_2@{ACT\_CAST\_2}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a47687f4f7ef9589de6b9e02dd06f71da}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a47687f4f7ef9589de6b9e02dd06f71da}} 
+A\+C\+T\+\_\+\+C\+A\+S\+T\+\_\+2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_CAST\_3@{ACT\_CAST\_3}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_CAST\_3@{ACT\_CAST\_3}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a1c5dd1af35910a113a3fb9bd6ef7fdfe}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a1c5dd1af35910a113a3fb9bd6ef7fdfe}} 
+A\+C\+T\+\_\+\+C\+A\+S\+T\+\_\+3&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_UPGRADE@{ACT\_UPGRADE}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_UPGRADE@{ACT\_UPGRADE}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6abeeedbdca7bd60aa4e23bf43a36ce4b2}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6abeeedbdca7bd60aa4e23bf43a36ce4b2}} 
+A\+C\+T\+\_\+\+U\+P\+G\+R\+A\+DE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACT\_REPAIR@{ACT\_REPAIR}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!ACT\_REPAIR@{ACT\_REPAIR}}}\mbox{\Hypertarget{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a12068251c6090dad2eb681acd60593ec}\label{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6a12068251c6090dad2eb681acd60593ec}} 
+A\+C\+T\+\_\+\+R\+E\+P\+A\+IR&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61a}\label{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61a}} 
+\index{UI\_Element@{UI\_Element}!State@{State}}
+\index{State@{State}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{State}{State}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61a}{U\+I\+\_\+\+Element\+::\+State}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NOTHING@{NOTHING}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!NOTHING@{NOTHING}}}\mbox{\Hypertarget{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aa1205b2dfe239cf0b6040c846dd8b2d34}\label{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aa1205b2dfe239cf0b6040c846dd8b2d34}} 
+N\+O\+T\+H\+I\+NG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IDLE@{IDLE}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!IDLE@{IDLE}}}\mbox{\Hypertarget{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aaaa17b0241b201b3ba100b13fa06b65ab}\label{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aaaa17b0241b201b3ba100b13fa06b65ab}} 
+I\+D\+LE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HOVER@{HOVER}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!HOVER@{HOVER}}}\mbox{\Hypertarget{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aa57996f22d47e4cbbd32959bfcc4c78b6}\label{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aa57996f22d47e4cbbd32959bfcc4c78b6}} 
+H\+O\+V\+ER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LOGIC@{LOGIC}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!LOGIC@{LOGIC}}}\mbox{\Hypertarget{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aa942359d6df5742f2145e0a8f9d108f3b}\label{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aa942359d6df5742f2145e0a8f9d108f3b}} 
+L\+O\+G\+IC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LOCKED@{LOCKED}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!LOCKED@{LOCKED}}}\mbox{\Hypertarget{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aabc44e4718803f6315c00494b43e1102a}\label{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aabc44e4718803f6315c00494b43e1102a}} 
+L\+O\+C\+K\+ED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DRAG@{DRAG}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!DRAG@{DRAG}}}\mbox{\Hypertarget{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aa3b2f0b57bbef90ffea30a6f6cbc109e1}\label{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61aa3b2f0b57bbef90ffea30a6f6cbc109e1}} 
+D\+R\+AG&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1e}\label{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1e}} 
+\index{UI\_Element@{UI\_Element}!UI\_type@{UI\_type}}
+\index{UI\_type@{UI\_type}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{UI\_type}{UI\_type}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1e}{U\+I\+\_\+\+Element\+::\+U\+I\+\_\+type}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UNKNOWN@{UNKNOWN}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!UNKNOWN@{UNKNOWN}}}\mbox{\Hypertarget{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1ea752f8d3f27ea487de93c4187186a3d47}\label{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1ea752f8d3f27ea487de93c4187186a3d47}} 
+U\+N\+K\+N\+O\+WN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LABEL@{LABEL}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!LABEL@{LABEL}}}\mbox{\Hypertarget{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1ea1366cd18c85cdc7a06a324fd835db204}\label{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1ea1366cd18c85cdc7a06a324fd835db204}} 
+L\+A\+B\+EL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IMAGE@{IMAGE}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!IMAGE@{IMAGE}}}\mbox{\Hypertarget{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1ea186f605abe12a6100b44fefb7e2d1894}\label{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1ea186f605abe12a6100b44fefb7e2d1894}} 
+I\+M\+A\+GE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PUSHBUTTON@{PUSHBUTTON}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!PUSHBUTTON@{PUSHBUTTON}}}\mbox{\Hypertarget{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1eaae2177567bc3047aa17e6dd39a4424d0}\label{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1eaae2177567bc3047aa17e6dd39a4424d0}} 
+P\+U\+S\+H\+B\+U\+T\+T\+ON&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SLIDER@{SLIDER}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!SLIDER@{SLIDER}}}\mbox{\Hypertarget{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1ea62c4475f8079e559a56371f15496754f}\label{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1ea62c4475f8079e559a56371f15496754f}} 
+S\+L\+I\+D\+ER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WINDOW@{WINDOW}!UI\_Element@{UI\_Element}}\index{UI\_Element@{UI\_Element}!WINDOW@{WINDOW}}}\mbox{\Hypertarget{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1eaec8239005a8af522445d233047e0020f}\label{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1eaec8239005a8af522445d233047e0020f}} 
+W\+I\+N\+D\+OW&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_u_i___element_a4b337671cff586ef9c8bcbcd06a08356}\label{class_u_i___element_a4b337671cff586ef9c8bcbcd06a08356}} 
+\index{UI\_Element@{UI\_Element}!UI\_Element@{UI\_Element}}
+\index{UI\_Element@{UI\_Element}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{UI\_Element()}{UI\_Element()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily U\+I\+\_\+\+Element\+::\+U\+I\+\_\+\+Element (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_u_i___element_ad7184033dd8aff731f4a4f555bded9c8}\label{class_u_i___element_ad7184033dd8aff731f4a4f555bded9c8}} 
+\index{UI\_Element@{UI\_Element}!UI\_Element@{UI\_Element}}
+\index{UI\_Element@{UI\_Element}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{UI\_Element()}{UI\_Element()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily U\+I\+\_\+\+Element\+::\+U\+I\+\_\+\+Element (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1e}{U\+I\+\_\+type}}}]{type,  }\item[{\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$}]{parent,  }\item[{bool}]{visible,  }\item[{\mbox{\hyperlink{struct_dragable}{Dragable}}}]{dragable }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_u_i___element_aad1976da74baf5d57087f27ad43d1401}\label{class_u_i___element_aad1976da74baf5d57087f27ad43d1401}} 
+\index{UI\_Element@{UI\_Element}!````~UI\_Element@{$\sim$UI\_Element}}
+\index{````~UI\_Element@{$\sim$UI\_Element}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{$\sim$UI\_Element()}{~UI\_Element()}}
+{\footnotesize\ttfamily U\+I\+\_\+\+Element\+::$\sim$\+U\+I\+\_\+\+Element (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_u_i___element_af6d7b22a1dcb4e2d07e6b28585f5ae48}\label{class_u_i___element_af6d7b22a1dcb4e2d07e6b28585f5ae48}} 
+\index{UI\_Element@{UI\_Element}!Center@{Center}}
+\index{Center@{Center}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{Center()}{Center()}}
+{\footnotesize\ttfamily void U\+I\+\_\+\+Element\+::\+Center (\begin{DoxyParamCaption}\item[{bool}]{x,  }\item[{bool}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_u_i___element_aef56a211bea0e79047fb2d382789ff90}\label{class_u_i___element_aef56a211bea0e79047fb2d382789ff90}} 
+\index{UI\_Element@{UI\_Element}!DoLogic@{DoLogic}}
+\index{DoLogic@{DoLogic}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{DoLogic()}{DoLogic()}}
+{\footnotesize\ttfamily virtual void U\+I\+\_\+\+Element\+::\+Do\+Logic (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6}{Action}}}]{action }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+\mbox{\Hypertarget{class_u_i___element_a331ca65f09fc4651681cf0126d1f4bbc}\label{class_u_i___element_a331ca65f09fc4651681cf0126d1f4bbc}} 
+\index{UI\_Element@{UI\_Element}!Drag@{Drag}}
+\index{Drag@{Drag}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{Drag()}{Drag()}}
+{\footnotesize\ttfamily void U\+I\+\_\+\+Element\+::\+Drag (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_u_i___element_a6b950c18db35c9328a3463860dcbcd04}\label{class_u_i___element_a6b950c18db35c9328a3463860dcbcd04}} 
+\index{UI\_Element@{UI\_Element}!SetDragable@{SetDragable}}
+\index{SetDragable@{SetDragable}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{SetDragable()}{SetDragable()}}
+{\footnotesize\ttfamily void U\+I\+\_\+\+Element\+::\+Set\+Dragable (\begin{DoxyParamCaption}\item[{bool}]{x,  }\item[{bool}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_u_i___element_a1d416dd216b21b0cfd8e234edad2b472}\label{class_u_i___element_a1d416dd216b21b0cfd8e234edad2b472}} 
+\index{UI\_Element@{UI\_Element}!action@{action}}
+\index{action@{action}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{action}{action}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element_ae179047d98a379f4e0dcdf0871c7b8d6}{Action}} U\+I\+\_\+\+Element\+::action}
+
+\mbox{\Hypertarget{class_u_i___element_a5630a07d31524e06d15aae288c4fbb1f}\label{class_u_i___element_a5630a07d31524e06d15aae288c4fbb1f}} 
+\index{UI\_Element@{UI\_Element}!children@{children}}
+\index{children@{children}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{children}{children}}
+{\footnotesize\ttfamily list$<$\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$$>$ U\+I\+\_\+\+Element\+::children}
+
+\mbox{\Hypertarget{class_u_i___element_afe2217f1c77e887e24844af36c2ccfc8}\label{class_u_i___element_afe2217f1c77e887e24844af36c2ccfc8}} 
+\index{UI\_Element@{UI\_Element}!click\_pos@{click\_pos}}
+\index{click\_pos@{click\_pos}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{click\_pos}{click\_pos}}
+{\footnotesize\ttfamily pair$<$int,int$>$ U\+I\+\_\+\+Element\+::click\+\_\+pos}
+
+\mbox{\Hypertarget{class_u_i___element_ab6dbc2e018fde1df8970ecb18e4dc366}\label{class_u_i___element_ab6dbc2e018fde1df8970ecb18e4dc366}} 
+\index{UI\_Element@{UI\_Element}!collider@{collider}}
+\index{collider@{collider}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{collider}{collider}}
+{\footnotesize\ttfamily S\+D\+L\+\_\+\+Rect U\+I\+\_\+\+Element\+::collider}
+
+\mbox{\Hypertarget{class_u_i___element_acc8601d91ea8749d14bf8b03c1a18f6e}\label{class_u_i___element_acc8601d91ea8749d14bf8b03c1a18f6e}} 
+\index{UI\_Element@{UI\_Element}!color@{color}}
+\index{color@{color}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{color}{color}}
+{\footnotesize\ttfamily S\+D\+L\+\_\+\+Color U\+I\+\_\+\+Element\+::color}
+
+\mbox{\Hypertarget{class_u_i___element_ac2b4266648ab33c1a486bfa8fd79d474}\label{class_u_i___element_ac2b4266648ab33c1a486bfa8fd79d474}} 
+\index{UI\_Element@{UI\_Element}!dragable@{dragable}}
+\index{dragable@{dragable}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{dragable}{dragable}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_dragable}{Dragable}} U\+I\+\_\+\+Element\+::dragable}
+
+\mbox{\Hypertarget{class_u_i___element_a7a889ccdc3ba79a8542d64fa60f6aaa2}\label{class_u_i___element_a7a889ccdc3ba79a8542d64fa60f6aaa2}} 
+\index{UI\_Element@{UI\_Element}!dragging@{dragging}}
+\index{dragging@{dragging}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{dragging}{dragging}}
+{\footnotesize\ttfamily bool U\+I\+\_\+\+Element\+::dragging = false}
+
+\mbox{\Hypertarget{class_u_i___element_abb7953fd50dc002b8bec9d85db0b6ade}\label{class_u_i___element_abb7953fd50dc002b8bec9d85db0b6ade}} 
+\index{UI\_Element@{UI\_Element}!globalpos@{globalpos}}
+\index{globalpos@{globalpos}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{globalpos}{globalpos}}
+{\footnotesize\ttfamily pair$<$int,int$>$ U\+I\+\_\+\+Element\+::globalpos}
+
+\mbox{\Hypertarget{class_u_i___element_ad7c19958ef5519d577f543676235bf93}\label{class_u_i___element_ad7c19958ef5519d577f543676235bf93}} 
+\index{UI\_Element@{UI\_Element}!label@{label}}
+\index{label@{label}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{label}{label}}
+{\footnotesize\ttfamily const char$\ast$ U\+I\+\_\+\+Element\+::label = nullptr}
+
+\mbox{\Hypertarget{class_u_i___element_abadfcba029a7bf8d9c0463c4803f9c36}\label{class_u_i___element_abadfcba029a7bf8d9c0463c4803f9c36}} 
+\index{UI\_Element@{UI\_Element}!locked@{locked}}
+\index{locked@{locked}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{locked}{locked}}
+{\footnotesize\ttfamily bool U\+I\+\_\+\+Element\+::locked = false}
+
+\mbox{\Hypertarget{class_u_i___element_a3e9ec27fe0cc3d30c351a9405733439f}\label{class_u_i___element_a3e9ec27fe0cc3d30c351a9405733439f}} 
+\index{UI\_Element@{UI\_Element}!parent@{parent}}
+\index{parent@{parent}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{parent}{parent}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ U\+I\+\_\+\+Element\+::parent}
+
+\mbox{\Hypertarget{class_u_i___element_a47f8f59e3f076f611948eb7aee09d943}\label{class_u_i___element_a47f8f59e3f076f611948eb7aee09d943}} 
+\index{UI\_Element@{UI\_Element}!position@{position}}
+\index{position@{position}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{position}{position}}
+{\footnotesize\ttfamily pair$<$int,int$>$ U\+I\+\_\+\+Element\+::position}
+
+\mbox{\Hypertarget{class_u_i___element_a2dba8ecd63b5095e8dd9d4d53fd98b32}\label{class_u_i___element_a2dba8ecd63b5095e8dd9d4d53fd98b32}} 
+\index{UI\_Element@{UI\_Element}!rect@{rect}}
+\index{rect@{rect}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{rect}{rect}}
+{\footnotesize\ttfamily S\+D\+L\+\_\+\+Rect U\+I\+\_\+\+Element\+::rect}
+
+\mbox{\Hypertarget{class_u_i___element_a6a5d2f29f12914f3806a82c4834746e6}\label{class_u_i___element_a6a5d2f29f12914f3806a82c4834746e6}} 
+\index{UI\_Element@{UI\_Element}!size@{size}}
+\index{size@{size}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{size}{size}}
+{\footnotesize\ttfamily pair$<$int,int$>$ U\+I\+\_\+\+Element\+::size}
+
+\mbox{\Hypertarget{class_u_i___element_aac94828dd8f149e69391b89b384d15b7}\label{class_u_i___element_aac94828dd8f149e69391b89b384d15b7}} 
+\index{UI\_Element@{UI\_Element}!start\_drag\_pos@{start\_drag\_pos}}
+\index{start\_drag\_pos@{start\_drag\_pos}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{start\_drag\_pos}{start\_drag\_pos}}
+{\footnotesize\ttfamily pair$<$int,int$>$ U\+I\+\_\+\+Element\+::start\+\_\+drag\+\_\+pos}
+
+\mbox{\Hypertarget{class_u_i___element_a8ddf6ebdd05ecb2f5ad174c29064b604}\label{class_u_i___element_a8ddf6ebdd05ecb2f5ad174c29064b604}} 
+\index{UI\_Element@{UI\_Element}!state@{state}}
+\index{state@{state}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{state}{state}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element_a9c8a61f72c40984cccdb54325f9dc61a}{State}} U\+I\+\_\+\+Element\+::state}
+
+\mbox{\Hypertarget{class_u_i___element_a3247f386f99b334223a67a7000d821fb}\label{class_u_i___element_a3247f386f99b334223a67a7000d821fb}} 
+\index{UI\_Element@{UI\_Element}!texture@{texture}}
+\index{texture@{texture}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{texture}{texture}}
+{\footnotesize\ttfamily S\+D\+L\+\_\+\+Texture$\ast$ U\+I\+\_\+\+Element\+::texture}
+
+\mbox{\Hypertarget{class_u_i___element_ad40069673afbc9b0fbd596ef164e8e92}\label{class_u_i___element_ad40069673afbc9b0fbd596ef164e8e92}} 
+\index{UI\_Element@{UI\_Element}!type@{type}}
+\index{type@{type}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element_a7ed595c46c75d53d30fa3813b036cf1e}{U\+I\+\_\+type}} U\+I\+\_\+\+Element\+::type}
+
+\mbox{\Hypertarget{class_u_i___element_a78aac2800a8d8db3ab76caddf3ece0c4}\label{class_u_i___element_a78aac2800a8d8db3ab76caddf3ece0c4}} 
+\index{UI\_Element@{UI\_Element}!visible@{visible}}
+\index{visible@{visible}!UI\_Element@{UI\_Element}}
+\subsubsection{\texorpdfstring{visible}{visible}}
+{\footnotesize\ttfamily bool U\+I\+\_\+\+Element\+::visible = true}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_u_i___element_8h}{U\+I\+\_\+\+Element.\+h}}\end{DoxyCompactItemize}

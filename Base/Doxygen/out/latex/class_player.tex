@@ -1,0 +1,532 @@
+\hypertarget{class_player}{}\section{Player Class Reference}
+\label{class_player}\index{Player@{Player}}
+
+
+{\ttfamily \#include $<$Player.\+h$>$}
+
+Inheritance diagram for Player\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_player}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_player_a5d4417b196345195ecceabcf9cd81bdf}{C\+U\+R\+R\+E\+N\+T\+\_\+\+UI}} \{ \newline
+\mbox{\hyperlink{class_player_a5d4417b196345195ecceabcf9cd81bdfabef03a3a55d2b8392614dc29ec87f7d1}{C\+U\+R\+R\+\_\+\+M\+A\+IN}} = 1, 
+\mbox{\hyperlink{class_player_a5d4417b196345195ecceabcf9cd81bdfa5acbad97c3a07a708d25400a0304484f}{C\+U\+R\+R\+\_\+\+B\+U\+I\+LD}}, 
+\mbox{\hyperlink{class_player_a5d4417b196345195ecceabcf9cd81bdfaeae28732879cfa90230734c6c19d3aca}{C\+U\+R\+R\+\_\+\+D\+E\+P\+L\+OY}}, 
+\mbox{\hyperlink{class_player_a5d4417b196345195ecceabcf9cd81bdfaf5541a8af149bbb37d48cecfa3d3ff36}{C\+U\+R\+R\+\_\+\+C\+A\+ST}}, 
+\newline
+\mbox{\hyperlink{class_player_a5d4417b196345195ecceabcf9cd81bdfa698713392921ab17bde944b099ecc949}{C\+U\+R\+R\+\_\+\+G\+E\+N\+E\+R\+AL}}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_player_affe0cc3cb714f6deb4e62f0c0d3f1fd8}{Player}} ()
+\item 
+\mbox{\hyperlink{class_player_a749d2c00e1fe0f5c2746f7505a58c062}{$\sim$\+Player}} ()
+\item 
+bool \mbox{\hyperlink{class_player_a797198656a642b66fd8ec656153d8595}{Start}} ()
+\item 
+bool \mbox{\hyperlink{class_player_a637908f123cba18727999783a7534459}{Update}} (float dt)
+\item 
+bool \mbox{\hyperlink{class_player_a1defee0e5f5a011305ae00d3a022af18}{Post\+Update}} ()
+\item 
+bool \mbox{\hyperlink{class_player_aebe8ef704dff5d2b676144c36f4217d8}{Clean\+Up}} ()
+\item 
+void \mbox{\hyperlink{class_player_a67b4cc05008c0b3ec4c40ce2987698a0}{Get\+Cursor\+Pos}} (int \&x, int \&y)
+\item 
+void \mbox{\hyperlink{class_player_af46bd7e9f66cbd7c24a1dfb3f7919329}{Update\+Visibility}} ()
+\item 
+void \mbox{\hyperlink{class_player_ac4b7933fa90258aab8c40e5b5d53fa7e}{Do\+Logic}} (\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$data)
+\item 
+bool \mbox{\hyperlink{class_player_a9be26181363a215e7a76562a042241ac}{Check\+Cursor\+Pos}} (\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$data)
+\item 
+bool \mbox{\hyperlink{class_player_a84ce05afd52adb5138c021b100164a66}{Check\+Cursor\+Click}} (\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$data)
+\item 
+bool \mbox{\hyperlink{class_player_a6879cbd220edf52a79c1c217d2f158e9}{Check\+Building\+Pos}} ()
+\item 
+void \mbox{\hyperlink{class_player_a9f6646ebdb0ca639bc568922fc8980a3}{Update\+Walkability\+Map}} (bool is\+Walkable)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_player_a555d3b43aa9a20abb5cf6deae89d2f94}{is\+Building}}
+\item 
+bool \mbox{\hyperlink{class_player_aa9e69f9660d78baf171553e696ccbc2f}{is\+Deploying}}
+\item 
+bool \mbox{\hyperlink{class_player_a3f5b0dbf72823a61f934b78e7d697395}{is\+Casting}}
+\item 
+\mbox{\hyperlink{struct_collider}{Collider}} \mbox{\hyperlink{class_player_a10fd723bd44718d2b5c3ad12f7fd8ef5}{collider}}
+\item 
+\mbox{\hyperlink{class_entity_afd4a8ca3ac152f193c21d6a5100f1192}{Entity\+::entity\+Type}} \mbox{\hyperlink{class_player_a81e64dcef096cbaae8b3eeb8ae53c2e6}{type}}
+\item 
+bool \mbox{\hyperlink{class_player_ae5744673c12a6f91ffd251a1e3dfa510}{is\+Player1}}
+\item 
+string \mbox{\hyperlink{class_player_a046a64a6e7ec2e6ebce2178bccf9deab}{team}}
+\item 
+\mbox{\hyperlink{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{class_player_aee9df5718f5d385e2005408322c758fa}{gold}}
+\item 
+\mbox{\hyperlink{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{class_player_a384867971bd7a6919984f516feb34766}{current\+UI}}
+\item 
+\mbox{\hyperlink{struct_cursor}{Cursor}} \mbox{\hyperlink{class_player_a0bb16d20af73b941a5694e802a081cca}{cursor}}
+\item 
+\mbox{\hyperlink{struct_game_pad}{Game\+Pad}} \mbox{\hyperlink{class_player_a07c3f36cd10eb75c18b15aea6c5c4467}{gamepad}}
+\item 
+list$<$ \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ $>$ \mbox{\hyperlink{class_player_ae2211c0d011cb65b9dce646a3254bd27}{U\+I\+\_\+elements}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_ac3f897bb94a9bd60e226423dbede3180}{Health\+\_\+\+UI}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a9076794bf5978f1c79dec7ace6a1e41e}{Gold\+\_\+\+UI}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_ada6b724556a16c66053cca0ec592a837}{Main\+\_\+\+UI}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a516e87268fc1dc66d25c12925f50cc14}{Build\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a9cb536e84eeb0aa65d9166460c783659}{Deploy\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a6ff56e52e87b0fc6db1e802e6dd33580}{Cast\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_ade6ba1f2e0318858c6ba37df88e407c6}{Build\+\_\+\+UI}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a4de3e85fdcae7a324f504a603ed37c2f}{Def\+\_\+\+A\+O\+E\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a187041a31a299c3b21a66f933d7b0298}{Def\+\_\+\+Target\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a50174d01e6d4aecea84a2a795e660517}{Mines\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a9af46b03c4d13ce71174c19882d668ff}{Barracks\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_aadaf2cbef1851be0c84e6f34fc4db253}{Deploy\+\_\+\+UI}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_abb51b9657cede554e090b1ca8aef5933}{Soldier\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_aca20327e291a4a6d68bce39546585215}{Tankman\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a5dfc5406b2207136c0cba5dc4ab7e130}{Infiltrator\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a1a558107defcb163a605a69750724820}{Engineer\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_af9215ac8219ee70227633d81316340ef}{War\+\_\+hound\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a5ecf6a552c44d1f3875b128d0bcbed85}{Cast\+\_\+\+UI}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a970d1b5e58cd0929e6c97e0104309a5e}{Missiles\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a2ccc373449cae9b0f558b78d7f248dfb}{Cast2\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a8083e83d5de2ef62aeaaddf97123c6a8}{Cast3\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a5a13c3b62fc6b92b1955579fc507dec6}{General\+\_\+\+UI}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a73d0785a8215260f890693387c4cd9c1}{Upgrade\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a413823bd408e445f96acd34a381638d7}{Repair\+\_\+icon}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a06dddd6015c09accaa908c4eb24939d4}{Name\+\_\+text}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a26d8f9665855495d109414d41cd7a5f3}{Level\+\_\+text}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a18a44a5ab95e107fd5058782bcd25c50}{Health\+\_\+text}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a564b548b61a08aa2b7462e029b9de2a3}{Damage\+\_\+text}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_a212546bc352d4116065a5014bc1fc9db}{Prod\+\_\+text}}
+\item 
+\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$ \mbox{\hyperlink{class_player_ad37b79b585d8f13ead82aaa74291b37f}{Capacity\+\_\+text}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_player_a5d4417b196345195ecceabcf9cd81bdf}\label{class_player_a5d4417b196345195ecceabcf9cd81bdf}} 
+\index{Player@{Player}!CURRENT\_UI@{CURRENT\_UI}}
+\index{CURRENT\_UI@{CURRENT\_UI}!Player@{Player}}
+\subsubsection{\texorpdfstring{CURRENT\_UI}{CURRENT\_UI}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_player_a5d4417b196345195ecceabcf9cd81bdf}{Player\+::\+C\+U\+R\+R\+E\+N\+T\+\_\+\+UI}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CURR\_MAIN@{CURR\_MAIN}!Player@{Player}}\index{Player@{Player}!CURR\_MAIN@{CURR\_MAIN}}}\mbox{\Hypertarget{class_player_a5d4417b196345195ecceabcf9cd81bdfabef03a3a55d2b8392614dc29ec87f7d1}\label{class_player_a5d4417b196345195ecceabcf9cd81bdfabef03a3a55d2b8392614dc29ec87f7d1}} 
+C\+U\+R\+R\+\_\+\+M\+A\+IN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CURR\_BUILD@{CURR\_BUILD}!Player@{Player}}\index{Player@{Player}!CURR\_BUILD@{CURR\_BUILD}}}\mbox{\Hypertarget{class_player_a5d4417b196345195ecceabcf9cd81bdfa5acbad97c3a07a708d25400a0304484f}\label{class_player_a5d4417b196345195ecceabcf9cd81bdfa5acbad97c3a07a708d25400a0304484f}} 
+C\+U\+R\+R\+\_\+\+B\+U\+I\+LD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CURR\_DEPLOY@{CURR\_DEPLOY}!Player@{Player}}\index{Player@{Player}!CURR\_DEPLOY@{CURR\_DEPLOY}}}\mbox{\Hypertarget{class_player_a5d4417b196345195ecceabcf9cd81bdfaeae28732879cfa90230734c6c19d3aca}\label{class_player_a5d4417b196345195ecceabcf9cd81bdfaeae28732879cfa90230734c6c19d3aca}} 
+C\+U\+R\+R\+\_\+\+D\+E\+P\+L\+OY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CURR\_CAST@{CURR\_CAST}!Player@{Player}}\index{Player@{Player}!CURR\_CAST@{CURR\_CAST}}}\mbox{\Hypertarget{class_player_a5d4417b196345195ecceabcf9cd81bdfaf5541a8af149bbb37d48cecfa3d3ff36}\label{class_player_a5d4417b196345195ecceabcf9cd81bdfaf5541a8af149bbb37d48cecfa3d3ff36}} 
+C\+U\+R\+R\+\_\+\+C\+A\+ST&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CURR\_GENERAL@{CURR\_GENERAL}!Player@{Player}}\index{Player@{Player}!CURR\_GENERAL@{CURR\_GENERAL}}}\mbox{\Hypertarget{class_player_a5d4417b196345195ecceabcf9cd81bdfa698713392921ab17bde944b099ecc949}\label{class_player_a5d4417b196345195ecceabcf9cd81bdfa698713392921ab17bde944b099ecc949}} 
+C\+U\+R\+R\+\_\+\+G\+E\+N\+E\+R\+AL&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_player_affe0cc3cb714f6deb4e62f0c0d3f1fd8}\label{class_player_affe0cc3cb714f6deb4e62f0c0d3f1fd8}} 
+\index{Player@{Player}!Player@{Player}}
+\index{Player@{Player}!Player@{Player}}
+\subsubsection{\texorpdfstring{Player()}{Player()}}
+{\footnotesize\ttfamily Player\+::\+Player (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_player_a749d2c00e1fe0f5c2746f7505a58c062}\label{class_player_a749d2c00e1fe0f5c2746f7505a58c062}} 
+\index{Player@{Player}!````~Player@{$\sim$Player}}
+\index{````~Player@{$\sim$Player}!Player@{Player}}
+\subsubsection{\texorpdfstring{$\sim$Player()}{~Player()}}
+{\footnotesize\ttfamily Player\+::$\sim$\+Player (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_player_a6879cbd220edf52a79c1c217d2f158e9}\label{class_player_a6879cbd220edf52a79c1c217d2f158e9}} 
+\index{Player@{Player}!CheckBuildingPos@{CheckBuildingPos}}
+\index{CheckBuildingPos@{CheckBuildingPos}!Player@{Player}}
+\subsubsection{\texorpdfstring{CheckBuildingPos()}{CheckBuildingPos()}}
+{\footnotesize\ttfamily bool Player\+::\+Check\+Building\+Pos (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_player_a84ce05afd52adb5138c021b100164a66}\label{class_player_a84ce05afd52adb5138c021b100164a66}} 
+\index{Player@{Player}!CheckCursorClick@{CheckCursorClick}}
+\index{CheckCursorClick@{CheckCursorClick}!Player@{Player}}
+\subsubsection{\texorpdfstring{CheckCursorClick()}{CheckCursorClick()}}
+{\footnotesize\ttfamily bool Player\+::\+Check\+Cursor\+Click (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$}]{data }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_player_a9be26181363a215e7a76562a042241ac}\label{class_player_a9be26181363a215e7a76562a042241ac}} 
+\index{Player@{Player}!CheckCursorPos@{CheckCursorPos}}
+\index{CheckCursorPos@{CheckCursorPos}!Player@{Player}}
+\subsubsection{\texorpdfstring{CheckCursorPos()}{CheckCursorPos()}}
+{\footnotesize\ttfamily bool Player\+::\+Check\+Cursor\+Pos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$}]{data }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_player_aebe8ef704dff5d2b676144c36f4217d8}\label{class_player_aebe8ef704dff5d2b676144c36f4217d8}} 
+\index{Player@{Player}!CleanUp@{CleanUp}}
+\index{CleanUp@{CleanUp}!Player@{Player}}
+\subsubsection{\texorpdfstring{CleanUp()}{CleanUp()}}
+{\footnotesize\ttfamily bool Player\+::\+Clean\+Up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_a77d7a006e42c0bd10110e1adbd4598cb}{Module}}.
+
+\mbox{\Hypertarget{class_player_ac4b7933fa90258aab8c40e5b5d53fa7e}\label{class_player_ac4b7933fa90258aab8c40e5b5d53fa7e}} 
+\index{Player@{Player}!DoLogic@{DoLogic}}
+\index{DoLogic@{DoLogic}!Player@{Player}}
+\subsubsection{\texorpdfstring{DoLogic()}{DoLogic()}}
+{\footnotesize\ttfamily void Player\+::\+Do\+Logic (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}} $\ast$}]{data }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_player_a67b4cc05008c0b3ec4c40ce2987698a0}\label{class_player_a67b4cc05008c0b3ec4c40ce2987698a0}} 
+\index{Player@{Player}!GetCursorPos@{GetCursorPos}}
+\index{GetCursorPos@{GetCursorPos}!Player@{Player}}
+\subsubsection{\texorpdfstring{GetCursorPos()}{GetCursorPos()}}
+{\footnotesize\ttfamily void Player\+::\+Get\+Cursor\+Pos (\begin{DoxyParamCaption}\item[{int \&}]{x,  }\item[{int \&}]{y }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_player_a1defee0e5f5a011305ae00d3a022af18}\label{class_player_a1defee0e5f5a011305ae00d3a022af18}} 
+\index{Player@{Player}!PostUpdate@{PostUpdate}}
+\index{PostUpdate@{PostUpdate}!Player@{Player}}
+\subsubsection{\texorpdfstring{PostUpdate()}{PostUpdate()}}
+{\footnotesize\ttfamily bool Player\+::\+Post\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_afc355df351a4483850c3f512823ceebd}{Module}}.
+
+\mbox{\Hypertarget{class_player_a797198656a642b66fd8ec656153d8595}\label{class_player_a797198656a642b66fd8ec656153d8595}} 
+\index{Player@{Player}!Start@{Start}}
+\index{Start@{Start}!Player@{Player}}
+\subsubsection{\texorpdfstring{Start()}{Start()}}
+{\footnotesize\ttfamily bool Player\+::\+Start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_aaf67046743296e8de310039a1dc95d86}{Module}}.
+
+\mbox{\Hypertarget{class_player_a637908f123cba18727999783a7534459}\label{class_player_a637908f123cba18727999783a7534459}} 
+\index{Player@{Player}!Update@{Update}}
+\index{Update@{Update}!Player@{Player}}
+\subsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily bool Player\+::\+Update (\begin{DoxyParamCaption}\item[{float}]{dt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_module_ac1a7b6dca73586b9cce2e67647af58d8}{Module}}.
+
+\mbox{\Hypertarget{class_player_af46bd7e9f66cbd7c24a1dfb3f7919329}\label{class_player_af46bd7e9f66cbd7c24a1dfb3f7919329}} 
+\index{Player@{Player}!UpdateVisibility@{UpdateVisibility}}
+\index{UpdateVisibility@{UpdateVisibility}!Player@{Player}}
+\subsubsection{\texorpdfstring{UpdateVisibility()}{UpdateVisibility()}}
+{\footnotesize\ttfamily void Player\+::\+Update\+Visibility (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_player_a9f6646ebdb0ca639bc568922fc8980a3}\label{class_player_a9f6646ebdb0ca639bc568922fc8980a3}} 
+\index{Player@{Player}!UpdateWalkabilityMap@{UpdateWalkabilityMap}}
+\index{UpdateWalkabilityMap@{UpdateWalkabilityMap}!Player@{Player}}
+\subsubsection{\texorpdfstring{UpdateWalkabilityMap()}{UpdateWalkabilityMap()}}
+{\footnotesize\ttfamily void Player\+::\+Update\+Walkability\+Map (\begin{DoxyParamCaption}\item[{bool}]{is\+Walkable }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_player_a9af46b03c4d13ce71174c19882d668ff}\label{class_player_a9af46b03c4d13ce71174c19882d668ff}} 
+\index{Player@{Player}!Barracks\_icon@{Barracks\_icon}}
+\index{Barracks\_icon@{Barracks\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{Barracks\_icon}{Barracks\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Barracks\+\_\+icon}
+
+\mbox{\Hypertarget{class_player_a516e87268fc1dc66d25c12925f50cc14}\label{class_player_a516e87268fc1dc66d25c12925f50cc14}} 
+\index{Player@{Player}!Build\_icon@{Build\_icon}}
+\index{Build\_icon@{Build\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{Build\_icon}{Build\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Build\+\_\+icon}
+
+\mbox{\Hypertarget{class_player_ade6ba1f2e0318858c6ba37df88e407c6}\label{class_player_ade6ba1f2e0318858c6ba37df88e407c6}} 
+\index{Player@{Player}!Build\_UI@{Build\_UI}}
+\index{Build\_UI@{Build\_UI}!Player@{Player}}
+\subsubsection{\texorpdfstring{Build\_UI}{Build\_UI}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Build\+\_\+\+UI}
+
+\mbox{\Hypertarget{class_player_ad37b79b585d8f13ead82aaa74291b37f}\label{class_player_ad37b79b585d8f13ead82aaa74291b37f}} 
+\index{Player@{Player}!Capacity\_text@{Capacity\_text}}
+\index{Capacity\_text@{Capacity\_text}!Player@{Player}}
+\subsubsection{\texorpdfstring{Capacity\_text}{Capacity\_text}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Capacity\+\_\+text}
+
+\mbox{\Hypertarget{class_player_a2ccc373449cae9b0f558b78d7f248dfb}\label{class_player_a2ccc373449cae9b0f558b78d7f248dfb}} 
+\index{Player@{Player}!Cast2\_icon@{Cast2\_icon}}
+\index{Cast2\_icon@{Cast2\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{Cast2\_icon}{Cast2\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Cast2\+\_\+icon}
+
+\mbox{\Hypertarget{class_player_a8083e83d5de2ef62aeaaddf97123c6a8}\label{class_player_a8083e83d5de2ef62aeaaddf97123c6a8}} 
+\index{Player@{Player}!Cast3\_icon@{Cast3\_icon}}
+\index{Cast3\_icon@{Cast3\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{Cast3\_icon}{Cast3\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Cast3\+\_\+icon}
+
+\mbox{\Hypertarget{class_player_a6ff56e52e87b0fc6db1e802e6dd33580}\label{class_player_a6ff56e52e87b0fc6db1e802e6dd33580}} 
+\index{Player@{Player}!Cast\_icon@{Cast\_icon}}
+\index{Cast\_icon@{Cast\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{Cast\_icon}{Cast\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Cast\+\_\+icon}
+
+\mbox{\Hypertarget{class_player_a5ecf6a552c44d1f3875b128d0bcbed85}\label{class_player_a5ecf6a552c44d1f3875b128d0bcbed85}} 
+\index{Player@{Player}!Cast\_UI@{Cast\_UI}}
+\index{Cast\_UI@{Cast\_UI}!Player@{Player}}
+\subsubsection{\texorpdfstring{Cast\_UI}{Cast\_UI}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Cast\+\_\+\+UI}
+
+\mbox{\Hypertarget{class_player_a10fd723bd44718d2b5c3ad12f7fd8ef5}\label{class_player_a10fd723bd44718d2b5c3ad12f7fd8ef5}} 
+\index{Player@{Player}!collider@{collider}}
+\index{collider@{collider}!Player@{Player}}
+\subsubsection{\texorpdfstring{collider}{collider}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_collider}{Collider}} Player\+::collider}
+
+\mbox{\Hypertarget{class_player_a384867971bd7a6919984f516feb34766}\label{class_player_a384867971bd7a6919984f516feb34766}} 
+\index{Player@{Player}!currentUI@{currentUI}}
+\index{currentUI@{currentUI}!Player@{Player}}
+\subsubsection{\texorpdfstring{currentUI}{currentUI}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} Player\+::current\+UI}
+
+\mbox{\Hypertarget{class_player_a0bb16d20af73b941a5694e802a081cca}\label{class_player_a0bb16d20af73b941a5694e802a081cca}} 
+\index{Player@{Player}!cursor@{cursor}}
+\index{cursor@{cursor}!Player@{Player}}
+\subsubsection{\texorpdfstring{cursor}{cursor}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_cursor}{Cursor}} Player\+::cursor}
+
+\mbox{\Hypertarget{class_player_a564b548b61a08aa2b7462e029b9de2a3}\label{class_player_a564b548b61a08aa2b7462e029b9de2a3}} 
+\index{Player@{Player}!Damage\_text@{Damage\_text}}
+\index{Damage\_text@{Damage\_text}!Player@{Player}}
+\subsubsection{\texorpdfstring{Damage\_text}{Damage\_text}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Damage\+\_\+text}
+
+\mbox{\Hypertarget{class_player_a4de3e85fdcae7a324f504a603ed37c2f}\label{class_player_a4de3e85fdcae7a324f504a603ed37c2f}} 
+\index{Player@{Player}!Def\_AOE\_icon@{Def\_AOE\_icon}}
+\index{Def\_AOE\_icon@{Def\_AOE\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{Def\_AOE\_icon}{Def\_AOE\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Def\+\_\+\+A\+O\+E\+\_\+icon}
+
+\mbox{\Hypertarget{class_player_a187041a31a299c3b21a66f933d7b0298}\label{class_player_a187041a31a299c3b21a66f933d7b0298}} 
+\index{Player@{Player}!Def\_Target\_icon@{Def\_Target\_icon}}
+\index{Def\_Target\_icon@{Def\_Target\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{Def\_Target\_icon}{Def\_Target\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Def\+\_\+\+Target\+\_\+icon}
+
+\mbox{\Hypertarget{class_player_a9cb536e84eeb0aa65d9166460c783659}\label{class_player_a9cb536e84eeb0aa65d9166460c783659}} 
+\index{Player@{Player}!Deploy\_icon@{Deploy\_icon}}
+\index{Deploy\_icon@{Deploy\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{Deploy\_icon}{Deploy\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Deploy\+\_\+icon}
+
+\mbox{\Hypertarget{class_player_aadaf2cbef1851be0c84e6f34fc4db253}\label{class_player_aadaf2cbef1851be0c84e6f34fc4db253}} 
+\index{Player@{Player}!Deploy\_UI@{Deploy\_UI}}
+\index{Deploy\_UI@{Deploy\_UI}!Player@{Player}}
+\subsubsection{\texorpdfstring{Deploy\_UI}{Deploy\_UI}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Deploy\+\_\+\+UI}
+
+\mbox{\Hypertarget{class_player_a1a558107defcb163a605a69750724820}\label{class_player_a1a558107defcb163a605a69750724820}} 
+\index{Player@{Player}!Engineer\_icon@{Engineer\_icon}}
+\index{Engineer\_icon@{Engineer\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{Engineer\_icon}{Engineer\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Engineer\+\_\+icon}
+
+\mbox{\Hypertarget{class_player_a07c3f36cd10eb75c18b15aea6c5c4467}\label{class_player_a07c3f36cd10eb75c18b15aea6c5c4467}} 
+\index{Player@{Player}!gamepad@{gamepad}}
+\index{gamepad@{gamepad}!Player@{Player}}
+\subsubsection{\texorpdfstring{gamepad}{gamepad}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_game_pad}{Game\+Pad}} Player\+::gamepad}
+
+\mbox{\Hypertarget{class_player_a5a13c3b62fc6b92b1955579fc507dec6}\label{class_player_a5a13c3b62fc6b92b1955579fc507dec6}} 
+\index{Player@{Player}!General\_UI@{General\_UI}}
+\index{General\_UI@{General\_UI}!Player@{Player}}
+\subsubsection{\texorpdfstring{General\_UI}{General\_UI}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+General\+\_\+\+UI}
+
+\mbox{\Hypertarget{class_player_aee9df5718f5d385e2005408322c758fa}\label{class_player_aee9df5718f5d385e2005408322c758fa}} 
+\index{Player@{Player}!gold@{gold}}
+\index{gold@{gold}!Player@{Player}}
+\subsubsection{\texorpdfstring{gold}{gold}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_defs_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} Player\+::gold}
+
+\mbox{\Hypertarget{class_player_a9076794bf5978f1c79dec7ace6a1e41e}\label{class_player_a9076794bf5978f1c79dec7ace6a1e41e}} 
+\index{Player@{Player}!Gold\_UI@{Gold\_UI}}
+\index{Gold\_UI@{Gold\_UI}!Player@{Player}}
+\subsubsection{\texorpdfstring{Gold\_UI}{Gold\_UI}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Gold\+\_\+\+UI}
+
+\mbox{\Hypertarget{class_player_a18a44a5ab95e107fd5058782bcd25c50}\label{class_player_a18a44a5ab95e107fd5058782bcd25c50}} 
+\index{Player@{Player}!Health\_text@{Health\_text}}
+\index{Health\_text@{Health\_text}!Player@{Player}}
+\subsubsection{\texorpdfstring{Health\_text}{Health\_text}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Health\+\_\+text}
+
+\mbox{\Hypertarget{class_player_ac3f897bb94a9bd60e226423dbede3180}\label{class_player_ac3f897bb94a9bd60e226423dbede3180}} 
+\index{Player@{Player}!Health\_UI@{Health\_UI}}
+\index{Health\_UI@{Health\_UI}!Player@{Player}}
+\subsubsection{\texorpdfstring{Health\_UI}{Health\_UI}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Health\+\_\+\+UI}
+
+\mbox{\Hypertarget{class_player_a5dfc5406b2207136c0cba5dc4ab7e130}\label{class_player_a5dfc5406b2207136c0cba5dc4ab7e130}} 
+\index{Player@{Player}!Infiltrator\_icon@{Infiltrator\_icon}}
+\index{Infiltrator\_icon@{Infiltrator\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{Infiltrator\_icon}{Infiltrator\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Infiltrator\+\_\+icon}
+
+\mbox{\Hypertarget{class_player_a555d3b43aa9a20abb5cf6deae89d2f94}\label{class_player_a555d3b43aa9a20abb5cf6deae89d2f94}} 
+\index{Player@{Player}!isBuilding@{isBuilding}}
+\index{isBuilding@{isBuilding}!Player@{Player}}
+\subsubsection{\texorpdfstring{isBuilding}{isBuilding}}
+{\footnotesize\ttfamily bool Player\+::is\+Building}
+
+\mbox{\Hypertarget{class_player_a3f5b0dbf72823a61f934b78e7d697395}\label{class_player_a3f5b0dbf72823a61f934b78e7d697395}} 
+\index{Player@{Player}!isCasting@{isCasting}}
+\index{isCasting@{isCasting}!Player@{Player}}
+\subsubsection{\texorpdfstring{isCasting}{isCasting}}
+{\footnotesize\ttfamily bool Player\+::is\+Casting}
+
+\mbox{\Hypertarget{class_player_aa9e69f9660d78baf171553e696ccbc2f}\label{class_player_aa9e69f9660d78baf171553e696ccbc2f}} 
+\index{Player@{Player}!isDeploying@{isDeploying}}
+\index{isDeploying@{isDeploying}!Player@{Player}}
+\subsubsection{\texorpdfstring{isDeploying}{isDeploying}}
+{\footnotesize\ttfamily bool Player\+::is\+Deploying}
+
+\mbox{\Hypertarget{class_player_ae5744673c12a6f91ffd251a1e3dfa510}\label{class_player_ae5744673c12a6f91ffd251a1e3dfa510}} 
+\index{Player@{Player}!isPlayer1@{isPlayer1}}
+\index{isPlayer1@{isPlayer1}!Player@{Player}}
+\subsubsection{\texorpdfstring{isPlayer1}{isPlayer1}}
+{\footnotesize\ttfamily bool Player\+::is\+Player1}
+
+\mbox{\Hypertarget{class_player_a26d8f9665855495d109414d41cd7a5f3}\label{class_player_a26d8f9665855495d109414d41cd7a5f3}} 
+\index{Player@{Player}!Level\_text@{Level\_text}}
+\index{Level\_text@{Level\_text}!Player@{Player}}
+\subsubsection{\texorpdfstring{Level\_text}{Level\_text}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Level\+\_\+text}
+
+\mbox{\Hypertarget{class_player_ada6b724556a16c66053cca0ec592a837}\label{class_player_ada6b724556a16c66053cca0ec592a837}} 
+\index{Player@{Player}!Main\_UI@{Main\_UI}}
+\index{Main\_UI@{Main\_UI}!Player@{Player}}
+\subsubsection{\texorpdfstring{Main\_UI}{Main\_UI}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Main\+\_\+\+UI}
+
+\mbox{\Hypertarget{class_player_a50174d01e6d4aecea84a2a795e660517}\label{class_player_a50174d01e6d4aecea84a2a795e660517}} 
+\index{Player@{Player}!Mines\_icon@{Mines\_icon}}
+\index{Mines\_icon@{Mines\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{Mines\_icon}{Mines\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Mines\+\_\+icon}
+
+\mbox{\Hypertarget{class_player_a970d1b5e58cd0929e6c97e0104309a5e}\label{class_player_a970d1b5e58cd0929e6c97e0104309a5e}} 
+\index{Player@{Player}!Missiles\_icon@{Missiles\_icon}}
+\index{Missiles\_icon@{Missiles\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{Missiles\_icon}{Missiles\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Missiles\+\_\+icon}
+
+\mbox{\Hypertarget{class_player_a06dddd6015c09accaa908c4eb24939d4}\label{class_player_a06dddd6015c09accaa908c4eb24939d4}} 
+\index{Player@{Player}!Name\_text@{Name\_text}}
+\index{Name\_text@{Name\_text}!Player@{Player}}
+\subsubsection{\texorpdfstring{Name\_text}{Name\_text}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Name\+\_\+text}
+
+\mbox{\Hypertarget{class_player_a212546bc352d4116065a5014bc1fc9db}\label{class_player_a212546bc352d4116065a5014bc1fc9db}} 
+\index{Player@{Player}!Prod\_text@{Prod\_text}}
+\index{Prod\_text@{Prod\_text}!Player@{Player}}
+\subsubsection{\texorpdfstring{Prod\_text}{Prod\_text}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Prod\+\_\+text}
+
+\mbox{\Hypertarget{class_player_a413823bd408e445f96acd34a381638d7}\label{class_player_a413823bd408e445f96acd34a381638d7}} 
+\index{Player@{Player}!Repair\_icon@{Repair\_icon}}
+\index{Repair\_icon@{Repair\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{Repair\_icon}{Repair\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Repair\+\_\+icon}
+
+\mbox{\Hypertarget{class_player_abb51b9657cede554e090b1ca8aef5933}\label{class_player_abb51b9657cede554e090b1ca8aef5933}} 
+\index{Player@{Player}!Soldier\_icon@{Soldier\_icon}}
+\index{Soldier\_icon@{Soldier\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{Soldier\_icon}{Soldier\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Soldier\+\_\+icon}
+
+\mbox{\Hypertarget{class_player_aca20327e291a4a6d68bce39546585215}\label{class_player_aca20327e291a4a6d68bce39546585215}} 
+\index{Player@{Player}!Tankman\_icon@{Tankman\_icon}}
+\index{Tankman\_icon@{Tankman\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{Tankman\_icon}{Tankman\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Tankman\+\_\+icon}
+
+\mbox{\Hypertarget{class_player_a046a64a6e7ec2e6ebce2178bccf9deab}\label{class_player_a046a64a6e7ec2e6ebce2178bccf9deab}} 
+\index{Player@{Player}!team@{team}}
+\index{team@{team}!Player@{Player}}
+\subsubsection{\texorpdfstring{team}{team}}
+{\footnotesize\ttfamily string Player\+::team}
+
+\mbox{\Hypertarget{class_player_a81e64dcef096cbaae8b3eeb8ae53c2e6}\label{class_player_a81e64dcef096cbaae8b3eeb8ae53c2e6}} 
+\index{Player@{Player}!type@{type}}
+\index{type@{type}!Player@{Player}}
+\subsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_entity_afd4a8ca3ac152f193c21d6a5100f1192}{Entity\+::entity\+Type}} Player\+::type}
+
+\mbox{\Hypertarget{class_player_ae2211c0d011cb65b9dce646a3254bd27}\label{class_player_ae2211c0d011cb65b9dce646a3254bd27}} 
+\index{Player@{Player}!UI\_elements@{UI\_elements}}
+\index{UI\_elements@{UI\_elements}!Player@{Player}}
+\subsubsection{\texorpdfstring{UI\_elements}{UI\_elements}}
+{\footnotesize\ttfamily list$<$\mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$$>$ Player\+::\+U\+I\+\_\+elements}
+
+\mbox{\Hypertarget{class_player_a73d0785a8215260f890693387c4cd9c1}\label{class_player_a73d0785a8215260f890693387c4cd9c1}} 
+\index{Player@{Player}!Upgrade\_icon@{Upgrade\_icon}}
+\index{Upgrade\_icon@{Upgrade\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{Upgrade\_icon}{Upgrade\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+Upgrade\+\_\+icon}
+
+\mbox{\Hypertarget{class_player_af9215ac8219ee70227633d81316340ef}\label{class_player_af9215ac8219ee70227633d81316340ef}} 
+\index{Player@{Player}!War\_hound\_icon@{War\_hound\_icon}}
+\index{War\_hound\_icon@{War\_hound\_icon}!Player@{Player}}
+\subsubsection{\texorpdfstring{War\_hound\_icon}{War\_hound\_icon}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_u_i___element}{U\+I\+\_\+\+Element}}$\ast$ Player\+::\+War\+\_\+hound\+\_\+icon}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_player_8h}{Player.\+h}}\item 
+C\+:/\+Users/\+Johan/\+Documents/\+Git\+Hub/\+Storm\+Howlers/\+Base/\+Motor2\+D/\mbox{\hyperlink{_player_8cpp}{Player.\+cpp}}\end{DoxyCompactItemize}
