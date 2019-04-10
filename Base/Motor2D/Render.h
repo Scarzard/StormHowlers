@@ -52,7 +52,7 @@ public:
 	SDL_Rect		viewport;
 	SDL_Color		background;
 
-	float			zoom = 1.0f;
+	float			zoom = 0;
 };
 
 #endif // __Render_H__
