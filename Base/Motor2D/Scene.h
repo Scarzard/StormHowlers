@@ -5,8 +5,6 @@
 #include "UI_Element.h"
 #include <stdio.h>
 
-
-
 struct SDL_Texture;
 
 enum DEPLOY
@@ -23,15 +21,6 @@ enum CAST
 	CAST_MISSILES = 1,
 	CAST_2,
 	CAST_3
-};
-
-=======
-struct GeneralUI
-{
-
-	bool upgrade, repair;
-	string name;
-	uint level, health, unique;
 };
 
 struct PlayerUI
