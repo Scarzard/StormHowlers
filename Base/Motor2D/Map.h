@@ -130,6 +130,19 @@ struct MapData
 	list<TileSet*>		tilesets;
 	list<MapLayer*>		layers;
 	list<ObjectsGroup*>	objLayers;
+
+	//entities
+	pair<int, int> main_building;
+	pair<int, int> main_building2;
+	pair<int, int> main_tower;
+	pair<int, int> main_tower2;
+	pair<int, int> special_skill;
+	pair<int, int> special_skill2;
+	pair<int, int> tower;
+	pair<int, int> tower2;
+	pair<int, int> barrack;
+	pair<int, int> barrack2;
+	pair<int, int> mid_building;
 };
 
 // ----------------------------------------------------

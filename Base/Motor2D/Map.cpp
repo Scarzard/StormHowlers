@@ -349,6 +349,70 @@ bool Map::LoadMap()
 		data.tile_height = map.attribute("tileheight").as_int();
 		string bg_color(map.attribute("backgroundcolor").as_string());
 
+		//loading gameobjects
+		pugi::xml_node mapIterator;
+		for (mapIterator = map.child("objectgroup"); mapIterator; mapIterator = mapIterator.next_sibling("objectgroup"))
+		{
+			string tmp(mapIterator.first_attribute().as_string());
+			if (tmp == "main base")
+			{
+				data.main_building.first = mapIterator.child("object").attribute("x").as_int();
+				data.main_building.second = mapIterator.child("object").attribute("y").as_int();
+			}
+			else if (tmp == "main base 2")
+			{
+				data.main_building2.first = mapIterator.child("object").attribute("x").as_int();
+				data.main_building2.second = mapIterator.child("object").attribute("y").as_int();
+			}
+			else if (tmp == "main tower")
+			{
+				data.main_tower.first = mapIterator.child("object").attribute("x").as_int();
+				data.main_tower.second = mapIterator.child("object").attribute("y").as_int();
+			}
+			else if (tmp == "main tower 2")
+			{
+				data.main_tower.first = mapIterator.child("object").attribute("x").as_int();
+				data.main_tower.second = mapIterator.child("object").attribute("y").as_int();
+			}
+			else if (tmp == "special skills")
+			{
+				data.special_skill.first = mapIterator.child("object").attribute("x").as_int();
+				data.special_skill.second = mapIterator.child("object").attribute("y").as_int();
+			}
+			else if (tmp == "special skills 2")
+			{
+				data.special_skill2.first = mapIterator.child("object").attribute("x").as_int();
+				data.special_skill2.second = mapIterator.child("object").attribute("y").as_int();
+			}
+			else if (tmp == "tower")
+			{
+				data.tower.first = mapIterator.child("object").attribute("x").as_int();
+				data.tower.second = mapIterator.child("object").attribute("y").as_int();
+			}
+			else if (tmp == "tower 2")
+			{
+				data.tower2.first = mapIterator.child("object").attribute("x").as_int();
+				data.tower2.second = mapIterator.child("object").attribute("y").as_int();
+			}
+			else if (tmp == "barrack")
+			{
+				data.barrack.first = mapIterator.child("object").attribute("x").as_int();
+				data.barrack.second = mapIterator.child("object").attribute("y").as_int();
+			}
+			else if (tmp == "barrack 2")
+			{
+				data.barrack2.first = mapIterator.child("object").attribute("x").as_int();
+				data.barrack2.second = mapIterator.child("object").attribute("y").as_int();
+			}
+			else if (tmp == "mid building")
+			{
+				data.mid_building.first = mapIterator.child("object").attribute("x").as_int();
+				data.mid_building.second = mapIterator.child("object").attribute("y").as_int();
+			}
+			
+		}
+
+
 		data.background_color.r = 0;
 		data.background_color.g = 0;
 		data.background_color.b = 0;

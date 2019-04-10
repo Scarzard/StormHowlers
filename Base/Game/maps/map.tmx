@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="isometric" renderorder="right-down" width="70" height="90" tilewidth="60" tileheight="29" nextobjectid="1">
+<map version="1.0" orientation="isometric" renderorder="right-down" width="70" height="90" tilewidth="60" tileheight="29" nextobjectid="18">
  <tileset firstgid="1" name="Terrain" tilewidth="60" tileheight="29" tilecount="195" columns="15">
   <image source="terrain.png" width="900" height="377"/>
  </tileset>
@@ -6310,7 +6310,7 @@
    <tile gid="37"/>
   </data>
  </layer>
- <layer name="Walkability" width="70" height="90" visible="0">
+ <layer name="Walkability" width="70" height="90">
   <properties>
    <property name="Navigation" type="int" value="1"/>
   </properties>
@@ -12617,4 +12617,37 @@
    <tile gid="0"/>
   </data>
  </layer>
+ <objectgroup name="main base">
+  <object id="3" x="754" y="116" width="290" height="203"/>
+ </objectgroup>
+ <objectgroup name="main tower">
+  <object id="4" x="1160" y="406" width="87" height="87"/>
+ </objectgroup>
+ <objectgroup name="special skills">
+  <object id="6" x="667" y="406" width="87" height="87"/>
+ </objectgroup>
+ <objectgroup name="tower">
+  <object id="8" x="1363" y="754" width="116" height="87"/>
+ </objectgroup>
+ <objectgroup name="barrack">
+  <object id="9" x="493" y="725" width="116" height="58"/>
+ </objectgroup>
+ <objectgroup name="mid building">
+  <object id="10" x="1450" y="1305" width="174" height="29"/>
+ </objectgroup>
+ <objectgroup name="main base 2">
+  <object id="13" x="783" y="2349" width="348" height="145"/>
+ </objectgroup>
+ <objectgroup name="special skills 2">
+  <object id="14" x="1131" y="2175" width="116" height="87"/>
+ </objectgroup>
+ <objectgroup name="main tower 2">
+  <object id="15" x="638" y="2204" width="116" height="58"/>
+ </objectgroup>
+ <objectgroup name="tower 2">
+  <object id="16" x="493" y="1827" width="174" height="58"/>
+ </objectgroup>
+ <objectgroup name="barrack 2">
+  <object id="17" x="1334" y="1827" width="203" height="87"/>
+ </objectgroup>
 </map>
