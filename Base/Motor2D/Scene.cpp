@@ -285,6 +285,8 @@ bool Scene::Update(float dt)
 		App->render->zoom -= 0.01f;
 	}
 
+	
+
 	if (true) {
 
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN) {
