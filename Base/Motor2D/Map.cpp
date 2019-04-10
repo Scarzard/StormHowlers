@@ -30,8 +30,9 @@ bool Map::Awake(pugi::xml_node& config)
 	debug = false;
 
 	//-----
-	idleRight123 = idleRight123->LoadAnimation("animation/player.tmx", "idle right");
-	idleRight123->speed = 50;
+	idleRight123 = idleRight123->LoadAnimation("animation/buildings.tmx", "barracks");
+	idleRight123->speed = 1;
+	idleRight123->loop = false;
 	//-----
 
 	return ret;
@@ -82,7 +83,23 @@ void Map::Draw(float dt)
 	}
 
 	//testing animation uncoment to blit example
-	//App->render->Blit(App->scene->spritesheet123, 600, 200, &idleRight123->GetCurrentFrame(dt));
+	App->render->Blit(App->scene->spritesheet123, data.main_building.first, data.main_building.second, &idleRight123->GetCurrentFrame(dt));
+	App->render->Blit(App->scene->spritesheet123, data.main_building2.first, data.main_building2.second, &idleRight123->GetCurrentFrame(dt));
+	
+	App->render->Blit(App->scene->spritesheet123, data.main_tower.first, data.main_tower.second, &idleRight123->GetCurrentFrame(dt));
+	App->render->Blit(App->scene->spritesheet123, data.main_tower2.first, data.main_tower2.second, &idleRight123->GetCurrentFrame(dt));
+
+	App->render->Blit(App->scene->spritesheet123, data.special_skill.first, data.special_skill.second, &idleRight123->GetCurrentFrame(dt));
+	App->render->Blit(App->scene->spritesheet123, data.special_skill2.first, data.special_skill2.second, &idleRight123->GetCurrentFrame(dt));
+
+	App->render->Blit(App->scene->spritesheet123, data.tower.first, data.tower.second, &idleRight123->GetCurrentFrame(dt));
+	App->render->Blit(App->scene->spritesheet123, data.tower2.first, data.tower2.second, &idleRight123->GetCurrentFrame(dt));
+
+	App->render->Blit(App->scene->spritesheet123, data.barrack.first, data.barrack.second, &idleRight123->GetCurrentFrame(dt));
+	App->render->Blit(App->scene->spritesheet123, data.barrack2.first, data.barrack2.second, &idleRight123->GetCurrentFrame(dt));
+
+	App->render->Blit(App->scene->spritesheet123, data.mid_building.first, data.mid_building.second, &idleRight123->GetCurrentFrame(dt));
+	
 }
 
 int Properties::Get(const char* value, int default_value) const
@@ -349,69 +366,6 @@ bool Map::LoadMap()
 		data.tile_height = map.attribute("tileheight").as_int();
 		string bg_color(map.attribute("backgroundcolor").as_string());
 
-		//loading gameobjects
-		pugi::xml_node mapIterator;
-		for (mapIterator = map.child("objectgroup"); mapIterator; mapIterator = mapIterator.next_sibling("objectgroup"))
-		{
-			string tmp(mapIterator.first_attribute().as_string());
-			if (tmp == "main base")
-			{
-				data.main_building.first = mapIterator.child("object").attribute("x").as_int();
-				data.main_building.second = mapIterator.child("object").attribute("y").as_int();
-			}
-			else if (tmp == "main base 2")
-			{
-				data.main_building2.first = mapIterator.child("object").attribute("x").as_int();
-				data.main_building2.second = mapIterator.child("object").attribute("y").as_int();
-			}
-			else if (tmp == "main tower")
-			{
-				data.main_tower.first = mapIterator.child("object").attribute("x").as_int();
-				data.main_tower.second = mapIterator.child("object").attribute("y").as_int();
-			}
-			else if (tmp == "main tower 2")
-			{
-				data.main_tower.first = mapIterator.child("object").attribute("x").as_int();
-				data.main_tower.second = mapIterator.child("object").attribute("y").as_int();
-			}
-			else if (tmp == "special skills")
-			{
-				data.special_skill.first = mapIterator.child("object").attribute("x").as_int();
-				data.special_skill.second = mapIterator.child("object").attribute("y").as_int();
-			}
-			else if (tmp == "special skills 2")
-			{
-				data.special_skill2.first = mapIterator.child("object").attribute("x").as_int();
-				data.special_skill2.second = mapIterator.child("object").attribute("y").as_int();
-			}
-			else if (tmp == "tower")
-			{
-				data.tower.first = mapIterator.child("object").attribute("x").as_int();
-				data.tower.second = mapIterator.child("object").attribute("y").as_int();
-			}
-			else if (tmp == "tower 2")
-			{
-				data.tower2.first = mapIterator.child("object").attribute("x").as_int();
-				data.tower2.second = mapIterator.child("object").attribute("y").as_int();
-			}
-			else if (tmp == "barrack")
-			{
-				data.barrack.first = mapIterator.child("object").attribute("x").as_int();
-				data.barrack.second = mapIterator.child("object").attribute("y").as_int();
-			}
-			else if (tmp == "barrack 2")
-			{
-				data.barrack2.first = mapIterator.child("object").attribute("x").as_int();
-				data.barrack2.second = mapIterator.child("object").attribute("y").as_int();
-			}
-			else if (tmp == "mid building")
-			{
-				data.mid_building.first = mapIterator.child("object").attribute("x").as_int();
-				data.mid_building.second = mapIterator.child("object").attribute("y").as_int();
-			}
-			
-		}
-
 
 		data.background_color.r = 0;
 		data.background_color.g = 0;
@@ -454,6 +408,80 @@ bool Map::LoadMap()
 		else
 		{
 			data.type = MAPTYPE_UNKNOWN;
+		}
+
+		//loading gameobjects
+		pugi::xml_node mapIterator;
+		for (mapIterator = map.child("objectgroup"); mapIterator; mapIterator = mapIterator.next_sibling("objectgroup"))
+		{
+			string tmp(mapIterator.first_attribute().as_string());
+			if (tmp == "main base")
+			{
+				data.main_building.first = mapIterator.child("object").attribute("x").as_int();
+				data.main_building.second = mapIterator.child("object").attribute("y").as_int();
+				//data.main_building = MapToWorld(data.main_building.first, data.main_building.second);
+			}
+			else if (tmp == "main base 2")
+			{
+				data.main_building2.first = mapIterator.child("object").attribute("x").as_int();
+				data.main_building2.second = mapIterator.child("object").attribute("y").as_int();
+			//	data.main_building2 = MapToWorld(data.main_building2.first, data.main_building2.second);
+			}
+			else if (tmp == "main tower")
+			{
+				data.main_tower.first = mapIterator.child("object").attribute("x").as_int();
+				data.main_tower.second = mapIterator.child("object").attribute("y").as_int();
+				//data.main_tower = MapToWorld(data.main_tower.first, data.main_tower.second);
+			}
+			else if (tmp == "main tower 2")
+			{
+				data.main_tower2.first = mapIterator.child("object").attribute("x").as_int();
+				data.main_tower2.second = mapIterator.child("object").attribute("y").as_int();
+				//data.main_tower2 = MapToWorld(data.main_tower2.first, data.main_tower2.second);
+			}
+			else if (tmp == "special skills")
+			{
+				data.special_skill.first = mapIterator.child("object").attribute("x").as_int();
+				data.special_skill.second = mapIterator.child("object").attribute("y").as_int();
+			//	data.special_skill = MapToWorld(data.special_skill.first, data.special_skill.second);
+			}
+			else if (tmp == "special skills 2")
+			{
+				data.special_skill2.first = mapIterator.child("object").attribute("x").as_int();
+				data.special_skill2.second = mapIterator.child("object").attribute("y").as_int();
+				//data.special_skill2 = MapToWorld(data.special_skill2.first, data.special_skill2.second);
+			}
+			else if (tmp == "tower")
+			{
+				data.tower.first = mapIterator.child("object").attribute("x").as_int();
+				data.tower.second = mapIterator.child("object").attribute("y").as_int();
+				//data.tower = MapToWorld(data.tower.first, data.tower.second);
+			}
+			else if (tmp == "tower 2")
+			{
+				data.tower2.first = mapIterator.child("object").attribute("x").as_int();
+				data.tower2.second = mapIterator.child("object").attribute("y").as_int();
+			//data.tower2 = MapToWorld(data.tower2.first, data.tower2.second);
+			}
+			else if (tmp == "barrack")
+			{
+				data.barrack.first = mapIterator.child("object").attribute("x").as_int();
+				data.barrack.second = mapIterator.child("object").attribute("y").as_int();
+			//	data.barrack = MapToWorld(data.barrack.first, data.barrack.second);
+			}
+			else if (tmp == "barrack 2")
+			{
+				data.barrack2.first = mapIterator.child("object").attribute("x").as_int();
+				data.barrack2.second = mapIterator.child("object").attribute("y").as_int();
+			//	data.barrack2 = MapToWorld(data.barrack2.first, data.barrack2.second);
+			}
+			else if (tmp == "mid building")
+			{
+				data.mid_building.first = mapIterator.child("object").attribute("x").as_int();
+				data.mid_building.second = mapIterator.child("object").attribute("y").as_int();
+				//data.mid_building = MapToWorld(data.mid_building.first, data.mid_building.second);
+			}
+
 		}
 	}
 

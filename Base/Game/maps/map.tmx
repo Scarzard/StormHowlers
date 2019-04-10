@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="isometric" renderorder="right-down" width="70" height="90" tilewidth="60" tileheight="29" nextobjectid="18">
+<map version="1.0" orientation="isometric" renderorder="right-down" width="70" height="90" tilewidth="60" tileheight="29" nextobjectid="28">
  <tileset firstgid="1" name="Terrain" tilewidth="60" tileheight="29" tilecount="195" columns="15">
   <image source="terrain.png" width="900" height="377"/>
  </tileset>
- <tileset firstgid="196" name="meta" tilewidth="60" tileheight="29" tilecount="2" columns="2">
-  <image source="meta.png" width="120" height="29"/>
+ <tileset firstgid="196" name="meta" tilewidth="60" tileheight="29" tilecount="2" columns="1">
+  <image source="meta.png" width="64" height="32"/>
  </tileset>
  <layer name="Capa de Patrones 1" width="70" height="90">
   <data>

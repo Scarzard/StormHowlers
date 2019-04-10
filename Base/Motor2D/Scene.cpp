@@ -76,7 +76,7 @@ bool Scene::Start()
 
 	//animation testing
 	if (spritesheet123 == nullptr)
-		spritesheet123 = App->tex->Load("textures/prueba.png");
+		spritesheet123 = App->tex->Load("textures/Buildings.png");
 
 	//--------- CREATE MAIN BUILDINGS -------------// (falta cambiar posicion)
 
