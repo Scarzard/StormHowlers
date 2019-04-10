@@ -42,9 +42,9 @@ bool MainMenu::Start()
 {
 	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::MAIN_MENU_BG, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
 	
-	new_game_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 115, 2 }, { 39, 40 }, menu_background, true);
+	new_game_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 787, 302 }, { 39, 40 }, menu_background, true);
 
-	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 0, 0 }, { 39, 40 }, menu_background, true);
+	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 787, 488 }, { 39, 40 }, menu_background, true);
 
 	return true;
 }
