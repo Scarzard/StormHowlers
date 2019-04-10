@@ -16,9 +16,11 @@ public:
 	void ChangeAnimation();
 
 public:
-	vector<uint> health_lv;
+	vector<uint> health_lv, upgrade_cost, damage_lv;
 
-	Animation	idle;
+	Animation	level1;
+	Animation	level2;
+	Animation	level3;
 	Animation	damaged;
 	Animation	destroyed;
 };

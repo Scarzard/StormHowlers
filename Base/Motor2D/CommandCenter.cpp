@@ -55,8 +55,11 @@ CmdCenter::CmdCenter(bool isPlayer1, pair<int, int> pos) : Entity(entityType::CO
 	name = config.child("name").attribute("string").as_string();
 
 	level = 1;
+	health = health_lv[level];
+
 	fromPlayer1 = isPlayer1;
 	position = pos;
+
 	upgrade = repair = false;
 	damage = capacity = range = production = 0;
 

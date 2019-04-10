@@ -64,7 +64,8 @@
         <name string="main_defense"/>
         <health lvl1="500" lvl2="600" lvl3="750"/>
         <size width="10" height="10"/>
-        <damage value ="300"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <damage lvl1="300" lvl2="400" lvl3="550"/>
         <range value="50"/>
       </main_defense>
 

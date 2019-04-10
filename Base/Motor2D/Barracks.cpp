@@ -45,9 +45,11 @@ Barracks::Barracks(bool isPlayer1, pair<int, int> pos) : Entity(entityType::BARR
 	name = config.child("name").attribute("string").as_string();
 
 	level = 1;
+	health = health_lv[level];
+	capacity = capacity_lv[level];
+
 	fromPlayer1 = isPlayer1;
 	position = pos;
-	capacity = capacity_lv[level];
 
 	upgrade = repair = false;
 	damage = production = range = 0;
@@ -60,7 +62,7 @@ bool Barracks::PreUpdate()
 {
 	BROFILER_CATEGORY("Barracks PreUpdate", Profiler::Color::SandyBrown);
 
-	//update repair cost
+	repair_cost = (health_lv[level] - health) / 2;
 
 	return true;
 }
@@ -76,9 +78,10 @@ bool Barracks::Update(float dt)
 			if (upgrade == true) //upgrade
 			{
 				App->player1->gold -= upgrade_cost[level]; //pay costs
-				capacity = capacity_lv[level]; //update capacity
 				level++;
+				capacity = capacity_lv[level]; //update capacity
 				upgrade = false;
+				//play fx (upgrade);
 			}
 		}
 		if (repair == true) //repair
@@ -86,6 +89,7 @@ bool Barracks::Update(float dt)
 			App->player1->gold -= repair_cost;
 			health = health_lv[level];
 			repair = false;
+			//play fx (repair);
 		}
 	}
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
@@ -95,9 +99,10 @@ bool Barracks::Update(float dt)
 			if (upgrade == true) //upgrade
 			{
 				App->player2->gold -= upgrade_cost[level]; //pay costs
-				capacity = capacity_lv[level]; //update capacity
 				level++;
+				capacity = capacity_lv[level]; //update capacity
 				upgrade = false;
+				//play fx (upgrade);
 			}
 		}
 		if (repair == true) //repair
@@ -105,6 +110,7 @@ bool Barracks::Update(float dt)
 			App->player2->gold -= repair_cost;
 			health = health_lv[level];
 			repair = false;
+			//play fx (repair);
 		}
 	}
 

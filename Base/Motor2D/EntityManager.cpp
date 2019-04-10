@@ -116,8 +116,18 @@ bool EntityManager::CleanUp()
 
 void EntityManager::DeleteAllEntities()
 {
+	// Main entity list
+	list<Entity*>::iterator	tmp = entity_list.begin();
+	while (tmp != entity_list.end())
+	{
+		(*tmp)->CleanUp();
+		RELEASE(*tmp);
+		tmp++;
+	}
+	entity_list.clear();
+
 	// Player 1 Buildings
-	list<Entity*>::iterator	tmp = App->player1->buildings.begin();
+	tmp = App->player1->buildings.begin();
 	while (tmp != App->player1->buildings.end())
 	{
 		(*tmp)->CleanUp();
@@ -137,23 +147,16 @@ void EntityManager::DeleteAllEntities()
 	App->player2->buildings.clear();
 }
 
-bool EntityManager::Draw(float dt)
+bool EntityManager::Draw(float dt) //sprite ordering
 {
 	bool ret = true;
-	//list<Entity*>::iterator tmp = Entities.begin();
 
-	//while (tmp != Entities.end())
-	//{
-	//	if ((*tmp)->flip)
-	//	{
-	//		App->render->Blit(texture, (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_HORIZONTAL);
-	//	}
-	//	else
-	//	{
-	//		App->render->Blit(texture, (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
-	//	}
-	//	tmp++;
-	//}
+	list<Entity*>::iterator tmp = entity_list.begin();
+	while (tmp != entity_list.end())
+	{
+		App->render->Blit(texture, (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
+		tmp++;
+	}
 	return ret;
 }
 
@@ -198,6 +201,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 
 	if (tmp)
 	{
+		entity_list.push_back(tmp); // add to main entity list
 		if (isPlayer1 == true)
 		{
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building

@@ -28,6 +28,8 @@ public:
 	string			texture_path;
 	SDL_Texture*	texture;
 
+	list<Entity*>	entity_list;
+
 	bool draw_path = false;
 	bool godmode = false;
 };

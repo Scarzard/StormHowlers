@@ -30,14 +30,25 @@ MainDefense::MainDefense(bool isPlayer1, pair<int, int> pos) : Entity(entityType
 	health_lv.push_back(config.child("health").attribute("lvl2").as_uint());
 	health_lv.push_back(config.child("health").attribute("lvl3").as_uint());
 
+	damage_lv.push_back(0);
+	damage_lv.push_back(config.child("damage").attribute("lvl1").as_uint());
+	damage_lv.push_back(config.child("damage").attribute("lvl2").as_uint());
+	damage_lv.push_back(config.child("damage").attribute("lvl3").as_uint());
+
+	upgrade_cost.push_back(0);
+	upgrade_cost.push_back(config.child("upgrade_cost").attribute("ToLvl2").as_int());
+	upgrade_cost.push_back(config.child("upgrade_cost").attribute("ToLvl3").as_int());
+
 	size.first = config.child("size").attribute("width").as_int();
 	size.first = config.child("size").attribute("height").as_int();
 
 	name = config.child("name").attribute("string").as_string();
 	range = config.child("range").attribute("value").as_uint();
-	damage = config.child("damage").attribute("value").as_uint();
 
 	level = 1;
+	health = health_lv[level];
+	damage = damage_lv[level];
+
 	fromPlayer1 = isPlayer1;
 	position = pos;
 
@@ -56,6 +67,15 @@ bool MainDefense::Update(float dt)
 	{
 		if (health > 0) //if not destroyed
 		{
+			if (upgrade == true) //upgrade
+			{
+				App->player2->gold -= upgrade_cost[level]; //pay costs
+				level++;
+				damage = damage_lv[level]; //update production
+				upgrade = false;
+				//play fx (upgrade);
+			}
+
 			//if troops in range -> attack
 		}
 		else
@@ -67,6 +87,15 @@ bool MainDefense::Update(float dt)
 	{
 		if (health > 0) //if not destroyed
 		{
+			if (upgrade == true) //upgrade
+			{
+				App->player2->gold -= upgrade_cost[level]; //pay costs
+				level++;
+				damage = damage_lv[level]; //update production
+				upgrade = false;
+				//play fx (upgrade);
+			}
+
 			//if troops in range -> attack
 		}
 		else
@@ -83,8 +112,14 @@ void MainDefense::CleanUp()
 {
 	LOG("---Main Defense Deleted");
 
+	damage_lv.clear();
+	damage_lv.resize(0);
+
 	health_lv.clear();
 	health_lv.resize(0);
+
+	upgrade_cost.clear();
+	upgrade_cost.resize(0);
 }
 
 void MainDefense::LoadAnimations()
@@ -108,6 +143,12 @@ void MainDefense::ChangeAnimation()
 	else if (health < (health_lv[level] / 2))
 		Current_Animation = &damaged;
 
-	else
-		Current_Animation = &idle;
+	else if (level == 1)
+		Current_Animation = &level1;
+
+	else if (level == 2)
+		Current_Animation = &level2;
+
+	else if (level == 3)
+		Current_Animation = &level3;
 }

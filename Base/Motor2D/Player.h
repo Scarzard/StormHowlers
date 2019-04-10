@@ -78,6 +78,7 @@ public:
 	bool isCasting;
 
 	Collider collider;
+	pair<int, int> offset;
 	Entity::entityType type;
 
 	bool isPlayer1;

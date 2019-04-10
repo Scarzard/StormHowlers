@@ -45,8 +45,12 @@ Townhall::Townhall(bool isPlayer1, pair<int,int> pos) : Entity(entityType::TOWNH
 	name = config.child("name").attribute("string").as_string();
 
 	level = 1;
+	health = health_lv[level];
+	production = production_lv[level];
+
 	fromPlayer1 = isPlayer1;
 	position = pos;
+
 	upgrade = repair = false;
 	damage = capacity = range = 0;
 
@@ -65,9 +69,10 @@ bool Townhall::Update(float dt)
 			if (upgrade == true) //upgrade
 			{
 				App->player1->gold -= upgrade_cost[level]; //pay costs
-				production = production_lv[level]; //update production
 				level++;
+				production = production_lv[level]; //update production
 				upgrade = false;
+				//play fx (upgrade);
 			}
 		}
 		else
@@ -82,9 +87,10 @@ bool Townhall::Update(float dt)
 			if (upgrade == true) //upgrade
 			{
 				App->player2->gold -= upgrade_cost[level]; //pay costs
-				production = production_lv[level]; //update production
 				level++;
+				production = production_lv[level]; //update production
 				upgrade = false;
+				//play fx (upgrade);
 			}
 		}
 		else

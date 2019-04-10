@@ -31,6 +31,7 @@ Walls::Walls(bool isPlayer1, pair<int, int> pos) : Entity(entityType::WALLS)
 
 	fromPlayer1 = isPlayer1;
 	position = pos;
+
 	upgrade = repair = false;
 	damage = capacity = range = level = 0;
 

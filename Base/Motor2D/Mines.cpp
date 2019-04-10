@@ -45,8 +45,12 @@ Mines::Mines(bool isPlayer1, pair<int, int> pos) : Entity(entityType::MINES)
 	name = config.child("name").attribute("string").as_string();
 
 	level = 1;
+	health = health_lv[level];
+	production = production_lv[level];
+
 	fromPlayer1 = isPlayer1;
 	position = pos;
+
 	upgrade = repair = false;
 	damage = capacity = range = 0;
 
@@ -58,7 +62,7 @@ bool Mines::PreUpdate()
 {
 	BROFILER_CATEGORY("Mines PreUpdate", Profiler::Color::SandyBrown);
 
-	//update repair cost
+	repair_cost = (health_lv[level] - health ) / 2;
 
 	return true;
 }
@@ -74,9 +78,10 @@ bool Mines::Update(float dt)
 				if (upgrade == true) //upgrade
 				{
 					App->player1->gold -= upgrade_cost[level]; //pay costs
-					production = production_lv[level]; //update production
 					level++;
+					production = production_lv[level]; //update production
 					upgrade = false;
+					//play fx (upgrade);
 				}
 			}
 			if (repair == true) //repair
@@ -84,6 +89,7 @@ bool Mines::Update(float dt)
 				App->player1->gold -= repair_cost;
 				health = health_lv[level];
 				repair = false;
+				//play fx (repair);
 			}
 		}
 		else if (!fromPlayer1) // --- Player 2 ---------------------------
@@ -93,9 +99,10 @@ bool Mines::Update(float dt)
 				if (upgrade == true) //upgrade
 				{
 					App->player2->gold -= upgrade_cost[level]; //pay costs
-					production = production_lv[level]; //update production
 					level++;
+					production = production_lv[level]; //update production
 					upgrade = false;
+					//play fx (upgrade);
 				}
 			}
 			if (repair == true) //repair
@@ -103,6 +110,7 @@ bool Mines::Update(float dt)
 				App->player2->gold -= repair_cost;
 				health = health_lv[level];
 				repair = false;
+				//play fx (repair);
 			}
 		}
 

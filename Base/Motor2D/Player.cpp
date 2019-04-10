@@ -47,6 +47,37 @@ bool Player::Update(float dt)
 	if (gamepad.Controller[JOY_LEFT] == KEY_REPEAT || gamepad.Controller[LEFT] == KEY_REPEAT)
 		cursor.position.first -= 500 * dt;
 
+	//--- Cursor Limits Player 1
+	if (isPlayer1 == true)
+	{
+		if (cursor.position.second < 0) //up limit
+			cursor.position.second = 0;
+
+		if (cursor.position.first > App->win->height) //down limit
+			cursor.position.first = App->win->height - cursor.area.h;
+
+		if (cursor.position.first <= 0) //left limit
+			cursor.position.first = 0;
+
+		if (cursor.position.first > ((App->map->data.width*App->map->data.tile_width) / 2)) //right limit
+			cursor.position.first = ((App->map->data.width*App->map->data.tile_width) / 2) - cursor.area.w;
+	}
+	//--- Cursor Limits Player 2
+	else if (isPlayer1 == false)
+	{
+		if (cursor.position.second < 0) //up limit
+			cursor.position.second = 0;
+
+		if (cursor.position.first > App->win->height) //down limit
+			cursor.position.first = App->win->height - cursor.area.h;
+
+		if (cursor.position.first <= ((App->map->data.width*App->map->data.tile_width) / 2)) //left limit
+			cursor.position.first = (App->map->data.width / 2);
+
+		if (cursor.position.first > App->win->width) //right limit
+			cursor.position.first = App->win->width - cursor.area.w;
+	}
+
 	//--- Building ---------------------
 	if (isBuilding)
 	{
@@ -56,7 +87,7 @@ bool Player::Update(float dt)
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				//play fx (build);
-				//App->entitymanager->AddEntity(isPlayer1, type, { collider.x, collider.y });
+				App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first - offset.first, collider.tiles[0].second - offset.second });
 				UpdateWalkabilityMap(false);
 			}
 		}
@@ -323,24 +354,28 @@ void Player::DoLogic(UI_Element* data)
 		isBuilding = true;
 		type = Entity::entityType::DEFENSE_AOE;
 		collider.dimensions = { 3,4 };
+		offset = { 60,30 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_TARGET:
 		isBuilding = true;
 		type = Entity::entityType::DEFENSE_TARGET;
 		//collider.dimensions = { 3,4 };
+		//offset = { 60,30 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_MINE:
 		isBuilding = true;
 		type = Entity::entityType::MINES;
 		//collider.dimensions = { 3,4 };
+		//offset = { 60,30 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_BARRACKS:
 		isBuilding = true;
 		type = Entity::entityType::BARRACKS;
 		//collider.dimensions = { 3,4 };
+		//offset = { 60,30 };
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
