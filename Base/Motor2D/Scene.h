@@ -89,6 +89,10 @@ public:
 private:
 	SDL_Texture* debug_tex;
 	SDL_Texture* cursor_tex;
+
+	pair<int, int>	camera_motion;
+	pair<int, int>	last_motion;
+	bool	start_motion = false;
 };
 
 #endif // __Scene_H__

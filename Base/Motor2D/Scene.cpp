@@ -285,6 +285,44 @@ bool Scene::Update(float dt)
 		App->render->zoom -= 0.01f;
 	}
 
+	if (true) {
+
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
+			LOG("CLICK");
+			App->input->GetMousePosition(camera_motion.first, camera_motion.second);
+			start_motion = true;
+		}
+
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP) {
+			LOG("CLICK UP");
+			start_motion = false;
+			//App->input->GetMousePosition(camera_motion.x, camera_motion.y);
+		}
+		if (start_motion) {
+
+			pair<int,int> final;
+			App->input->GetMousePosition(final.first, final.second);
+			SDL_SetRenderDrawColor(App->render->renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+			if (App->map->debug)SDL_RenderDrawLine(App->render->renderer, camera_motion.first, camera_motion.second, final.first, final.second);
+
+			App->input->GetMouseMotion(final.first, final.second);
+			LOG("final_motio: %d,%d", final.first, final.second);
+			LOG("last_motion: %d,%d", last_motion.first, last_motion.second);
+
+			last_motion.first -= final.first;
+			last_motion.second -= final.second;
+			LOG("minus_motio: %d,%d", last_motion.first, last_motion.second);
+
+			if (last_motion.first != 0 && last_motion.second != 0) {
+				App->render->camera.x += final.first;
+				App->render->camera.y += final.second;
+				//App->render->MoveCamera(final.first, final.second);
+			}
+
+			last_motion = { final.first, final.second };
+		}
+	}
+
 	//else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) //Godmode
 	//{
 	//	godmode = !godmode;
