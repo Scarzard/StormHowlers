@@ -287,13 +287,13 @@ bool Scene::Update(float dt)
 
 	if (true) {
 
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN) {
 			LOG("CLICK");
 			App->input->GetMousePosition(camera_motion.first, camera_motion.second);
 			start_motion = true;
 		}
 
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP) {
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_UP) {
 			LOG("CLICK UP");
 			start_motion = false;
 			//App->input->GetMousePosition(camera_motion.x, camera_motion.y);
@@ -316,7 +316,6 @@ bool Scene::Update(float dt)
 			if (last_motion.first != 0 && last_motion.second != 0) {
 				App->render->camera.x += final.first;
 				App->render->camera.y += final.second;
-				//App->render->MoveCamera(final.first, final.second);
 			}
 
 			last_motion = { final.first, final.second };
