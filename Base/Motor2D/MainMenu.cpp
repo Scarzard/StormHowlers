@@ -150,6 +150,8 @@ bool MainMenu::CleanUp()
 {
 	LOG("Freeing Main Menu");
 
+	App->tex->UnLoad(menu_background->texture);
+
 	return true;
 }
 
