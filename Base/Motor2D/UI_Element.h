@@ -22,7 +22,8 @@ public:
 		IMAGE,
 		PUSHBUTTON,
 		SLIDER,
-		WINDOW
+		WINDOW,
+		MAIN_MENU_BG
 	};
 
 	enum Action

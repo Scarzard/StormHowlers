@@ -12,6 +12,7 @@
 #include "Gui.h"
 #include "Fonts.h"
 #include "UI_Element.h"
+#include "Player.h"
 
 #include <cstdio>
 #include "Brofiler\Brofiler.h"
@@ -31,6 +32,7 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 	LOG("Loading Main Menu");
 
 	menu_bg_file_name = conf.child("menu_bg").attribute("file").as_string("");
+	
 	// current_track = App->audio->tracks_path[1];
 	return true;
 }
@@ -38,13 +40,11 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool MainMenu::Start()
 {
-	menu_background = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
-	menu_background->texture = App->tex->Load(menu_bg_file_name);
-	menu_background->rect = { 0, 0,  App->win->width, App->win->height };
+	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::MAIN_MENU_BG, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
+	
+	new_game_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 787, 302 }, { 39, 40 }, menu_background, true);
 
-	new_game_button = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 115, 2 }, { 39, 40 }, menu_background, true);
-
-	exit_button = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 0, 0 }, { 39, 40 }, menu_background, true);
+	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 787, 488 }, { 39, 40 }, menu_background, true);
 
 	return true;
 }
@@ -73,8 +73,6 @@ bool MainMenu::Update(float dt)
 		App->scenechange->SwitchScene(App->scene, App->main_menu);
 	}
 
-	App->render->Blit(menu_background->texture, 0, 0, &menu_background->rect, SDL_FLIP_NONE, 0);
-
 	App->gui->Draw();
 	
 	return true;
@@ -86,16 +84,16 @@ bool MainMenu::PostUpdate()
 	BROFILER_CATEGORY("Main Menu PostUpdate", Profiler::Color::AliceBlue);
 	
 	//--- Update GUI
-	list<UI_Element*>::reverse_iterator item = App->gui->UI_elements.rbegin();
-	while (item != App->gui->UI_elements.rend())
+	list<UI_Element*>::reverse_iterator item = App->player1->UI_elements.rbegin();
+	while (item != App->player1->UI_elements.rend())
 	{
 		if ((*item)->visible == true)
 		{
-			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) || (App->gui->CheckCursorPos(*item) == true && App->input->P1.Controller[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
+			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) || (App->player1->CheckCursorPos(*item) == true && App->player1->gamepad.State[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
 			{
 				(*item)->state = UI_Element::State::HOVER;
 			}
-			if (((App->gui->CheckClick(*item) == true && App->gui->CheckMousePos(*item) == true) || (App->gui->CheckCursorClick(*item) == true && App->gui->CheckCursorPos(*item) == true)) && (*item)->state == UI_Element::State::HOVER) //on-click
+			if (((App->gui->CheckClick(*item) == true && App->gui->CheckMousePos(*item) == true) || (App->player1->CheckCursorClick(*item) == true && App->player1->CheckCursorPos(*item) == true)) && (*item)->state == UI_Element::State::HOVER) //on-click
 			{
 				if ((*item)->dragable.x == false && (*item)->dragable.y == false) //if not dragable
 				{
@@ -132,7 +130,7 @@ bool MainMenu::PostUpdate()
 					App->gui->UpdateChildren();
 				}
 			}
-			else if (App->gui->CheckMousePos(*item) == false && App->gui->CheckCursorPos(*item) == false && (*item)->state != UI_Element::State::DRAG) //change to idle
+			else if (App->gui->CheckMousePos(*item) == false && App->player1->CheckCursorPos(*item) == false && (*item)->state != UI_Element::State::DRAG) //change to idle
 			{
 				(*item)->state = UI_Element::State::IDLE;
 			}
@@ -173,6 +171,7 @@ void MainMenu::DoLogic(UI_Element* data)
 	case::UI_Element::Action::NEW_GAME:
 		App->scenechange->ContinueGame = true;
 		App->scenechange->SwitchScene(App->scene, App->main_menu);
+		menu_background->visible = false;
 		break;
 
 	case::UI_Element::Action::CONTINUE:
