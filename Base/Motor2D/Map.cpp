@@ -61,9 +61,14 @@ void Map::Draw(float dt)
 					int tile_id = layer->Get(x, y);
 					if (tile_id > 0)
 					{
+						/*if (x == 56 && y == 46)
+						{
+							int a = 0;
+						}*/
 						TileSet* tileset = GetTilesetFromTileId(tile_id);
 						SDL_Rect r = tileset->GetTileRect(tile_id);
 						pair<int, int> pos = MapToWorld(x, y);
+						pair<int, int> pos2 = WorldToMap(x, y);
 						App->render->Blit(tileset->texture, pos.first, pos.second, &r, SDL_FLIP_NONE);
 
 						if (debug == true)
@@ -417,69 +422,70 @@ bool Map::LoadMap()
 			string tmp(mapIterator.first_attribute().as_string());
 			if (tmp == "main base")
 			{
-				data.main_building.first = mapIterator.child("object").attribute("x").as_int();
-				data.main_building.second = mapIterator.child("object").attribute("y").as_int();
-				//data.main_building = MapToWorld(data.main_building.first, data.main_building.second);
+				data.main_building.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.main_building.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.main_building = MapToWorld(data.main_building.first, data.main_building.second);
 			}
 			else if (tmp == "main base 2")
 			{
-				data.main_building2.first = mapIterator.child("object").attribute("x").as_int();
-				data.main_building2.second = mapIterator.child("object").attribute("y").as_int();
-			//	data.main_building2 = MapToWorld(data.main_building2.first, data.main_building2.second);
+				data.main_building2.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.main_building2.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.main_building2 = MapToWorld(data.main_building2.first, data.main_building2.second);
 			}
 			else if (tmp == "main tower")
 			{
-				data.main_tower.first = mapIterator.child("object").attribute("x").as_int();
-				data.main_tower.second = mapIterator.child("object").attribute("y").as_int();
-				//data.main_tower = MapToWorld(data.main_tower.first, data.main_tower.second);
+				data.main_tower.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.main_tower.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.main_tower = MapToWorld(data.main_tower.first, data.main_tower.second);
 			}
 			else if (tmp == "main tower 2")
 			{
-				data.main_tower2.first = mapIterator.child("object").attribute("x").as_int();
-				data.main_tower2.second = mapIterator.child("object").attribute("y").as_int();
-				//data.main_tower2 = MapToWorld(data.main_tower2.first, data.main_tower2.second);
+				data.main_tower2.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.main_tower2.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.main_tower2 = MapToWorld(data.main_tower2.first, data.main_tower2.second);
 			}
 			else if (tmp == "special skills")
 			{
-				data.special_skill.first = mapIterator.child("object").attribute("x").as_int();
-				data.special_skill.second = mapIterator.child("object").attribute("y").as_int();
-			//	data.special_skill = MapToWorld(data.special_skill.first, data.special_skill.second);
+				data.special_skill.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.special_skill.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.special_skill = MapToWorld(data.special_skill.first, data.special_skill.second);
 			}
 			else if (tmp == "special skills 2")
 			{
-				data.special_skill2.first = mapIterator.child("object").attribute("x").as_int();
-				data.special_skill2.second = mapIterator.child("object").attribute("y").as_int();
-				//data.special_skill2 = MapToWorld(data.special_skill2.first, data.special_skill2.second);
+				data.special_skill2.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.special_skill2.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.special_skill2 = MapToWorld(data.special_skill2.first, data.special_skill2.second);
 			}
 			else if (tmp == "tower")
 			{
-				data.tower.first = mapIterator.child("object").attribute("x").as_int();
-				data.tower.second = mapIterator.child("object").attribute("y").as_int();
-				//data.tower = MapToWorld(data.tower.first, data.tower.second);
+				data.tower.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.tower.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.tower = MapToWorld(data.tower.first, data.tower.second);
 			}
 			else if (tmp == "tower 2")
 			{
-				data.tower2.first = mapIterator.child("object").attribute("x").as_int();
-				data.tower2.second = mapIterator.child("object").attribute("y").as_int();
-			//data.tower2 = MapToWorld(data.tower2.first, data.tower2.second);
+				data.tower2.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.tower2.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+			data.tower2 = MapToWorld(data.tower2.first, data.tower2.second);
 			}
 			else if (tmp == "barrack")
 			{
-				data.barrack.first = mapIterator.child("object").attribute("x").as_int();
-				data.barrack.second = mapIterator.child("object").attribute("y").as_int();
-			//	data.barrack = MapToWorld(data.barrack.first, data.barrack.second);
+				data.barrack.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.barrack.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.barrack = MapToWorld(data.barrack.first, data.barrack.second);
 			}
 			else if (tmp == "barrack 2")
 			{
-				data.barrack2.first = mapIterator.child("object").attribute("x").as_int();
-				data.barrack2.second = mapIterator.child("object").attribute("y").as_int();
-			//	data.barrack2 = MapToWorld(data.barrack2.first, data.barrack2.second);
+				data.barrack2.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.barrack2.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.barrack2 = MapToWorld(data.barrack2.first, data.barrack2.second);
 			}
 			else if (tmp == "mid building")
-			{
-				data.mid_building.first = mapIterator.child("object").attribute("x").as_int();
-				data.mid_building.second = mapIterator.child("object").attribute("y").as_int();
-				//data.mid_building = MapToWorld(data.mid_building.first, data.mid_building.second);
+			{ 
+				data.mid_building.first = mapIterator.child("object").attribute("x").as_int()/ data.tile_height;
+				data.mid_building.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.mid_building =MapToWorld(data.mid_building.first, data.mid_building.second);
+				
 			}
 
 		}
