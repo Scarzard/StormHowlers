@@ -275,6 +275,14 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 
 		case UI_Element::Action::ACT_BUILD_AOE:
 			data->rect = { 332,0,39,40 };
+
+			//-----Needs to be changed
+		case UI_Element::Action::NEW_GAME:
+			data->rect = { 410,0,39,40 };
+			break;
+			//change values
+		case UI_Element::Action::EXIT:
+			data->rect = { 371,0,39,40 };
 			break;
 		}
 		break;
@@ -296,6 +304,15 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 
 		case UI_Element::Action::ACT_BUILD_AOE:
 			data->rect = { 449,0,39,40 };
+        
+			//-----Needs to be changed
+		case UI_Element::Action::NEW_GAME:
+			data->rect = { 527,0,39,40 };
+			break;
+			//change values
+		case UI_Element::Action::EXIT:
+			data->rect = { 488,0,39,40 };
+
 			break;
 		}
 		break;
@@ -317,6 +334,13 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 
 		case UI_Element::Action::ACT_BUILD_AOE:
 			data->rect = { 449,80,39,40 };
+
+			//-----Needs to be changed
+		case UI_Element::Action::NEW_GAME:
+			data->rect = { 527,80,39,40 };
+			break;
+		case UI_Element::Action::EXIT:
+			data->rect = { 488,80,39,40 };
 			break;
 		}
 		break;
@@ -334,6 +358,13 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 
 		case UI_Element::Action::ACT_GOTO_CAST:
 			data->rect = { 410,80,39,40 };
+			break;
+			//-----Needs to be changed
+		case UI_Element::Action::NEW_GAME:
+			data->rect = { 410,80,39,40 };
+			break;
+		case UI_Element::Action::EXIT:
+			data->rect = { 332,80,39,40 };
 			break;
 		}
 		break;

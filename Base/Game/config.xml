@@ -254,8 +254,7 @@
   </scene>
 
   <main_menu>
-    <menu_bg file="gui/title_bg.PNG"/>
-    <credits file="gui/credits.png"/>
+    <menu_bg file="gui/mainmenu.png"/>
     <music vol="40" sfx="100"/>
   </main_menu>
 

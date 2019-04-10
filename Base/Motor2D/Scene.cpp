@@ -132,6 +132,43 @@ bool Scene::Start()
 	//App->player1->General_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
 	//App->player1->Upgrade_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_UPGRADE, { x,y }, { w,h }, App->player1->General_UI, false);
 	//App->player1->Repair_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_REPAIR, { x,y }, { w,h }, App->player1->General_UI, false);
+
+	//--------- CREATE GUI ----------  //(Falta poner position y size)
+	
+	//--- PLAYER 1
+	//P1.Health_UI = App->gui->AddUIElement(UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
+	//P1.Gold_UI = App->gui->AddUIElement(UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
+	P1.Main_UI = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, true);
+	P1.Main_UI->rect = { 0,79,166,79 };
+	P1.Build_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::CONTINUE, { 13,2 }, { 39,40 }, P1.Main_UI, true);
+	P1.Deploy_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 64,2 }, { 39,40 }, P1.Main_UI, true);
+	P1.Cast_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 115,2 }, { 39,40 }, P1.Main_UI, true);
+
+	P1.Build_UI = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, false);
+	P1.Build_UI->rect = { 166,79,166,79 };
+	//P1.Def_AOE_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { x,y }, { 39,40 } , P1.Build_UI, false);
+	//P1.Def_Target_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { x,y }, { 39,40 }, P1.Build_UI, false);
+	//P1.Mines_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { x,y }, { 39,40 }, P1.Build_UI, false);
+	//P1.Barracks_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { x,y }, { 39,40 }, P1.Build_UI, false);
+
+	P1.Deploy_UI = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, false);
+	P1.Deploy_UI->rect = { 166,79,166,79 };
+	//P1.Soldier_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_SOLDIER, { x,y }, { 39,40 }, P1.Deploy_UI, false);
+	//P1.Tankman_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_TANKMAN, { x,y }, { 39,40 }, P1.Deploy_UI, false);
+	//P1.Infiltrator_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { x,y }, { 39,40 }, P1.Deploy_UI, false);
+	//P1.Engineer_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_ENGINEER, { x,y }, { 39,40 }, P1.Deploy_UI, false);
+	//P1.War_hound_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { x,y }, { 39,40 }, P1.Deploy_UI, false);
+
+	P1.Cast_UI = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, false);
+	P1.Cast_UI->rect = { 166,79,166,79 };
+	//P1.Missiles_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_MISSILES, { x,y }, { 39,40 }, player.Cast_UI, false);
+	//P1.Cast2_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_2, { x,y }, { 39,40 }, P1.Cast_UI, false);
+	//P1.Cast3_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_3, { x,y }, { 39,40 }, P1.Cast_UI, false);
+
+	//P1.General_UI = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
+	//P1.Upgrade_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_UPGRADE, { x,y }, { w,h }, P1.General_UI, false);
+	//P1.Repair_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_REPAIR, { x,y }, { w,h }, P1.General_UI, false);
+
 	////falta poner los pointer a los datos del edificio seleccionado (ahora esta como "data") 
 	//App->player1->Name_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 	//App->player1->Level_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
@@ -139,7 +176,6 @@ bool Scene::Start()
 	//App->player1->Damage_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 	//App->player1->Prod_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 	//App->player1->Capacity_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
-
 
 	//--- PLAYER 2
 	//App->player2->Health_UI = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
@@ -660,4 +696,136 @@ void Scene::SpawnEnemies() //
 	//		}
 	//	}
 	//}
+
+}
+=======
+}
+
+void Scene::UpdateVisibility(PlayerUI player) // Update GUI Visibility
+{
+	switch (player.currentUI)
+	{
+	case::Scene::CURRENT_UI::CURR_MAIN:
+		player.Main_UI->visible = true;
+		player.Build_UI->visible = false;
+		player.Deploy_UI->visible = false;
+		player.Cast_UI->visible = false;
+		//player.General_UI->visible = false;
+		break;
+
+	case::Scene::CURRENT_UI::CURR_BUILD:
+		player.Main_UI->visible = false;
+		player.Build_UI->visible = true;
+		player.Deploy_UI->visible = false;
+		player.Cast_UI->visible = false;
+		//player.General_UI->visible = false;
+		break;
+
+	case::Scene::CURRENT_UI::CURR_DEPLOY:
+		player.Main_UI->visible = false;
+		player.Build_UI->visible = false;
+		player.Deploy_UI->visible = true;
+		player.Cast_UI->visible = false;
+		//player.General_UI->visible = false;
+		break;
+
+	case::Scene::CURRENT_UI::CURR_CAST:
+		player.Main_UI->visible = false;
+		player.Build_UI->visible = false;
+		player.Deploy_UI->visible = false;
+		player.Cast_UI->visible = true;
+		//player.General_UI->visible = false;
+		break;
+
+	case::Scene::CURRENT_UI::CURR_GENERAL:
+		//	player.Main_UI->visible = false;
+		//	player.Build_UI->visible = false;
+		//	player.Deploy_UI->visible = false;
+		//	player.Cast_UI->visible = false;
+		//	player.General_UI->visible = true;
+		break;
+	}
+	App->gui->UpdateChildren();
+}
+
+void Scene::DoLogic(PlayerUI player, UI_Element* data)
+{
+	switch (data->action)
+	{
+	case::UI_Element::Action::ACT_GOTO_MAIN:
+		player.currentUI = CURR_MAIN;
+		UpdateVisibility(player);
+		break;
+
+	case::UI_Element::Action::ACT_GOTO_BUILD:
+		player.currentUI = CURR_BUILD;
+		UpdateVisibility(player);
+		break;
+
+	case::UI_Element::Action::ACT_GOTO_DEPLOY:
+		player.currentUI = CURR_DEPLOY;
+		UpdateVisibility(player);
+		break;
+
+	case::UI_Element::Action::ACT_GOTO_CAST:
+		player.currentUI = CURR_CAST;
+		UpdateVisibility(player);
+		break;
+
+	case::UI_Element::Action::ACT_BUILD_AOE:
+		//
+		break;
+
+	case::UI_Element::Action::ACT_BUILD_TARGET:
+		//
+		break;
+
+	case::UI_Element::Action::ACT_BUILD_MINE:
+		//
+		break;
+
+	case::UI_Element::Action::ACT_BUILD_BARRACKS:
+		//
+		break;
+
+	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
+		//
+		break;
+
+	case::UI_Element::Action::ACT_DEPLOY_TANKMAN:
+		//
+		break;
+
+	case::UI_Element::Action::ACT_DEPLOY_INFILTRATOR:
+		//
+		break;
+
+	case::UI_Element::Action::ACT_DEPLOY_ENGINEER:
+		//
+		break;
+
+	case::UI_Element::Action::ACT_DEPLOY_WARHOUND:
+		//
+		break;
+
+	case::UI_Element::Action::ACT_CAST_MISSILES:
+		//
+		break;
+
+	case::UI_Element::Action::ACT_CAST_2:
+		//
+		break;
+
+	case::UI_Element::Action::ACT_CAST_3:
+		//
+		break;
+
+	case::UI_Element::Action::ACT_UPGRADE:
+		//
+		break;
+
+	case::UI_Element::Action::ACT_REPAIR:
+		//
+		break;
+	}
 }
