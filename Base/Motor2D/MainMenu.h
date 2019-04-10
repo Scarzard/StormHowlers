@@ -38,7 +38,7 @@ public:
 
 
 public:
-	const char* menu_bg_file_name;
+	string menu_bg_file_name;
 
 	UI_Element* menu_background;
 

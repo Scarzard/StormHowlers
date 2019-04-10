@@ -12,6 +12,7 @@
 #include "SimpleUI.h"
 #include "OtherUI.h"
 #include "Scene.h"
+#include "MainMenu.h"
 
 Gui::Gui() : Module()
 {
@@ -37,6 +38,9 @@ bool Gui::Awake(pugi::xml_node& conf)
 bool Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.data());
+	App->main_menu->menu_background->texture = App->tex->Load(App->main_menu->menu_bg_file_name.data());
+	App->main_menu->menu_background->rect = { 0, 0,  App->win->width, App->win->height };
+
 	return true;
 }
 
@@ -95,6 +99,10 @@ UI_Element* Gui::AddUIElement(bool player1, UI_Element::UI_type type, UI_Element
 	case UI_Element::UI_type::WINDOW:
 		UI_elem = new OtherUI(type, action, pos, size, parent, visible, dragable);
 		break;
+
+	case UI_Element::UI_type::MAIN_MENU_BG:
+		UI_elem = new OtherUI(type, action, pos, size, parent, visible, dragable);
+		break;
 	}
 
 	if (UI_elem && player1 == true)
@@ -131,6 +139,10 @@ bool Gui::Draw()
 				App->font->CalcSize((*UI_elem)->label, (*UI_elem)->size.first, (*UI_elem)->size.second);
 
 				App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
+			}
+			else if ((*UI_elem)->type == UI_Element::UI_type::MAIN_MENU_BG) //text
+			{
+				App->render->Blit(App->main_menu->menu_background->texture, 0, 0, &App->main_menu->menu_background->rect, SDL_FLIP_NONE, 0);
 			}
 			else //rest of ui
 			{

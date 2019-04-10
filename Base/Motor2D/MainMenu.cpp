@@ -32,6 +32,7 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 	LOG("Loading Main Menu");
 
 	menu_bg_file_name = conf.child("menu_bg").attribute("file").as_string("");
+	
 	// current_track = App->audio->tracks_path[1];
 	return true;
 }
@@ -39,10 +40,8 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool MainMenu::Start()
 {
-	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
-	menu_background->texture = App->tex->Load(menu_bg_file_name);
-	menu_background->rect = { 0, 0,  App->win->width, App->win->height };
-
+	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::MAIN_MENU_BG, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
+	
 	new_game_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 115, 2 }, { 39, 40 }, menu_background, true);
 
 	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 0, 0 }, { 39, 40 }, menu_background, true);
@@ -73,8 +72,6 @@ bool MainMenu::Update(float dt)
 		App->scenechange->ContinueGame = true;
 		App->scenechange->SwitchScene(App->scene, App->main_menu);
 	}
-
-	App->render->Blit(menu_background->texture, 0, 0, &menu_background->rect, SDL_FLIP_NONE, 0);
 
 	App->gui->Draw();
 	
@@ -174,6 +171,7 @@ void MainMenu::DoLogic(UI_Element* data)
 	case::UI_Element::Action::NEW_GAME:
 		App->scenechange->ContinueGame = true;
 		App->scenechange->SwitchScene(App->scene, App->main_menu);
+		menu_background->visible = false;
 		break;
 
 	case::UI_Element::Action::CONTINUE:
