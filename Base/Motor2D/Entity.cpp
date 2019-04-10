@@ -30,18 +30,6 @@ Entity::~Entity()
 {
 }
 
-void Entity::Draw(float dt)
-{
-	if (flip)
-	{
-		App->render->Blit(App->entitymanager->texture, position.first, position.second, &(Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_HORIZONTAL);
-	}
-	else
-	{
-		App->render->Blit(App->entitymanager->texture, position.first, position.second, &(Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
-	}
-}
-
 void Entity::Collider_Overlay()
 {
 	SDL_Rect ObjectRect;

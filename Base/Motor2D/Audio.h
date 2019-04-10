@@ -10,12 +10,12 @@ struct Mix_Chunk;
 
 enum FX
 {
-	WIN = 1,
-	DEAD,
-	GAME_OVER,
-	COIN,
-	CLICK,
-	LOCKED
+	MIN10 = 1,
+	MIN5,
+	MIN1,
+	TIMERSTART,
+	TIMERSTOP,
+	MIN3
 };
 
 class Audio : public Module
@@ -29,6 +29,9 @@ public:
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
+
+	// Called every frame 
+	bool Update(float dt); 
 
 	// Called before quitting
 	bool CleanUp();
@@ -45,6 +48,9 @@ public:
 	void AdjustMusicVol(int value);
 	void AdjustSoundVol(int value);
 	void PauseMusic();
+
+	bool song1played = false;
+	bool song2played = false;
 
 public:
 	string			folder_music;

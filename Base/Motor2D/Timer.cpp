@@ -15,19 +15,46 @@ Timer::Timer()
 // ---------------------------------------------
 void Timer::Start()
 {
-	// (OLD) TODO 1: Fill Start(), Read(), ReadSec() methods
-	// they are simple, one line each!
+	running = true;
 	started_at = SDL_GetTicks();
+}
+
+// ---------------------------------------------
+void Timer::Stop()
+{
+	running = false;
+	stopped_at = SDL_GetTicks();
 }
 
 // ---------------------------------------------
 uint32 Timer::Read() const
 {
-	return SDL_GetTicks() - started_at;
+	if (running == true)
+	{
+		return SDL_GetTicks() - started_at;
+	}
+	else
+	{
+		return stopped_at - started_at;
+	}
 }
 
 // ---------------------------------------------
 float Timer::ReadSec() const
 {
-	return float(SDL_GetTicks() - started_at) / 1000.0f;
+	if (running == true)
+	{
+		return (SDL_GetTicks() - started_at) / 1000.0f;
+	}
+	else
+	{
+		return (stopped_at - started_at) / 1000.0f;
+	}
+}
+
+// ---------------------------------------------
+bool Timer::runningRead() const
+{
+	return running;
+
 }

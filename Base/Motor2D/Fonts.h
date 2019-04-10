@@ -4,8 +4,8 @@
 #include "Module.h"
 #include "SDL\include\SDL_pixels.h"
 
-#define DEFAULT_FONT "fonts/open_sans/OpenSans-Regular.ttf"
-#define DEFAULT_FONT_SIZE 12
+#define DEFAULT_FONT "fonts/C&C Red Alert [INET].ttf"
+#define DEFAULT_FONT_SIZE 17
 
 struct SDL_Texture;
 struct _TTF_Font;
@@ -37,6 +37,11 @@ public:
 
 	list<_TTF_Font*>	fonts;
 	_TTF_Font*			default;
+	_TTF_Font*			actual_font = nullptr;
+	list<_TTF_Font*>::iterator font_iterator;
+	unsigned int size = 0;
+	int default_size = 0;
+	const char* path = nullptr;
 };
 
 

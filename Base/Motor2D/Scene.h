@@ -3,16 +3,11 @@
 
 #include "Module.h"
 #include "UI_Element.h"
+#include <stdio.h>
+
+
 
 struct SDL_Texture;
-
-enum BUILD
-{
-	BUILD_DEFENSE_AOE = 1,
-	BUILD_DEFENSE_TARGET,
-	BUILD_MINES,
-	BUILD_BARRACKS
-};
 
 enum DEPLOY
 {
@@ -30,6 +25,7 @@ enum CAST
 	CAST_3
 };
 
+=======
 struct GeneralUI
 {
 
@@ -86,15 +82,6 @@ struct PlayerUI
 class Scene : public Module
 {
 public:
-	enum CURRENT_UI
-	{
-		CURR_MAIN = 1,
-		CURR_BUILD,
-		CURR_DEPLOY,
-		CURR_CAST,
-		CURR_GENERAL
-	};
-
 	Scene();
 	virtual ~Scene();
 
@@ -112,15 +99,15 @@ public:
 	void SpawnEnemies();
 	void SpawnEntities();
 
-	void UpdateVisibility(PlayerUI player);
-	void DoLogic(PlayerUI player, UI_Element* data);
+
+	//void changeSize(float time, int maxsize);
 
 public:
-
 	vector<string*> map_names;
 	float fade_time;
 
 	uint currentMap;
+	uchar* Wmap;
 
 	bool pause;
 	bool godmode;
@@ -130,10 +117,31 @@ public:
 	string current_track;
 	string current_fx;
 
-	PlayerUI P1, P2;
+
+	//testing animation
+	SDL_Texture* spritesheet123 = nullptr;
+
+//timer elements
+	UI_Element* ui_timer;
+
+	Timer world_clock;
+	Timer world_seconds;
+	Timer size_timer;
+	char current_time[20] = "TIME: 000";
+	uint worldminutes=0;
+	uint worldseconds=0;
+	uint size_timer_count = 0;
+	int increase_decresease = 0;
+	bool increase_size = true;
+	bool change_font_size = false;
+	bool reference_active = false;
+	bool pausetimer = false;
+	
+
 
 private:
 	SDL_Texture* debug_tex;
+	SDL_Texture* cursor_tex;
 };
 
 #endif // __Scene_H__
