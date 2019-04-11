@@ -77,6 +77,13 @@ bool Scene::Start()
 	if (spritesheet123 == nullptr)
 		spritesheet123 = App->tex->Load("textures/prueba.png");
 
+	//--------- INIT BUILD ZONE LIMITS ------------- (falta cambiar con valores de las build Zones
+	App->player1->x_limits = { 10,20 };
+	App->player1->y_limits = { -1,20 };
+
+	App->player2->x_limits = { 30,50 };
+	App->player2->y_limits = { 30,50 };
+
 
 	//--------- CREATE MAIN BUILDINGS -------------// (falta cambiar posicion)
 	//--- PLAYER 1
@@ -185,28 +192,17 @@ bool Scene::Start()
 	//App->player2->Capacity_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
 
 	// --- CURSORS
-	//Cursor player 1 ------------
-	if (App->player1->gamepad.Connected == true)
-	{
-		App->player1->cursor.position.first = 300;
-		App->player1->cursor.position.second = 300;
-		App->player1->cursor.area.x = App->player1->cursor.area.y = 0;
-		App->player1->cursor.area.w = App->player1->cursor.area.h = 25;
-	}
-	else
-		LOG("...Player1 GamePad Not Connected");
+	App->player1->currentTile.first = 300;
+	App->player1->currentTile.second = 300;
 
-	//Cursor player 2 ------------
-	if (App->player2->gamepad.Connected == true)
-	{
-		App->player2->cursor.position.first = 500;
-		App->player2->cursor.position.second = 300;
-		App->player2->cursor.area.x = 27;
-		App->player2->cursor.area.y = 0;
-		App->player2->cursor.area.w = App->player2->cursor.area.h = 25;
-	}
-	else
-		LOG("...Player2 GamePad Not Connected");
+	App->player2->currentTile.first = 500;
+	App->player2->currentTile.second = 300;
+
+	if (App->player1->gamepad.Connected == false)
+		LOG("---Player 1 Gamepad not Connected");
+
+	if (App->player2->gamepad.Connected == false)
+		LOG("---Player 2 Gamepad not Connected");
 
 	if (cursor_tex == nullptr)
 		cursor_tex = App->tex->Load("textures/Cursors.png");
@@ -308,18 +304,25 @@ bool Scene::Update(float dt)
 	{
 		App->entitymanager->AddEntity(false, Entity::entityType::WALLS, { x,y });
 	}
-
-
-
-
+	else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) //Movecamera Up
+	{
+		App->render->camera.y -= 10;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) //Movecamera Down
+	{
+		App->render->camera.y += 10;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) //Movecamera Left
+	{
+		App->render->camera.x += 10;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) //Movecamera Right
+	{
+		App->render->camera.x -= 10;
+	}
 
 	
 	
-	//else if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) //Start from second level
-	//{
-	//	Load_level(1);
-	//	currentMap = 1;
-	//}
 	//else if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) //Go to main menu
 	//{
 	//	App->scenechange->SwitchScene(App->main_menu, App->scene);
@@ -378,13 +381,11 @@ bool Scene::PostUpdate()
 	{
 		if ((*item)->visible == true)
 		{
-			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) ||
-				(App->player1->CheckCursorPos(*item) == true && App->player1->gamepad.Controller[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
+			if ((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) && (*item)->dragging == false) //hovering
 			{
 				(*item)->state = UI_Element::State::HOVER;
 			}
-			if (((App->gui->CheckClick(*item) == true && App->gui->CheckMousePos(*item) == true) ||
-				(App->player1->CheckCursorClick(*item) == true && App->player1->CheckCursorPos(*item) == true)) && (*item)->state == UI_Element::State::HOVER) //on-click
+			if ((App->gui->CheckClick(*item) == true && App->gui->CheckMousePos(*item) == true) && (*item)->state == UI_Element::State::HOVER) //on-click
 			{
 				if ((*item)->dragable.x == false && (*item)->dragable.y == false) //if not dragable
 				{
@@ -415,7 +416,7 @@ bool Scene::PostUpdate()
 					//	(*item)->globalpos.first = limit;
 				}
 			}
-			else if (App->gui->CheckMousePos(*item) == false && App->player1->CheckCursorPos(*item) == false && (*item)->state != UI_Element::State::DRAG) //change to idle
+			else if (App->gui->CheckMousePos(*item) == false && (*item)->state != UI_Element::State::DRAG) //change to idle
 			{
 				(*item)->state = UI_Element::State::IDLE;
 			}
@@ -430,13 +431,11 @@ bool Scene::PostUpdate()
 	{
 		if ((*item)->visible == true)
 		{
-			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) ||
-				(App->player2->CheckCursorPos(*item) == true && App->player2->gamepad.Controller[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
+			if ((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) && (*item)->dragging == false) //hovering
 			{
 				(*item)->state = UI_Element::State::HOVER;
 			}
-			if (((App->gui->CheckClick(*item) == true && App->gui->CheckMousePos(*item) == true) ||
-				(App->player2->CheckCursorClick(*item) == true && App->player2->CheckCursorPos(*item) == true)) && (*item)->state == UI_Element::State::HOVER) //on-click
+			if ((App->gui->CheckClick(*item) == true && App->gui->CheckMousePos(*item) == true) && (*item)->state == UI_Element::State::HOVER) //on-click
 			{
 				if ((*item)->dragable.x == false && (*item)->dragable.y == false) //if not dragable
 				{
@@ -467,7 +466,7 @@ bool Scene::PostUpdate()
 					//	(*item)->globalpos.first = limit;
 				}
 			}
-			else if (App->gui->CheckMousePos(*item) == false && App->player2->CheckCursorPos(*item) == false && (*item)->state != UI_Element::State::DRAG) //change to idle
+			else if (App->gui->CheckMousePos(*item) == false && (*item)->state != UI_Element::State::DRAG) //change to idle
 			{
 				(*item)->state = UI_Element::State::IDLE;
 			}
@@ -477,12 +476,6 @@ bool Scene::PostUpdate()
 	}
 	App->gui->UpdateChildren();
 
-	//--- Draw Cursors
-	if (App->player1->gamepad.Connected == true)
-		App->render->Blit(cursor_tex, App->player1->cursor.position.first, App->player1->cursor.position.second, &App->player1->cursor.area);
-
-	if (App->player2->gamepad.Connected == true)
-		App->render->Blit(cursor_tex, App->player2->cursor.position.first, App->player2->cursor.position.second, &App->player2->cursor.area);
 
 	//--- Change map with fade
 	if (to_end == true && App->scenechange->IsChanging() == false)

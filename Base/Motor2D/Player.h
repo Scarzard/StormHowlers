@@ -21,12 +21,6 @@ struct GamePad
 
 };
 
-struct Cursor
-{
-	pair <int, int> position;
-	SDL_Rect area;
-};
-
 struct GeneralUI
 {
 	bool upgrade, repair;
@@ -61,18 +55,17 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	void GetCursorPos(int& x, int& y);
-	bool DeleteEntity(Entity* entity);
+	void GetCurrentTile(int& x, int& y);
 
 	void UpdateVisibility(); //update gui visibility
 	void DoLogic(UI_Element* data); //gui actions
-	bool CheckCursorPos(UI_Element* data);
-	bool CheckCursorClick(UI_Element* data);
 
 	bool CheckBuildingPos();
 	void UpdateWalkabilityMap(bool isWalkable);
+	bool DeleteEntity(Entity* entity);
 
 public:
+	bool onUI;
 	bool isBuilding;
 	bool isDeploying;
 	bool isCasting;
@@ -87,11 +80,15 @@ public:
 	uint currentUI;
 	int actual_capacity;
 
-	Cursor cursor;
 	GamePad gamepad;
+
+	pair<int,int> currentTile;
+	pair<int, int> x_limits, y_limits;
 
 	list<Entity*> buildings, troops;
 
+
+	//---
 	list<UI_Element*> UI_elements;
 
 	UI_Element* Health_UI;
