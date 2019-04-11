@@ -102,30 +102,33 @@ bool Scene::Start()
 	//--- PLAYER 1
 	//App->player1->Health_UI = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
 	//App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
-	App->player1->Main_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566,163 }, nullptr, true);
+	App->player1->Main_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, true);
 	App->player1->Main_UI->rect = { 0,245,566,163 };
 	App->player1->Build_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_BUILD, { 275,55 }, { 80, 81 }, App->player1->Main_UI, true);
 	App->player1->Deploy_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 378,55 }, { 80, 81 }, App->player1->Main_UI, true);
 	App->player1->Cast_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 482,55 }, { 80,81 }, App->player1->Main_UI, true);
 
 
-	App->player1->Build_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, false);
-	App->player1->Build_UI->rect = { 166,79,166,79 };
-	App->player1->Def_AOE_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { 2,1 }, { 39,40 } , App->player1->Build_UI, false);
-	//App->player1->Def_Target_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { x,y }, { 39,40 }, App->player1->Build_UI, false);
+	App->player1->Build_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
+	App->player1->Build_UI->rect = { 569, 246, 566, 163 };
+	App->player1->Def_AOE_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { 119, 55 }, { 85, 81 } , App->player1->Build_UI, false);
+	App->player1->Def_Target_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { 222, 55 }, { 85, 81 }, App->player1->Build_UI, false);
 	//App->player1->Mines_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { x,y }, { 39,40 }, App->player1->Build_UI, false);
 	//App->player1->Barracks_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { x,y }, { 39,40 }, App->player1->Build_UI, false);
 
-	App->player1->Deploy_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, false);
-	App->player1->Deploy_UI->rect = { 166,79,166,79 };
-	//App->player1->Soldier_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_SOLDIER, { x,y }, { 39,40 }, App->player1->Deploy_UI, false);
-	//App->player1->Tankman_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_TANKMAN, { x,y }, { 39,40 }, App->player1->Deploy_UI, false);
-	//App->player1->Infiltrator_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { x,y }, { 39,40 }, App->player1->Deploy_UI, false);
-	//App->player1->Engineer_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_ENGINEER, { x,y }, { 39,40 }, App->player1->Deploy_UI, false);
-	//App->player1->War_hound_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { x,y }, { 39,40 }, App->player1->Deploy_UI, false);
+	App->player1->Deploy_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
+	App->player1->Deploy_UI->rect = { 569, 411, 566, 163 };
+	App->player1->Soldier_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_SOLDIER, { 68, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
+	App->player1->Tankman_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_TANKMAN, { 171, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
+
+	//------ These coords are for the 3rd slot in the menu { 275, 55 }, { 85, 81 }
+	//App->player1->Infiltrator_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { 275, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
+	//------ These coords are for the 4th slot in the menu { 380, 55 }, { 85, 81 }
+	//App->player1->Engineer_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_ENGINEER, { 380, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
+	//App->player1->War_hound_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { x,y }, { 85, 81 }, App->player1->Deploy_UI, false);
 
 	App->player1->Cast_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, false);
-	App->player1->Cast_UI->rect = { 166,79,166,79 };
+	App->player1->Cast_UI->rect = { 569, 575, 566, 163 };
 	//App->player1->Missiles_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_MISSILES, { x,y }, { 39,40 }, player.Cast_UI, false);
 	//App->player1->Cast2_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_2, { x,y }, { 39,40 }, App->player1->Cast_UI, false);
 	//App->player1->Cast3_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_3, { x,y }, { 39,40 }, App->player1->Cast_UI, false);
