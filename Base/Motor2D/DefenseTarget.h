@@ -7,7 +7,7 @@ class DefenseTarget : public Entity
 {
 public:
 	DefenseTarget();
-	DefenseTarget(bool isPlayer1, pair<int, int> position);
+	DefenseTarget(bool isPlayer1, pair<int, int> pos);
 	~DefenseTarget();
 
 	bool Start();
@@ -15,29 +15,12 @@ public:
 	bool Update(float dt);
 	void CleanUp();
 
-	void LoadAnimations();
-	void ChangeAnimation();
-
 	bool Is_inRange(pair<int, int> pos, int & distance);
 
 
 public:
-	vector<uint>  health_lv, upgrade_cost;
-	vector<uint>  damage_missiles;
-	int repair_cost;
-
-	Animation	building;
-	Animation	level1;
-	Animation	level2;
-	Animation	level3;
-	Animation	damaged;
-	Animation	destroyed;
-
 	SDL_Rect	collider;
 	SDL_Texture* tex;
-
-	Timer		timer;
-	float			rate_of_fire;
 };
 
 #endif

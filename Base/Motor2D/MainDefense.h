@@ -12,17 +12,6 @@ public:
 	bool Update(float dt);
 	void CleanUp();
 
-	void LoadAnimations();
-	void ChangeAnimation();
-
-public:
-	vector<uint> health_lv, upgrade_cost, damage_lv;
-
-	Animation	level1;
-	Animation	level2;
-	Animation	level3;
-	Animation	damaged;
-	Animation	destroyed;
 };
 
 #endif

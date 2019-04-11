@@ -9,14 +9,7 @@ public:
 	Soldier(bool isPlayer1, pair<int, int> pos);
 	~Soldier();
 
-
-	vector<uint> health_lv, upgrade_cost;
-	vector<uint> damage_missiles, damage_cast2, damage_cast3;
-
 	bool Update(float dt);
-
-	void TakeDamage(int damage);
-
 
 	SDL_Rect	collider;
 	SDL_Texture* tex;

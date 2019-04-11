@@ -12,49 +12,11 @@ DefenseTarget::~DefenseTarget()
 {
 }
 
-DefenseTarget::DefenseTarget(bool isPlayer1, pair<int, int> pos) : Entity(entityType::DEFENSE_TARGET)
+DefenseTarget::DefenseTarget(bool isPlayer1, pair<int, int> pos) : Entity(entityType::DEFENSE_TARGET, isPlayer1, pos)
 {
-	LOG("Loading DefenseTarget");
-
-	pugi::xml_document	config_file;
-	pugi::xml_node		config;
-	config = App->LoadConfig(config_file);
-	config = config.child("entitymanager").child("buildings").child("defense_target");
-
-
-	health_lv.push_back(config.child("health").attribute("lvl1").as_uint());
-	health_lv.push_back(config.child("health").attribute("lvl2").as_uint());
-	health_lv.push_back(config.child("health").attribute("lvl3").as_uint());
-	
-
-	upgrade_cost.push_back(0);
-	upgrade_cost.push_back(config.child("upgrade_cost").attribute("ToLvl2").as_int());
-	upgrade_cost.push_back(config.child("upgrade_cost").attribute("ToLvl3").as_int());
-
-	size.first = config.child("size").attribute("width").as_int();
-	size.first = config.child("size").attribute("height").as_int();
-
-	damage_missiles.push_back(config.child("damage").attribute("lvl1").as_uint());
-	damage_missiles.push_back(config.child("damage").attribute("lvl2").as_uint());
-	damage_missiles.push_back(config.child("damage").attribute("lvl3").as_uint());
-
-	range = config.child("range").attribute("value").as_int();
-	rate_of_fire = config.child("rate_of_fire").attribute("value").as_float();
-
-	name = config.child("name").attribute("string").as_string();
-
-	level = 0;
-	fromPlayer1 = isPlayer1;
-	position = pos;
-	health = health_lv[0];
-	damage = damage_missiles[0];
-
-	upgrade = repair = false;
-
 	collider = { 0,0,64,32 };
 	tex = App->tex->Load("maps/meta.png");
-	LoadAnimations();
-	ChangeAnimation();
+
 }
 
 bool DefenseTarget::Start()
@@ -76,6 +38,7 @@ bool DefenseTarget::Update(float dt)
 {
 	BROFILER_CATEGORY("DefenseTarget Update", Profiler::Color::SandyBrown);
 
+	// Moves building to mouse position 
 	int x = 0;
 	int y = 0;
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE)) {
@@ -87,12 +50,11 @@ bool DefenseTarget::Update(float dt)
 
 	App->render->Blit(tex, position.first, position.second, &collider);
 
-	Player* tmpMod = App->player2;
-	if (!fromPlayer1) {
-		tmpMod = App->player1;
-	}
+	// Checks where to look for enemies
+	Player* tmpMod = (fromPlayer1) ? App->player2 : App->player1;
 	list<Entity*>::iterator tmp = tmpMod->troops.begin();
 	
+	// Finds the closest one
 	Entity* closest = *tmpMod->troops.begin();
 	int min_distance;
 	int d = 0;
@@ -100,7 +62,6 @@ bool DefenseTarget::Update(float dt)
 
 	while (tmp != tmpMod->troops.end())
 	{
-		
 		if (Is_inRange((*tmp)->position, d) && min_distance >= d) {
 			closest = *tmp;
 			min_distance = d;
@@ -108,30 +69,23 @@ bool DefenseTarget::Update(float dt)
 		tmp++;
 	}
 
+	// Shoots the closest one if in range
 	if (timer.ReadSec() >= rate_of_fire && Is_inRange(closest->position,d))
 	{
-		closest->TakeDamage(damage_missiles[level]);
+		closest->TakeDamage(damage_lv[level]);
 		timer.Start();
-		LOG("Distance: %d", d);
+		//LOG("Distance: %d", d);
 	}
-
 	return true;
 }
 
 void DefenseTarget::CleanUp()
 {
+	// Its needed or the super class is always called?
+	this->Entity::CleanUp();
 }
 
-void DefenseTarget::LoadAnimations()
-{
-	//not working, the Entity is represented by a green square
-	building.PushBack({1212,3672,50,50});
-	Current_Animation = &building;
-}
 
-void DefenseTarget::ChangeAnimation()
-{
-}
 
 bool DefenseTarget::Is_inRange(pair<int, int> pos, int &distance) {
 

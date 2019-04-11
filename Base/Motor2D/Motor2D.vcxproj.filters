@@ -237,4 +237,9 @@
       <UniqueIdentifier>{09b60214-5efb-46e2-bb27-876d56110c60}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\config.xml">
+      <Filter>Desenvolupament  ========</Filter>
+    </Xml>
+  </ItemGroup>
 </Project>

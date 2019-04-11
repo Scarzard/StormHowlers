@@ -137,13 +137,13 @@ void EntityManager::DeleteAllEntities()
 {
 	// Main entity list
 	list<Entity*>::iterator	tmp = entity_list.begin();
-	/*while (tmp != entity_list.end())
+	while (tmp != entity_list.end())
 	{
 		(*tmp)->CleanUp();
 		RELEASE(*tmp);
 		tmp++;
 	}
-	entity_list.clear();*/
+	entity_list.clear();
 
 	// Player 1 Buildings
 	tmp = App->player1->buildings.begin();
@@ -202,7 +202,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		break;
 
 	case Entity::entityType::DEFENSE_AOE:
-		//tmp = new DefenseAOE(isPlayer1, position);
+		tmp = new DefenseAoe(isPlayer1, position);
 		break;
 
 	case Entity::entityType::DEFENSE_TARGET:
@@ -218,6 +218,18 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		break;
 	case Entity::entityType::SOLDIER:
 		tmp = new Soldier(isPlayer1, position);
+		break;
+	case Entity::entityType::ENGINEER:
+		//tmp = new Engineer(isPlayer1, position);
+		break;
+	case Entity::entityType::TANKMAN:
+		//tmp = new Tankman(isPlayer1, position);
+		break;
+	case Entity::entityType::INFILTRATOR:
+		//tmp = new Infiltrator(isPlayer1, position);
+		break;
+	case Entity::entityType::WAR_HOUND:
+		//tmp = new War_hound(isPlayer1, position);
 		break;
 	}
 

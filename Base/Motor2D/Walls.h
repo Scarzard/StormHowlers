@@ -12,13 +12,6 @@ public:
 	bool Update(float dt);
 	void CleanUp();
 
-	void LoadAnimations();
-	void ChangeAnimation();
-
-public:
-	Animation	idle;
-	Animation	damaged;
-	Animation	destroyed;
 };
 
 #endif
