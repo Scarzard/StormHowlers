@@ -1,7 +1,7 @@
 <!-- Config file for the game -->
 
 <config>
-  <app framerate_cap="60">
+  <app framerate_cap="200">
     <title>Game Development Testbed</title>
     <organization>UPC</organization>
   </app>
@@ -12,7 +12,7 @@
 
   <window>
     <resolution width="1920" height="1080" scale="1"/>
-    <fullscreen value="false"/>
+    <fullscreen value="true"/>
     <borderless value="false"/>
     <resizable value="false"/>
     <fullscreen_window value="false"/>
@@ -36,7 +36,7 @@
   </audio>
 
   <gui>
-    <atlas file="gui/atlas.png"/>
+    <atlas file="gui/new_atlas.png"/>
   </gui>
 
   <file_system>
@@ -249,7 +249,7 @@
 
   <scene>
     <map_name name="map2.tmx"></map_name>
-    <map_name name="level2.tmx"></map_name>
+    
     <fade_time value="1"/>
   </scene>
 

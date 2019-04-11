@@ -262,15 +262,15 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		switch (data->action)
 		{
 		case UI_Element::Action::ACT_GOTO_BUILD:
-			data->rect = { 332,0,39,40 };
+			data->rect = { 0, 0, 80, 81 };
 			break;
 
 		case UI_Element::Action::ACT_GOTO_DEPLOY:
-			data->rect = { 371,0,39,40 };
+			data->rect = { 80, 0, 80, 81 };
 			break;
 
 		case UI_Element::Action::ACT_GOTO_CAST:
-			data->rect = { 410,0,39,40 };
+			data->rect = { 159, 0, 78, 81 };
 			break;
 
 		case UI_Element::Action::ACT_BUILD_AOE:
