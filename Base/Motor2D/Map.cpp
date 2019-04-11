@@ -54,21 +54,17 @@ void Map::Draw(float dt)
 		{
 			if (layer->properties.Get("Navigation") == 1)
 				continue;
-			for (int y = 0; y < data.height; ++y)
+			for (int y = 0; y < data.height; y++)
 			{
-				for (int x = 0; x < data.width; ++x)
+				for (int x = data.width; x >= 0; x--)
 				{
 					int tile_id = layer->Get(x, y);
 					if (tile_id > 0)
 					{
-						/*if (x == 56 && y == 46)
-						{
-							int a = 0;
-						}*/
 						TileSet* tileset = GetTilesetFromTileId(tile_id);
 						SDL_Rect r = tileset->GetTileRect(tile_id);
+
 						pair<int, int> pos = MapToWorld(x, y);
-						pair<int, int> pos2 = WorldToMap(x, y);
 						App->render->Blit(tileset->texture, pos.first, pos.second, &r, SDL_FLIP_NONE);
 
 						if (debug == true)
