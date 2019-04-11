@@ -70,6 +70,21 @@ bool Player::Update(float dt)
 	if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
 	{
 		(*focus)->state = UI_Element::State::IDLE;
+
+		if (currentUI == CURR_BUILD)
+		{
+			if (isBuilding == true)
+			{
+				isBuilding = false;
+				App->map->debug = false;
+			}
+			else if (isBuilding == false)
+			{
+				currentUI = CURR_MAIN;
+				UpdateVisibility();
+			}
+		}
+
 		GotoPrevWindows(currentUI);
 		UpdateFocus(currentUI);
 	}
@@ -331,22 +346,27 @@ void Player::GotoPrevWindows(uint data)
 	{
 	case Player::CURRENT_UI::CURR_MAIN :
 		currentUI = CURRENT_UI::NONE;
+		UpdateVisibility();
 		break;
 
 	case Player::CURRENT_UI::CURR_GENERAL:
 		currentUI = CURRENT_UI::NONE;
+		UpdateVisibility();
 		break;
 
 	case Player::CURRENT_UI::CURR_BUILD :
 		currentUI = CURRENT_UI::CURR_MAIN;
+		UpdateVisibility();
 		break;
 
 	case Player::CURRENT_UI::CURR_DEPLOY:
 		currentUI = CURRENT_UI::CURR_MAIN;
+		UpdateVisibility();
 		break;
 
 	case Player::CURRENT_UI::CURR_CAST:
 		currentUI = CURRENT_UI::CURR_MAIN;
+		UpdateVisibility();
 		break;
 
 	}
