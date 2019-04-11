@@ -80,13 +80,17 @@ bool Player::Update(float dt)
 			}
 			else if (isBuilding == false)
 			{
-				currentUI = CURR_MAIN;
-				UpdateVisibility();
+				GotoPrevWindows(currentUI);
+				UpdateFocus(currentUI);
 			}
 		}
+		else
+		{
+			GotoPrevWindows(currentUI);
+			UpdateFocus(currentUI);
+		}
 
-		GotoPrevWindows(currentUI);
-		UpdateFocus(currentUI);
+		
 	}
 
 	if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
