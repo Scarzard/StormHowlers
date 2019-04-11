@@ -59,8 +59,10 @@ bool Render::Awake(pugi::xml_node& config)
 bool Render::Start()
 {
 	LOG("render start");
-	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
+
+	//SDL_RenderSetLogicalSize(renderer, App->win->width, App->win->height);
+
 	return true;
 }
 
