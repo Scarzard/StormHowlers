@@ -96,11 +96,7 @@ public:
 	virtual bool Awake(pugi::xml_node & config) { return true; };
 	virtual bool Start() { return true; };
 	virtual bool PreUpdate() { return true; };
-	virtual bool Update(float dt) { 
-		if (App->map->debug) {
-
-		}
-		return true; };
+	virtual bool Update(float dt) { return true; };
 	virtual bool PostUpdate() { return true; };
 
 	virtual void CleanUp() {

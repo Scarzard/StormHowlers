@@ -251,6 +251,8 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	BROFILER_CATEGORY("Scene Update", Profiler::Color::DarkOrange);
+	int x, y;
+	App->input->GetMousePosition(x, y);
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || App->player1->gamepad.Controller[BUTTON_B] == KEY_DOWN) //return to main_ui player1 
 	{
@@ -264,6 +266,55 @@ bool Scene::Update(float dt)
 		App->player2->UpdateVisibility();
 		App->player2->isBuilding = false;
 	}
+	
+	// Player 1 -> number / Player2 -> letter
+	else if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) 
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::MAIN_DEFENSE, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::SOLDIER, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::WALLS, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::WALLS, { x,y });
+	}
+
+
+
+
+
+	
+	
 	//else if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) //Start from second level
 	//{
 	//	Load_level(1);
