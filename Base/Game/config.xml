@@ -11,8 +11,8 @@
   </renderer>
 
   <window>
-    <resolution width="1920" height="1080" scale="1"/>
-    <fullscreen value="true"/>
+    <resolution width="1080" height="720" scale="1"/>
+    <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="true"/>
     <fullscreen_window value="false"/>
@@ -248,7 +248,7 @@
   </buildings_animations>
 
   <scene>
-    <map_name name="map2.tmx"></map_name>
+    <map_name name="map3.tmx"></map_name>
     
     <fade_time value="1"/>
   </scene>

@@ -33,7 +33,7 @@ bool Window::Awake(pugi::xml_node& config)
 	{
 		//Create window
 		Uint32 flags = SDL_WINDOW_SHOWN;
-		bool fullscreen = config.child("fullscreen").attribute("value").as_bool(false);
+		fullscreen = config.child("fullscreen").attribute("value").as_bool(false);
 		bool borderless = config.child("borderless").attribute("value").as_bool(false);
 		bool resizable = config.child("resizable").attribute("value").as_bool(false);
 		bool fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool(false);
@@ -45,6 +45,7 @@ bool Window::Awake(pugi::xml_node& config)
 		if(fullscreen == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN;
+		
 		}
 
 		if(borderless == true)
@@ -111,4 +112,14 @@ void Window::GetWindowSize(uint& width, uint& height) const
 uint Window::GetScale() const
 {
 	return scale;
+}
+
+void Window::GetWindowSize()
+{
+	// if in fullscreen modify height and with to the virtual size of the monitor
+	if (fullscreen == true)
+	{
+		//SDL_GetRendererOutputSize(App->render->renderer, &width, &height);
+	}
+
 }

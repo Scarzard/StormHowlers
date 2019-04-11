@@ -3,6 +3,7 @@
 
 #include "SDL/include/SDL.h"
 #include "Module.h"
+#include "Window.h"
 
 class Render : public Module
 {

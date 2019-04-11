@@ -215,6 +215,10 @@ bool Scene::Start()
 	SpawnEntities();
 
 	App->font->font_iterator = App->font->fonts.begin();
+
+	//Map load 
+	App->map->LoadTileList();
+
 	// timer start
 	world_clock.Start();
 	world_seconds.Start();

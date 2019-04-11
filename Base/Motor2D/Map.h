@@ -9,7 +9,14 @@
 
 
 struct SDL_Texture;
+struct Tiles
+{
+	SDL_Texture* texture;
+	int x;
+	int y;
+	SDL_Rect Tile_rect;
 
+};
 struct Properties
 {
 	struct Property
@@ -175,6 +182,12 @@ public:
 
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 
+	//load visble map on list
+	void LoadTileList();
+
+	//Draw wakability
+	void DrawWakability(float dt, bool draw);
+
 private:
 
 	bool LoadMap();
@@ -189,6 +202,9 @@ private:
 	//testing animation
 	Animation* idleRight123 = nullptr;
 	
+
+	//map framerate
+	list<Tiles>		TileList;
 
 public:
 	MapData				data;

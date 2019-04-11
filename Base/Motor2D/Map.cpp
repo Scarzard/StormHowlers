@@ -45,37 +45,13 @@ void Map::Draw(float dt)
 	if (map_loaded == false)
 		return;
 
-	list<MapLayer*>::const_iterator lay;
-	list<TileSet*>::const_iterator set;
-	for (lay = data.layers.begin(); lay != data.layers.end(); ++lay)
+	list<Tiles>::const_iterator iterator;
+
+	for (iterator = TileList.begin(); iterator != TileList.end(); ++iterator)
 	{
-		MapLayer* layer = *lay;
-		for (set = data.tilesets.begin(); set != data.tilesets.end(); ++set)
-		{
-			if (layer->properties.Get("Navigation") == 1)
-				continue;
-			for (int y = 0; y < data.height; y++)
-			{
-				for (int x = data.width; x >= 0; x--)
-				{
-					int tile_id = layer->Get(x, y);
-					if (tile_id > 0)
-					{
-						TileSet* tileset = GetTilesetFromTileId(tile_id);
-						SDL_Rect r = tileset->GetTileRect(tile_id);
 
-						pair<int, int> pos = MapToWorld(x, y);
-						App->render->Blit(tileset->texture, pos.first, pos.second, &r, SDL_FLIP_NONE);
-
-						if (debug == true && App->pathfinding->IsWalkable({ x,y }) == false) // walkability map draw
-						{
-							r = { 60,0,60,29 };
-							App->render->Blit(debug_tex, pos.first, pos.second, &r, SDL_FLIP_NONE);
-						}
-					}
-				}
-			}
-		}
+		App->render->Blit((*iterator).texture, (*iterator).x, (*iterator).y, &(*iterator).Tile_rect, SDL_FLIP_NONE);
+	
 	}
 
 	//testing animation uncoment to blit example
@@ -668,4 +644,109 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 		break;
 	}
 	return ret;
+}
+
+void Map::LoadTileList()
+{
+	BROFILER_CATEGORY("tile list load", Profiler::Color::LightGreen);
+
+	if (map_loaded == false)
+		return;
+
+	list<MapLayer*>::const_iterator lay;
+	list<TileSet*>::const_iterator set;
+	for (lay = data.layers.begin(); lay != data.layers.end(); ++lay)
+	{
+		MapLayer* layer = *lay;
+		for (set = data.tilesets.begin(); set != data.tilesets.end(); ++set)
+		{
+			if (layer->properties.Get("Visible") == 1)
+			{
+
+				for (int y = 0; y < data.height; y++)
+				{
+					for (int x = data.width; x >= 0; x--)
+					{
+						int tile_id = layer->Get(x, y);
+						if (tile_id > 0)
+						{
+							TileSet* tileset = GetTilesetFromTileId(tile_id);
+							SDL_Rect r = tileset->GetTileRect(tile_id);
+
+							pair<int, int> pos = MapToWorld(x, y);
+							/*if ((pos.first )*App->win->GetScale()*App->render->zoom >= -App->render->camera.x && pos.first <= -App->render->camera.x + App->render->camera.w
+							&& (pos.second + data.tile_height)*App->win->GetScale()*App->render->zoom >= -App->render->camera.y && pos.second <= -App->render->camera.y + App->render->camera.h)
+							{*/
+							//App->render->Blit(tileset->texture, pos.first, pos.second, &r, SDL_FLIP_NONE);
+							Tiles Tile;
+							Tile.texture = tileset->texture;
+							Tile.Tile_rect = r;
+							Tile.x = pos.first;
+							Tile.y = pos.second;
+
+							TileList.push_back(Tile);
+							//}
+
+						}
+					}
+				}
+
+
+			}
+			
+		}
+	}
+
+	
+}
+
+
+void Map::DrawWakability(float dt, bool draw)
+{
+	BROFILER_CATEGORY("Wakability Draw", Profiler::Color::CadetBlue);
+
+	if (map_loaded == false)
+		return;
+
+	if (draw == true)
+	{
+		list<MapLayer*>::const_iterator lay;
+		list<TileSet*>::const_iterator set;
+		for (lay = data.layers.begin(); lay != data.layers.end(); ++lay)
+		{
+			MapLayer* layer = *lay;
+			for (set = data.tilesets.begin(); set != data.tilesets.end(); ++set)
+			{
+				if (layer->properties.Get("Navigation") == 1)
+				{
+					for (int y = 0; y < data.height; y++)
+					{
+						for (int x = data.width; x >= 0; x--)
+						{
+							int tile_id = layer->Get(x, y);
+							if (tile_id > 0)
+							{
+								TileSet* tileset = GetTilesetFromTileId(tile_id);
+								SDL_Rect r = tileset->GetTileRect(tile_id);
+
+								pair<int, int> pos = MapToWorld(x, y);
+
+								if (debug == true && App->pathfinding->IsWalkable({ x,y }) == false) // walkability map draw
+								{
+									r = { 60,0,60,29 };
+									App->render->Blit(debug_tex, pos.first, pos.second, &r, SDL_FLIP_NONE);
+								}
+							}
+						}
+					}
+				}
+				
+			}
+		}
+
+
+	}
+	
+
+
 }
