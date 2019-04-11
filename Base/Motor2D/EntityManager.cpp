@@ -127,8 +127,8 @@ bool EntityManager::PostUpdate()
 
 bool EntityManager::CleanUp()
 {
-	DeleteAllEntities();
 	App->tex->UnLoad(texture);
+	entity_list.clear();
 
 	return true;
 }
