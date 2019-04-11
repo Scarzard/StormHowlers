@@ -24,7 +24,7 @@ Player::~Player()
 bool Player::Start()
 {
 	gold = 0;
-	currentUI = CURR_MAIN;
+	currentUI = NONE;
 	isBuilding = false;
 
 	return true;
@@ -46,6 +46,73 @@ bool Player::Update(float dt)
 
 	if (gamepad.Controller[JOY_LEFT] == KEY_REPEAT || gamepad.Controller[LEFT] == KEY_REPEAT)
 		cursor.position.first -= 500 * dt;
+
+	if (focus == Main_UI->children.begin())
+		LOG("YES");
+	else
+		LOG("NO");
+
+	//LOG("CURR: %u", currentUI);
+
+
+	if (currentUI != CURRENT_UI::NONE)
+	{
+		(*focus)->state = UI_Element::State::HOVER;
+	}
+
+	if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
+	{
+		(*focus)->state = UI_Element::State::IDLE;
+		DoLogic((*focus));
+		UpdateFocus(currentUI);
+	}
+
+	if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
+	{
+		(*focus)->state = UI_Element::State::IDLE;
+		GotoPrevWindows(currentUI);
+		UpdateFocus(currentUI);
+	}
+
+	if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
+	{
+		currentUI = CURRENT_UI::CURR_MAIN;
+		UpdateFocus(currentUI);
+	}
+	
+
+
+	if (gamepad.Controller[RIGHT] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
+	{
+		(*focus)->state = UI_Element::State::IDLE;
+
+		if (focus == last_element)
+		{
+			focus = GetUI_Element(currentUI)->children.begin();
+			
+		}
+		else
+		{
+			focus++;
+		}
+		
+	}
+	else if (gamepad.Controller[LEFT] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
+	{
+		(*focus)->state = UI_Element::State::IDLE;
+		if (focus == GetUI_Element(currentUI)->children.begin())
+		{
+			focus = last_element;
+		}
+		else
+		{
+			focus--;
+		}
+
+	}
+
+	
+	
 
 	//--- Building ---------------------
 	if (isBuilding)
@@ -71,8 +138,8 @@ bool Player::Update(float dt)
 		}
 	}
 
-	//--- Press B --------------------
-	if (gamepad.Controller[BUTTON_B] == KEY_DOWN || 
+	////--- Press B --------------------
+	/*if (gamepad.Controller[BUTTON_B] == KEY_DOWN || 
 		App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
 		if (currentUI == CURR_BUILD)
@@ -88,7 +155,7 @@ bool Player::Update(float dt)
 				UpdateVisibility();
 			}
 		}
-	}
+	}*/
 
 	return true;
 }
@@ -232,6 +299,75 @@ void Player::UpdateWalkabilityMap(bool isWalkable) //update walkable tiles
 	}
 }
 
+void Player::UpdateFocus(uint data)
+{
+	switch (data)
+	{
+	case::Player::CURRENT_UI::CURR_MAIN:
+		focus = Main_UI->children.begin();
+		last_element = Main_UI->children.end();
+		last_element--;
+		break;
+
+	case::Player::CURRENT_UI::CURR_BUILD:
+		focus = Build_UI->children.begin();
+		last_element = Build_UI->children.end();
+		last_element--;
+		break;
+
+	case::Player::CURRENT_UI::CURR_CAST:
+		focus = Cast_UI->children.begin();
+		last_element = Cast_UI->children.end();
+		last_element--;
+		break;
+	
+	}
+}
+
+
+void Player::GotoPrevWindows(uint data)
+{
+	switch (data)
+	{
+	case Player::CURRENT_UI::CURR_MAIN :
+		currentUI = CURRENT_UI::NONE;
+		break;
+
+	case Player::CURRENT_UI::CURR_GENERAL:
+		currentUI = CURRENT_UI::NONE;
+		break;
+
+	case Player::CURRENT_UI::CURR_BUILD :
+		currentUI = CURRENT_UI::CURR_MAIN;
+		break;
+
+	case Player::CURRENT_UI::CURR_DEPLOY:
+		currentUI = CURRENT_UI::CURR_MAIN;
+		break;
+
+	case Player::CURRENT_UI::CURR_CAST:
+		currentUI = CURRENT_UI::CURR_MAIN;
+		break;
+
+	}
+}
+
+UI_Element* Player::GetUI_Element(uint data)
+{
+	switch (data)
+	{
+	case::Player::CURRENT_UI::CURR_MAIN:
+		return Main_UI;
+
+	case::Player::CURRENT_UI::CURR_BUILD:
+		return Build_UI;
+
+	case::Player::CURRENT_UI::CURR_CAST:
+		return Cast_UI;
+
+	}
+}
+
 void Player::UpdateVisibility() // Update GUI Visibility
 {
 	switch (currentUI)
@@ -342,14 +478,6 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_CAST_MISSILES:
-		//
-		break;
-
-	case::UI_Element::Action::ACT_CAST_2:
-		//
-		break;
-
-	case::UI_Element::Action::ACT_CAST_3:
 		//
 		break;
 

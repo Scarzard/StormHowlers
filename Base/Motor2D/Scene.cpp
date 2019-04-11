@@ -509,11 +509,11 @@ bool Scene::PostUpdate()
 		else if ((*item)->visible == true)
 		{
 			
-			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) ||
-				(App->player1->CheckCursorPos(*item) == true && App->player1->gamepad.Controller[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
-			{
-				(*item)->state = UI_Element::State::HOVER;
-			}
+			//if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) ||
+			//	(App->player1->CheckCursorPos(*item) == true && App->player1->gamepad.Controller[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
+			//{
+			//	(*item)->state = UI_Element::State::HOVER;
+			//}
 			if (((App->gui->CheckClick(*item) == true && App->gui->CheckMousePos(*item) == true) ||
 				(App->player1->CheckCursorClick(*item) == true && App->player1->CheckCursorPos(*item) == true)) && (*item)->state == UI_Element::State::HOVER) //on-click
 			{
@@ -546,10 +546,10 @@ bool Scene::PostUpdate()
 					//	(*item)->globalpos.first = limit;
 				}
 			}
-			else if (App->gui->CheckMousePos(*item) == false && App->player1->CheckCursorPos(*item) == false && (*item)->state != UI_Element::State::DRAG) //change to idle
-			{
-				(*item)->state = UI_Element::State::IDLE;
-			}
+			//else if (App->gui->CheckMousePos(*item) == false && App->player1->CheckCursorPos(*item) == false && (*item)->state != UI_Element::State::DRAG) //change to idle
+			//{
+			//	(*item)->state = UI_Element::State::IDLE;
+			//}
 		}
 		App->gui->UpdateState(*item);
 		item++;

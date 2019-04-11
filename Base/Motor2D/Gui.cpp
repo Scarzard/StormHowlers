@@ -337,10 +337,10 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 
 			//--------- Building buttons
 		case UI_Element::Action::ACT_BUILD_AOE: //POWER PLANT
-			data->rect = { 746, 81, 85, 81 };
+			data->rect = { 1090, 81, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_BUILD_TARGET://PRISM TOWER
-			data->rect = { 662, 81, 85, 81 };
+			data->rect = { 1005, 81, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_BUILD_MINE: //ORE REFINERY
 			data->rect = { 576, 81, 85, 81 };
