@@ -53,6 +53,9 @@ void Map::Draw(float dt)
 		App->render->Blit((*iterator).texture, (*iterator).x, (*iterator).y, &(*iterator).Tile_rect, SDL_FLIP_NONE);
 	
 	}
+	//testing image blit
+
+
 
 	//testing animation uncoment to blit example
 	App->render->Blit(App->scene->spritesheet123, data.main_building.first, data.main_building.second, &idleRight123->GetCurrentFrame(dt));
@@ -701,14 +704,14 @@ void Map::LoadTileList()
 }
 
 
-void Map::DrawWakability(float dt, bool draw)
+void Map::DrawWakability(float dt)
 {
 	BROFILER_CATEGORY("Wakability Draw", Profiler::Color::CadetBlue);
 
 	if (map_loaded == false)
 		return;
 
-	if (draw == true)
+	if (debug == true)
 	{
 		list<MapLayer*>::const_iterator lay;
 		list<TileSet*>::const_iterator set;

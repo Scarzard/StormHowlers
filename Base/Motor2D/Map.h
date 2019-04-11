@@ -186,7 +186,7 @@ public:
 	void LoadTileList();
 
 	//Draw wakability
-	void DrawWakability(float dt, bool draw);
+	void DrawWakability(float dt);
 
 private:
 

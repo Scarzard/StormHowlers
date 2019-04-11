@@ -9823,7 +9823,7 @@
    <tile gid="37"/>
   </data>
  </layer>
- <layer name="Walkability" width="90" height="109">
+ <layer name="Walkability" width="90" height="109" visible="0">
   <properties>
    <property name="Navigation" type="int" value="1"/>
   </properties>
@@ -19640,37 +19640,37 @@
    <tile gid="0"/>
   </data>
  </layer>
- <objectgroup name="main base">
+ <objectgroup name="main base" visible="0">
   <object id="3" x="1160" y="580" width="34.3619" height="30.8333"/>
  </objectgroup>
- <objectgroup name="main tower">
+ <objectgroup name="main tower" visible="0">
   <object id="4" x="1624" y="667" width="49.0667" height="52.9333"/>
  </objectgroup>
- <objectgroup name="special skills">
+ <objectgroup name="special skills" visible="0">
   <object id="6" x="870" y="667" width="46.1" height="46.1"/>
  </objectgroup>
- <objectgroup name="tower">
+ <objectgroup name="tower" visible="0">
   <object id="8" x="1653" y="1044" width="49.6333" height="37.225"/>
  </objectgroup>
- <objectgroup name="barrack">
+ <objectgroup name="barrack" visible="0">
   <object id="9" x="870" y="986" width="116" height="58"/>
  </objectgroup>
- <objectgroup name="mid building">
+ <objectgroup name="mid building" visible="0">
   <object id="10" x="1856" y="1537" width="174" height="29"/>
  </objectgroup>
- <objectgroup name="main base 2">
+ <objectgroup name="main base 2" visible="0">
   <object id="13" x="1218" y="2552" width="27.8" height="41.2667"/>
  </objectgroup>
- <objectgroup name="special skills 2">
+ <objectgroup name="special skills 2" visible="0">
   <object id="14" x="1421" y="2436" width="26.3333" height="16.6667"/>
  </objectgroup>
- <objectgroup name="main tower 2">
+ <objectgroup name="main tower 2" visible="0">
   <object id="15" x="1015" y="2378" width="36.9333" height="33.0667"/>
  </objectgroup>
- <objectgroup name="tower 2">
+ <objectgroup name="tower 2" visible="0">
   <object id="16" x="812" y="2030" width="58.9667" height="57.0333"/>
  </objectgroup>
- <objectgroup name="barrack 2">
+ <objectgroup name="barrack 2" visible="0">
   <object id="17" x="1711" y="2030" width="45" height="45"/>
  </objectgroup>
 </map>

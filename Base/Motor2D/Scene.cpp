@@ -454,6 +454,7 @@ bool Scene::Update(float dt)
 
 	//----
 	App->map->Draw(dt);
+	App->map->DrawWakability(dt);
 	//App->entitymanager->Draw(dt);
 	App->gui->Draw();
 

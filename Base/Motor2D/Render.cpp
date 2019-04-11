@@ -51,6 +51,7 @@ bool Render::Awake(pugi::xml_node& config)
 		camera.x = 1122;
 		camera.y = -494;
 		zoom =0.75;
+		App->win->zoom_scale = zoom*App->win->scale;
 	}
 
 	return ret;
@@ -155,8 +156,9 @@ bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, S
 
 	bool ret = true;
 	// Scale must be always positive (changed from uint to int)
-	float scale = App->win->GetScale();
-	scale *= zoom;
+	float scale = App->win->zoom_scale;
+
+
 	SDL_Rect rect;
 	rect.x = (int)( ((camera.x * speed) + (int)((x * scale))) );
 	rect.y = (int)( ((camera.y * speed) + (int)((y * scale))) );
