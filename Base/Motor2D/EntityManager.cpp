@@ -17,6 +17,8 @@
 #include "Townhall.h"
 #include "Walls.h"
 #include "Soldier.h"
+#include "Building.h"
+#include "Troop.h"
 
 #include "Brofiler\Brofiler.h"
 #include "PugiXml/src/pugixml.hpp"
@@ -56,7 +58,7 @@ bool EntityManager::Update(float dt)
 	if (App->scene->pause == false)
 	{
 		// Player 1 Buildings
-		list<Entity*>::const_iterator tmp = App->player1->buildings.begin();
+		list<Building*>::const_iterator tmp = App->player1->buildings.begin();
 		while (tmp != App->player1->buildings.end())
 		{
 			ret = (*tmp)->Update(dt);
@@ -70,25 +72,21 @@ bool EntityManager::Update(float dt)
 			ret = (*tmp)->Update(dt);
 			tmp++;
 		}
-
 		// Player 1 Troops
-		tmp = App->player1->troops.begin();
-		while (tmp != App->player1->troops.end())
+		list<Troop*>::const_iterator ttmp = App->player1->troops.begin();
+		while (ttmp != App->player1->troops.end())
 		{
-			ret = (*tmp)->Update(dt);
-			tmp++;
+			ret = (*ttmp)->Update(dt);
+			ttmp++;
 		}
 
 		// Player 2 Troops
-		tmp = App->player2->troops.begin();
-		while (tmp != App->player2->troops.end())
+		ttmp = App->player2->troops.begin();
+		while (ttmp != App->player2->troops.end())
 		{
-			ret = (*tmp)->Update(dt);
-			tmp++;
+			ret = (*ttmp)->Update(dt);
+			ttmp++;
 		}
-
-
-
 
 	}
 
@@ -104,7 +102,7 @@ bool EntityManager::PostUpdate()
 	if (App->scene->pause == false)
 	{
 		// Player 1 Buildings
-		list<Entity*>::const_iterator tmp = App->player1->buildings.begin();
+		list<Building*>::const_iterator tmp = App->player1->buildings.begin();
 		while (tmp != App->player1->buildings.end())
 		{
 			ret = (*tmp)->PostUpdate();
@@ -117,6 +115,21 @@ bool EntityManager::PostUpdate()
 		{
 			ret = (*tmp)->PostUpdate();
 			tmp++;
+		}
+		// Player 1 Troops
+		list<Troop*>::const_iterator ttmp = App->player1->troops.begin();
+		while (ttmp != App->player1->troops.end())
+		{
+			ret = (*ttmp)->PostUpdate();
+			ttmp++;
+		}
+
+		// Player 2 Troops
+		ttmp = App->player2->troops.begin();
+		while (ttmp != App->player2->troops.end())
+		{
+			ret = (*ttmp)->PostUpdate();
+			ttmp++;
 		}
 
 
@@ -145,37 +158,60 @@ void EntityManager::DeleteAllEntities()
 	}
 	entity_list.clear();
 
+
 	// Player 1 Buildings
-	tmp = App->player1->buildings.begin();
-	while (tmp != App->player1->buildings.end())
+	list<Building*>::iterator btmp = App->player1->buildings.begin();
+	while (btmp != App->player1->buildings.end())
 	{
-		(*tmp)->CleanUp();
-		RELEASE(*tmp);
-		tmp++;
+		(*btmp)->CleanUp();
+		RELEASE(*btmp);
+		btmp++;
 	}
 	App->player1->buildings.clear();
 
 	// Player 2 Buildings
-	tmp = App->player2->buildings.begin();
-	while (tmp != App->player2->buildings.end())
+	btmp = App->player2->buildings.begin();
+	while (btmp != App->player2->buildings.end())
 	{
-		(*tmp)->CleanUp();
-		RELEASE(*tmp);
-		tmp++;
+		(*btmp)->CleanUp();
+		RELEASE(*btmp);
+		btmp++;
 	}
 	App->player2->buildings.clear();
+
+	// Player 1 Troops
+	list<Troop*>::iterator ttmp = App->player1->troops.begin();
+	while (ttmp != App->player1->troops.end())
+	{
+		(*ttmp)->CleanUp();
+		RELEASE(*ttmp);
+		ttmp++;
+	}
+	App->player1->troops.clear();
+
+	// Player 2 Troops
+	ttmp = App->player2->troops.begin();
+	while (ttmp != App->player2->troops.end())
+	{
+		(*ttmp)->CleanUp();
+		RELEASE(*ttmp);
+		ttmp++;
+	}
+	App->player2->troops.clear();
+
 }
 
 bool EntityManager::Draw(float dt) //sprite ordering
 {
 	bool ret = true;
 
-	list<Entity*>::iterator tmp = entity_list.begin();
+	/*list<Entity*>::iterator tmp = entity_list.begin();
+
 	while (tmp != entity_list.end())
 	{
 		//App->render->Blit(texture, (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
 		tmp++;
-	}
+	}*/
 	return ret;
 }
 
@@ -240,24 +276,25 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		{
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building
 			{
-				App->player1->buildings.push_back(tmp);
+				App->player1->buildings.push_back((Building*)tmp);
 			}
 			else if (type > Entity::entityType::BARRACKS) //if troops
 			{
-				App->player1->troops.push_back(tmp);
+				App->player1->troops.push_back((Troop*)tmp);
 			}
 		}
 		else // Player 2 -------------------------------
 		{
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS)
 			{
-				App->player2->buildings.push_back(tmp);
+				App->player2->buildings.push_back((Building*)tmp);
 			}
 			else if (type > Entity::entityType::BARRACKS)
 			{
-				App->player2->troops.push_back(tmp);
+				App->player2->troops.push_back((Troop*)tmp);
 			}
 		}
 	}
 	return tmp;
 }
+

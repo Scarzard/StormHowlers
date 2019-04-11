@@ -15,7 +15,7 @@ MainDefense::~MainDefense()
 {
 }
 
-MainDefense::MainDefense(bool isPlayer1, pair<int, int> pos) : Entity(entityType::MAIN_DEFENSE, isPlayer1, pos)
+MainDefense::MainDefense(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::MAIN_DEFENSE, isPlayer1, pos)
 {
 	LOG("Loading Main Defense");
 

@@ -12,7 +12,7 @@ DefenseTarget::~DefenseTarget()
 {
 }
 
-DefenseTarget::DefenseTarget(bool isPlayer1, pair<int, int> pos) : Entity(entityType::DEFENSE_TARGET, isPlayer1, pos)
+DefenseTarget::DefenseTarget(bool isPlayer1, pair<int, int> pos) : Building(entityType::DEFENSE_TARGET, isPlayer1, pos)
 {
 	collider = { 0,0,64,32 };
 	tex = App->tex->Load("maps/meta.png");
@@ -52,10 +52,10 @@ bool DefenseTarget::Update(float dt)
 
 	// Checks where to look for enemies
 	Player* tmpMod = (fromPlayer1) ? App->player2 : App->player1;
-	list<Entity*>::iterator tmp = tmpMod->troops.begin();
+	list<Troop*>::iterator tmp = tmpMod->troops.begin();
 	
 	// Finds the closest one
-	Entity* closest = *tmpMod->troops.begin();
+	Troop* closest = *tmpMod->troops.begin();
 	int min_distance;
 	int d = 0;
 	Is_inRange(closest->position, min_distance);

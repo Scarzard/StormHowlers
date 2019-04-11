@@ -15,7 +15,7 @@ Walls::~Walls()
 {
 }
 
-Walls::Walls(bool isPlayer1, pair<int, int> pos) : Entity(entityType::WALLS,isPlayer1, pos)
+Walls::Walls(bool isPlayer1, pair<int, int> pos) : Building(entityType::WALLS,isPlayer1, pos)
 {
 }
 

@@ -139,7 +139,7 @@ bool Player::CleanUp()
 	LOG("---Player Deleted");
 
 	//Clear buildings
-	list<Entity*>::iterator item = buildings.begin();
+	list<Building*>::iterator item = buildings.begin();
 	while (item != buildings.end())
 	{
 		(*item)->CleanUp();
@@ -149,12 +149,12 @@ bool Player::CleanUp()
 	buildings.clear();
 
 	//Clear troops
-	item = troops.begin();
-	while (item != troops.end())
+	list<Troop*>::iterator titem = troops.begin();
+	while (titem != troops.end())
 	{
-		(*item)->CleanUp();
-		RELEASE(*item);
-		item++;
+		(*titem)->CleanUp();
+		RELEASE(*titem);
+		titem++;
 	}
 	troops.clear();
 
@@ -384,7 +384,7 @@ bool Player::DeleteEntity(Entity* entity)
 
 	if (entity->type >= Entity::entityType::TOWNHALL && entity->type <= Entity::entityType::BARRACKS) //if entity = building
 	{
-		list<Entity*>::iterator item = buildings.begin();
+		list<Building*>::iterator item = buildings.begin();
 		while (item != buildings.end())
 		{
 			if ((*item) == entity)
@@ -393,7 +393,7 @@ bool Player::DeleteEntity(Entity* entity)
 	}
 	else if (type > Entity::entityType::BARRACKS) //if entity = troop
 	{
-		list<Entity*>::iterator item = troops.begin();
+		list<Troop*>::iterator item = troops.begin();
 		while (item != troops.end())
 		{
 			if ((*item) == entity)

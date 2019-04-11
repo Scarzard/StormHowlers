@@ -15,7 +15,7 @@ Townhall::~Townhall()
 {
 }
 
-Townhall::Townhall(bool isPlayer1, pair<int,int> pos) : Entity(entityType::TOWNHALL,isPlayer1,pos)
+Townhall::Townhall(bool isPlayer1, pair<int,int> pos): Building(Entity::entityType::TOWNHALL,isPlayer1,pos)
 {
 }
 

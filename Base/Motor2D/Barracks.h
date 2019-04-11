@@ -1,9 +1,8 @@
 #ifndef __Barracks_H__
 #define __Barracks_H__
-#include "Entity.h"
+#include "Building.h"
 
-class Barracks : public Entity
-{
+class Barracks : public Building {
 public:
 	Barracks();
 	Barracks(bool isPlayer1, pair<int, int> position);

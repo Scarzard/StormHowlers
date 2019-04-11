@@ -15,7 +15,7 @@ Mines::~Mines()
 {
 }
 
-Mines::Mines(bool isPlayer1, pair<int, int> pos) : Entity(entityType::MINES, isPlayer1, pos)
+Mines::Mines(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::MINES, isPlayer1, pos)
 {
 
 }

@@ -204,6 +204,12 @@
     <ClInclude Include="Soldier.h">
       <Filter>Desenvolupament  ========\Entities\Troops</Filter>
     </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Desenvolupament  ========\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Troop.h">
+      <Filter>Desenvolupament  ========\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Desenvolupament  ========">

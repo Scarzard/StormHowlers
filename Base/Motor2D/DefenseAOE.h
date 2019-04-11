@@ -1,9 +1,10 @@
 #ifndef __DefenseAOE_H__
 #define __DefenseAOE_H__
-#include "Entity.h"
+
+#include "Building.h"
 #include "Timer.h"
 
-class DefenseAoe : public Entity
+class DefenseAoe : public Building
 {
 public:
 	DefenseAoe();

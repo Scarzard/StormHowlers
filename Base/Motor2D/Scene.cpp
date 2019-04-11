@@ -16,6 +16,8 @@
 #include "UI_Element.h"
 #include "Player.h"
 #include "Audio.h"
+#include "Building.h"
+#include "Troop.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -219,7 +221,7 @@ bool Scene::PreUpdate()
 	BROFILER_CATEGORY("Scene PreUpdate", Profiler::Color::DarkOrange);
 
 	// Gold Player 1 ------------
-	list<Entity*>::iterator item = App->player1->buildings.begin();
+	list<Building*>::iterator item = App->player1->buildings.begin();
 	for (item; item != App->player1->buildings.end(); ++item)
 	{
 		if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)

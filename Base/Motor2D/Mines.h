@@ -1,8 +1,9 @@
 #ifndef __Mines_H__
 #define __Mines_H__
-#include "Entity.h"
 
-class Mines : public Entity
+#include "Building.h"
+
+class Mines : public Building
 {
 public:
 	Mines();

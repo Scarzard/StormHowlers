@@ -10,7 +10,7 @@
 Barracks::Barracks(){}
 Barracks::~Barracks(){}
 
-Barracks::Barracks(bool isPlayer1, pair<int, int> pos) : Entity(entityType::BARRACKS, isPlayer1, pos)
+Barracks::Barracks(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::BARRACKS, isPlayer1, pos)
 {
 
 }

@@ -1,8 +1,9 @@
 #ifndef __CmdCenter_H__
 #define __CmdCenter_H__
-#include "Entity.h"
 
-class CmdCenter : public Entity
+#include "Building.h"
+
+class CmdCenter : public Building
 {
 public:
 	CmdCenter();

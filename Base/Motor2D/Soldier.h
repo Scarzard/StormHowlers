@@ -1,8 +1,8 @@
 #ifndef __Soldier_H__
 #define __Soldier_H__
-#include "Entity.h"
+#include "Troop.h"
 
-class Soldier :	public Entity
+class Soldier :	public Troop
 {
 public:
 	Soldier();

@@ -1,8 +1,9 @@
 #ifndef __MainDefense_H__
 #define __MainDefense_H__
-#include "Entity.h"
 
-class MainDefense : public Entity
+#include "Building.h"
+
+class MainDefense : public Building
 {
 public:
 	MainDefense();

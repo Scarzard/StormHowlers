@@ -1,8 +1,9 @@
 #ifndef __Townhall_H__
 #define __Townhall_H__
-#include "Entity.h"
 
-class Townhall : public Entity
+#include "Building.h"
+
+class Townhall : public Building
 {
 public:
 	Townhall();

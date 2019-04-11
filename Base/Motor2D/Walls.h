@@ -1,8 +1,9 @@
 #ifndef __Walls_H__
 #define __Walls_H__
-#include "Entity.h"
 
-class Walls : public Entity
+#include "Building.h"
+
+class Walls : public Building
 {
 public:
 	Walls();

@@ -6,7 +6,6 @@
 #include "Player.h"
 #include "Brofiler\Brofiler.h"
 
-
 CmdCenter::CmdCenter()
 {
 }
@@ -15,7 +14,7 @@ CmdCenter::~CmdCenter()
 {
 }
 
-CmdCenter::CmdCenter(bool isPlayer1, pair<int, int> pos) : Entity(entityType::COMMAND_CENTER, isPlayer1, pos)
+CmdCenter::CmdCenter(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::COMMAND_CENTER, isPlayer1, pos)
 {
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
@@ -23,14 +22,14 @@ CmdCenter::CmdCenter(bool isPlayer1, pair<int, int> pos) : Entity(entityType::CO
 	config = config.child("entitymanager").child("buildings").child("command_center");
 
 	damage_cast2.push_back(0);
-	damage_cast2.push_back(config.child("damage_cast2").attribute("lvl1").as_uint());
-	damage_cast2.push_back(config.child("damage_cast2").attribute("lvl2").as_uint());
-	damage_cast2.push_back(config.child("damage_cast2").attribute("lvl3").as_uint());
+	damage_cast2.push_back(config.child("damage_cast2").attribute("lvl1").as_uint(0));
+	damage_cast2.push_back(config.child("damage_cast2").attribute("lvl2").as_uint(0));
+	damage_cast2.push_back(config.child("damage_cast2").attribute("lvl3").as_uint(0));
 
 	damage_cast3.push_back(0);
-	damage_cast3.push_back(config.child("damage_cast3").attribute("lvl1").as_uint());
-	damage_cast3.push_back(config.child("damage_cast3").attribute("lvl2").as_uint());
-	damage_cast3.push_back(config.child("damage_cast3").attribute("lvl3").as_uint());
+	damage_cast3.push_back(config.child("damage_cast3").attribute("lvl1").as_uint(0));
+	damage_cast3.push_back(config.child("damage_cast3").attribute("lvl2").as_uint(0));
+	damage_cast3.push_back(config.child("damage_cast3").attribute("lvl3").as_uint(0));
 
 
 }

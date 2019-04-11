@@ -4,6 +4,7 @@
 #include "Render.h"
 #include "Log.h"
 
+
 DefenseAoe::DefenseAoe()
 {
 }
@@ -12,7 +13,7 @@ DefenseAoe::~DefenseAoe()
 {
 }
 
-DefenseAoe::DefenseAoe(bool isPlayer1, pair<int, int> pos) : Entity(entityType::DEFENSE_TARGET, isPlayer1, pos)
+DefenseAoe::DefenseAoe(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::DEFENSE_TARGET, isPlayer1, pos)
 {
 
 	collider = { 0,0,64,32 };

@@ -7,7 +7,7 @@ Soldier::Soldier()
 	
 }
 
-Soldier::Soldier(bool isPlayer1, pair<int, int> pos):Entity(entityType::SOLDIER,isPlayer1,pos)
+Soldier::Soldier(bool isPlayer1, pair<int, int> pos):Troop(Entity::entityType::SOLDIER,isPlayer1,pos)
 {
 	tex = App->tex->Load("maps/meta.png");
 	collider = { 64,0,64,32 };

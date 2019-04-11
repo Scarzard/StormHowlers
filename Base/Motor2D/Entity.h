@@ -28,15 +28,11 @@ public:
 
 public:
 	Entity() {};
-	Entity(entityType type, bool isPlayer1, pair<int, int> pos) {
+	Entity(Entity::entityType type, bool isPlayer1, pair<int, int> pos) {
 		this->type = type;
-		char* s_type = "buildings";
+	
+		char *s_type = (type > BARRACKS) ? "troops" : "buildings";
 		name = "ERROR";
-		if (type > BARRACKS) //if troops
-		{
-			s_type = "troops";
-		}
-
 		name = GetName(type);
 
 		LOG("Loading %s",&name[0]);
@@ -66,17 +62,10 @@ public:
 		size.first = config.child("size").attribute("width").as_int(6);
 		size.first = config.child("size").attribute("height").as_int(6);
 		
-		capacity_lv.push_back(config.child("capacity").attribute("lvl1").as_uint(0));
-		capacity_lv.push_back(config.child("capacity").attribute("lvl2").as_uint(0));
-		capacity_lv.push_back(config.child("capacity").attribute("lvl3").as_uint(0));
-
-		production_lv.push_back(config.child("production").attribute("lvl1").as_uint(0));
-		production_lv.push_back(config.child("production").attribute("lvl2").as_uint(0));
-		production_lv.push_back(config.child("production").attribute("lvl3").as_uint(0));
+		rate_of_fire = config.child("attack").attribute("rate").as_float(0);
+		max_targets  = config.child("attack").attribute("targets").as_int(0);
+		range		 = config.child("attack").attribute("range").as_int(0);
 		
-		range		 = config.child("range").attribute("value").as_int(0);
-		rate_of_fire = config.child("fire").attribute("value").as_float(0);
-
 		position	= pos;
 
 		fromPlayer1 = isPlayer1;
@@ -84,8 +73,7 @@ public:
 		repair		= false;
 
 		level		= 0;
-		capacity	= capacity_lv[level];
-		production	= production_lv[level];
+		
 		health		= health_lv[level];
 		damage		= damage_lv[level];
 
@@ -109,8 +97,6 @@ public:
 		damage_lv.clear();
 		damage_lv.resize(0);
 
-		production_lv.clear();
-		production_lv.resize(0);
 	};
 	virtual void Save(pugi::xml_node& file) const {};
 	virtual void Load(pugi::xml_node& file) {};
@@ -174,8 +160,6 @@ public:
 	string		name;
 
 	vector<uint>	health_lv;
-	vector<uint>	production_lv; 
-	vector<uint>	capacity_lv;
 	vector<uint>	damage_lv;
 	vector<uint>	upgrade_cost;
 
@@ -196,14 +180,12 @@ public:
 	int range;
 	int repair_cost;
 	int frame = 0;
-	int production;
-	int capacity;
+	int max_targets;
 
 	float rate_of_fire;
 
-public:
-
-		char* GetName(entityType type) {
+	private:
+		char* GetName(const Entity::entityType& type) {
 			switch (type)
 			{
 			case Entity::entityType::TOWNHALL:

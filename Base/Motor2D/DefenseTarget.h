@@ -1,9 +1,10 @@
 #ifndef __DefenseTarget_H__
 #define __DefenseTarget_H__
-#include "Entity.h"
+
+#include "Building.h"
 #include "Timer.h"
 
-class DefenseTarget : public Entity
+class DefenseTarget : public Building
 {
 public:
 	DefenseTarget();

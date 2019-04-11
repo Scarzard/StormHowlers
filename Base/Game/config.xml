@@ -60,8 +60,7 @@
         <size width="10" height="10"/>
         <capacity lvl1="1000" lvl2="1500" lvl3="2000"/>
         <production lvl1="1000" lvl2="1500" lvl3="2000"/>
-        <range value="0"/>
-        <fire_rate value="1"/><!-- in seconds -->
+        <attack rate="0" targets="0" range="50"/><!-- in seconds -->
       </townhall>
     
       <main_defense>
@@ -70,8 +69,7 @@
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <damage lvl1="300" lvl2="400" lvl3="550"/>
         <size width="10" height="10"/>
-        <range value="170"/>
-        <fire value="1" targets="5"/>
+        <attack rate="1" targets="5" range="170"/>
       </main_defense>
 
       <command_center>
@@ -99,8 +97,7 @@
         <size width="82" height="84"/>
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <damage lvl1="15" lvl2="150" lvl3="200"/>
-        <range value="150"/>
-        <fire value="1" targets="1"/>
+        <attack rate="1" targets="1" range="150"/>
       </defense_target>
 
       <defense_aoe>
@@ -109,8 +106,7 @@
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <size width="106" height="92"/>
         <damage lvl1="100" lvl2="150" lvl3="200"/>
-        <range value="50"/>
-        <fire value="1" targets="5"/>
+        <attack rate="1" targets="5" range="50"/>
       </defense_aoe>
       
       <barracks>
@@ -136,12 +132,12 @@
     <troops>
       <soldier>
         <name string="soldier"/>
-        <health lvl1="20" lvl2="120" lvl3="150"/>
+        <health lvl1="120" lvl2="130" lvl3="150"/>
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <size width="82" height="84"/>
         <damage lvl1="100" lvl2="150" lvl3="200"/>
-        <range value="50"/>
-        <fire_rate value="1"/>
+        <attack rate="1" targets="1" range="50"/>
+        <speed value="10"/>
       </soldier>
       <tankman>
         <name string="tankman"/>
@@ -149,8 +145,8 @@
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <size width="82" height="84"/>
         <damage lvl1="100" lvl2="150" lvl3="200"/>
-        <range value="50"/>
-        <fire_rate value="1"/>
+        <attack rate="1" targets="1" range="50"/>
+        <speed value="10"/>
       </tankman>
       <infiltrator>
         <name string="infiltrator"/>
@@ -158,8 +154,8 @@
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <size width="82" height="84"/>
         <damage lvl1="100" lvl2="150" lvl3="200"/>
-        <range value="50"/>
-        <fire_rate value="1"/>
+        <attack rate="1" targets="1" range="50"/>
+        <speed value="10"/>
       </infiltrator>
       <engineer>
         <name string="engineer"/>
@@ -167,8 +163,8 @@
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <size width="82" height="84"/>
         <damage lvl1="100" lvl2="150" lvl3="200"/>
-        <range value="50"/>
-        <fire_rate value="1"/>
+        <attack rate="1" targets="1" range="50"/>
+        <speed value="10"/>
       </engineer>
       <war_hound>
         <name string="war_hound"/>
@@ -176,8 +172,8 @@
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <size width="82" height="84"/>
         <damage lvl1="100" lvl2="150" lvl3="200"/>
-        <range value="50"/>
-        <fire_rate value="1"/>
+        <attack rate="1" targets="1" range="50"/>
+        <speed value="10"/>
       </war_hound>
     </troops>
   </entitymanager>

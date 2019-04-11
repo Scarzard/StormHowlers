@@ -2,7 +2,10 @@
 #define __Player_H__
 
 #include "Module.h"
-#include "Entity.h"
+#include "Troop.h"
+#include "Building.h"
+#include "Building.h"
+#include "Troop.h"
 #include "SDL\include\SDL_gamecontroller.h"
 
 struct SDL_Texture;
@@ -85,7 +88,8 @@ public:
 	pair<int,int> currentTile;
 	pair<int, int> x_limits, y_limits;
 
-	list<Entity*> buildings, troops;
+	list<Building*> buildings;
+	list<Troop*> troops;
 
 
 	//---

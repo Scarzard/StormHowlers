@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Barracks.h" />
+    <ClInclude Include="Building.h" />
     <ClInclude Include="CommandCenter.h" />
     <ClInclude Include="DefenseAOE.h" />
     <ClInclude Include="DefenseTarget.h" />
@@ -140,6 +141,7 @@
     <ClInclude Include="Module.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="Troop.h" />
     <ClInclude Include="Walls.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
@@ -147,7 +149,9 @@
     <ClInclude Include="UI_Element.h" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="..\Game\config.xml" />
+    <Xml Include="..\Game\config.xml">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
