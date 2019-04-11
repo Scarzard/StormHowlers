@@ -115,10 +115,23 @@
         <health lvl1="100" lvl2="120" lvl3="150"/>
         <size width="82" height="84"/>
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
-        <damage lvl1="100" lvl2="150" lvl3="200"/>
-        <range value="75"/>
+        <damage lvl1="15" lvl2="150" lvl3="200"/>
+        <range value="150"/>
+        <rate_of_fire value="1"/>
       </defense_target>
+      
     </buildings>
+
+    <troops>
+      <soldier>
+        <name string="soldier"/>
+        <health lvl1="100" lvl2="120" lvl3="150"/>
+        <size width="82" height="84"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <damage lvl1="100" lvl2="150" lvl3="200"/>
+        <range value="50"/>
+      </soldier>
+    </troops>
   </entitymanager>
   
   <buildings_animations>

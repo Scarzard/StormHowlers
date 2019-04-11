@@ -84,12 +84,16 @@ bool Scene::Start()
 	App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, { 50,50 });
 	App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, { 50,50 });
 	App->entitymanager->AddEntity(true, Entity::entityType::WALLS, { 50,50 });
+	App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, { 50,50 });
 
-	//--- PLAYER 1
+	//--- PLAYER 2
 	App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, { 50,50 });
 	App->entitymanager->AddEntity(false, Entity::entityType::MAIN_DEFENSE, { 50,50 });
 	App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, { 50,50 });
 	App->entitymanager->AddEntity(false, Entity::entityType::WALLS, { 50,50 });
+	App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 5000,50 });
+	App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 350,400 });
+
 
 
 	//--------- CREATE GUI -----------//  (Falta poner position y size)
@@ -298,7 +302,7 @@ bool Scene::Update(float dt)
 
 	//----
 	App->map->Draw(dt);
-	//App->entitymanager->Draw(dt);
+	App->entitymanager->Draw(dt);
 	App->gui->Draw();
 
 	return true;

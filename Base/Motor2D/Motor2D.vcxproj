@@ -97,6 +97,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SimpleUI.cpp" />
+    <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="Townhall.cpp" />
     <ClCompile Include="Transitions.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SimpleUI.h" />
+    <ClInclude Include="Soldier.h" />
     <ClInclude Include="Townhall.h" />
     <ClInclude Include="Transitions.h" />
     <ClInclude Include="Timer.h" />

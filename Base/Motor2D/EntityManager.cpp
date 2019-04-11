@@ -16,6 +16,7 @@
 #include "Mines.h"
 #include "Townhall.h"
 #include "Walls.h"
+#include "Soldier.h"
 
 #include "Brofiler\Brofiler.h"
 #include "PugiXml/src/pugixml.hpp"
@@ -70,6 +71,24 @@ bool EntityManager::Update(float dt)
 			tmp++;
 		}
 
+		// Player 1 Troops
+		tmp = App->player1->troops.begin();
+		while (tmp != App->player1->troops.end())
+		{
+			ret = (*tmp)->Update(dt);
+			tmp++;
+		}
+
+		// Player 2 Troops
+		tmp = App->player2->troops.begin();
+		while (tmp != App->player2->troops.end())
+		{
+			ret = (*tmp)->Update(dt);
+			tmp++;
+		}
+
+
+
 
 	}
 
@@ -118,13 +137,13 @@ void EntityManager::DeleteAllEntities()
 {
 	// Main entity list
 	list<Entity*>::iterator	tmp = entity_list.begin();
-	while (tmp != entity_list.end())
+	/*while (tmp != entity_list.end())
 	{
 		(*tmp)->CleanUp();
 		RELEASE(*tmp);
 		tmp++;
 	}
-	entity_list.clear();
+	entity_list.clear();*/
 
 	// Player 1 Buildings
 	tmp = App->player1->buildings.begin();
@@ -154,7 +173,7 @@ bool EntityManager::Draw(float dt) //sprite ordering
 	list<Entity*>::iterator tmp = entity_list.begin();
 	while (tmp != entity_list.end())
 	{
-		App->render->Blit(texture, (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
+		//App->render->Blit(texture, (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
 		tmp++;
 	}
 	return ret;
@@ -187,7 +206,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		break;
 
 	case Entity::entityType::DEFENSE_TARGET:
-		//tmp = new DefenseTarget(isPlayer1, position);
+		tmp = new DefenseTarget(isPlayer1, position);
 		break;
 
 	case Entity::entityType::MINES:
@@ -196,6 +215,9 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 
 	case Entity::entityType::BARRACKS:
 		tmp = new Barracks(isPlayer1, position);
+		break;
+	case Entity::entityType::SOLDIER:
+		tmp = new Soldier(isPlayer1, position);
 		break;
 	}
 

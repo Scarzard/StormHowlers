@@ -18,7 +18,8 @@ public:
 		DEFENSE_AOE,
 		DEFENSE_TARGET,
 		MINES,
-		BARRACKS
+		BARRACKS,
+		SOLDIER
 	};
 
 public:
@@ -38,6 +39,8 @@ public:
 	virtual void LoadAnimations() {};
 	virtual void ChangeAnimation() {};
 
+	virtual void TakeDamage(int damage) {};
+
 	pair<int, int> GetSize(Entity* entity) { return entity->size; };
 	pair<int, int> GetPos(Entity* entity) { return entity->position; };
 
@@ -54,7 +57,7 @@ public:
 	
 	bool flip = false;
 	int frame = 0;
-
+	bool alive = true;
 };
 
 #endif
