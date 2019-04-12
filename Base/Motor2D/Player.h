@@ -89,6 +89,8 @@ public:
 	uint gold;
 	uint currentUI;
 
+	SDL_Rect LiveBar;
+
 	// Live of TOWN HALL
 	int live = 2000;
 

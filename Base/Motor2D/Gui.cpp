@@ -262,20 +262,29 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		switch (data->action)
 		{
 		case UI_Element::Action::ACT_GOTO_BUILD:
-			data->rect = { 0, 0, 80, 81 };
+			if (App->player1->Build_icon == data)
+				data->rect = { 0, 0, 80, 81 };  // RED
+			else
+				data->rect = { 0, 81, 80, 79 }; //BLUE
+
 			break;
 
 		case UI_Element::Action::ACT_GOTO_DEPLOY:
-			data->rect = { 80, 0, 80, 81 };
+			if (App->player1->Deploy_icon == data)
+				data->rect = { 80, 0, 80, 81 }; // RED
+			else
+				data->rect = { 80, 81, 82, 79 }; //BLUE
+
 			break;
 
 		case UI_Element::Action::ACT_GOTO_CAST:
-			data->rect = { 159, 0, 78, 81 };
+			if (App->player1->Cast_icon == data)
+				data->rect = { 159, 0, 78, 81 }; // RED
+			else
+				data->rect = { 162, 81, 75, 79 }; //BLUE
 			break;
 
-		/*case UI_Element::Action::ACT_BUILD_AOE:
-			data->rect = { 332,0,39,40 };
-			break;*/
+
 			//--------- Building buttons
 		case UI_Element::Action::ACT_BUILD_AOE: //POWER PLANT
 			data->rect = { 746, 81, 85, 81 };
@@ -324,15 +333,24 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		switch (data->action)
 		{
 		case UI_Element::Action::ACT_GOTO_BUILD:
-			data->rect = { 237, 0, 81, 81 };
+			if (App->player1->Build_icon == data)
+				data->rect = { 237, 0, 81, 81 };
+			else
+				data->rect = { 237, 81, 81, 79 };
 			break;
 
 		case UI_Element::Action::ACT_GOTO_DEPLOY:
-			data->rect = { 318, 0, 78, 81 };
+			if (App->player1->Deploy_icon == data)
+				data->rect = { 318, 0, 78, 81 };
+			else
+				data->rect = { 318, 81, 78, 79 };
 			break;
 
 		case UI_Element::Action::ACT_GOTO_CAST:
-			data->rect = { 396, 0, 80, 81 };
+			if (App->player1->Cast_icon == data)
+				data->rect = { 396, 0, 80, 81 };
+			else
+				data->rect = { 396, 81, 80, 79 };
 			break;
 
 			//--------- Building buttons
