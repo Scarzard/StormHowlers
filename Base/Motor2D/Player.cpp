@@ -23,11 +23,12 @@ Player::~Player()
 
 bool Player::Start()
 {
-	gold = 0;
+
+	gold = actual_capacity = 0;
+
+	isBuilding = isDeploying = isCasting = false;
+	currentTile = { 13,0 };
 	currentUI = NONE;
-	isBuilding = false;
-
-
 
 	return true;
 }
@@ -36,19 +37,12 @@ bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("Player Update", Profiler::Color::Black);
 
-	//--- Cursor Movement
-	if (gamepad.Controller[JOY_UP] == KEY_REPEAT || gamepad.Controller[UP] == KEY_REPEAT)
-		cursor.position.second -= 500 * dt;
+	//--- Press X (Square)
+	if (gamepad.Controller[BUTTON_X] == KEY_DOWN)
+	{
+		onUI = !onUI;
+	}
 
-	if (gamepad.Controller[JOY_DOWN] == KEY_REPEAT || gamepad.Controller[DOWN] == KEY_REPEAT)
-		cursor.position.second += 500 * dt;
-
-	if (gamepad.Controller[JOY_RIGHT] == KEY_REPEAT || gamepad.Controller[RIGHT] == KEY_REPEAT)
-		cursor.position.first += 500 * dt;
-
-	if (gamepad.Controller[JOY_LEFT] == KEY_REPEAT || gamepad.Controller[LEFT] == KEY_REPEAT)
-		cursor.position.first -= 500 * dt;
-	
 
 	// Button with focus changes state to HOVER 
 	if (currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
@@ -79,6 +73,7 @@ bool Player::Update(float dt)
 	{
 		(*focus)->state = UI_Element::State::IDLE;
 
+
 		if (currentUI == CURR_BUILD)
 		{
 			if (isBuilding == true)
@@ -88,6 +83,7 @@ bool Player::Update(float dt)
 			}
 			else if (isBuilding == false)
 			{
+
 				GotoPrevWindows(currentUI);
 				UpdateFocus(currentUI);
 			}
@@ -153,31 +149,71 @@ bool Player::Update(float dt)
 	
 	
 
+
 	//--- Building ---------------------
 	if (isBuilding)
 	{
+		//--- Movement
+		if (gamepad.Controller[JOY_UP] == KEY_REPEAT || gamepad.Controller[UP] == KEY_DOWN || 
+			App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+			currentTile.second--;
+		}
+		else if (gamepad.Controller[JOY_DOWN] == KEY_REPEAT || gamepad.Controller[DOWN] == KEY_DOWN || 
+			App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			currentTile.second++;
+		}
+
+		if (gamepad.Controller[JOY_RIGHT] == KEY_REPEAT || gamepad.Controller[RIGHT] == KEY_DOWN ||
+			App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			currentTile.first++;
+		}
+		else if (gamepad.Controller[JOY_LEFT] == KEY_REPEAT || gamepad.Controller[LEFT] == KEY_DOWN ||
+			App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			currentTile.first--;
+		}
+
+		//--- Limits
+		if (currentTile.first < x_limits.first) //left limit
+		{
+			currentTile.first = x_limits.first;
+		}
+		else if (currentTile.first > x_limits.second) //right limit
+		{
+			currentTile.first = x_limits.second;
+		}
+		
+		if (currentTile.second < y_limits.first - collider.dimensions.first + collider.dimensions.second) //up limit
+		{
+			currentTile.second = y_limits.first - collider.dimensions.first + collider.dimensions.second;
+		}
+		else if (currentTile.second > y_limits.second - collider.dimensions.first + collider.dimensions.second) //down limit
+		{
+			currentTile.second = y_limits.second - collider.dimensions.first + collider.dimensions.second;
+		}
+
+		//--- Press A
 		App->map->debug = true;
 		if (CheckBuildingPos() == true) // Can build
 		{
-			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || 
-				App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				//play fx (build);
-				//App->entitymanager->AddEntity(isPlayer1, type, { collider.x, collider.y });
+				App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first - offset.first, collider.tiles[0].second - offset.second });
 				UpdateWalkabilityMap(false);
 			}
 		}
 		else
 		{
-			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || 
-				App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				//play fx (error);
 			}
 		}
 	}
-
-
 
 	return true;
 }
@@ -194,69 +230,54 @@ bool Player::CleanUp()
 {
 	LOG("---Player Deleted");
 
-	//Clear UI elements
-	list<UI_Element*>::iterator item = UI_elements.begin();
-	while (item != UI_elements.end())
+	//Clear buildings
+	list<Building*>::iterator item = buildings.begin();
+	while (item != buildings.end())
 	{
-		(*item)->children.clear();
+		(*item)->CleanUp();
 		RELEASE(*item);
 		item++;
+	}
+	buildings.clear();
+
+	//Clear troops
+	list<Troop*>::iterator titem = troops.begin();
+	while (titem != troops.end())
+	{
+		(*titem)->CleanUp();
+		RELEASE(*titem);
+		titem++;
+	}
+	troops.clear();
+
+	//Clear UI elements
+	list<UI_Element*>::iterator item2 = UI_elements.begin();
+	while (item2 != UI_elements.end())
+	{
+		(*item2)->children.clear();
+		RELEASE(*item2);
+		item2++;
 	}
 	UI_elements.clear();
 
 	return true;
 }
 
-void Player::GetCursorPos(int& x, int& y)
+void Player::GetCurrentTile(int& x, int& y)
 {
-	x = cursor.position.first;
-	y = cursor.position.second;
-}
-
-bool Player::CheckCursorPos(UI_Element* data)
-{
-	bool ret = false;
-
-	int x, y;
-	GetCursorPos(x, y);
-	SDL_Rect CursorCollider = { x,y,1,1 };
-
-	if (SDL_HasIntersection(&CursorCollider, &data->collider))
-		ret = true;
-
-	return ret;
-}
-
-bool Player::CheckCursorClick(UI_Element* data)
-{
-	bool ret = false;
-
-	if (gamepad.Controller[BUTTON_A] == KEY_DOWN)
-	{
-		GetCursorPos(data->click_pos.first, data->click_pos.second);
-		data->start_drag_pos = data->globalpos;
-		ret = true;
-	}
-	if (gamepad.Controller[BUTTON_A] == KEY_REPEAT)
-	{
-		ret = true;
-	}
-	if (gamepad.Controller[BUTTON_A] == KEY_UP)
-	{
-		data->dragging = false;
-		return false;
-	}
-
-	return ret;
+	x = currentTile.first;
+	y = currentTile.second;
 }
 
 bool Player::CheckBuildingPos() // Check collider with walkability map
 {
 	bool ret = true;
 
-	// Get tile on mouse/cursor
 	pair<int, int> pos, real_pos;
-	if (gamepad.Connected == true)
+
+	pos = currentTile;
+
+	/*if (gamepad.Connected == true)
 	{
 		pos = cursor.position;
 	}
@@ -266,14 +287,15 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 	}
 	pos = App -> render->ScreenToWorld(pos.first, pos.second);
 	pos = App->map->WorldToMap(pos.first, pos.second);
-	pos.first--;
+	pos.first--;*/
+
 
 	// Check what tiles is the collider occupying
 	int cont;
 	collider.tiles.resize(0); //reset vector
-	for (int i = 0; i < collider.dimensions.first; ++i)
+	for (int i = 0; i < collider.dimensions.first; i++)
 	{
-		for (int j = 0; j < collider.dimensions.second; ++j)
+		for (int j = 0; j < collider.dimensions.second; j++)
 		{
 			real_pos = App->map->MapToWorld(pos.first, pos.second);
 			collider.tiles.push_back(real_pos); //add tile to collider.tiles
@@ -285,7 +307,7 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 	}
 
 	// compare tiles with walkability map
-	for (int i = 0; i < collider.tiles.size(); ++i)
+	for (int i = 0; i < collider.tiles.size(); i++)
 	{
 		pos = App->map->WorldToMap(collider.tiles[i].first, collider.tiles[i].second);
 		if (App->pathfinding->IsWalkable(pos) == false)
@@ -297,7 +319,7 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 
 	// Draw Collider
 	SDL_Rect rect;
-	for (int i = 0; i < collider.tiles.size(); ++i)
+	for (int i = 0; i < collider.tiles.size(); i++)
 	{
 		if (ret == true)
 			rect = { 0,0,60,29 }; //green
@@ -479,24 +501,30 @@ void Player::DoLogic(UI_Element* data)
 		isBuilding = true;
 		type = Entity::entityType::DEFENSE_AOE;
 		collider.dimensions = { 3,4 };
+		//offset = { 60,30 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_TARGET:
 		isBuilding = true;
+
 		type = Entity::entityType::DEFENSE_AOE;
 		collider.dimensions = { 3,4 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_MINE:
 		isBuilding = true;
+
 		type = Entity::entityType::DEFENSE_AOE;
 		collider.dimensions = { 3,4 };
+
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_BARRACKS:
 		isBuilding = true;
+
 		type = Entity::entityType::DEFENSE_AOE;
 		collider.dimensions = { 3,4 };
+
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
@@ -531,4 +559,29 @@ void Player::DoLogic(UI_Element* data)
 		//
 		break;
 	}
+}
+
+bool Player::DeleteEntity(Entity* entity)
+{
+	entity->CleanUp();
+
+	if (entity->type >= Entity::entityType::TOWNHALL && entity->type <= Entity::entityType::BARRACKS) //if entity = building
+	{
+		list<Building*>::iterator item = buildings.begin();
+		while (item != buildings.end())
+		{
+			if ((*item) == entity)
+				buildings.erase(item);
+		}
+	}
+	else if (type > Entity::entityType::BARRACKS) //if entity = troop
+	{
+		list<Troop*>::iterator item = troops.begin();
+		while (item != troops.end())
+		{
+			if ((*item) == entity)
+				troops.erase(item);
+		}
+	}
+	return true;
 }

@@ -22,7 +22,8 @@ public:
 		IMAGE,
 		PUSHBUTTON,
 		SLIDER,
-		WINDOW
+		WINDOW,
+		MAIN_MENU_BG
 	};
 
 	enum Action
@@ -49,7 +50,14 @@ public:
 		ACT_CAST_MISSILES,
 
 		ACT_UPGRADE,
-		ACT_REPAIR
+		ACT_REPAIR,
+
+		//MainMenu Buttons
+		NEW_GAME,
+		CONTINUE,
+		SETTINGS,
+		WEBPAGE,
+		EXIT
 	};
 
 	enum State

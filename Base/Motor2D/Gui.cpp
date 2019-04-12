@@ -12,6 +12,7 @@
 #include "SimpleUI.h"
 #include "OtherUI.h"
 #include "Scene.h"
+#include "MainMenu.h"
 
 Gui::Gui() : Module()
 {
@@ -37,6 +38,9 @@ bool Gui::Awake(pugi::xml_node& conf)
 bool Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.data());
+	App->main_menu->menu_background->texture = App->tex->Load(App->main_menu->menu_bg_file_name.data());
+	App->main_menu->menu_background->rect = { 0, 0,  App->win->width, App->win->height };
+
 	return true;
 }
 
@@ -95,6 +99,10 @@ UI_Element* Gui::AddUIElement(bool player1, UI_Element::UI_type type, UI_Element
 	case UI_Element::UI_type::WINDOW:
 		UI_elem = new OtherUI(type, action, pos, size, parent, visible, dragable);
 		break;
+
+	case UI_Element::UI_type::MAIN_MENU_BG:
+		UI_elem = new OtherUI(type, action, pos, size, parent, visible, dragable);
+		break;
 	}
 
 	if (UI_elem && player1 == true)
@@ -131,6 +139,10 @@ bool Gui::Draw()
 				App->font->CalcSize((*UI_elem)->label, (*UI_elem)->size.first, (*UI_elem)->size.second);
 
 				App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
+			}
+			else if ((*UI_elem)->type == UI_Element::UI_type::MAIN_MENU_BG) //text
+			{
+				App->render->Blit(App->main_menu->menu_background->texture, 0, 0, &App->main_menu->menu_background->rect, SDL_FLIP_NONE, 0);
 			}
 			else //rest of ui
 			{
@@ -316,6 +328,18 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			data->rect = { 746, 0, 85, 81 };
 			break;
 
+
+		case UI_Element::Action::ACT_BUILD_AOE:
+			data->rect = { 332,0,39,40 };
+
+			//-----Needs to be changed
+		case UI_Element::Action::NEW_GAME:
+			data->rect = { 410,0,39,40 };
+			break;
+			//change values
+		case UI_Element::Action::EXIT:
+			data->rect = { 371,0,39,40 };
+
 			//Special abilities button (cast)
 		case UI_Element::Action::ACT_CAST_TANKS: //RHINO TANK
 			data->rect = { 492, 161, 85, 81 };
@@ -325,6 +349,7 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			break;
 		case UI_Element::Action::ACT_CAST_MISSILES://V3 ROCKETS
 			data->rect = { 662, 161, 85, 81 };
+
 			break;
 		}
 		break;
@@ -384,6 +409,19 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			data->rect = { 1671, 0, 85, 81 };
 			break;
 
+
+		case UI_Element::Action::ACT_BUILD_AOE:
+			data->rect = { 449,0,39,40 };
+        
+			//-----Needs to be changed
+		case UI_Element::Action::NEW_GAME:
+			data->rect = { 527,0,39,40 };
+			break;
+			//change values
+		case UI_Element::Action::EXIT:
+			data->rect = { 488,0,39,40 };
+
+
 			//Special abilities button (cast)
 		case UI_Element::Action::ACT_CAST_TANKS: //RHINO TANK
 			data->rect = { 1417, 161, 85, 81 };
@@ -393,6 +431,7 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			break;
 		case UI_Element::Action::ACT_CAST_MISSILES://V3 ROCKETS
 			data->rect = { 1587, 161, 85, 81 };
+
 			break;
 		}
 		break;
@@ -426,6 +465,17 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			data->rect = { 492, 81, 85, 8 };
 			break;
 
+
+		case UI_Element::Action::ACT_BUILD_AOE:
+			data->rect = { 449,80,39,40 };
+
+			//-----Needs to be changed
+		case UI_Element::Action::NEW_GAME:
+			data->rect = { 527,80,39,40 };
+			break;
+		case UI_Element::Action::EXIT:
+			data->rect = { 488,80,39,40 };
+
 			//--------- Troop buttons
 		case UI_Element::Action::ACT_DEPLOY_SOLDIER: //GI
 			data->rect = { 662, 0, 85, 81 };
@@ -452,6 +502,7 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			break;
 		case UI_Element::Action::ACT_CAST_MISSILES://V3 ROCKETS
 			data->rect = { 662, 161, 85, 81 };
+
 			break;
 		}
 		break;
@@ -478,6 +529,15 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::ACT_BUILD_TARGET://PRISM TOWER
 			data->rect = { 1005, 81, 85, 81 };
 			break;
+
+			//-----Needs to be changed
+		case UI_Element::Action::NEW_GAME:
+			data->rect = { 410,80,39,40 };
+			break;
+		case UI_Element::Action::EXIT:
+			data->rect = { 332,80,39,40 };
+			break;
+
 		case UI_Element::Action::ACT_BUILD_MINE: //ORE REFINERY
 			data->rect = { 919, 81, 85, 81 };
 			break;
@@ -513,6 +573,7 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		//	data->rect = {  };
 		//	break;
 			
+
 		}
 		break;
 	}

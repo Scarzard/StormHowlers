@@ -5,8 +5,6 @@
 #include "UI_Element.h"
 #include <stdio.h>
 
-
-
 struct SDL_Texture;
 
 enum DEPLOY
@@ -23,6 +21,50 @@ enum CAST
 	CAST_MISSILES = 1,
 	CAST_2,
 	CAST_3
+};
+
+struct PlayerUI
+{
+	bool isPlayer1;
+	uint currentUI;
+
+	// Main UI
+	UI_Element* Health_UI;
+	UI_Element* Gold_UI;
+
+	UI_Element* Main_UI;
+	UI_Element* Build_icon;
+	UI_Element* Deploy_icon;
+	UI_Element* Cast_icon;
+
+	UI_Element* Build_UI;
+	UI_Element* Def_AOE_icon;
+	UI_Element* Def_Target_icon;
+	UI_Element* Mines_icon;
+	UI_Element* Barracks_icon;
+
+	UI_Element* Deploy_UI;
+	UI_Element* Soldier_icon;
+	UI_Element* Tankman_icon;
+	UI_Element* Infiltrator_icon;
+	UI_Element* Engineer_icon;
+	UI_Element* War_hound_icon;
+
+	UI_Element* Cast_UI;
+	UI_Element* Missiles_icon;
+	UI_Element* Cast2_icon;
+	UI_Element* Cast3_icon;
+
+	// Selected Building UI
+	UI_Element* General_UI;
+	UI_Element* Upgrade_icon;
+	UI_Element* Repair_icon;
+	UI_Element* Name_text;
+	UI_Element* Level_text;
+	UI_Element* Health_text;
+	UI_Element* Damage_text; //only for defense buildings
+	UI_Element* Prod_text; //only for townhall & mines
+	UI_Element* Capacity_text; //only for barracks
 };
 
 
