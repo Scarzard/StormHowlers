@@ -50,18 +50,19 @@ bool Player::Update(float dt)
 		cursor.position.first -= 500 * dt;
 	
 
-
+	// Button with focus changes state to HOVER 
 	if (currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
 	{
 		(*focus)->state = UI_Element::State::HOVER;
 	}
-
+	
+	// Button A to clcik a button
 	if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
 	{
 		if(currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
 			(*focus)->state = UI_Element::State::LOGIC;
 	}
-
+	
 	if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE)
 	{
 		if(!isBuilding)
@@ -72,6 +73,7 @@ bool Player::Update(float dt)
 		if((*focus)==Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
 			UpdateFocus(currentUI);
 	}
+
 
 	if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
 	{
@@ -104,8 +106,6 @@ bool Player::Update(float dt)
 		currentUI = CURRENT_UI::CURR_MAIN;
 		UpdateFocus(currentUI);
 	}
-	
-
 
 	if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false)
 	{
@@ -122,7 +122,8 @@ bool Player::Update(float dt)
 		}
 		
 	}
-	else if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false)
+	
+	if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false)
 	{
 		(*focus)->state = UI_Element::State::IDLE;
 		if (focus == GetUI_Element(currentUI)->children.begin())
@@ -135,6 +136,9 @@ bool Player::Update(float dt)
 		}
 
 	}
+
+
+	
 
 
 	// Just to test the LiveBar
