@@ -48,11 +48,11 @@ bool Render::Awake(pugi::xml_node& config)
 	{
 		camera.w = App->win->screen_surface->w;
 		camera.h = App->win->screen_surface->h;
-		camera.x = 1047;
-		camera.y = -418;
+		camera.x = 933;
+		camera.y = -460;
 		/*camera.x =0;
 		camera.y = 0;*/
-		zoom =0.80;
+		zoom =0.77;
 		App->win->zoom_scale = zoom*App->win->scale;
 	}
 
