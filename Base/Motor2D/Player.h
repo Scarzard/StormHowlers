@@ -46,7 +46,8 @@ class Player : public Module
 public:
 	enum CURRENT_UI
 	{
-		CURR_MAIN = 1,
+		NONE,
+		CURR_MAIN,
 		CURR_BUILD,
 		CURR_DEPLOY,
 		CURR_CAST,
@@ -68,6 +69,10 @@ public:
 	bool CheckCursorPos(UI_Element* data);
 	bool CheckCursorClick(UI_Element* data);
 
+	void UpdateFocus(uint data);	//updates where the focus is pointing
+	void GotoPrevWindows(uint data);
+	UI_Element* GetUI_Element(uint data); //returns the window we are currently on
+
 	bool CheckBuildingPos();
 	void UpdateWalkabilityMap(bool isWalkable);
 
@@ -84,10 +89,19 @@ public:
 	uint gold;
 	uint currentUI;
 
+	SDL_Rect LiveBar;
+
+	// Live of TOWN HALL
+	int live = 2000;
+
 	Cursor cursor;
 	GamePad gamepad;
 
 	list<UI_Element*> UI_elements;
+
+	list<UI_Element*>::iterator focus;
+	list<UI_Element*>::iterator last_element;
+
 
 	// --- UI --- //
 	UI_Element* Health_UI;

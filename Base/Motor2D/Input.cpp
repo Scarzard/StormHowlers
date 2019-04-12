@@ -45,13 +45,13 @@ bool Input::Awake(pugi::xml_node& config)
 	}
 	else
 	{
-		if (SDL_NumJoysticks() == 2) //Here we have to put instead of a 2 a 1 (im doing it with ps4 controllers and its bugged, with XBOX controllers will work with a 1) 
+		if (SDL_NumJoysticks() == 1) //Here we have to put instead of a 2 a 1 (im doing it with ps4 controllers and its bugged, with XBOX controllers will work with a 1) 
 		{
 			//If there is only 1 controller connected
 			App->player1->gamepad.GameController = SDL_GameControllerOpen(0);
 			App->player1->gamepad.joy = SDL_JoystickOpen(0);
 		}
-		else if (SDL_NumJoysticks() == 4) //Here we have to put instead of a 4 a 2 (im doing it with ps4 controllers and its bugged, with XBOX controllers will work with a 2)
+		else if (SDL_NumJoysticks() == 2) //Here we have to put instead of a 4 a 2 (im doing it with ps4 controllers and its bugged, with XBOX controllers will work with a 2)
 		{
 			// If there are 2 controllers connected
 			App->player1->gamepad.GameController = SDL_GameControllerOpen(0);
@@ -110,7 +110,7 @@ bool Input::PreUpdate()
 			mouse_buttons[i] = KEY_IDLE;
 	}
 
-	for (int i = 0; i < SDL_NumJoysticks() / 2; ++i) //Remove the /2 for XBOX controller (with ps4 works weirdly)
+	for (int i = 0; i < SDL_NumJoysticks(); ++i) //Remove the /2 for XBOX controller (with ps4 works weirdly)
 	{
 		if (SDL_IsGameController(i))
 		{
@@ -132,7 +132,11 @@ bool Input::PreUpdate()
 						App->player1->gamepad.State[BUTTON_X] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_X);
 						App->player1->gamepad.State[BUTTON_Y] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_Y);
 						App->player1->gamepad.State[START] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_START);
-
+						App->player1->gamepad.State[LT] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_LEFTSTICK);
+						App->player1->gamepad.State[RT] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_RIGHTSTICK);
+						App->player1->gamepad.State[LB] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
+						App->player1->gamepad.State[RB] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
+					
 						App->player1->gamepad.LeftAxisX = SDL_JoystickGetAxis(App->player1->gamepad.joy, SDL_CONTROLLER_AXIS_LEFTX);
 						App->player1->gamepad.LeftAxisY = SDL_JoystickGetAxis(App->player1->gamepad.joy, SDL_CONTROLLER_AXIS_LEFTY);
 						App->player1->gamepad.Connected = true;
@@ -171,6 +175,10 @@ bool Input::PreUpdate()
 						App->player2->gamepad.State[BUTTON_X] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_X);
 						App->player2->gamepad.State[BUTTON_Y] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_Y);
 						App->player2->gamepad.State[START] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_START);
+						App->player2->gamepad.State[LT] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_LEFTSTICK);
+						App->player2->gamepad.State[RT] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_RIGHTSTICK);
+						App->player2->gamepad.State[LB] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
+						App->player2->gamepad.State[RB] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
 
 						App->player2->gamepad.LeftAxisX = SDL_JoystickGetAxis(App->player2->gamepad.joy, SDL_CONTROLLER_AXIS_LEFTX);
 						App->player2->gamepad.LeftAxisY = SDL_JoystickGetAxis(App->player2->gamepad.joy, SDL_CONTROLLER_AXIS_LEFTY);

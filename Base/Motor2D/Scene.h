@@ -46,6 +46,8 @@ public:
 	void SpawnEnemies();
 	void SpawnEntities();
 
+	void DrawLiveBar(Player* player);
+
 
 	//void changeSize(float time, int maxsize);
 
@@ -64,6 +66,7 @@ public:
 	string current_track;
 	string current_fx;
 
+	
 
 	//testing animation
 	SDL_Texture* spritesheet123 = nullptr;
