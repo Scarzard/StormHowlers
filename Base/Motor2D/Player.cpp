@@ -23,10 +23,12 @@ Player::~Player()
 
 bool Player::Start()
 {
+
 	gold = actual_capacity = 0;
-	currentUI = CURR_MAIN;
+
 	isBuilding = isDeploying = isCasting = false;
 	currentTile = { 13,0 };
+	currentUI = NONE;
 
 	return true;
 }
@@ -41,9 +43,37 @@ bool Player::Update(float dt)
 		onUI = !onUI;
 	}
 
-	//--- Press B (Circle)
-	if (gamepad.Controller[BUTTON_B] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+
+	// Button with focus changes state to HOVER 
+	if (currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
 	{
+		(*focus)->state = UI_Element::State::HOVER;
+	}
+	
+	// Button A to clcik a button
+	if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
+	{
+		if(currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
+			(*focus)->state = UI_Element::State::LOGIC;
+	}
+	
+	if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE)
+	{
+		if(!isBuilding)
+			(*focus)->state = UI_Element::State::IDLE;
+
+		DoLogic((*focus));
+
+		if((*focus)==Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
+			UpdateFocus(currentUI);
+	}
+
+
+	if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
+	{
+		(*focus)->state = UI_Element::State::IDLE;
+
+
 		if (currentUI == CURR_BUILD)
 		{
 			if (isBuilding == true)
@@ -53,11 +83,72 @@ bool Player::Update(float dt)
 			}
 			else if (isBuilding == false)
 			{
-				currentUI = CURR_MAIN;
-				UpdateVisibility();
+
+				GotoPrevWindows(currentUI);
+				UpdateFocus(currentUI);
 			}
 		}
+		else
+		{
+			GotoPrevWindows(currentUI);
+			UpdateFocus(currentUI);
+		}
+
+		
 	}
+
+	if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
+	{
+		currentUI = CURRENT_UI::CURR_MAIN;
+		UpdateFocus(currentUI);
+	}
+
+	if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false)
+	{
+		(*focus)->state = UI_Element::State::IDLE;
+
+		if (focus == last_element)
+		{
+			focus = GetUI_Element(currentUI)->children.begin();
+			
+		}
+		else
+		{
+			focus++;
+		}
+		
+	}
+	
+	if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false)
+	{
+		(*focus)->state = UI_Element::State::IDLE;
+		if (focus == GetUI_Element(currentUI)->children.begin())
+		{
+			focus = last_element;
+		}
+		else
+		{
+			focus--;
+		}
+
+	}
+
+
+	
+
+
+	// Just to test the LiveBar
+	if (gamepad.Controller[UP] == KEY_DOWN)
+	{
+		
+		live -= 100;
+	}
+
+	if (live < 0)
+		live = 0;
+	
+	
+
 
 	//--- Building ---------------------
 	if (isBuilding)
@@ -123,6 +214,7 @@ bool Player::Update(float dt)
 			}
 		}
 	}
+
 	return true;
 }
 
@@ -182,7 +274,21 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 	bool ret = true;
 
 	pair<int, int> pos, real_pos;
+
 	pos = currentTile;
+
+	/*if (gamepad.Connected == true)
+	{
+		pos = cursor.position;
+	}
+	else
+	{
+		App->input->GetMousePosition(pos.first, pos.second);
+	}
+	pos = App -> render->ScreenToWorld(pos.first, pos.second);
+	pos = App->map->WorldToMap(pos.first, pos.second);
+	pos.first--;*/
+
 
 	// Check what tiles is the collider occupying
 	int cont;
@@ -237,6 +343,89 @@ void Player::UpdateWalkabilityMap(bool isWalkable) //update walkable tiles
 	}
 }
 
+void Player::UpdateFocus(uint data)
+{
+	switch (data)
+	{
+	case::Player::CURRENT_UI::CURR_MAIN:
+		focus = Main_UI->children.begin();
+		last_element = Main_UI->children.end();
+		last_element--;
+		break;
+
+	case::Player::CURRENT_UI::CURR_BUILD:
+		focus = Build_UI->children.begin();
+		last_element = Build_UI->children.end();
+		last_element--;
+		break;
+
+	case::Player::CURRENT_UI::CURR_CAST:
+		focus = Cast_UI->children.begin();
+		last_element = Cast_UI->children.end();
+		last_element--;
+		break;
+
+	case::Player::CURRENT_UI::CURR_DEPLOY:
+		focus = Deploy_UI->children.begin();
+		last_element = Deploy_UI->children.end();
+		last_element--;
+		break;
+	
+	}
+}
+
+
+void Player::GotoPrevWindows(uint data)
+{
+	switch (data)
+	{
+	case Player::CURRENT_UI::CURR_MAIN :
+		currentUI = CURRENT_UI::NONE;
+		UpdateVisibility();
+		break;
+
+	case Player::CURRENT_UI::CURR_GENERAL:
+		currentUI = CURRENT_UI::NONE;
+		UpdateVisibility();
+		break;
+
+	case Player::CURRENT_UI::CURR_BUILD :
+		currentUI = CURRENT_UI::CURR_MAIN;
+		UpdateVisibility();
+		break;
+
+	case Player::CURRENT_UI::CURR_DEPLOY:
+		currentUI = CURRENT_UI::CURR_MAIN;
+		UpdateVisibility();
+		break;
+
+	case Player::CURRENT_UI::CURR_CAST:
+		currentUI = CURRENT_UI::CURR_MAIN;
+		UpdateVisibility();
+		break;
+
+	}
+}
+
+UI_Element* Player::GetUI_Element(uint data)
+{
+	switch (data)
+	{
+	case::Player::CURRENT_UI::CURR_MAIN:
+		return Main_UI;
+
+	case::Player::CURRENT_UI::CURR_BUILD:
+		return Build_UI;
+
+	case::Player::CURRENT_UI::CURR_CAST:
+		return Cast_UI;
+
+	case::Player::CURRENT_UI::CURR_DEPLOY:
+		return Deploy_UI;
+
+	}
+}
+
 void Player::UpdateVisibility() // Update GUI Visibility
 {
 	switch (currentUI)
@@ -268,7 +457,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 	case::Player::CURRENT_UI::CURR_CAST:
 		Main_UI->visible = false;
 		Build_UI->visible = false;
-		Deploy_UI->visible = false;
+		Deploy_UI->visible = true;
 		Cast_UI->visible = true;
 		//General_UI->visible = false;
 		break;
@@ -317,23 +506,25 @@ void Player::DoLogic(UI_Element* data)
 
 	case::UI_Element::Action::ACT_BUILD_TARGET:
 		isBuilding = true;
-		type = Entity::entityType::DEFENSE_TARGET;
-		//collider.dimensions = { 3,4 };
-		//offset = { 60,30 };
+
+		type = Entity::entityType::DEFENSE_AOE;
+		collider.dimensions = { 3,4 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_MINE:
 		isBuilding = true;
-		type = Entity::entityType::MINES;
-		//collider.dimensions = { 3,4 };
-		//offset = { 60,30 };
+
+		type = Entity::entityType::DEFENSE_AOE;
+		collider.dimensions = { 3,4 };
+
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_BARRACKS:
 		isBuilding = true;
-		type = Entity::entityType::BARRACKS;
-		//collider.dimensions = { 3,4 };
-		//offset = { 60,30 };
+
+		type = Entity::entityType::DEFENSE_AOE;
+		collider.dimensions = { 3,4 };
+
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
@@ -357,14 +548,6 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_CAST_MISSILES:
-		//
-		break;
-
-	case::UI_Element::Action::ACT_CAST_2:
-		//
-		break;
-
-	case::UI_Element::Action::ACT_CAST_3:
 		//
 		break;
 

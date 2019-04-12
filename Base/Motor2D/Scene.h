@@ -88,6 +88,8 @@ public:
 	void SpawnEnemies();
 	void SpawnEntities();
 
+	void DrawLiveBar(Player* player);
+
 
 	//void changeSize(float time, int maxsize);
 
@@ -106,6 +108,7 @@ public:
 	string current_track;
 	string current_fx;
 
+	
 
 	//testing animation
 	SDL_Texture* spritesheet123 = nullptr;
@@ -131,6 +134,10 @@ public:
 private:
 	SDL_Texture* debug_tex;
 	SDL_Texture* cursor_tex;
+
+	pair<int, int>	camera_motion;
+	pair<int, int>	last_motion;
+	bool	start_motion = false;
 };
 
 #endif // __Scene_H__

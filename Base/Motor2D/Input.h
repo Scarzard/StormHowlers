@@ -5,7 +5,7 @@
 
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
-#define MAX_BUTTONS 13
+#define MAX_BUTTONS 20
 //#define LAST_KEYS_PRESSED_BUFFER 50
 
 struct SDL_Rect;
@@ -40,7 +40,11 @@ enum CONTROLLER_BUTTONS {
 	JOY_UP,
 	JOY_DOWN,
 	JOY_LEFT,
-	JOY_RIGHT
+	JOY_RIGHT,
+	LB,
+	RB,
+	LT,
+	RT
 };
 
 class Input : public Module

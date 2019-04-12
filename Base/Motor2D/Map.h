@@ -9,7 +9,14 @@
 
 
 struct SDL_Texture;
+struct Tiles
+{
+	SDL_Texture* texture;
+	int x;
+	int y;
+	SDL_Rect Tile_rect;
 
+};
 struct Properties
 {
 	struct Property
@@ -130,6 +137,19 @@ struct MapData
 	list<TileSet*>		tilesets;
 	list<MapLayer*>		layers;
 	list<ObjectsGroup*>	objLayers;
+
+	//entities
+	pair<int, int> main_building;
+	pair<int, int> main_building2;
+	pair<int, int> main_tower;
+	pair<int, int> main_tower2;
+	pair<int, int> special_skill;
+	pair<int, int> special_skill2;
+	pair<int, int> tower;
+	pair<int, int> tower2;
+	pair<int, int> barrack;
+	pair<int, int> barrack2;
+	pair<int, int> mid_building;
 };
 
 // ----------------------------------------------------
@@ -162,6 +182,12 @@ public:
 
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 
+	//load visble map on list
+	void LoadTileList();
+
+	//Draw wakability
+	void DrawWakability(float dt);
+
 private:
 
 	bool LoadMap();
@@ -177,15 +203,23 @@ private:
 	Animation* idleRight123 = nullptr;
 	
 
+	//map framerate
+	list<Tiles>		TileList;
+	
+
 public:
 	MapData				data;
 	bool				debug = false;
 	SDL_Texture*		debug_tex;
 
+	SDL_Texture* imagemap;
+	SDL_Rect rect_for_back_image = { 0,0,0,0 };
+
 private:
 	pugi::xml_document	map_file;
 	string				folder;
 	bool				map_loaded;
+
 };
 
 #endif // __Map_H__

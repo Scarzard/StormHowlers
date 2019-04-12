@@ -171,7 +171,7 @@ bool MainApp::Update()
 	bool ret = true;
 	PrepareUpdate();
 
-	if(input->GetWindowEvent(WE_QUIT) == true)
+	if(input->GetWindowEvent(WE_QUIT) == true || input->GetKey(SDL_SCANCODE_ESCAPE))
 		ret = false;
 
 	if(ret == true)
@@ -252,12 +252,15 @@ void MainApp::FinishUpdate()
 
 	pair<int, int> pos;
 	App->input->GetMousePosition(pos.first, pos.second);
+	pos = App -> render->ScreenToWorld(pos.first, pos.second);
 	pos = App->map->WorldToMap(pos.first, pos.second);
 
 	static char title[256];
 
-	sprintf_s(title, 256, "FPS: %i | Av.FPS: %.2f | MsLastFrame: %02u ms | Last dt: %.5f | FPS_Cap: %i | Vsync: %i | Tile: %i, %i| Time: %u:%u",
-		prev_last_sec_frame_count, avg_fps, last_frame_ms, dt,  fpsCapON, vsyncON,pos.first, pos.second, scene->worldminutes,scene->worldseconds);
+
+	sprintf_s(title, 256, "FPS: %i | Av.FPS: %.2f | MsLastFrame: %02u ms | Last dt: %.5f | FPS_Cap: %i | Vsync: %i | Tile: %i, %i | Time: %u:%u | Zoom %.2f |Camera x:%i y:%i",
+		prev_last_sec_frame_count, avg_fps, last_frame_ms, dt,  fpsCapON, vsyncON,pos.first, pos.second, scene->worldminutes,scene->worldseconds, render->zoom, render->camera.x, render->camera.y);
+
 
 	App->win->SetTitle(title);
 }

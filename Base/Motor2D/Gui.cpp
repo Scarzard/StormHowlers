@@ -274,16 +274,60 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		switch (data->action)
 		{
 		case UI_Element::Action::ACT_GOTO_BUILD:
-			data->rect = { 332,0,39,40 };
+			if (App->player1->Build_icon == data)
+				data->rect = { 0, 0, 80, 81 };  // RED
+			else
+				data->rect = { 0, 81, 80, 79 }; //BLUE
+
 			break;
 
 		case UI_Element::Action::ACT_GOTO_DEPLOY:
-			data->rect = { 371,0,39,40 };
+			if (App->player1->Deploy_icon == data)
+				data->rect = { 80, 0, 80, 81 }; // RED
+			else
+				data->rect = { 80, 81, 82, 79 }; //BLUE
+
 			break;
 
 		case UI_Element::Action::ACT_GOTO_CAST:
-			data->rect = { 410,0,39,40 };
+			if (App->player1->Cast_icon == data)
+				data->rect = { 159, 0, 78, 81 }; // RED
+			else
+				data->rect = { 162, 81, 75, 79 }; //BLUE
 			break;
+
+
+			//--------- Building buttons
+		case UI_Element::Action::ACT_BUILD_AOE: //POWER PLANT
+			data->rect = { 746, 81, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_BUILD_TARGET://PRISM TOWER
+			data->rect = { 662, 81, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_BUILD_MINE: //ORE REFINERY
+			data->rect = { 576, 81, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_BUILD_BARRACKS: //CLONING VATS
+			data->rect = { 492, 81, 85, 81 };
+			break;
+
+			//--------- Troop buttons
+		case UI_Element::Action::ACT_DEPLOY_SOLDIER: //GI
+			data->rect = { 662, 0, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_DEPLOY_TANKMAN: //TESLA TROOPER
+			data->rect = { 576, 0, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_DEPLOY_INFILTRATOR: // SPY
+			data->rect = { 832, 0, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_DEPLOY_ENGINEER:// ENGINEER
+			data->rect = { 492, 0, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_DEPLOY_WARHOUND://ATTACK DOG
+			data->rect = { 746, 0, 85, 81 };
+			break;
+
 
 		case UI_Element::Action::ACT_BUILD_AOE:
 			data->rect = { 332,0,39,40 };
@@ -295,6 +339,17 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			//change values
 		case UI_Element::Action::EXIT:
 			data->rect = { 371,0,39,40 };
+
+			//Special abilities button (cast)
+		case UI_Element::Action::ACT_CAST_TANKS: //RHINO TANK
+			data->rect = { 492, 161, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_CAST_INVULNERABILITY://INVULNERABLE
+			data->rect = { 576, 161, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_CAST_MISSILES://V3 ROCKETS
+			data->rect = { 662, 161, 85, 81 };
+
 			break;
 		}
 		break;
@@ -303,16 +358,57 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		switch (data->action)
 		{
 		case UI_Element::Action::ACT_GOTO_BUILD:
-			data->rect = { 449,0,39,40 };
+			if (App->player1->Build_icon == data)
+				data->rect = { 237, 0, 81, 81 };
+			else
+				data->rect = { 237, 81, 81, 79 };
 			break;
 
 		case UI_Element::Action::ACT_GOTO_DEPLOY:
-			data->rect = { 488,0,39,40 };
+			if (App->player1->Deploy_icon == data)
+				data->rect = { 318, 0, 78, 81 };
+			else
+				data->rect = { 318, 81, 78, 79 };
 			break;
 
 		case UI_Element::Action::ACT_GOTO_CAST:
-			data->rect = { 527,0,39,40 };
+			if (App->player1->Cast_icon == data)
+				data->rect = { 396, 0, 80, 81 };
+			else
+				data->rect = { 396, 81, 80, 79 };
 			break;
+
+			//--------- Building buttons
+		case UI_Element::Action::ACT_BUILD_AOE: //POWER PLANT
+			data->rect = { 1671, 81, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_BUILD_TARGET://PRISM TOWER
+			data->rect = { 1587, 81, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_BUILD_MINE: //ORE REFINERY
+			data->rect = { 1501, 81, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_BUILD_BARRACKS: //CLONING VATS
+			data->rect = { 1417, 81, 85, 81 };
+			break;
+
+			//--------- Troop buttons
+		case UI_Element::Action::ACT_DEPLOY_SOLDIER: //GI
+			data->rect = { 1587, 0, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_DEPLOY_TANKMAN: //TESLA TROOPER
+			data->rect = { 1501, 0, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_DEPLOY_INFILTRATOR: // SPY
+			data->rect = { 1757, 0, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_DEPLOY_ENGINEER:// ENGINEER
+			data->rect = { 1417, 0, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_DEPLOY_WARHOUND://ATTACK DOG
+			data->rect = { 1671, 0, 85, 81 };
+			break;
+
 
 		case UI_Element::Action::ACT_BUILD_AOE:
 			data->rect = { 449,0,39,40 };
@@ -325,6 +421,17 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::EXIT:
 			data->rect = { 488,0,39,40 };
 
+
+			//Special abilities button (cast)
+		case UI_Element::Action::ACT_CAST_TANKS: //RHINO TANK
+			data->rect = { 1417, 161, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_CAST_INVULNERABILITY://INVULNERABLE
+			data->rect = { 1501, 161, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_CAST_MISSILES://V3 ROCKETS
+			data->rect = { 1587, 161, 85, 81 };
+
 			break;
 		}
 		break;
@@ -333,16 +440,31 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		switch (data->action)
 		{
 		case UI_Element::Action::ACT_GOTO_BUILD:
-			data->rect = { 449,80,39,40 };
+			data->rect = { 237, 163, 81, 80 };
 			break;
 
 		case UI_Element::Action::ACT_GOTO_DEPLOY:
-			data->rect = { 488,80,39,40 };
+			data->rect = { 318, 163, 78, 80 };
 			break;
 
 		case UI_Element::Action::ACT_GOTO_CAST:
-			data->rect = { 527,80,39,40 };
+			data->rect = { 396, 163, 79, 80 };
 			break;
+
+			//--------- Building buttons
+		case UI_Element::Action::ACT_BUILD_AOE: //POWER PLANT
+			data->rect = { 746, 81, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_BUILD_TARGET://PRISM TOWER
+			data->rect = { 662, 81, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_BUILD_MINE: //ORE REFINERY
+			data->rect = { 576, 81, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_BUILD_BARRACKS: //CLONING VATS
+			data->rect = { 492, 81, 85, 8 };
+			break;
+
 
 		case UI_Element::Action::ACT_BUILD_AOE:
 			data->rect = { 449,80,39,40 };
@@ -353,6 +475,34 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			break;
 		case UI_Element::Action::EXIT:
 			data->rect = { 488,80,39,40 };
+
+			//--------- Troop buttons
+		case UI_Element::Action::ACT_DEPLOY_SOLDIER: //GI
+			data->rect = { 662, 0, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_DEPLOY_TANKMAN: //TESLA TROOPER
+			data->rect = { 576, 0, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_DEPLOY_INFILTRATOR: // SPY
+			data->rect = { 832, 0, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_DEPLOY_ENGINEER:// ENGINEER
+			data->rect = { 492, 0, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_DEPLOY_WARHOUND://ATTACK DOG
+			data->rect = { 746, 0, 85, 81 };
+			break;
+
+			//Special abilities button (cast)
+		case UI_Element::Action::ACT_CAST_TANKS: //RHINO TANK
+			data->rect = { 492, 161, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_CAST_INVULNERABILITY://INVULNERABLE
+			data->rect = { 576, 161, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_CAST_MISSILES://V3 ROCKETS
+			data->rect = { 662, 161, 85, 81 };
+
 			break;
 		}
 		break;
@@ -361,16 +511,25 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		switch (data->action)
 		{
 		case UI_Element::Action::ACT_GOTO_BUILD:
-			data->rect = { 332,80,39,40 };
+			data->rect = { 0, 163, 80, 80 };
 			break;
 
 		case UI_Element::Action::ACT_GOTO_DEPLOY:
-			data->rect = { 371,80,39,40 };
+			data->rect = { 80, 63, 82, 80 };
 			break;
 
 		case UI_Element::Action::ACT_GOTO_CAST:
-			data->rect = { 410,80,39,40 };
+			data->rect = { 162, 163, 75, 80 };
 			break;
+
+			//--------- Building buttons
+		case UI_Element::Action::ACT_BUILD_AOE: //POWER PLANT
+			data->rect = { 1090, 81, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_BUILD_TARGET://PRISM TOWER
+			data->rect = { 1005, 81, 85, 81 };
+			break;
+
 			//-----Needs to be changed
 		case UI_Element::Action::NEW_GAME:
 			data->rect = { 410,80,39,40 };
@@ -378,6 +537,43 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::EXIT:
 			data->rect = { 332,80,39,40 };
 			break;
+
+		case UI_Element::Action::ACT_BUILD_MINE: //ORE REFINERY
+			data->rect = { 919, 81, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_BUILD_BARRACKS: //CLONING VATS
+			data->rect = { 835, 81, 85, 81 };
+			break;
+
+			//--------- Troop buttons
+		case UI_Element::Action::ACT_DEPLOY_SOLDIER: //GI
+			data->rect = { 1090, 0, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_DEPLOY_TANKMAN: //TESLA TROOPER
+			data->rect = { 1005, 0, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_DEPLOY_INFILTRATOR: // SPY
+			data->rect = { 1260, 0, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_DEPLOY_ENGINEER:// ENGINEER
+			data->rect = { 921, 0, 85, 81 };
+			break;
+		case UI_Element::Action::ACT_DEPLOY_WARHOUND://ATTACK DOG
+			data->rect = { 1175, 0, 85, 81 };
+			break;
+
+			//Special abilities button (cast) MUST GET COORDS
+		//case UI_Element::Action::ACT_CAST_TANKS: //RHINO TANK
+		//	data->rect = {  };
+		//	break;
+		//case UI_Element::Action::ACT_CAST_INVULNERABILITY://INVULNERABLE
+		//	data->rect = {  };
+		//	break;
+		//case UI_Element::Action::ACT_CAST_MISSILES://V3 ROCKETS
+		//	data->rect = {  };
+		//	break;
+			
+
 		}
 		break;
 	}

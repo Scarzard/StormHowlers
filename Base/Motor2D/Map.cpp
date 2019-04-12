@@ -30,8 +30,12 @@ bool Map::Awake(pugi::xml_node& config)
 	debug = false;
 
 	//-----
-	idleRight123 = idleRight123->LoadAnimation("animation/player.tmx", "idle right");
-	idleRight123->speed = 50;
+	idleRight123 = idleRight123->LoadAnimation("animation/buildings.tmx", "barracks");
+	idleRight123->speed = 1;
+	idleRight123->loop = false;
+
+		rect_for_back_image = { 0,0,5040,2436 };
+	
 	//-----
 
 	return ret;
@@ -44,45 +48,46 @@ void Map::Draw(float dt)
 	if (map_loaded == false)
 		return;
 
-	list<MapLayer*>::const_iterator lay;
-	list<TileSet*>::const_iterator set;
-	for (lay = data.layers.begin(); lay != data.layers.end(); ++lay)
-	{
-		MapLayer* layer = *lay;
-		for (set = data.tilesets.begin(); set != data.tilesets.end(); ++set)
-		{
-			if (layer->properties.Get("Navigation") == 1)
-				continue;
-			for (int y = 0; y < data.height; ++y)
-			{
-				for (int x = 0; x < data.width; ++x)
-				{
-					int tile_id = layer->Get(x, y);
-					if (tile_id > 0)
-					{
-						TileSet* tileset = GetTilesetFromTileId(tile_id);
-						SDL_Rect r = tileset->GetTileRect(tile_id);
-						pair<int, int> pos = MapToWorld(x, y);
-						App->render->Blit(tileset->texture, pos.first, pos.second, &r, SDL_FLIP_NONE);
+	//testing image blit
 
-						if (debug == true)
-						{
-							pos = WorldToMap(pos.first, pos.second);
-							if (App->pathfinding->IsWalkable(pos) == false)
-							{
-								pos = MapToWorld(pos.first, pos.second);
-								r = { 60,0,60,29 };
-								App->render->Blit(debug_tex, pos.first, pos.second, &r, SDL_FLIP_NONE);
-							}
-						}
-					}
-				}
-			}
-		}
+	/*pair <int, int> position_back_image;
+
+	
+	position_back_image = WorldToMap(App->render->camera.x, App->render->camera.y);
+
+*/
+	App->render->Blit(imagemap, -2900, 0, &rect_for_back_image, SDL_FLIP_NONE);
+
+
+	list<Tiles>::const_iterator iterator;
+
+	for (iterator = TileList.begin(); iterator != TileList.end(); ++iterator)
+	{
+
+		App->render->Blit((*iterator).texture, (*iterator).x, (*iterator).y, &(*iterator).Tile_rect, SDL_FLIP_NONE);
+	
 	}
 
+	
+
 	//testing animation uncoment to blit example
-	//App->render->Blit(App->scene->spritesheet123, 600, 200, &idleRight123->GetCurrentFrame(dt));
+	App->render->Blit(App->scene->spritesheet123, data.main_building.first, data.main_building.second, &idleRight123->GetCurrentFrame(dt));
+	App->render->Blit(App->scene->spritesheet123, data.main_building2.first, data.main_building2.second, &idleRight123->GetCurrentFrame(dt));
+	
+	App->render->Blit(App->scene->spritesheet123, data.main_tower.first, data.main_tower.second, &idleRight123->GetCurrentFrame(dt));
+	App->render->Blit(App->scene->spritesheet123, data.main_tower2.first, data.main_tower2.second, &idleRight123->GetCurrentFrame(dt));
+
+	App->render->Blit(App->scene->spritesheet123, data.special_skill.first, data.special_skill.second, &idleRight123->GetCurrentFrame(dt));
+	App->render->Blit(App->scene->spritesheet123, data.special_skill2.first, data.special_skill2.second, &idleRight123->GetCurrentFrame(dt));
+
+	App->render->Blit(App->scene->spritesheet123, data.tower.first, data.tower.second, &idleRight123->GetCurrentFrame(dt));
+	App->render->Blit(App->scene->spritesheet123, data.tower2.first, data.tower2.second, &idleRight123->GetCurrentFrame(dt));
+
+	App->render->Blit(App->scene->spritesheet123, data.barrack.first, data.barrack.second, &idleRight123->GetCurrentFrame(dt));
+	App->render->Blit(App->scene->spritesheet123, data.barrack2.first, data.barrack2.second, &idleRight123->GetCurrentFrame(dt));
+
+	App->render->Blit(App->scene->spritesheet123, data.mid_building.first, data.mid_building.second, &idleRight123->GetCurrentFrame(dt));
+	
 }
 
 int Properties::Get(const char* value, int default_value) const
@@ -214,6 +219,23 @@ bool Map::CleanUp()
 
 	// Clean up the pugui tree
 	map_file.reset();
+
+
+	// Remove all layers
+	list<Tiles>::iterator item3 = TileList.begin();
+	//while (item3 != TileList.end())
+	//{
+	//	if ((*item)->texture != nullptr)
+	//	{
+	//		(*item)->texture = nullptr;
+	//	}
+	//	item3++;
+	//	//delete *item3;
+
+	//}
+	TileList.clear();
+
+	
 
 	return true;
 }
@@ -349,6 +371,7 @@ bool Map::LoadMap()
 		data.tile_height = map.attribute("tileheight").as_int();
 		string bg_color(map.attribute("backgroundcolor").as_string());
 
+
 		data.background_color.r = 0;
 		data.background_color.g = 0;
 		data.background_color.b = 0;
@@ -390,6 +413,81 @@ bool Map::LoadMap()
 		else
 		{
 			data.type = MAPTYPE_UNKNOWN;
+		}
+
+		//loading gameobjects
+		pugi::xml_node mapIterator;
+		for (mapIterator = map.child("objectgroup"); mapIterator; mapIterator = mapIterator.next_sibling("objectgroup"))
+		{
+			string tmp(mapIterator.first_attribute().as_string());
+			if (tmp == "main base")
+			{
+				data.main_building.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.main_building.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.main_building = MapToWorld(data.main_building.first, data.main_building.second);
+			}
+			else if (tmp == "main base 2")
+			{
+				data.main_building2.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.main_building2.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.main_building2 = MapToWorld(data.main_building2.first, data.main_building2.second);
+			}
+			else if (tmp == "main tower")
+			{
+				data.main_tower.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.main_tower.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.main_tower = MapToWorld(data.main_tower.first, data.main_tower.second);
+			}
+			else if (tmp == "main tower 2")
+			{
+				data.main_tower2.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.main_tower2.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.main_tower2 = MapToWorld(data.main_tower2.first, data.main_tower2.second);
+			}
+			else if (tmp == "special skills")
+			{
+				data.special_skill.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.special_skill.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.special_skill = MapToWorld(data.special_skill.first, data.special_skill.second);
+			}
+			else if (tmp == "special skills 2")
+			{
+				data.special_skill2.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.special_skill2.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.special_skill2 = MapToWorld(data.special_skill2.first, data.special_skill2.second);
+			}
+			else if (tmp == "tower")
+			{
+				data.tower.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.tower.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.tower = MapToWorld(data.tower.first, data.tower.second);
+			}
+			else if (tmp == "tower 2")
+			{
+				data.tower2.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.tower2.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+			data.tower2 = MapToWorld(data.tower2.first, data.tower2.second);
+			}
+			else if (tmp == "barrack")
+			{
+				data.barrack.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.barrack.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.barrack = MapToWorld(data.barrack.first, data.barrack.second);
+			}
+			else if (tmp == "barrack 2")
+			{
+				data.barrack2.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.barrack2.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.barrack2 = MapToWorld(data.barrack2.first, data.barrack2.second);
+			}
+			else if (tmp == "mid building")
+			{ 
+				data.mid_building.first = mapIterator.child("object").attribute("x").as_int()/ data.tile_height;
+				data.mid_building.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.mid_building =MapToWorld(data.mid_building.first, data.mid_building.second);
+				
+			}
+
 		}
 	}
 
@@ -579,4 +677,110 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 		break;
 	}
 	return ret;
+}
+
+void Map::LoadTileList()
+{
+	BROFILER_CATEGORY("tile list load", Profiler::Color::LightGreen);
+
+	if (map_loaded == false)
+		return;
+
+	list<MapLayer*>::const_iterator lay;
+	list<TileSet*>::const_iterator set;
+	for (lay = data.layers.begin(); lay != data.layers.end(); ++lay)
+	{
+		MapLayer* layer = *lay;
+		for (set = data.tilesets.begin(); set != data.tilesets.end(); ++set)
+		{
+			if (layer->properties.Get("Visible") == 1)
+			{
+
+				for (int y = 0; y < data.height; y++)
+				{
+					for (int x = data.width; x >= 0; x--)
+					{
+						int tile_id = layer->Get(x, y);
+						if (tile_id > 0)
+						{
+							TileSet* tileset = GetTilesetFromTileId(tile_id);
+							SDL_Rect r = tileset->GetTileRect(tile_id);
+
+							pair<int, int> pos = MapToWorld(x, y);
+							/*if ((pos.first )*App->win->GetScale()*App->render->zoom >= -App->render->camera.x && pos.first <= -App->render->camera.x + App->render->camera.w
+							&& (pos.second + data.tile_height)*App->win->GetScale()*App->render->zoom >= -App->render->camera.y && pos.second <= -App->render->camera.y + App->render->camera.h)
+							{*/
+							//App->render->Blit(tileset->texture, pos.first, pos.second, &r, SDL_FLIP_NONE);
+							Tiles Tile;
+
+							Tile.texture = tileset->texture;
+							Tile.Tile_rect = r;
+							Tile.x = pos.first;
+							Tile.y = pos.second;
+
+							TileList.push_back(Tile);
+							//}
+
+						}
+					}
+				}
+
+
+			}
+			
+		}
+	}
+
+	
+}
+
+
+void Map::DrawWakability(float dt)
+{
+	BROFILER_CATEGORY("Wakability Draw", Profiler::Color::CadetBlue);
+
+	if (map_loaded == false)
+		return;
+
+	if (debug == true)
+	{
+		list<MapLayer*>::const_iterator lay;
+		list<TileSet*>::const_iterator set;
+		for (lay = data.layers.begin(); lay != data.layers.end(); ++lay)
+		{
+			MapLayer* layer = *lay;
+			for (set = data.tilesets.begin(); set != data.tilesets.end(); ++set)
+			{
+				if (layer->properties.Get("Navigation") == 1)
+				{
+					for (int y = 0; y < data.height; y++)
+					{
+						for (int x = data.width; x >= 0; x--)
+						{
+							int tile_id = layer->Get(x, y);
+							if (tile_id > 0)
+							{
+								TileSet* tileset = GetTilesetFromTileId(tile_id);
+								SDL_Rect r = tileset->GetTileRect(tile_id);
+
+								pair<int, int> pos = MapToWorld(x, y);
+
+								if (debug == true && App->pathfinding->IsWalkable({ x,y }) == false) // walkability map draw
+								{
+									r = { 60,0,60,29 };
+									App->render->Blit(debug_tex, pos.first, pos.second, &r, SDL_FLIP_NONE);
+								}
+							}
+						}
+					}
+				}
+				
+			}
+		}
+
+
+	}
+	
+
+
 }
