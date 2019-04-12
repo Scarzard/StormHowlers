@@ -94,8 +94,6 @@ public:
 	// Live of TOWN HALL
 	int live = 2000;
 
-	Cursor cursor;
-
 	GamePad gamepad;
 
 	pair<int,int> currentTile;
