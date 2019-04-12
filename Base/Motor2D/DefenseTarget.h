@@ -17,11 +17,6 @@ public:
 	void CleanUp();
 
 	bool Is_inRange(pair<int, int> pos, int & distance);
-
-
-public:
-	SDL_Rect	collider;
-	SDL_Texture* tex;
 };
 
 #endif

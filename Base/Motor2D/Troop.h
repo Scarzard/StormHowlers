@@ -17,11 +17,21 @@ public:
 
 		speed = config.child("speed").attribute("value").as_int();
 
+		collider = { 180,0,59,28 };
+		if (!isPlayer1)
+			collider = { 120,0,59,28 };
+
 	}
 	~Troop() {};
 
 	void CleanUp() {
 
+	}
+	bool Update(float dt) {
+
+		SDL_Rect r = { position.first, position.second,size.first,size.second*0.5 };
+		SDL_RenderCopy(App->render->renderer, tex, &collider, &r);
+		return true;
 	}
 
 public:

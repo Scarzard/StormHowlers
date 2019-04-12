@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "Map.h"
 #include "App.h"
+#include "Render.h"
 
 class Entity
 {
@@ -35,7 +36,7 @@ public:
 		name = "ERROR";
 		name = GetName(type);
 
-		LOG("Loading %s",&name[0]);
+		LOG("Player %d: Loading %s",(isPlayer1)?1:2,&name[0]);
 
 		pugi::xml_document	config_file;
 		pugi::xml_node config;
@@ -60,7 +61,7 @@ public:
 		damage_lv.push_back(config.child("damage").attribute("lvl3").as_uint(0));
 
 		size.first = config.child("size").attribute("width").as_int(6);
-		size.first = config.child("size").attribute("height").as_int(6);
+		size.second = config.child("size").attribute("height").as_int(6);
 		
 		rate_of_fire = config.child("attack").attribute("rate").as_float(0);
 		max_targets  = config.child("attack").attribute("targets").as_int(0);
@@ -79,13 +80,19 @@ public:
 
 		LoadAnimations();
 		ChangeAnimation();
+
+		// DEBUG PURPOSES
+		tex = App->tex->Load("maps/meta.png");
 	};
+
 	~Entity() {};
 	virtual bool Awake(pugi::xml_node & config) { return true; };
 	virtual bool Start() { return true; };
 	virtual bool PreUpdate() { return true; };
 	virtual bool Update(float dt) { return true; };
-	virtual bool PostUpdate() { return true; };
+	virtual bool PostUpdate(
+	
+	) { return true; };
 
 	virtual void CleanUp() {
 		health_lv.clear();
@@ -184,7 +191,12 @@ public:
 
 	float rate_of_fire;
 
-	private:
+	// DEBUG PURPOSES
+	SDL_Rect	collider;
+	SDL_Texture* tex;
+
+private:
+
 		char* GetName(const Entity::entityType& type) {
 			switch (type)
 			{

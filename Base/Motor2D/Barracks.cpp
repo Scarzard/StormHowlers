@@ -19,6 +19,9 @@ bool Barracks::PreUpdate()
 {
 	BROFILER_CATEGORY("Barracks PreUpdate", Profiler::Color::SandyBrown);
 
+	SDL_Rect r = { position.first, position.second,size.first,size.second*0.5 };
+	SDL_RenderCopy(App->render->renderer, tex, &collider, &r);
+
 	repair_cost = (health_lv[level] - health) / 2;
 
 	return true;
@@ -72,6 +75,8 @@ bool Barracks::Update(float dt)
 	}
 
 	ChangeAnimation();
+
+	Building::Update(dt);
 
 	return true;
 }

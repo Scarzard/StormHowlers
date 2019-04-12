@@ -61,6 +61,8 @@ bool Townhall::Update(float dt)
 	}
 	ChangeAnimation();
 
+	Building::Update(dt);
+
 	return true;
 }
 

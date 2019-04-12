@@ -1,5 +1,4 @@
 #include "Soldier.h"
-#include "Render.h"
 
 
 Soldier::Soldier()
@@ -9,8 +8,7 @@ Soldier::Soldier()
 
 Soldier::Soldier(bool isPlayer1, pair<int, int> pos):Troop(Entity::entityType::SOLDIER,isPlayer1,pos)
 {
-	tex = App->tex->Load("maps/meta.png");
-	collider = { 64,0,64,32 };
+	
 }
 
 
@@ -29,8 +27,7 @@ bool Soldier::Update(float dt)
 		position.second = y;
 	}
 
-	App->render->Blit(tex, position.first, position.second, &collider);
-
+	Troop::Update(dt);
 	return true;
 }
 

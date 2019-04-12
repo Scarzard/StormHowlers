@@ -89,7 +89,7 @@ bool Scene::Start()
 
 	//--------- CREATE MAIN BUILDINGS -------------// (falta cambiar posicion)
 	//--- PLAYER 1
-	App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 50,50 });
+	/*App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 50,50 });
 	App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, { 50,50 });
 	App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, { 50,50 });
 	App->entitymanager->AddEntity(true, Entity::entityType::WALLS, { 50,50 });
@@ -101,7 +101,7 @@ bool Scene::Start()
 	App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, { 50,50 });
 	App->entitymanager->AddEntity(false, Entity::entityType::WALLS, { 50,50 });
 	App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 5000,50 });
-	App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 350,400 });
+	App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 350,400 });*/
 
 
 
@@ -290,11 +290,43 @@ bool Scene::Update(float dt)
 	{
 		App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, { x,y });
 	}
+	else if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::BARRACKS, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::BARRACKS, { x,y });
+	}
 	else if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_AOE, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_AOE, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_TARGET, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::MINES, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::MINES, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
 	{
 		App->entitymanager->AddEntity(true, Entity::entityType::SOLDIER, { x,y });
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
 	{
 		App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { x,y });
 	}

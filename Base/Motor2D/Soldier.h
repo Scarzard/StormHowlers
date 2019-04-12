@@ -11,9 +11,6 @@ public:
 
 	bool Update(float dt);
 
-	SDL_Rect	collider;
-	SDL_Texture* tex;
-
 };
 
 #endif

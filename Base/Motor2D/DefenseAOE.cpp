@@ -13,12 +13,8 @@ DefenseAoe::~DefenseAoe()
 {
 }
 
-DefenseAoe::DefenseAoe(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::DEFENSE_TARGET, isPlayer1, pos)
+DefenseAoe::DefenseAoe(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::DEFENSE_AOE, isPlayer1, pos)
 {
-
-	collider = { 0,0,64,32 };
-	tex = App->tex->Load("maps/meta.png");
-
 }
 
 bool DefenseAoe::Start()
@@ -39,6 +35,8 @@ bool DefenseAoe::PreUpdate()
 bool DefenseAoe::Update(float dt)
 {
 	BROFILER_CATEGORY("DefenseAoe Update", Profiler::Color::SandyBrown);
+
+	Building::Update(dt);
 
 	
 	return true;

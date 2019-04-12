@@ -78,6 +78,8 @@ bool Mines::Update(float dt)
 
 	ChangeAnimation();
 
+	Building::Update(dt);
+
 	return true;
 }
 

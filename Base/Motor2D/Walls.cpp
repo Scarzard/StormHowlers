@@ -24,6 +24,7 @@ bool Walls::Update(float dt)
 	BROFILER_CATEGORY("Walls Update", Profiler::Color::SandyBrown);
 
 	ChangeAnimation();
+	Building::Update(dt);
 
 	return true;
 }
