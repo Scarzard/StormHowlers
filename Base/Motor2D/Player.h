@@ -2,7 +2,10 @@
 #define __Player_H__
 
 #include "Module.h"
-#include "Entity.h"
+#include "Troop.h"
+#include "Building.h"
+#include "Building.h"
+#include "Troop.h"
 #include "SDL\include\SDL_gamecontroller.h"
 
 struct SDL_Texture;
@@ -19,12 +22,6 @@ struct GamePad
 	int LeftAxisX = 0;
 	int LeftAxisY = 0;
 
-};
-
-struct Cursor
-{
-	pair <int, int> position;
-	SDL_Rect area;
 };
 
 struct GeneralUI
@@ -61,35 +58,43 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	void GetCursorPos(int& x, int& y);
+	void GetCurrentTile(int& x, int& y);
 
 	void UpdateVisibility(); //update gui visibility
 	void DoLogic(UI_Element* data); //gui actions
-	bool CheckCursorPos(UI_Element* data);
-	bool CheckCursorClick(UI_Element* data);
 
 	bool CheckBuildingPos();
 	void UpdateWalkabilityMap(bool isWalkable);
+	bool DeleteEntity(Entity* entity);
 
 public:
+	bool onUI;
 	bool isBuilding;
 	bool isDeploying;
 	bool isCasting;
 
 	Collider collider;
+	pair<int, int> offset;
 	Entity::entityType type;
 
 	bool isPlayer1;
 	string team;
 	uint gold;
 	uint currentUI;
+	int actual_capacity;
 
-	Cursor cursor;
 	GamePad gamepad;
 
+	pair<int,int> currentTile;
+	pair<int, int> x_limits, y_limits;
+
+	list<Building*> buildings;
+	list<Troop*> troops;
+
+
+	//---
 	list<UI_Element*> UI_elements;
 
-	// --- UI --- //
 	UI_Element* Health_UI;
 	UI_Element* Gold_UI;
 
@@ -123,6 +128,8 @@ public:
 	UI_Element* Name_text;
 	UI_Element* Level_text;
 	UI_Element* Health_text;
+	UI_Element* UpgradeCost_text;
+	UI_Element* RepairCost_text;
 	UI_Element* Damage_text; //only for defense buildings
 	UI_Element* Prod_text; //only for townhall & mines
 	UI_Element* Capacity_text; //only for barracks

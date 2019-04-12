@@ -19,17 +19,16 @@ public:
 	bool CleanUp();
 
 	bool Draw(float dt);
-	bool DebugDraw();
 
 	Entity* AddEntity(bool player1, Entity::entityType type, pair<int,int> position);
-	bool DeleteEntity(Entity* entity);
-	void DeleteEntities();
+	void DeleteAllEntities();
 
 public:
 	string			folder;
 	string			texture_path;
 	SDL_Texture*	texture;
-	list<Entity*>	Entities;
+
+	list<Entity*>	entity_list;
 
 	bool draw_path = false;
 	bool godmode = false;

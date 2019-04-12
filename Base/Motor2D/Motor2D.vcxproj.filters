@@ -10,9 +10,6 @@
     <ClCompile Include="Audio.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Desenvolupament  ========\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Fonts.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
@@ -69,6 +66,33 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Townhall.cpp">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="MainDefense.cpp">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandCenter.cpp">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Walls.cpp">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="DefenseAOE.cpp">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="DefenseTarget.cpp">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Mines.cpp">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Barracks.cpp">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Soldier.cpp">
+      <Filter>Desenvolupament  ========\Entities\Troops</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +177,39 @@
     <ClInclude Include="Player.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Townhall.h">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="MainDefense.h">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandCenter.h">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Walls.h">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="DefenseAOE.h">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="DefenseTarget.h">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Mines.h">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Barracks.h">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Soldier.h">
+      <Filter>Desenvolupament  ========\Entities\Troops</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Desenvolupament  ========\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Troop.h">
+      <Filter>Desenvolupament  ========\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Desenvolupament  ========">
@@ -185,5 +242,10 @@
     <Filter Include="Desenvolupament  ========\Entities\Troops">
       <UniqueIdentifier>{09b60214-5efb-46e2-bb27-876d56110c60}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\config.xml">
+      <Filter>Desenvolupament  ========</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

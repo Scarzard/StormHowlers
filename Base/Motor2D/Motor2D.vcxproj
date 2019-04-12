@@ -80,8 +80,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Barracks.cpp" />
+    <ClCompile Include="CommandCenter.cpp" />
+    <ClCompile Include="DefenseAOE.cpp" />
+    <ClCompile Include="DefenseTarget.cpp" />
+    <ClCompile Include="MainDefense.cpp" />
+    <ClCompile Include="Mines.cpp" />
     <ClCompile Include="OtherUI.cpp" />
-    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Fonts.cpp" />
     <ClCompile Include="Gui.cpp" />
@@ -96,15 +101,25 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SimpleUI.cpp" />
+    <ClCompile Include="Soldier.cpp" />
+    <ClCompile Include="Townhall.cpp" />
     <ClCompile Include="Transitions.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="Textures.cpp" />
+    <ClCompile Include="Walls.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Barracks.h" />
+    <ClInclude Include="Building.h" />
+    <ClInclude Include="CommandCenter.h" />
+    <ClInclude Include="DefenseAOE.h" />
+    <ClInclude Include="DefenseTarget.h" />
+    <ClInclude Include="MainDefense.h" />
+    <ClInclude Include="Mines.h" />
     <ClInclude Include="OtherUI.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
@@ -117,6 +132,8 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SimpleUI.h" />
+    <ClInclude Include="Soldier.h" />
+    <ClInclude Include="Townhall.h" />
     <ClInclude Include="Transitions.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Animation.h" />
@@ -128,10 +145,17 @@
     <ClInclude Include="Module.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="Troop.h" />
+    <ClInclude Include="Walls.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="UI_Element.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\config.xml">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
