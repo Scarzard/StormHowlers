@@ -64,6 +64,8 @@ public:
 	string current_track;
 	string current_fx;
 
+	SDL_Rect LiveBar_P1 = { 51, 18 , 348, 19 }; //LiveBar for player1
+
 
 	//testing animation
 	SDL_Texture* spritesheet123 = nullptr;

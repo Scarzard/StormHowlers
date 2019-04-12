@@ -287,7 +287,7 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			data->rect = { 576, 81, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_BUILD_BARRACKS: //CLONING VATS
-			data->rect = { 492, 81, 85, 8 };
+			data->rect = { 492, 81, 85, 81 };
 			break;
 
 			//--------- Troop buttons
@@ -337,44 +337,44 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 
 			//--------- Building buttons
 		case UI_Element::Action::ACT_BUILD_AOE: //POWER PLANT
-			data->rect = { 1090, 81, 85, 81 };
+			data->rect = { 1671, 81, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_BUILD_TARGET://PRISM TOWER
-			data->rect = { 1005, 81, 85, 81 };
+			data->rect = { 1587, 81, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_BUILD_MINE: //ORE REFINERY
-			data->rect = { 576, 81, 85, 81 };
+			data->rect = { 1501, 81, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_BUILD_BARRACKS: //CLONING VATS
-			data->rect = { 492, 81, 85, 8 };
+			data->rect = { 1417, 81, 85, 81 };
 			break;
 
 			//--------- Troop buttons
 		case UI_Element::Action::ACT_DEPLOY_SOLDIER: //GI
-			data->rect = { 662, 0, 85, 81 };
+			data->rect = { 1587, 0, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_DEPLOY_TANKMAN: //TESLA TROOPER
-			data->rect = { 576, 0, 85, 81 };
+			data->rect = { 1501, 0, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_DEPLOY_INFILTRATOR: // SPY
-			data->rect = { 832, 0, 85, 81 };
+			data->rect = { 1757, 0, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_DEPLOY_ENGINEER:// ENGINEER
-			data->rect = { 492, 0, 85, 81 };
+			data->rect = { 1417, 0, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_DEPLOY_WARHOUND://ATTACK DOG
-			data->rect = { 746, 0, 85, 81 };
+			data->rect = { 1671, 0, 85, 81 };
 			break;
 
 			//Special abilities button (cast)
 		case UI_Element::Action::ACT_CAST_TANKS: //RHINO TANK
-			data->rect = { 492, 161, 85, 81 };
+			data->rect = { 1417, 161, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_CAST_INVULNERABILITY://INVULNERABLE
-			data->rect = { 576, 161, 85, 81 };
+			data->rect = { 1501, 161, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_CAST_MISSILES://V3 ROCKETS
-			data->rect = { 662, 161, 85, 81 };
+			data->rect = { 1587, 161, 85, 81 };
 			break;
 		}
 		break;

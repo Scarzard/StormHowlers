@@ -191,7 +191,7 @@ bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, S
 bool Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera) const
 {
 	bool ret = true;
-	uint scale = App->win->GetScale();
+	int scale = App->win->GetScale();
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
@@ -199,11 +199,12 @@ bool Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, 
 	SDL_Rect rec(rect);
 	if(use_camera)
 	{
-		rec.x = (int)(camera.x + rect.x * scale);
-		rec.y = (int)(camera.y + rect.y * scale);
-		rec.w *= scale;
-		rec.h *= scale;
+		rec.x = (int)(((camera.x) + (int)((rect.x * scale)*zoom)));
+		rec.y = (int)(((camera.y) + (int)((rect.y * scale)*zoom)));
 	}
+
+	rec.w *= (scale * zoom) + 0.1f;
+	rec.h *= (scale * zoom) + 0.1f;
 
 	int result = (filled) ? SDL_RenderFillRect(renderer, &rec) : SDL_RenderDrawRect(renderer, &rec);
 

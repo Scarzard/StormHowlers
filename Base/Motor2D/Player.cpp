@@ -27,6 +27,8 @@ bool Player::Start()
 	currentUI = NONE;
 	isBuilding = false;
 
+
+
 	return true;
 }
 
@@ -46,23 +48,24 @@ bool Player::Update(float dt)
 
 	if (gamepad.Controller[JOY_LEFT] == KEY_REPEAT || gamepad.Controller[LEFT] == KEY_REPEAT)
 		cursor.position.first -= 500 * dt;
-
-	if (focus == Main_UI->children.begin())
-		LOG("YES");
-	else
-		LOG("NO");
-
-	//LOG("CURR: %u", currentUI);
+	
 
 
-	if (currentUI != CURRENT_UI::NONE)
+	if (currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
 	{
 		(*focus)->state = UI_Element::State::HOVER;
 	}
 
 	if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
 	{
-		(*focus)->state = UI_Element::State::IDLE;
+		if(currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
+			(*focus)->state = UI_Element::State::LOGIC;
+	}
+
+	if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE)
+	{
+		if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
+			(*focus)->state = UI_Element::State::IDLE;
 		DoLogic((*focus));
 		UpdateFocus(currentUI);
 	}
@@ -101,7 +104,7 @@ bool Player::Update(float dt)
 	
 
 
-	if (gamepad.Controller[RIGHT] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
+	if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && isBuilding == false)
 	{
 		(*focus)->state = UI_Element::State::IDLE;
 
@@ -116,7 +119,7 @@ bool Player::Update(float dt)
 		}
 		
 	}
-	else if (gamepad.Controller[LEFT] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
+	else if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && isBuilding == false)
 	{
 		(*focus)->state = UI_Element::State::IDLE;
 		if (focus == GetUI_Element(currentUI)->children.begin())
@@ -130,6 +133,15 @@ bool Player::Update(float dt)
 
 	}
 
+
+	if (gamepad.Controller[UP] == KEY_DOWN)
+	{
+		
+		live -= 100;
+	}
+
+	if (live < 0)
+		live = 0;
 	
 	
 
@@ -157,24 +169,7 @@ bool Player::Update(float dt)
 		}
 	}
 
-	////--- Press B --------------------
-	/*if (gamepad.Controller[BUTTON_B] == KEY_DOWN || 
-		App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
-	{
-		if (currentUI == CURR_BUILD)
-		{
-			if (isBuilding == true)
-			{
-				isBuilding = false;
-				App->map->debug = false;
-			}
-			else if (isBuilding == false)
-			{
-				currentUI = CURR_MAIN;
-				UpdateVisibility();
-			}
-		}
-	}*/
+
 
 	return true;
 }
@@ -339,6 +334,12 @@ void Player::UpdateFocus(uint data)
 		last_element = Cast_UI->children.end();
 		last_element--;
 		break;
+
+	case::Player::CURRENT_UI::CURR_DEPLOY:
+		focus = Deploy_UI->children.begin();
+		last_element = Deploy_UI->children.end();
+		last_element--;
+		break;
 	
 	}
 }
@@ -389,6 +390,9 @@ UI_Element* Player::GetUI_Element(uint data)
 	case::Player::CURRENT_UI::CURR_CAST:
 		return Cast_UI;
 
+	case::Player::CURRENT_UI::CURR_DEPLOY:
+		return Deploy_UI;
+
 	}
 }
 
@@ -423,7 +427,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 	case::Player::CURRENT_UI::CURR_CAST:
 		Main_UI->visible = false;
 		Build_UI->visible = false;
-		Deploy_UI->visible = false;
+		Deploy_UI->visible = true;
 		Cast_UI->visible = true;
 		//General_UI->visible = false;
 		break;
@@ -470,15 +474,21 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_TARGET:
-		//
+		isBuilding = true;
+		type = Entity::entityType::DEFENSE_AOE;
+		collider.dimensions = { 3,4 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_MINE:
-		//
+		isBuilding = true;
+		type = Entity::entityType::DEFENSE_AOE;
+		collider.dimensions = { 3,4 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_BARRACKS:
-		//
+		isBuilding = true;
+		type = Entity::entityType::DEFENSE_AOE;
+		collider.dimensions = { 3,4 };
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:

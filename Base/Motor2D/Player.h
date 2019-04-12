@@ -89,6 +89,9 @@ public:
 	uint gold;
 	uint currentUI;
 
+	// Live of TOWN HALL
+	int live = 2000;
+
 	Cursor cursor;
 	GamePad gamepad;
 

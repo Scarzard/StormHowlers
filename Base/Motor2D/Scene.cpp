@@ -113,8 +113,8 @@ bool Scene::Start()
 	App->player1->Build_UI->rect = { 569, 246, 566, 163 };
 	App->player1->Def_AOE_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { 119, 55 }, { 85, 81 } , App->player1->Build_UI, false);
 	App->player1->Def_Target_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { 222, 55 }, { 85, 81 }, App->player1->Build_UI, false);
-	//App->player1->Mines_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { x,y }, { 39,40 }, App->player1->Build_UI, false);
-	//App->player1->Barracks_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { x,y }, { 39,40 }, App->player1->Build_UI, false);
+	App->player1->Mines_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { 325,55 }, { 85,81 }, App->player1->Build_UI, false);
+	App->player1->Barracks_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { 425, 55 }, { 85, 81 }, App->player1->Build_UI, false);
 
 	App->player1->Deploy_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player1->Deploy_UI->rect = { 569, 411, 566, 163 };
@@ -128,10 +128,10 @@ bool Scene::Start()
 	//App->player1->War_hound_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { x,y }, { 85, 81 }, App->player1->Deploy_UI, false);
 
 	App->player1->Cast_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, false);
-	App->player1->Cast_UI->rect = { 569, 575, 566, 163 };
-	//App->player1->Missiles_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_MISSILES, { x,y }, { 39,40 }, player.Cast_UI, false);
-	//App->player1->Cast2_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_2, { x,y }, { 39,40 }, App->player1->Cast_UI, false);
-	//App->player1->Cast3_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_3, { x,y }, { 39,40 }, App->player1->Cast_UI, false);
+	App->player1->Cast_UI->rect = { 0, 573, 566, 163 }; 
+	App->player1->Cast2_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_TANKS, {171 ,55 }, { 85, 81 }, App->player1->Cast_UI, false);
+	App->player1->Cast3_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_INVULNERABILITY, { 273, 55 }, { 85, 81 }, App->player1->Cast_UI, false);
+	App->player1->Missiles_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_MISSILES, { 375, 55 }, { 85, 81 }, App->player1->Cast_UI, false);
 
 	//App->player1->General_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
 	//App->player1->Upgrade_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_UPGRADE, { x,y }, { w,h }, App->player1->General_UI, false);
@@ -449,12 +449,21 @@ bool Scene::Update(float dt)
 	}
 
 
-
+	//UpdateLiveBar P1
+	LiveBar_P1.w = (348 * App->player1->live)/2000;
 
 	//----
 	App->map->Draw(dt);
 	//App->entitymanager->Draw(dt);
 	App->gui->Draw();
+
+	//DRAW LIVE BAR NEEDS FUNCTION 
+	if(App->player1->live >= 1500)
+		App->render->DrawQuad(LiveBar_P1, 0, 255, 0, 255, true, false);
+	else if(App->player1->live >= 750 && App->player1->live <= 1500)
+		App->render->DrawQuad(LiveBar_P1, 255, 150, 0, 255, true, false);
+	else
+		App->render->DrawQuad(LiveBar_P1, 255, 0, 0, 255, true, false);
 
 	return true;
 }
