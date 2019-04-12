@@ -33,6 +33,8 @@ bool Map::Awake(pugi::xml_node& config)
 	idleRight123 = idleRight123->LoadAnimation("animation/buildings.tmx", "barracks");
 	idleRight123->speed = 1;
 	idleRight123->loop = false;
+
+		rect_for_back_image = { 0,0,5040,2436 };
 	
 	//-----
 
@@ -48,15 +50,13 @@ void Map::Draw(float dt)
 
 	//testing image blit
 
-	SDL_Rect r = { 0,0,5040,2436 };
-	pair <int, int> pos;
+	/*pair <int, int> position_back_image;
 
-	//pos = App->render->ScreenToWorld(App->render->camera.x, App->render->camera.y);
-	pos = WorldToMap(App->render->camera.x, App->render->camera.y);
+	
+	position_back_image = WorldToMap(App->render->camera.x, App->render->camera.y);
 
-
-	//p->render->Blit(imagemap, App->render->camera.x, 0, &r, SDL_FLIP_NONE);
-	App->render->Blit(imagemap, -3000, 0, &r, SDL_FLIP_NONE);
+*/
+	App->render->Blit(imagemap, -2900, 0, &rect_for_back_image, SDL_FLIP_NONE);
 
 
 	list<Tiles>::const_iterator iterator;

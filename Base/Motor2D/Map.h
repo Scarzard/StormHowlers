@@ -213,6 +213,7 @@ public:
 	SDL_Texture*		debug_tex;
 
 	SDL_Texture* imagemap;
+	SDL_Rect rect_for_back_image = { 0,0,0,0 };
 
 private:
 	pugi::xml_document	map_file;
