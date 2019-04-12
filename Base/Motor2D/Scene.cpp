@@ -103,7 +103,12 @@ bool Scene::Start()
 	App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 5000,50 });
 	App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 350,400 });*/
 
+	string track = App->audio->folder_music + "/Test.ogg"; 
+	App->audio->PlayMusic(track.c_str()); 
 
+	//--------- CREATE GUI -----------//  (Falta poner position y size)
+	ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { App->win->width / 2 - 80 ,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
+	ui_timer->color = { 250,250,250,250 };
 
 	//--------- CREATE GUI -----------//  (Falta poner position y size)
 	//--- PLAYER 1 -----
@@ -139,6 +144,43 @@ bool Scene::Start()
 	//App->player1->General_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
 	//App->player1->Upgrade_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_UPGRADE, { x,y }, { w,h }, App->player1->General_UI, false);
 	//App->player1->Repair_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_REPAIR, { x,y }, { w,h }, App->player1->General_UI, false);
+
+	//--------- CREATE GUI ----------  //(Falta poner position y size)
+	
+	//--- PLAYER 1
+	//P1.Health_UI = App->gui->AddUIElement(UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
+	//P1.Gold_UI = App->gui->AddUIElement(UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
+	App->player1->Main_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, true);
+	App->player1->Main_UI->rect = { 0,79,166,79 };
+	App->player1->Build_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::CONTINUE, { 13,2 }, { 39,40 }, App->player1->Main_UI, true);
+	App->player1->Deploy_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 64,2 }, { 39,40 }, App->player1->Main_UI, true);
+	App->player1->Cast_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 115,2 }, { 39,40 }, App->player1->Main_UI, true);
+
+	App->player1->Build_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, false);
+	App->player1->Build_UI->rect = { 166,79,166,79 };
+	//P1.Def_AOE_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { x,y }, { 39,40 } , P1.Build_UI, false);
+	//P1.Def_Target_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { x,y }, { 39,40 }, P1.Build_UI, false);
+	//P1.Mines_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { x,y }, { 39,40 }, P1.Build_UI, false);
+	//P1.Barracks_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { x,y }, { 39,40 }, P1.Build_UI, false);
+
+	App->player1->Deploy_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, false);
+	App->player1->Deploy_UI->rect = { 166,79,166,79 };
+	//P1.Soldier_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_SOLDIER, { x,y }, { 39,40 }, P1.Deploy_UI, false);
+	//P1.Tankman_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_TANKMAN, { x,y }, { 39,40 }, P1.Deploy_UI, false);
+	//P1.Infiltrator_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { x,y }, { 39,40 }, P1.Deploy_UI, false);
+	//P1.Engineer_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_ENGINEER, { x,y }, { 39,40 }, P1.Deploy_UI, false);
+	//P1.War_hound_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { x,y }, { 39,40 }, P1.Deploy_UI, false);
+
+	App->player1->Cast_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, false);
+	App->player1->Cast_UI->rect = { 166,79,166,79 };
+	//P1.Missiles_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_MISSILES, { x,y }, { 39,40 }, player.Cast_UI, false);
+	//P1.Cast2_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_2, { x,y }, { 39,40 }, P1.Cast_UI, false);
+	//P1.Cast3_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_3, { x,y }, { 39,40 }, P1.Cast_UI, false);
+
+	//P1.General_UI = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
+	//P1.Upgrade_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_UPGRADE, { x,y }, { w,h }, P1.General_UI, false);
+	//P1.Repair_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_REPAIR, { x,y }, { w,h }, P1.General_UI, false);
+
 	////falta poner los pointer a los datos del edificio seleccionado (ahora esta como "data") 
 	//App->player1->Name_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 	//App->player1->Level_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
@@ -148,6 +190,7 @@ bool Scene::Start()
 	//App->player1->Damage_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 	//App->player1->Prod_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 	//App->player1->Capacity_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
+
 
 
 	//--- PLAYER 2 -----
@@ -211,6 +254,13 @@ bool Scene::Start()
 
 	//-----------
 	SpawnEntities();
+
+	App->font->font_iterator = App->font->fonts.begin();
+	// timer start
+	world_clock.Start();
+	world_seconds.Start();
+	size_timer.Start();
+
 
 	return true;
 }
@@ -387,6 +437,118 @@ bool Scene::Update(float dt)
 	//	App->fpsCapON = !App->fpsCapON;
 	//}
 
+	// testing timer
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	{
+		if (pausetimer == false)
+		{
+			//if the pause timer is false, the clock is running and you want to stop it
+			pausetimer=true;
+			world_seconds.Stop();
+		}
+		else if (pausetimer == true)
+		{
+			//if the pause timer is true, the clock is stop and you want to start it
+			pausetimer = false;
+			world_seconds.Start();
+			
+		}
+	}
+
+	reference_active = change_font_size;
+	
+
+	if (((worldseconds >= 0 && worldseconds <= 1) && worldminutes==0) || ((worldseconds >= 0 && worldseconds <= 1) && worldminutes == 5 ) || (worldseconds >=0 && worldseconds <= 1 && worldminutes == 7) || (worldseconds >= 0 && worldseconds <= 1 && worldminutes == 9) && pausetimer==false)
+	{
+		change_font_size = true;
+		ui_timer->visible = true;
+		
+	
+	}
+	
+	
+	
+	if (ui_timer->visible == true && change_font_size == true && pausetimer ==false)
+	{
+		
+		if (reference_active != change_font_size)
+		{
+			
+			increase_size = true;
+			App->font->font_iterator = App->font->fonts.begin();
+			App->font->size = 17;
+			if ((worldseconds <= 1) && worldminutes==0 )
+			{
+				App->audio->PlayFx(MIN10);
+			}
+			else if ((worldseconds <= 1) && worldminutes == 5)
+			{
+				App->audio->PlayFx(MIN5);
+			}
+			else if ((worldseconds <= 1) && worldminutes == 7)
+			{
+				App->audio->PlayFx(MIN3);
+			} 
+			else if ((worldseconds <= 1)&& worldminutes == 9)
+			{
+				App->audio->PlayFx(MIN1);
+			}
+		}
+
+		if (worldseconds <=15)
+		{
+			if (increase_size == true && App->font->size < 61)
+			{
+				App->font->size++;
+				App->font->actual_font = *App->font->font_iterator;
+				App->font->font_iterator++;
+
+			}
+			else if (increase_size == false && App->font->size > 15)
+			{
+				App->font->size--;
+				App->font->actual_font = *App->font->font_iterator;
+				App->font->font_iterator--;
+
+			}
+
+
+			if (worldseconds >= 10 && increase_size==true)
+			{
+				
+				increase_size = !increase_size;
+				increase_decresease++;
+				if (increase_size == true)
+				{
+					App->font->size = 0;
+				}
+				else if (increase_size == false)
+				{
+					App->font->size = 60;
+				}
+			}
+			else if (worldseconds >= 15 && increase_size == false)
+			{
+				increase_decresease++;
+			}
+			
+
+			 if (increase_decresease>=2 )
+			{
+				change_font_size = false;
+				reference_active = false;
+				increase_size = true;
+				increase_decresease = 0;
+				ui_timer->visible = false;
+			
+				
+			}
+		}
+
+	}
+
+
+
 
 	//----
 	App->map->Draw(dt);
@@ -413,9 +575,42 @@ bool Scene::PostUpdate()
 	list<UI_Element*>::reverse_iterator item = App->player1->UI_elements.rbegin();
 	while (item != App->player1->UI_elements.rend())
 	{
-		if ((*item)->visible == true)
+		// timer 
+		if ((*item) == ui_timer && pausetimer == false) 
 		{
-			if ((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) && (*item)->dragging == false) //hovering
+			if (world_seconds.ReadSec() >= 1)
+			{
+				world_seconds.Start();
+				worldseconds++;
+
+				if (worldseconds >= 60)
+				{
+					worldseconds = 0;
+					worldminutes++;
+				}
+
+				if (size_timer.runningRead() == true && size_timer.ReadSec() >=1)
+				{
+					size_timer_count++;
+					size_timer.Start();
+				}
+
+			}
+
+			sprintf_s(current_time, "TIME: %u:%u",worldminutes, worldseconds);
+			(*item)->label = current_time;
+			break;
+		}
+		//
+		
+		else if ((*item)->visible == true)
+		{
+			
+			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) ||
+				(App->player1->CheckCursorPos(*item) == true && App->player1->gamepad.Controller[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
+      //MERGE BUILDING CONFLICT
+			//if ((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) && (*item)->dragging == false) //hovering
+
 			{
 				(*item)->state = UI_Element::State::HOVER;
 			}
@@ -465,7 +660,11 @@ bool Scene::PostUpdate()
 	{
 		if ((*item)->visible == true)
 		{
-			if ((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) && (*item)->dragging == false) //hovering
+			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) ||
+				(App->player2->CheckCursorPos(*item) == true && App->player2->gamepad.Controller[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
+      // MERGE BUILDING CONFLICT
+			//if ((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) && (*item)->dragging == false) //hovering
+
 			{
 				(*item)->state = UI_Element::State::HOVER;
 			}
@@ -586,6 +785,11 @@ void Scene::SpawnEntities() //
 	//player->Start();
 }
 
+//void Scene::changeSize(float time, int maxsize)
+//{
+//	Timer time
+//}
+
 
 void Scene::SpawnEnemies() //
 {
@@ -604,4 +808,6 @@ void Scene::SpawnEnemies() //
 	//		}
 	//	}
 	//}
+
+
 }

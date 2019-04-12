@@ -53,8 +53,8 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(pathfinding);
-	AddModule(main_menu, false);
-	AddModule(scene);
+	AddModule(main_menu);
+	AddModule(scene, false);
 	AddModule(scenechange);
 	AddModule(entitymanager);
 	AddModule(font);
@@ -255,8 +255,10 @@ void MainApp::FinishUpdate()
 	pos = App->map->WorldToMap(pos.first, pos.second);
 
 	static char title[128];
-	sprintf_s(title, 128, "FPS: %i | Av.FPS: %.2f | MsLastFrame: %02u ms | Last dt: %.5f | FPS_Cap: %i | Vsync: %i | Tile: %i, %i",
-		prev_last_sec_frame_count, avg_fps, last_frame_ms, dt,  fpsCapON, vsyncON, pos.first, pos.second);
+
+	sprintf_s(title, 128, "FPS: %i | Av.FPS: %.2f | MsLastFrame: %02u ms | Last dt: %.5f | FPS_Cap: %i | Vsync: %i | Tile: %i, %i| Time: %u:%u",
+		prev_last_sec_frame_count, avg_fps, last_frame_ms, dt,  fpsCapON, vsyncON,pos.first, pos.second, scene->worldminutes,scene->worldseconds);
+
 	App->win->SetTitle(title);
 }
 

@@ -26,12 +26,12 @@
     </music>
     <fx>
       <folder>audio/fx</folder>
-      <sound>Win.wav</sound>
-      <sound>Dead.wav</sound>
-      <sound>Game_over.wav</sound>
-      <sound>Coin.wav</sound>
-      <sound>Click.wav</sound>
-      <sound>Locked.wav</sound>
+      <sound>10 min.wav</sound>
+      <sound>5 min.wav</sound>
+      <sound>1 min.wav</sound>
+      <sound>timer startwav</sound>
+      <sound>timer stop.wav</sound>
+      <sound>3 min.wav</sound>
     </fx>
   </audio>
 
@@ -318,8 +318,7 @@
   </scene>
 
   <main_menu>
-    <menu_bg file="gui/title_bg.PNG"/>
-    <credits file="gui/credits.png"/>
+    <menu_bg file="gui/mainmenu.png"/>
     <music vol="40" sfx="100"/>
   </main_menu>
 
