@@ -48,23 +48,23 @@ void Map::Draw(float dt)
 
 	list<Tiles>::const_iterator iterator;
 
-	//for (iterator = TileList.begin(); iterator != TileList.end(); ++iterator)
-	//{
+	for (iterator = TileList.begin(); iterator != TileList.end(); ++iterator)
+	{
 
-	//	App->render->Blit((*iterator).texture, (*iterator).x, (*iterator).y, &(*iterator).Tile_rect, SDL_FLIP_NONE);
-	//
-	//}
+		App->render->Blit((*iterator).texture, (*iterator).x, (*iterator).y, &(*iterator).Tile_rect, SDL_FLIP_NONE);
+	
+	}
 
 	//testing image blit
 
-	SDL_Rect r = { 0,0,5040,2436 };
-	pair <int, int> pos;
+	//SDL_Rect r = { 0,0,5040,2436 };
+	//pair <int, int> pos;
 
-	//pos = App->render->ScreenToWorld(App->render->camera.x, App->render->camera.y);
-	pos = WorldToMap(App->render->camera.x, App->render->camera.y);
+	////pos = App->render->ScreenToWorld(App->render->camera.x, App->render->camera.y);
+	//pos = WorldToMap(App->render->camera.x, App->render->camera.y);
 
 
-	App->render->Blit(imagemap, -App->render->camera.x, 0, &r, SDL_FLIP_NONE);
+	//App->render->Blit(imagemap, -App->render->camera.x, 0, &r, SDL_FLIP_NONE);
 	//App->render->Blit(imagemap, 0, 0, &r, SDL_FLIP_NONE);
 
 
@@ -218,9 +218,22 @@ bool Map::CleanUp()
 	// Clean up the pugui tree
 	map_file.reset();
 
+
 	// Remove all layers
-	/*list<Tiles>::iterator item3 = TileList.begin();
-	item3.clear();*/
+	list<Tiles>::iterator item3 = TileList.begin();
+	while (item3 != TileList.end())
+	{
+		if ((*item)->texture != nullptr)
+		{
+			(*item)->texture = nullptr;
+		}
+		item3++;
+		//delete *item3;
+
+	}
+	TileList.clear();
+
+	
 
 	return true;
 }
@@ -697,6 +710,7 @@ void Map::LoadTileList()
 							{*/
 							//App->render->Blit(tileset->texture, pos.first, pos.second, &r, SDL_FLIP_NONE);
 							Tiles Tile;
+
 							Tile.texture = tileset->texture;
 							Tile.Tile_rect = r;
 							Tile.x = pos.first;
