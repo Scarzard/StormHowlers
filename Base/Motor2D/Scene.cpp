@@ -606,8 +606,8 @@ bool Scene::PostUpdate()
 		else if ((*item)->visible == true)
 		{
 			
-			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) ||
-				(App->player1->CheckCursorPos(*item) == true && App->player1->gamepad.Controller[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
+			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) 
+				/*||(App->player1->CheckCursorPos(*item) == true*/ && App->player1->gamepad.Controller[BUTTON_A] != KEY_REPEAT) && (*item)->dragging == false) //hovering
       //MERGE BUILDING CONFLICT
 			//if ((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) && (*item)->dragging == false) //hovering
 
@@ -660,8 +660,8 @@ bool Scene::PostUpdate()
 	{
 		if ((*item)->visible == true)
 		{
-			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) ||
-				(App->player2->CheckCursorPos(*item) == true && App->player2->gamepad.Controller[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
+			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) 
+				/*||(App->player2->CheckCursorPos(*item) == true */&& App->player2->gamepad.Controller[BUTTON_A] != KEY_REPEAT) && (*item)->dragging == false) //hovering
       // MERGE BUILDING CONFLICT
 			//if ((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) && (*item)->dragging == false) //hovering
 

@@ -254,9 +254,9 @@ void MainApp::FinishUpdate()
 	App->input->GetMousePosition(pos.first, pos.second);
 	pos = App->map->WorldToMap(pos.first, pos.second);
 
-	static char title[128];
+	static char title[256];
 
-	sprintf_s(title, 128, "FPS: %i | Av.FPS: %.2f | MsLastFrame: %02u ms | Last dt: %.5f | FPS_Cap: %i | Vsync: %i | Tile: %i, %i| Time: %u:%u",
+	sprintf_s(title, 256, "FPS: %i | Av.FPS: %.2f | MsLastFrame: %02u ms | Last dt: %.5f | FPS_Cap: %i | Vsync: %i | Tile: %i, %i| Time: %u:%u",
 		prev_last_sec_frame_count, avg_fps, last_frame_ms, dt,  fpsCapON, vsyncON,pos.first, pos.second, scene->worldminutes,scene->worldseconds);
 
 	App->win->SetTitle(title);
