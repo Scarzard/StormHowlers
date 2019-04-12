@@ -48,21 +48,23 @@ void Map::Draw(float dt)
 
 	list<Tiles>::const_iterator iterator;
 
-	for (iterator = TileList.begin(); iterator != TileList.end(); ++iterator)
-	{
+	//for (iterator = TileList.begin(); iterator != TileList.end(); ++iterator)
+	//{
 
-		App->render->Blit((*iterator).texture, (*iterator).x, (*iterator).y, &(*iterator).Tile_rect, SDL_FLIP_NONE);
-	
-	}
+	//	App->render->Blit((*iterator).texture, (*iterator).x, (*iterator).y, &(*iterator).Tile_rect, SDL_FLIP_NONE);
+	//
+	//}
 
 	//testing image blit
 
-	/*SDL_Rect r = { 0,0,4478,2164 };
+	SDL_Rect r = { 0,0,5040,2436 };
 	pair <int, int> pos;
 
+	//pos = App->render->ScreenToWorld(App->render->camera.x, App->render->camera.y);
 	pos = WorldToMap(App->render->camera.x, App->render->camera.y);
 
-	App->render->Blit(imagemap, pos.first,pos.second, &r, SDL_FLIP_NONE);*/
+
+	App->render->Blit(imagemap, -App->render->camera.x, 0, &r, SDL_FLIP_NONE);
 	//App->render->Blit(imagemap, 0, 0, &r, SDL_FLIP_NONE);
 
 
