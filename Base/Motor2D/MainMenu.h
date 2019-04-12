@@ -33,20 +33,28 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void UpdateVisibility(PlayerUI player);
+	void DoLogic(UI_Element* data);
+
+
 public:
 	string menu_bg_file_name;
-	string credits_file_name;
 
 	UI_Element* menu_background;
-
-	UI_Element* continue_button;
-	UI_Element* continue_text;
 
 	UI_Element* new_game_button;
 	UI_Element* new_game_text;
 
+	UI_Element* continue_button;
+	UI_Element* continue_text;
+
+	UI_Element* exit_button;
+	UI_Element* exit_text;
+
 	string current_track;
 	string current_fx;
+private:
+	bool close_app = true;
 };
 
 #endif // __j1MAIN_MENU_H__

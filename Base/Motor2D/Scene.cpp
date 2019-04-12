@@ -16,6 +16,8 @@
 #include "UI_Element.h"
 #include "Player.h"
 #include "Audio.h"
+#include "Building.h"
+#include "Troop.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -72,30 +74,44 @@ bool Scene::Start()
 		App->pathfinding->SetMap(w, h, Wmap);
 		LOG("Create walkability map");
 	}
-	debug_tex = App->tex->Load("maps/pathfinding.png");
 
 	//animation testing
 	if (spritesheet123 == nullptr)
 		spritesheet123 = App->tex->Load("textures/prueba.png");
 
-	//--------- CREATE MAIN BUILDINGS -------------// (falta cambiar posicion)
+	//--------- INIT BUILD ZONE LIMITS ------------- (falta cambiar con valores de las build Zones
+	App->player1->x_limits = { 10,20 };
+	App->player1->y_limits = { -1,20 };
 
+	App->player2->x_limits = { 30,50 };
+	App->player2->y_limits = { 30,50 };
+
+
+	//--------- CREATE MAIN BUILDINGS -------------// (falta cambiar posicion)
 	//--- PLAYER 1
-	App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 50,50 });
+	/*App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 50,50 });
 	App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, { 50,50 });
 	App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, { 50,50 });
 	App->entitymanager->AddEntity(true, Entity::entityType::WALLS, { 50,50 });
+	App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, { 50,50 });
 
-	//--- PLAYER 1
+	//--- PLAYER 2
 	App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, { 50,50 });
 	App->entitymanager->AddEntity(false, Entity::entityType::MAIN_DEFENSE, { 50,50 });
 	App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, { 50,50 });
 	App->entitymanager->AddEntity(false, Entity::entityType::WALLS, { 50,50 });
+	App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 5000,50 });
+	App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 350,400 });*/
 
+	string track = App->audio->folder_music + "/Test.ogg"; 
+	App->audio->PlayMusic(track.c_str()); 
 
 	//--------- CREATE GUI -----------//  (Falta poner position y size)
+	ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { App->win->width / 2 - 80 ,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
+	ui_timer->color = { 250,250,250,250 };
 
-	//--- PLAYER 1
+	//--------- CREATE GUI -----------//  (Falta poner position y size)
+	//--- PLAYER 1 -----
 	//App->player1->Health_UI = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
 	//App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
 	App->player1->Main_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, true);
@@ -128,16 +144,56 @@ bool Scene::Start()
 	//App->player1->General_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
 	//App->player1->Upgrade_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_UPGRADE, { x,y }, { w,h }, App->player1->General_UI, false);
 	//App->player1->Repair_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_REPAIR, { x,y }, { w,h }, App->player1->General_UI, false);
+
+	//--------- CREATE GUI ----------  //(Falta poner position y size)
+	
+	//--- PLAYER 1
+	//P1.Health_UI = App->gui->AddUIElement(UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
+	//P1.Gold_UI = App->gui->AddUIElement(UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
+	App->player1->Main_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, true);
+	App->player1->Main_UI->rect = { 0,79,166,79 };
+	App->player1->Build_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::CONTINUE, { 13,2 }, { 39,40 }, App->player1->Main_UI, true);
+	App->player1->Deploy_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 64,2 }, { 39,40 }, App->player1->Main_UI, true);
+	App->player1->Cast_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 115,2 }, { 39,40 }, App->player1->Main_UI, true);
+
+	App->player1->Build_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, false);
+	App->player1->Build_UI->rect = { 166,79,166,79 };
+	//P1.Def_AOE_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { x,y }, { 39,40 } , P1.Build_UI, false);
+	//P1.Def_Target_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { x,y }, { 39,40 }, P1.Build_UI, false);
+	//P1.Mines_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { x,y }, { 39,40 }, P1.Build_UI, false);
+	//P1.Barracks_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { x,y }, { 39,40 }, P1.Build_UI, false);
+
+	App->player1->Deploy_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, false);
+	App->player1->Deploy_UI->rect = { 166,79,166,79 };
+	//P1.Soldier_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_SOLDIER, { x,y }, { 39,40 }, P1.Deploy_UI, false);
+	//P1.Tankman_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_TANKMAN, { x,y }, { 39,40 }, P1.Deploy_UI, false);
+	//P1.Infiltrator_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { x,y }, { 39,40 }, P1.Deploy_UI, false);
+	//P1.Engineer_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_ENGINEER, { x,y }, { 39,40 }, P1.Deploy_UI, false);
+	//P1.War_hound_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { x,y }, { 39,40 }, P1.Deploy_UI, false);
+
+	App->player1->Cast_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 166,79 }, nullptr, false);
+	App->player1->Cast_UI->rect = { 166,79,166,79 };
+	//P1.Missiles_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_MISSILES, { x,y }, { 39,40 }, player.Cast_UI, false);
+	//P1.Cast2_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_2, { x,y }, { 39,40 }, P1.Cast_UI, false);
+	//P1.Cast3_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_3, { x,y }, { 39,40 }, P1.Cast_UI, false);
+
+	//P1.General_UI = App->gui->AddUIElement(UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
+	//P1.Upgrade_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_UPGRADE, { x,y }, { w,h }, P1.General_UI, false);
+	//P1.Repair_icon = App->gui->AddUIElement(UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_REPAIR, { x,y }, { w,h }, P1.General_UI, false);
+
 	////falta poner los pointer a los datos del edificio seleccionado (ahora esta como "data") 
 	//App->player1->Name_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 	//App->player1->Level_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 	//App->player1->Health_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
+	//App->player1->UpgradeCost_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
+	//App->player1->RepairCost_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 	//App->player1->Damage_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 	//App->player1->Prod_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 	//App->player1->Capacity_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 
 
-	//--- PLAYER 2
+
+	//--- PLAYER 2 -----
 	//App->player2->Health_UI = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
 	//App->player2->Gold_UI = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
 	App->player2->Main_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 166,App->win->height - 79 }, { 166,79 }, nullptr, true);
@@ -174,39 +230,37 @@ bool Scene::Start()
 	//App->player2->Name_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
 	//App->player2->Level_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
 	//App->player2->Health_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
+	//App->player2->UpgradeCost_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
+	//App->player2->RepairCost_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 	//App->player2->Damage_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, player.General_UI, false, { false, false }, "data");
 	//App->player2->Prod_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
 	//App->player2->Capacity_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
 
 	// --- CURSORS
-	//Cursor player 1 ------------
-	if (App->player1->gamepad.Connected == true)
-	{
-		App->player1->cursor.position.first = 300;
-		App->player1->cursor.position.second = 300;
-		App->player1->cursor.area.x = App->player1->cursor.area.y = 0;
-		App->player1->cursor.area.w = App->player1->cursor.area.h = 25;
-	}
-	else
-		LOG("...Player1 GamePad Not Connected");
+	App->player1->currentTile.first = 300;
+	App->player1->currentTile.second = 300;
 
-	//Cursor player 2 ------------
-	if (App->player2->gamepad.Connected == true)
-	{
-		App->player2->cursor.position.first = 500;
-		App->player2->cursor.position.second = 300;
-		App->player2->cursor.area.x = 27;
-		App->player2->cursor.area.y = 0;
-		App->player2->cursor.area.w = App->player2->cursor.area.h = 25;
-	}
-	else
-		LOG("...Player2 GamePad Not Connected");
+	App->player2->currentTile.first = 500;
+	App->player2->currentTile.second = 300;
+
+	if (App->player1->gamepad.Connected == false)
+		LOG("---Player 1 Gamepad not Connected");
+
+	if (App->player2->gamepad.Connected == false)
+		LOG("---Player 2 Gamepad not Connected");
 
 	if (cursor_tex == nullptr)
 		cursor_tex = App->tex->Load("textures/Cursors.png");
 
 	//-----------
 	SpawnEntities();
+
+	App->font->font_iterator = App->font->fonts.begin();
+	// timer start
+	world_clock.Start();
+	world_seconds.Start();
+	size_timer.Start();
+
 
 	return true;
 }
@@ -215,6 +269,29 @@ bool Scene::Start()
 bool Scene::PreUpdate()
 {
 	BROFILER_CATEGORY("Scene PreUpdate", Profiler::Color::DarkOrange);
+
+	// Gold Player 1 ------------
+	list<Building*>::iterator item = App->player1->buildings.begin();
+	for (item; item != App->player1->buildings.end(); ++item)
+	{
+		if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
+		{
+			App->player1->gold += (*item)->production;
+		}
+	}
+
+	// Gold Player 2 -----------
+	item = App->player2->buildings.begin();
+	for (item; item != App->player2->buildings.end(); ++item)
+	{
+		if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
+		{
+			App->player2->gold += (*item)->production;
+		}
+	}
+	//----
+
+
 	return true;
 }
 
@@ -222,6 +299,8 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	BROFILER_CATEGORY("Scene Update", Profiler::Color::DarkOrange);
+	int x, y;
+	App->input->GetMousePosition(x, y);
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || App->player1->gamepad.Controller[BUTTON_B] == KEY_DOWN) //return to main_ui player1 
 	{
@@ -235,11 +314,99 @@ bool Scene::Update(float dt)
 		App->player2->UpdateVisibility();
 		App->player2->isBuilding = false;
 	}
-	//else if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) //Start from second level
-	//{
-	//	Load_level(1);
-	//	currentMap = 1;
-	//}
+	
+	// Player 1 -> number / Player2 -> letter
+	else if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) 
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::MAIN_DEFENSE, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::BARRACKS, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::BARRACKS, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_AOE, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_AOE, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_TARGET, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::MINES, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::MINES, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::SOLDIER, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(true, Entity::entityType::WALLS, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		App->entitymanager->AddEntity(false, Entity::entityType::WALLS, { x,y });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) //Movecamera Up
+	{
+		App->render->camera.y -= 10;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) //Movecamera Down
+	{
+		App->render->camera.y += 10;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) //Movecamera Left
+	{
+		App->render->camera.x += 10;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) //Movecamera Right
+	{
+		App->render->camera.x -= 10;
+	}
+
+	
+	
 	//else if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) //Go to main menu
 	//{
 	//	App->scenechange->SwitchScene(App->main_menu, App->scene);
@@ -270,10 +437,122 @@ bool Scene::Update(float dt)
 	//	App->fpsCapON = !App->fpsCapON;
 	//}
 
+	// testing timer
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	{
+		if (pausetimer == false)
+		{
+			//if the pause timer is false, the clock is running and you want to stop it
+			pausetimer=true;
+			world_seconds.Stop();
+		}
+		else if (pausetimer == true)
+		{
+			//if the pause timer is true, the clock is stop and you want to start it
+			pausetimer = false;
+			world_seconds.Start();
+			
+		}
+	}
+
+	reference_active = change_font_size;
+	
+
+	if (((worldseconds >= 0 && worldseconds <= 1) && worldminutes==0) || ((worldseconds >= 0 && worldseconds <= 1) && worldminutes == 5 ) || (worldseconds >=0 && worldseconds <= 1 && worldminutes == 7) || (worldseconds >= 0 && worldseconds <= 1 && worldminutes == 9) && pausetimer==false)
+	{
+		change_font_size = true;
+		ui_timer->visible = true;
+		
+	
+	}
+	
+	
+	
+	if (ui_timer->visible == true && change_font_size == true && pausetimer ==false)
+	{
+		
+		if (reference_active != change_font_size)
+		{
+			
+			increase_size = true;
+			App->font->font_iterator = App->font->fonts.begin();
+			App->font->size = 17;
+			if ((worldseconds <= 1) && worldminutes==0 )
+			{
+				App->audio->PlayFx(MIN10);
+			}
+			else if ((worldseconds <= 1) && worldminutes == 5)
+			{
+				App->audio->PlayFx(MIN5);
+			}
+			else if ((worldseconds <= 1) && worldminutes == 7)
+			{
+				App->audio->PlayFx(MIN3);
+			} 
+			else if ((worldseconds <= 1)&& worldminutes == 9)
+			{
+				App->audio->PlayFx(MIN1);
+			}
+		}
+
+		if (worldseconds <=15)
+		{
+			if (increase_size == true && App->font->size < 61)
+			{
+				App->font->size++;
+				App->font->actual_font = *App->font->font_iterator;
+				App->font->font_iterator++;
+
+			}
+			else if (increase_size == false && App->font->size > 15)
+			{
+				App->font->size--;
+				App->font->actual_font = *App->font->font_iterator;
+				App->font->font_iterator--;
+
+			}
+
+
+			if (worldseconds >= 10 && increase_size==true)
+			{
+				
+				increase_size = !increase_size;
+				increase_decresease++;
+				if (increase_size == true)
+				{
+					App->font->size = 0;
+				}
+				else if (increase_size == false)
+				{
+					App->font->size = 60;
+				}
+			}
+			else if (worldseconds >= 15 && increase_size == false)
+			{
+				increase_decresease++;
+			}
+			
+
+			 if (increase_decresease>=2 )
+			{
+				change_font_size = false;
+				reference_active = false;
+				increase_size = true;
+				increase_decresease = 0;
+				ui_timer->visible = false;
+			
+				
+			}
+		}
+
+	}
+
+
+
 
 	//----
 	App->map->Draw(dt);
-	//App->entitymanager->Draw(dt);
+	App->entitymanager->Draw(dt);
 	App->gui->Draw();
 
 	return true;
@@ -296,15 +575,46 @@ bool Scene::PostUpdate()
 	list<UI_Element*>::reverse_iterator item = App->player1->UI_elements.rbegin();
 	while (item != App->player1->UI_elements.rend())
 	{
-		if ((*item)->visible == true)
+		// timer 
+		if ((*item) == ui_timer && pausetimer == false) 
 		{
-			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) ||
-				(App->player1->CheckCursorPos(*item) == true && App->player1->gamepad.Controller[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
+			if (world_seconds.ReadSec() >= 1)
+			{
+				world_seconds.Start();
+				worldseconds++;
+
+				if (worldseconds >= 60)
+				{
+					worldseconds = 0;
+					worldminutes++;
+				}
+
+				if (size_timer.runningRead() == true && size_timer.ReadSec() >=1)
+				{
+					size_timer_count++;
+					size_timer.Start();
+				}
+
+			}
+
+			sprintf_s(current_time, "TIME: %u:%u",worldminutes, worldseconds);
+			(*item)->label = current_time;
+			break;
+		}
+		//
+		
+		else if ((*item)->visible == true)
+		{
+			
+			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) 
+				/*||(App->player1->CheckCursorPos(*item) == true*/ && App->player1->gamepad.Controller[BUTTON_A] != KEY_REPEAT) && (*item)->dragging == false) //hovering
+      //MERGE BUILDING CONFLICT
+			//if ((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) && (*item)->dragging == false) //hovering
+
 			{
 				(*item)->state = UI_Element::State::HOVER;
 			}
-			if (((App->gui->CheckClick(*item) == true && App->gui->CheckMousePos(*item) == true) ||
-				(App->player1->CheckCursorClick(*item) == true && App->player1->CheckCursorPos(*item) == true)) && (*item)->state == UI_Element::State::HOVER) //on-click
+			if ((App->gui->CheckClick(*item) == true && App->gui->CheckMousePos(*item) == true) && (*item)->state == UI_Element::State::HOVER) //on-click
 			{
 				if ((*item)->dragable.x == false && (*item)->dragable.y == false) //if not dragable
 				{
@@ -335,7 +645,7 @@ bool Scene::PostUpdate()
 					//	(*item)->globalpos.first = limit;
 				}
 			}
-			else if (App->gui->CheckMousePos(*item) == false && App->player1->CheckCursorPos(*item) == false && (*item)->state != UI_Element::State::DRAG) //change to idle
+			else if (App->gui->CheckMousePos(*item) == false && (*item)->state != UI_Element::State::DRAG) //change to idle
 			{
 				(*item)->state = UI_Element::State::IDLE;
 			}
@@ -350,13 +660,15 @@ bool Scene::PostUpdate()
 	{
 		if ((*item)->visible == true)
 		{
-			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) ||
-				(App->player2->CheckCursorPos(*item) == true && App->player2->gamepad.Controller[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
+			if (((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) 
+				/*||(App->player2->CheckCursorPos(*item) == true */&& App->player2->gamepad.Controller[BUTTON_A] != KEY_REPEAT) && (*item)->dragging == false) //hovering
+      // MERGE BUILDING CONFLICT
+			//if ((App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT) && (*item)->dragging == false) //hovering
+
 			{
 				(*item)->state = UI_Element::State::HOVER;
 			}
-			if (((App->gui->CheckClick(*item) == true && App->gui->CheckMousePos(*item) == true) ||
-				(App->player2->CheckCursorClick(*item) == true && App->player2->CheckCursorPos(*item) == true)) && (*item)->state == UI_Element::State::HOVER) //on-click
+			if ((App->gui->CheckClick(*item) == true && App->gui->CheckMousePos(*item) == true) && (*item)->state == UI_Element::State::HOVER) //on-click
 			{
 				if ((*item)->dragable.x == false && (*item)->dragable.y == false) //if not dragable
 				{
@@ -387,7 +699,7 @@ bool Scene::PostUpdate()
 					//	(*item)->globalpos.first = limit;
 				}
 			}
-			else if (App->gui->CheckMousePos(*item) == false && App->player2->CheckCursorPos(*item) == false && (*item)->state != UI_Element::State::DRAG) //change to idle
+			else if (App->gui->CheckMousePos(*item) == false && (*item)->state != UI_Element::State::DRAG) //change to idle
 			{
 				(*item)->state = UI_Element::State::IDLE;
 			}
@@ -397,12 +709,6 @@ bool Scene::PostUpdate()
 	}
 	App->gui->UpdateChildren();
 
-	//--- Draw Cursors
-	if (App->player1->gamepad.Connected == true)
-		App->render->Blit(cursor_tex, App->player1->cursor.position.first, App->player1->cursor.position.second, &App->player1->cursor.area);
-
-	if (App->player2->gamepad.Connected == true)
-		App->render->Blit(cursor_tex, App->player2->cursor.position.first, App->player2->cursor.position.second, &App->player2->cursor.area);
 
 	//--- Change map with fade
 	if (to_end == true && App->scenechange->IsChanging() == false)
@@ -427,10 +733,7 @@ bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
-	App->tex->UnLoad(debug_tex);
 	App->tex->UnLoad(cursor_tex);
-
-	debug_tex = nullptr;
 	cursor_tex = nullptr;
 
 	RELEASE_ARRAY(Wmap);
@@ -482,6 +785,11 @@ void Scene::SpawnEntities() //
 	//player->Start();
 }
 
+//void Scene::changeSize(float time, int maxsize)
+//{
+//	Timer time
+//}
+
 
 void Scene::SpawnEnemies() //
 {
@@ -500,4 +808,6 @@ void Scene::SpawnEnemies() //
 	//		}
 	//	}
 	//}
+
+
 }

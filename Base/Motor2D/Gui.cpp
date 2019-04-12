@@ -12,6 +12,7 @@
 #include "SimpleUI.h"
 #include "OtherUI.h"
 #include "Scene.h"
+#include "MainMenu.h"
 
 Gui::Gui() : Module()
 {
@@ -37,6 +38,9 @@ bool Gui::Awake(pugi::xml_node& conf)
 bool Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.data());
+	App->main_menu->menu_background->texture = App->tex->Load(App->main_menu->menu_bg_file_name.data());
+	App->main_menu->menu_background->rect = { 0, 0,  App->win->width, App->win->height };
+
 	return true;
 }
 
@@ -95,6 +99,10 @@ UI_Element* Gui::AddUIElement(bool player1, UI_Element::UI_type type, UI_Element
 	case UI_Element::UI_type::WINDOW:
 		UI_elem = new OtherUI(type, action, pos, size, parent, visible, dragable);
 		break;
+
+	case UI_Element::UI_type::MAIN_MENU_BG:
+		UI_elem = new OtherUI(type, action, pos, size, parent, visible, dragable);
+		break;
 	}
 
 	if (UI_elem && player1 == true)
@@ -116,13 +124,25 @@ bool Gui::Draw()
 	{
 		if ((*UI_elem)->visible == true)
 		{
-			if ((*UI_elem)->type == UI_Element::UI_type::LABEL) //text
+			if ((*UI_elem)->type == UI_Element::UI_type::LABEL && (*UI_elem)==App->scene->ui_timer) //timer
+			{
+				App->tex->UnLoad((*UI_elem)->texture);
+				(*UI_elem)->texture = App->font->Print((*UI_elem)->label, (*UI_elem)->color,App->font->actual_font);
+				App->font->CalcSize((*UI_elem)->label, (*UI_elem)->size.first, (*UI_elem)->size.second);
+
+				App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
+			}
+			else if ((*UI_elem)->type == UI_Element::UI_type::LABEL) //text
 			{
 				App->tex->UnLoad((*UI_elem)->texture);
 				(*UI_elem)->texture = App->font->Print((*UI_elem)->label, (*UI_elem)->color);
 				App->font->CalcSize((*UI_elem)->label, (*UI_elem)->size.first, (*UI_elem)->size.second);
 
 				App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
+			}
+			else if ((*UI_elem)->type == UI_Element::UI_type::MAIN_MENU_BG) //text
+			{
+				App->render->Blit(App->main_menu->menu_background->texture, 0, 0, &App->main_menu->menu_background->rect, SDL_FLIP_NONE, 0);
 			}
 			else //rest of ui
 			{
@@ -267,6 +287,14 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 
 		case UI_Element::Action::ACT_BUILD_AOE:
 			data->rect = { 332,0,39,40 };
+
+			//-----Needs to be changed
+		case UI_Element::Action::NEW_GAME:
+			data->rect = { 410,0,39,40 };
+			break;
+			//change values
+		case UI_Element::Action::EXIT:
+			data->rect = { 371,0,39,40 };
 			break;
 		}
 		break;
@@ -288,6 +316,15 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 
 		case UI_Element::Action::ACT_BUILD_AOE:
 			data->rect = { 449,0,39,40 };
+        
+			//-----Needs to be changed
+		case UI_Element::Action::NEW_GAME:
+			data->rect = { 527,0,39,40 };
+			break;
+			//change values
+		case UI_Element::Action::EXIT:
+			data->rect = { 488,0,39,40 };
+
 			break;
 		}
 		break;
@@ -309,6 +346,13 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 
 		case UI_Element::Action::ACT_BUILD_AOE:
 			data->rect = { 449,80,39,40 };
+
+			//-----Needs to be changed
+		case UI_Element::Action::NEW_GAME:
+			data->rect = { 527,80,39,40 };
+			break;
+		case UI_Element::Action::EXIT:
+			data->rect = { 488,80,39,40 };
 			break;
 		}
 		break;
@@ -326,6 +370,13 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 
 		case UI_Element::Action::ACT_GOTO_CAST:
 			data->rect = { 410,80,39,40 };
+			break;
+			//-----Needs to be changed
+		case UI_Element::Action::NEW_GAME:
+			data->rect = { 410,80,39,40 };
+			break;
+		case UI_Element::Action::EXIT:
+			data->rect = { 332,80,39,40 };
 			break;
 		}
 		break;

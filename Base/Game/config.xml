@@ -26,12 +26,12 @@
     </music>
     <fx>
       <folder>audio/fx</folder>
-      <sound>Win.wav</sound>
-      <sound>Dead.wav</sound>
-      <sound>Game_over.wav</sound>
-      <sound>Coin.wav</sound>
-      <sound>Click.wav</sound>
-      <sound>Locked.wav</sound>
+      <sound>10 min.wav</sound>
+      <sound>5 min.wav</sound>
+      <sound>1 min.wav</sound>
+      <sound>timer startwav</sound>
+      <sound>timer stop.wav</sound>
+      <sound>3 min.wav</sound>
     </fx>
   </audio>
 
@@ -53,65 +53,129 @@
   
     <buildings>
       <townhall>
-        <name string="townhall"/>
+        <name string="townhall"/><!-- TO DELETE -->
         <health lvl1="5000" lvl2="6000" lvl3="7500"/>
-        <size width="10" height="10"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <damage lvl1="-1" lvl2="-3" lvl3="-5"/>      <!-- HEALS -->
+        <size width="250" height="250"/>
+        <capacity lvl1="1000" lvl2="1500" lvl3="2000"/>
         <production lvl1="1000" lvl2="1500" lvl3="2000"/>
+        <attack rate="0" targets="0" range="50"/><!-- in seconds -->
       </townhall>
     
       <main_defense>
-        <name string="main_defense"/>
+        <name string="main_defense"/>  <!-- TO DELETE -->
         <health lvl1="500" lvl2="600" lvl3="750"/>
-        <size width="10" height="10"/>
-        <damage lvl1="300" lvl2="400" lvl3="500"/>
-        <range value="50"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <damage lvl1="300" lvl2="400" lvl3="550"/>
+        <size width="100" height="100"/>
+        <attack rate="1" targets="5" range="170"/>
       </main_defense>
 
       <command_center>
-        <name string="command_center"/>
+        <name string="command_center"/>     <!-- TO DELETE -->...
         <health lvl1="1000" lvl2="1500" lvl3="2000"/>
-        <size width="211" height="213"/>
-        <damage_missiles lvl1="1000" lvl2="1200" lvl3="1500"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <damage lvl1="1000" lvl2="1200" lvl3="1500"/>
         <damage_cast2 lvl1="1000" lvl2="1200" lvl3="1500"/>
         <damage_cast3 lvl1="1000" lvl2="1200" lvl3="1500"/>
+        <size width="200" height="200"/>
+        <capacity lvl1="1000" lvl2="1500" lvl3="2000"/>
+        <production lvl1="1000" lvl2="1500" lvl3="2000"/>
       </command_center>
 
       <walls>
         <name string="walls"/>
         <health value="100"/>
-        <size width="10" height="10"/>
+        <upgrade_cost ToLvl2="50" ToLvl3="30"/>
+        <size width="50" height="50"/>
       </walls>
 
+      <defense_target>
+        <name string="defense_target"/>
+        <health lvl1="100" lvl2="120" lvl3="150"/>
+        <size width="100" height="100"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <damage lvl1="15" lvl2="150" lvl3="200"/>
+        <attack rate="1" targets="1" range="150"/>
+      </defense_target>
+
+      <defense_aoe>
+        <name string="defense_aoe"/>
+        <health lvl1="100" lvl2="120" lvl3="150"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <size width="100" height="100"/>
+        <damage lvl1="100" lvl2="150" lvl3="200"/>
+        <attack rate="1" targets="5" range="50"/>
+      </defense_aoe>
+      
       <barracks>
         <name string="barracks"/>
         <health lvl1="500" lvl2="600" lvl3="750"/>
-        <size width="10" height="10"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <size width="350" height="350"/>
         <capacity lvl1="100" lvl2="150" lvl3="200"/>
+        <production lvl1="1000" lvl2="1500" lvl3="2000"/>
       </barracks>
    
       <mine>
         <name string="mine"/>
         <health lvl1="500" lvl2="600" lvl3="750"/>
-        <size width="187" height="142"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <size width="75" height="75"/>
+        <capacity lvl1="100" lvl2="150" lvl3="200"/>
         <production lvl1="1000" lvl2="1500" lvl3="2000"/>
       </mine>
- 
-      <defense_aoe>
-        <name string="defense_aoe"/>
-        <health lvl1="100" lvl2="120" lvl3="150"/>
-        <size width="106" height="92"/>
-        <damage lvl1="100" lvl2="150" lvl3="200"/>
-        <range value="50"/>
-      </defense_aoe>
-   
-      <defense_target>
-        <name string="defense_target"/>
-        <health lvl1="100" lvl2="120" lvl3="150"/>
-        <size width="82" height="84"/>
-        <damage lvl1="100" lvl2="150" lvl3="200"/>
-        <range value="75"/>
-      </defense_target>
+      
     </buildings>
+
+    <troops>
+      <soldier>
+        <name string="soldier"/>
+        <health lvl1="120" lvl2="130" lvl3="150"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <size width="35" height="35"/>
+        <damage lvl1="100" lvl2="150" lvl3="200"/>
+        <attack rate="1" targets="1" range="50"/>
+        <speed value="10"/>
+      </soldier>
+      <tankman>
+        <name string="tankman"/>
+        <health lvl1="100" lvl2="120" lvl3="150"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <size width="35" height="35"/>
+        <damage lvl1="100" lvl2="150" lvl3="200"/>
+        <attack rate="1" targets="1" range="50"/>
+        <speed value="10"/>
+      </tankman>
+      <infiltrator>
+        <name string="infiltrator"/>
+        <health lvl1="100" lvl2="120" lvl3="150"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <size width="35" height="35"/>
+        <damage lvl1="100" lvl2="150" lvl3="200"/>
+        <attack rate="1" targets="1" range="50"/>
+        <speed value="10"/>
+      </infiltrator>
+      <engineer>
+        <name string="engineer"/>
+        <health lvl1="100" lvl2="120" lvl3="150"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <size width="35" height="35"/>
+        <damage lvl1="100" lvl2="150" lvl3="200"/>
+        <attack rate="1" targets="1" range="50"/>
+        <speed value="10"/>
+      </engineer>
+      <war_hound>
+        <name string="war_hound"/>
+        <health lvl1="100" lvl2="120" lvl3="150"/>
+        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <size width="35" height="35"/>
+        <damage lvl1="100" lvl2="150" lvl3="200"/>
+        <attack rate="1" targets="1" range="50"/>
+        <speed value="10"/>
+      </war_hound>
+    </troops>
   </entitymanager>
   
   <buildings_animations>
@@ -254,8 +318,7 @@
   </scene>
 
   <main_menu>
-    <menu_bg file="gui/title_bg.PNG"/>
-    <credits file="gui/credits.png"/>
+    <menu_bg file="gui/mainmenu.png"/>
     <music vol="40" sfx="100"/>
   </main_menu>
 

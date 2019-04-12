@@ -77,7 +77,7 @@ bool Transitions::Update(float dt)
 				to_disable->Disable();
 				App->gui->CleanUp();
 				App->map->CleanUp();
-				App->entitymanager->DeleteEntities();
+				App->entitymanager->DeleteAllEntities();
 				if (to_disable == App->scene)
 				{
 					App->entitymanager->Disable();
