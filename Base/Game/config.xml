@@ -5,16 +5,16 @@
     <title>Game Development Testbed</title>
     <organization>UPC</organization>
   </app>
-	
+
   <renderer>
     <vsync value="false"/>
   </renderer>
 
   <window>
-    <resolution width="1920" height="1080" scale="1"/>
+    <resolution width="1680" height="1050" scale="1"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
-    <resizable value="false"/>
+    <resizable value="true"/>
     <fullscreen_window value="false"/>
   </window>
 
@@ -50,7 +50,7 @@
   <entitymanager>
     <folder>textures/</folder>
     <sprite_sheet source="Entities.png"/>
-  
+
     <buildings>
       <townhall>
         <name string="townhall"/>
@@ -58,7 +58,7 @@
         <size width="10" height="10"/>
         <production lvl1="1000" lvl2="1500" lvl3="2000"/>
       </townhall>
-    
+
       <main_defense>
         <name string="main_defense"/>
         <health lvl1="500" lvl2="600" lvl3="750"/>
@@ -88,14 +88,14 @@
         <size width="10" height="10"/>
         <capacity lvl1="100" lvl2="150" lvl3="200"/>
       </barracks>
-   
+
       <mine>
         <name string="mine"/>
         <health lvl1="500" lvl2="600" lvl3="750"/>
         <size width="187" height="142"/>
         <production lvl1="1000" lvl2="1500" lvl3="2000"/>
       </mine>
- 
+
       <defense_aoe>
         <name string="defense_aoe"/>
         <health lvl1="100" lvl2="120" lvl3="150"/>
@@ -103,7 +103,7 @@
         <damage lvl1="100" lvl2="150" lvl3="200"/>
         <range value="50"/>
       </defense_aoe>
-   
+
       <defense_target>
         <name string="defense_target"/>
         <health lvl1="100" lvl2="120" lvl3="150"/>
@@ -113,7 +113,7 @@
       </defense_target>
     </buildings>
   </entitymanager>
-  
+
   <buildings_animations>
     <command_center x="132" y="135"  width="211" height="213"/>
     <command_center x="478" y="135"  width="211" height="213"/>
@@ -140,7 +140,7 @@
     <command_center x="132" y="3435" width="211" height="213"/>
     <command_center x="478" y="3435" width="211" height="213"/>
     <command_center x="132" y="3735" width="211" height="213"/>
-    
+
     <gold_mine x="874"  y="1131" width="187" height="142"/>
     <gold_mine x="1082" y="1131" width="187" height="142"/>
     <gold_mine x="1290" y="1131" width="187" height="142"/>
@@ -248,8 +248,8 @@
   </buildings_animations>
 
   <scene>
-    <map_name name="map2.tmx"></map_name>
-    
+    <map_name name="map3.tmx"></map_name>
+
     <fade_time value="1"/>
   </scene>
 
@@ -259,4 +259,4 @@
     <music vol="40" sfx="100"/>
   </main_menu>
 
-  </config>
+</config>
