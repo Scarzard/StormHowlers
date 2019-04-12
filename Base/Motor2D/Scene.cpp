@@ -80,7 +80,7 @@ bool Scene::Start()
 	//animation testing
 	if (spritesheet123 == nullptr)
 		spritesheet123 = App->tex->Load("textures/Buildings.png");
-
+	App->map->imagemap = App->tex->Load("textures/map3.png");
 	//--------- CREATE MAIN BUILDINGS -------------// (falta cambiar posicion)
 
 	//--- PLAYER 1
@@ -99,7 +99,7 @@ bool Scene::Start()
 	App->audio->PlayMusic(track.c_str()); 
 
 	//--------- CREATE GUI -----------//  (Falta poner position y size)
-	ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { App->win->width/2 ,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
+	ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, {800 ,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
 	ui_timer->color = { 250,250,250,250 };
 
 	//--- PLAYER 1
@@ -216,6 +216,10 @@ bool Scene::Start()
 	SpawnEntities();
 
 	App->font->font_iterator = App->font->fonts.begin();
+
+	//Map load 
+	App->map->LoadTileList();
+
 	// timer start
 	world_clock.Start();
 	world_seconds.Start();
@@ -449,6 +453,7 @@ bool Scene::Update(float dt)
 
 	//----
 	App->map->Draw(dt);
+	App->map->DrawWakability(dt);
 	//App->entitymanager->Draw(dt);
 	App->gui->Draw();
 

@@ -33,6 +33,9 @@ bool Map::Awake(pugi::xml_node& config)
 	idleRight123 = idleRight123->LoadAnimation("animation/buildings.tmx", "barracks");
 	idleRight123->speed = 1;
 	idleRight123->loop = false;
+
+		rect_for_back_image = { 0,0,5040,2436 };
+	
 	//-----
 
 	return ret;
@@ -45,43 +48,27 @@ void Map::Draw(float dt)
 	if (map_loaded == false)
 		return;
 
-	list<MapLayer*>::const_iterator lay;
-	list<TileSet*>::const_iterator set;
-	for (lay = data.layers.begin(); lay != data.layers.end(); ++lay)
+	//testing image blit
+
+	/*pair <int, int> position_back_image;
+
+	
+	position_back_image = WorldToMap(App->render->camera.x, App->render->camera.y);
+
+*/
+	App->render->Blit(imagemap, -2900, 0, &rect_for_back_image, SDL_FLIP_NONE);
+
+
+	list<Tiles>::const_iterator iterator;
+
+	for (iterator = TileList.begin(); iterator != TileList.end(); ++iterator)
 	{
-		MapLayer* layer = *lay;
-		for (set = data.tilesets.begin(); set != data.tilesets.end(); ++set)
-		{
-			if (layer->properties.Get("Navigation") == 1)
-				continue;
-			for (int y = 0; y < data.height; y++)
-			{
-				for (int x = data.width; x >= 0; x--)
-				{
-					int tile_id = layer->Get(x, y);
-					if (tile_id > 0)
-					{
-						TileSet* tileset = GetTilesetFromTileId(tile_id);
-						SDL_Rect r = tileset->GetTileRect(tile_id);
 
-						pair<int, int> pos = MapToWorld(x, y);
-						App->render->Blit(tileset->texture, pos.first, pos.second, &r, SDL_FLIP_NONE);
-
-						if (debug == true)
-						{
-							pos = WorldToMap(pos.first, pos.second);
-							if (App->pathfinding->IsWalkable(pos) == false)
-							{
-								pos = MapToWorld(pos.first, pos.second);
-								r = { 60,0,60,29 };
-								App->render->Blit(debug_tex, pos.first, pos.second, &r, SDL_FLIP_NONE);
-							}
-						}
-					}
-				}
-			}
-		}
+		App->render->Blit((*iterator).texture, (*iterator).x, (*iterator).y, &(*iterator).Tile_rect, SDL_FLIP_NONE);
+	
 	}
+
+	
 
 	//testing animation uncoment to blit example
 	App->render->Blit(App->scene->spritesheet123, data.main_building.first, data.main_building.second, &idleRight123->GetCurrentFrame(dt));
@@ -232,6 +219,23 @@ bool Map::CleanUp()
 
 	// Clean up the pugui tree
 	map_file.reset();
+
+
+	// Remove all layers
+	list<Tiles>::iterator item3 = TileList.begin();
+	//while (item3 != TileList.end())
+	//{
+	//	if ((*item)->texture != nullptr)
+	//	{
+	//		(*item)->texture = nullptr;
+	//	}
+	//	item3++;
+	//	//delete *item3;
+
+	//}
+	TileList.clear();
+
+	
 
 	return true;
 }
@@ -673,4 +677,110 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 		break;
 	}
 	return ret;
+}
+
+void Map::LoadTileList()
+{
+	BROFILER_CATEGORY("tile list load", Profiler::Color::LightGreen);
+
+	if (map_loaded == false)
+		return;
+
+	list<MapLayer*>::const_iterator lay;
+	list<TileSet*>::const_iterator set;
+	for (lay = data.layers.begin(); lay != data.layers.end(); ++lay)
+	{
+		MapLayer* layer = *lay;
+		for (set = data.tilesets.begin(); set != data.tilesets.end(); ++set)
+		{
+			if (layer->properties.Get("Visible") == 1)
+			{
+
+				for (int y = 0; y < data.height; y++)
+				{
+					for (int x = data.width; x >= 0; x--)
+					{
+						int tile_id = layer->Get(x, y);
+						if (tile_id > 0)
+						{
+							TileSet* tileset = GetTilesetFromTileId(tile_id);
+							SDL_Rect r = tileset->GetTileRect(tile_id);
+
+							pair<int, int> pos = MapToWorld(x, y);
+							/*if ((pos.first )*App->win->GetScale()*App->render->zoom >= -App->render->camera.x && pos.first <= -App->render->camera.x + App->render->camera.w
+							&& (pos.second + data.tile_height)*App->win->GetScale()*App->render->zoom >= -App->render->camera.y && pos.second <= -App->render->camera.y + App->render->camera.h)
+							{*/
+							//App->render->Blit(tileset->texture, pos.first, pos.second, &r, SDL_FLIP_NONE);
+							Tiles Tile;
+
+							Tile.texture = tileset->texture;
+							Tile.Tile_rect = r;
+							Tile.x = pos.first;
+							Tile.y = pos.second;
+
+							TileList.push_back(Tile);
+							//}
+
+						}
+					}
+				}
+
+
+			}
+			
+		}
+	}
+
+	
+}
+
+
+void Map::DrawWakability(float dt)
+{
+	BROFILER_CATEGORY("Wakability Draw", Profiler::Color::CadetBlue);
+
+	if (map_loaded == false)
+		return;
+
+	if (debug == true)
+	{
+		list<MapLayer*>::const_iterator lay;
+		list<TileSet*>::const_iterator set;
+		for (lay = data.layers.begin(); lay != data.layers.end(); ++lay)
+		{
+			MapLayer* layer = *lay;
+			for (set = data.tilesets.begin(); set != data.tilesets.end(); ++set)
+			{
+				if (layer->properties.Get("Navigation") == 1)
+				{
+					for (int y = 0; y < data.height; y++)
+					{
+						for (int x = data.width; x >= 0; x--)
+						{
+							int tile_id = layer->Get(x, y);
+							if (tile_id > 0)
+							{
+								TileSet* tileset = GetTilesetFromTileId(tile_id);
+								SDL_Rect r = tileset->GetTileRect(tile_id);
+
+								pair<int, int> pos = MapToWorld(x, y);
+
+								if (debug == true && App->pathfinding->IsWalkable({ x,y }) == false) // walkability map draw
+								{
+									r = { 60,0,60,29 };
+									App->render->Blit(debug_tex, pos.first, pos.second, &r, SDL_FLIP_NONE);
+								}
+							}
+						}
+					}
+				}
+				
+			}
+		}
+
+
+	}
+	
+
+
 }
