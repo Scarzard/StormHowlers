@@ -32,4 +32,6 @@ bool Walls::Update(float dt)
 void Walls::CleanUp()
 {
 	LOG("---Wall Deleted");
+	Building::CleanUp();
+
 }

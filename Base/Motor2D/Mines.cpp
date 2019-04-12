@@ -86,6 +86,7 @@ bool Mines::Update(float dt)
 void Mines::CleanUp()
 {
 	LOG("---Mine Deleted");
+	Building::CleanUp();
 
 }
 

@@ -31,3 +31,7 @@ bool Soldier::Update(float dt)
 	return true;
 }
 
+void Soldier::CleanUp() {
+	Troop::CleanUp();
+
+}

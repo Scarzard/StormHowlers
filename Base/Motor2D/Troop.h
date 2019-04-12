@@ -25,7 +25,7 @@ public:
 	~Troop() {};
 
 	void CleanUp() {
-
+		Entity::CleanUp();
 	}
 	bool Update(float dt) {
 

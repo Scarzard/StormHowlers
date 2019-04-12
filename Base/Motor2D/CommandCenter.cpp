@@ -110,5 +110,7 @@ void CmdCenter::CleanUp()
 	damage_cast3.clear();
 	damage_cast3.resize(0);
 
+	Building::CleanUp();
+
 }
 

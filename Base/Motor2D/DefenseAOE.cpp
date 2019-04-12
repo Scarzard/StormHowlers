@@ -45,7 +45,7 @@ bool DefenseAoe::Update(float dt)
 void DefenseAoe::CleanUp()
 {
 	// Its needed or the super class is always called?
-	this->Entity::CleanUp();
+	Entity::CleanUp();
 }
 
 

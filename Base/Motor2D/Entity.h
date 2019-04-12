@@ -144,11 +144,12 @@ public:
 
 			if (health <= 0) {
 				alive = false;
+				LOG("P[%d] %s DEAD", (fromPlayer1) ? 1 : 2, &name[0]);
 			}
 
+			LOG("P[%d] %s health: %d", (fromPlayer1)?1:2, &name[0], health);
 		}
 		
-		LOG("health: %d", health);
 	};
 
 	pair<int, int> GetSize(Entity* entity) { return entity->size; };
@@ -219,7 +220,7 @@ private:
 				return"defense_target";
 				break;
 			case Entity::entityType::MINES:
-				return"mines";
+				return"mine";
 				break;
 			case Entity::entityType::BARRACKS:
 				return"barracks";

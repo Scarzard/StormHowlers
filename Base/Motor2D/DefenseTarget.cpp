@@ -52,7 +52,7 @@ bool DefenseTarget::Update(float dt)
 	
 	// Finds the closest one
 	Troop* closest = *tmpMod->troops.begin();
-	if (closest) {
+	if (closest != nullptr) {
 		int min_distance;
 		int d = 0;
 

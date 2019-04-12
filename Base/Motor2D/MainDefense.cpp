@@ -75,6 +75,7 @@ bool MainDefense::Update(float dt)
 void MainDefense::CleanUp()
 {
 	LOG("---Main Defense Deleted");
+	Building::CleanUp();
 
 }
 

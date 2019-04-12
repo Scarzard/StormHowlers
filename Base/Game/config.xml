@@ -122,7 +122,7 @@
         <name string="mine"/>
         <health lvl1="500" lvl2="600" lvl3="750"/>
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
-        <size width="187" height="142"/>
+        <size width="75" height="75"/>
         <capacity lvl1="100" lvl2="150" lvl3="200"/>
         <production lvl1="1000" lvl2="1500" lvl3="2000"/>
       </mine>

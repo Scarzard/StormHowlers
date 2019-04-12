@@ -85,5 +85,6 @@ void Barracks::CleanUp()
 {
 	LOG("---Barracks Deleted");
 
+	Building::CleanUp();
 
 }

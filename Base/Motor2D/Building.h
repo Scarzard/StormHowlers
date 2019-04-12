@@ -40,6 +40,8 @@ public:
 
 		capacity_lv.clear();
 		capacity_lv.resize(0);
+
+		Entity::CleanUp();
 	}
 
 	bool Update(float dt) {

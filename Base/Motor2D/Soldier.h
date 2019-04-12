@@ -10,6 +10,8 @@ public:
 	~Soldier();
 
 	bool Update(float dt);
+	void CleanUp();
+
 
 };
 

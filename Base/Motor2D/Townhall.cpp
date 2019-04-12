@@ -70,6 +70,7 @@ void Townhall::CleanUp()
 {
 	LOG("---Townhall Deleted");
 
-	
+	Building::CleanUp();
+
 
 }
