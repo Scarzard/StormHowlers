@@ -156,12 +156,12 @@ bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, S
 
 	bool ret = true;
 	// Scale must be always positive (changed from uint to int)
-	float scale = App->win->zoom_scale;
-
+	//float scale = App->win->zoom_scale;
+	int scale = App->win->GetScale();
 
 	SDL_Rect rect;
-	rect.x = (int)( ((camera.x * speed) + (int)((x * scale))) );
-	rect.y = (int)( ((camera.y * speed) + (int)((y * scale))) );
+	rect.x = (int)( ((camera.x * speed) + (int)((x * scale*zoom))) );
+	rect.y = (int)( ((camera.y * speed) + (int)((y * scale*zoom))) );
 
 	if(section != NULL)
 	{
@@ -173,8 +173,8 @@ bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, S
 		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 	}
 
-	rect.w *= (scale) + 0.1f;
-	rect.h *= (scale) + 0.1f;
+	rect.w *= (scale*zoom) + 0.1f;
+	rect.h *= (scale*zoom) + 0.1f;
 
 	SDL_Point* p = NULL;
 	SDL_Point pivot;

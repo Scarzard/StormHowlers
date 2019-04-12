@@ -33,6 +33,7 @@ bool Map::Awake(pugi::xml_node& config)
 	idleRight123 = idleRight123->LoadAnimation("animation/buildings.tmx", "barracks");
 	idleRight123->speed = 1;
 	idleRight123->loop = false;
+	
 	//-----
 
 	return ret;
@@ -53,8 +54,16 @@ void Map::Draw(float dt)
 		App->render->Blit((*iterator).texture, (*iterator).x, (*iterator).y, &(*iterator).Tile_rect, SDL_FLIP_NONE);
 	
 	}
+
 	//testing image blit
 
+	/*SDL_Rect r = { 0,0,4478,2164 };
+	pair <int, int> pos;
+
+	pos = WorldToMap(App->render->camera.x, App->render->camera.y);
+
+	App->render->Blit(imagemap, pos.first,pos.second, &r, SDL_FLIP_NONE);*/
+	//App->render->Blit(imagemap, 0, 0, &r, SDL_FLIP_NONE);
 
 
 	//testing animation uncoment to blit example
@@ -206,6 +215,10 @@ bool Map::CleanUp()
 
 	// Clean up the pugui tree
 	map_file.reset();
+
+	// Remove all layers
+	/*list<Tiles>::iterator item3 = TileList.begin();
+	item3.clear();*/
 
 	return true;
 }

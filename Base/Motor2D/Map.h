@@ -205,16 +205,20 @@ private:
 
 	//map framerate
 	list<Tiles>		TileList;
+	
 
 public:
 	MapData				data;
 	bool				debug = false;
 	SDL_Texture*		debug_tex;
 
+	SDL_Texture* imagemap;
+
 private:
 	pugi::xml_document	map_file;
 	string				folder;
 	bool				map_loaded;
+
 };
 
 #endif // __Map_H__
