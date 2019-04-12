@@ -46,6 +46,19 @@ void Map::Draw(float dt)
 	if (map_loaded == false)
 		return;
 
+	//testing image blit
+
+	SDL_Rect r = { 0,0,5040,2436 };
+	pair <int, int> pos;
+
+	//pos = App->render->ScreenToWorld(App->render->camera.x, App->render->camera.y);
+	pos = WorldToMap(App->render->camera.x, App->render->camera.y);
+
+
+	//p->render->Blit(imagemap, App->render->camera.x, 0, &r, SDL_FLIP_NONE);
+	App->render->Blit(imagemap, -3000, 0, &r, SDL_FLIP_NONE);
+
+
 	list<Tiles>::const_iterator iterator;
 
 	for (iterator = TileList.begin(); iterator != TileList.end(); ++iterator)
@@ -55,18 +68,7 @@ void Map::Draw(float dt)
 	
 	}
 
-	//testing image blit
-
-	//SDL_Rect r = { 0,0,5040,2436 };
-	//pair <int, int> pos;
-
-	////pos = App->render->ScreenToWorld(App->render->camera.x, App->render->camera.y);
-	//pos = WorldToMap(App->render->camera.x, App->render->camera.y);
-
-
-	//App->render->Blit(imagemap, -App->render->camera.x, 0, &r, SDL_FLIP_NONE);
-	//App->render->Blit(imagemap, 0, 0, &r, SDL_FLIP_NONE);
-
+	
 
 	//testing animation uncoment to blit example
 	App->render->Blit(App->scene->spritesheet123, data.main_building.first, data.main_building.second, &idleRight123->GetCurrentFrame(dt));
@@ -221,16 +223,16 @@ bool Map::CleanUp()
 
 	// Remove all layers
 	list<Tiles>::iterator item3 = TileList.begin();
-	while (item3 != TileList.end())
-	{
-		if ((*item)->texture != nullptr)
-		{
-			(*item)->texture = nullptr;
-		}
-		item3++;
-		//delete *item3;
+	//while (item3 != TileList.end())
+	//{
+	//	if ((*item)->texture != nullptr)
+	//	{
+	//		(*item)->texture = nullptr;
+	//	}
+	//	item3++;
+	//	//delete *item3;
 
-	}
+	//}
 	TileList.clear();
 
 	
