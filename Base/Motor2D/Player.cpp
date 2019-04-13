@@ -46,7 +46,7 @@ bool Player::Update(float dt)
 
 
 	// Button with focus changes state to HOVER 
-	if (gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
+	if (currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
 	{
 		(*focus)->state = UI_Element::State::HOVER;
 	}
