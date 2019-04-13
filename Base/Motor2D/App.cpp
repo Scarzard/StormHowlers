@@ -35,8 +35,6 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures();
 	audio = new Audio();
 	pathfinding = new Pathfinding();
-	main_menu = new MainMenu();
-	scene = new Scene();
 	scenechange = new Transitions();
 	map = new Map();
 	entitymanager = new EntityManager();
@@ -44,6 +42,8 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	gui = new Gui();
 	player1 = new Player();
 	player2 = new Player();
+	main_menu = new MainMenu();
+	scene = new Scene();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -53,15 +53,14 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(pathfinding);
-	AddModule(main_menu);
-	AddModule(scene, false);
 	AddModule(scenechange);
 	AddModule(entitymanager);
 	AddModule(font);
 	AddModule(gui);
 	AddModule(player1);
 	AddModule(player2);
-
+	AddModule(main_menu);
+	AddModule(scene, false);
 	// render last to swap buffer
 	AddModule(render);
 

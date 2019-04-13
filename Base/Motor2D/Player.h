@@ -44,6 +44,7 @@ public:
 	enum CURRENT_UI
 	{
 		NONE,
+		CURR_MAIN_MENU,
 		CURR_MAIN,
 		CURR_BUILD,
 		CURR_DEPLOY,
@@ -93,8 +94,6 @@ public:
 
 	// Live of TOWN HALL
 	int live = 2000;
-
-	Cursor cursor;
 
 	GamePad gamepad;
 

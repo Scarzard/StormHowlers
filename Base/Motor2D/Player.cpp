@@ -9,6 +9,7 @@
 #include "EntityManager.h"
 #include "Render.h"
 #include "Pathfinding.h"
+#include "MainMenu.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -28,7 +29,7 @@ bool Player::Start()
 
 	isBuilding = isDeploying = isCasting = false;
 	currentTile = { 13,0 };
-	currentUI = NONE;
+	
 
 	return true;
 }
@@ -45,7 +46,7 @@ bool Player::Update(float dt)
 
 
 	// Button with focus changes state to HOVER 
-	if (currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
+	if (gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
 	{
 		(*focus)->state = UI_Element::State::HOVER;
 	}
@@ -61,8 +62,10 @@ bool Player::Update(float dt)
 	{
 		if(!isBuilding)
 			(*focus)->state = UI_Element::State::IDLE;
-
-		DoLogic((*focus));
+		if (App->scene->active)
+			DoLogic((*focus));
+		else
+			App->main_menu->DoLogic((*focus));
 
 		if((*focus)==Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
 			UpdateFocus(currentUI);
@@ -99,7 +102,11 @@ bool Player::Update(float dt)
 
 	if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
 	{
-		currentUI = CURRENT_UI::CURR_MAIN;
+		if(App->scene->active)
+			currentUI = CURRENT_UI::CURR_MAIN;
+		else if (App->main_menu->active)
+			currentUI = CURRENT_UI::CURR_MAIN_MENU;
+
 		UpdateFocus(currentUI);
 	}
 
@@ -347,6 +354,11 @@ void Player::UpdateFocus(uint data)
 {
 	switch (data)
 	{
+	case::Player::CURRENT_UI::CURR_MAIN_MENU:
+		focus = App->main_menu->menu_background->children.begin();
+		last_element = App->main_menu->menu_background->children.end();
+		last_element--;
+		break;
 	case::Player::CURRENT_UI::CURR_MAIN:
 		focus = Main_UI->children.begin();
 		last_element = Main_UI->children.end();
@@ -411,6 +423,8 @@ UI_Element* Player::GetUI_Element(uint data)
 {
 	switch (data)
 	{
+	case::Player::CURRENT_UI::CURR_MAIN_MENU:
+		return App->main_menu->menu_background;
 	case::Player::CURRENT_UI::CURR_MAIN:
 		return Main_UI;
 

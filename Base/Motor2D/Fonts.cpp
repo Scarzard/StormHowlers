@@ -42,10 +42,15 @@ bool Fonts::Awake(pugi::xml_node& conf)
 				default = Load(path, size);
 				actual_font = default;
 			}
+			else if (i == 50)
+			{
+				main_menu_font = Load(path, size);
+			}
 			else
 			{
 				Load(path, i);
 			}
+			
 
 		}
 		

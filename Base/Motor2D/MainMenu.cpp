@@ -40,11 +40,27 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool MainMenu::Start()
 {
-	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::MAIN_MENU_BG, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
-	
-	new_game_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 787, 302 }, { 39, 40 }, menu_background, true);
+	App->player1->currentUI = Player::CURRENT_UI::NONE;
 
-	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 787, 488 }, { 39, 40 }, menu_background, true);
+	App->font->actual_font = App->font->main_menu_font;
+	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::MAIN_MENU_BG, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
+	menu_background->texture = App->tex->Load(menu_bg_file_name.data());
+	menu_background->rect = { 0, 0, App->win->width, App->win->height };
+	App->render->zoom = 1;
+
+	new_game_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 1273, 432 }, { 371, 87 }, menu_background, true);
+	new_game_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 170, 40 }, { 0, 0 }, new_game_button, true, { false, false });
+	new_game_text->label = new_game_label;
+
+	//exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 519 }, { 371, 87 }, menu_background, true);
+	//exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 616 }, { 371, 87 }, menu_background, true);
+	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 706 }, { 371, 87 }, menu_background, true);
+	exit_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 1273, 432 }, { 371, 87 }, new_game_button, true);
+	
+
+	//ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 800 ,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
+
+
 
 	return true;
 }
@@ -71,6 +87,7 @@ bool MainMenu::Update(float dt)
 	{
 		App->scenechange->ContinueGame = true;
 		App->scenechange->SwitchScene(App->scene, App->main_menu);
+		menu_background->visible = false;
 	}
 
 	App->gui->Draw();
@@ -87,56 +104,6 @@ bool MainMenu::PostUpdate()
 	list<UI_Element*>::reverse_iterator item = App->player1->UI_elements.rbegin();
 	while (item != App->player1->UI_elements.rend())
 	{
-		if ((*item)->visible == true)
-		{
-			if (( (App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT)
-				/*|| (App->player1->CheckCursorPos(*item) == true */ && (App->player1->gamepad.State[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
-			{
-				(*item)->state = UI_Element::State::HOVER;
-			}
-			if (((App->gui->CheckClick(*item) == true && App->gui->CheckMousePos(*item) == true)  /*||(App->player1->CheckCursorClick(*item) == true && App->player1->CheckCursorPos(*item) == true))*/ 
-				&& (*item)->state == UI_Element::State::HOVER)) //on-click
-			{
-				if ((*item)->dragable.x == false && (*item)->dragable.y == false) //if not dragable
-				{
-					(*item)->state = UI_Element::State::LOGIC; //do logic
-					if ((*item)->locked == true) //if locked
-					{
-						//App->audio->PlayFx(LOCKED);
-					}
-					else
-					{
-						//App->audio->PlayFx(CLICK);
-						if ((*item)->globalpos.second < App->win->height) 
-						{
-							DoLogic(*item);
-						}
-					}
-				}
-				else //drag
-				{
-					(*item)->dragging = true;
-					(*item)->Drag();
-
-					////--- Do logic
-					//if ((*item)->action == UI_Element::Action::ADJUST_VOL)
-					//{
-					//}
-
-					////--- Check limits
-					//if ((*item)->globalpos.first <= limit) //left limit
-					//	(*item)->globalpos.first = limit;
-					//else if ((*item)->globalpos.first >= limit) //right limit
-					//	(*item)->globalpos.first = limit;
-
-					App->gui->UpdateChildren();
-				}
-			}
-			else if (App->gui->CheckMousePos(*item) == false && /*App->player1->CheckCursorPos(*item) == false && */(*item)->state != UI_Element::State::DRAG) //change to idle
-			{
-				(*item)->state = UI_Element::State::IDLE;
-			}
-		}
 		App->gui->UpdateState(*item);
 		item++;
 	}
@@ -189,7 +156,7 @@ void MainMenu::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::WEBPAGE:
-		ShellExecuteA(NULL, "open", "https://github.com/Scarzard/StormHowlers", NULL, NULL, SW_SHOWNORMAL);
+		//ShellExecuteA(NULL, "open", "https://github.com/Scarzard/StormHowlers", NULL, NULL, SW_SHOWNORMAL);
 		break;
 	}
 }
