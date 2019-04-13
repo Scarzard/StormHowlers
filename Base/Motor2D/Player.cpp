@@ -284,18 +284,19 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 
 	pos = currentTile;
 
-	/*if (gamepad.Connected == true)
+	if (gamepad.Connected == true)
 	{
-		pos = cursor.position;
+		pos = currentTile;
+		pos = App->map->MapToWorld(pos.first, pos.second);
 	}
 	else
 	{
 		App->input->GetMousePosition(pos.first, pos.second);
 	}
-	pos = App -> render->ScreenToWorld(pos.first, pos.second);
+	/*pos = App -> render->ScreenToWorld(pos.first, pos.second);
 	pos = App->map->WorldToMap(pos.first, pos.second);
-	pos.first--;*/
-
+	pos.first--;
+*/
 
 	// Check what tiles is the collider occupying
 	int cont;

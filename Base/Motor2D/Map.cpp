@@ -135,8 +135,10 @@ pair<int, int> Map::MapToWorld(int x, int y) const
 	}
 	else if(data.type == MAPTYPE_ISOMETRIC)
 	{
-		ret.first = (x - y) * ceilf(data.tile_width * 0.5f);
-		ret.second = (x + y) * ceilf(data.tile_height * 0.5f);
+		ret.first = (x - y) * (data.tile_width * 0.5f);
+		ret.second = (x + y) * (data.tile_height * 0.5f); 
+		/*ret.first = (x - y) * ceilf(data.tile_width * 0.5f);
+		ret.second = (x + y) * ceilf(data.tile_height * 0.5f);*/
 	}
 	else
 	{
