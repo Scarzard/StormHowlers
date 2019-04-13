@@ -98,7 +98,8 @@ public:
 	GamePad gamepad;
 
 	pair<int,int> currentTile;
-	pair<int, int> x_limits, y_limits;
+	pair<int, int> x_limits_player1, y_limits_player1;
+	pair<int, int> x_limits_player2, y_limits_player2;
 
 	list<Building*> buildings;
 	list<Troop*> troops;
