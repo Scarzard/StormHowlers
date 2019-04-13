@@ -44,6 +44,7 @@ public:
 	enum CURRENT_UI
 	{
 		NONE,
+		CURR_MAIN_MENU,
 		CURR_MAIN,
 		CURR_BUILD,
 		CURR_DEPLOY,

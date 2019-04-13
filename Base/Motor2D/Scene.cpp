@@ -64,6 +64,10 @@ bool Scene::Start()
 	change = false;
 	App->player1->isPlayer1 = true;
 	App->player2->isPlayer1 = false;
+
+	App->player1->currentUI = Player::CURRENT_UI::NONE;
+	App->player2->currentUI = Player::CURRENT_UI::NONE;
+
 	App->map->debug_tex = App->tex->Load("maps/meta.png");
 
 	App->player1->LiveBar = { 51, 18 , 348, 19 }; //LiveBar for player1

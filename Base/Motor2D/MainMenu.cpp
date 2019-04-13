@@ -40,6 +40,8 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool MainMenu::Start()
 {
+	App->player1->currentUI = Player::CURRENT_UI::NONE;
+
 	App->font->actual_font = App->font->main_menu_font;
 	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::MAIN_MENU_BG, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
 	menu_background->texture = App->tex->Load(menu_bg_file_name.data());
@@ -102,56 +104,6 @@ bool MainMenu::PostUpdate()
 	list<UI_Element*>::reverse_iterator item = App->player1->UI_elements.rbegin();
 	while (item != App->player1->UI_elements.rend())
 	{
-		if ((*item)->visible == true)
-		{
-			if (( (App->gui->CheckMousePos(*item) == true && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) != KEY_REPEAT)
-				/*|| (App->player1->CheckCursorPos(*item) == true */ && (App->player1->gamepad.State[BUTTON_A] != KEY_REPEAT)) && (*item)->dragging == false) //hovering
-			{
-				(*item)->state = UI_Element::State::HOVER;
-			}
-			if (((App->gui->CheckClick(*item) == true && App->gui->CheckMousePos(*item) == true)  /*||(App->player1->CheckCursorClick(*item) == true && App->player1->CheckCursorPos(*item) == true))*/ 
-				&& (*item)->state == UI_Element::State::HOVER)) //on-click
-			{
-				if ((*item)->dragable.x == false && (*item)->dragable.y == false) //if not dragable
-				{
-					(*item)->state = UI_Element::State::LOGIC; //do logic
-					if ((*item)->locked == true) //if locked
-					{
-						//App->audio->PlayFx(LOCKED);
-					}
-					else
-					{
-						//App->audio->PlayFx(CLICK);
-						if ((*item)->globalpos.second < App->win->height) 
-						{
-							DoLogic(*item);
-						}
-					}
-				}
-				else //drag
-				{
-					(*item)->dragging = true;
-					(*item)->Drag();
-
-					////--- Do logic
-					//if ((*item)->action == UI_Element::Action::ADJUST_VOL)
-					//{
-					//}
-
-					////--- Check limits
-					//if ((*item)->globalpos.first <= limit) //left limit
-					//	(*item)->globalpos.first = limit;
-					//else if ((*item)->globalpos.first >= limit) //right limit
-					//	(*item)->globalpos.first = limit;
-
-					App->gui->UpdateChildren();
-				}
-			}
-			else if (App->gui->CheckMousePos(*item) == false && /*App->player1->CheckCursorPos(*item) == false && */(*item)->state != UI_Element::State::DRAG) //change to idle
-			{
-				(*item)->state = UI_Element::State::IDLE;
-			}
-		}
 		App->gui->UpdateState(*item);
 		item++;
 	}
