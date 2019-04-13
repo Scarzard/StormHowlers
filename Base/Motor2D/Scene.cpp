@@ -55,7 +55,7 @@ bool Scene::Start()
 	App->map->Load(map_names.front()->data());
 	//current_track = App->audio->tracks_path.front();
 	//App->audio->PlayMusic(PATH(App->audio->folder_music.data(), current_track.data()));
-
+	App->render->zoom = 0.77;
 	// Variables init
 	currentMap = 0;
 	pause = false;
@@ -114,12 +114,7 @@ bool Scene::Start()
 	App->audio->PlayMusic(track.c_str()); 
 
 	//--------- CREATE GUI -----------//  (Falta poner position y size)
-	ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, {800 ,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
-	ui_timer->color = { 250,250,250,250 };
-
-	//--------- CREATE GUI -----------//  (Falta poner position y size)
-	//--------- CREATE GUI -----------//  (Falta poner position y size)
-	ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 800 ,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
+	ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, {800, 0 }, { 0, 0 }, nullptr, true, { false, false }, "Timer: 0s");
 	ui_timer->color = { 250,250,250,250 };
 
 	//--- PLAYER 1

@@ -40,11 +40,25 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool MainMenu::Start()
 {
+	App->font->actual_font = App->font->main_menu_font;
 	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::MAIN_MENU_BG, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
-	
-	new_game_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 787, 302 }, { 39, 40 }, menu_background, true);
+	menu_background->texture = App->tex->Load(menu_bg_file_name.data());
+	menu_background->rect = { 0, 0, App->win->width, App->win->height };
+	App->render->zoom = 1;
 
-	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 787, 488 }, { 39, 40 }, menu_background, true);
+	new_game_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 1273, 432 }, { 371, 87 }, menu_background, true);
+	new_game_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 170, 40 }, { 0, 0 }, new_game_button, true, { false, false });
+	new_game_text->label = new_game_label;
+
+	//exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 519 }, { 371, 87 }, menu_background, true);
+	//exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 616 }, { 371, 87 }, menu_background, true);
+	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 706 }, { 371, 87 }, menu_background, true);
+	exit_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 1273, 432 }, { 371, 87 }, new_game_button, true);
+	
+
+	//ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 800 ,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
+
+
 
 	return true;
 }
@@ -71,6 +85,7 @@ bool MainMenu::Update(float dt)
 	{
 		App->scenechange->ContinueGame = true;
 		App->scenechange->SwitchScene(App->scene, App->main_menu);
+		menu_background->visible = false;
 	}
 
 	App->gui->Draw();
@@ -189,7 +204,7 @@ void MainMenu::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::WEBPAGE:
-		ShellExecuteA(NULL, "open", "https://github.com/Scarzard/StormHowlers", NULL, NULL, SW_SHOWNORMAL);
+		//ShellExecuteA(NULL, "open", "https://github.com/Scarzard/StormHowlers", NULL, NULL, SW_SHOWNORMAL);
 		break;
 	}
 }

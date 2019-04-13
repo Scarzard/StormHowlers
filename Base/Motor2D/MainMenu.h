@@ -44,12 +44,14 @@ public:
 
 	UI_Element* new_game_button;
 	UI_Element* new_game_text;
+	char new_game_label[5] = "PLAY";
 
 	UI_Element* continue_button;
 	UI_Element* continue_text;
 
 	UI_Element* exit_button;
 	UI_Element* exit_text;
+	char exit_label[5] = "EXIT";
 
 	string current_track;
 	string current_fx;
