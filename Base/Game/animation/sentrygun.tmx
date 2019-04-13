@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="6" height="4" tilewidth="62" tileheight="39" nextobjectid="23">
+ <layer name="Capa de Patrones 1" width="6" height="4">
+  <data encoding="csv">
+0,0,0,0,0,0,
+0,0,0,0,0,0,
+0,0,0,0,0,0,
+0,0,0,0,0,0
+</data>
+ </layer>
+ <imagelayer name="Capa de Imagen 1">
+  <image source="../textures/sentrygun_tiled.png" width="372" height="156"/>
+ </imagelayer>
+ <objectgroup name="idle">
+  <object id="1" x="0" y="0" width="62" height="39"/>
+  <object id="2" x="62" y="0" width="62" height="39"/>
+  <object id="3" x="124" y="0" width="62" height="39"/>
+  <object id="4" x="186" y="0" width="62" height="39"/>
+  <object id="5" x="0" y="39" width="62" height="39"/>
+  <object id="6" x="62" y="39" width="62" height="39"/>
+  <object id="7" x="124" y="39" width="62" height="39"/>
+  <object id="8" x="186" y="39" width="62" height="39"/>
+ </objectgroup>
+ <objectgroup name="constructing">
+  <object id="9" x="0" y="78" width="62" height="39"/>
+  <object id="12" x="62" y="78" width="62" height="39"/>
+  <object id="13" x="124" y="78" width="62" height="39"/>
+  <object id="14" x="186" y="78" width="62" height="39"/>
+  <object id="15" x="248" y="78" width="62" height="39"/>
+  <object id="16" x="310" y="78" width="62" height="39"/>
+  <object id="17" x="0" y="117" width="62" height="39"/>
+  <object id="18" x="62" y="117" width="62" height="39"/>
+  <object id="19" x="124" y="117" width="62" height="39"/>
+  <object id="20" x="186" y="117" width="62" height="39"/>
+  <object id="21" x="248" y="117" width="62" height="39"/>
+  <object id="22" x="310" y="117" width="62" height="39"/>
+ </objectgroup>
+</map>
