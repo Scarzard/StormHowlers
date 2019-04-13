@@ -8,6 +8,7 @@
 #include "Pathfinding.h"
 #include "Scene.h"
 #include "Brofiler\Brofiler.h"
+#include "Player.h"
 #include <cmath>
 
 
@@ -758,9 +759,12 @@ void Map::DrawWakability(float dt)
 			{
 				if (layer->properties.Get("Navigation") == 1)
 				{
-					for (int y = 0; y < data.height; y++)
+					int y = (App->player1->isBuilding) ? 0 : data.height / 2;
+					int yEnd = (App->player2->isBuilding) ? data.height : data.height / 2;
+
+					for (y; y < yEnd; y++)
 					{
-						for (int x = data.width; x >= 0; x--)
+						for (int x = 0; x < data.width; x++)
 						{
 							int tile_id = layer->Get(x, y);
 							if (tile_id > 0)
@@ -775,6 +779,7 @@ void Map::DrawWakability(float dt)
 								}
 							}
 						}
+						int x = (App->player1->isBuilding) ? 0 : data.width / 2;
 					}
 				}
 				

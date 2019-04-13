@@ -226,19 +226,6 @@ bool Player::Update(float dt)
 			}
 
 		}
-		
-		// DEBUG PURPOSES DO NOT DELETE PLEASE
-		if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
-
-			isBuilding = true;
-			type = Entity::entityType::DEFENSE_TARGET;
-			isPlayer1 = true;
-			collider.dimensions = { 3,4 };
-			//currentUI == CURRENT_UI::CURR_BUILD;
-			//CheckBuildingPos();
-		}
-
-
 
 		//--- Press A
 		App->map->debug = true;
@@ -258,6 +245,20 @@ bool Player::Update(float dt)
 				//play fx (error);
 			}
 		}
+	}
+
+	// DEBUG PURPOSES DO NOT DELETE PLEASE
+	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT) {
+
+		
+
+		isBuilding = true;
+		type = Entity::entityType::DEFENSE_TARGET;
+		isPlayer1 = true;
+		collider.dimensions = { 3,4 };
+		currentUI == CURRENT_UI::CURR_BUILD;
+		//CheckBuildingPos();
+		
 	}
 
 	return true;
