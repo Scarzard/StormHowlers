@@ -25,7 +25,7 @@ Player::~Player()
 bool Player::Start()
 {
 
-	gold = actual_capacity = 0;
+	gold = actual_capacity = time_iterator = 0;
 
 	isBuilding = isDeploying = isCasting = false;
 	currentTile = { 13,0 };
