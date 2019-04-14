@@ -25,7 +25,7 @@
 
 EntityManager::EntityManager()
 {
-	name.append("EntityManager");
+	name.append("entitymanager");
 }
 
 EntityManager::~EntityManager()
@@ -35,8 +35,15 @@ EntityManager::~EntityManager()
 bool EntityManager::Awake(pugi::xml_node &config)
 {
 	bool ret = true;
+
+	/*pugi::xml_document	config_file;
+	pugi::xml_node config;
+	config = App->LoadConfig(config_file);
+	config = config.child("entitymanager").child(s_type).child(&name[0]);*/
+
 	folder.append(config.child("folder").child_value());
 	texture_path = config.child("sprite_sheet").attribute("source").as_string();
+	entitiesTextures = vector<SDL_Texture*>(Entity::entityType::WAR_HOUND, nullptr);
 
 	return ret;
 }
@@ -44,7 +51,12 @@ bool EntityManager::Awake(pugi::xml_node &config)
 bool EntityManager::Start()
 {
 	bool ret = true;
-	texture = App->tex->Load(PATH(folder.data(), texture_path.data()));
+	for (int i = Entity::entityType::TOWNHALL; i < Entity::entityType::WAR_HOUND; i++) {
+		string n = GetName(Entity::entityType(i));
+		n += "_anim.png";
+
+		entitiesTextures[i] = App->tex->Load(PATH(folder.data(), n.data()));
+	}
 
 	return ret;
 }
@@ -205,13 +217,14 @@ bool EntityManager::Draw(float dt) //sprite ordering
 {
 	bool ret = true;
 
-	/*list<Entity*>::iterator tmp = entity_list.begin();
+	list<Entity*>::iterator tmp = entity_list.begin();
 
 	while (tmp != entity_list.end())
 	{
-		//App->render->Blit(texture, (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
+		int posy = (*tmp)->position.second - (*tmp)->Current_Animation->GetCurrentFrame(dt).h;// - ((*tmp)->Current_Animation->GetCurrentFrame(dt).h - (*tmp)->position.second);
+		App->render->Blit(entitiesTextures[(*tmp)->type],  (*tmp)->position.first ,posy, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
 		tmp++;
-	}*/
+	}
 	return ret;
 }
 
@@ -296,5 +309,52 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		}
 	}
 	return tmp;
+
 }
 
+char* EntityManager::GetName(Entity::entityType type) {
+	switch (type)
+	{
+	case Entity::entityType::TOWNHALL:
+		return"Townhall";
+		break;
+	case Entity::entityType::MAIN_DEFENSE:
+		return"sentrygun";
+		break;
+	case Entity::entityType::COMMAND_CENTER:
+		return"CommandCenter";
+		break;
+	case Entity::entityType::WALLS:
+		return"Walls";
+		break;
+	case Entity::entityType::DEFENSE_AOE:
+		return"defense_aoe";
+		break;
+	case Entity::entityType::DEFENSE_TARGET:
+		return"Tesla";
+		break;
+	case Entity::entityType::MINES:
+		return"GoldMine";
+		break;
+	case Entity::entityType::BARRACKS:
+		return"Barracks";
+		break;
+	case Entity::entityType::SOLDIER:
+		return"BasicSoldier";
+		break;
+	case Entity::entityType::TANKMAN:
+		return"tankman";
+		break;
+	case Entity::entityType::INFILTRATOR:
+		return"infiltrator";
+		break;
+	case Entity::entityType::ENGINEER:
+		return"engineer";
+		break;
+	case Entity::entityType::WAR_HOUND:
+		return"war_hound";
+		break;
+	default:
+		break;
+	}
+}

@@ -17,6 +17,9 @@ Townhall::~Townhall()
 
 Townhall::Townhall(bool isPlayer1, pair<int,int> pos): Building(Entity::entityType::TOWNHALL,isPlayer1,pos)
 {
+
+	string path = "animation/" + name + ".tmx";
+	LoadAnimations(isPlayer1, path.data());
 }
 
 bool Townhall::Update(float dt)
@@ -73,4 +76,8 @@ void Townhall::CleanUp()
 	Building::CleanUp();
 
 
+}
+
+void Townhall::LoadAnimations(bool isPlayer1, string path)
+{
 }

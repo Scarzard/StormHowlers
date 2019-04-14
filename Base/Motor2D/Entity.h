@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "Map.h"
 #include "App.h"
+#include "Animation.h"
 #include "Render.h"
 
 class Entity
@@ -36,12 +37,12 @@ public:
 		name = "ERROR";
 		name = GetName(type);
 
-		LOG("Player %d: Loading %s",(isPlayer1)?1:2,&name[0]);
+		LOG("Player %d: Loading %s",(isPlayer1)?1:2,name.data());
 
 		pugi::xml_document	config_file;
 		pugi::xml_node config;
 		config = App->LoadConfig(config_file);
-		config = config.child("entitymanager").child(s_type).child(&name[0]);
+		config = config.child("entitymanager").child(s_type).child(name.data());
 
 		// Parsing data
 
@@ -66,7 +67,7 @@ public:
 		rate_of_fire = config.child("attack").attribute("rate").as_float(0);
 		max_targets  = config.child("attack").attribute("targets").as_int(0);
 		range		 = config.child("attack").attribute("range").as_int(0);
-		
+
 		position	= pos;
 
 		fromPlayer1 = isPlayer1;
@@ -78,8 +79,7 @@ public:
 		health		= health_lv[level];
 		damage		= damage_lv[level];
 
-		LoadAnimations();
-		ChangeAnimation();
+		//ChangeAnimation();
 
 		// DEBUG PURPOSES
 		tex = App->tex->Load("maps/meta.png");
@@ -88,7 +88,17 @@ public:
 	~Entity() {};
 	virtual bool Awake(pugi::xml_node & config) { return true; };
 	virtual bool Start() { return true; };
-	virtual bool PreUpdate() { return true; };
+	virtual bool PreUpdate() { 
+		
+		//App->render->Blit(tex, position.first, position.second, object->GetCurrentFrame);
+		
+		
+		
+		
+		
+		
+		return true; 
+	};
 	virtual bool Update(float dt) { return true; };
 	virtual bool PostUpdate(
 	
@@ -108,33 +118,24 @@ public:
 	virtual void Save(pugi::xml_node& file) const {};
 	virtual void Load(pugi::xml_node& file) {};
 	virtual void Restart() {};
-	virtual void LoadAnimations() {
-		if (fromPlayer1) //load player 1 sprites
-		{
-
-		}
-		else if (!fromPlayer1) //load player 2 sprites
-		{
-
-		}
-	};
+	virtual void LoadAnimations(bool isPlayer1, string path) {};
 
 	// Damage animation does not care about levels(?)
 	virtual void ChangeAnimation() {
 		if (health <= 0)
-			Current_Animation = &destroyed;
+			Current_Animation = destroyed;
 
 		else if (health < (health_lv[level] / 2))
-			Current_Animation = &damaged;
+			Current_Animation = damaged;
+
+		else if (level == 0)
+			Current_Animation = level1;
 
 		else if (level == 1)
-			Current_Animation = &level1;
+			Current_Animation = level2;
 
 		else if (level == 2)
-			Current_Animation = &level2;
-
-		else if (level == 3)
-			Current_Animation = &level3;
+			Current_Animation = level3;
 	};
 
 	virtual void TakeDamage(int damage) {
@@ -157,12 +158,12 @@ public:
 
 public:
 	Animation*	Current_Animation = nullptr;
-	Animation	object;
-	Animation	level1;
-	Animation	level2;
-	Animation	level3;
-	Animation	damaged;
-	Animation	destroyed;
+	Animation*	building;
+	Animation*	level1;
+	Animation*	level2;
+	Animation*	level3;
+	Animation*	damaged;
+	Animation*	destroyed;
 
 	entityType	type;
 	string		name;
@@ -196,37 +197,37 @@ public:
 	SDL_Rect	collider;
 	SDL_Texture* tex;
 
-private:
+public:
 
 		char* GetName(const Entity::entityType& type) {
 			switch (type)
 			{
 			case Entity::entityType::TOWNHALL:
-				return"townhall";
+				return"Townhall";
 				break;
 			case Entity::entityType::MAIN_DEFENSE:
-				return"main_defense";
+				return"sentrygun";
 				break;
 			case Entity::entityType::COMMAND_CENTER:
-				return"command_center";
+				return"CommandCenter";
 				break;
 			case Entity::entityType::WALLS:
-				return"walls";
+				return"Walls";
 				break;
 			case Entity::entityType::DEFENSE_AOE:
 				return"defense_aoe";
 				break;
 			case Entity::entityType::DEFENSE_TARGET:
-				return"defense_target";
+				return"Tesla";
 				break;
 			case Entity::entityType::MINES:
-				return"mine";
+				return"GoldMine";
 				break;
 			case Entity::entityType::BARRACKS:
-				return"barracks";
+				return"Barracks";
 				break;
 			case Entity::entityType::SOLDIER:
-				return"soldier";
+				return"BasicSoldier";
 				break;
 			case Entity::entityType::TANKMAN:
 				return"tankman";

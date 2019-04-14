@@ -17,7 +17,8 @@ Mines::~Mines()
 
 Mines::Mines(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::MINES, isPlayer1, pos)
 {
-
+	string path = "animation/" + name + ".tmx";
+	LoadAnimations(isPlayer1, path.data());
 }
 
 bool Mines::PreUpdate()
@@ -88,5 +89,17 @@ void Mines::CleanUp()
 	LOG("---Mine Deleted");
 	Building::CleanUp();
 
+}
+
+void Mines::LoadAnimations(bool isPlayer1, string path)
+{
+	building = building->LoadAnimation(path.data(), (!isPlayer1) ? "red_constructing" : "blue_constructing");
+	level1 = level1->LoadAnimation(path.data(), (!isPlayer1) ? "red_idle" : "blue_idle");
+	//level1->PushBack(building->GetLastAnimationFrame());// level1->LoadAnimation(&path[0], (!isPlayer1) ? "red" : "blue");
+	level1->speed = 3;
+	building->speed = 3;
+	building->loop = false;
+	level1->loop = false;
+	Current_Animation = building;
 }
 

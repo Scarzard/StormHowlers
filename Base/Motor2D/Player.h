@@ -88,6 +88,8 @@ public:
 	uint gold;
 	uint currentUI;
 	int actual_capacity;
+	bool entityAdded;
+	Entity* previewEntity;
 
 
 	SDL_Rect LiveBar;

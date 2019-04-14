@@ -8,7 +8,8 @@ Soldier::Soldier()
 
 Soldier::Soldier(bool isPlayer1, pair<int, int> pos):Troop(Entity::entityType::SOLDIER,isPlayer1,pos)
 {
-	
+	string path = "animation/" + name + ".tmx";
+	LoadAnimations(isPlayer1, path.data());
 }
 
 
@@ -34,4 +35,8 @@ bool Soldier::Update(float dt)
 void Soldier::CleanUp() {
 	Troop::CleanUp();
 
+}
+
+void Soldier::LoadAnimations(bool isPlayer1, string path)
+{
 }

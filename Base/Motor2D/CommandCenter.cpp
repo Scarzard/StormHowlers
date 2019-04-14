@@ -31,7 +31,8 @@ CmdCenter::CmdCenter(bool isPlayer1, pair<int, int> pos) : Building(Entity::enti
 	damage_cast3.push_back(config.child("damage_cast3").attribute("lvl2").as_uint(0));
 	damage_cast3.push_back(config.child("damage_cast3").attribute("lvl3").as_uint(0));
 
-
+	string path = "animation/" + name + ".tmx";
+	LoadAnimations(isPlayer1, path.data());
 }
 
 bool CmdCenter::Update(float dt)
@@ -112,5 +113,17 @@ void CmdCenter::CleanUp()
 
 	Building::CleanUp();
 
+}
+
+void CmdCenter::LoadAnimations(bool isPlayer1, string path)
+{
+	building = building->LoadAnimation(path.data(), (!isPlayer1) ? "red" : "blue");
+	level1 = level1->LoadAnimation(path.data(), (!isPlayer1) ? "red" : "blue");
+	//level1->PushBack(building->GetLastAnimationFrame());// level1->LoadAnimation(&path[0], (!isPlayer1) ? "red" : "blue");
+	level1->speed = 3;
+	building->speed = 3;
+	building->loop = false;
+	level1->loop = false;
+	Current_Animation = building;
 }
 

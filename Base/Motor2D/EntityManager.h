@@ -21,12 +21,15 @@ public:
 	bool Draw(float dt);
 
 	Entity* AddEntity(bool player1, Entity::entityType type, pair<int,int> position);
+	char * GetName(Entity::entityType type);
 	void DeleteAllEntities();
 
 public:
 	string			folder;
 	string			texture_path;
 	SDL_Texture*	texture;
+
+	vector<SDL_Texture*> entitiesTextures;
 
 	list<Entity*>	entity_list;
 

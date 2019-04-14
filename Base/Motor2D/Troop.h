@@ -29,8 +29,8 @@ public:
 	}
 	bool Update(float dt) {
 
-		SDL_Rect r = { position.first, position.second,size.first,size.second*0.5 };
-		SDL_RenderCopy(App->render->renderer, tex, &collider, &r);
+		//SDL_Rect r = { position.first, position.second,size.first,size.second*0.5 };
+		//SDL_RenderCopy(App->render->renderer, tex, &collider, &r);
 		return true;
 	}
 

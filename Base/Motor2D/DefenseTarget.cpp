@@ -13,7 +13,8 @@ DefenseTarget::~DefenseTarget()
 
 DefenseTarget::DefenseTarget(bool isPlayer1, pair<int, int> pos) : Building(entityType::DEFENSE_TARGET, isPlayer1, pos)
 {
-	
+	string path = "animation/" + name + ".tmx";
+	LoadAnimations(isPlayer1, path.data());
 
 }
 
@@ -92,5 +93,16 @@ bool DefenseTarget::Is_inRange(pair<int, int> pos, int &distance) {
 	distance = (int)(sqrt(pow(vector_distance.first, 2) + pow(vector_distance.second, 2)));
 	
 	return distance <= range;
+}
+
+void DefenseTarget::LoadAnimations(bool isPlayer1, string path)
+{
+	building = building->LoadAnimation(path.data(), (!isPlayer1) ? "red" : "blue");
+	level1 = level1->LoadAnimation(path.data(), (!isPlayer1) ? "red" : "blue");
+	level1->speed = 3;
+	building->speed = 3;
+	building->loop = false;
+	level1->loop = false;
+	Current_Animation = building;
 }
 

@@ -31,8 +31,11 @@ public:
 		if (!isPlayer1)
 			collider = { 60,0,59,28 };
 
+
 	}
 	~Building() {};
+
+	void LoadAnimations(bool isPlayer1, string path) {};
 
 	void CleanUp() {
 		production_lv.clear();
@@ -45,8 +48,8 @@ public:
 	}
 
 	bool Update(float dt) {
-		SDL_Rect r = { position.first, position.second,size.first,size.second*0.5 };
-		SDL_RenderCopy(App->render->renderer, tex, &collider, &r);
+		//SDL_Rect r = { position.first, position.second,size.first,size.second*0.5 };
+		//SDL_RenderCopy(App->render->renderer, tex, &collider, &r);
 		return true;
 	}
 

@@ -13,7 +13,7 @@ public:
 	bool PreUpdate();
 	bool Update(float dt);
 	void CleanUp();
-
+	void LoadAnimations(bool isPlayer1, string path);
 };
 
 #endif

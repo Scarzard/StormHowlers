@@ -12,7 +12,8 @@ Barracks::~Barracks(){}
 
 Barracks::Barracks(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::BARRACKS, isPlayer1, pos)
 {
-
+	string path = "animation/" + name + ".tmx";
+	LoadAnimations(isPlayer1, path.data());
 }
 
 bool Barracks::PreUpdate()
@@ -80,6 +81,16 @@ bool Barracks::Update(float dt)
 
 	return true;
 }
+
+void Barracks::LoadAnimations(bool isPlayer1, string path) {
+	level1 = level1->LoadAnimation(&path[0], (!isPlayer1) ? "red_idle" : "blue_idle");
+	building = building->LoadAnimation(&path[0], (!isPlayer1) ? "red_constructing" : "blue_constructing");
+	level1->speed = 3;
+	building->speed = 3;
+	building->loop = false;
+	Current_Animation = building;
+};
+
 
 void Barracks::CleanUp()
 {

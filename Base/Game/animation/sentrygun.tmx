@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="6" height="4" tilewidth="62" tileheight="39" nextobjectid="23">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="6" height="4" tilewidth="62" tileheight="39" nextobjectid="67">
  <layer name="Capa de Patrones 1" width="6" height="4">
   <data encoding="csv">
 0,0,0,0,0,0,
@@ -9,9 +9,9 @@
 </data>
  </layer>
  <imagelayer name="Capa de Imagen 1">
-  <image source="../textures/sentrygun_tiled.png" width="372" height="156"/>
+  <image source="sentrygun_tiled.png" width="372" height="312"/>
  </imagelayer>
- <objectgroup name="idle">
+ <objectgroup name="red_idle">
   <object id="1" x="0" y="0" width="62" height="39"/>
   <object id="2" x="62" y="0" width="62" height="39"/>
   <object id="3" x="124" y="0" width="62" height="39"/>
@@ -21,7 +21,17 @@
   <object id="7" x="124" y="39" width="62" height="39"/>
   <object id="8" x="186" y="39" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="constructing">
+ <objectgroup name="blue_idle">
+  <object id="47" x="0" y="156" width="62" height="39"/>
+  <object id="48" x="62" y="156" width="62" height="39"/>
+  <object id="49" x="124" y="156" width="62" height="39"/>
+  <object id="50" x="186" y="156" width="62" height="39"/>
+  <object id="51" x="0" y="195" width="62" height="39"/>
+  <object id="52" x="62" y="195" width="62" height="39"/>
+  <object id="53" x="124" y="195" width="62" height="39"/>
+  <object id="54" x="186" y="195" width="62" height="39"/>
+ </objectgroup>
+ <objectgroup name="red_constructing">
   <object id="9" x="0" y="78" width="62" height="39"/>
   <object id="12" x="62" y="78" width="62" height="39"/>
   <object id="13" x="124" y="78" width="62" height="39"/>
@@ -34,5 +44,19 @@
   <object id="20" x="186" y="117" width="62" height="39"/>
   <object id="21" x="248" y="117" width="62" height="39"/>
   <object id="22" x="310" y="117" width="62" height="39"/>
+ </objectgroup>
+ <objectgroup name="blue_constructing">
+  <object id="55" x="0" y="234" width="62" height="39"/>
+  <object id="56" x="62" y="234" width="62" height="39"/>
+  <object id="57" x="124" y="234" width="62" height="39"/>
+  <object id="58" x="186" y="234" width="62" height="39"/>
+  <object id="59" x="248" y="234" width="62" height="39"/>
+  <object id="60" x="310" y="234" width="62" height="39"/>
+  <object id="61" x="0" y="273" width="62" height="39"/>
+  <object id="62" x="62" y="273" width="62" height="39"/>
+  <object id="63" x="124" y="273" width="62" height="39"/>
+  <object id="64" x="186" y="273" width="62" height="39"/>
+  <object id="65" x="248" y="273" width="62" height="39"/>
+  <object id="66" x="310" y="273" width="62" height="39"/>
  </objectgroup>
 </map>

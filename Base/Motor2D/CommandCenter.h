@@ -13,6 +13,7 @@ public:
 	bool Update(float dt);
 	void CleanUp();
 
+	void LoadAnimations(bool isPlayer1, string path);
 
 public:
 	vector<uint> damage_cast2, damage_cast3;

@@ -296,11 +296,11 @@ bool Scene::Update(float dt)
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 	{
-		App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, { x,y });
+		App->player1->type = Entity::entityType::COMMAND_CENTER;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
-		App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, { x,y });
+		App->player2->type = Entity::entityType::COMMAND_CENTER;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
 	{

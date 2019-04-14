@@ -27,7 +27,7 @@ bool Player::Start()
 
 	gold = actual_capacity = 0;
 
-	isBuilding = isDeploying = isCasting = false;
+	isBuilding = isDeploying = isCasting = entityAdded = false;
 	currentTile = { 13,0 };
 	
 
@@ -234,28 +234,43 @@ bool Player::Update(float dt)
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				//play fx (build);
-				App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first - offset.first, collider.tiles[0].second - offset.second });
+				//App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ });
 				UpdateWalkabilityMap(false);
+				entityAdded = true;
+				isBuilding = false;
+				currentUI == CURRENT_UI::CURR_GENERAL;
 			}
 		}
 		else
 		{
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
+				if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building
+				{
+					//buildings.pop_back();
+					
+				}
+				else if (type > Entity::entityType::BARRACKS) //if troops
+				{
+					//troops.pop_back();
+				}
+				entityAdded = false;
+				isBuilding = false;
+				currentUI == CURRENT_UI::CURR_GENERAL;
+
 				//play fx (error);
 			}
 		}
 	}
 
 	// DEBUG PURPOSES DO NOT DELETE PLEASE
-	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
 
 		
-
 		isBuilding = true;
-		type = Entity::entityType::DEFENSE_TARGET;
-		isPlayer1 = true;
-		collider.dimensions = { 3,4 };
+		type = Entity::entityType::BARRACKS;
+		//isPlayer1 = true;
+		collider.dimensions = { 4,3 };
 		currentUI == CURRENT_UI::CURR_BUILD;
 		//CheckBuildingPos();
 		
@@ -332,11 +347,21 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 	{
 		App->input->GetMousePosition(pos.first, pos.second);
 		pos = App -> render->ScreenToWorld(pos.first, pos.second);
+
 		pos = App->map->WorldToMap(pos.first, pos.second);
 		pos.first--;
 	}
 	
+	//Preview Building
+	if (!entityAdded) {
+		if (isPlayer1)
+			previewEntity = App->entitymanager->AddEntity(isPlayer1, type, { pos.first,pos.second });
+		else
+			previewEntity = App->entitymanager->AddEntity(isPlayer1, type, { pos.first,pos.second });
+		entityAdded = true;
+	}
 	
+	previewEntity->position = App->map->MapToWorld(pos.first, pos.second);
 	
 
 
@@ -379,6 +404,11 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 		App->render->Blit(App->map->debug_tex, collider.tiles[i].first, collider.tiles[i].second, &rect);
 	}
 	return ret;
+
+	
+
+
+
 }
 
 void Player::UpdateWalkabilityMap(bool isWalkable) //update walkable tiles
@@ -560,20 +590,20 @@ void Player::DoLogic(UI_Element* data)
 		isBuilding = true;
 		type = Entity::entityType::DEFENSE_AOE;
 		collider.dimensions = { 3,4 };
-		//offset = { 60,30 };
+		offset = { 60,30 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_TARGET:
 		isBuilding = true;
 
-		type = Entity::entityType::DEFENSE_AOE;
+		type = Entity::entityType::DEFENSE_TARGET;
 		collider.dimensions = { 3,4 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_MINE:
 		isBuilding = true;
 
-		type = Entity::entityType::DEFENSE_AOE;
+		type = Entity::entityType::MINES;
 		collider.dimensions = { 3,4 };
 
 		break;
@@ -581,12 +611,16 @@ void Player::DoLogic(UI_Element* data)
 	case::UI_Element::Action::ACT_BUILD_BARRACKS:
 		isBuilding = true;
 
-		type = Entity::entityType::DEFENSE_AOE;
+		type = Entity::entityType::BARRACKS;
 		collider.dimensions = { 3,4 };
 
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
+		isBuilding = true;
+
+		type = Entity::entityType::SOLDIER;
+		collider.dimensions = { 1,1 };
 		//
 		break;
 
