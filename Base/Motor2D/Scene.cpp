@@ -87,13 +87,13 @@ bool Scene::Start()
 
 		spritesheet123 = App->tex->Load("textures/prueba.png");
 
-	/*//--------- INIT BUILD ZONE LIMITS ------------- (falta cambiar con valores de las build Zones
-	App->player1->x_limits = { 10,20 };
-	App->player1->y_limits = { -1,20 };
+	//--------- INIT BUILD ZONE LIMITS ------------- (falta cambiar con valores de las build Zones
+	App->player1->x_limits_player1 = { 20,60 };
+	App->player1->y_limits_player1 = { 11,33 };
 
-	App->player2->x_limits = { 30,50 };
-	App->player2->y_limits = { 30,50 };
-*/
+	App->player2->x_limits_player2 = { 20,60 };
+	App->player2->y_limits_player2 = { 56,78 };
+
 		//spritesheet123 = App->tex->Load("textures/Buildings.png");
 	App->map->imagemap = App->tex->Load("textures/map3.png");
 
@@ -206,11 +206,11 @@ bool Scene::Start()
 
 
 	// --- CURSORS
-	App->player1->currentTile.first = 300;
-	App->player1->currentTile.second = 300;
+	App->player1->currentTile.first = 13;
+	App->player1->currentTile.second = 0;
 
-	App->player2->currentTile.first = 500;
-	App->player2->currentTile.second = 300;
+	App->player2->currentTile.first = 39;
+	App->player2->currentTile.second = 69;
 
 	if (App->player1->gamepad.Connected == false)
 		LOG("---Player 1 Gamepad not Connected");
