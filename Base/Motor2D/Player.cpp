@@ -144,11 +144,11 @@ bool Player::Update(float dt)
 	if (gamepad.Controller[UP] == KEY_DOWN)
 	{
 		
-		live -= 1000;
+		App->player1->TownHall->health -= 1000;
 	}
 
-	if (live < 0)
-		live = 0;
+	if (App->player1->TownHall->health < 0)
+		App->player1->TownHall->health = 0;
 	
 
 	//--- Building ---------------------

@@ -92,9 +92,6 @@ public:
 
 	SDL_Rect LiveBar;
 
-	// Live of TOWN HALL
-	int live = 2000;
-
 	GamePad gamepad;
 
 	pair<int,int> currentTile;
@@ -152,6 +149,9 @@ public:
 	UI_Element* Damage_text; //only for defense buildings
 	UI_Element* Prod_text; //only for townhall & mines
 	UI_Element* Capacity_text; //only for barracks
+
+	//Entities
+	Entity* TownHall;
 
 };
 

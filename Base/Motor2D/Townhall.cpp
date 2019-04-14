@@ -10,6 +10,7 @@
 
 Townhall::Townhall()
 {
+	health = 2000;
 }
 
 Townhall::~Townhall()
@@ -26,7 +27,7 @@ bool Townhall::Update(float dt)
 
 	if (fromPlayer1)
 	{
-		if (App->player1->live > 0) //if not destroyed
+		if (health > 0) //if not destroyed
 		{
 			if (upgrade == true) //upgrade
 			{
@@ -44,7 +45,7 @@ bool Townhall::Update(float dt)
 	}
 	else if (!fromPlayer1)
 	{
-		if (App->player2->live > 0) //if not destroyed
+		if (health > 0 > 0) //if not destroyed
 		{
 			if (upgrade == true) //upgrade
 			{
