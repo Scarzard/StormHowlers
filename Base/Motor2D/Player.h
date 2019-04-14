@@ -57,6 +57,7 @@ public:
 
 	bool Start();
 	bool Update(float dt);
+	void SpawnEntity();
 	bool PostUpdate();
 	bool CleanUp();
 
@@ -96,6 +97,8 @@ public:
 
 	// Live of TOWN HALL
 	int live = 2000;
+	//index for testing previews
+	int curr = 1;
 
 	GamePad gamepad;
 

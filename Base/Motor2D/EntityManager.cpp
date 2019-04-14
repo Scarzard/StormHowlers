@@ -221,8 +221,11 @@ bool EntityManager::Draw(float dt) //sprite ordering
 
 	while (tmp != entity_list.end())
 	{
-		int posy = (*tmp)->position.second - (*tmp)->Current_Animation->GetCurrentFrame(dt).h;// - ((*tmp)->Current_Animation->GetCurrentFrame(dt).h - (*tmp)->position.second);
-		App->render->Blit(entitiesTextures[(*tmp)->type],  (*tmp)->position.first ,posy, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
+		if (entitiesTextures[(*tmp)->type] != nullptr) {
+
+			int posy = (*tmp)->position.second - (*tmp)->Current_Animation->GetCurrentFrame(dt).h;// - ((*tmp)->Current_Animation->GetCurrentFrame(dt).h - (*tmp)->position.second);
+			App->render->Blit(entitiesTextures[(*tmp)->type],  (*tmp)->position.first ,posy, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
+		}
 		tmp++;
 	}
 	return ret;
@@ -295,6 +298,8 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			{
 				App->player1->troops.push_back((Troop*)tmp);
 			}
+			App->player1->collider.dimensions.first = tmp->size.first;
+			App->player1->collider.dimensions.second = tmp->size.second;
 		}
 		else // Player 2 -------------------------------
 		{
@@ -306,8 +311,12 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			{
 				App->player2->troops.push_back((Troop*)tmp);
 			}
+			App->player2->collider.dimensions.first = tmp->size.first;
+			App->player2->collider.dimensions.second = tmp->size.second;
 		}
 	}
+
+	
 	return tmp;
 
 }

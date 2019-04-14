@@ -3,6 +3,20 @@
 
 #include "Entity.h"
 
+enum entityDir {
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST,
+	NORTHEAST,
+	NORTHWEST,
+	SOUTHEAST,
+	SOUTHWEST,
+
+	MAX
+};
+
+
 class Troop : public Entity
 {
 public:
@@ -37,6 +51,12 @@ public:
 public:
 
 	int speed;
+
+	Animation* idle;
+	vector<Animation*> moving;
+	vector<Animation*> shooting;
+	//Animation idle;
+	int curr = 0;
 };
 
 #endif

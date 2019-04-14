@@ -97,6 +97,10 @@ public:
 		return frames[(int)current_frame];
 	}
 
+	void SetCurrentFrame(int frame) {
+		current_frame = frame;
+	}
+
 	bool Finished() const
 	{
 		return loops > 0;

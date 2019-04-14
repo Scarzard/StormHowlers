@@ -264,21 +264,27 @@ bool Player::Update(float dt)
 	}
 
 	// DEBUG PURPOSES DO NOT DELETE PLEASE
-	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
-
-		
-		isBuilding = true;
-		type = Entity::entityType::BARRACKS;
-		//isPlayer1 = true;
-		collider.dimensions = { 4,3 };
-		currentUI == CURRENT_UI::CURR_BUILD;
-		//CheckBuildingPos();
-		
-	}
+	SpawnEntity();
 
 	return true;
 }
 
+
+void Player::SpawnEntity() {
+	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
+		isBuilding = true;
+		isPlayer1 = true;
+		type = (Entity::entityType)curr++;
+		currentUI == CURRENT_UI::CURR_BUILD;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
+		isBuilding = true;
+		isPlayer1 = false;
+		type = (Entity::entityType)curr++;
+		currentUI == CURRENT_UI::CURR_BUILD;
+	}
+
+}
 bool Player::PostUpdate()
 {
 	BROFILER_CATEGORY("Player PostUpdate", Profiler::Color::Black);
@@ -589,7 +595,7 @@ void Player::DoLogic(UI_Element* data)
 	case::UI_Element::Action::ACT_BUILD_AOE:
 		isBuilding = true;
 		type = Entity::entityType::DEFENSE_AOE;
-		collider.dimensions = { 3,4 };
+		//collider.dimensions = { 3,4 };
 		offset = { 60,30 };
 		break;
 
@@ -597,14 +603,14 @@ void Player::DoLogic(UI_Element* data)
 		isBuilding = true;
 
 		type = Entity::entityType::DEFENSE_TARGET;
-		collider.dimensions = { 3,4 };
+		//collider.dimensions = { 3,4 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_MINE:
 		isBuilding = true;
 
 		type = Entity::entityType::MINES;
-		collider.dimensions = { 3,4 };
+		//collider.dimensions = { 3,4 };
 
 		break;
 
@@ -612,15 +618,15 @@ void Player::DoLogic(UI_Element* data)
 		isBuilding = true;
 
 		type = Entity::entityType::BARRACKS;
-		collider.dimensions = { 3,4 };
+		//collider.dimensions = { 3,4 };
 
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
-		isBuilding = true;
+		//isBuilding = true;
 
 		type = Entity::entityType::SOLDIER;
-		collider.dimensions = { 1,1 };
+		//collider.dimensions = { 1,1 };
 		//
 		break;
 

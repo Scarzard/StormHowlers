@@ -88,17 +88,7 @@ public:
 	~Entity() {};
 	virtual bool Awake(pugi::xml_node & config) { return true; };
 	virtual bool Start() { return true; };
-	virtual bool PreUpdate() { 
-		
-		//App->render->Blit(tex, position.first, position.second, object->GetCurrentFrame);
-		
-		
-		
-		
-		
-		
-		return true; 
-	};
+	virtual bool PreUpdate() { 	return true; };
 	virtual bool Update(float dt) { return true; };
 	virtual bool PostUpdate(
 	
