@@ -54,13 +54,13 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(pathfinding);
 	AddModule(scenechange);
-	AddModule(entitymanager);
 	AddModule(font);
 	AddModule(gui);
 	AddModule(player1);
 	AddModule(player2);
 	AddModule(main_menu);
 	AddModule(scene, false);
+	AddModule(entitymanager);
 	// render last to swap buffer
 	AddModule(render);
 
