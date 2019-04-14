@@ -752,17 +752,20 @@ void Scene::DrawLiveBar(Player* player)
 		App->render->DrawQuad(player->LiveBar, 255, 0, 0, 255, true, false);
 }
 
-void Scene::AlliedVictorious()
+void Scene::Victorious()
 {
-	App->dt = 0.0f;
-	SDL_Rect r = { 0,0,App->win->width,App->win->height };
-	SDL_RenderCopy(App->render->renderer, App->gui->allied_win_tex, NULL, &r);
+	if (App->player1->isPlayer1)
+	{
+		App->dt = 0.0f;
+		SDL_Rect r = { 0,0,App->win->width,App->win->height };
+		SDL_RenderCopy(App->render->renderer, App->gui->allied_win_tex, NULL, &r);
+	}
 	
-}
-
-void Scene::SovietVictorious()
-{
-	App->dt = 0.0f;
-	SDL_Rect r = { 0,0,App->win->width,App->win->height };
-	SDL_RenderCopy(App->render->renderer, App->gui->soviet_win_tex, NULL, &r);
+	else if (!App->player2->isPlayer1)
+	{
+		App->dt = 0.0f;
+		SDL_Rect r = { 0,0,App->win->width,App->win->height };
+		SDL_RenderCopy(App->render->renderer, App->gui->soviet_win_tex, NULL, &r);
+	}
+	
 }

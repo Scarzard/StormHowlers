@@ -39,7 +39,7 @@ bool Townhall::Update(float dt)
 		}
 		else
 		{
-			App->scene->AlliedVictorious();
+			App->scene->Victorious();
 		}
 	}
 	else if (!fromPlayer1)
@@ -57,7 +57,7 @@ bool Townhall::Update(float dt)
 		}
 		else
 		{
-			App->scene->SovietVictorious();
+			App->scene->Victorious();
 		}
 	}
 	ChangeAnimation();
