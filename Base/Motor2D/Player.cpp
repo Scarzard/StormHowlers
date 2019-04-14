@@ -144,7 +144,7 @@ bool Player::Update(float dt)
 	if (gamepad.Controller[UP] == KEY_DOWN)
 	{
 		
-		live -= 100;
+		live -= 1000;
 	}
 
 	if (live < 0)

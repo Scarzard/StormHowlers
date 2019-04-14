@@ -23,11 +23,10 @@ Townhall::Townhall(bool isPlayer1, pair<int,int> pos): Building(Entity::entityTy
 bool Townhall::Update(float dt)
 {
 	BROFILER_CATEGORY("Townhall Update", Profiler::Color::SandyBrown);
-	health = App->player1->live;
 
 	if (fromPlayer1)
 	{
-		if (health > 0) //if not destroyed
+		if (App->player1->live > 0) //if not destroyed
 		{
 			if (upgrade == true) //upgrade
 			{
@@ -40,14 +39,12 @@ bool Townhall::Update(float dt)
 		}
 		else
 		{
-			//player 1 lose
-			//put dt to 0
-			//App->render->Blit(App->gui->allied_win_tex, 0, 0, NULL, SDL_FLIP_NONE, 0.0f);
+			App->scene->Victorious();
 		}
 	}
 	else if (!fromPlayer1)
 	{
-		if (health > 0) //if not destroyed
+		if (App->player2->live > 0) //if not destroyed
 		{
 			if (upgrade == true) //upgrade
 			{
@@ -60,7 +57,7 @@ bool Townhall::Update(float dt)
 		}
 		else
 		{
-			//player 2 lose
+			App->scene->Victorious();
 		}
 	}
 	ChangeAnimation();

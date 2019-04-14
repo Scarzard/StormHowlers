@@ -89,7 +89,7 @@ public:
 	void SpawnEntities();
 
 	void DrawLiveBar(Player* player);
-
+	void Victorious();
 
 	//void changeSize(float time, int maxsize);
 

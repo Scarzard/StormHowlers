@@ -30,8 +30,8 @@ bool Gui::Awake(pugi::xml_node& conf)
 	bool ret = true;
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
-	allied_win_name = conf.child("menu_bg").attribute("file").as_string("");
-	soviet_win_name = conf.child("menu_bg").attribute("file").as_string("");
+	allied_win_name = conf.child("allied").attribute("file").as_string("");
+	soviet_win_name = conf.child("soviet").attribute("file").as_string("");
 	
 	return ret;
 }
