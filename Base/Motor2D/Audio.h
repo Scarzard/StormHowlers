@@ -2,6 +2,7 @@
 #define __Audio_H__
 
 #include "Module.h"
+#include "Timer.h"
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
@@ -31,7 +32,7 @@ public:
 	bool Awake(pugi::xml_node&);
 
 	// Called every frame 
-	bool Update(float dt); 
+	bool Update(float dt);
 
 	// Called before quitting
 	bool CleanUp();
@@ -48,9 +49,16 @@ public:
 	void AdjustMusicVol(int value);
 	void AdjustSoundVol(int value);
 	void PauseMusic();
+	void FadeOut(const char* path);
+	void FadeIn();
 
 	bool song1played = false;
 	bool song2played = false;
+	bool fading_in = false;
+	bool fading_out = false;
+	bool reading_time = true;
+
+	int fade_time = 0;
 
 public:
 	string			folder_music;
@@ -62,6 +70,8 @@ private:
 
 	_Mix_Music*			music = NULL;
 	list<Mix_Chunk*>	fx;
+
+	string track;
 };
 
 #endif // __Audio_H__
