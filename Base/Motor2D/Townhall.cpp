@@ -4,6 +4,7 @@
 #include "Render.h"
 #include "Map.h"
 #include "Player.h"
+#include "Gui.h"
 #include "Brofiler\Brofiler.h"
 
 
@@ -22,6 +23,7 @@ Townhall::Townhall(bool isPlayer1, pair<int,int> pos): Building(Entity::entityTy
 bool Townhall::Update(float dt)
 {
 	BROFILER_CATEGORY("Townhall Update", Profiler::Color::SandyBrown);
+	health = App->player1->live;
 
 	if (fromPlayer1)
 	{
@@ -39,6 +41,8 @@ bool Townhall::Update(float dt)
 		else
 		{
 			//player 1 lose
+			//put dt to 0
+			//App->render->Blit(App->gui->allied_win_tex, 0, 0, NULL, SDL_FLIP_NONE, 0.0f);
 		}
 	}
 	else if (!fromPlayer1)

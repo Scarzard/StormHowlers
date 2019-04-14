@@ -140,10 +140,6 @@ bool Player::Update(float dt)
 
 	}
 
-
-	
-
-
 	// Just to test the LiveBar
 	if (gamepad.Controller[UP] == KEY_DOWN)
 	{
@@ -154,8 +150,6 @@ bool Player::Update(float dt)
 	if (live < 0)
 		live = 0;
 	
-	
-
 
 	//--- Building ---------------------
 	if (isBuilding)
@@ -570,6 +564,12 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_REPAIR:
+		//
+		break;
+	case::UI_Element::Action::REMATCH:
+		
+		break;
+	case::UI_Element::Action::RETURN_MAINMENU:
 		//
 		break;
 	}

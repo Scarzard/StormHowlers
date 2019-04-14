@@ -57,7 +57,12 @@ public:
 		CONTINUE,
 		SETTINGS,
 		WEBPAGE,
-		EXIT
+		EXIT,
+
+		//Win/Lose buttons
+		REMATCH,
+		RETURN_MAINMENU
+
 	};
 
 	enum State

@@ -30,6 +30,8 @@ bool Gui::Awake(pugi::xml_node& conf)
 	bool ret = true;
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
+	allied_win_name = conf.child("menu_bg").attribute("file").as_string("");
+	soviet_win_name = conf.child("menu_bg").attribute("file").as_string("");
 	
 	return ret;
 }
@@ -38,7 +40,8 @@ bool Gui::Awake(pugi::xml_node& conf)
 bool Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.data());
-	
+	allied_win_tex = App->tex->Load(allied_win_name.data());
+	soviet_win_tex = App->tex->Load(soviet_win_name.data());
 
 	return true;
 }
