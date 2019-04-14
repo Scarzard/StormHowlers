@@ -710,8 +710,8 @@ void Scene::SpawnEntities() //
 
 	//Entity* player = App->entitymanager->AddEntity(Entity::entityType::PLAYER, { 0,0 }, { 0,0 });
 	//player->Awake(config.child(App->entitymanager->name.data()));
-	App->player1->Start();
-	App->player1->TownHall = App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 50, 50 });
+	//player->Start();
+	App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 0,0 });
 }
 
 //void Scene::changeSize(float time, int maxsize)
@@ -742,11 +742,11 @@ void Scene::SpawnEnemies() //
 
 void Scene::DrawLiveBar(Player* player)
 {
-	player->LiveBar.w = (348 * App->player1->TownHall->health) / 2000; // (maximum rect width * town hall live) / MAX town hall live
+	player->LiveBar.w = (348 * player->live) / 2000; // (maximum rect width * town hall live) / MAX town hall live
 
-	if (App->player1->TownHall->health >= 1500)
+	if (player->live >= 1500)
 		App->render->DrawQuad(player->LiveBar, 0, 255, 0, 255, true, false);
-	else if (App->player1->TownHall->health >= 750 && App->player1->TownHall->health <= 1500)
+	else if (player->live >= 750 && player->live <= 1500)
 		App->render->DrawQuad(player->LiveBar, 255, 150, 0, 255, true, false);
 	else
 		App->render->DrawQuad(player->LiveBar, 255, 0, 0, 255, true, false);
@@ -757,10 +757,10 @@ void Scene::Victorious()
 	if (App->player1->isPlayer1)
 	{
 		App->dt = 0.0f;
-		SDL_Rect r = { 0, 0, App->win->width, App->win->height };
+		SDL_Rect r = { 0,0,App->win->width,App->win->height };
 		SDL_RenderCopy(App->render->renderer, App->gui->allied_win_tex, NULL, &r);
 	}
-	else if (!App->player2->isPlayer1)
+	else if (!App->player1->isPlayer1)
 	{
 		App->dt = 0.0f;
 		App->render->Blit(App->gui->soviet_win_tex, 0, 0, NULL, SDL_FLIP_NONE, 0.0f);
