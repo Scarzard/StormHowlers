@@ -711,7 +711,7 @@ void Scene::SpawnEntities() //
 	//Entity* player = App->entitymanager->AddEntity(Entity::entityType::PLAYER, { 0,0 }, { 0,0 });
 	//player->Awake(config.child(App->entitymanager->name.data()));
 	//player->Start();
-	App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 0,0 });
+	App->player1->TownHall = App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 0,0 });
 }
 
 //void Scene::changeSize(float time, int maxsize)
@@ -752,18 +752,17 @@ void Scene::DrawLiveBar(Player* player)
 		App->render->DrawQuad(player->LiveBar, 255, 0, 0, 255, true, false);
 }
 
-void Scene::Victorious()
+void Scene::AlliedVictorious()
 {
-	if (App->player1->isPlayer1)
-	{
-		App->dt = 0.0f;
-		SDL_Rect r = { 0,0,App->win->width,App->win->height };
-		SDL_RenderCopy(App->render->renderer, App->gui->allied_win_tex, NULL, &r);
-	}
-	else if (!App->player1->isPlayer1)
-	{
-		App->dt = 0.0f;
-		App->render->Blit(App->gui->soviet_win_tex, 0, 0, NULL, SDL_FLIP_NONE, 0.0f);
-	}
+	App->dt = 0.0f;
+	SDL_Rect r = { 0,0,App->win->width,App->win->height };
+	SDL_RenderCopy(App->render->renderer, App->gui->allied_win_tex, NULL, &r);
+	
 }
 
+void Scene::SovietVictorious()
+{
+	App->dt = 0.0f;
+	SDL_Rect r = { 0,0,App->win->width,App->win->height };
+	SDL_RenderCopy(App->render->renderer, App->gui->soviet_win_tex, NULL, &r);
+}

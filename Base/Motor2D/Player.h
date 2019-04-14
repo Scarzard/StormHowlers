@@ -97,6 +97,8 @@ public:
 
 	GamePad gamepad;
 
+	Entity* TownHall;
+
 	pair<int,int> currentTile;
 	pair<int, int> x_limits, y_limits;
 
