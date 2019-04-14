@@ -85,7 +85,10 @@ public:
 
 	bool isPlayer1;
 	string team;
+
 	uint gold;
+	uint time_iterator;
+
 	uint currentUI;
 	int actual_capacity;
 

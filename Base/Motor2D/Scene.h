@@ -128,6 +128,11 @@ public:
 	bool change_font_size = false;
 	bool reference_active = false;
 	bool pausetimer = false;
+
+	// Players Gold
+	char current_p1_gold[20] = "0000 $";
+	char current_p2_gold[20] = "0000 $";
+
 	
 
 

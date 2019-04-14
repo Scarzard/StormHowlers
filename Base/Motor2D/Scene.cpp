@@ -71,7 +71,7 @@ bool Scene::Start()
 	App->map->debug_tex = App->tex->Load("maps/meta.png");
 
 	App->player1->LiveBar = { 51, 18 , 348, 19 }; //LiveBar for player1
-	App->player2->LiveBar = { 1490, 920 , 348, 19 }; //LiveBar for player2
+	App->player2->LiveBar = { 1232, 921 , 348, 19 }; //LiveBar for player2
 
 	//walkability map
 	Wmap = NULL;
@@ -164,30 +164,36 @@ bool Scene::Start()
 	//App->player1->Prod_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 	//App->player1->Capacity_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 
+	App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 470, 19 }, { 0, 0 }, nullptr, true, { false,false }, "$ 0000");
+	App->player1->Gold_UI->color = { 255,255,0,255 };
+
 
 	//--- PLAYER 2
 	//App->player2->Health_UI = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
 	//App->player2->Gold_UI = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
-	App->player2->Main_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width ,App->win->height + 122 }, { 566,163 }, nullptr, true);
+	App->player2->Main_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 122 }, { 566,163 }, nullptr, true);
 	App->player2->Main_UI->rect = { 0, 408, 566, 163 };
 	App->player2->Build_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_BUILD, { 275,55 }, { 80, 81 }, App->player2->Main_UI, true);
 	App->player2->Deploy_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 378,55 }, { 80, 81 }, App->player2->Main_UI, true);
 	App->player2->Cast_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 483,55 }, { 80,81 }, App->player2->Main_UI, true);
 
 
-	App->player2->Build_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width ,App->win->height + 122 }, { 566, 163 }, nullptr, false);
+	App->player2->Build_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
 	App->player2->Build_UI->rect = { 569, 246, 566, 163 };
 	App->player2->Def_AOE_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { 119, 55 }, { 85, 81 }, App->player2->Build_UI, false);
 	App->player2->Def_Target_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { 222, 55 }, { 85, 81 }, App->player2->Build_UI, false);
 	App->player2->Mines_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { 325,55 }, { 85,81 }, App->player2->Build_UI, false);
 	App->player2->Barracks_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { 425, 55 }, { 85, 81 }, App->player2->Build_UI, false);
 
-	App->player2->Deploy_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width ,App->win->height + 122 }, { 566, 163 }, nullptr, false);
+	App->player2->Deploy_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
 	App->player2->Deploy_UI->rect = { 569, 411, 566, 163 };
 	App->player2->Soldier_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_SOLDIER, { 68, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
 	App->player2->Tankman_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_TANKMAN, { 171, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
+	App->player2->Engineer_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_ENGINEER, { 274, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
+	App->player2->War_hound_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { 377, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
+	App->player2->Infiltrator_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { 480, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
 
-	App->player2->Cast_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width ,App->win->height + 122 }, { 166,79 }, nullptr, false);
+	App->player2->Cast_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 166,79 }, nullptr, false);
 	App->player2->Cast_UI->rect = { 0, 573, 566, 163 };
 	App->player2->Cast2_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_TANKS, { 171 ,55 }, { 85, 81 }, App->player2->Cast_UI, false);
 	App->player2->Cast3_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_INVULNERABILITY, { 273, 55 }, { 85, 81 }, App->player2->Cast_UI, false);
@@ -203,6 +209,9 @@ bool Scene::Start()
 	//App->player2->Damage_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, player.General_UI, false, { false, false }, "data");
 	//App->player2->Prod_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
 	//App->player2->Capacity_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
+
+	App->player2->Gold_UI = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 2000, 1191 }, { 0, 0 }, nullptr, true, { false,false }, "$ 0000");
+	App->player2->Gold_UI->color = { 255,255,0,255 };
 
 
 	// --- CURSORS
@@ -252,6 +261,14 @@ bool Scene::PreUpdate()
 			App->player1->gold += (*item)->production;
 		}
 	}
+	// This updates the gold every second. This has to be in the if above: if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
+	if (world_clock.ReadSec() > App->player1->time_iterator)
+	{
+		App->player1->gold += 100;
+		App->player1->time_iterator++;
+	}
+
+	
 
 	// Gold Player 2 -----------
 	item = App->player2->buildings.begin();
@@ -261,6 +278,12 @@ bool Scene::PreUpdate()
 		{
 			App->player2->gold += (*item)->production;
 		}
+	}
+	// This updates the gold every second. This has to be in the if above: if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
+	if (world_clock.ReadSec() > App->player2->time_iterator)
+	{
+		App->player2->gold += 100;
+		App->player2->time_iterator++;
 	}
 	//----
 
@@ -620,8 +643,13 @@ bool Scene::PostUpdate()
 
 			sprintf_s(current_time, "TIME: %u:%u",worldminutes, worldseconds);
 			(*item)->label = current_time;
-			break;
 		}
+		else if ((*item) == App->player1->Gold_UI) //gold
+		{
+			sprintf_s(current_p1_gold, "$ %u", App->player1->gold);
+			(*item)->label = current_p1_gold;
+		}
+
 		App->gui->UpdateState(*item);
 		item++;
 	}
@@ -630,6 +658,11 @@ bool Scene::PostUpdate()
 	item = App->player2->UI_elements.rbegin();
 	while (item != App->player2->UI_elements.rend())
 	{
+		if ((*item) == App->player2->Gold_UI) //gold
+		{
+			sprintf_s(current_p2_gold, "$ %u", App->player2->gold);
+			(*item)->label = current_p2_gold;
+		}
 		App->gui->UpdateState(*item);
 		item++;
 	}
