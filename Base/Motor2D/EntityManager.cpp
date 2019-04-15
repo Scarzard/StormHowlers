@@ -45,6 +45,7 @@ bool EntityManager::Awake(pugi::xml_node &config)
 	texture_path = config.child("sprite_sheet").attribute("source").as_string();
 	entitiesTextures = vector<SDL_Texture*>(Entity::entityType::WAR_HOUND, nullptr);
 
+
 	return ret;
 }
 
@@ -165,7 +166,7 @@ bool EntityManager::CleanUp()
 	wall_parts_list.clear();
 
 
-	Building::CleanUp();
+	//Building::CleanUp();
 
 
 	return true;
@@ -234,19 +235,24 @@ bool EntityManager::Draw(float dt) //sprite ordering
 
 	while (tmp != entity_list.end())
 	{
-		if (entitiesTextures[(*tmp)->type] != nullptr) {
+		//if (entitiesTextures[(*tmp)->type] != nullptr) {
 
-			int posy = (*tmp)->position.second - (*tmp)->Current_Animation->GetCurrentFrame(dt).h;// - ((*tmp)->Current_Animation->GetCurrentFrame(dt).h - (*tmp)->position.second);
-			App->render->Blit(entitiesTextures[(*tmp)->type],  (*tmp)->position.first ,posy, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
-		}
+		//	int posy = (*tmp)->position.second - (*tmp)->Current_Animation->GetCurrentFrame(dt).h;// - ((*tmp)->Current_Animation->GetCurrentFrame(dt).h - (*tmp)->position.second);
+		//	App->render->Blit(entitiesTextures[(*tmp)->type],  (*tmp)->position.first ,posy, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
+		//}
 		
 		
 		if ((*tmp)->type == Entity::entityType::WALLS)
 		{
-			list<wall_parts*>::iterator tmp2 = (*tmp).wall_parts_list.begin();
+			list<wall_parts*>::iterator tmp2 = (wall_parts_list.begin());
 			while (tmp2 != wall_parts_list.end())
 			{
-				App->render->Blit(wall_text, (*tmp2)->coordinates.first, (*tmp2)->coordinates.second, &((*tmp2)->wall_anim->GetCurrentFrame(dt)));
+				pair<int, int> pos;
+				pos.first = (*tmp2)->coordinates.first;
+				pos.second = (*tmp2)->coordinates.second;
+				pos = App->map->MapToWorld(pos.first, pos.second);
+
+				App->render->Blit(wall_text, pos.first, pos.second, &((*tmp2)->wall_anim->GetCurrentFrame(dt)));
 				tmp2++;
 			}
 
@@ -278,7 +284,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		break;
 
 	case Entity::entityType::WALLS:
-		tmp = new Walls();
+		tmp = new Walls(isPlayer1,position);
 		break;
 
 	case Entity::entityType::DEFENSE_AOE:

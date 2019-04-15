@@ -35,6 +35,9 @@ public:
 
 	bool draw_path = false;
 	bool godmode = false;
+
+	list<wall_parts*> wall_parts_list;
+	SDL_Texture* wall_text;
 };
 
 #endif //

@@ -13,7 +13,7 @@ public:
 		pugi::xml_node config;
 		config = App->LoadConfig(config_file);
 		config = config.child("entitymanager").child("buildings").child(&name[0]);
-
+		
 		capacity_lv.push_back(config.child("capacity").attribute("lvl1").as_uint(0));
 		capacity_lv.push_back(config.child("capacity").attribute("lvl2").as_uint(0));
 		capacity_lv.push_back(config.child("capacity").attribute("lvl3").as_uint(0));

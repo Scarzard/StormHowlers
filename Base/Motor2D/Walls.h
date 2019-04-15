@@ -23,7 +23,7 @@ public:
 	void CleanUp();
 	void LoadAnimations(bool isPlayer1, string path);
 
-	list<wall_parts*> wall_parts_list;
+	
 	
 	Animation* tower;
 	Animation* front;
@@ -32,7 +32,7 @@ public:
 	Animation* corner_down_right;
 	Animation* corner_up_left;
 	Animation* corner_up_right;
-	SDL_Texture* wall_text;
+
 };
 
 #endif

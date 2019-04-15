@@ -7,8 +7,16 @@
 #include "Brofiler\Brofiler.h"
 
 
-Walls::Walls()
+Walls::Walls() 
 {
+	
+	
+}
+
+Walls::Walls(bool isPlayer1, pair<int, int> pos) : Building(entityType::WALLS, isPlayer1, pos)
+{
+	string path = "animation/" + name + ".tmx";
+	//LoadAnimations(isPlayer1, path.data());
 	LoadWalls();
 }
 
@@ -19,14 +27,14 @@ Walls::~Walls()
 bool Walls::LoadWalls()
 {
 	bool ret = true;
-	wall_text = App->tex->Load("animation/Walls_anim.png");
-	front = front->LoadAnimation("animation/walls", "principal_wall");
-	side = side->LoadAnimation("animation/walls", "side_wall");
-	corner_down_left = corner_down_left->LoadAnimation("animation/walls", "corner_east");
-	tower = tower->LoadAnimation("animation/walls", "small_wall");
-	corner_down_right = corner_down_right->LoadAnimation("animation/walls", "corner_north");
-	corner_up_left = corner_up_left->LoadAnimation("animation/walls", "corner_south");
-	corner_up_right = corner_up_right->LoadAnimation("animation/walls", "corner_west");
+
+	front = front->LoadAnimation("animation/walls.tmx", "principal_wall");
+	side = side->LoadAnimation("animation/walls.tmx", "side_wall");
+	corner_down_left = corner_down_left->LoadAnimation("animation/walls.tmx", "corner_east");
+	tower = tower->LoadAnimation("animation/walls.tmx", "small_wall");
+	corner_down_right = corner_down_right->LoadAnimation("animation/walls.tmx", "corner_north");
+	corner_up_left = corner_up_left->LoadAnimation("animation/walls.tmx", "corner_south");
+	corner_up_right = corner_up_right->LoadAnimation("animation/walls.tmx", "corner_west");
 
 
 	list<wall_coordinates*>::iterator item = App->map->data.wall_list.begin();
@@ -101,7 +109,7 @@ bool Walls::LoadWalls()
 
 		}
 
-		wall_parts_list.push_back(wallpart);
+		App->entitymanager->wall_parts_list.push_back(wallpart);
 
 		item++;
 	}
@@ -112,11 +120,7 @@ bool Walls::LoadWalls()
 	return ret;
 }
 
-Walls::Walls(bool isPlayer1, pair<int, int> pos) : Building(entityType::WALLS,isPlayer1, pos)
-{
-	string path = "animation/" + name + ".tmx";
-	LoadAnimations(isPlayer1, path.data());
-}
+
 
 bool Walls::Update(float dt)
 {
@@ -133,13 +137,7 @@ void Walls::CleanUp()
 {
 	LOG("---Wall Deleted");
 	
-	list<wall_parts*>::iterator item = wall_parts_list.begin();
-	while (item != wall_parts_list.end())
-	{
-		RELEASE(*item);
-		item++;
-	}
-	wall_parts_list.clear();
+	
 
 
 	Building::CleanUp();
