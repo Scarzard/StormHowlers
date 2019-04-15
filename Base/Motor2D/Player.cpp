@@ -765,6 +765,13 @@ void Player::DoLogic(UI_Element* data)
 {
 	switch (data->action)
 	{
+
+	/*case::UI_Element::Action::NEW_GAME:
+		App->scenechange->ContinueGame = true;
+		App->scenechange->SwitchScene(App->scene, App->main_menu);
+		menu_background->visible = false;
+		break;*/
+
 	case::UI_Element::Action::ACT_GOTO_MAIN:
 		currentUI = CURR_MAIN;
 		UpdateVisibility();
@@ -878,10 +885,9 @@ void Player::DoLogic(UI_Element* data)
 		App->player1->CleanUp();
 		App->gui->CleanUp();
 		App->map->CleanUp();
-		App->audio->CleanUp();
+		App->font->CleanUp();
 		
 		App->font->Start();
-		App->audio->Start();
 		App->map->Start();
 		App->gui->Start();
 		App->player1->Start();

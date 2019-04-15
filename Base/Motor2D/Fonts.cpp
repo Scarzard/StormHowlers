@@ -34,29 +34,37 @@ bool Fonts::Awake(pugi::xml_node& conf)
 		size = conf.child("default_font").attribute("size").as_int(DEFAULT_FONT_SIZE);
 		default_size = size;
 		
-		for (int i = 1; i<=60; i++)
-		{
-			
-			if (i == DEFAULT_FONT_SIZE)
-			{
-				default = Load(path, size);
-				actual_font = default;
-			}
-			else if (i == 10)
-			{
-				main_menu_font = Load(path, i);
-			}
-			else
-			{
-				Load(path, i);
-			}
-			
-
-		}
+		
 		
 	}
 
 	return ret;
+}
+
+bool Fonts::Start()
+{
+
+	for (int i = 1; i <= 60; i++)
+	{
+
+		if (i == DEFAULT_FONT_SIZE)
+		{
+			default = Load(path, DEFAULT_FONT_SIZE);
+			actual_font = default;
+		}
+		else if (i == 40)
+		{
+			main_menu_font = Load(path, i);
+		}
+		else
+		{
+			Load(path, i);
+		}
+
+
+	}
+
+	return true;
 }
 
 // Called before quitting
@@ -70,7 +78,7 @@ bool Fonts::CleanUp()
 		TTF_CloseFont(*item);
 	}
 	fonts.clear();
-	TTF_Quit();
+	//TTF_Quit();
 
 	return true;
 }

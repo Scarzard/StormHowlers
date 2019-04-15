@@ -40,20 +40,20 @@ public:
 public:
 	string menu_bg_file_name;
 
-	UI_Element* menu_background;
+	UI_Element* menu_background = nullptr;
 
-	UI_Element* new_game_button;
-	UI_Element* new_game_text;
+	UI_Element* new_game_button = nullptr;
+	UI_Element* new_game_text = nullptr;
 	char new_game_label[5] = "Play";
 
-	UI_Element* continue_button;
-	UI_Element* continue_text;
+	UI_Element* continue_button = nullptr;
+	UI_Element* continue_text = nullptr;
 
-	UI_Element* exit_button;
-	UI_Element* exit_text;
+	UI_Element* exit_button = nullptr;
+	UI_Element* exit_text = nullptr;
 	char exit_label[5] = "EXIT";
 
-	string current_track;
+	string current_track ;
 	string current_fx;
 private:
 	bool close_app = true;

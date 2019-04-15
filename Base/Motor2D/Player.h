@@ -77,31 +77,31 @@ public:
 	bool DeleteEntity(Entity* entity);
 
 public:
-	bool onUI;
-	bool isBuilding;
-	bool isDeploying;
-	bool isCasting;
-	bool isPaused;
+	bool onUI = false;
+	bool isBuilding = false;
+	bool isDeploying = false;
+	bool isCasting = false;
+	bool isPaused = false;
 
 	Collider collider;
 	pair<int, int> offset;
 	Entity::entityType type;
 
-	bool isPlayer1;
+	bool isPlayer1 = false;
 	string team;
 
-	uint gold;
-	uint time_iterator;
+	uint gold = 0;
+	uint time_iterator = 0;
 
-	uint last_currentUI;
-	uint currentUI;
-	int actual_capacity;
+	uint last_currentUI = 0;
+	uint currentUI = 0;
+	int actual_capacity = 0;
 
 
 	SDL_Rect LiveBar;
 
 	// Live of TOWN HALL
-	int live;
+	int live = 0;
 
 	GamePad gamepad;
 
@@ -123,90 +123,90 @@ public:
 
 	// --- UI --- //
 	
-	UI_Element* Gold_UI;
+	UI_Element* Gold_UI = nullptr;
 
-	UI_Element* Main_UI;
-	UI_Element* Build_icon;
-	UI_Element* Deploy_icon;
-	UI_Element* Cast_icon;
+	UI_Element* Main_UI = nullptr;
+	UI_Element* Build_icon = nullptr;
+	UI_Element* Deploy_icon = nullptr;
+	UI_Element* Cast_icon = nullptr;
 
-	UI_Element* Build_UI;
-	UI_Element* Def_AOE_icon;
-	UI_Element* Def_Target_icon;
-	UI_Element* Mines_icon;
-	UI_Element* Barracks_icon;
+	UI_Element* Build_UI = nullptr;
+	UI_Element* Def_AOE_icon = nullptr;
+	UI_Element* Def_Target_icon = nullptr;
+	UI_Element* Mines_icon = nullptr;
+	UI_Element* Barracks_icon = nullptr;
 
-	UI_Element* Deploy_UI;
-	UI_Element* Soldier_icon;
-	UI_Element* Tankman_icon;
-	UI_Element* Infiltrator_icon;
-	UI_Element* Engineer_icon;
-	UI_Element* War_hound_icon;
+	UI_Element* Deploy_UI = nullptr;
+	UI_Element* Soldier_icon = nullptr;
+	UI_Element* Tankman_icon = nullptr;
+	UI_Element* Infiltrator_icon = nullptr;
+	UI_Element* Engineer_icon = nullptr;
+	UI_Element* War_hound_icon = nullptr;
 
-	UI_Element* Cast_UI;
-	UI_Element* Missiles_icon;
-	UI_Element* Cast2_icon;
-	UI_Element* Cast3_icon;
+	UI_Element* Cast_UI = nullptr;
+	UI_Element* Missiles_icon = nullptr;
+	UI_Element* Cast2_icon = nullptr;
+	UI_Element* Cast3_icon = nullptr;
 
 	// Selected Building UI
-	UI_Element* General_UI;
-	UI_Element* Upgrade_icon;
-	UI_Element* Repair_icon;
-	UI_Element* Name_text;
-	UI_Element* Level_text;
-	UI_Element* Health_text;
-	UI_Element* UpgradeCost_text;
-	UI_Element* RepairCost_text;
-	UI_Element* Damage_text; //only for defense buildings
-	UI_Element* Prod_text; //only for townhall & mines
-	UI_Element* Capacity_text; //only for barracks
+	UI_Element* General_UI = nullptr;
+	UI_Element* Upgrade_icon = nullptr;
+	UI_Element* Repair_icon = nullptr;
+	UI_Element* Name_text = nullptr;
+	UI_Element* Level_text = nullptr;
+	UI_Element* Health_text = nullptr;
+	UI_Element* UpgradeCost_text = nullptr;
+	UI_Element* RepairCost_text = nullptr;
+	UI_Element* Damage_text = nullptr; //only for defense buildings
+	UI_Element* Prod_text = nullptr; //only for townhall & mines
+	UI_Element* Capacity_text = nullptr; //only for barracks
 
 	// Pause Menu
-	UI_Element* Pause_UI;
+	UI_Element* Pause_UI = nullptr;
 
-	UI_Element* Resume_Button;
-	UI_Element* Resume_text;
+	UI_Element* Resume_Button = nullptr;
+	UI_Element* Resume_text = nullptr;
 	char resume_label[12] = "Resume Game";
 
-	UI_Element* Settings_Button;
-	UI_Element* Settings_text;
+	UI_Element* Settings_Button = nullptr;
+	UI_Element* Settings_text = nullptr;
 	char settings_label[9] = "Settings";
 
-	UI_Element* Abort_Button;
-	UI_Element* Abort_text;
+	UI_Element* Abort_Button = nullptr;
+	UI_Element* Abort_text = nullptr;
 	char abort_label[14] = "Abort Mission";
 
 	// Pause Settings Menu
-	UI_Element* Settings_UI;
+	UI_Element* Settings_UI = nullptr;
 
-	UI_Element* Music_Settings;
-	UI_Element* Music_text;
+	UI_Element* Music_Settings = nullptr;
+	UI_Element* Music_text = nullptr;
 	char Music_label[14] = "Music Volume";
-	UI_Element* Music_Slider;
-	UI_Element* Music_Slider_text;
+	UI_Element* Music_Slider = nullptr;
+	UI_Element* Music_Slider_text = nullptr;
 	char Music_Slider_label[5] = "0";
-	UI_Element* Music_Slider_Button;
+	UI_Element* Music_Slider_Button = nullptr;
 
-	UI_Element* FX_Settings;
-	UI_Element* FX_text;
+	UI_Element* FX_Settings = nullptr;
+	UI_Element* FX_text = nullptr;
 	char FX_label[10] = "FX Volume";
-	UI_Element* FX_Slider;
-	UI_Element* FX_Slider_text;
+	UI_Element* FX_Slider = nullptr;
+	UI_Element* FX_Slider_text = nullptr;
 	char FX_Slider_label[5] = "0";
-	UI_Element* FX_Slider_Button;
+	UI_Element* FX_Slider_Button = nullptr;
 
 	// Pause Abort Mission
 
-	UI_Element* Abort_UI;
-	UI_Element* Abort_Message;
+	UI_Element* Abort_UI = nullptr;
+	UI_Element* Abort_Message = nullptr;
 	char Abort_message_label[27] = "What would you like to do?";
 
-	UI_Element* Quit;
-	UI_Element* Quit_text;
+	UI_Element* Quit = nullptr;
+	UI_Element* Quit_text = nullptr;
 	char Quit_label[10] = "Surrender";
 
-	UI_Element* Restart;
-	UI_Element* Restart_text;
+	UI_Element* Restart = nullptr;
+	UI_Element* Restart_text = nullptr;
 	char Restart_label[13] = "Restart Game";
 	
 

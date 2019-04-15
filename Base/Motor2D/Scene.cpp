@@ -251,7 +251,7 @@ bool Scene::Start()
 	App->player2->Main_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 122 }, { 566,163 }, nullptr, true);
 	App->player2->Main_UI->rect = { 0, 408, 566, 163 };
 	App->player2->Build_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_BUILD, { 275,55 }, { 80, 81 }, App->player2->Main_UI, true);
-	App->player2->Deploy_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 378,55 }, { 80, 81 }, App->player2->Main_UI, true);
+	App->player2->Deploy_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 374,55 }, { 80, 81 }, App->player2->Main_UI, true);
 	App->player2->Cast_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 483,55 }, { 80,81 }, App->player2->Main_UI, true);
 
 
@@ -296,13 +296,18 @@ bool Scene::Start()
 
 	App->player2->Abort_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ABORT_PAUSE, { 1291 ,868 }, { 301,59 }, App->player2->Pause_UI, false);
 	App->player2->Abort_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Abort_Button, false, { false, false });
-	App->player2->Abort_text->label = App->player1->abort_label;
+	App->player2->Abort_text->label = App->player2->abort_label;
 	App->player2->Abort_text->color = { 255,255,9,255 };
 
 	App->player2->Settings_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player2->Pause_UI, false);
 	App->player2->Settings_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player2->Settings_Button, false, { false, false });
 	App->player2->Settings_text->label = App->player2->settings_label;
 	App->player2->Settings_text->color = { 255,255,9,255 };
+
+	/*App->player1->Settings_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player1->Pause_UI, false);
+	App->player1->Settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player1->Settings_Button, false, { false, false });
+	App->player1->Settings_text->label = App->player1->settings_label;
+	App->player1->Settings_text->color = { 255,255,9,255 };*/
 
 	App->player2->Resume_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESUME_PAUSE, { 1291 ,498 }, { 301,59 }, App->player2->Pause_UI, false);
 	App->player2->Resume_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Resume_Button, false, { false, false });

@@ -131,7 +131,7 @@ bool Gui::Draw()
 
 				App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
 			}
-			else if ((*UI_elem)->type == UI_Element::UI_type::LABEL && (*UI_elem) == App->main_menu->new_game_text) //label main menu
+			else if ((*UI_elem)->type == UI_Element::UI_type::LABEL && (*UI_elem) == App->main_menu->new_game_text && App->main_menu->active) //label main menu
 			{
 				App->tex->UnLoad((*UI_elem)->texture);
 				(*UI_elem)->texture = App->font->Print((*UI_elem)->label, (*UI_elem)->color, App->font->main_menu_font);
@@ -169,7 +169,8 @@ bool Gui::Draw()
 		}
 		if (UI_Debug == true)
 		{
-			App->render->DrawQuad((*UI_elem)->collider, 255, 0, 0, 255, false, false);
+			if ((*UI_elem)->visible == true)
+				App->render->DrawQuad((*UI_elem)->collider, 255, 0, 0, 255, false, false);
 		}
 		UI_elem++;
 	}
@@ -206,7 +207,8 @@ bool Gui::Draw()
 		}
 		if (UI_Debug == true)
 		{
-			App->render->DrawQuad((*UI_elem)->collider, 255, 0, 0, 255, false, false);
+			if ((*UI_elem)->visible == true)
+				App->render->DrawQuad((*UI_elem)->collider, 255, 0, 0, 255, false, false);
 		}
 
 		UI_elem++;

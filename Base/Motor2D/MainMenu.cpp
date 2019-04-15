@@ -41,9 +41,6 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool MainMenu::Start()
 {
-	App->player1->currentUI = Player::CURRENT_UI::NONE;
-
-	
 	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
 	menu_background->texture = App->tex->Load(menu_bg_file_name.data());
 	menu_background->rect = { 0, 0, App->win->width, App->win->height };
@@ -121,6 +118,16 @@ bool MainMenu::CleanUp()
 	LOG("Freeing Main Menu");
 
 	App->tex->UnLoad(menu_background->texture);
+
+	////Clear UI elements
+	//list<UI_Element*>::iterator item2 = App->player1->UI_elements.begin();
+	//while (item2 != App->player1->UI_elements.end())
+	//{
+	//	(*item2)->children.clear();
+	//	RELEASE(*item2);
+	//	item2++;
+	//}
+	//App->player1->UI_elements.clear();
 
 	return true;
 }
