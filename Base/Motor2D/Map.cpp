@@ -221,21 +221,26 @@ bool Map::CleanUp()
 	// Clean up the pugui tree
 	map_file.reset();
 
-
-	// Remove all layers
-	list<Tiles>::iterator item3 = TileList.begin();
-	//while (item3 != TileList.end())
-	//{
-	//	if ((*item)->texture != nullptr)
-	//	{
-	//		(*item)->texture = nullptr;
-	//	}
-	//	item3++;
-	//	//delete *item3;
-
-	//}
+	// clear list
 	TileList.clear();
 
+	// clear list 
+	// Remove all layers
+	list<wall_coordinates*>::iterator item3 = data.wall_list.begin();
+	while (item3 != data.wall_list.end())
+	{
+		RELEASE(*item3);
+		item3++;
+	}
+	data.wall_list.clear();
+
+	list<wall_coordinates*>::iterator item4 = data.wall_list2.begin();
+	while (item4 != data.wall_list2.end())
+	{
+		RELEASE(*item4);
+		item4++;
+	}
+	data.wall_list2.clear();
 	
 
 	return true;
@@ -492,6 +497,32 @@ bool Map::LoadMap()
 				data.mid_building.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
 				data.mid_building =MapToWorld(data.mid_building.first, data.mid_building.second);
 				
+			}
+			else if (tmp == "walls")
+			{
+				
+				for (pugi::xml_node wallIterator = mapIterator.child("object"); wallIterator; wallIterator = wallIterator.next_sibling("object"))
+				{
+					wall_coordinates* wall = new wall_coordinates();
+					wall->wall_pair.first = wallIterator.attribute("x").as_int() / data.tile_height;
+					wall->wall_pair.second = wallIterator.attribute("y").as_int() / data.tile_height;
+
+					data.wall_list.push_back(wall);
+				}
+				
+			}
+			else if (tmp == "walls2")
+			{
+
+				for (pugi::xml_node wallIterator = mapIterator.child("object"); wallIterator; wallIterator = wallIterator.next_sibling("object"))
+				{
+					wall_coordinates* wall = new wall_coordinates();
+					wall->wall_pair.first = wallIterator.attribute("x").as_int() / data.tile_height;
+					wall->wall_pair.second = wallIterator.attribute("y").as_int() / data.tile_height;
+
+					data.wall_list2.push_back(wall);
+				}
+
 			}
 
 		}

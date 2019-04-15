@@ -222,6 +222,12 @@ bool Scene::Start()
 		cursor_tex = App->tex->Load("textures/Cursors.png");
 
 	//-----------
+
+	pair <int, int> test;
+	test.first = 0;
+	test.second = 0;
+	App->entitymanager->AddEntity(true, Entity::entityType::WALLS, test);
+	App->entitymanager->AddEntity(false, Entity::entityType::WALLS, test);
 	SpawnEntities();
 
 	App->font->font_iterator = App->font->fonts.begin();
@@ -233,7 +239,7 @@ bool Scene::Start()
 	world_clock.Start();
 	world_seconds.Start();
 	size_timer.Start();
-
+	
 
 	return true;
 }

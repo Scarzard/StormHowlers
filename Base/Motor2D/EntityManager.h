@@ -3,7 +3,7 @@
 
 #include "Module.h"
 #include "Entity.h"
-
+#include "Walls.h"
 class Entity;
 
 class EntityManager : public Module
@@ -35,6 +35,9 @@ public:
 
 	bool draw_path = false;
 	bool godmode = false;
+
+	list<wall_parts*> wall_parts_list;
+	SDL_Texture* wall_text;
 };
 
 #endif //

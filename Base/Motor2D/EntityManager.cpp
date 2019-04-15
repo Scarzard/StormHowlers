@@ -45,6 +45,7 @@ bool EntityManager::Awake(pugi::xml_node &config)
 	texture_path = config.child("sprite_sheet").attribute("source").as_string();
 	entitiesTextures = vector<SDL_Texture*>(Entity::entityType::WAR_HOUND, nullptr);
 
+
 	return ret;
 }
 
@@ -62,6 +63,7 @@ bool EntityManager::Start()
 			entitiesTextures[i] = App->tex->Load(PATH(folder.data(), n.data()));
 	}
 
+	wall_text = App->tex->Load("animation/Walls_anim.png");
 	return ret;
 }
 
@@ -159,6 +161,18 @@ bool EntityManager::CleanUp()
 	App->tex->UnLoad(texture);
 	entity_list.clear();
 
+	list<wall_parts*>::iterator item = wall_parts_list.begin();
+	while (item != wall_parts_list.end())
+	{
+		RELEASE(*item);
+		item++;
+	}
+	wall_parts_list.clear();
+
+
+	//Building::CleanUp();
+
+
 	return true;
 }
 
@@ -225,19 +239,42 @@ bool EntityManager::Draw(float dt) //sprite ordering
 
 	while (tmp != entity_list.end())
 	{
-		if (entitiesTextures[(*tmp)->type] != nullptr) {
+		//if (entitiesTextures[(*tmp)->type] != nullptr) {
 
-			//pair<int,int> pos = App->map->WorldToMap((*tmp)->position.first /*- (*tmp)->size.first * App->map->data.tile_width*0.5f*/, (*tmp)->position.second - (*tmp)->size.second*App->map->data.tile_height*0.5f);
+		//	int posy = (*tmp)->position.second - (*tmp)->Current_Animation->GetCurrentFrame(dt).h;// - ((*tmp)->Current_Animation->GetCurrentFrame(dt).h - (*tmp)->position.second);
+		//	App->render->Blit(entitiesTextures[(*tmp)->type],  (*tmp)->position.first ,posy, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
+		//pair<int,int> pos = App->map->WorldToMap((*tmp)->position.first /*- (*tmp)->size.first * App->map->data.tile_width*0.5f*/, (*tmp)->position.second - (*tmp)->size.second*App->map->data.tile_height*0.5f);
 			//pos = App->map->MapToWorld(pos.first, pos.second);
 
-			pair<int, int> pos = { (*tmp)->position.first,(*tmp)->position.second - (*tmp)->offset };
-			App->render->Blit(entitiesTextures[(*tmp)->type], pos.first, pos.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
+			//pair<int, int> pos = { (*tmp)->position.first,(*tmp)->position.second - (*tmp)->offset };
+			//App->render->Blit(entitiesTextures[(*tmp)->type], pos.first, pos.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
+
+    //}
+	
+  	
+		
+		if ((*tmp)->type == Entity::entityType::WALLS)
+		{
+			list<wall_parts*>::iterator tmp2 = (wall_parts_list.begin());
+			while (tmp2 != wall_parts_list.end())
+			{
+				pair<int, int> pos;
+				pos.first = (*tmp2)->coordinates.first;
+				pos.second = (*tmp2)->coordinates.second;
+				pos = App->map->MapToWorld(pos.first, pos.second);
+
+				App->render->Blit(wall_text, pos.first, pos.second, &((*tmp2)->wall_anim->GetCurrentFrame(dt)));
+				tmp2++;
+			}
 
 
 		}
 		
+-----------
 		tmp++;
 	}
+
+	
 	return ret;
 }
 
@@ -260,7 +297,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		break;
 
 	case Entity::entityType::WALLS:
-		tmp = new Walls(isPlayer1, position);
+		tmp = new Walls(isPlayer1,position);
 		break;
 
 	case Entity::entityType::DEFENSE_AOE:
