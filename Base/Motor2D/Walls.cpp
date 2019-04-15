@@ -18,6 +18,15 @@ Walls::~Walls()
 bool Walls::Start()
 {
 	bool ret = true;
+	wall_text = App->tex->Load("animation/Walls_anim.png");
+	front = front->LoadAnimation("animation/walls", "principal_wall");
+	side = side->LoadAnimation("animation/walls", "side_wall");
+	corner_down_left = corner_down_left->LoadAnimation("animation/walls", "corner_east");
+	tower = tower->LoadAnimation("animation/walls", "small_wall");
+	corner_down_right = corner_down_right->LoadAnimation("animation/walls", "corner_north");
+	corner_up_left = corner_up_left->LoadAnimation("animation/walls", "corner_south");
+	corner_up_right = corner_up_right->LoadAnimation("animation/walls", "corner_west");
+
 
 	list<wall_coordinates*>::iterator item = App->map->data.wall_list.begin();
 	while (item != App->map->data.wall_list.end())
@@ -54,37 +63,40 @@ bool Walls::Start()
 			item2++;
 		}
 		
-		if (up)
+		if (up || down || left || right)
 		{
-			wallpart->wall_anim = nullptr;
+			//only tower
+			wallpart->wall_anim = tower;
 		}
-		else if (down)
+		else if (down && up)
 		{
-			wallpart->wall_anim = nullptr;
+			//side
+			wallpart->wall_anim = side;
 		}
-		else if (left)
+		else if (left && right)
 		{
-			wallpart->wall_anim = nullptr;
-		}
-		else if (right)
-		{
-			wallpart->wall_anim = nullptr;
+			//frontal
+			wallpart->wall_anim = front;
 		}
 		else if (down && right)
 		{
-			wallpart->wall_anim = nullptr;
+			//corner
+			wallpart->wall_anim = corner_down_right;
 		}
 		else if (down && left)
 		{
-			wallpart->wall_anim = nullptr;
+			//corner
+			wallpart->wall_anim = corner_down_left;
 		}
 		else if (up && left)
 		{
-			wallpart->wall_anim = nullptr;
+			//corner
+			wallpart->wall_anim = corner_up_left;
 		}
 		else if (up && right)
 		{
-			wallpart->wall_anim = nullptr;
+			//corner
+			wallpart->wall_anim = corner_up_right;
 		}
 
 		wall_parts_list.push_back(wallpart);

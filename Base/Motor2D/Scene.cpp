@@ -234,6 +234,10 @@ bool Scene::Start()
 	world_seconds.Start();
 	size_timer.Start();
 
+	pair <int, int> test;
+	test.first = 0;
+	test.second = 0;
+	App->entitymanager->AddEntity(true, Entity::entityType::WALLS, test);
 
 	return true;
 }
