@@ -154,7 +154,8 @@ bool Player::Update(float dt)
 	if (live < 0)
 		live = 0;
 	
-	
+	// DEBUG PURPOSES DO NOT DELETE PLEASE
+	SpawnEntity();
 
 
 	//--- Building ---------------------
@@ -226,6 +227,7 @@ bool Player::Update(float dt)
 			}
 
 		}
+		
 
 		//--- Press A
 		App->map->debug = true;
@@ -236,7 +238,7 @@ bool Player::Update(float dt)
 				//play fx (build);
 				//App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ });
 				UpdateWalkabilityMap(false);
-				entityAdded = true;
+				entityAdded = false;
 				isBuilding = false;
 				currentUI == CURRENT_UI::CURR_GENERAL;
 			}
@@ -254,7 +256,7 @@ bool Player::Update(float dt)
 				{
 					//troops.pop_back();
 				}
-				entityAdded = false;
+				entityAdded = true;
 				isBuilding = false;
 				currentUI == CURRENT_UI::CURR_GENERAL;
 
@@ -263,21 +265,45 @@ bool Player::Update(float dt)
 		}
 	}
 
-	// DEBUG PURPOSES DO NOT DELETE PLEASE
-	SpawnEntity();
+	
 
 	return true;
 }
 
 
 void Player::SpawnEntity() {
+
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
+		if (entityAdded){
+			if (type >= Entity::entityType::BARRACKS) {
+				troops.pop_back();
+				App->entitymanager->entity_list.pop_back();
+
+				previewEntity = nullptr;
+			}
+			else {
+				buildings.pop_back();
+				App->entitymanager->entity_list.pop_back();
+				previewEntity = nullptr;
+			}
+		}
+		entityAdded = false;
 		isBuilding = true;
 		isPlayer1 = true;
-		type = (Entity::entityType)curr++;
+		type = (Entity::entityType)((curr++) % (int)Entity::entityType::TANKMAN);
+		/*if (type == Entity::entityType::WALLS || type == Entity::entityType::TANKMAN
+			|| type == Entity::entityType::)*/
 		currentUI == CURRENT_UI::CURR_BUILD;
+		
 	}
 	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
+		if (type >= Entity::entityType::BARRACKS) {
+			troops.pop_back();
+		}
+		else {
+			buildings.pop_back();
+		}
+		entityAdded = false;
 		isBuilding = true;
 		isPlayer1 = false;
 		type = (Entity::entityType)curr++;

@@ -89,7 +89,9 @@ public:
 	virtual bool Awake(pugi::xml_node & config) { return true; };
 	virtual bool Start() { return true; };
 	virtual bool PreUpdate() { 	return true; };
-	virtual bool Update(float dt) { return true; };
+	virtual bool Update(float dt) { 
+		
+		return true; };
 	virtual bool PostUpdate(
 	
 	) { return true; };
@@ -186,6 +188,8 @@ public:
 	// DEBUG PURPOSES
 	SDL_Rect	collider;
 	SDL_Texture* tex;
+
+	int offset = 0;
 
 public:
 

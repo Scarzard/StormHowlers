@@ -120,11 +120,6 @@ public:
 	{
 		return last_frame;
 	}
-
-	SDL_Rect GetLastAnimationFrame()
-	{
-		return frames[last_frame];
-	}
 };
 
 #endif

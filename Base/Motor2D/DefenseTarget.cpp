@@ -37,15 +37,15 @@ bool DefenseTarget::Update(float dt)
 {
 	BROFILER_CATEGORY("DefenseTarget Update", Profiler::Color::SandyBrown);
 
-	// Moves building to mouse position 
-	int x = 0;
-	int y = 0;
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE)) {
+	//// Moves building to mouse position 
+	//int x = 0;
+	//int y = 0;
+	//if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE)) {
 
-		App->input->GetMousePosition(x, y);
-		position.first = x;
-		position.second = y;
-	}
+	//	App->input->GetMousePosition(x, y);
+	//	position.first = x;
+	//	position.second = y;
+	//}
 
 	// Checks where to look for enemies
 	Player* tmpMod = (fromPlayer1) ? App->player2 : App->player1;
