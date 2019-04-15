@@ -233,6 +233,14 @@ bool Map::CleanUp()
 		item3++;
 	}
 	data.wall_list.clear();
+
+	list<wall_coordinates*>::iterator item4 = data.wall_list2.begin();
+	while (item4 != data.wall_list2.end())
+	{
+		RELEASE(*item4);
+		item4++;
+	}
+	data.wall_list2.clear();
 	
 
 	return true;
@@ -502,6 +510,19 @@ bool Map::LoadMap()
 					data.wall_list.push_back(wall);
 				}
 				
+			}
+			else if (tmp == "walls2")
+			{
+
+				for (pugi::xml_node wallIterator = mapIterator.child("object"); wallIterator; wallIterator = wallIterator.next_sibling("object"))
+				{
+					wall_coordinates* wall = new wall_coordinates();
+					wall->wall_pair.first = wallIterator.attribute("x").as_int() / data.tile_height;
+					wall->wall_pair.second = wallIterator.attribute("y").as_int() / data.tile_height;
+
+					data.wall_list2.push_back(wall);
+				}
+
 			}
 
 		}

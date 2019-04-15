@@ -164,6 +164,7 @@ struct MapData
 	pair<int, int> mid_building;
 
 	list<wall_coordinates*> wall_list;
+	list<wall_coordinates*> wall_list2;
 
 };
 
