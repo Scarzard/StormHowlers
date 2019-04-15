@@ -25,7 +25,7 @@ Player::~Player()
 bool Player::Start()
 {
 
-	gold = actual_capacity = 0;
+	gold = actual_capacity = time_iterator = 0;
 
 	isBuilding = isDeploying = isCasting = false;
 	currentTile = { 13,0 };
@@ -160,44 +160,69 @@ bool Player::Update(float dt)
 	{
 		//--- Movement
 		if (gamepad.Controller[JOY_UP] == KEY_REPEAT || gamepad.Controller[UP] == KEY_DOWN || 
-			App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+			App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT)
 		{
 			currentTile.second--;
 		}
 		else if (gamepad.Controller[JOY_DOWN] == KEY_REPEAT || gamepad.Controller[DOWN] == KEY_DOWN || 
-			App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
 		{
 			currentTile.second++;
 		}
 
 		if (gamepad.Controller[JOY_RIGHT] == KEY_REPEAT || gamepad.Controller[RIGHT] == KEY_DOWN ||
-			App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+			App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
 		{
 			currentTile.first++;
 		}
 		else if (gamepad.Controller[JOY_LEFT] == KEY_REPEAT || gamepad.Controller[LEFT] == KEY_DOWN ||
-			App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+			App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT)
 		{
 			currentTile.first--;
 		}
 
 		//--- Limits
-		if (currentTile.first < x_limits.first) //left limit
+		//need to modify, when player1 is building we must chehk its width
+		if (isPlayer1==true)
 		{
-			currentTile.first = x_limits.first;
+			if (currentTile.first <= x_limits_player1.first) //left limit
+			{
+				currentTile.first = x_limits_player1.first;
+			}
+			else if (currentTile.first + collider.dimensions.first >= x_limits_player1.second) //right limit
+			{
+				currentTile.first = x_limits_player1.second- collider.dimensions.first;
+			}
+
+			if (currentTile.second < y_limits_player1.first ) //up limit
+			{
+				currentTile.second = y_limits_player1.first ;
+			}
+			else if (currentTile.second + collider.dimensions.second >= y_limits_player1.second) //down limit
+			{
+				currentTile.second = y_limits_player1.second - collider.dimensions.second;
+			}
 		}
-		else if (currentTile.first > x_limits.second) //right limit
+		else if (isPlayer1 == false)
 		{
-			currentTile.first = x_limits.second;
-		}
-		
-		if (currentTile.second < y_limits.first - collider.dimensions.first + collider.dimensions.second) //up limit
-		{
-			currentTile.second = y_limits.first - collider.dimensions.first + collider.dimensions.second;
-		}
-		else if (currentTile.second > y_limits.second - collider.dimensions.first + collider.dimensions.second) //down limit
-		{
-			currentTile.second = y_limits.second - collider.dimensions.first + collider.dimensions.second;
+			if (currentTile.first + collider.dimensions.first >= x_limits_player2.second) // right limit
+			{
+				currentTile.first = x_limits_player2.second-collider.dimensions.first;
+			}
+			else if (currentTile.first  <= x_limits_player2.first) //left limit
+			{
+				currentTile.first = x_limits_player2.first;
+			}
+
+			if (currentTile.second < y_limits_player2.first) //up limit
+			{
+				currentTile.second = y_limits_player2.first;
+			}
+			else if (currentTile.second + collider.dimensions.second >= y_limits_player2.second) //down limit
+			{
+				currentTile.second = y_limits_player2.second - collider.dimensions.second;
+			}
+
 		}
 
 		//--- Press A
@@ -218,6 +243,20 @@ bool Player::Update(float dt)
 				//play fx (error);
 			}
 		}
+	}
+
+	// DEBUG PURPOSES DO NOT DELETE PLEASE
+	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT) {
+
+		
+
+		isBuilding = true;
+		type = Entity::entityType::DEFENSE_TARGET;
+		isPlayer1 = true;
+		collider.dimensions = { 3,4 };
+		currentUI == CURRENT_UI::CURR_BUILD;
+		//CheckBuildingPos();
+		
 	}
 
 	return true;
@@ -282,17 +321,21 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 
 	pos = currentTile;
 
-	/*if (gamepad.Connected == true)
+	if (gamepad.Connected == true)
 	{
-		pos = cursor.position;
+		pos = currentTile;
+
 	}
 	else
 	{
 		App->input->GetMousePosition(pos.first, pos.second);
+		pos = App -> render->ScreenToWorld(pos.first, pos.second);
+		pos = App->map->WorldToMap(pos.first, pos.second);
+		pos.first--;
 	}
-	pos = App -> render->ScreenToWorld(pos.first, pos.second);
-	pos = App->map->WorldToMap(pos.first, pos.second);
-	pos.first--;*/
+	
+	
+	
 
 
 	// Check what tiles is the collider occupying
@@ -344,6 +387,8 @@ void Player::UpdateWalkabilityMap(bool isWalkable) //update walkable tiles
 		if (App->pathfinding->GetTileAt(pos) != isWalkable)
 		{
 			App->pathfinding->ChangeWalkability(pos, isWalkable);
+			App->map->walkability_layer->Set(pos.first, pos.second, 1);
+
 		}
 	}
 }

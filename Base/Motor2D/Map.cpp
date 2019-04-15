@@ -8,6 +8,7 @@
 #include "Pathfinding.h"
 #include "Scene.h"
 #include "Brofiler\Brofiler.h"
+#include "Player.h"
 #include <cmath>
 
 
@@ -135,8 +136,8 @@ pair<int, int> Map::MapToWorld(int x, int y) const
 	}
 	else if(data.type == MAPTYPE_ISOMETRIC)
 	{
-		ret.first = (x - y) * ceilf(data.tile_width * 0.5f);
-		ret.second = (x + y) * ceilf(data.tile_height * 0.5f);
+		ret.first = int((x - y) * (data.tile_width /2));
+		ret.second = int((x + y) * (data.tile_height /2));
 	}
 	else
 	{
@@ -159,8 +160,8 @@ pair<int,int> Map::WorldToMap(int x, int y) const
 	else if(data.type == MAPTYPE_ISOMETRIC)
 	{
 		
-		float half_width = data.tile_width * 0.5f;
-		float half_height = data.tile_height * 0.5f;
+		int half_width = data.tile_width /2;
+		int half_height = data.tile_height /2;
 		ret.first = int( (x / half_width + y / half_height) / 2);
 		ret.second = int( (y / half_height - (x / half_width)) / 2);
 	}
@@ -290,8 +291,13 @@ bool Map::Load(const char* file_name)
 
 		ret = LoadLayer(layer, lay);
 
-		if(ret == true)
+		if (ret == true) {
 			data.layers.push_back(lay);
+			if (lay->properties.Get("Navigation") == 1) {
+				walkability_layer = lay;
+			}
+
+		}
 	}
 
 	//Load objects info ----------------------------------------------
@@ -753,25 +759,27 @@ void Map::DrawWakability(float dt)
 			{
 				if (layer->properties.Get("Navigation") == 1)
 				{
-					for (int y = 0; y < data.height; y++)
+					int y = (App->player1->isBuilding) ? 0 : data.height / 2;
+					int yEnd = (App->player2->isBuilding) ? data.height : data.height / 2;
+
+					for (y; y < yEnd; y++)
 					{
-						for (int x = data.width; x >= 0; x--)
+						for (int x = 0; x < data.width; x++)
 						{
 							int tile_id = layer->Get(x, y);
 							if (tile_id > 0)
 							{
-								TileSet* tileset = GetTilesetFromTileId(tile_id);
-								SDL_Rect r = tileset->GetTileRect(tile_id);
-
+								SDL_Rect r;
 								pair<int, int> pos = MapToWorld(x, y);
 
-								if (debug == true && App->pathfinding->IsWalkable({ x,y }) == false) // walkability map draw
+								if (App->pathfinding->IsWalkable({ x,y }) == false) // walkability map draw
 								{
 									r = { 60,0,60,29 };
 									App->render->Blit(debug_tex, pos.first, pos.second, &r, SDL_FLIP_NONE);
 								}
 							}
 						}
+						int x = (App->player1->isBuilding) ? 0 : data.width / 2;
 					}
 				}
 				
