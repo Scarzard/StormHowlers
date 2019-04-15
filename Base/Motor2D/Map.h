@@ -65,10 +65,6 @@ struct MapLayer
 	{
 		return data[(y*width) + x];
 	}
-	inline void Set(int x, int y, int id) const
-	{
-		data[(y*width) + x] = id;
-	}
 };
 
 struct ObjectsData
@@ -215,8 +211,6 @@ public:
 	MapData				data;
 	bool				debug = false;
 	SDL_Texture*		debug_tex;
-
-	MapLayer*			walkability_layer;
 
 	SDL_Texture* imagemap;
 	SDL_Rect rect_for_back_image = { 0,0,0,0 };

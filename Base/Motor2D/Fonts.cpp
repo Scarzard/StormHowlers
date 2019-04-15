@@ -44,7 +44,7 @@ bool Fonts::Awake(pugi::xml_node& conf)
 			}
 			else if (i == 50)
 			{
-				main_menu_font = Load(path, i);
+				main_menu_font = Load(path, size);
 			}
 			else
 			{

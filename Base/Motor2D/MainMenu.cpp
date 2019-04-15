@@ -49,9 +49,8 @@ bool MainMenu::Start()
 	App->render->zoom = 1;
 
 	new_game_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 1273, 432 }, { 371, 87 }, menu_background, true);
-	new_game_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, new_game_button, true, { false, false });
+	new_game_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 170, 40 }, { 0, 0 }, new_game_button, true, { false, false });
 	new_game_text->label = new_game_label;
-	new_game_text->color = { 255,255,9,255 };
 
 	//exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 519 }, { 371, 87 }, menu_background, true);
 	//exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 616 }, { 371, 87 }, menu_background, true);

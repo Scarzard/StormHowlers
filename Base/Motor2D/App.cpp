@@ -56,10 +56,10 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scenechange);
 	AddModule(font);
 	AddModule(gui);
-	AddModule(main_menu);
-	AddModule(scene, false);
 	AddModule(player1);
 	AddModule(player2);
+	AddModule(main_menu);
+	AddModule(scene, false);
 	AddModule(entitymanager);
 	// render last to swap buffer
 	AddModule(render);
