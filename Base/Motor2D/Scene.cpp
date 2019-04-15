@@ -59,6 +59,7 @@ bool Scene::Start()
 	//current_track = App->audio->tracks_path.front();
 	//App->audio->PlayMusic(PATH(App->audio->folder_music.data(), current_track.data()));
 	App->render->zoom = 0.77;
+
 	// Variables init
 	currentMap = 0;
 	pause = false;
@@ -88,10 +89,7 @@ bool Scene::Start()
 		LOG("Create walkability map");
 	}
 
-	//animation testing
-	if (spritesheet123 == nullptr)
-
-		spritesheet123 = App->tex->Load("textures/prueba.png");
+	
 
 	//--------- INIT BUILD ZONE LIMITS ------------- (falta cambiar con valores de las build Zones
 	App->player1->x_limits_player1 = { 20,60 };
@@ -102,6 +100,7 @@ bool Scene::Start()
 
 		//spritesheet123 = App->tex->Load("textures/Buildings.png");
 	App->map->imagemap = App->tex->Load("textures/map3.png");
+	
 
 
 	//--------- CREATE MAIN BUILDINGS -------------// (falta cambiar posicion)
@@ -183,6 +182,7 @@ bool Scene::Start()
 	App->player1->Abort_text->label = App->player1->abort_label;
 	App->player1->Abort_text->color = { 255,255,9,255 };
 
+
 	App->player1->Settings_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player1->Pause_UI, false);
 	App->player1->Settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player1->Settings_Button, false, { false, false });
 	App->player1->Settings_text->label = App->player1->settings_label;
@@ -225,7 +225,24 @@ bool Scene::Start()
 	App->player1->FX_Slider_Button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 }, App->player1->FX_Slider, false);
 	App->player1->FX_Slider_Button->rect = { 2135, 773, 29, 55 };
 
+	// ABORT MISSION MENU
+	App->player1->Abort_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
+	App->player1->Abort_UI->texture = App->tex->Load(pause_soviet.data());
+	App->player1->Abort_UI->rect = { 0, 0, 0, App->win->height };
 
+	App->player1->Restart = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESTART, { 1291 ,565 }, { 301,59 }, App->player1->Abort_UI, false);
+	App->player1->Restart_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Restart, false, { false, false });
+	App->player1->Restart_text->label = App->player1->Restart_label;
+	App->player1->Restart_text->color = { 255,255,9,255 };
+
+	App->player1->Abort_Message = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { -850, -100 }, { 0, 0 }, App->player1->Restart, false, { false, false });
+	App->player1->Abort_Message->label = App->player1->Abort_message_label;
+	App->player1->Abort_Message->color = { 255,255,9,255 };
+
+	App->player1->Quit = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SURRENDER, { 1291 ,498 }, { 301,59 }, App->player1->Abort_UI, false);
+	App->player1->Quit_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 110, 18 }, { 0, 0 }, App->player1->Quit, false, { false, false });
+	App->player1->Quit_text->label = App->player1->Quit_label;
+	App->player1->Quit_text->color = { 255,255,9,255 };
 
 
 	//--- PLAYER 2
@@ -324,6 +341,25 @@ bool Scene::Start()
 	App->player2->FX_Slider_Button = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 }, App->player2->FX_Slider, false);
 	App->player2->FX_Slider_Button->rect = { 2135, 712, 29, 55 };
 
+	// ABORT MISSION MENU
+	App->player2->Abort_UI = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
+	App->player2->Abort_UI->texture = App->tex->Load(pause_alied.data());
+	App->player2->Abort_UI->rect = { 0, 0, 0, App->win->height };
+
+	App->player2->Restart = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESTART, { 1291 ,565 }, { 301,59 }, App->player2->Abort_UI, false);
+	App->player2->Restart_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Restart, false, { false, false });
+	App->player2->Restart_text->label = App->player2->Restart_label;
+	App->player2->Restart_text->color = { 255,255,9,255 };
+
+	App->player2->Abort_Message = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { -850, -100 }, { 0, 0 }, App->player2->Restart, false, { false, false });
+	App->player2->Abort_Message->label = App->player2->Abort_message_label;
+	App->player2->Abort_Message->color = { 255,255,9,255 };
+
+	App->player2->Quit = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SURRENDER, { 1291 ,498 }, { 301,59 }, App->player2->Abort_UI, false);
+	App->player2->Quit_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 110, 18 }, { 0, 0 }, App->player2->Quit, false, { false, false });
+	App->player2->Quit_text->label = App->player2->Quit_label;
+	App->player2->Quit_text->color = { 255,255,9,255 };
+
 
 
 
@@ -350,6 +386,11 @@ bool Scene::Start()
 
 	//Map load 
 	App->map->LoadTileList();
+
+	worldminutes = 0;
+	worldseconds = 0;
+	reference_active = true;
+	change_font_size = false;
 
 	// timer start
 	world_clock.Start();
@@ -853,6 +894,9 @@ bool Scene::CleanUp()
 	LOG("Freeing scene");
 
 	App->tex->UnLoad(cursor_tex);
+	App->tex->UnLoad(App->map->imagemap);
+	App->tex->UnLoad(App->map->debug_tex);
+
 	cursor_tex = nullptr;
 
 	RELEASE_ARRAY(Wmap);

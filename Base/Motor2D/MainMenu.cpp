@@ -43,7 +43,7 @@ bool MainMenu::Start()
 {
 	App->player1->currentUI = Player::CURRENT_UI::NONE;
 
-	App->font->actual_font = App->font->main_menu_font;
+	
 	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
 	menu_background->texture = App->tex->Load(menu_bg_file_name.data());
 	menu_background->rect = { 0, 0, App->win->width, App->win->height };

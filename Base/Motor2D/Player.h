@@ -51,7 +51,8 @@ public:
 		CURR_CAST,
 		CURR_GENERAL,
 		CURR_PAUSE,
-		CURR_PAUSE_SETTINGS
+		CURR_PAUSE_SETTINGS,
+		CURR_PAUSE_ABORT
 	};
 
 	Player();
@@ -100,7 +101,7 @@ public:
 	SDL_Rect LiveBar;
 
 	// Live of TOWN HALL
-	int live = 2000;
+	int live;
 
 	GamePad gamepad;
 
@@ -193,6 +194,21 @@ public:
 	UI_Element* FX_Slider_text;
 	char FX_Slider_label[5] = "0";
 	UI_Element* FX_Slider_Button;
+
+	// Pause Abort Mission
+
+	UI_Element* Abort_UI;
+	UI_Element* Abort_Message;
+	char Abort_message_label[27] = "What would you like to do?";
+
+	UI_Element* Quit;
+	UI_Element* Quit_text;
+	char Quit_label[10] = "Surrender";
+
+	UI_Element* Restart;
+	UI_Element* Restart_text;
+	char Restart_label[13] = "Restart Game";
+	
 
 };
 

@@ -10,6 +10,9 @@
 #include "Render.h"
 #include "Pathfinding.h"
 #include "MainMenu.h"
+#include "Fonts.h"
+#include "Audio.h"
+
 
 #include "Brofiler\Brofiler.h"
 
@@ -26,6 +29,8 @@ bool Player::Start()
 {
 
 	gold = actual_capacity = time_iterator = 0;
+
+	live = 2000;
 
 	isBuilding = isDeploying = isCasting = false;
 	currentTile = { 13,0 };
@@ -563,6 +568,12 @@ void Player::UpdateFocus(uint data)
 		last_element = Settings_UI->children.end();
 		last_element--;
 		break;
+
+	case::Player::CURRENT_UI::CURR_PAUSE_ABORT:
+		focus = Abort_UI->children.begin();
+		last_element = Abort_UI->children.end();
+		last_element--;
+		break;
 	
 	}
 }
@@ -607,6 +618,11 @@ void Player::GotoPrevWindows(uint data)
 		UpdateVisibility();
 		break;
 
+	case Player::CURRENT_UI::CURR_PAUSE_ABORT:
+		currentUI = CURR_PAUSE;
+		UpdateVisibility();
+		break;
+
 	}
 }
 
@@ -634,6 +650,9 @@ UI_Element* Player::GetUI_Element(uint data)
 	case::Player::CURRENT_UI::CURR_PAUSE_SETTINGS:
 		return Settings_UI;
 
+	case::Player::CURRENT_UI::CURR_PAUSE_ABORT:
+		return Abort_UI;
+
 	}
 }
 
@@ -647,6 +666,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Deploy_UI->visible = false;
 		Cast_UI->visible = false;
 		Pause_UI->visible = false;
+		Abort_UI->visible = false;
 		Settings_UI->visible = false;
 		//General_UI->visible = false;
 		break;
@@ -657,6 +677,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Cast_UI->visible = false;
 		Pause_UI->visible = false;
 		Settings_UI->visible = false;
+		Abort_UI->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -667,6 +688,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Cast_UI->visible = false;
 		Pause_UI->visible = false;
 		Settings_UI->visible = false;
+		Abort_UI->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -677,6 +699,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Cast_UI->visible = false;
 		Pause_UI->visible = false;
 		Settings_UI->visible = false;
+		Abort_UI->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -687,6 +710,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Cast_UI->visible = true;
 		Pause_UI->visible = false;
 		Settings_UI->visible = false;
+		Abort_UI->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -706,6 +730,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Cast_UI->visible = false;
 		Pause_UI->visible = true;
 		Settings_UI->visible = false;
+		Abort_UI->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -716,6 +741,18 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Cast_UI->visible = false;
 		Pause_UI->visible = false;
 		Settings_UI->visible = true;
+		Abort_UI->visible = false;
+		//General_UI->visible = false;
+		break;
+
+	case::Player::CURRENT_UI::CURR_PAUSE_ABORT:
+		Main_UI->visible = false;
+		Build_UI->visible = false;
+		Deploy_UI->visible = false;
+		Cast_UI->visible = false;
+		Pause_UI->visible = false;
+		Settings_UI->visible = false;
+		Abort_UI->visible = true;
 		//General_UI->visible = false;
 		break;
 
@@ -829,7 +866,29 @@ void Player::DoLogic(UI_Element* data)
 		UpdateFocus(currentUI);
 		break;
 	case::UI_Element::Action::ABORT_PAUSE:
-		// The other player wins the game
+		currentUI = CURR_PAUSE_ABORT;
+		UpdateVisibility();
+		UpdateFocus(currentUI);
+		break;
+	case::UI_Element::Action::RESTART:
+		
+		App->scene->CleanUp();
+		App->entitymanager->CleanUp();
+		App->player2->CleanUp();
+		App->player1->CleanUp();
+		App->gui->CleanUp();
+		App->map->CleanUp();
+		App->audio->CleanUp();
+		
+		App->font->Start();
+		App->audio->Start();
+		App->map->Start();
+		App->gui->Start();
+		App->player1->Start();
+		App->player2->Start();
+		App->entitymanager->Start();
+		App->scene->Start();
+
 		break;
 	}
 }
