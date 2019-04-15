@@ -250,7 +250,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		break;
 
 	case Entity::entityType::WALLS:
-		tmp = new Walls(isPlayer1, position);
+		tmp = new Walls();
 		break;
 
 	case Entity::entityType::DEFENSE_AOE:

@@ -18,7 +18,7 @@ public:
 	Walls(bool isPlayer1, pair<int, int> position);
 	~Walls();
 
-	bool Start();
+	bool LoadWalls();
 	bool Update(float dt);
 	void CleanUp();
 	void LoadAnimations(bool isPlayer1, string path);

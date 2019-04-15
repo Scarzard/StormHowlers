@@ -9,13 +9,14 @@
 
 Walls::Walls()
 {
+	LoadWalls();
 }
 
 Walls::~Walls()
 {
 }
 
-bool Walls::Start()
+bool Walls::LoadWalls()
 {
 	bool ret = true;
 	wall_text = App->tex->Load("animation/Walls_anim.png");
@@ -37,7 +38,7 @@ bool Walls::Start()
 		wallpart->coordinates.second = (*item)->wall_pair.second;
 		wallpart->health = 100;
 		
-		bool right, left, up, down = false;
+		bool right=false, left=false, up=false, down = false;
 
 		list<wall_coordinates*>::iterator item2 = App->map->data.wall_list.begin();
 		while (item2 != App->map->data.wall_list.end())
@@ -53,11 +54,11 @@ bool Walls::Start()
 			}
 			else if ((*item2)->wall_pair.first == wallpart->coordinates.first && (*item2)->wall_pair.second-1 == wallpart->coordinates.second)
 			{
-				up = true;
+				down = true;
 			}
 			else if ((*item2)->wall_pair.first == wallpart->coordinates.first && (*item2)->wall_pair.second + 1 == wallpart->coordinates.second)
 			{
-				down = true;
+				up = true;
 			}
 
 			item2++;
