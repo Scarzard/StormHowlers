@@ -9,6 +9,14 @@
 
 
 struct SDL_Texture;
+
+struct wall_coordinates
+{
+
+	pair<int, int> wall_pair;
+
+};
+
 struct Tiles
 {
 	SDL_Texture* texture;
@@ -154,6 +162,9 @@ struct MapData
 	pair<int, int> barrack;
 	pair<int, int> barrack2;
 	pair<int, int> mid_building;
+
+	list<wall_coordinates*> wall_list;
+
 };
 
 // ----------------------------------------------------

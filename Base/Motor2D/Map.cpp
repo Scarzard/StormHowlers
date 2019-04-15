@@ -493,6 +493,19 @@ bool Map::LoadMap()
 				data.mid_building =MapToWorld(data.mid_building.first, data.mid_building.second);
 				
 			}
+			else if (tmp == "walls")
+			{
+				
+				for (pugi::xml_node wallIterator = mapIterator.child("object"); wallIterator; wallIterator = wallIterator.next_sibling("object"))
+				{
+					wall_coordinates* wall = new wall_coordinates();
+					wall->wall_pair.first = wallIterator.attribute("x").as_int() / data.tile_height;
+					wall->wall_pair.second = wallIterator.attribute("y").as_int() / data.tile_height;
+
+					data.wall_list.push_back(wall);
+				}
+				
+			}
 
 		}
 	}
