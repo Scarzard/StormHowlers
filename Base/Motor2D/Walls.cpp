@@ -64,12 +64,7 @@ bool Walls::LoadWalls()
 			item2++;
 		}
 		
-		if (up || down || left || right)
-		{
-			//only tower
-			wallpart->wall_anim = tower;
-		}
-		else if (down && up)
+		if (down && up)
 		{
 			//side
 			wallpart->wall_anim = side;
@@ -99,6 +94,12 @@ bool Walls::LoadWalls()
 			//corner
 			wallpart->wall_anim = corner_up_right;
 		}
+		else if (up || down || left || right)
+		{
+			//only tower
+			wallpart->wall_anim = tower;
+
+		}
 
 		wall_parts_list.push_back(wallpart);
 
@@ -123,6 +124,7 @@ bool Walls::Update(float dt)
 
 	ChangeAnimation();
 	Building::Update(dt);
+
 
 	return true;
 }

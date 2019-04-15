@@ -3,7 +3,7 @@
 
 #include "Module.h"
 #include "Entity.h"
-
+#include "Walls.h"
 class Entity;
 
 class EntityManager : public Module

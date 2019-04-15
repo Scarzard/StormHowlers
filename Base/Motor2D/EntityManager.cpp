@@ -58,6 +58,7 @@ bool EntityManager::Start()
 		entitiesTextures[i] = App->tex->Load(PATH(folder.data(), n.data()));
 	}
 
+	wall_text = App->tex->Load("animation/Walls_anim.png");
 	return ret;
 }
 
@@ -155,6 +156,18 @@ bool EntityManager::CleanUp()
 	App->tex->UnLoad(texture);
 	entity_list.clear();
 
+	list<wall_parts*>::iterator item = wall_parts_list.begin();
+	while (item != wall_parts_list.end())
+	{
+		RELEASE(*item);
+		item++;
+	}
+	wall_parts_list.clear();
+
+
+	Building::CleanUp();
+
+
 	return true;
 }
 
@@ -226,8 +239,23 @@ bool EntityManager::Draw(float dt) //sprite ordering
 			int posy = (*tmp)->position.second - (*tmp)->Current_Animation->GetCurrentFrame(dt).h;// - ((*tmp)->Current_Animation->GetCurrentFrame(dt).h - (*tmp)->position.second);
 			App->render->Blit(entitiesTextures[(*tmp)->type],  (*tmp)->position.first ,posy, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
 		}
+		
+		
+		if ((*tmp)->type == Entity::entityType::WALLS)
+		{
+			list<wall_parts*>::iterator tmp2 = (*tmp).wall_parts_list.begin();
+			while (tmp2 != wall_parts_list.end())
+			{
+				App->render->Blit(wall_text, (*tmp2)->coordinates.first, (*tmp2)->coordinates.second, &((*tmp2)->wall_anim->GetCurrentFrame(dt)));
+				tmp2++;
+			}
+
+		}
+
 		tmp++;
 	}
+
+	
 	return ret;
 }
 
