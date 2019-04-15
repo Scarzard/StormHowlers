@@ -249,7 +249,7 @@ bool EntityManager::Draw(float dt) //sprite ordering
 			//pair<int, int> pos = { (*tmp)->position.first,(*tmp)->position.second - (*tmp)->offset };
 			//App->render->Blit(entitiesTextures[(*tmp)->type], pos.first, pos.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
 
-    //}
+		//}
 	
   	
 		
@@ -270,7 +270,7 @@ bool EntityManager::Draw(float dt) //sprite ordering
 
 		}
 		
------------
+
 		tmp++;
 	}
 
