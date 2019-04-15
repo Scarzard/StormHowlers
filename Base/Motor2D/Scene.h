@@ -107,6 +107,8 @@ public:
 
 	string current_track;
 	string current_fx;
+	string pause_alied;
+	string pause_soviet;
 
 	
 

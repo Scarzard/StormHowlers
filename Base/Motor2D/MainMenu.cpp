@@ -32,6 +32,7 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 	LOG("Loading Main Menu");
 
 	menu_bg_file_name = conf.child("menu_bg").attribute("file").as_string("");
+
 	
 	// current_track = App->audio->tracks_path[1];
 	return true;
@@ -43,7 +44,7 @@ bool MainMenu::Start()
 	App->player1->currentUI = Player::CURRENT_UI::NONE;
 
 	App->font->actual_font = App->font->main_menu_font;
-	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::MAIN_MENU_BG, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
+	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
 	menu_background->texture = App->tex->Load(menu_bg_file_name.data());
 	menu_background->rect = { 0, 0, App->win->width, App->win->height };
 	App->render->zoom = 1;
@@ -61,7 +62,8 @@ bool MainMenu::Start()
 
 	//ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 800 ,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
 
-
+	App->player1->currentUI = Player::CURRENT_UI::CURR_MAIN_MENU;
+	App->player1->UpdateFocus(App->player1->currentUI);
 
 	return true;
 }

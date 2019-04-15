@@ -313,6 +313,8 @@
 
   <scene>
     <map_name name="map3.tmx"></map_name>
+    <pause_menu_alied file="gui/Pause_Menu_Alied.png"></pause_menu_alied>
+    <pause_menu_soviet file="gui/Pause_Menu_Soviet.png"></pause_menu_soviet>
 
     <fade_time value="1"/>
   </scene>

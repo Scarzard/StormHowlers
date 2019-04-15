@@ -49,7 +49,8 @@ public:
 		CURR_BUILD,
 		CURR_DEPLOY,
 		CURR_CAST,
-		CURR_GENERAL
+		CURR_GENERAL,
+		CURR_PAUSE
 	};
 
 	Player();
@@ -89,6 +90,7 @@ public:
 	uint gold;
 	uint time_iterator;
 
+	uint last_currentUI;
 	uint currentUI;
 	int actual_capacity;
 
@@ -117,8 +119,7 @@ public:
 
 
 	// --- UI --- //
-
-	UI_Element* Health_UI;
+	
 	UI_Element* Gold_UI;
 
 	UI_Element* Main_UI;
@@ -156,6 +157,11 @@ public:
 	UI_Element* Damage_text; //only for defense buildings
 	UI_Element* Prod_text; //only for townhall & mines
 	UI_Element* Capacity_text; //only for barracks
+
+	UI_Element* Pause_UI;
+	UI_Element* Resume_Button;
+	UI_Element* Settings_Button;
+	UI_Element* Abort_Button;
 
 };
 
