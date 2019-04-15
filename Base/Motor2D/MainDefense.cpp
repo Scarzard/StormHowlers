@@ -40,10 +40,6 @@ bool MainDefense::Update(float dt)
 
 			//if troops in range -> attack
 		}
-		else
-		{
-			//destroyed
-		}
 	}
 	else if (!fromPlayer1)
 	{
@@ -59,10 +55,6 @@ bool MainDefense::Update(float dt)
 			}
 
 			//if troops in range -> attack
-		}
-		else
-		{
-			//destroyed
 		}
 	}
 	ChangeAnimation();

@@ -45,6 +45,11 @@ bool Barracks::Update(float dt)
 				//play fx (upgrade);
 			}
 		}
+		else
+		{
+			App->player1->DeleteEntity(this);
+		}
+
 		if (repair == true) //repair
 		{
 			App->player1->gold -= repair_cost;
@@ -66,6 +71,11 @@ bool Barracks::Update(float dt)
 				//play fx (upgrade);
 			}
 		}
+		else
+		{
+			App->player2->DeleteEntity(this);
+		}
+
 		if (repair == true) //repair
 		{
 			App->player2->gold -= repair_cost;
