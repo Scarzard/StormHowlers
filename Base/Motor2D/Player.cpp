@@ -297,16 +297,25 @@ void Player::SpawnEntity() {
 		
 	}
 	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
-		if (type >= Entity::entityType::BARRACKS) {
-			troops.pop_back();
-		}
-		else {
-			buildings.pop_back();
+		if (entityAdded) {
+			if (type >= Entity::entityType::BARRACKS) {
+				troops.pop_back();
+				App->entitymanager->entity_list.pop_back();
+
+				previewEntity = nullptr;
+			}
+			else {
+				buildings.pop_back();
+				App->entitymanager->entity_list.pop_back();
+				previewEntity = nullptr;
+			}
 		}
 		entityAdded = false;
 		isBuilding = true;
 		isPlayer1 = false;
-		type = (Entity::entityType)curr++;
+		type = (Entity::entityType)((curr++) % (int)Entity::entityType::TANKMAN);
+		/*if (type == Entity::entityType::WALLS || type == Entity::entityType::TANKMAN
+			|| type == Entity::entityType::)*/
 		currentUI == CURRENT_UI::CURR_BUILD;
 	}
 

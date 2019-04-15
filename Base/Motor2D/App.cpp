@@ -60,7 +60,7 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene, false);
 	AddModule(player1);
 	AddModule(entitymanager);
-	//AddModule(player2);
+	AddModule(player2);
 	
 	
 	// render last to swap buffer
