@@ -125,5 +125,6 @@ void CmdCenter::LoadAnimations(bool isPlayer1, string path)
 	building->loop = false;
 	level1->loop = false;
 	Current_Animation = building;
+	offset = 5 * App->map->data.tile_height;
 }
 

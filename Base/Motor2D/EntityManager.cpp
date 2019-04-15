@@ -56,7 +56,11 @@ bool EntityManager::Start()
 		string n = GetName(Entity::entityType(i));
 		n += "_anim.png";
 
-		entitiesTextures[i] = App->tex->Load(PATH(folder.data(), n.data()));
+		if (i == Entity::entityType::WALLS || i == Entity::entityType::TANKMAN
+			|| i == Entity::entityType::DEFENSE_AOE) {
+			entitiesTextures[i] = nullptr;
+		}else
+			entitiesTextures[i] = App->tex->Load(PATH(folder.data(), n.data()));
 	}
 
 	wall_text = App->tex->Load("animation/Walls_anim.png");
@@ -239,8 +243,15 @@ bool EntityManager::Draw(float dt) //sprite ordering
 
 		//	int posy = (*tmp)->position.second - (*tmp)->Current_Animation->GetCurrentFrame(dt).h;// - ((*tmp)->Current_Animation->GetCurrentFrame(dt).h - (*tmp)->position.second);
 		//	App->render->Blit(entitiesTextures[(*tmp)->type],  (*tmp)->position.first ,posy, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
-		//}
-		
+		//pair<int,int> pos = App->map->WorldToMap((*tmp)->position.first /*- (*tmp)->size.first * App->map->data.tile_width*0.5f*/, (*tmp)->position.second - (*tmp)->size.second*App->map->data.tile_height*0.5f);
+			//pos = App->map->MapToWorld(pos.first, pos.second);
+
+			//pair<int, int> pos = { (*tmp)->position.first,(*tmp)->position.second - (*tmp)->offset };
+			//App->render->Blit(entitiesTextures[(*tmp)->type], pos.first, pos.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
+
+    //}
+	
+  	
 		
 		if ((*tmp)->type == Entity::entityType::WALLS)
 		{
@@ -256,8 +267,10 @@ bool EntityManager::Draw(float dt) //sprite ordering
 				tmp2++;
 			}
 
-		}
 
+		}
+		
+-----------
 		tmp++;
 	}
 
