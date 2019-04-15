@@ -221,21 +221,18 @@ bool Map::CleanUp()
 	// Clean up the pugui tree
 	map_file.reset();
 
-
-	// Remove all layers
-	list<Tiles>::iterator item3 = TileList.begin();
-	//while (item3 != TileList.end())
-	//{
-	//	if ((*item)->texture != nullptr)
-	//	{
-	//		(*item)->texture = nullptr;
-	//	}
-	//	item3++;
-	//	//delete *item3;
-
-	//}
+	// clear list
 	TileList.clear();
 
+	// clear list 
+	// Remove all layers
+	list<wall_coordinates*>::iterator item3 = data.wall_list.begin();
+	while (item3 != data.wall_list.end())
+	{
+		RELEASE(*item3);
+		item3++;
+	}
+	data.wall_list.clear();
 	
 
 	return true;
