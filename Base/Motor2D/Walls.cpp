@@ -17,7 +17,7 @@ Walls::Walls(bool isPlayer1, pair<int, int> pos) : Building(entityType::WALLS, i
 {
 	
 	string path = "animation/" + name + ".tmx";
-	LoadAnimations(isPlayer1, path.data());
+	//LoadAnimations(isPlayer1, path.data());
 	LoadWalls();
 }
 
@@ -29,6 +29,14 @@ bool Walls::LoadWalls()
 {
 	bool ret = true;
 
+	front = front->LoadAnimation("animation/walls.tmx", "principal_wall");
+	side = side->LoadAnimation("animation/walls.tmx", "side_wall");
+	corner_down_left = corner_down_left->LoadAnimation("animation/walls.tmx", "corner_east");
+	tower = tower->LoadAnimation("animation/walls.tmx", "small_wall");
+	corner_down_right = corner_down_right->LoadAnimation("animation/walls.tmx", "corner_north");
+	corner_up_left = corner_up_left->LoadAnimation("animation/walls.tmx", "corner_south");
+	corner_up_right = corner_up_right->LoadAnimation("animation/walls.tmx", "corner_west");
+
 	if (fromPlayer1)
 	{
 		list<wall_coordinates*>::iterator item = App->map->data.wall_list.begin();
@@ -38,7 +46,7 @@ bool Walls::LoadWalls()
 
 			wallpart->coordinates.first = (*item)->wall_pair.first;
 			wallpart->coordinates.second = (*item)->wall_pair.second;
-			wallpart->health = health;
+			wallpart->health = 100;
 
 			bool right = false, left = false, up = false, down = false;
 
@@ -219,25 +227,4 @@ void Walls::CleanUp()
 
 void Walls::LoadAnimations(bool isPlayer1, string path)
 {
-
-	front = front->LoadAnimation(path.data(), (!isPlayer1) ? "principal_wall_red" : "principal_wall_blue");
-	front->loop = false;
-
-	side = side->LoadAnimation(path.data(), (!isPlayer1) ? "side_wall_red" : "side_wall_blue");
-	side->loop = false;
-
-	corner_down_left = corner_down_left->LoadAnimation(path.data(), (!isPlayer1) ? "corner_east_red" : "corner_east_blue");
-	corner_down_left->loop = false;
-
-	tower = tower->LoadAnimation(path.data(), (!isPlayer1) ? "small_wall_red" : "small_wall_blue");
-	tower->loop = false;
-
-	corner_down_right = corner_down_right->LoadAnimation(path.data(), (!isPlayer1) ? "corner_north_red" : "corner_north_blue");
-	corner_down_right->loop = false;
-
-	corner_up_left = corner_up_left->LoadAnimation(path.data(), (!isPlayer1) ? "corner_south_red" : "corner_south_blue");
-	corner_up_left->loop = false;
-
-	corner_up_right = corner_up_right->LoadAnimation(path.data(), (!isPlayer1) ? "corner_west_red" : "corner_west_blue");
-	corner_up_right->loop = false;
 }
