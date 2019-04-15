@@ -50,7 +50,8 @@ public:
 		CURR_DEPLOY,
 		CURR_CAST,
 		CURR_GENERAL,
-		CURR_PAUSE
+		CURR_PAUSE,
+		CURR_PAUSE_SETTINGS
 	};
 
 	Player();
@@ -79,6 +80,7 @@ public:
 	bool isBuilding;
 	bool isDeploying;
 	bool isCasting;
+	bool isPaused;
 
 	Collider collider;
 	pair<int, int> offset;
@@ -158,10 +160,39 @@ public:
 	UI_Element* Prod_text; //only for townhall & mines
 	UI_Element* Capacity_text; //only for barracks
 
+	// Pause Menu
 	UI_Element* Pause_UI;
+
 	UI_Element* Resume_Button;
+	UI_Element* Resume_text;
+	char resume_label[12] = "Resume Game";
+
 	UI_Element* Settings_Button;
+	UI_Element* Settings_text;
+	char settings_label[9] = "Settings";
+
 	UI_Element* Abort_Button;
+	UI_Element* Abort_text;
+	char abort_label[14] = "Abort Mission";
+
+	// Pause Settings Menu
+	UI_Element* Settings_UI;
+
+	UI_Element* Music_Settings;
+	UI_Element* Music_text;
+	char Music_label[14] = "Music Volume";
+	UI_Element* Music_Slider;
+	UI_Element* Music_Slider_text;
+	char Music_Slider_label[5] = "0";
+	UI_Element* Music_Slider_Button;
+
+	UI_Element* FX_Settings;
+	UI_Element* FX_text;
+	char FX_label[10] = "FX Volume";
+	UI_Element* FX_Slider;
+	UI_Element* FX_Slider_text;
+	char FX_Slider_label[5] = "0";
+	UI_Element* FX_Slider_Button;
 
 };
 

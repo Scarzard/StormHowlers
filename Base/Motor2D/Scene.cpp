@@ -76,6 +76,9 @@ bool Scene::Start()
 	App->player1->LiveBar = { 51, 18 , 348, 19 }; //LiveBar for player1
 	App->player2->LiveBar = { 1232, 921 , 348, 19 }; //LiveBar for player2
 
+	Music_Volume = 50;
+	FX_Volume = 20;
+
 	//walkability map
 	Wmap = NULL;
 	int w, h;
@@ -170,13 +173,59 @@ bool Scene::Start()
 	App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 470, 19 }, { 0, 0 }, nullptr, true, { false,false }, "$ 0000");
 	App->player1->Gold_UI->color = { 255,255,0,255 };
 
+	// ------ PAUSE MENU ------
 	App->player1->Pause_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, false);
 	App->player1->Pause_UI->texture = App->tex->Load(pause_soviet.data());
 	App->player1->Pause_UI->rect = { 0, 0, App->win->width, App->win->height };
 
 	App->player1->Abort_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ABORT_PAUSE, { 1291 ,868 }, { 301,59 }, App->player1->Pause_UI, false);
+	App->player1->Abort_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Abort_Button, false, { false, false });
+	App->player1->Abort_text->label = App->player1->abort_label;
+	App->player1->Abort_text->color = { 255,255,9,255 };
+
 	App->player1->Settings_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player1->Pause_UI, false);
+	App->player1->Settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player1->Settings_Button, false, { false, false });
+	App->player1->Settings_text->label = App->player1->settings_label;
+	App->player1->Settings_text->color = { 255,255,9,255 };
+
 	App->player1->Resume_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESUME_PAUSE, { 1291 ,498 }, { 301,59 }, App->player1->Pause_UI, false);
+	App->player1->Resume_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Resume_Button, false, { false, false });
+	App->player1->Resume_text->label = App->player1->resume_label;
+	App->player1->Resume_text->color = { 255,255,9,255 };
+
+	//------ Settings Pause MENU ------
+	App->player1->Settings_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
+	App->player1->Settings_UI->texture = App->tex->Load(pause_soviet.data());
+	App->player1->Settings_UI->rect = { 0, 0, 0, App->win->height };
+
+	App->player1->Music_Settings = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::MUSIC_VOLUME, { 100 ,100 }, { 301,59 }, App->player1->Settings_UI, false);
+	App->player1->Music_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Music_Settings, false, { false, false });
+	App->player1->Music_text->label = App->player1->Music_label;
+	App->player1->Music_text->color = { 255,255,9,255 };
+
+	App->player1->Music_Slider = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 50 , 100 }, { 651, 59 }, App->player1->Music_Settings, false);
+	App->player1->Music_Slider->rect = {1483, 770, 651, 59 };
+	App->player1->Music_Slider_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 640, 18 }, { 0, 0 }, App->player1->Music_Slider, false, { false, false });
+	App->player1->Music_Slider_text->label = App->player1->Music_Slider_label;
+	App->player1->Music_Slider_text->color = { 255,255,9,255 };
+	App->player1->Music_Slider_Button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 }, App->player1->Music_Slider, false);
+	App->player1->Music_Slider_Button->rect = { 2135, 773, 29, 55 };
+
+
+	App->player1->FX_Settings = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::FX_VOLUME, { 100 ,400 }, { 301,59 }, App->player1->Settings_UI, false);
+	App->player1->FX_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 100, 18 }, { 0, 0 }, App->player1->FX_Settings, false, { false, false });
+	App->player1->FX_text->label = App->player1->FX_label;
+	App->player1->FX_text->color = { 255,255,9,255 };
+
+	App->player1->FX_Slider = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 50 , 100 }, { 651, 59 }, App->player1->FX_Settings, false);
+	App->player1->FX_Slider->rect = { 1483, 770, 651, 59 };
+	App->player1->FX_Slider_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 640, 18 }, { 0, 0 }, App->player1->FX_Slider, false, { false, false });
+	App->player1->FX_Slider_text->label = App->player1->FX_Slider_label;
+	App->player1->FX_Slider_text->color = { 255,255,9,255 };
+	App->player1->FX_Slider_Button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 }, App->player1->FX_Slider, false);
+	App->player1->FX_Slider_Button->rect = { 2135, 773, 29, 55 };
+
+
 
 
 	//--- PLAYER 2
@@ -229,8 +278,53 @@ bool Scene::Start()
 	App->player2->Pause_UI->rect = { 0, 0, App->win->width, App->win->height };
 
 	App->player2->Abort_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ABORT_PAUSE, { 1291 ,868 }, { 301,59 }, App->player2->Pause_UI, false);
+	App->player2->Abort_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Abort_Button, false, { false, false });
+	App->player2->Abort_text->label = App->player1->abort_label;
+	App->player2->Abort_text->color = { 255,255,9,255 };
+
 	App->player2->Settings_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player2->Pause_UI, false);
+	App->player2->Settings_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player2->Settings_Button, false, { false, false });
+	App->player2->Settings_text->label = App->player2->settings_label;
+	App->player2->Settings_text->color = { 255,255,9,255 };
+
 	App->player2->Resume_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESUME_PAUSE, { 1291 ,498 }, { 301,59 }, App->player2->Pause_UI, false);
+	App->player2->Resume_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Resume_Button, false, { false, false });
+	App->player2->Resume_text->label = App->player2->resume_label;
+	App->player2->Resume_text->color = { 255,255,9,255 };
+
+
+	//------ Settings Pause MENU ------
+	App->player2->Settings_UI = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
+	App->player2->Settings_UI->texture = App->tex->Load(pause_alied.data());
+	App->player2->Settings_UI->rect = { 0, 0, 0, App->win->height };
+
+	App->player2->Music_Settings = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::MUSIC_VOLUME, { 100 ,100 }, { 301,59 }, App->player2->Settings_UI, false);
+	App->player2->Music_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Music_Settings, false, { false, false });
+	App->player2->Music_text->label = App->player2->Music_label;
+	App->player2->Music_text->color = { 255,255,9,255 };
+
+	App->player2->Music_Slider = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 50 , 100 }, { 651, 59 }, App->player2->Music_Settings, false);
+	App->player2->Music_Slider->rect = { 1483, 709, 651, 59 };
+	App->player2->Music_Slider_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 640, 18 }, { 0, 0 }, App->player2->Music_Slider, false, { false, false });
+	App->player2->Music_Slider_text->label = App->player2->Music_Slider_label;
+	App->player2->Music_Slider_text->color = { 255,255,9,255 };
+	App->player2->Music_Slider_Button = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 }, App->player2->Music_Slider, false);
+	App->player2->Music_Slider_Button->rect = { 2135, 712, 29, 55 };
+
+	App->player2->FX_Settings = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::FX_VOLUME, { 100 ,400 }, { 301,59 }, App->player2->Settings_UI, false);
+	App->player2->FX_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 100, 18 }, { 0, 0 }, App->player2->FX_Settings, false, { false, false });
+	App->player2->FX_text->label = App->player2->FX_label;
+	App->player2->FX_text->color = { 255,255,9,255 };
+
+	App->player2->FX_Slider = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 50 , 100 }, { 651, 59 }, App->player2->FX_Settings, false);
+	App->player2->FX_Slider->rect = { 1483, 709, 651, 59 };
+	App->player2->FX_Slider_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 640, 18 }, { 0, 0 }, App->player2->FX_Slider, false, { false, false });
+	App->player2->FX_Slider_text->label = App->player2->FX_Slider_label;
+	App->player2->FX_Slider_text->color = { 255,255,9,255 };
+	App->player2->FX_Slider_Button = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 }, App->player2->FX_Slider, false);
+	App->player2->FX_Slider_Button->rect = { 2135, 712, 29, 55 };
+
+
 
 
 	// --- CURSORS
@@ -427,10 +521,10 @@ bool Scene::Update(float dt)
 	//{
 	//	App->LoadGame();
 	//}
-	//else if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) //Debug UI
-	//{
-	//	App->gui->UI_Debug = !App->gui->UI_Debug;
-	//}
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) //Debug UI
+	{
+		App->gui->UI_Debug = !App->gui->UI_Debug;
+	}
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) //View colliders
 	{
 		App->map->debug = !App->map->debug;
@@ -676,6 +770,25 @@ bool Scene::PostUpdate()
 			sprintf_s(current_p1_gold, "$ %u", App->player1->gold);
 			(*item)->label = current_p1_gold;
 		}
+		else if ((*item) == App->player1->Music_Slider_text) //Music VOlume
+		{
+			sprintf_s(App->player1->Music_Slider_label, "%u", Music_Volume);
+			(*item)->label = App->player1->Music_Slider_label;
+		}
+		else if ((*item) == App->player1->FX_Slider_text) //FX Volume
+		{
+			sprintf_s(App->player1->FX_Slider_label, "%u", FX_Volume);
+			(*item)->label = App->player1->FX_Slider_label;
+		}
+		else if ((*item) == App->player1->Music_Slider_Button) //MUSIC SLIDER POS
+		{
+			App->player1->Music_Slider_Button->position.first = (550 * Music_Volume) / 100;
+		}
+		else if ((*item) == App->player1->FX_Slider_Button) //FX SLIDER POS
+		{
+			App->player1->FX_Slider_Button->position.first = (550 * FX_Volume) / 100;
+		}
+		
 
 		App->gui->UpdateState(*item);
 		item++;
@@ -689,6 +802,24 @@ bool Scene::PostUpdate()
 		{
 			sprintf_s(current_p2_gold, "$ %u", App->player2->gold);
 			(*item)->label = current_p2_gold;
+		}
+		else if ((*item) == App->player2->Music_Slider_text) //Music VOlume
+		{
+			sprintf_s(App->player2->Music_Slider_label, "%u", Music_Volume);
+			(*item)->label = App->player2->Music_Slider_label;
+		}
+		else if ((*item) == App->player2->FX_Slider_text) //FX Volume
+		{
+			sprintf_s(App->player2->FX_Slider_label, "%u", FX_Volume);
+			(*item)->label = App->player2->FX_Slider_label;
+		}
+		else if ((*item) == App->player2->Music_Slider_Button) //MUSIC SLIDER POS
+		{
+			App->player2->Music_Slider_Button->position.first = (550 * Music_Volume) / 100;
+		}
+		else if ((*item) == App->player2->FX_Slider_Button) //FX SLIDER POS
+		{
+			App->player2->FX_Slider_Button->position.first = (550 * FX_Volume) / 100;
 		}
 		App->gui->UpdateState(*item);
 		item++;

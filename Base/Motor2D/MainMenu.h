@@ -44,7 +44,7 @@ public:
 
 	UI_Element* new_game_button;
 	UI_Element* new_game_text;
-	char new_game_label[5] = "PLAY";
+	char new_game_label[5] = "Play";
 
 	UI_Element* continue_button;
 	UI_Element* continue_text;

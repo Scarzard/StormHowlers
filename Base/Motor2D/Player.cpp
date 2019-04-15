@@ -54,29 +54,72 @@ bool Player::Update(float dt)
 		(*focus)->state = UI_Element::State::HOVER;
 	}
 
-	if (!App->scene->pause)
+	// PAUSE
+	if (gamepad.Controller[START] == KEY_DOWN && App->scene->active)
 	{
+		if (!App->scene->pause)
+		{
+			App->scene->world_seconds.Stop();
+			App->render->zoom = 1;
+			Pause_UI->visible = true;
+			isPaused = true;
+
+			App->scene->pause = !App->scene->pause;
+
+			if (currentUI != CURRENT_UI::NONE)
+				(*focus)->state = UI_Element::State::IDLE;
+
+			last_currentUI = currentUI;
+			currentUI = CURRENT_UI::CURR_PAUSE;
+			UpdateFocus(currentUI);
+		}
+		else if (App->scene->pause && isPaused && currentUI == CURRENT_UI::CURR_PAUSE)
+		{
+			App->scene->world_seconds.Start();
+			App->render->zoom = 0.77;
+			Pause_UI->visible = false;
+			isPaused = false;
+
+			App->scene->pause = !App->scene->pause;
+
+
+			currentUI = last_currentUI;
+			UpdateVisibility();
+			UpdateFocus(currentUI);
+
+		}
 		
+
 	}
 
 	// Button A to clcik a button
-	if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
+	if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
 	{
 		if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
 			(*focus)->state = UI_Element::State::LOGIC;
 	}
 
-	if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE)
+	if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
 	{
-		if (!isBuilding)
+		if (App->scene->pause && isPaused == true)
+		{
 			(*focus)->state = UI_Element::State::IDLE;
-		if (App->scene->active)
 			DoLogic((*focus));
-		else
-			App->main_menu->DoLogic((*focus));
-
-		if ((*focus) == Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
 			UpdateFocus(currentUI);
+		}
+		else if (!App->scene->pause)
+		{
+			if (!isBuilding)
+				(*focus)->state = UI_Element::State::IDLE;
+			if (App->scene->active)
+				DoLogic((*focus));
+			else
+				App->main_menu->DoLogic((*focus));
+
+			if ((*focus) == Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
+				UpdateFocus(currentUI);
+		}
+		
 	}
 
 
@@ -84,28 +127,46 @@ bool Player::Update(float dt)
 	{
 		(*focus)->state = UI_Element::State::IDLE;
 
-
-		if (currentUI == CURR_BUILD)
+		if (App->scene->pause && isPaused && currentUI==CURRENT_UI::CURR_PAUSE)
 		{
-			if (isBuilding == true)
-			{
-				isBuilding = false;
-				App->map->debug = false;
-			}
-			else if (isBuilding == false)
-			{
+			App->scene->world_seconds.Start();
+			App->render->zoom = 0.77;
+			Pause_UI->visible = false;
+			isPaused = false;
 
-				GotoPrevWindows(currentUI);
-				UpdateFocus(currentUI);
-			}
+			App->scene->pause = !App->scene->pause;
+
+			currentUI = last_currentUI;
+			UpdateVisibility();
+			UpdateFocus(currentUI);
 		}
-		else
+		else if (App->scene->pause && isPaused && currentUI != CURRENT_UI::CURR_PAUSE)
 		{
 			GotoPrevWindows(currentUI);
 			UpdateFocus(currentUI);
 		}
+		else if (!App->scene->pause )
+		{
+			if (currentUI == CURR_BUILD)
+			{
+				if (isBuilding == true)
+				{
+					isBuilding = false;
+					App->map->debug = false;
+				}
+				else if (isBuilding == false)
+				{
 
-
+					GotoPrevWindows(currentUI);
+					UpdateFocus(currentUI);
+				}
+			}
+			else
+			{
+				GotoPrevWindows(currentUI);
+				UpdateFocus(currentUI);
+			}
+		}
 	}
 
 	if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
@@ -116,34 +177,7 @@ bool Player::Update(float dt)
 		UpdateFocus(currentUI);
 	}
 
-	if (gamepad.Controller[START] == KEY_DOWN && App->scene->active)
-	{
-		if (!App->scene->pause)
-		{
-			App->scene->world_seconds.Stop();
-			App->render->zoom = 1;
-			Pause_UI->visible = true;
-
-			if(currentUI != CURRENT_UI::NONE)
-				(*focus)->state = UI_Element::State::IDLE;
-
-			last_currentUI = currentUI;
-			currentUI = CURRENT_UI::CURR_PAUSE;
-			UpdateFocus(currentUI);
-		}
-		else
-		{
-			App->scene->world_seconds.Start();
-			App->render->zoom = 0.77;
-			Pause_UI->visible = false;
-
-			currentUI = last_currentUI;
-			UpdateFocus(currentUI);
-
-		}
-		App->scene->pause = !App->scene->pause;
-
-	}
+	
 
 	if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 	{
@@ -208,7 +242,28 @@ bool Player::Update(float dt)
 		}
 	}
 	
-	
+	if (gamepad.Controller[RIGHT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
+	{
+		if ((*focus) == Music_Settings)
+		{
+			App->scene->Music_Volume += 10;
+		}
+		else
+		{
+			App->scene->FX_Volume += 10;
+		}
+	}
+	else if (gamepad.Controller[LEFT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
+	{
+		if ((*focus) == Music_Settings)
+		{
+			App->scene->Music_Volume -= 10;
+		}
+		else
+		{
+			App->scene->FX_Volume -= 10;
+		}
+	}
 
 	
 
@@ -502,6 +557,12 @@ void Player::UpdateFocus(uint data)
 		last_element = Pause_UI->children.end();
 		last_element--;
 		break;
+
+	case::Player::CURRENT_UI::CURR_PAUSE_SETTINGS:
+		focus = Settings_UI->children.begin();
+		last_element = Settings_UI->children.end();
+		last_element--;
+		break;
 	
 	}
 }
@@ -536,6 +597,16 @@ void Player::GotoPrevWindows(uint data)
 		UpdateVisibility();
 		break;
 
+	case Player::CURRENT_UI::CURR_PAUSE:
+		currentUI = last_currentUI;
+		UpdateVisibility();
+		break;
+
+	case Player::CURRENT_UI::CURR_PAUSE_SETTINGS:
+		currentUI = CURR_PAUSE;
+		UpdateVisibility();
+		break;
+
 	}
 }
 
@@ -560,6 +631,9 @@ UI_Element* Player::GetUI_Element(uint data)
 	case::Player::CURRENT_UI::CURR_PAUSE:
 		return Pause_UI;
 
+	case::Player::CURRENT_UI::CURR_PAUSE_SETTINGS:
+		return Settings_UI;
+
 	}
 }
 
@@ -567,11 +641,22 @@ void Player::UpdateVisibility() // Update GUI Visibility
 {
 	switch (currentUI)
 	{
+	case::Player::CURRENT_UI::NONE:
+		Main_UI->visible = true;
+		Build_UI->visible = false;
+		Deploy_UI->visible = false;
+		Cast_UI->visible = false;
+		Pause_UI->visible = false;
+		Settings_UI->visible = false;
+		//General_UI->visible = false;
+		break;
 	case::Player::CURRENT_UI::CURR_MAIN:
 		Main_UI->visible = true;
 		Build_UI->visible = false;
 		Deploy_UI->visible = false;
 		Cast_UI->visible = false;
+		Pause_UI->visible = false;
+		Settings_UI->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -580,6 +665,8 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Build_UI->visible = true;
 		Deploy_UI->visible = false;
 		Cast_UI->visible = false;
+		Pause_UI->visible = false;
+		Settings_UI->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -588,14 +675,18 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Build_UI->visible = false;
 		Deploy_UI->visible = true;
 		Cast_UI->visible = false;
+		Pause_UI->visible = false;
+		Settings_UI->visible = false;
 		//General_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_CAST:
 		Main_UI->visible = false;
 		Build_UI->visible = false;
-		Deploy_UI->visible = true;
+		Deploy_UI->visible = false;
 		Cast_UI->visible = true;
+		Pause_UI->visible = false;
+		Settings_UI->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -605,15 +696,30 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		//Deploy_UI->visible = false;
 		//Cast_UI->visible = false;
 		//General_UI->visible = true;
+
 		break;
 
-	//case::Player::CURRENT_UI::CURR_PAUSE:
-	//	Main_UI->visible = false;
-	//	Build_UI->visible = false;
-	//	Deploy_UI->visible = false;
-	//	Cast_UI->visible = false;
-	//	//General_UI->visible = false;
-	//	break;
+	case::Player::CURRENT_UI::CURR_PAUSE:
+		Main_UI->visible = false;
+		Build_UI->visible = false;
+		Deploy_UI->visible = false;
+		Cast_UI->visible = false;
+		Pause_UI->visible = true;
+		Settings_UI->visible = false;
+		//General_UI->visible = false;
+		break;
+
+	case::Player::CURRENT_UI::CURR_PAUSE_SETTINGS:
+		Main_UI->visible = false;
+		Build_UI->visible = false;
+		Deploy_UI->visible = false;
+		Cast_UI->visible = false;
+		Pause_UI->visible = false;
+		Settings_UI->visible = true;
+		//General_UI->visible = false;
+		break;
+
+
 	}
 	App->gui->UpdateChildren();
 }
@@ -660,7 +766,7 @@ void Player::DoLogic(UI_Element* data)
 		isBuilding = true;
 
 		type = Entity::entityType::DEFENSE_AOE;
-		collider.dimensions = { 3,4 };
+		collider.dimensions = { 1,1 };
 
 		break;
 
@@ -702,6 +808,28 @@ void Player::DoLogic(UI_Element* data)
 
 	case::UI_Element::Action::ACT_REPAIR:
 		//
+		break;
+	case::UI_Element::Action::RESUME_PAUSE:
+		
+		App->scene->world_seconds.Start();
+		App->render->zoom = 0.77;
+		Pause_UI->visible = false;
+		isPaused = false;
+
+		App->scene->pause = !App->scene->pause;
+
+		currentUI = last_currentUI;
+		UpdateVisibility();
+		UpdateFocus(currentUI);
+		break;
+	case::UI_Element::Action::SETTINGS_PAUSE:
+		// Open settings menu
+		Settings_UI->visible = true;
+		currentUI = CURR_PAUSE_SETTINGS;
+		UpdateFocus(currentUI);
+		break;
+	case::UI_Element::Action::ABORT_PAUSE:
+		// The other player wins the game
 		break;
 	}
 }

@@ -63,6 +63,8 @@ public:
 		RESUME_PAUSE,
 		SETTINGS_PAUSE,
 		ABORT_PAUSE,
+		MUSIC_VOLUME,
+		FX_VOLUME
 
 		
 	};
