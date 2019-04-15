@@ -14455,12 +14455,12 @@
   <object id="39" x="1479" y="1827" width="29" height="29"/>
  </objectgroup>
  <objectgroup name="walls">
-  <object id="108" x="638" y="2175" width="29" height="29"/>
-  <object id="109" x="638" y="2146" width="29" height="29"/>
-  <object id="110" x="638" y="2117" width="29" height="29"/>
-  <object id="111" x="638" y="2088" width="29" height="29"/>
-  <object id="112" x="638" y="2059" width="29" height="29"/>
   <object id="113" x="638" y="2030" width="29" height="29"/>
+  <object id="112" x="638" y="2059" width="29" height="29"/>
+  <object id="111" x="638" y="2088" width="29" height="29"/>
+  <object id="110" x="638" y="2117" width="29" height="29"/>
+  <object id="109" x="638" y="2146" width="29" height="29"/>
+  <object id="108" x="638" y="2175" width="29" height="29"/>
   <object id="114" x="667" y="2030" width="29" height="29"/>
   <object id="115" x="696" y="2030" width="29" height="29"/>
   <object id="116" x="725" y="2030" width="29" height="29"/>
@@ -14547,12 +14547,12 @@
   <object id="257" x="1566" y="551" width="29" height="29"/>
   <object id="258" x="1595" y="551" width="29" height="29"/>
   <object id="259" x="1624" y="551" width="29" height="29"/>
-  <object id="260" x="1653" y="551" width="29" height="29"/>
-  <object id="261" x="1653" y="522" width="29" height="29"/>
-  <object id="263" x="1653" y="493" width="29" height="29"/>
-  <object id="264" x="1653" y="464" width="29" height="29"/>
-  <object id="266" x="1653" y="435" width="29" height="29"/>
-  <object id="267" x="1653" y="406" width="29" height="29"/>
   <object id="268" x="1653" y="377" width="29" height="29"/>
+  <object id="267" x="1653" y="406" width="29" height="29"/>
+  <object id="266" x="1653" y="435" width="29" height="29"/>
+  <object id="264" x="1653" y="464" width="29" height="29"/>
+  <object id="263" x="1653" y="493" width="29" height="29"/>
+  <object id="261" x="1653" y="522" width="29" height="29"/>
+  <object id="260" x="1653" y="551" width="29" height="29"/>
  </objectgroup>
 </map>

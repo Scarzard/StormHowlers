@@ -24,6 +24,9 @@ public:
 	char * GetName(Entity::entityType type);
 	void DeleteAllEntities();
 
+	list<Entity*> EntityManager::OrderEntities(list<Entity*> List);
+	int EntityManager::GetDepth(Entity* entity);
+
 public:
 	string			folder;
 	string			texture_path;

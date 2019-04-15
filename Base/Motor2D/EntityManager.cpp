@@ -56,14 +56,13 @@ bool EntityManager::Start()
 		string n = GetName(Entity::entityType(i));
 		n += "_anim.png";
 
-		if (i == Entity::entityType::WALLS || i == Entity::entityType::TANKMAN
-			|| i == Entity::entityType::DEFENSE_AOE) {
+		if (i == Entity::entityType::TANKMAN || i == Entity::entityType::DEFENSE_AOE) 
 			entitiesTextures[i] = nullptr;
-		}else
+		else
 			entitiesTextures[i] = App->tex->Load(PATH(folder.data(), n.data()));
 	}
-
-	wall_text = App->tex->Load("animation/Walls_anim.png");
+	//wall_text = App->tex->Load("animation/Walls_anim.png");
+	
 	return ret;
 }
 
@@ -243,15 +242,15 @@ bool EntityManager::Draw(float dt) //sprite ordering
 
 		//	int posy = (*tmp)->position.second - (*tmp)->Current_Animation->GetCurrentFrame(dt).h;// - ((*tmp)->Current_Animation->GetCurrentFrame(dt).h - (*tmp)->position.second);
 		//	App->render->Blit(entitiesTextures[(*tmp)->type],  (*tmp)->position.first ,posy, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
-		//pair<int,int> pos = App->map->WorldToMap((*tmp)->position.first /*- (*tmp)->size.first * App->map->data.tile_width*0.5f*/, (*tmp)->position.second - (*tmp)->size.second*App->map->data.tile_height*0.5f);
-			//pos = App->map->MapToWorld(pos.first, pos.second);
+		//	
+		//	pair<int,int> pos = App->map->WorldToMap((*tmp)->position.first /*- (*tmp)->size.first * App->map->data.tile_width*0.5f*/, (*tmp)->position.second - (*tmp)->size.second*App->map->data.tile_height*0.5f);
+		//	pos = App->map->MapToWorld(pos.first, pos.second);
 
-			//pair<int, int> pos = { (*tmp)->position.first,(*tmp)->position.second - (*tmp)->offset };
-			//App->render->Blit(entitiesTextures[(*tmp)->type], pos.first, pos.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
+		//	pair<int, int> pos = { (*tmp)->position.first,(*tmp)->position.second - (*tmp)->offset };
+		//	App->render->Blit(entitiesTextures[(*tmp)->type], pos.first, pos.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
 
-    //}
-	
-  	
+		//}
+	  	
 		
 		if ((*tmp)->type == Entity::entityType::WALLS)
 		{
@@ -263,14 +262,14 @@ bool EntityManager::Draw(float dt) //sprite ordering
 				pos.second = (*tmp2)->coordinates.second;
 				pos = App->map->MapToWorld(pos.first, pos.second);
 
-				App->render->Blit(wall_text, pos.first, pos.second, &((*tmp2)->wall_anim->GetCurrentFrame(dt)));
+				App->render->Blit(entitiesTextures[(*tmp)->type], pos.first, pos.second, &((*tmp2)->wall_anim->GetCurrentFrame(dt)));
 				tmp2++;
 			}
 
 
 		}
 		
------------
+
 		tmp++;
 	}
 
@@ -335,6 +334,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 	if (tmp)
 	{
 		entity_list.push_back(tmp); // add to main entity list
+		entity_list = OrderEntities(entity_list);
 		if (isPlayer1 == true)
 		{
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building
@@ -413,4 +413,38 @@ char* EntityManager::GetName(Entity::entityType type) {
 	default:
 		break;
 	}
+}
+
+list<Entity*> EntityManager::OrderEntities(list<Entity*> List)
+{
+	list<Entity*> ListOrder;
+	ListOrder.push_back(List.front()); // push first element of List to OrderList
+	bool found = false;
+
+	for (list<Entity*>::iterator tmp = List.begin(); tmp != List.end(); tmp++) // traverse entity list (unordered)
+	{
+		for (list<Entity*>::iterator tmp2 = ListOrder.begin(); tmp2 != ListOrder.end(); tmp2++) // traverse Ordered List
+		{
+			if (GetDepth(*tmp) < GetDepth(*tmp2)) // if tmp is further than tmp2
+			{
+				ListOrder.insert(tmp2, *tmp); // add tmp in front of tmp2
+				found = true;
+				break;
+			}
+		}
+		if (found == false) // if tmp is the closest
+		{
+			ListOrder.push_back(*tmp); // push to last place
+		}
+		found = false;
+	}
+
+	return ListOrder;
+}
+
+int EntityManager::GetDepth(Entity* entity)
+{
+	entity->position = App->map->WorldToMap(entity->position.first, entity->position.second); // get map coords
+
+	return (entity->position.first + entity->position.second); // return depth
 }
