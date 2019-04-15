@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Timer.h"
+#include "SDL_mixer\include\SDL_mixer.h"
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
@@ -59,6 +60,21 @@ public:
 	bool reading_time = true;
 
 	int fade_time = 0;
+	int volume_before = 0; 
+
+	uint SetMusicVolume() const
+	{
+		return Mix_VolumeMusic(masterVolume * (musicVolume * MIX_MAX_VOLUME / 100) / 100);
+	}
+	uint SetSfxVolume() const {
+		return Mix_Volume(-1, masterVolume * (sfxVolume * MIX_MAX_VOLUME / 100) / 100);
+	}
+
+public:
+
+	unsigned short masterVolume = 100;
+	unsigned short musicVolume = 30;
+	unsigned short sfxVolume = 30;
 
 public:
 	string			folder_music;

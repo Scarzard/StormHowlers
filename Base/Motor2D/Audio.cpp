@@ -8,8 +8,8 @@
 #include "SDL_mixer\include\SDL_mixer.h"
 #pragma comment( lib, "SDL_mixer/libx86/SDL2_mixer.lib" )
 
-#define SONG1_BEGIN_TIME 10
-#define SONG2_BEGIN_TIME 30
+#define SONG1_BEGIN_TIME 5
+#define SONG2_BEGIN_TIME 8
 
 Audio::Audio() : Module()
 {
@@ -87,18 +87,20 @@ bool Audio::Awake(pugi::xml_node& config)
 
 bool Audio::Update(float dt)
 {
-	if (App->scene->worldseconds > SONG1_BEGIN_TIME && App->scene->worldseconds < SONG2_BEGIN_TIME && song1played == false)
+	if (App->scene->worldminutes >= SONG1_BEGIN_TIME && App->scene->worldminutes < SONG2_BEGIN_TIME && song1played == false)
 	{
 		song1played = true;
 		fading_out = true;
-		track = App->audio->folder_music + "/Test2.ogg";
+		track = App->audio->folder_music + "/MiddleSong.ogg";
+		volume_before = Mix_VolumeMusic(-1); 
 	}
 
-	else if (App->scene->worldseconds > SONG2_BEGIN_TIME && song2played == false)
+	else if (App->scene->worldminutes >= SONG2_BEGIN_TIME && song2played == false)
 	{
 		song2played = true;
 		fading_out = true;
-		track = App->audio->folder_music + "/Test3.ogg";
+		track = App->audio->folder_music + "/FinalSong.ogg";
+		volume_before = Mix_VolumeMusic(-1);
 	}
 
 
@@ -262,15 +264,15 @@ void Audio::PauseMusic()
 void Audio::FadeOut(const char* path)
 {
 
-	int volume_level = Mix_VolumeMusic(-1);
+	int musicVolume = Mix_VolumeMusic(-1);
 
-	if (App->scene->world_clock.Read() - fade_time > 100 && volume_level > 0)
+	if (App->scene->world_clock.Read() - fade_time > 100 && musicVolume > 0)
 	{
-		Mix_VolumeMusic(volume_level -= 5);
+		Mix_VolumeMusic(musicVolume -= 5);
 		reading_time = true;
 	}
 
-	if (volume_level <= 0)
+	if (musicVolume <= 0)
 	{
 		Mix_FreeMusic(music); //Changing song
 		music = Mix_LoadMUS(path);
@@ -282,14 +284,14 @@ void Audio::FadeOut(const char* path)
 
 void Audio::FadeIn()
 {
-	int volume_level = Mix_VolumeMusic(-1);
+	musicVolume = Mix_VolumeMusic(-1);
 
-	if (App->scene->world_clock.Read() - fade_time > 100 && volume_level < 128)
+	if (App->scene->world_clock.Read() - fade_time > 100 && musicVolume < 128)
 	{
-		Mix_VolumeMusic(volume_level += 5);
+		Mix_VolumeMusic(musicVolume += 5);
 		reading_time = true;
 	}
 
-	if (volume_level >= 128)
+	if (musicVolume >= musicVolume)
 		fading_in = false;
 }
