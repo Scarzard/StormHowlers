@@ -143,12 +143,16 @@ bool Player::Update(float dt)
 	// Just to test the LiveBar
 	if (gamepad.Controller[UP] == KEY_DOWN)
 	{
-		
 		live -= 1000;
 	}
 
 	if (live < 0)
 		live = 0;
+
+	if (App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_DOWN)
+	{
+		App->scene->ResetGame();
+	}
 	
 
 	//--- Building ---------------------

@@ -62,6 +62,7 @@ bool Scene::Start()
 	godmode = false;
 	to_end = false;
 	change = false;
+	endgame = false;
 	App->player1->isPlayer1 = true;
 	App->player2->isPlayer1 = false;
 
@@ -758,14 +759,31 @@ void Scene::Victorious()
 	{
 		App->dt = 0.0f;
 		SDL_Rect r = { 0,0,App->win->width,App->win->height };
+		
+		App->render->DrawQuad({ 0, 0, (int)App->win->width + 500, (int)App->win->height + 150 }, 0, 0, 0, 150, true, false);
 		SDL_RenderCopy(App->render->renderer, App->gui->allied_win_tex, NULL, &r);
+		
+		endgame = true;
 	}
-	
 	else if (!App->player2->isPlayer1)
 	{
 		App->dt = 0.0f;
 		SDL_Rect r = { 0,0,App->win->width,App->win->height };
 		SDL_RenderCopy(App->render->renderer, App->gui->soviet_win_tex, NULL, &r);
+		endgame = true;
 	}
 	
+}
+
+void Scene::ResetGame()
+{
+	//restart dt
+	//stop music
+	//stop timer
+	//reset entities
+	//reset timer
+	//replay initial music
+	//call start from scene again
+	//general cleanups
+	//App->scene->Start();
 }

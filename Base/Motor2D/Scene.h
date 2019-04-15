@@ -90,6 +90,7 @@ public:
 
 	void DrawLiveBar(Player* player);
 	void Victorious();
+	void ResetGame();
 
 	//void changeSize(float time, int maxsize);
 
@@ -104,6 +105,7 @@ public:
 	bool godmode;
 	bool to_end;
 	bool change;
+	bool endgame;
 
 	string current_track;
 	string current_fx;
