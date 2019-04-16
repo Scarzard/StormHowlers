@@ -29,6 +29,8 @@ bool Player::Start()
 
 	isBuilding = isDeploying = isCasting = false;
 	currentTile = { 13,0 };
+
+	live = 2000;
 	
 
 	return true;
@@ -616,10 +618,10 @@ void Player::DoLogic(UI_Element* data)
 		//
 		break;
 	case::UI_Element::Action::REMATCH:
-		
+		App->scene->ResetGame();
 		break;
 	case::UI_Element::Action::RETURN_MAINMENU:
-		//
+		//App->scene->GoToMainMenu();
 		break;
 	}
 }

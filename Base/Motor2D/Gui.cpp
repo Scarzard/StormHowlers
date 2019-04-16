@@ -350,15 +350,21 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			data->rect = { 662, 161, 85, 81 };
 			break;
 
-			//-----Needs to be changed
+			//Main_Menu
 		case UI_Element::Action::NEW_GAME:
 			data->rect = { 744, 954, 371, 87 };
 			break;
-			//change values
 		case UI_Element::Action::EXIT:
 			data->rect = { 744, 954, 371, 87 };
 			break;
 
+		//Win/Lose
+		case UI_Element::Action::REMATCH:
+			data->rect = { 581, 769, 187, 37 };
+			break;
+		case UI_Element::Action::RETURN_MAINMENU:
+			data->rect = { 581, 769, 187, 37 };
+			break;
 		}
 		break;
 
@@ -429,13 +435,19 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			data->rect = { 1587, 161, 85, 81 };
 			break;
 
-			//-----Needs to be changed
+			//Main_Menu
 		case UI_Element::Action::NEW_GAME:
 			data->rect = { 1116, 954, 371, 86 };
 			break;
-			//change values
 		case UI_Element::Action::EXIT:
 			data->rect = { 1116, 954, 371, 86 };
+			break;
+			//Win/Lose
+		case UI_Element::Action::REMATCH:
+			data->rect = { 769, 769, 186, 37 };
+			break;
+		case UI_Element::Action::RETURN_MAINMENU:
+			data->rect = { 769, 769, 186, 37 };
 			break;
 		}
 		break;
@@ -497,12 +509,20 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			data->rect = { 662, 161, 85, 81 };
 			break;
 
-			//-----Needs to be changed
+			//Main_Menu
 		case UI_Element::Action::NEW_GAME:
 			data->rect = { 1488, 954, 371, 86 };
 			break;
 		case UI_Element::Action::EXIT:
 			data->rect = { 1488, 954, 371, 86 };
+			break;
+
+			//Win/Lose
+		case UI_Element::Action::REMATCH:
+			data->rect = { 954, 769, 187, 37 };
+			break;
+		case UI_Element::Action::RETURN_MAINMENU:
+			data->rect = { 954, 769, 187, 37 };
 			break;
 		}
 		break;
@@ -530,7 +550,7 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			data->rect = { 1005, 81, 85, 81 };
 			break;
 
-			//-----Needs to be changed
+			//Main_Menu - Locked needs to be changed
 		case UI_Element::Action::NEW_GAME:
 			data->rect = { 410,80,39,40 };
 			break;

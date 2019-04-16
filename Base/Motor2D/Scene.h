@@ -65,6 +65,7 @@ struct PlayerUI
 	UI_Element* Damage_text; //only for defense buildings
 	UI_Element* Prod_text; //only for townhall & mines
 	UI_Element* Capacity_text; //only for barracks
+
 };
 
 
@@ -135,7 +136,13 @@ public:
 	char current_p1_gold[20] = "0000 $";
 	char current_p2_gold[20] = "0000 $";
 
-	
+	UI_Element* rematch_button;
+	UI_Element* rematch_button_text;
+	char rematch_button_label[20] = "CLICK A TO CONTINUE";
+
+	UI_Element* return_mainmenu;
+	UI_Element* return_mainmenu_text;
+	char return_mainmenu_label[31] = "CLICK B TO RETURN TO MAIN MENU";
 
 
 private:

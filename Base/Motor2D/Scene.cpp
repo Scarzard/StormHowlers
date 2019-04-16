@@ -792,17 +792,42 @@ void Scene::Victorious()
 	{
 		App->dt = 0.0f;
 		SDL_Rect r = { 0,0,App->win->width,App->win->height };
-		
 		App->render->DrawQuad({ 0, 0, (int)App->win->width + 500, (int)App->win->height + 150 }, 0, 0, 0, 150, true, false);
 		SDL_RenderCopy(App->render->renderer, App->gui->allied_win_tex, NULL, &r);
+		pausetimer = true;
+		world_seconds.Stop();
+
+		rematch_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::REMATCH, { 1273, 432 }, { 187, 37 }, nullptr, true);
+		rematch_button_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, rematch_button, true, { false, false });
+		rematch_button->label = rematch_button->label;
+		rematch_button->color = { 255, 255, 9, 255 };
 		
+		return_mainmenu = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RETURN_MAINMENU, { 1273, 532 }, { 187, 37 }, nullptr, true);
+		return_mainmenu_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, return_mainmenu, true, { false, false });
+		return_mainmenu->label = return_mainmenu->label;
+		return_mainmenu->color = { 255, 255, 9, 255 };
+
 		endgame = true;
 	}
 	else if (!App->player2->isPlayer1)
 	{
 		App->dt = 0.0f;
 		SDL_Rect r = { 0,0,App->win->width,App->win->height };
+		App->render->DrawQuad({ 0, 0, (int)App->win->width + 500, (int)App->win->height + 150 }, 0, 0, 0, 150, true, false);
 		SDL_RenderCopy(App->render->renderer, App->gui->soviet_win_tex, NULL, &r);
+		pausetimer = true;
+		world_seconds.Stop();
+
+		rematch_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::REMATCH, { 1273, 432 }, { 187, 37 }, nullptr, true);
+		rematch_button_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, rematch_button, true, { false, false });
+		rematch_button->label = rematch_button->label;
+		rematch_button->color = { 255, 255, 9, 255 };
+
+		return_mainmenu = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RETURN_MAINMENU, { 1273, 532 }, { 187, 37 }, nullptr, true);
+		return_mainmenu_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, return_mainmenu, true, { false, false });
+		return_mainmenu->label = return_mainmenu->label;
+		return_mainmenu->color = { 255, 255, 9, 255 };
+
 		endgame = true;
 	}
 	
@@ -810,13 +835,18 @@ void Scene::Victorious()
 
 void Scene::ResetGame()
 {
-	//restart dt
-	//stop music
-	//stop timer
-	//reset entities
-	//reset timer
-	//replay initial music
-	//call start from scene again
-	//general cleanups
-	//App->scene->Start();
+	App->scene->CleanUp();
+	App->entitymanager->CleanUp();
+	App->player2->CleanUp();
+	App->player1->CleanUp();
+	App->gui->CleanUp();
+	App->map->CleanUp();
+	App->font->CleanUp();
+
+	App->font->Start();
+	App->map->Start();
+	App->gui->Start();
+	App->player1->Start();
+	App->player2->Start();
+	App->scene->Start();
 }

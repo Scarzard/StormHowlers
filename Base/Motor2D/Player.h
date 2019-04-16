@@ -96,7 +96,7 @@ public:
 	SDL_Rect LiveBar;
 
 	// Live of TOWN HALL
-	int live = 2000;
+	int live;
 
 	GamePad gamepad;
 
