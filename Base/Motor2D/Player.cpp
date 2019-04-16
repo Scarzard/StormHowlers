@@ -12,6 +12,7 @@
 #include "MainMenu.h"
 #include "Fonts.h"
 #include "Audio.h"
+#include "Scene.h"
 
 
 #include "Brofiler\Brofiler.h"
@@ -171,7 +172,7 @@ bool Player::Update(float dt)
 		}
 	}
 
-	if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
+	if (!App->scene->endgame && gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
 	{
 		if (App->scene->active)
 			currentUI = CURRENT_UI::CURR_MAIN;
