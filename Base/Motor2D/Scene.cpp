@@ -119,7 +119,7 @@ bool Scene::Start()
 	App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 5000,50 });
 	App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 350,400 });*/
 
-	string track = App->audio->folder_music + "/Test.ogg"; 
+	string track = App->audio->folder_music + "/StartSong.ogg"; 
 	App->audio->PlayMusic(track.c_str()); 
 
 	//--------- CREATE GUI -----------//  (Falta poner position y size)
