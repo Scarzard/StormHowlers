@@ -77,8 +77,6 @@ bool Scene::Start()
 	App->player1->LiveBar = { 51, 18 , 348, 19 }; //LiveBar for player1
 	App->player2->LiveBar = { 1232, 921 , 348, 19 }; //LiveBar for player2
 
-	Music_Volume = 50;
-	FX_Volume = 20;
 
 	//walkability map
 	Wmap = NULL;
@@ -818,21 +816,21 @@ bool Scene::PostUpdate()
 		}
 		else if ((*item) == App->player1->Music_Slider_text) //Music VOlume
 		{
-			sprintf_s(App->player1->Music_Slider_label, "%u", Music_Volume);
+			sprintf_s(App->player1->Music_Slider_label, "%u", App->audio->musicVolume);
 			(*item)->label = App->player1->Music_Slider_label;
 		}
 		else if ((*item) == App->player1->FX_Slider_text) //FX Volume
 		{
-			sprintf_s(App->player1->FX_Slider_label, "%u", FX_Volume);
+			sprintf_s(App->player1->FX_Slider_label, "%u", App->audio->sfxVolume);
 			(*item)->label = App->player1->FX_Slider_label;
 		}
 		else if ((*item) == App->player1->Music_Slider_Button) //MUSIC SLIDER POS
 		{
-			App->player1->Music_Slider_Button->position.first = (550 * Music_Volume) / 100;
+			App->player1->Music_Slider_Button->position.first = (550 * App->audio->musicVolume) / 100;
 		}
 		else if ((*item) == App->player1->FX_Slider_Button) //FX SLIDER POS
 		{
-			App->player1->FX_Slider_Button->position.first = (550 * FX_Volume) / 100;
+			App->player1->FX_Slider_Button->position.first = (550 * App->audio->sfxVolume) / 100;
 		}
 		
 
@@ -851,21 +849,21 @@ bool Scene::PostUpdate()
 		}
 		else if ((*item) == App->player2->Music_Slider_text) //Music VOlume
 		{
-			sprintf_s(App->player2->Music_Slider_label, "%u", Music_Volume);
+			sprintf_s(App->player2->Music_Slider_label, "%u", App->audio->musicVolume);
 			(*item)->label = App->player2->Music_Slider_label;
 		}
 		else if ((*item) == App->player2->FX_Slider_text) //FX Volume
 		{
-			sprintf_s(App->player2->FX_Slider_label, "%u", FX_Volume);
+			sprintf_s(App->player2->FX_Slider_label, "%u", App->audio->sfxVolume);
 			(*item)->label = App->player2->FX_Slider_label;
 		}
 		else if ((*item) == App->player2->Music_Slider_Button) //MUSIC SLIDER POS
 		{
-			App->player2->Music_Slider_Button->position.first = (550 * Music_Volume) / 100;
+			App->player2->Music_Slider_Button->position.first = (550 * App->audio->musicVolume) / 100;
 		}
 		else if ((*item) == App->player2->FX_Slider_Button) //FX SLIDER POS
 		{
-			App->player2->FX_Slider_Button->position.first = (550 * FX_Volume) / 100;
+			App->player2->FX_Slider_Button->position.first = (550 * App->audio->sfxVolume) / 100;
 		}
 		App->gui->UpdateState(*item);
 		item++;

@@ -43,15 +43,12 @@ bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("Player Update", Profiler::Color::Black);
 
+
+	//--- Press X (Square)
 	if (gamepad.Controller[BUTTON_X] == KEY_DOWN)
 	{
 		onUI = !onUI;
 	}
-
-	//--- Press X (Square)
-	
-
-	
 
 	// Button with focus changes state to HOVER 
 	if (currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr )
@@ -251,22 +248,28 @@ bool Player::Update(float dt)
 	{
 		if ((*focus) == Music_Settings)
 		{
-			App->scene->Music_Volume += 10;
+			App->audio->musicVolume += 10;
+			App->audio->SetMusicVolume();
+			
+
 		}
 		else
 		{
-			App->scene->FX_Volume += 10;
+			App->audio->sfxVolume += 10;
+			App->audio->SetSfxVolume();
 		}
 	}
 	else if (gamepad.Controller[LEFT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
 	{
 		if ((*focus) == Music_Settings)
 		{
-			App->scene->Music_Volume -= 10;
+			App->audio->musicVolume -= 10;
+			App->audio->SetMusicVolume();
 		}
 		else
 		{
-			App->scene->FX_Volume -= 10;
+			App->audio->sfxVolume -= 10;
+			App->audio->SetSfxVolume();
 		}
 	}
 

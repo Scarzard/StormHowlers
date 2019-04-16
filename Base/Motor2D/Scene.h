@@ -135,9 +135,6 @@ public:
 	char current_p1_gold[20] = "0000 $";
 	char current_p2_gold[20] = "0000 $";
 
-	uint Music_Volume = 0; // JUST TO TEST SETTINGS MENU (NOT REAL VOLUME)
-	uint FX_Volume = 0; // JUST TO TEST SETTINGS MENU (NOT REAL VOLUME)
-
 
 private:
 	SDL_Texture* debug_tex;
