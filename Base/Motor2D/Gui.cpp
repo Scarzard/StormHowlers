@@ -159,7 +159,7 @@ bool Gui::Draw()
 				}
 				else if ((*UI_elem) == App->player1->win_screen)
 				{
-					App->render->DrawQuad({ 0, 0, (int)App->win->width + 520, (int)App->win->height + 150 }, 0, 0, 0, 150, true, false);
+					App->render->DrawQuad({ 0, 0, (int)App->win->width + 520, (int)App->win->height + 300 }, 0, 0, 0, 150, true, false);
 					SDL_RenderCopy(App->render->renderer, App->scene->allied_win_tex, NULL, &r);
 				}
 			}
@@ -200,7 +200,7 @@ bool Gui::Draw()
 				}
 				else if ((*UI_elem) == App->player2->win_screen)
 				{
-					App->render->DrawQuad({ 0, 0, (int)App->win->width + 520, (int)App->win->height + 150 }, 0, 0, 0, 150, true, false);
+					App->render->DrawQuad({ 0, 0, (int)App->win->width + 520, (int)App->win->height + 300 }, 0, 0, 0, 150, true, false);
 					SDL_RenderCopy(App->render->renderer, App->scene->soviet_win_tex, NULL, &r);
 				}
 			}

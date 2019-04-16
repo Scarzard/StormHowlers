@@ -82,6 +82,9 @@ bool Audio::Awake(pugi::xml_node& config)
 		LoadFx(PATH(folder_fx.data(), fx_path[i].data()));
 	}
 
+	SetMusicVolume();
+	SetSfxVolume();
+
 	return ret;
 }
 

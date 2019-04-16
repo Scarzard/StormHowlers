@@ -89,7 +89,7 @@ public:
 	void SpawnEntities();
 
 	void DrawLiveBar(Player* player);
-	void Victorious();
+	void Victorious(Player* player);
 	void ResetGame();
 
 
@@ -102,16 +102,19 @@ public:
 	uint currentMap = 0;
 	uchar* Wmap;
 
-	bool pause;
-	bool godmode;
-	bool to_end;
-	bool change;
-	bool endgame;
+	bool pause = false;
+	bool godmode = false;
+	bool to_end = false;
+	bool change = false;
+	bool endgame = false;
 
 	string current_track ;
 	string current_fx ;
+
 	string pause_alied;
+	SDL_Texture* pause_alied_texture = nullptr;
 	string pause_soviet;
+	SDL_Texture* pause_soviet_texture = nullptr;
 
 	
 
@@ -154,8 +157,8 @@ public:
 
 
 private:
-	SDL_Texture* debug_tex;
-	SDL_Texture* cursor_tex;
+	SDL_Texture* debug_tex = nullptr;
+	SDL_Texture* cursor_tex = nullptr;
 
 	pair<int, int>	camera_motion;
 	pair<int, int>	last_motion;

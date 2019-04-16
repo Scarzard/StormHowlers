@@ -66,6 +66,9 @@ bool Scene::Start()
 	allied_win_tex = App->tex->Load(allied_win_name.data());
 	soviet_win_tex = App->tex->Load(soviet_win_name.data());
 
+	pause_soviet_texture = App->tex->Load(pause_soviet.data());
+	pause_alied_texture = App->tex->Load(pause_alied.data());
+
 	// Variables init
 	currentMap = 0;
 	pause = false;
@@ -179,7 +182,7 @@ bool Scene::Start()
 
 	// ------ PAUSE MENU ------
 	App->player1->Pause_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, false);
-	App->player1->Pause_UI->texture = App->tex->Load(pause_soviet.data());
+	App->player1->Pause_UI->texture = pause_soviet_texture;
 	App->player1->Pause_UI->rect = { 0, 0, App->win->width, App->win->height };
 
 	App->player1->Abort_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ABORT_PAUSE, { 1291 ,868 }, { 301,59 }, App->player1->Pause_UI, false);
@@ -200,7 +203,7 @@ bool Scene::Start()
 
 	//------ Settings Pause MENU ------
 	App->player1->Settings_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
-	App->player1->Settings_UI->texture = App->tex->Load(pause_soviet.data());
+	App->player1->Settings_UI->texture = pause_soviet_texture;
 	App->player1->Settings_UI->rect = { 0, 0, 0, App->win->height };
 
 	App->player1->Music_Settings = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::MUSIC_VOLUME, { 100 ,100 }, { 301,59 }, App->player1->Settings_UI, false);
@@ -232,7 +235,7 @@ bool Scene::Start()
 
 	// ABORT MISSION MENU
 	App->player1->Abort_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
-	App->player1->Abort_UI->texture = App->tex->Load(pause_soviet.data());
+	App->player1->Abort_UI->texture = pause_soviet_texture;
 	App->player1->Abort_UI->rect = { 0, 0, 0, App->win->height };
 
 	App->player1->Restart = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESTART, { 1291 ,565 }, { 301,59 }, App->player1->Abort_UI, false);
@@ -299,7 +302,7 @@ bool Scene::Start()
 	App->player2->Gold_UI->color = { 255,255,0,255 };
 
 	App->player2->Pause_UI = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, false);
-	App->player2->Pause_UI->texture = App->tex->Load(pause_alied.data());
+	App->player2->Pause_UI->texture = pause_alied_texture;
 	App->player2->Pause_UI->rect = { 0, 0, App->win->width, App->win->height };
 
 	App->player2->Abort_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ABORT_PAUSE, { 1291 ,868 }, { 301,59 }, App->player2->Pause_UI, false);
@@ -325,7 +328,7 @@ bool Scene::Start()
 
 	//------ Settings Pause MENU ------
 	App->player2->Settings_UI = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
-	App->player2->Settings_UI->texture = App->tex->Load(pause_alied.data());
+	App->player2->Settings_UI->texture = pause_alied_texture;
 	App->player2->Settings_UI->rect = { 0, 0, 0, App->win->height };
 
 	App->player2->Music_Settings = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::MUSIC_VOLUME, { 100 ,100 }, { 301,59 }, App->player2->Settings_UI, false);
@@ -356,7 +359,7 @@ bool Scene::Start()
 
 	// ABORT MISSION MENU
 	App->player2->Abort_UI = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
-	App->player2->Abort_UI->texture = App->tex->Load(pause_alied.data());
+	App->player2->Abort_UI->texture = pause_alied_texture;
 	App->player2->Abort_UI->rect = { 0, 0, 0, App->win->height };
 
 	App->player2->Restart = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESTART, { 1291 ,565 }, { 301,59 }, App->player2->Abort_UI, false);
@@ -429,15 +432,15 @@ bool Scene::PreUpdate()
 		{
 			if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
 			{
-				App->player1->gold += (*item)->production;
+				if ((int)world_clock.ReadSec() > App->player1->time_iterator)
+				{
+					App->player1->gold += (*item)->production;
+					App->player1->time_iterator = (int)world_clock.ReadSec();
+				}
+				
 			}
 		}
-		// This updates the gold every second. This has to be in the if above: if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
-		if ((int)world_clock.ReadSec() > App->player1->time_iterator)
-		{
-			App->player1->gold += 100;
-			App->player1->time_iterator = (int)world_clock.ReadSec();
-		}
+		
 
 
 
@@ -447,16 +450,15 @@ bool Scene::PreUpdate()
 		{
 			if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
 			{
-				App->player2->gold += (*item)->production;
+				if ((int)world_clock.ReadSec() > App->player2->time_iterator)
+				{
+					App->player2->gold += (*item)->production;
+					App->player2->time_iterator = (int)world_clock.ReadSec();
+				}
 			}
+				
 		}
-		// This updates the gold every second. This has to be in the if above: if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
-		if ((int)world_clock.ReadSec() > App->player2->time_iterator)
-		{
-			App->player2->gold += 100;
-			App->player2->time_iterator = (int)world_clock.ReadSec();
-		}
-		//----
+		
 	}
 	
 
@@ -904,6 +906,11 @@ bool Scene::CleanUp()
 	App->tex->UnLoad(cursor_tex);
 	App->tex->UnLoad(App->map->imagemap);
 	App->tex->UnLoad(App->map->debug_tex);
+	App->tex->UnLoad(allied_win_tex);
+	App->tex->UnLoad(soviet_win_tex);
+	App->tex->UnLoad(pause_soviet_texture);
+	App->tex->UnLoad(pause_alied_texture);
+	
 
 	cursor_tex = nullptr;
 
@@ -979,9 +986,9 @@ void Scene::SpawnEnemies() //
 	//		}
 	//	}
 	//}
-	App->player1->TownHall = App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 100, 700 });
+	App->player1->TownHall = App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 1420, 30 });
 
-	App->player2->TownHall = App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 500, 700 });
+	App->player2->TownHall = App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, { 0, 900 });
 }
 
 
@@ -997,9 +1004,9 @@ void Scene::DrawLiveBar(Player* player)
 		App->render->DrawQuad(player->LiveBar, 255, 0, 0, 255, true, false);
 }
 
-void Scene::Victorious()
+void Scene::Victorious(Player* player)
 {
-	if (App->player1->isDead)
+	if (player == App->player1)
 	{
 		pausetimer = true;
 		world_seconds.Stop();
@@ -1009,16 +1016,6 @@ void Scene::Victorious()
 		App->player1->currentUI = Player::CURRENT_UI::CURR_WIN_SCREEN;
 		App->player1->UpdateVisibility();
 
-		//rematch_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::REMATCH, { 1273, 432 }, { 187, 37 }, nullptr, true);
-		//rematch_button_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, rematch_button, true, { false, false });
-		//rematch_button->label = rematch_button->label;
-		//rematch_button->color = { 255, 255, 9, 255 };
-
-		//return_mainmenu = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RETURN_MAINMENU, { 1273, 532 }, { 187, 37 }, nullptr, true);
-		//return_mainmenu_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, return_mainmenu, true, { false, false });
-		//return_mainmenu->label = return_mainmenu->label;
-		//return_mainmenu->color = { 255, 255, 9, 255 };
-
 		endgame = true;
 
 		if (App->scene->pause == false)
@@ -1026,25 +1023,15 @@ void Scene::Victorious()
 			App->scene->pause = true;
 		}
 	}
-	else if (App->player2->isDead)
+	else if (player == App->player2)
 	{
 		pausetimer = true;
 		world_seconds.Stop();
-		
+
 		App->player1->currentUI = Player::CURRENT_UI::ENDGAME;
 		App->player1->UpdateVisibility();
 		App->player2->currentUI = Player::CURRENT_UI::CURR_WIN_SCREEN;
 		App->player2->UpdateVisibility();
-
-		//rematch_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::REMATCH, { 1273, 432 }, { 187, 37 }, nullptr, true);
-		//rematch_button_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, rematch_button, true, { false, false });
-		//rematch_button->label = rematch_button->label;
-		//rematch_button->color = { 255, 255, 9, 255 };
-
-		//return_mainmenu = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RETURN_MAINMENU, { 1273, 532 }, { 187, 37 }, nullptr, true);
-		//return_mainmenu_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, return_mainmenu, true, { false, false });
-		//return_mainmenu->label = return_mainmenu->label;
-		//return_mainmenu->color = { 255, 255, 9, 255 };
 
 		endgame = true;
 
