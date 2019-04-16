@@ -4,7 +4,6 @@
 #include "Render.h"
 #include "Map.h"
 #include "Player.h"
-#include "Gui.h"
 #include "Brofiler\Brofiler.h"
 
 
@@ -26,7 +25,7 @@ bool Townhall::Update(float dt)
 
 	if (fromPlayer1)
 	{
-		if (App->player1->live > 0) //if not destroyed
+		if (health > 0) //if not destroyed
 		{
 			if (upgrade == true) //upgrade
 			{
@@ -39,12 +38,12 @@ bool Townhall::Update(float dt)
 		}
 		else
 		{
-			App->scene->Victorious();
+			//player 1 lose
 		}
 	}
 	else if (!fromPlayer1)
 	{
-		if (App->player2->live > 0) //if not destroyed
+		if (health > 0) //if not destroyed
 		{
 			if (upgrade == true) //upgrade
 			{
@@ -57,7 +56,7 @@ bool Townhall::Update(float dt)
 		}
 		else
 		{
-			App->scene->Victorious();
+			//player 2 lose
 		}
 	}
 	ChangeAnimation();

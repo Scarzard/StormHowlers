@@ -8,8 +8,8 @@
 #include "SDL_mixer\include\SDL_mixer.h"
 #pragma comment( lib, "SDL_mixer/libx86/SDL2_mixer.lib" )
 
-#define SONG1_BEGIN_TIME 10
-#define SONG2_BEGIN_TIME 20
+#define SONG1_BEGIN_TIME 5
+#define SONG2_BEGIN_TIME 8
 
 Audio::Audio() : Module()
 {
@@ -28,7 +28,7 @@ bool Audio::Awake(pugi::xml_node& config)
 	bool ret = true;
 	SDL_Init(0);
 
-	if(SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
+	if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
 	{
 		LOG("SDL_INIT_AUDIO could not initialize! SDL_Error: %s\n", SDL_GetError());
 		active = false;
@@ -39,7 +39,7 @@ bool Audio::Awake(pugi::xml_node& config)
 	int flags = MIX_INIT_OGG;
 	int init = Mix_Init(flags);
 
-	if((init & flags) != flags)
+	if ((init & flags) != flags)
 	{
 		LOG("Could not initialize Mixer lib. Mix_Init: %s", Mix_GetError());
 		active = false;
@@ -47,7 +47,7 @@ bool Audio::Awake(pugi::xml_node& config)
 	}
 
 	//Initialize SDL_mixer
-	if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
 		LOG("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 		active = false;
@@ -62,7 +62,7 @@ bool Audio::Awake(pugi::xml_node& config)
 
 	pugi::xml_node music_node = config.child("music").child("track");
 	int i = 0;
-	for (music_node; music_node; music_node = music_node.next_sibling("track")) 
+	for (music_node; music_node; music_node = music_node.next_sibling("track"))
 	{
 		tracks_path.push_back(music_node.child_value());
 		LOG("Loading paths %s", tracks_path[i++].data());
@@ -70,7 +70,7 @@ bool Audio::Awake(pugi::xml_node& config)
 
 	pugi::xml_node fx_node = config.child("fx").child("sound");
 	i = 0;
-	for (fx_node; fx_node; fx_node = fx_node.next_sibling("sound")) 
+	for (fx_node; fx_node; fx_node = fx_node.next_sibling("sound"))
 	{
 		fx_path.push_back(fx_node.child_value());
 		LOG("Loading fx path %s  i: %d", fx_path[i].data(), i - 1);
@@ -87,21 +87,33 @@ bool Audio::Awake(pugi::xml_node& config)
 
 bool Audio::Update(float dt)
 {
-	if (App->scene->worldseconds > SONG1_BEGIN_TIME && App->scene->worldseconds < SONG2_BEGIN_TIME && song1played == false) {
-		string track = App->audio->folder_music + "/Test2.ogg"; 
-		App->audio->PlayMusic(track.c_str());
-		song1played = true; 
-	}
-
-	else if (App->scene->worldseconds > SONG2_BEGIN_TIME && song2played == false) 
+	if (App->scene->worldminutes >= SONG1_BEGIN_TIME && App->scene->worldminutes < SONG2_BEGIN_TIME && song1played == false)
 	{
-		string track = App->audio->folder_music + "/Test3.ogg";
-		App->audio->PlayMusic(track.c_str());
+		song1played = true;
+		fading_out = true;
+		track = App->audio->folder_music + "/MiddleSong.ogg";
+		volume_before = Mix_VolumeMusic(-1); 
+	}
+
+	else if (App->scene->worldminutes >= SONG2_BEGIN_TIME && song2played == false)
+	{
 		song2played = true;
+		fading_out = true;
+		track = App->audio->folder_music + "/FinalSong.ogg";
+		volume_before = Mix_VolumeMusic(-1);
 	}
 
 
+	if (reading_time)
+	{
+		fade_time = App->scene->world_clock.Read();
+		reading_time = false;
+	}
 
+	if (fading_out)
+		FadeOut(track.c_str());
+	if (fading_in)
+		FadeIn();
 
 	return true;
 }
@@ -109,19 +121,19 @@ bool Audio::Update(float dt)
 // Called before quitting
 bool Audio::CleanUp()
 {
-	if(!active)
+	if (!active)
 		return true;
 
 	LOG("Freeing sound FX, closing Mixer and Audio subsystem");
 
-	if(music != NULL)
+	if (music != NULL)
 	{
 		Mix_FreeMusic(music);
 	}
 
 	list<Mix_Chunk*>::const_iterator item;
 
-	for(item = fx.begin(); item != fx.end(); item++)
+	for (item = fx.begin(); item != fx.end(); item++)
 		Mix_FreeChunk(*item);
 
 	fx.clear();
@@ -138,14 +150,15 @@ bool Audio::PlayMusic(const char* path, float fade_time)
 {
 	bool ret = true;
 
-	if(!active)
+	if (!active)
 		return false;
 
-	if(music != NULL)
+	if (music != NULL)
 	{
-		if(fade_time > 0.0f)
+		if (fade_time > 0.0f)
 		{
-			Mix_FadeOutMusic(int(fade_time * 1000.0f));
+			//Mix_FadeOutMusic(int(fade_time * 1000.0f));
+			//changing_song = true;
 		}
 		else
 		{
@@ -158,16 +171,16 @@ bool Audio::PlayMusic(const char* path, float fade_time)
 
 	music = Mix_LoadMUS(path);
 
-	if(music == NULL)
+	if (music == NULL)
 	{
 		LOG("Cannot load music %s. Mix_GetError(): %s\n", path, Mix_GetError());
 		ret = false;
 	}
 	else
 	{
-		if(fade_time > 0.0f)
+		if (fade_time > 0.0f)
 		{
-			if(Mix_FadeInMusic(music, -1, (int) (fade_time * 1000.0f)) < 0)
+			if (Mix_FadeInMusic(music, -1, (int)(fade_time * 1000.0f)) < 0)
 			{
 				LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
@@ -175,7 +188,7 @@ bool Audio::PlayMusic(const char* path, float fade_time)
 		}
 		else
 		{
-			if(Mix_PlayMusic(music, -1) < 0)
+			if (Mix_PlayMusic(music, -1) < 0)
 			{
 				LOG("Cannot play in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
@@ -192,12 +205,12 @@ unsigned int Audio::LoadFx(const char* path)
 {
 	unsigned int ret = 0;
 
-	if(!active)
+	if (!active)
 		return 0;
 
 	Mix_Chunk* chunk = Mix_LoadWAV(path);
 
-	if(chunk == NULL)
+	if (chunk == NULL)
 	{
 		LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
 	}
@@ -215,10 +228,10 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 {
 	bool ret = false;
 
-	if(!active)
+	if (!active)
 		return false;
 
-	if(id > 0 && id <= fx.size())
+	if (id > 0 && id <= fx.size())
 	{
 		Mix_PlayChannel(-1, *next(fx.begin(), id - 1), repeat);
 	}
@@ -246,4 +259,39 @@ void Audio::PauseMusic()
 	{
 		Mix_PauseMusic();
 	}
+}
+
+void Audio::FadeOut(const char* path)
+{
+
+	int musicVolume = Mix_VolumeMusic(-1);
+
+	if (App->scene->world_clock.Read() - fade_time > 100 && musicVolume > 0)
+	{
+		Mix_VolumeMusic(musicVolume -= 5);
+		reading_time = true;
+	}
+
+	if (musicVolume <= 0)
+	{
+		Mix_FreeMusic(music); //Changing song
+		music = Mix_LoadMUS(path);
+		Mix_PlayMusic(music, -1);
+		fading_out = false;
+		fading_in = true;
+	}
+}
+
+void Audio::FadeIn()
+{
+	musicVolume = Mix_VolumeMusic(-1);
+
+	if (App->scene->world_clock.Read() - fade_time > 100 && musicVolume < 128)
+	{
+		Mix_VolumeMusic(musicVolume += 5);
+		reading_time = true;
+	}
+
+	if (musicVolume >= musicVolume)
+		fading_in = false;
 }

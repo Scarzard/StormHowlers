@@ -58,9 +58,11 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(gui);
 	AddModule(main_menu);
 	AddModule(scene, false);
+	AddModule(entitymanager);
 	AddModule(player1);
 	AddModule(player2);
-	AddModule(entitymanager);
+	
+	
 	// render last to swap buffer
 	AddModule(render);
 
