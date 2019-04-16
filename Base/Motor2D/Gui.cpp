@@ -99,7 +99,7 @@ UI_Element* Gui::AddUIElement(bool player1, UI_Element::UI_type type, UI_Element
 		UI_elem = new OtherUI(type, action, pos, size, parent, visible, dragable);
 		break;
 
-	case UI_Element::UI_type::MAIN_MENU_BG:
+	case UI_Element::UI_type::TEXTURE:
 		UI_elem = new OtherUI(type, action, pos, size, parent, visible, dragable);
 		break;
 	}
@@ -131,7 +131,7 @@ bool Gui::Draw()
 
 				App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
 			}
-			else if ((*UI_elem)->type == UI_Element::UI_type::LABEL && (*UI_elem) == App->main_menu->new_game_text) //label main menu
+			else if ((*UI_elem)->type == UI_Element::UI_type::LABEL && (*UI_elem) == App->main_menu->new_game_text && App->main_menu->active) //label main menu
 			{
 				App->tex->UnLoad((*UI_elem)->texture);
 				(*UI_elem)->texture = App->font->Print((*UI_elem)->label, (*UI_elem)->color, App->font->main_menu_font);
@@ -142,15 +142,25 @@ bool Gui::Draw()
 			else if ((*UI_elem)->type == UI_Element::UI_type::LABEL) //text
 			{
 				App->tex->UnLoad((*UI_elem)->texture);
-				(*UI_elem)->texture = App->font->Print((*UI_elem)->label, (*UI_elem)->color);
+				(*UI_elem)->texture = App->font->Print((*UI_elem)->label, (*UI_elem)->color, App->font->default);
 				App->font->CalcSize((*UI_elem)->label, (*UI_elem)->size.first, (*UI_elem)->size.second);
 
 				App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
 			}
-			else if ((*UI_elem)->type == UI_Element::UI_type::MAIN_MENU_BG) //text
+			else if ((*UI_elem)->type == UI_Element::UI_type::TEXTURE) //text
 			{
 				SDL_Rect r = { 0,0,App->win->width,App->win->height };
-				SDL_RenderCopy(App->render->renderer, App->main_menu->menu_background->texture, NULL, &r);
+				if ((*UI_elem) == App->main_menu->menu_background)
+				{
+					SDL_RenderCopy(App->render->renderer, App->main_menu->menu_background->texture, NULL, &r);
+				}
+				else if ((*UI_elem) == App->player1->Pause_UI || (*UI_elem) == App->player1->Abort_UI)
+				{
+					SDL_RenderCopy(App->render->renderer, App->player1->Pause_UI->texture, NULL, &r);
+				}
+				
+				
+				
 			}
 			else //rest of ui
 			{
@@ -159,7 +169,8 @@ bool Gui::Draw()
 		}
 		if (UI_Debug == true)
 		{
-			App->render->DrawQuad((*UI_elem)->collider, 255, 0, 0, 255, false, false);
+			if ((*UI_elem)->visible == true)
+				App->render->DrawQuad((*UI_elem)->collider, 255, 0, 0, 255, false, false);
 		}
 		UI_elem++;
 	}
@@ -178,6 +189,17 @@ bool Gui::Draw()
 
 				App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
 			}
+			else if ((*UI_elem)->type == UI_Element::UI_type::TEXTURE) //text
+			{
+				SDL_Rect r = { 0,0,App->win->width,App->win->height };
+				
+				if ((*UI_elem) == App->player2->Pause_UI || (*UI_elem) == App->player2->Abort_UI)
+				{
+					SDL_RenderCopy(App->render->renderer, App->player2->Pause_UI->texture, NULL, &r);
+				}
+
+
+			}
 			else //rest of ui
 			{
 				App->render->Blit(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, &(*UI_elem)->rect, SDL_FLIP_NONE, 0);
@@ -185,7 +207,8 @@ bool Gui::Draw()
 		}
 		if (UI_Debug == true)
 		{
-			App->render->DrawQuad((*UI_elem)->collider, 255, 0, 0, 255, false, false);
+			if ((*UI_elem)->visible == true)
+				App->render->DrawQuad((*UI_elem)->collider, 255, 0, 0, 255, false, false);
 		}
 
 		UI_elem++;
@@ -356,6 +379,53 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			data->rect = { 744, 954, 371, 87 };
 			break;
 
+			//------ Pause Menu ------
+		case UI_Element::Action::RESUME_PAUSE:
+			if (App->player1->Resume_Button == data)
+				data->rect = { 581, 769, 301,59 };
+			else
+				data->rect = {581, 830, 300, 60};
+			break;
+		case UI_Element::Action::SETTINGS_PAUSE:
+			if (App->player1->Settings_Button == data)
+				data->rect = { 581, 769, 301,59 };
+			else
+				data->rect = { 581, 830, 300, 60 };
+			break;
+		case UI_Element::Action::ABORT_PAUSE:
+			if (App->player1->Abort_Button== data)
+				data->rect = { 581, 769, 301,59 };
+			else
+				data->rect = { 581, 830, 300, 60 };
+			break;
+
+		case UI_Element::Action::SURRENDER:
+			if (App->player1->Quit == data)
+				data->rect = { 581, 769, 301,59 };
+			else
+				data->rect = { 581, 830, 300, 60 };
+			break;
+		case UI_Element::Action::RESTART:
+			if (App->player1->Restart == data)
+				data->rect = { 581, 769, 301,59 };
+			else
+				data->rect = { 581, 830, 300, 60 };
+			break;
+
+
+		case UI_Element::Action::MUSIC_VOLUME:
+			if (App->player1->Music_Settings == data)
+				data->rect = { 1517, 830, 291, 54 };
+			else
+				data->rect = { 1816, 830, 291, 54 };
+			break;
+		case UI_Element::Action::FX_VOLUME:
+			if (App->player1->FX_Settings == data)
+				data->rect = { 1517, 830, 291, 54 };
+			else
+				data->rect = { 1816, 830, 291, 54 };
+			break;
+
 		}
 		break;
 
@@ -434,6 +504,52 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::EXIT:
 			data->rect = { 1116, 954, 371, 86 };
 			break;
+
+			//------ Pause Menu ------
+		case UI_Element::Action::RESUME_PAUSE:
+			if (App->player1->Resume_Button == data)
+				data->rect = { 881, 769, 301,59 };
+			else
+				data->rect = { 881, 830, 300, 60 };
+			break;
+		case UI_Element::Action::SETTINGS_PAUSE:
+			if (App->player1->Settings_Button == data)
+				data->rect = { 881, 769, 301,59 };
+			else
+				data->rect = { 881, 830, 300, 60 };
+			break;
+		case UI_Element::Action::ABORT_PAUSE:
+			if (App->player1->Abort_Button == data)
+				data->rect = { 881, 769, 301,59 };
+			else
+				data->rect = { 881, 830, 300, 60 };
+			break;
+
+		case UI_Element::Action::SURRENDER:
+			if (App->player1->Quit == data)
+				data->rect = { 881, 769, 301,59 };
+			else
+				data->rect = { 881, 830, 300, 60 };
+			break;
+		case UI_Element::Action::RESTART:
+			if (App->player1->Restart == data)
+				data->rect = { 881, 769, 301,59 };
+			else
+				data->rect = { 881, 830, 300, 60 };
+			break;
+
+		case UI_Element::Action::MUSIC_VOLUME:
+			if (App->player1->Music_Settings == data)
+				data->rect = { 1517, 884, 291, 54 };
+			else
+				data->rect = { 1816, 884, 291, 54 };
+			break;
+		case UI_Element::Action::FX_VOLUME:
+			if (App->player1->FX_Settings == data)
+				data->rect = { 1517, 884, 291, 54 };
+			else
+				data->rect = { 1816, 884, 291, 54 };
+			break;
 		}
 		break;
 
@@ -500,6 +616,52 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			break;
 		case UI_Element::Action::EXIT:
 			data->rect = { 1488, 954, 371, 86 };
+			break;
+
+			//------ Pause Menu ------
+		case UI_Element::Action::RESUME_PAUSE:
+			if(App->player1->Resume_Button == data)
+				data->rect = { 1181, 769, 301,59 };
+			else
+				data->rect = { 1181, 830, 300, 60 };
+			break;
+		case UI_Element::Action::SETTINGS_PAUSE:
+			if (App->player1->Settings_Button == data)
+				data->rect = { 1181, 769, 301,59 };
+			else
+				data->rect = { 1181, 830, 300, 60 };
+			break;
+		case UI_Element::Action::ABORT_PAUSE:
+			if (App->player1->Abort_Button == data)
+				data->rect = { 1181, 769, 301,59 };
+			else
+				data->rect = { 1181, 830, 300, 60 };
+			break;
+
+		case UI_Element::Action::SURRENDER:
+			if (App->player1->Quit == data)
+				data->rect = { 1181, 769, 301,59 };
+			else
+				data->rect = { 1181, 830, 300, 60 };
+			break;
+		case UI_Element::Action::RESTART:
+			if (App->player1->Restart == data)
+				data->rect = { 1181, 769, 301,59 };
+			else
+				data->rect = { 1181, 830, 300, 60 };
+			break;
+
+		case UI_Element::Action::MUSIC_VOLUME:
+			if (App->player1->Music_Settings == data)
+				data->rect = { 1517, 884, 291, 54 };
+			else
+				data->rect = { 1816, 884, 291, 54 };
+			break;
+		case UI_Element::Action::FX_VOLUME:
+			if (App->player1->FX_Settings == data)
+				data->rect = { 1517, 884, 291, 54 };
+			else
+				data->rect = { 1816, 884, 291, 54 };
 			break;
 		}
 		break;
@@ -569,6 +731,17 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		//case UI_Element::Action::ACT_CAST_MISSILES://V3 ROCKETS
 		//	data->rect = {  };
 		//	break;
+
+				//------ Pause Menu ------
+		case UI_Element::Action::RESUME_PAUSE:
+			data->rect = { 769, 769, 301,59 };
+			break;
+		case UI_Element::Action::SETTINGS_PAUSE:
+			data->rect = { 769, 769, 301,59 };
+			break;
+		case UI_Element::Action::ABORT_PAUSE:
+			data->rect = { 769, 769, 301,59 };
+			break;
 			
 
 		}

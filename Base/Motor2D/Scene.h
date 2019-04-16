@@ -95,18 +95,20 @@ public:
 
 public:
 	vector<string*> map_names;
-	float fade_time;
+	float fade_time = 0.0f;
 
-	uint currentMap;
+	uint currentMap = 0;
 	uchar* Wmap;
 
-	bool pause;
-	bool godmode;
-	bool to_end;
-	bool change;
+	bool pause = false;
+	bool godmode = false;
+	bool to_end = false;
+	bool change = false;
 
-	string current_track;
-	string current_fx;
+	string current_track ;
+	string current_fx ;
+	string pause_alied;
+	string pause_soviet;
 
 	
 
@@ -114,14 +116,14 @@ public:
 	SDL_Texture* spritesheet123 = nullptr;
 
 //timer elements
-	UI_Element* ui_timer;
+	UI_Element* ui_timer = nullptr;
 
 	Timer world_clock;
 	Timer world_seconds;
 	Timer size_timer;
 	char current_time[20] = "TIME: 000";
-	uint worldminutes=0;
-	uint worldseconds=0;
+	uint worldminutes = 0;
+	uint worldseconds = 0;
 	uint size_timer_count = 0;
 	int increase_decresease = 0;
 	bool increase_size = true;
@@ -132,8 +134,6 @@ public:
 	// Players Gold
 	char current_p1_gold[20] = "0000 $";
 	char current_p2_gold[20] = "0000 $";
-
-	
 
 
 private:
