@@ -23,7 +23,7 @@ public:
 		PUSHBUTTON,
 		SLIDER,
 		WINDOW,
-		TEXTURE
+		MAIN_MENU_BG
 	};
 
 	enum Action
@@ -61,16 +61,7 @@ public:
 
 		//Win/Lose buttons
 		REMATCH,
-		RETURN_MAINMENU,
-
-		//Pause 
-		RESUME_PAUSE,
-		SETTINGS_PAUSE,
-		ABORT_PAUSE,
-		MUSIC_VOLUME,
-		FX_VOLUME,
-		SURRENDER,
-		RESTART
+		RETURN_MAINMENU
 
 	};
 

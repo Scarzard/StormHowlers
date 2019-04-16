@@ -44,9 +44,6 @@ bool Scene::Awake(pugi::xml_node& config)
 	}
 	fade_time = config.child("fade_time").attribute("value").as_float();
 
-	pause_soviet = config.child("pause_menu_soviet").attribute("file").as_string("");
-	pause_alied = config.child("pause_menu_alied").attribute("file").as_string("");
-
 	return ret;
 }
 
@@ -59,7 +56,6 @@ bool Scene::Start()
 	//current_track = App->audio->tracks_path.front();
 	//App->audio->PlayMusic(PATH(App->audio->folder_music.data(), current_track.data()));
 	App->render->zoom = 0.77;
-
 	// Variables init
 	currentMap = 0;
 	pause = false;
@@ -78,7 +74,6 @@ bool Scene::Start()
 	App->player1->LiveBar = { 51, 18 , 348, 19 }; //LiveBar for player1
 	App->player2->LiveBar = { 1232, 921 , 348, 19 }; //LiveBar for player2
 
-
 	//walkability map
 	Wmap = NULL;
 	int w, h;
@@ -88,7 +83,10 @@ bool Scene::Start()
 		LOG("Create walkability map");
 	}
 
-	
+	//animation testing
+	if (spritesheet123 == nullptr)
+
+		spritesheet123 = App->tex->Load("textures/prueba.png");
 
 	//--------- INIT BUILD ZONE LIMITS ------------- (falta cambiar con valores de las build Zones
 	App->player1->x_limits_player1 = { 20,60 };
@@ -99,7 +97,6 @@ bool Scene::Start()
 
 		//spritesheet123 = App->tex->Load("textures/Buildings.png");
 	App->map->imagemap = App->tex->Load("textures/map3.png");
-	
 
 
 	//--------- CREATE MAIN BUILDINGS -------------// (falta cambiar posicion)
@@ -118,7 +115,7 @@ bool Scene::Start()
 	App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 5000,50 });
 	App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 350,400 });*/
 
-	string track = App->audio->folder_music + "/StartSong.ogg"; 
+	string track = App->audio->folder_music + "/Test.ogg"; 
 	App->audio->PlayMusic(track.c_str()); 
 
 	//--------- CREATE GUI -----------//  (Falta poner position y size)
@@ -137,10 +134,10 @@ bool Scene::Start()
 
 	App->player1->Build_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player1->Build_UI->rect = { 569, 246, 566, 163 };
-	App->player1->Def_AOE_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { 68, 55 }, { 85, 81 }, App->player1->Build_UI, false);
-	App->player1->Def_Target_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { 171, 55 }, { 85, 81 }, App->player1->Build_UI, false);
-	App->player1->Mines_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { 274, 55 }, { 85,81 }, App->player1->Build_UI, false);
-	App->player1->Barracks_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { 375, 55 }, { 85, 81 }, App->player1->Build_UI, false);
+	App->player1->Def_AOE_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { 119, 55 }, { 85, 81 }, App->player1->Build_UI, false);
+	App->player1->Def_Target_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { 222, 55 }, { 85, 81 }, App->player1->Build_UI, false);
+	App->player1->Mines_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { 325,55 }, { 85,81 }, App->player1->Build_UI, false);
+	App->player1->Barracks_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { 425, 55 }, { 85, 81 }, App->player1->Build_UI, false);
 
 	App->player1->Deploy_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player1->Deploy_UI->rect = { 569, 411, 566, 163 };
@@ -171,78 +168,6 @@ bool Scene::Start()
 	App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 470, 19 }, { 0, 0 }, nullptr, true, { false,false }, "$ 0000");
 	App->player1->Gold_UI->color = { 255,255,0,255 };
 
-	// ------ PAUSE MENU ------
-	App->player1->Pause_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, false);
-	App->player1->Pause_UI->texture = App->tex->Load(pause_soviet.data());
-	App->player1->Pause_UI->rect = { 0, 0, App->win->width, App->win->height };
-
-	App->player1->Abort_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ABORT_PAUSE, { 1291 ,868 }, { 301,59 }, App->player1->Pause_UI, false);
-	App->player1->Abort_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Abort_Button, false, { false, false });
-	App->player1->Abort_text->label = App->player1->abort_label;
-	App->player1->Abort_text->color = { 255,255,9,255 };
-
-
-	App->player1->Settings_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player1->Pause_UI, false);
-	App->player1->Settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player1->Settings_Button, false, { false, false });
-	App->player1->Settings_text->label = App->player1->settings_label;
-	App->player1->Settings_text->color = { 255,255,9,255 };
-
-	App->player1->Resume_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESUME_PAUSE, { 1291 ,498 }, { 301,59 }, App->player1->Pause_UI, false);
-	App->player1->Resume_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Resume_Button, false, { false, false });
-	App->player1->Resume_text->label = App->player1->resume_label;
-	App->player1->Resume_text->color = { 255,255,9,255 };
-
-	//------ Settings Pause MENU ------
-	App->player1->Settings_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
-	App->player1->Settings_UI->texture = App->tex->Load(pause_soviet.data());
-	App->player1->Settings_UI->rect = { 0, 0, 0, App->win->height };
-
-	App->player1->Music_Settings = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::MUSIC_VOLUME, { 100 ,100 }, { 301,59 }, App->player1->Settings_UI, false);
-	App->player1->Music_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Music_Settings, false, { false, false });
-	App->player1->Music_text->label = App->player1->Music_label;
-	App->player1->Music_text->color = { 255,255,9,255 };
-
-	App->player1->Music_Slider = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 50 , 100 }, { 651, 59 }, App->player1->Music_Settings, false);
-	App->player1->Music_Slider->rect = {1483, 770, 651, 59 };
-	App->player1->Music_Slider_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 640, 18 }, { 0, 0 }, App->player1->Music_Slider, false, { false, false });
-	App->player1->Music_Slider_text->label = App->player1->Music_Slider_label;
-	App->player1->Music_Slider_text->color = { 255,255,9,255 };
-	App->player1->Music_Slider_Button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 }, App->player1->Music_Slider, false);
-	App->player1->Music_Slider_Button->rect = { 2135, 773, 29, 55 };
-
-
-	App->player1->FX_Settings = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::FX_VOLUME, { 100 ,400 }, { 301,59 }, App->player1->Settings_UI, false);
-	App->player1->FX_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 100, 18 }, { 0, 0 }, App->player1->FX_Settings, false, { false, false });
-	App->player1->FX_text->label = App->player1->FX_label;
-	App->player1->FX_text->color = { 255,255,9,255 };
-
-	App->player1->FX_Slider = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 50 , 100 }, { 651, 59 }, App->player1->FX_Settings, false);
-	App->player1->FX_Slider->rect = { 1483, 770, 651, 59 };
-	App->player1->FX_Slider_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 640, 18 }, { 0, 0 }, App->player1->FX_Slider, false, { false, false });
-	App->player1->FX_Slider_text->label = App->player1->FX_Slider_label;
-	App->player1->FX_Slider_text->color = { 255,255,9,255 };
-	App->player1->FX_Slider_Button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 }, App->player1->FX_Slider, false);
-	App->player1->FX_Slider_Button->rect = { 2135, 773, 29, 55 };
-
-	// ABORT MISSION MENU
-	App->player1->Abort_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
-	App->player1->Abort_UI->texture = App->tex->Load(pause_soviet.data());
-	App->player1->Abort_UI->rect = { 0, 0, 0, App->win->height };
-
-	App->player1->Restart = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESTART, { 1291 ,565 }, { 301,59 }, App->player1->Abort_UI, false);
-	App->player1->Restart_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Restart, false, { false, false });
-	App->player1->Restart_text->label = App->player1->Restart_label;
-	App->player1->Restart_text->color = { 255,255,9,255 };
-
-	App->player1->Abort_Message = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { -850, -100 }, { 0, 0 }, App->player1->Restart, false, { false, false });
-	App->player1->Abort_Message->label = App->player1->Abort_message_label;
-	App->player1->Abort_Message->color = { 255,255,9,255 };
-
-	App->player1->Quit = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SURRENDER, { 1291 ,498 }, { 301,59 }, App->player1->Abort_UI, false);
-	App->player1->Quit_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 110, 18 }, { 0, 0 }, App->player1->Quit, false, { false, false });
-	App->player1->Quit_text->label = App->player1->Quit_label;
-	App->player1->Quit_text->color = { 255,255,9,255 };
-
 
 	//--- PLAYER 2
 	//App->player2->Health_UI = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
@@ -250,16 +175,16 @@ bool Scene::Start()
 	App->player2->Main_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 122 }, { 566,163 }, nullptr, true);
 	App->player2->Main_UI->rect = { 0, 408, 566, 163 };
 	App->player2->Build_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_BUILD, { 275,55 }, { 80, 81 }, App->player2->Main_UI, true);
-	App->player2->Deploy_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 374,55 }, { 80, 81 }, App->player2->Main_UI, true);
+	App->player2->Deploy_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 378,55 }, { 80, 81 }, App->player2->Main_UI, true);
 	App->player2->Cast_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 483,55 }, { 80,81 }, App->player2->Main_UI, true);
 
 
 	App->player2->Build_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
 	App->player2->Build_UI->rect = { 569, 246, 566, 163 };
-	App->player2->Def_AOE_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { 68, 55 }, { 85, 81 }, App->player2->Build_UI, false);
-	App->player2->Def_Target_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { 171, 55 }, { 85, 81 }, App->player2->Build_UI, false);
-	App->player2->Mines_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { 274, 55 }, { 85,81 }, App->player2->Build_UI, false);
-	App->player2->Barracks_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { 375, 55 }, { 85, 81 }, App->player2->Build_UI, false);
+	App->player2->Def_AOE_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { 119, 55 }, { 85, 81 }, App->player2->Build_UI, false);
+	App->player2->Def_Target_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { 222, 55 }, { 85, 81 }, App->player2->Build_UI, false);
+	App->player2->Mines_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { 325,55 }, { 85,81 }, App->player2->Build_UI, false);
+	App->player2->Barracks_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { 425, 55 }, { 85, 81 }, App->player2->Build_UI, false);
 
 	App->player2->Deploy_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
 	App->player2->Deploy_UI->rect = { 569, 411, 566, 163 };
@@ -289,83 +214,6 @@ bool Scene::Start()
 	App->player2->Gold_UI = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 2000, 1191 }, { 0, 0 }, nullptr, true, { false,false }, "$ 0000");
 	App->player2->Gold_UI->color = { 255,255,0,255 };
 
-	App->player2->Pause_UI = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, false);
-	App->player2->Pause_UI->texture = App->tex->Load(pause_alied.data());
-	App->player2->Pause_UI->rect = { 0, 0, App->win->width, App->win->height };
-
-	App->player2->Abort_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ABORT_PAUSE, { 1291 ,868 }, { 301,59 }, App->player2->Pause_UI, false);
-	App->player2->Abort_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Abort_Button, false, { false, false });
-	App->player2->Abort_text->label = App->player2->abort_label;
-	App->player2->Abort_text->color = { 255,255,9,255 };
-
-	App->player2->Settings_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player2->Pause_UI, false);
-	App->player2->Settings_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player2->Settings_Button, false, { false, false });
-	App->player2->Settings_text->label = App->player2->settings_label;
-	App->player2->Settings_text->color = { 255,255,9,255 };
-
-	/*App->player1->Settings_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player1->Pause_UI, false);
-	App->player1->Settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player1->Settings_Button, false, { false, false });
-	App->player1->Settings_text->label = App->player1->settings_label;
-	App->player1->Settings_text->color = { 255,255,9,255 };*/
-
-	App->player2->Resume_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESUME_PAUSE, { 1291 ,498 }, { 301,59 }, App->player2->Pause_UI, false);
-	App->player2->Resume_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Resume_Button, false, { false, false });
-	App->player2->Resume_text->label = App->player2->resume_label;
-	App->player2->Resume_text->color = { 255,255,9,255 };
-
-
-	//------ Settings Pause MENU ------
-	App->player2->Settings_UI = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
-	App->player2->Settings_UI->texture = App->tex->Load(pause_alied.data());
-	App->player2->Settings_UI->rect = { 0, 0, 0, App->win->height };
-
-	App->player2->Music_Settings = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::MUSIC_VOLUME, { 100 ,100 }, { 301,59 }, App->player2->Settings_UI, false);
-	App->player2->Music_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Music_Settings, false, { false, false });
-	App->player2->Music_text->label = App->player2->Music_label;
-	App->player2->Music_text->color = { 255,255,9,255 };
-
-	App->player2->Music_Slider = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 50 , 100 }, { 651, 59 }, App->player2->Music_Settings, false);
-	App->player2->Music_Slider->rect = { 1483, 709, 651, 59 };
-	App->player2->Music_Slider_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 640, 18 }, { 0, 0 }, App->player2->Music_Slider, false, { false, false });
-	App->player2->Music_Slider_text->label = App->player2->Music_Slider_label;
-	App->player2->Music_Slider_text->color = { 255,255,9,255 };
-	App->player2->Music_Slider_Button = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 }, App->player2->Music_Slider, false);
-	App->player2->Music_Slider_Button->rect = { 2135, 712, 29, 55 };
-
-	App->player2->FX_Settings = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::FX_VOLUME, { 100 ,400 }, { 301,59 }, App->player2->Settings_UI, false);
-	App->player2->FX_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 100, 18 }, { 0, 0 }, App->player2->FX_Settings, false, { false, false });
-	App->player2->FX_text->label = App->player2->FX_label;
-	App->player2->FX_text->color = { 255,255,9,255 };
-
-	App->player2->FX_Slider = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 50 , 100 }, { 651, 59 }, App->player2->FX_Settings, false);
-	App->player2->FX_Slider->rect = { 1483, 709, 651, 59 };
-	App->player2->FX_Slider_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 640, 18 }, { 0, 0 }, App->player2->FX_Slider, false, { false, false });
-	App->player2->FX_Slider_text->label = App->player2->FX_Slider_label;
-	App->player2->FX_Slider_text->color = { 255,255,9,255 };
-	App->player2->FX_Slider_Button = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 }, App->player2->FX_Slider, false);
-	App->player2->FX_Slider_Button->rect = { 2135, 712, 29, 55 };
-
-	// ABORT MISSION MENU
-	App->player2->Abort_UI = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
-	App->player2->Abort_UI->texture = App->tex->Load(pause_alied.data());
-	App->player2->Abort_UI->rect = { 0, 0, 0, App->win->height };
-
-	App->player2->Restart = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESTART, { 1291 ,565 }, { 301,59 }, App->player2->Abort_UI, false);
-	App->player2->Restart_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Restart, false, { false, false });
-	App->player2->Restart_text->label = App->player2->Restart_label;
-	App->player2->Restart_text->color = { 255,255,9,255 };
-
-	App->player2->Abort_Message = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { -850, -100 }, { 0, 0 }, App->player2->Restart, false, { false, false });
-	App->player2->Abort_Message->label = App->player2->Abort_message_label;
-	App->player2->Abort_Message->color = { 255,255,9,255 };
-
-	App->player2->Quit = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SURRENDER, { 1291 ,498 }, { 301,59 }, App->player2->Abort_UI, false);
-	App->player2->Quit_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 110, 18 }, { 0, 0 }, App->player2->Quit, false, { false, false });
-	App->player2->Quit_text->label = App->player2->Quit_label;
-	App->player2->Quit_text->color = { 255,255,9,255 };
-
-
-
 
 	// --- CURSORS
 	App->player1->currentTile.first = 13;
@@ -391,11 +239,6 @@ bool Scene::Start()
 	//Map load 
 	App->map->LoadTileList();
 
-	worldminutes = 0;
-	worldseconds = 0;
-	reference_active = true;
-	change_font_size = false;
-
 	// timer start
 	world_clock.Start();
 	world_seconds.Start();
@@ -410,44 +253,40 @@ bool Scene::PreUpdate()
 {
 	BROFILER_CATEGORY("Scene PreUpdate", Profiler::Color::DarkOrange);
 
-	if (!pause)
+	// Gold Player 1 ------------
+	list<Building*>::iterator item = App->player1->buildings.begin();
+	for (item; item != App->player1->buildings.end(); ++item)
 	{
-		// Gold Player 1 ------------
-		list<Building*>::iterator item = App->player1->buildings.begin();
-		for (item; item != App->player1->buildings.end(); ++item)
+		if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
 		{
-			if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
-			{
-				App->player1->gold += (*item)->production;
-			}
+			App->player1->gold += (*item)->production;
 		}
-		// This updates the gold every second. This has to be in the if above: if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
-		if ((int)world_clock.ReadSec() > App->player1->time_iterator)
-		{
-			App->player1->gold += 100;
-			App->player1->time_iterator = (int)world_clock.ReadSec();
-		}
-
-
-
-		// Gold Player 2 -----------
-		item = App->player2->buildings.begin();
-		for (item; item != App->player2->buildings.end(); ++item)
-		{
-			if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
-			{
-				App->player2->gold += (*item)->production;
-			}
-		}
-		// This updates the gold every second. This has to be in the if above: if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
-		if ((int)world_clock.ReadSec() > App->player2->time_iterator)
-		{
-			App->player2->gold += 100;
-			App->player2->time_iterator = (int)world_clock.ReadSec();
-		}
-		//----
 	}
+	// This updates the gold every second. This has to be in the if above: if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
+	if (world_clock.ReadSec() > App->player1->time_iterator)
+	{
+		App->player1->gold += 100;
+		App->player1->time_iterator++;
+	}
+
 	
+
+	// Gold Player 2 -----------
+	item = App->player2->buildings.begin();
+	for (item; item != App->player2->buildings.end(); ++item)
+	{
+		if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
+		{
+			App->player2->gold += (*item)->production;
+		}
+	}
+	// This updates the gold every second. This has to be in the if above: if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
+	if (world_clock.ReadSec() > App->player2->time_iterator)
+	{
+		App->player2->gold += 100;
+		App->player2->time_iterator++;
+	}
+	//----
 
 
 	return true;
@@ -566,10 +405,10 @@ bool Scene::Update(float dt)
 	//{
 	//	App->LoadGame();
 	//}
-	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) //Debug UI
-	{
-		App->gui->UI_Debug = !App->gui->UI_Debug;
-	}
+	//else if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) //Debug UI
+	//{
+	//	App->gui->UI_Debug = !App->gui->UI_Debug;
+	//}
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) //View colliders
 	{
 		App->map->debug = !App->map->debug;
@@ -756,12 +595,8 @@ bool Scene::Update(float dt)
 	App->gui->Draw();
 
 	//DRAW LIVE BARS 
-	if (!pause)
-	{
-		DrawLiveBar(App->player1);
-		DrawLiveBar(App->player2);
-	}
-	
+	DrawLiveBar(App->player1);
+	DrawLiveBar(App->player2);
 
 	
 
@@ -815,25 +650,6 @@ bool Scene::PostUpdate()
 			sprintf_s(current_p1_gold, "$ %u", App->player1->gold);
 			(*item)->label = current_p1_gold;
 		}
-		else if ((*item) == App->player1->Music_Slider_text) //Music VOlume
-		{
-			sprintf_s(App->player1->Music_Slider_label, "%u", App->audio->musicVolume);
-			(*item)->label = App->player1->Music_Slider_label;
-		}
-		else if ((*item) == App->player1->FX_Slider_text) //FX Volume
-		{
-			sprintf_s(App->player1->FX_Slider_label, "%u", App->audio->sfxVolume);
-			(*item)->label = App->player1->FX_Slider_label;
-		}
-		else if ((*item) == App->player1->Music_Slider_Button) //MUSIC SLIDER POS
-		{
-			App->player1->Music_Slider_Button->position.first = (550 * App->audio->musicVolume) / 100;
-		}
-		else if ((*item) == App->player1->FX_Slider_Button) //FX SLIDER POS
-		{
-			App->player1->FX_Slider_Button->position.first = (550 * App->audio->sfxVolume) / 100;
-		}
-		
 
 		App->gui->UpdateState(*item);
 		item++;
@@ -847,24 +663,6 @@ bool Scene::PostUpdate()
 		{
 			sprintf_s(current_p2_gold, "$ %u", App->player2->gold);
 			(*item)->label = current_p2_gold;
-		}
-		else if ((*item) == App->player2->Music_Slider_text) //Music VOlume
-		{
-			sprintf_s(App->player2->Music_Slider_label, "%u", App->audio->musicVolume);
-			(*item)->label = App->player2->Music_Slider_label;
-		}
-		else if ((*item) == App->player2->FX_Slider_text) //FX Volume
-		{
-			sprintf_s(App->player2->FX_Slider_label, "%u", App->audio->sfxVolume);
-			(*item)->label = App->player2->FX_Slider_label;
-		}
-		else if ((*item) == App->player2->Music_Slider_Button) //MUSIC SLIDER POS
-		{
-			App->player2->Music_Slider_Button->position.first = (550 * App->audio->musicVolume) / 100;
-		}
-		else if ((*item) == App->player2->FX_Slider_Button) //FX SLIDER POS
-		{
-			App->player2->FX_Slider_Button->position.first = (550 * App->audio->sfxVolume) / 100;
 		}
 		App->gui->UpdateState(*item);
 		item++;
@@ -898,9 +696,6 @@ bool Scene::CleanUp()
 	LOG("Freeing scene");
 
 	App->tex->UnLoad(cursor_tex);
-	App->tex->UnLoad(App->map->imagemap);
-	App->tex->UnLoad(App->map->debug_tex);
-
 	cursor_tex = nullptr;
 
 	RELEASE_ARRAY(Wmap);

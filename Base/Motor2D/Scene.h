@@ -98,9 +98,9 @@ public:
 
 public:
 	vector<string*> map_names;
-	float fade_time = 0.0f;
+	float fade_time;
 
-	uint currentMap = 0;
+	uint currentMap;
 	uchar* Wmap;
 
 	bool pause;
@@ -109,10 +109,8 @@ public:
 	bool change;
 	bool endgame;
 
-	string current_track ;
-	string current_fx ;
-	string pause_alied;
-	string pause_soviet;
+	string current_track;
+	string current_fx;
 
 	
 
@@ -120,14 +118,14 @@ public:
 	SDL_Texture* spritesheet123 = nullptr;
 
 //timer elements
-	UI_Element* ui_timer = nullptr;
+	UI_Element* ui_timer;
 
 	Timer world_clock;
 	Timer world_seconds;
 	Timer size_timer;
 	char current_time[20] = "TIME: 000";
-	uint worldminutes = 0;
-	uint worldseconds = 0;
+	uint worldminutes=0;
+	uint worldseconds=0;
 	uint size_timer_count = 0;
 	int increase_decresease = 0;
 	bool increase_size = true;
@@ -146,6 +144,7 @@ public:
 	UI_Element* return_mainmenu;
 	UI_Element* return_mainmenu_text;
 	char return_mainmenu_label[31] = "CLICK B TO RETURN TO MAIN MENU";
+
 
 private:
 	SDL_Texture* debug_tex;

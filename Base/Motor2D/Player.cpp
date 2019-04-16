@@ -10,9 +10,6 @@
 #include "Render.h"
 #include "Pathfinding.h"
 #include "MainMenu.h"
-#include "Fonts.h"
-#include "Audio.h"
-
 
 #include "Brofiler\Brofiler.h"
 
@@ -30,8 +27,6 @@ bool Player::Start()
 
 	gold = actual_capacity = time_iterator = 0;
 
-	live = 2000;
-
 	isBuilding = isDeploying = isCasting = false;
 	currentTile = { 13,0 };
 
@@ -45,85 +40,37 @@ bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("Player Update", Profiler::Color::Black);
 
-
 	//--- Press X (Square)
 	if (gamepad.Controller[BUTTON_X] == KEY_DOWN)
 	{
 		onUI = !onUI;
 	}
 
+
 	// Button with focus changes state to HOVER 
-	if (currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr )
+	if (currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
 	{
 		(*focus)->state = UI_Element::State::HOVER;
 	}
-
-	// PAUSE
-	if (gamepad.Controller[START] == KEY_DOWN && App->scene->active)
-	{
-		if (!App->scene->pause)
-		{
-			App->scene->world_seconds.Stop();
-			App->render->zoom = 1;
-			Pause_UI->visible = true;
-			isPaused = true;
-
-			App->scene->pause = !App->scene->pause;
-
-			if (currentUI != CURRENT_UI::NONE)
-				(*focus)->state = UI_Element::State::IDLE;
-
-			last_currentUI = currentUI;
-			currentUI = CURRENT_UI::CURR_PAUSE;
-			UpdateFocus(currentUI);
-		}
-		else if (App->scene->pause && isPaused && currentUI == CURRENT_UI::CURR_PAUSE)
-		{
-			App->scene->world_seconds.Start();
-			App->render->zoom = 0.77;
-			Pause_UI->visible = false;
-			isPaused = false;
-
-			App->scene->pause = !App->scene->pause;
-
-
-			currentUI = last_currentUI;
-			UpdateVisibility();
-			UpdateFocus(currentUI);
-
-		}
-		
-
-	}
-
+	
 	// Button A to clcik a button
-	if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
+	if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
 	{
-		if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
+		if(currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
 			(*focus)->state = UI_Element::State::LOGIC;
 	}
-
-	if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
+	
+	if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE)
 	{
-		if (App->scene->pause && isPaused == true)
-		{
+		if(!isBuilding)
 			(*focus)->state = UI_Element::State::IDLE;
+		if (App->scene->active)
 			DoLogic((*focus));
-			UpdateFocus(currentUI);
-		}
-		else if (!App->scene->pause)
-		{
-			if (!isBuilding)
-				(*focus)->state = UI_Element::State::IDLE;
-			if (App->scene->active)
-				DoLogic((*focus));
-			else
-				App->main_menu->DoLogic((*focus));
+		else
+			App->main_menu->DoLogic((*focus));
 
-			if ((*focus) == Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
-				UpdateFocus(currentUI);
-		}
-		
+		if((*focus)==Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
+			UpdateFocus(currentUI);
 	}
 
 
@@ -131,75 +78,57 @@ bool Player::Update(float dt)
 	{
 		(*focus)->state = UI_Element::State::IDLE;
 
-		if (App->scene->pause && isPaused && currentUI==CURRENT_UI::CURR_PAUSE)
-		{
-			App->scene->world_seconds.Start();
-			App->render->zoom = 0.77;
-			Pause_UI->visible = false;
-			isPaused = false;
 
-			App->scene->pause = !App->scene->pause;
-
-			currentUI = last_currentUI;
-			UpdateVisibility();
-			UpdateFocus(currentUI);
-		}
-		else if (App->scene->pause && isPaused && currentUI != CURRENT_UI::CURR_PAUSE)
+		if (currentUI == CURR_BUILD)
 		{
-			GotoPrevWindows(currentUI);
-			UpdateFocus(currentUI);
-		}
-		else if (!App->scene->pause )
-		{
-			if (currentUI == CURR_BUILD)
+			if (isBuilding == true)
 			{
-				if (isBuilding == true)
-				{
-					isBuilding = false;
-					App->map->debug = false;
-				}
-				else if (isBuilding == false)
-				{
-
-					GotoPrevWindows(currentUI);
-					UpdateFocus(currentUI);
-				}
+				isBuilding = false;
+				App->map->debug = false;
 			}
-			else
+			else if (isBuilding == false)
 			{
+
 				GotoPrevWindows(currentUI);
 				UpdateFocus(currentUI);
 			}
 		}
+		else
+		{
+			GotoPrevWindows(currentUI);
+			UpdateFocus(currentUI);
+		}
+
+		
 	}
 
 	if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
 	{
-		if (App->scene->active)
+		if(App->scene->active)
 			currentUI = CURRENT_UI::CURR_MAIN;
+		else if (App->main_menu->active)
+			currentUI = CURRENT_UI::CURR_MAIN_MENU;
 
 		UpdateFocus(currentUI);
 	}
 
-	
-
-	if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
+	if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false)
 	{
 		(*focus)->state = UI_Element::State::IDLE;
 
 		if (focus == last_element)
 		{
 			focus = GetUI_Element(currentUI)->children.begin();
-
+			
 		}
 		else
 		{
 			focus++;
 		}
-
+		
 	}
-
-	if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
+	
+	if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false)
 	{
 		(*focus)->state = UI_Element::State::IDLE;
 		if (focus == GetUI_Element(currentUI)->children.begin())
@@ -212,83 +141,15 @@ bool Player::Update(float dt)
 		}
 
 	}
-	
-	if (App->main_menu->active || App->scene->pause)
-	{
-		if (gamepad.Controller[UP] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
-		{
-			(*focus)->state = UI_Element::State::IDLE;
-
-			if (focus == last_element)
-			{
-				focus = GetUI_Element(currentUI)->children.begin();
-
-			}
-			else
-			{
-				focus++;
-			}
-
-		}
-
-		if (gamepad.Controller[DOWN] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
-		{
-			(*focus)->state = UI_Element::State::IDLE;
-			if (focus == GetUI_Element(currentUI)->children.begin())
-			{
-				focus = last_element;
-			}
-			else
-			{
-				focus--;
-			}
-
-		}
-	}
-	
-	if (gamepad.Controller[RIGHT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
-	{
-		if ((*focus) == Music_Settings)
-		{
-			App->audio->musicVolume += 10;
-			App->audio->SetMusicVolume();
-			
-
-		}
-		else
-		{
-			App->audio->sfxVolume += 10;
-			App->audio->SetSfxVolume();
-		}
-	}
-	else if (gamepad.Controller[LEFT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
-	{
-		if ((*focus) == Music_Settings)
-		{
-			App->audio->musicVolume -= 10;
-			App->audio->SetMusicVolume();
-		}
-		else
-		{
-			App->audio->sfxVolume -= 10;
-			App->audio->SetSfxVolume();
-		}
-	}
-
-	
 
 	// Just to test the LiveBar
-	if (gamepad.Controller[UP] == KEY_DOWN && live > 0 && App->scene->active)
+	if (gamepad.Controller[UP] == KEY_DOWN)
 	{
-
 		live -= 1000;
 	}
 
 	if (live < 0)
 		live = 0;
-	}
-
-	
 
 	if (App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_DOWN)
 	{
@@ -297,7 +158,7 @@ bool Player::Update(float dt)
 	
 
 	//--- Building ---------------------
-	if (isBuilding && !App->scene->pause)
+	if (isBuilding)
 	{
 		//--- Movement
 		if (gamepad.Controller[JOY_UP] == KEY_REPEAT || gamepad.Controller[UP] == KEY_DOWN || 
@@ -566,24 +427,6 @@ void Player::UpdateFocus(uint data)
 		last_element = Deploy_UI->children.end();
 		last_element--;
 		break;
-
-	case::Player::CURRENT_UI::CURR_PAUSE:
-		focus = Pause_UI->children.begin();
-		last_element = Pause_UI->children.end();
-		last_element--;
-		break;
-
-	case::Player::CURRENT_UI::CURR_PAUSE_SETTINGS:
-		focus = Settings_UI->children.begin();
-		last_element = Settings_UI->children.end();
-		last_element--;
-		break;
-
-	case::Player::CURRENT_UI::CURR_PAUSE_ABORT:
-		focus = Abort_UI->children.begin();
-		last_element = Abort_UI->children.end();
-		last_element--;
-		break;
 	
 	}
 }
@@ -618,21 +461,6 @@ void Player::GotoPrevWindows(uint data)
 		UpdateVisibility();
 		break;
 
-	case Player::CURRENT_UI::CURR_PAUSE:
-		currentUI = last_currentUI;
-		UpdateVisibility();
-		break;
-
-	case Player::CURRENT_UI::CURR_PAUSE_SETTINGS:
-		currentUI = CURR_PAUSE;
-		UpdateVisibility();
-		break;
-
-	case Player::CURRENT_UI::CURR_PAUSE_ABORT:
-		currentUI = CURR_PAUSE;
-		UpdateVisibility();
-		break;
-
 	}
 }
 
@@ -654,15 +482,6 @@ UI_Element* Player::GetUI_Element(uint data)
 	case::Player::CURRENT_UI::CURR_DEPLOY:
 		return Deploy_UI;
 
-	case::Player::CURRENT_UI::CURR_PAUSE:
-		return Pause_UI;
-
-	case::Player::CURRENT_UI::CURR_PAUSE_SETTINGS:
-		return Settings_UI;
-
-	case::Player::CURRENT_UI::CURR_PAUSE_ABORT:
-		return Abort_UI;
-
 	}
 }
 
@@ -670,24 +489,11 @@ void Player::UpdateVisibility() // Update GUI Visibility
 {
 	switch (currentUI)
 	{
-	case::Player::CURRENT_UI::NONE:
-		Main_UI->visible = true;
-		Build_UI->visible = false;
-		Deploy_UI->visible = false;
-		Cast_UI->visible = false;
-		Pause_UI->visible = false;
-		Abort_UI->visible = false;
-		Settings_UI->visible = false;
-		//General_UI->visible = false;
-		break;
 	case::Player::CURRENT_UI::CURR_MAIN:
 		Main_UI->visible = true;
 		Build_UI->visible = false;
 		Deploy_UI->visible = false;
 		Cast_UI->visible = false;
-		Pause_UI->visible = false;
-		Settings_UI->visible = false;
-		Abort_UI->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -696,9 +502,6 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Build_UI->visible = true;
 		Deploy_UI->visible = false;
 		Cast_UI->visible = false;
-		Pause_UI->visible = false;
-		Settings_UI->visible = false;
-		Abort_UI->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -707,20 +510,14 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Build_UI->visible = false;
 		Deploy_UI->visible = true;
 		Cast_UI->visible = false;
-		Pause_UI->visible = false;
-		Settings_UI->visible = false;
-		Abort_UI->visible = false;
 		//General_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_CAST:
 		Main_UI->visible = false;
 		Build_UI->visible = false;
-		Deploy_UI->visible = false;
+		Deploy_UI->visible = true;
 		Cast_UI->visible = true;
-		Pause_UI->visible = false;
-		Settings_UI->visible = false;
-		Abort_UI->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -730,43 +527,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		//Deploy_UI->visible = false;
 		//Cast_UI->visible = false;
 		//General_UI->visible = true;
-
 		break;
-
-	case::Player::CURRENT_UI::CURR_PAUSE:
-		Main_UI->visible = false;
-		Build_UI->visible = false;
-		Deploy_UI->visible = false;
-		Cast_UI->visible = false;
-		Pause_UI->visible = true;
-		Settings_UI->visible = false;
-		Abort_UI->visible = false;
-		//General_UI->visible = false;
-		break;
-
-	case::Player::CURRENT_UI::CURR_PAUSE_SETTINGS:
-		Main_UI->visible = false;
-		Build_UI->visible = false;
-		Deploy_UI->visible = false;
-		Cast_UI->visible = false;
-		Pause_UI->visible = false;
-		Settings_UI->visible = true;
-		Abort_UI->visible = false;
-		//General_UI->visible = false;
-		break;
-
-	case::Player::CURRENT_UI::CURR_PAUSE_ABORT:
-		Main_UI->visible = false;
-		Build_UI->visible = false;
-		Deploy_UI->visible = false;
-		Cast_UI->visible = false;
-		Pause_UI->visible = false;
-		Settings_UI->visible = false;
-		Abort_UI->visible = true;
-		//General_UI->visible = false;
-		break;
-
-
 	}
 	App->gui->UpdateChildren();
 }
@@ -775,13 +536,6 @@ void Player::DoLogic(UI_Element* data)
 {
 	switch (data->action)
 	{
-
-	/*case::UI_Element::Action::NEW_GAME:
-		App->scenechange->ContinueGame = true;
-		App->scenechange->SwitchScene(App->scene, App->main_menu);
-		menu_background->visible = false;
-		break;*/
-
 	case::UI_Element::Action::ACT_GOTO_MAIN:
 		currentUI = CURR_MAIN;
 		UpdateVisibility();
@@ -820,7 +574,7 @@ void Player::DoLogic(UI_Element* data)
 		isBuilding = true;
 
 		type = Entity::entityType::DEFENSE_AOE;
-		collider.dimensions = { 1,1 };
+		collider.dimensions = { 3,4 };
 
 		break;
 
@@ -868,47 +622,6 @@ void Player::DoLogic(UI_Element* data)
 		break;
 	case::UI_Element::Action::RETURN_MAINMENU:
 		//App->scene->GoToMainMenu();
-	case::UI_Element::Action::RESUME_PAUSE:
-		
-		App->scene->world_seconds.Start();
-		App->render->zoom = 0.77;
-		Pause_UI->visible = false;
-		isPaused = false;
-
-		App->scene->pause = !App->scene->pause;
-
-		currentUI = last_currentUI;
-		UpdateVisibility();
-		UpdateFocus(currentUI);
-		break;
-	case::UI_Element::Action::SETTINGS_PAUSE:
-		// Open settings menu
-		Settings_UI->visible = true;
-		currentUI = CURR_PAUSE_SETTINGS;
-		UpdateFocus(currentUI);
-		break;
-	case::UI_Element::Action::ABORT_PAUSE:
-		currentUI = CURR_PAUSE_ABORT;
-		UpdateVisibility();
-		UpdateFocus(currentUI);
-		break;
-	case::UI_Element::Action::RESTART:
-		
-		App->scene->CleanUp();
-		App->entitymanager->CleanUp();
-		App->player2->CleanUp();
-		App->player1->CleanUp();
-		App->gui->CleanUp();
-		App->map->CleanUp();
-		App->font->CleanUp();
-		
-		App->font->Start();
-		App->map->Start();
-		App->gui->Start();
-		App->player1->Start();
-		App->player2->Start();
-		App->entitymanager->Start();
-		App->scene->Start();
 		break;
 	}
 }

@@ -32,7 +32,6 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 	LOG("Loading Main Menu");
 
 	menu_bg_file_name = conf.child("menu_bg").attribute("file").as_string("");
-
 	
 	// current_track = App->audio->tracks_path[1];
 	return true;
@@ -41,13 +40,16 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool MainMenu::Start()
 {
-	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
+	App->player1->currentUI = Player::CURRENT_UI::NONE;
+
+	App->font->actual_font = App->font->main_menu_font;
+	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::MAIN_MENU_BG, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
 	menu_background->texture = App->tex->Load(menu_bg_file_name.data());
 	menu_background->rect = { 0, 0, App->win->width, App->win->height };
 	App->render->zoom = 1;
 
 	new_game_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 1273, 432 }, { 371, 87 }, menu_background, true);
-	new_game_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 22 }, { 0, 0 }, new_game_button, true, { false, false });
+	new_game_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, new_game_button, true, { false, false });
 	new_game_text->label = new_game_label;
 	new_game_text->color = { 255,255,9,255 };
 
@@ -59,8 +61,7 @@ bool MainMenu::Start()
 
 	//ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 800 ,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
 
-	App->player1->currentUI = Player::CURRENT_UI::CURR_MAIN_MENU;
-	App->player1->UpdateFocus(App->player1->currentUI);
+
 
 	return true;
 }
@@ -118,16 +119,6 @@ bool MainMenu::CleanUp()
 	LOG("Freeing Main Menu");
 
 	App->tex->UnLoad(menu_background->texture);
-
-	////Clear UI elements
-	//list<UI_Element*>::iterator item2 = App->player1->UI_elements.begin();
-	//while (item2 != App->player1->UI_elements.end())
-	//{
-	//	(*item2)->children.clear();
-	//	RELEASE(*item2);
-	//	item2++;
-	//}
-	//App->player1->UI_elements.clear();
 
 	return true;
 }
