@@ -14,7 +14,7 @@ CmdCenter::~CmdCenter()
 {
 }
 
-CmdCenter::CmdCenter(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::COMMAND_CENTER, isPlayer1, pos)
+CmdCenter::CmdCenter(bool isPlayer1, pair<int, int> pos, Collider collider) : Building(Entity::entityType::COMMAND_CENTER, isPlayer1, pos, collider)
 {
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
@@ -63,7 +63,7 @@ bool CmdCenter::Update(float dt)
 		}
 		else
 		{
-			//destroyed
+			App->player1->UpdateWalkabilityMap(false, collider); //destroyed
 		}
 	}
 	else if (!fromPlayer1)
@@ -90,7 +90,7 @@ bool CmdCenter::Update(float dt)
 		}
 		else
 		{
-			//destroyed
+			App->player2->UpdateWalkabilityMap(false, collider); //destroyed
 		}
 	}
 	

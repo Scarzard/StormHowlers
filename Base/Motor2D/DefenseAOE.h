@@ -8,7 +8,7 @@ class DefenseAoe : public Building
 {
 public:
 	DefenseAoe();
-	DefenseAoe(bool isPlayer1, pair<int, int> pos);
+	DefenseAoe(bool isPlayer1, pair<int, int> pos, Collider collider);
 	~DefenseAoe();
 
 	bool Start();

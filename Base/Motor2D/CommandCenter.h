@@ -7,7 +7,7 @@ class CmdCenter : public Building
 {
 public:
 	CmdCenter();
-	CmdCenter(bool isPlayer1, pair<int, int> position);
+	CmdCenter(bool isPlayer1, pair<int, int> position, Collider collider);
 	~CmdCenter();
 
 	bool Update(float dt);

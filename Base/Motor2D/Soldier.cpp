@@ -6,7 +6,7 @@ Soldier::Soldier()
 	
 }
 
-Soldier::Soldier(bool isPlayer1, pair<int, int> pos):Troop(Entity::entityType::SOLDIER,isPlayer1,pos)
+Soldier::Soldier(bool isPlayer1, pair<int, int> pos, Collider collider):Troop(Entity::entityType::SOLDIER,isPlayer1,pos, collider)
 {
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());

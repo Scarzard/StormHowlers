@@ -8,7 +8,7 @@ class Building   : public Entity
 public:
 
 	Building() {};
-	Building(entityType type, bool isPlayer1, pair<int, int> pos) : Entity(type, isPlayer1, pos) {
+	Building(entityType type, bool isPlayer1, pair<int, int> pos, Collider collider) : Entity(type, isPlayer1, pos, collider) {
 		pugi::xml_document	config_file;
 		pugi::xml_node config;
 		config = App->LoadConfig(config_file);
@@ -25,11 +25,10 @@ public:
 		capacity = capacity_lv[level];
 		production = production_lv[level];
 
-		//DEBUG PURPOSES
-
-		collider = { 0,0,59,28 };
-		if (!isPlayer1)
-			collider = { 60,0,59,28 };
+		////DEBUG PURPOSES
+		//collider = { 0,0,59,28 };
+		//if (!isPlayer1)
+		//	collider = { 60,0,59,28 };
 
 
 	}

@@ -2,20 +2,19 @@
 #define __Walls_H__
 
 #include "Building.h"
+
 struct wall_parts
 {
-
 	pair <int, int> coordinates;
 	int health;
 	Animation* wall_anim;
-
 };
 
 class Walls : public Building
 {
 public:
 	Walls();
-	Walls(bool isPlayer1, pair<int, int> position);
+	Walls(bool isPlayer1, pair<int, int> position, Collider collider);
 	~Walls();
 
 	bool LoadWalls();

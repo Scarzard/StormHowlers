@@ -13,7 +13,7 @@ DefenseAoe::~DefenseAoe()
 {
 }
 
-DefenseAoe::DefenseAoe(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::DEFENSE_AOE, isPlayer1, pos)
+DefenseAoe::DefenseAoe(bool isPlayer1, pair<int, int> pos, Collider collider) : Building(Entity::entityType::DEFENSE_AOE, isPlayer1, pos, collider)
 {
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());

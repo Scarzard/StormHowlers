@@ -224,10 +224,11 @@ bool Scene::Start()
 	//-----------
 
 	pair <int, int> test;
+	Collider collider_test;
 	test.first = 0;
 	test.second = 0;
-	App->entitymanager->AddEntity(true, Entity::entityType::WALLS, test);
-	App->entitymanager->AddEntity(false, Entity::entityType::WALLS, test);
+	App->entitymanager->AddEntity(true, Entity::entityType::WALLS, test, collider_test);
+	App->entitymanager->AddEntity(false, Entity::entityType::WALLS, test, collider_test);
 	SpawnEntities();
 
 	App->font->font_iterator = App->font->fonts.begin();

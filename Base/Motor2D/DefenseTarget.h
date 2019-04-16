@@ -8,7 +8,7 @@ class DefenseTarget : public Building
 {
 public:
 	DefenseTarget();
-	DefenseTarget(bool isPlayer1, pair<int, int> pos);
+	DefenseTarget(bool isPlayer1, pair<int, int> pos, Collider collider);
 	~DefenseTarget();
 
 	bool Start();

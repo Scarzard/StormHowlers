@@ -6,7 +6,7 @@ class Soldier :	public Troop
 {
 public:
 	Soldier();
-	Soldier(bool isPlayer1, pair<int, int> pos);
+	Soldier(bool isPlayer1, pair<int, int> pos, Collider collider);
 	~Soldier();
 
 	bool Update(float dt);

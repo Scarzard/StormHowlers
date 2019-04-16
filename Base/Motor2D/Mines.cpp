@@ -15,7 +15,7 @@ Mines::~Mines()
 {
 }
 
-Mines::Mines(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::MINES, isPlayer1, pos)
+Mines::Mines(bool isPlayer1, pair<int, int> pos, Collider collider) : Building(Entity::entityType::MINES, isPlayer1, pos, collider)
 {
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
@@ -47,8 +47,9 @@ bool Mines::Update(float dt)
 					//play fx (upgrade);
 				}
 			}
-			else
+			else //destroyed
 			{
+				App->player1->UpdateWalkabilityMap(false, collider);
 				App->player1->DeleteEntity(this);
 			}
 
@@ -73,8 +74,9 @@ bool Mines::Update(float dt)
 					//play fx (upgrade);
 				}
 			}
-			else
+			else //destroyed
 			{
+				App->player2->UpdateWalkabilityMap(false, collider);
 				App->player2->DeleteEntity(this);
 			}
 

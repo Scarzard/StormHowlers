@@ -4,7 +4,7 @@
 #include "Module.h"
 #include "Troop.h"
 #include "Building.h"
-#include "Building.h"
+#include "Entity.h"
 #include "Troop.h"
 #include "SDL\include\SDL_gamecontroller.h"
 
@@ -30,13 +30,6 @@ struct GeneralUI
 	string name;
 	uint level, health, unique;
 };
-
-struct Collider
-{
-	pair<int, int> dimensions;
-	vector<pair<int,int>> tiles;
-};
-
 
 class Player : public Module
 {
@@ -71,7 +64,7 @@ public:
 	UI_Element* GetUI_Element(uint data); //returns the window we are currently on
 
 	bool CheckBuildingPos();
-	void UpdateWalkabilityMap(bool isWalkable);
+	void UpdateWalkabilityMap(bool isWalkable, Collider collider);
 	bool DeleteEntity(Entity* entity);
 
 public:

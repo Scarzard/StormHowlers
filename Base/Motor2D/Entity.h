@@ -8,6 +8,12 @@
 #include "Animation.h"
 #include "Render.h"
 
+struct Collider
+{
+	pair<int, int> dimensions;
+	vector<pair<int, int>> tiles;
+};
+
 class Entity
 {
 public:
@@ -30,12 +36,13 @@ public:
 
 public:
 	Entity() {};
-	Entity(Entity::entityType type, bool isPlayer1, pair<int, int> pos) {
+	Entity(Entity::entityType type, bool isPlayer1, pair<int, int> pos, Collider Collider) {
 		this->type = type;
 	
 		char *s_type = (type > BARRACKS) ? "troops" : "buildings";
 		name = "ERROR";
 		name = GetName(type);
+		collider = Collider;
 
 		LOG("Player %d: Loading %s",(isPlayer1)?1:2,name.data());
 
@@ -186,10 +193,11 @@ public:
 	float rate_of_fire;
 
 	// DEBUG PURPOSES
-	SDL_Rect	collider;
+	SDL_Rect	debug_collider;
 	SDL_Texture* tex;
 
 	int offset = 0;
+	Collider collider;
 
 public:
 

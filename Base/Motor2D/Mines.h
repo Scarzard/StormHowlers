@@ -7,7 +7,7 @@ class Mines : public Building
 {
 public:
 	Mines();
-	Mines(bool isPlayer1, pair<int, int> position);
+	Mines(bool isPlayer1, pair<int, int> position, Collider collider);
 	~Mines();
 
 	bool PreUpdate();

@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Entity.h"
 #include "Walls.h"
+
 class Entity;
 
 class EntityManager : public Module
@@ -20,7 +21,7 @@ public:
 
 	bool Draw(float dt);
 
-	Entity* AddEntity(bool player1, Entity::entityType type, pair<int,int> position);
+	Entity* AddEntity(bool player1, Entity::entityType type, pair<int,int> position, Collider collider);
 	char * GetName(Entity::entityType type);
 	void DeleteAllEntities();
 

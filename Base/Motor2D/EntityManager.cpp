@@ -277,57 +277,57 @@ bool EntityManager::Draw(float dt) //sprite ordering
 	return ret;
 }
 
-Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<int, int> position)
+Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<int, int> position, Collider collider)
 {
 	Entity* tmp = nullptr;
 
 	switch (type)
 	{
 	case Entity::entityType::TOWNHALL:
-		tmp = new Townhall(isPlayer1, position);
+		tmp = new Townhall(isPlayer1, position, collider);
 		break;
 
 	case Entity::entityType::MAIN_DEFENSE:
-		tmp = new MainDefense(isPlayer1, position);
+		tmp = new MainDefense(isPlayer1, position, collider);
 		break;
 
 	case Entity::entityType::COMMAND_CENTER:
-		tmp = new CmdCenter(isPlayer1, position);
+		tmp = new CmdCenter(isPlayer1, position, collider);
 		break;
 
 	case Entity::entityType::WALLS:
-		tmp = new Walls(isPlayer1,position);
+		tmp = new Walls(isPlayer1,position, collider);
 		break;
 
 	case Entity::entityType::DEFENSE_AOE:
-		tmp = new DefenseAoe(isPlayer1, position);
+		tmp = new DefenseAoe(isPlayer1, position, collider);
 		break;
 
 	case Entity::entityType::DEFENSE_TARGET:
-		tmp = new DefenseTarget(isPlayer1, position);
+		tmp = new DefenseTarget(isPlayer1, position, collider);
 		break;
 
 	case Entity::entityType::MINES:
-		tmp = new Mines(isPlayer1, position);
+		tmp = new Mines(isPlayer1, position, collider);
 		break;
 
 	case Entity::entityType::BARRACKS:
-		tmp = new Barracks(isPlayer1, position);
+		tmp = new Barracks(isPlayer1, position, collider);
 		break;
 	case Entity::entityType::SOLDIER:
-		tmp = new Soldier(isPlayer1, position);
+		tmp = new Soldier(isPlayer1, position, collider);
 		break;
 	case Entity::entityType::ENGINEER:
-		//tmp = new Engineer(isPlayer1, position);
+		//tmp = new Engineer(isPlayer1, position, collider);
 		break;
 	case Entity::entityType::TANKMAN:
-		//tmp = new Tankman(isPlayer1, position);
+		//tmp = new Tankman(isPlayer1, position, collider);
 		break;
 	case Entity::entityType::INFILTRATOR:
-		//tmp = new Infiltrator(isPlayer1, position);
+		//tmp = new Infiltrator(isPlayer1, position, collider);
 		break;
 	case Entity::entityType::WAR_HOUND:
-		//tmp = new War_hound(isPlayer1, position);
+		//tmp = new War_hound(isPlayer1, position, collider);
 		break;
 	}
 

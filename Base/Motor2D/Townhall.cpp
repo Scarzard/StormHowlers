@@ -15,7 +15,7 @@ Townhall::~Townhall()
 {
 }
 
-Townhall::Townhall(bool isPlayer1, pair<int,int> pos): Building(Entity::entityType::TOWNHALL,isPlayer1,pos)
+Townhall::Townhall(bool isPlayer1, pair<int,int> pos, Collider collider): Building(Entity::entityType::TOWNHALL,isPlayer1,pos, collider)
 {
 
 	string path = "animation/" + name + ".tmx";

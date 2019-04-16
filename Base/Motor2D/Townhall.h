@@ -7,7 +7,7 @@ class Townhall : public Building
 {
 public:
 	Townhall();
-	Townhall(bool isPlayer1, pair<int, int> position);
+	Townhall(bool isPlayer1, pair<int, int> position, Collider collider);
 	~Townhall();
 
 	bool Update(float dt);

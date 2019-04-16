@@ -13,7 +13,7 @@ Walls::Walls()
 	
 }
 
-Walls::Walls(bool isPlayer1, pair<int, int> pos) : Building(entityType::WALLS, isPlayer1, pos)
+Walls::Walls(bool isPlayer1, pair<int, int> pos, Collider collider) : Building(entityType::WALLS, isPlayer1, pos, collider)
 {
 	
 	string path = "animation/" + name + ".tmx";
@@ -23,6 +23,23 @@ Walls::Walls(bool isPlayer1, pair<int, int> pos) : Building(entityType::WALLS, i
 
 Walls::~Walls()
 {
+}
+
+bool Walls::Update(float dt)
+{
+	BROFILER_CATEGORY("Walls Update", Profiler::Color::SandyBrown);
+
+	ChangeAnimation();
+	Building::Update(dt);
+
+
+	return true;
+}
+
+void Walls::CleanUp()
+{
+	LOG("---Wall Deleted");
+	Building::CleanUp();
 }
 
 bool Walls::LoadWalls()
@@ -116,7 +133,7 @@ bool Walls::LoadWalls()
 			item++;
 		}
 	}
-	else if (fromPlayer1==false)
+	else if (fromPlayer1 == false)
 	{
 		list<wall_coordinates*>::iterator item = App->map->data.wall_list2.begin();
 		while (item != App->map->data.wall_list2.end())
@@ -199,30 +216,6 @@ bool Walls::LoadWalls()
 
 
 	return ret;
-}
-
-
-
-bool Walls::Update(float dt)
-{
-	BROFILER_CATEGORY("Walls Update", Profiler::Color::SandyBrown);
-
-	ChangeAnimation();
-	Building::Update(dt);
-
-
-	return true;
-}
-
-void Walls::CleanUp()
-{
-	LOG("---Wall Deleted");
-	
-	
-
-
-	Building::CleanUp();
-
 }
 
 void Walls::LoadAnimations(bool isPlayer1, string path)

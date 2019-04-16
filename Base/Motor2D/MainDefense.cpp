@@ -15,7 +15,7 @@ MainDefense::~MainDefense()
 {
 }
 
-MainDefense::MainDefense(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::MAIN_DEFENSE, isPlayer1, pos)
+MainDefense::MainDefense(bool isPlayer1, pair<int, int> pos, Collider collider) : Building(Entity::entityType::MAIN_DEFENSE, isPlayer1, pos, collider)
 {
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
@@ -40,6 +40,10 @@ bool MainDefense::Update(float dt)
 
 			//if troops in range -> attack
 		}
+		else
+		{
+			App->player1->UpdateWalkabilityMap(false, collider); //destroyed
+		}
 	}
 	else if (!fromPlayer1)
 	{
@@ -55,6 +59,10 @@ bool MainDefense::Update(float dt)
 			}
 
 			//if troops in range -> attack
+		}
+		else
+		{
+			App->player2->UpdateWalkabilityMap(false, collider); //destroyed
 		}
 	}
 	ChangeAnimation();

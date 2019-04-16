@@ -11,7 +11,7 @@ DefenseTarget::~DefenseTarget()
 {
 }
 
-DefenseTarget::DefenseTarget(bool isPlayer1, pair<int, int> pos) : Building(entityType::DEFENSE_TARGET, isPlayer1, pos)
+DefenseTarget::DefenseTarget(bool isPlayer1, pair<int, int> pos, Collider collider) : Building(entityType::DEFENSE_TARGET, isPlayer1, pos, collider)
 {
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());

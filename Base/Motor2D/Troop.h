@@ -22,7 +22,7 @@ class Troop : public Entity
 public:
 
 	Troop() {};
-	Troop(entityType type, bool isPlayer1, pair<int, int> pos) : Entity(type, isPlayer1, pos) {
+	Troop(entityType type, bool isPlayer1, pair<int, int> pos, Collider Collider) : Entity(type, isPlayer1, pos, Collider) {
 
 		pugi::xml_document	config_file;
 		pugi::xml_node config;
@@ -31,9 +31,11 @@ public:
 
 		speed = config.child("speed").attribute("value").as_int();
 
-		collider = { 180,0,59,28 };
-		if (!isPlayer1)
-			collider = { 120,0,59,28 };
+		collider = Collider;
+
+		//collider = { 180,0,59,28 };
+		//if (!isPlayer1)
+		//	collider = { 120,0,59,28 };
 
 	}
 	~Troop() {};

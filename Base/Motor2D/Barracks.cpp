@@ -10,7 +10,7 @@
 Barracks::Barracks(){}
 Barracks::~Barracks(){}
 
-Barracks::Barracks(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::BARRACKS, isPlayer1, pos)
+Barracks::Barracks(bool isPlayer1, pair<int, int> pos, Collider collider) : Building(Entity::entityType::BARRACKS, isPlayer1, pos, collider)
 {
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
@@ -21,7 +21,7 @@ bool Barracks::PreUpdate()
 	BROFILER_CATEGORY("Barracks PreUpdate", Profiler::Color::SandyBrown);
 
 	SDL_Rect r = { position.first, position.second,size.first,size.second*0.5 };
-	SDL_RenderCopy(App->render->renderer, tex, &collider, &r);
+	SDL_RenderCopy(App->render->renderer, tex, &debug_collider, &r);
 
 	repair_cost = (health_lv[level] - health) / 2;
 
@@ -45,8 +45,9 @@ bool Barracks::Update(float dt)
 				//play fx (upgrade);
 			}
 		}
-		else
+		else //destroyed
 		{
+			App->player1->UpdateWalkabilityMap(false, collider);
 			App->player1->DeleteEntity(this);
 		}
 
@@ -71,8 +72,9 @@ bool Barracks::Update(float dt)
 				//play fx (upgrade);
 			}
 		}
-		else
+		else //destroyed
 		{
+			App->player2->UpdateWalkabilityMap(false, collider);
 			App->player2->DeleteEntity(this);
 		}
 

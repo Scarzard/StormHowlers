@@ -237,7 +237,7 @@ bool Player::Update(float dt)
 			{
 				//play fx (build);
 				//App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ });
-				UpdateWalkabilityMap(false);
+				UpdateWalkabilityMap(false, collider);
 				entityAdded = false;
 				isBuilding = false;
 				currentUI == CURRENT_UI::CURR_GENERAL;
@@ -297,11 +297,15 @@ void Player::SpawnEntity() {
 		
 	}
 	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
-		if (type >= Entity::entityType::BARRACKS) {
-			troops.pop_back();
+		if (type >= Entity::entityType::BARRACKS)
+		{
+			if (troops.empty() == false)
+				troops.pop_back();
 		}
-		else {
-			buildings.pop_back();
+		else 
+		{
+			if (buildings.empty() == false)
+				buildings.pop_back();
 		}
 		entityAdded = false;
 		isBuilding = true;
@@ -367,13 +371,11 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 	bool ret = true;
 
 	pair<int, int> pos, real_pos;
-
 	pos = currentTile;
 
 	if (gamepad.Connected == true)
 	{
 		pos = currentTile;
-
 	}
 	else
 	{
@@ -387,12 +389,12 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 	//Preview Building
 	if (!entityAdded) {
 		if (isPlayer1)
-			previewEntity = App->entitymanager->AddEntity(isPlayer1, type, { pos.first,pos.second });
+			previewEntity = App->entitymanager->AddEntity(isPlayer1, type, { pos.first,pos.second }, collider);
 		else
-			previewEntity = App->entitymanager->AddEntity(isPlayer1, type, { pos.first,pos.second });
+			previewEntity = App->entitymanager->AddEntity(isPlayer1, type, { pos.first,pos.second }, collider);
+
 		entityAdded = true;
 	}
-	
 	previewEntity->position = App->map->MapToWorld(pos.first, pos.second);
 	
 
@@ -413,7 +415,7 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 		pos.second -= cont + 1;
 	}
 
-	// compare tiles with walkability map
+	// Compare tiles with walkability map
 	for (int i = 0; i < collider.tiles.size(); i++)
 	{
 		pos = App->map->WorldToMap(collider.tiles[i].first, collider.tiles[i].second);
@@ -436,14 +438,9 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 		App->render->Blit(App->map->debug_tex, collider.tiles[i].first, collider.tiles[i].second, &rect);
 	}
 	return ret;
-
-	
-
-
-
 }
 
-void Player::UpdateWalkabilityMap(bool isWalkable) //update walkable tiles
+void Player::UpdateWalkabilityMap(bool isWalkable, Collider collider) //update walkable tiles
 {
 	for (int i = 0; i < collider.tiles.size(); ++i)
 	{
@@ -452,7 +449,6 @@ void Player::UpdateWalkabilityMap(bool isWalkable) //update walkable tiles
 		{
 			App->pathfinding->ChangeWalkability(pos, isWalkable);
 			App->map->walkability_layer->Set(pos.first, pos.second, 1);
-
 		}
 	}
 }

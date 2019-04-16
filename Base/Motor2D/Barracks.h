@@ -5,7 +5,7 @@
 class Barracks : public Building {
 public:
 	Barracks();
-	Barracks(bool isPlayer1, pair<int, int> position);
+	Barracks(bool isPlayer1, pair<int, int> position, Collider collider);
 	~Barracks();
 
 	bool PreUpdate();

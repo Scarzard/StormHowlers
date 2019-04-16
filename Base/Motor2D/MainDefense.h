@@ -7,7 +7,7 @@ class MainDefense : public Building
 {
 public:
 	MainDefense();
-	MainDefense(bool isPlayer1, pair<int, int> position);
+	MainDefense(bool isPlayer1, pair<int, int> position, Collider collider);
 	~MainDefense();
 
 	bool Update(float dt);
