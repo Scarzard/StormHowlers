@@ -37,6 +37,8 @@
 
   <gui>
     <atlas file="gui/new_atlas.png"/>
+    <allied file="gui/Allied_Victorious.png"/>
+    <soviet file="gui/Soviet_Victorious.png"/>
   </gui>
 
   <file_system>

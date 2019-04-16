@@ -25,7 +25,7 @@ bool Townhall::Update(float dt)
 
 	if (fromPlayer1)
 	{
-		if (health > 0) //if not destroyed
+		if (App->player1->live > 0) //if not destroyed
 		{
 			if (upgrade == true) //upgrade
 			{
@@ -38,12 +38,12 @@ bool Townhall::Update(float dt)
 		}
 		else
 		{
-			//player 1 lose
+			App->scene->Victorious();
 		}
 	}
 	else if (!fromPlayer1)
 	{
-		if (health > 0) //if not destroyed
+		if (App->player2->live > 0) //if not destroyed
 		{
 			if (upgrade == true) //upgrade
 			{
@@ -56,7 +56,7 @@ bool Townhall::Update(float dt)
 		}
 		else
 		{
-			//player 2 lose
+			App->scene->Victorious();
 		}
 	}
 	ChangeAnimation();

@@ -283,6 +283,11 @@ bool Player::Update(float dt)
 		if (live < 0)
 			live = 0;
 	}
+	
+	if (App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_DOWN)
+	{
+		App->scene->ResetGame();
+	}
 
 
 	//--- Building ---------------------

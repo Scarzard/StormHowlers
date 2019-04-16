@@ -102,6 +102,7 @@ public:
 
 	// Live of TOWN HALL
 	int live = 0;
+	Entity* TownHall = nullptr;
 
 	GamePad gamepad;
 

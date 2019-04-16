@@ -89,6 +89,8 @@ public:
 	void SpawnEntities();
 
 	void DrawLiveBar(Player* player);
+	void Victorious();
+	void ResetGame();
 
 
 	//void changeSize(float time, int maxsize);
@@ -100,10 +102,11 @@ public:
 	uint currentMap = 0;
 	uchar* Wmap;
 
-	bool pause = false;
-	bool godmode = false;
-	bool to_end = false;
-	bool change = false;
+	bool pause;
+	bool godmode;
+	bool to_end;
+	bool change;
+	bool endgame;
 
 	string current_track ;
 	string current_fx ;
@@ -134,6 +137,14 @@ public:
 	// Players Gold
 	char current_p1_gold[20] = "0000 $";
 	char current_p2_gold[20] = "0000 $";
+
+	UI_Element* rematch_button;
+	UI_Element* rematch_button_text;
+	char rematch_button_label[20] = "CLICK A TO CONTINUE";
+
+	UI_Element* return_mainmenu;
+	UI_Element* return_mainmenu_text;
+	char return_mainmenu_label[31] = "CLICK B TO RETURN TO MAIN MENU";
 
 
 private:
