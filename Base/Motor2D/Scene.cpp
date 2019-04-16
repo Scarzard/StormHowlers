@@ -562,16 +562,6 @@ bool Scene::Update(float dt)
 	{
 		App->render->camera.x -= 10;
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT && App->scene->active) 
-	{
-		App->player2->live -= 1000;
-		if (App->player2->live < 0)
-		{
-			App->player2->live = 0;
-		}
-		if (App->player2->live == 0)
-			App->player2->isDead = true;
-	}
 	
 	//else if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) //Go to main menu
 	//{
