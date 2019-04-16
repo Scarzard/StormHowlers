@@ -92,6 +92,7 @@ public:
 	void DrawLiveBar(Player* player);
 	void Victorious();
 	void ResetGame();
+	//void ReturnMainMenu();
 
 	//void changeSize(float time, int maxsize);
 

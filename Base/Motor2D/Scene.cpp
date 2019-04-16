@@ -802,10 +802,10 @@ void Scene::Victorious()
 		rematch_button->label = rematch_button->label;
 		rematch_button->color = { 255, 255, 9, 255 };
 		
-		return_mainmenu = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RETURN_MAINMENU, { 1273, 532 }, { 187, 37 }, nullptr, true);
-		return_mainmenu_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, return_mainmenu, true, { false, false });
-		return_mainmenu->label = return_mainmenu->label;
-		return_mainmenu->color = { 255, 255, 9, 255 };
+		//return_mainmenu = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RETURN_MAINMENU, { 1273, 532 }, { 187, 37 }, nullptr, true);
+		//return_mainmenu_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, return_mainmenu, true, { false, false });
+		//return_mainmenu->label = return_mainmenu->label;
+		//return_mainmenu->color = { 255, 255, 9, 255 };
 
 		endgame = true;
 	}
@@ -823,10 +823,10 @@ void Scene::Victorious()
 		rematch_button->label = rematch_button->label;
 		rematch_button->color = { 255, 255, 9, 255 };
 
-		return_mainmenu = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RETURN_MAINMENU, { 1273, 532 }, { 187, 37 }, nullptr, true);
-		return_mainmenu_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, return_mainmenu, true, { false, false });
-		return_mainmenu->label = return_mainmenu->label;
-		return_mainmenu->color = { 255, 255, 9, 255 };
+		//return_mainmenu = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RETURN_MAINMENU, { 1273, 532 }, { 187, 37 }, nullptr, true);
+		//return_mainmenu_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, return_mainmenu, true, { false, false });
+		//return_mainmenu->label = return_mainmenu->label;
+		//return_mainmenu->color = { 255, 255, 9, 255 };
 
 		endgame = true;
 	}
@@ -850,3 +850,8 @@ void Scene::ResetGame()
 	App->player2->Start();
 	App->scene->Start();
 }
+
+//void Scene::ReturnMainMenu()
+//{
+//
+//}
