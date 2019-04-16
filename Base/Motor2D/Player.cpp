@@ -44,177 +44,146 @@ bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("Player Update", Profiler::Color::Black);
 
-
-	//--- Press X (Square)
-	if (gamepad.Controller[BUTTON_X] == KEY_DOWN)
+	if (!App->scene->endgame)
 	{
-		onUI = !onUI;
-	}
-
-	// Button with focus changes state to HOVER 
-	if (currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr )
-	{
-		(*focus)->state = UI_Element::State::HOVER;
-	}
-
-	// PAUSE
-	if (gamepad.Controller[START] == KEY_DOWN && App->scene->active)
-	{
-		if (!App->scene->pause)
+		//--- Press X (Square)
+		if (gamepad.Controller[BUTTON_X] == KEY_DOWN)
 		{
-			App->scene->world_seconds.Stop();
-			App->render->zoom = 1;
-			Pause_UI->visible = true;
-			isPaused = true;
+			onUI = !onUI;
+		}
 
-			App->scene->pause = !App->scene->pause;
+		// Button with focus changes state to HOVER 
+		if (currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
+		{
+			(*focus)->state = UI_Element::State::HOVER;
+		}
 
-			if (currentUI != CURRENT_UI::NONE)
+		// PAUSE
+		if (gamepad.Controller[START] == KEY_DOWN && App->scene->active)
+		{
+			if (!App->scene->pause)
+			{
+				App->scene->world_seconds.Stop();
+				App->render->zoom = 1;
+				Pause_UI->visible = true;
+				isPaused = true;
+
+				App->scene->pause = !App->scene->pause;
+
+				if (currentUI != CURRENT_UI::NONE)
+					(*focus)->state = UI_Element::State::IDLE;
+
+				last_currentUI = currentUI;
+				currentUI = CURRENT_UI::CURR_PAUSE;
+				UpdateFocus(currentUI);
+			}
+			else if (App->scene->pause && isPaused && currentUI == CURRENT_UI::CURR_PAUSE)
+			{
+				App->scene->world_seconds.Start();
+				App->render->zoom = 0.77;
+				Pause_UI->visible = false;
+				isPaused = false;
+
+				App->scene->pause = !App->scene->pause;
+
+
+				currentUI = last_currentUI;
+				UpdateVisibility();
+				UpdateFocus(currentUI);
+
+			}
+
+
+		}
+
+		// Button A to clcik a button
+		if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
+		{
+			if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
+				(*focus)->state = UI_Element::State::LOGIC;
+		}
+
+		if (!App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
+		{
+			if (App->scene->pause && isPaused == true)
+			{
 				(*focus)->state = UI_Element::State::IDLE;
+				DoLogic((*focus));
+				UpdateFocus(currentUI);
+			}
+			else if (!App->scene->pause)
+			{
+				if (!isBuilding)
+					(*focus)->state = UI_Element::State::IDLE;
+				if (App->scene->active)
+					DoLogic((*focus));
+				else
+					App->main_menu->DoLogic((*focus));
 
-			last_currentUI = currentUI;
-			currentUI = CURRENT_UI::CURR_PAUSE;
-			UpdateFocus(currentUI);
-		}
-		else if (App->scene->pause && isPaused && currentUI == CURRENT_UI::CURR_PAUSE)
-		{
-			App->scene->world_seconds.Start();
-			App->render->zoom = 0.77;
-			Pause_UI->visible = false;
-			isPaused = false;
-
-			App->scene->pause = !App->scene->pause;
-
-
-			currentUI = last_currentUI;
-			UpdateVisibility();
-			UpdateFocus(currentUI);
+				if ((*focus) == Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
+					UpdateFocus(currentUI);
+			}
 
 		}
-		
 
-	}
 
-	// Button A to clcik a button
-	if (!App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
-	{
-		if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
-			(*focus)->state = UI_Element::State::LOGIC;
-	}
-
-	if (!App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
-	{
-		if (App->scene->pause && isPaused == true)
+		if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
 		{
 			(*focus)->state = UI_Element::State::IDLE;
-			DoLogic((*focus));
-			UpdateFocus(currentUI);
-		}
-		else if (!App->scene->pause)
-		{
-			if (!isBuilding)
-				(*focus)->state = UI_Element::State::IDLE;
-			if (App->scene->active)
-				DoLogic((*focus));
-			else
-				App->main_menu->DoLogic((*focus));
 
-			if ((*focus) == Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
-				UpdateFocus(currentUI);
-		}
-		
-	}
-
-
-	if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
-	{
-		(*focus)->state = UI_Element::State::IDLE;
-
-		if (App->scene->pause && isPaused && currentUI==CURRENT_UI::CURR_PAUSE)
-		{
-			App->scene->world_seconds.Start();
-			App->render->zoom = 0.77;
-			Pause_UI->visible = false;
-			isPaused = false;
-
-			App->scene->pause = !App->scene->pause;
-
-			currentUI = last_currentUI;
-			UpdateVisibility();
-			UpdateFocus(currentUI);
-		}
-		else if (App->scene->pause && isPaused && currentUI != CURRENT_UI::CURR_PAUSE)
-		{
-			GotoPrevWindows(currentUI);
-			UpdateFocus(currentUI);
-		}
-		else if (!App->scene->pause )
-		{
-			if (currentUI == CURR_BUILD)
+			if (App->scene->pause && isPaused && currentUI == CURRENT_UI::CURR_PAUSE)
 			{
-				if (isBuilding == true)
-				{
-					isBuilding = false;
-					App->map->debug = false;
-				}
-				else if (isBuilding == false)
-				{
+				App->scene->world_seconds.Start();
+				App->render->zoom = 0.77;
+				Pause_UI->visible = false;
+				isPaused = false;
 
-					GotoPrevWindows(currentUI);
-					UpdateFocus(currentUI);
-				}
+				App->scene->pause = !App->scene->pause;
+
+				currentUI = last_currentUI;
+				UpdateVisibility();
+				UpdateFocus(currentUI);
 			}
-			else
+			else if (App->scene->pause && isPaused && currentUI != CURRENT_UI::CURR_PAUSE)
 			{
 				GotoPrevWindows(currentUI);
 				UpdateFocus(currentUI);
 			}
+			else if (!App->scene->pause)
+			{
+				if (currentUI == CURR_BUILD)
+				{
+					if (isBuilding == true)
+					{
+						isBuilding = false;
+						App->map->debug = false;
+					}
+					else if (isBuilding == false)
+					{
+
+						GotoPrevWindows(currentUI);
+						UpdateFocus(currentUI);
+					}
+				}
+				else
+				{
+					GotoPrevWindows(currentUI);
+					UpdateFocus(currentUI);
+				}
+			}
 		}
-	}
 
-	if (!App->scene->endgame && gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
-	{
-		if (App->scene->active)
-			currentUI = CURRENT_UI::CURR_MAIN;
-
-		UpdateFocus(currentUI);
-	}
-
-	
-
-	if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
-	{
-		(*focus)->state = UI_Element::State::IDLE;
-
-		if (focus == last_element)
+		if (!App->scene->endgame && gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
 		{
-			focus = GetUI_Element(currentUI)->children.begin();
+			if (App->scene->active)
+				currentUI = CURRENT_UI::CURR_MAIN;
 
-		}
-		else
-		{
-			focus++;
+			UpdateFocus(currentUI);
 		}
 
-	}
 
-	if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
-	{
-		(*focus)->state = UI_Element::State::IDLE;
-		if (focus == GetUI_Element(currentUI)->children.begin())
-		{
-			focus = last_element;
-		}
-		else
-		{
-			focus--;
-		}
 
-	}
-	
-	if (App->main_menu->active || App->scene->pause)
-	{
-		if (gamepad.Controller[UP] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
+		if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			(*focus)->state = UI_Element::State::IDLE;
 
@@ -230,7 +199,7 @@ bool Player::Update(float dt)
 
 		}
 
-		if (gamepad.Controller[DOWN] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
+		if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			(*focus)->state = UI_Element::State::IDLE;
 			if (focus == GetUI_Element(currentUI)->children.begin())
@@ -243,52 +212,87 @@ bool Player::Update(float dt)
 			}
 
 		}
+
+		if (App->main_menu->active || App->scene->pause)
+		{
+			if (gamepad.Controller[UP] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
+			{
+				(*focus)->state = UI_Element::State::IDLE;
+
+				if (focus == last_element)
+				{
+					focus = GetUI_Element(currentUI)->children.begin();
+
+				}
+				else
+				{
+					focus++;
+				}
+
+			}
+
+			if (gamepad.Controller[DOWN] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
+			{
+				(*focus)->state = UI_Element::State::IDLE;
+				if (focus == GetUI_Element(currentUI)->children.begin())
+				{
+					focus = last_element;
+				}
+				else
+				{
+					focus--;
+				}
+
+			}
+		}
+
+		if (gamepad.Controller[RIGHT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
+		{
+			if ((*focus) == Music_Settings)
+			{
+				App->audio->musicVolume += 10;
+				App->audio->SetMusicVolume();
+
+
+			}
+			else
+			{
+				App->audio->sfxVolume += 10;
+				App->audio->SetSfxVolume();
+			}
+		}
+		else if (gamepad.Controller[LEFT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
+		{
+			if ((*focus) == Music_Settings)
+			{
+				App->audio->musicVolume -= 10;
+				App->audio->SetMusicVolume();
+			}
+			else
+			{
+				App->audio->sfxVolume -= 10;
+				App->audio->SetSfxVolume();
+			}
+		}
+
+
+
+
+		// Just to test the LiveBar
+		if (!App->scene->pause && gamepad.Controller[UP] == KEY_DOWN && live > 0 && App->scene->active)
+		{
+			live -= 1000;
+			if (live < 0)
+			{
+				live = 0;
+			}
+			if (live == 0)
+				isDead = true;
+
+		}
 	}
+
 	
-	if (gamepad.Controller[RIGHT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
-	{
-		if ((*focus) == Music_Settings)
-		{
-			App->audio->musicVolume += 10;
-			App->audio->SetMusicVolume();
-			
-
-		}
-		else
-		{
-			App->audio->sfxVolume += 10;
-			App->audio->SetSfxVolume();
-		}
-	}
-	else if (gamepad.Controller[LEFT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
-	{
-		if ((*focus) == Music_Settings)
-		{
-			App->audio->musicVolume -= 10;
-			App->audio->SetMusicVolume();
-		}
-		else
-		{
-			App->audio->sfxVolume -= 10;
-			App->audio->SetSfxVolume();
-		}
-	}
-
-	
-
-
-	// Just to test the LiveBar
-	if (!App->scene->pause && gamepad.Controller[UP] == KEY_DOWN && live > 0 && App->scene->active)
-	{
-		live -= 1000;
-		if (live < 0)
-		{
-			live = 0;
-		}
-		if (live == 0)
-			isDead = true;
-
-	}
 	
 	if (App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_DOWN)
 	{
