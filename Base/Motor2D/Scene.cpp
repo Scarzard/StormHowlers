@@ -47,6 +47,9 @@ bool Scene::Awake(pugi::xml_node& config)
 	pause_soviet = config.child("pause_menu_soviet").attribute("file").as_string("");
 	pause_alied = config.child("pause_menu_alied").attribute("file").as_string("");
 
+	allied_win_name = config.child("allied").attribute("file").as_string("");
+	soviet_win_name = config.child("soviet").attribute("file").as_string("");
+
 	return ret;
 }
 
@@ -59,6 +62,9 @@ bool Scene::Start()
 	//current_track = App->audio->tracks_path.front();
 	//App->audio->PlayMusic(PATH(App->audio->folder_music.data(), current_track.data()));
 	App->render->zoom = 0.77;
+
+	allied_win_tex = App->tex->Load(allied_win_name.data());
+	soviet_win_tex = App->tex->Load(soviet_win_name.data());
 
 	// Variables init
 	currentMap = 0;
@@ -243,6 +249,9 @@ bool Scene::Start()
 	App->player1->Quit_text->label = App->player1->Quit_label;
 	App->player1->Quit_text->color = { 255,255,9,255 };
 
+	App->player1->win_screen = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
+	App->player1->win_screen->texture = allied_win_tex;
+	App->player1->win_screen->rect = { 0, 0, 0, App->win->height };
 
 	//--- PLAYER 2
 	//App->player2->Health_UI = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
@@ -364,7 +373,9 @@ bool Scene::Start()
 	App->player2->Quit_text->label = App->player2->Quit_label;
 	App->player2->Quit_text->color = { 255,255,9,255 };
 
-
+	App->player2->win_screen  = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
+	App->player2->win_screen->texture = soviet_win_tex;
+	App->player2->win_screen->rect = { 0, 0, 0, App->win->height };
 
 
 	// --- CURSORS
@@ -550,6 +561,16 @@ bool Scene::Update(float dt)
 	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) //Movecamera Right
 	{
 		App->render->camera.x -= 10;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT && App->scene->active) 
+	{
+		App->player2->live -= 1000;
+		if (App->player2->live < 0)
+		{
+			App->player2->live = 0;
+		}
+		if (App->player2->live == 0)
+			App->player2->isDead = true;
 	}
 
 	
@@ -976,6 +997,8 @@ void Scene::SpawnEnemies() //
 	//	}
 	//}
 	App->player1->TownHall = App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 100, 700 });
+
+	App->player2->TownHall = App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 500, 700 });
 }
 
 
@@ -993,14 +1016,15 @@ void Scene::DrawLiveBar(Player* player)
 
 void Scene::Victorious()
 {
-	if (App->player1->isPlayer1)
+	if (App->player1->isDead)
 	{
-		App->scene->pause = true;
-		SDL_Rect r = { 0,0,App->win->width,App->win->height };
-		App->render->DrawQuad({ 0, 0, (int)App->win->width + 500, (int)App->win->height + 150 }, 0, 0, 0, 150, true, false);
-		SDL_RenderCopy(App->render->renderer, App->gui->allied_win_tex, NULL, &r);
 		pausetimer = true;
 		world_seconds.Stop();
+
+		App->player2->currentUI = Player::CURRENT_UI::ENDGAME;
+		App->player2->UpdateVisibility();
+		App->player1->currentUI = Player::CURRENT_UI::CURR_WIN_SCREEN;
+		App->player1->UpdateVisibility();
 
 		//rematch_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::REMATCH, { 1273, 432 }, { 187, 37 }, nullptr, true);
 		//rematch_button_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, rematch_button, true, { false, false });
@@ -1013,15 +1037,22 @@ void Scene::Victorious()
 		//return_mainmenu->color = { 255, 255, 9, 255 };
 
 		endgame = true;
+
+		if (App->scene->pause == false)
+		{
+			App->scene->pause = true;
+		}
 	}
-	else if (!App->player2->isPlayer1)
+	else if (App->player2->isDead)
 	{
-		App->scene->pause = true;
-		SDL_Rect r = { 0,0,App->win->width,App->win->height };
-		App->render->DrawQuad({ 0, 0, (int)App->win->width + 500, (int)App->win->height + 150 }, 0, 0, 0, 150, true, false);
-		SDL_RenderCopy(App->render->renderer, App->gui->soviet_win_tex, NULL, &r);
 		pausetimer = true;
 		world_seconds.Stop();
+		
+		SDL_Rect r = { 0,0,App->win->width,App->win->height };
+		App->render->DrawQuad({ 0, 0, (int)App->win->width + 520, (int)App->win->height + 150 }, 0, 0, 0, 150, true, false);
+		App->player2->currentUI = Player::CURRENT_UI::CURR_WIN_SCREEN;
+		App->player2->UpdateVisibility();
+
 
 		//rematch_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::REMATCH, { 1273, 432 }, { 187, 37 }, nullptr, true);
 		//rematch_button_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, rematch_button, true, { false, false });
@@ -1034,6 +1065,11 @@ void Scene::Victorious()
 		//return_mainmenu->color = { 255, 255, 9, 255 };
 
 		endgame = true;
+
+		if (App->scene->pause == false)
+		{
+			App->scene->pause = true;
+		}
 	}
 
 }

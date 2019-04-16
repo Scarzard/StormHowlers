@@ -52,7 +52,9 @@ public:
 		CURR_GENERAL,
 		CURR_PAUSE,
 		CURR_PAUSE_SETTINGS,
-		CURR_PAUSE_ABORT
+		CURR_PAUSE_ABORT,
+		CURR_WIN_SCREEN,
+		ENDGAME
 	};
 
 	Player();
@@ -82,6 +84,7 @@ public:
 	bool isDeploying = false;
 	bool isCasting = false;
 	bool isPaused = false;
+	bool isDead = false;
 
 	Collider collider;
 	pair<int, int> offset;
@@ -210,7 +213,7 @@ public:
 	UI_Element* Restart_text = nullptr;
 	char Restart_label[13] = "Restart Game";
 	
-
+	UI_Element* win_screen = nullptr;
 };
 
 #endif // !__Player_H__

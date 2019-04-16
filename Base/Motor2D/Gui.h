@@ -54,11 +54,6 @@ private:
 public:
 	bool UI_Debug = false;
 
-	string allied_win_name;
-	SDL_Texture* allied_win_tex = nullptr;
-
-	string soviet_win_name;
-	SDL_Texture* soviet_win_tex = nullptr;
 };
 
 #endif //__J1_GUI_H__

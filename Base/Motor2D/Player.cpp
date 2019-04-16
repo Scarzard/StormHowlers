@@ -282,7 +282,12 @@ bool Player::Update(float dt)
 	{
 		live -= 1000;
 		if (live < 0)
+		{
 			live = 0;
+		}
+		if (live == 0)
+			isDead = true;
+
 	}
 	
 	if (App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_DOWN)
@@ -673,6 +678,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Pause_UI->visible = false;
 		Abort_UI->visible = false;
 		Settings_UI->visible = false;
+		win_screen->visible = false;
 		//General_UI->visible = false;
 		break;
 	case::Player::CURRENT_UI::CURR_MAIN:
@@ -683,6 +689,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Pause_UI->visible = false;
 		Settings_UI->visible = false;
 		Abort_UI->visible = false;
+		win_screen->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -694,6 +701,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Pause_UI->visible = false;
 		Settings_UI->visible = false;
 		Abort_UI->visible = false;
+		win_screen->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -705,6 +713,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Pause_UI->visible = false;
 		Settings_UI->visible = false;
 		Abort_UI->visible = false;
+		win_screen->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -716,6 +725,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Pause_UI->visible = false;
 		Settings_UI->visible = false;
 		Abort_UI->visible = false;
+		win_screen->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -736,6 +746,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Pause_UI->visible = true;
 		Settings_UI->visible = false;
 		Abort_UI->visible = false;
+		win_screen->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -747,6 +758,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Pause_UI->visible = false;
 		Settings_UI->visible = true;
 		Abort_UI->visible = false;
+		win_screen->visible = false;
 		//General_UI->visible = false;
 		break;
 
@@ -758,6 +770,32 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Pause_UI->visible = false;
 		Settings_UI->visible = false;
 		Abort_UI->visible = true;
+		win_screen->visible = false;
+		//General_UI->visible = false;
+		break;
+	case::Player::CURRENT_UI::CURR_WIN_SCREEN:
+		Main_UI->visible = false;
+		Build_UI->visible = false;
+		Deploy_UI->visible = false;
+		Cast_UI->visible = false;
+		Pause_UI->visible = false;
+		Settings_UI->visible = false;
+		Abort_UI->visible = false;
+		win_screen->visible = true;
+		Gold_UI->visible = false;
+		//General_UI->visible = false;
+		break;
+	case::Player::CURRENT_UI::ENDGAME:
+		Main_UI->visible = false;
+		Build_UI->visible = false;
+		Deploy_UI->visible = false;
+		Cast_UI->visible = false;
+		Pause_UI->visible = false;
+		Settings_UI->visible = false;
+		Abort_UI->visible = false;
+		win_screen->visible = false;
+		Gold_UI->visible = false;
+		App->scene->ui_timer->visible = false;
 		//General_UI->visible = false;
 		break;
 

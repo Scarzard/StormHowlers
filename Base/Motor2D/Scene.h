@@ -146,6 +146,12 @@ public:
 	UI_Element* return_mainmenu_text;
 	char return_mainmenu_label[31] = "CLICK B TO RETURN TO MAIN MENU";
 
+	string allied_win_name;
+	SDL_Texture* allied_win_tex = nullptr;
+
+	string soviet_win_name;
+	SDL_Texture* soviet_win_tex = nullptr;
+
 
 private:
 	SDL_Texture* debug_tex;

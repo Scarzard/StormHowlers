@@ -30,9 +30,7 @@ bool Gui::Awake(pugi::xml_node& conf)
 	bool ret = true;
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
-	allied_win_name = conf.child("allied").attribute("file").as_string("");
-	soviet_win_name = conf.child("soviet").attribute("file").as_string("");
-	
+
 	return ret;
 }
 
@@ -40,8 +38,6 @@ bool Gui::Awake(pugi::xml_node& conf)
 bool Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.data());
-	allied_win_tex = App->tex->Load(allied_win_name.data());
-	soviet_win_tex = App->tex->Load(soviet_win_name.data());
 
 	return true;
 }
@@ -161,6 +157,11 @@ bool Gui::Draw()
 				{
 					SDL_RenderCopy(App->render->renderer, App->player1->Pause_UI->texture, NULL, &r);
 				}
+				else if ((*UI_elem) == App->player1->win_screen)
+				{
+					App->render->DrawQuad({ 0, 0, (int)App->win->width + 520, (int)App->win->height + 150 }, 0, 0, 0, 150, true, false);
+					SDL_RenderCopy(App->render->renderer, App->scene->allied_win_tex, NULL, &r);
+				}
 				
 				
 				
@@ -199,6 +200,11 @@ bool Gui::Draw()
 				if ((*UI_elem) == App->player2->Pause_UI || (*UI_elem) == App->player2->Abort_UI)
 				{
 					SDL_RenderCopy(App->render->renderer, App->player2->Pause_UI->texture, NULL, &r);
+				}
+				else if ((*UI_elem) == App->player2->win_screen)
+				{
+					App->render->DrawQuad({ 0, 0, (int)App->win->width + 520, (int)App->win->height + 150 }, 0, 0, 0, 150, true, false);
+					SDL_RenderCopy(App->render->renderer, App->scene->soviet_win_tex, NULL, &r);
 				}
 
 
