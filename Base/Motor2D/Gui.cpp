@@ -162,9 +162,6 @@ bool Gui::Draw()
 					App->render->DrawQuad({ 0, 0, (int)App->win->width + 520, (int)App->win->height + 150 }, 0, 0, 0, 150, true, false);
 					SDL_RenderCopy(App->render->renderer, App->scene->allied_win_tex, NULL, &r);
 				}
-				
-				
-				
 			}
 			else //rest of ui
 			{
@@ -206,8 +203,6 @@ bool Gui::Draw()
 					App->render->DrawQuad({ 0, 0, (int)App->win->width + 520, (int)App->win->height + 150 }, 0, 0, 0, 150, true, false);
 					SDL_RenderCopy(App->render->renderer, App->scene->soviet_win_tex, NULL, &r);
 				}
-
-
 			}
 			else //rest of ui
 			{

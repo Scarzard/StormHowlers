@@ -96,13 +96,13 @@ bool Player::Update(float dt)
 	}
 
 	// Button A to clcik a button
-	if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
+	if (!App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
 	{
 		if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
 			(*focus)->state = UI_Element::State::LOGIC;
 	}
 
-	if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
+	if (!App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
 	{
 		if (App->scene->pause && isPaused == true)
 		{

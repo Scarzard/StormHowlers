@@ -373,7 +373,7 @@ bool Scene::Start()
 	App->player2->Quit_text->label = App->player2->Quit_label;
 	App->player2->Quit_text->color = { 255,255,9,255 };
 
-	App->player2->win_screen  = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
+	App->player2->win_screen  = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
 	App->player2->win_screen->texture = soviet_win_tex;
 	App->player2->win_screen->rect = { 0, 0, 0, App->win->height };
 
@@ -572,9 +572,7 @@ bool Scene::Update(float dt)
 		if (App->player2->live == 0)
 			App->player2->isDead = true;
 	}
-
 	
-
 	//else if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) //Go to main menu
 	//{
 	//	App->scenechange->SwitchScene(App->main_menu, App->scene);
@@ -683,9 +681,7 @@ bool Scene::Update(float dt)
 		change_font_size = true;
 		ui_timer->visible = true;
 		
-	
 	}
-	
 	
 	
 	if (ui_timer->visible == true && change_font_size == true && pausetimer ==false)
@@ -783,9 +779,6 @@ bool Scene::Update(float dt)
 		DrawLiveBar(App->player2);
 	}
 	
-
-	
-
 	return true;
 }
 
@@ -1048,11 +1041,10 @@ void Scene::Victorious()
 		pausetimer = true;
 		world_seconds.Stop();
 		
-		SDL_Rect r = { 0,0,App->win->width,App->win->height };
-		App->render->DrawQuad({ 0, 0, (int)App->win->width + 520, (int)App->win->height + 150 }, 0, 0, 0, 150, true, false);
+		App->player1->currentUI = Player::CURRENT_UI::ENDGAME;
+		App->player1->UpdateVisibility();
 		App->player2->currentUI = Player::CURRENT_UI::CURR_WIN_SCREEN;
 		App->player2->UpdateVisibility();
-
 
 		//rematch_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::REMATCH, { 1273, 432 }, { 187, 37 }, nullptr, true);
 		//rematch_button_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, rematch_button, true, { false, false });

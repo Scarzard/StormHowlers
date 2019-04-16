@@ -41,24 +41,23 @@ bool Townhall::Update(float dt)
 			App->scene->Victorious();
 		}
 	}
-	else if (!fromPlayer1)
+	
+	if (App->player2->live > 0) //if not destroyed
 	{
-		if (App->player2->live > 0) //if not destroyed
+		if (upgrade == true) //upgrade
 		{
-			if (upgrade == true) //upgrade
-			{
-				App->player2->gold -= upgrade_cost[level]; //pay costs
-				level++;
-				production = production_lv[level]; //update production
-				upgrade = false;
-				//play fx (upgrade);
-			}
-		}
-		else
-		{
-			App->scene->Victorious();
+			App->player2->gold -= upgrade_cost[level]; //pay costs
+			level++;
+			production = production_lv[level]; //update production
+			upgrade = false;
+			//play fx (upgrade);
 		}
 	}
+	else
+	{
+		App->scene->Victorious();
+	}
+
 	ChangeAnimation();
 
 	Building::Update(dt);
