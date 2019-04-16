@@ -279,12 +279,14 @@ bool Player::Update(float dt)
 
 	// Just to test the LiveBar
 	if (gamepad.Controller[UP] == KEY_DOWN && live > 0 && App->scene->active)
-		live -= 1000;
+	{
 
+		live -= 1000;
+	}
 
 	if (live < 0)
 		live = 0;
-	
+	}
 
 	
 
@@ -400,7 +402,6 @@ bool Player::Update(float dt)
 
 	return true;
 }
-
 
 bool Player::PostUpdate()
 {
