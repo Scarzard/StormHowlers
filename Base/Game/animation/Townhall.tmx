@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2" height="1" tilewidth="252" tileheight="166" nextobjectid="3">
+ <layer name="Capa de Patrones 1" width="2" height="1">
+  <data encoding="csv">
+0,0
+</data>
+ </layer>
+ <imagelayer name="Capa de Imagen 1">
+  <image source="townhall_tiled.png" width="504" height="166"/>
+ </imagelayer>
+ <objectgroup name="soviet">
+  <object id="1" x="0" y="0" width="252" height="166"/>
+ </objectgroup>
+ <objectgroup name="allied">
+  <object id="2" x="252" y="0" width="252" height="166"/>
+ </objectgroup>
+</map>

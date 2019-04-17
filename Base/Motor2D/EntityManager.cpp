@@ -226,6 +226,7 @@ bool EntityManager::Draw(float dt) //sprite ordering
 
 	while (tmp != entity_list.end())
 	{
+		
 		//if (entitiesTextures[(*tmp)->type] != nullptr) {
 
 		//	int posy = (*tmp)->position.second - (*tmp)->Current_Animation->GetCurrentFrame(dt).h;// - ((*tmp)->Current_Animation->GetCurrentFrame(dt).h - (*tmp)->position.second);
@@ -239,6 +240,11 @@ bool EntityManager::Draw(float dt) //sprite ordering
 
 		//}
 		if ((*tmp)->type == Entity::entityType::WALLS)
+		{
+			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
+		}
+		
+		if ((*tmp)->type == Entity::entityType::TOWNHALL)
 		{
 			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 		}
@@ -347,7 +353,7 @@ char* EntityManager::GetName(Entity::entityType type) {
 	switch (type)
 	{
 	case Entity::entityType::TOWNHALL:
-		return"Townhall";
+		return"townhall";
 		break;
 	case Entity::entityType::MAIN_DEFENSE:
 		return"sentrygun";

@@ -50,7 +50,6 @@ public:
 
 	bool Start();
 	bool Update(float dt);
-	void PreviewEntity();
 	void SpawnEntity();
 	bool PostUpdate();
 	bool CleanUp();
@@ -89,8 +88,7 @@ public:
 
 	SDL_Rect LiveBar;
 
-	// Live of TOWN HALL
-	int live = 2000;
+	
 	//index for testing previews
 	int curr = 1;
 
@@ -103,6 +101,8 @@ public:
 	list<Building*> buildings;
 	list<Troop*> troops;
 
+	Entity* Townhall;
+
 
 	//---
 	list<UI_Element*> UI_elements;
@@ -111,9 +111,6 @@ public:
 	list<UI_Element*>::iterator focus;
 	list<UI_Element*>::iterator last_element;
 
-
-	vector<SDL_Rect> preview_rects;
-	bool isPreviewing = false;
 
 	// --- UI --- //
 
