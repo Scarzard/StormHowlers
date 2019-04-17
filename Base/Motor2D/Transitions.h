@@ -32,7 +32,7 @@ public:
 	bool IsChanging() const;
 
 	//Change Scene
-	bool SwitchScene(Module* SceneIn, Module* SceneOut);
+	bool SwitchScene(Module* SceneIn, Module* SceneOut, float time);
 
 	//returns true if switching
 	bool IsSwitching() const;
@@ -62,6 +62,7 @@ private:
 
 	bool map = false;
 	bool scene = false;
+	bool main_menu = false;
 
 };
 

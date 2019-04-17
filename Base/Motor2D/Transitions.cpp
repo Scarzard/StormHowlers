@@ -9,7 +9,7 @@
 #include "Map.h"
 #include "Gui.h"
 #include "Brofiler\Brofiler.h"
-
+#include "MainMenu.h"
 #include <math.h>
 #include "SDL\include\SDL_render.h"
 
@@ -45,6 +45,10 @@ bool Transitions::Update(float dt)
 	if (current_step == fade_step::none)
 	{
 		return true;
+	}
+	else if (current_step == fade_step::fade_from_black)
+	{
+		App->main_menu->menu_background->visible = false;
 	}
 
 	uint now = SDL_GetTicks() - start_time;
@@ -105,13 +109,19 @@ bool Transitions::Update(float dt)
 	{
 		normalized = 1.0f - normalized;
 
-		if (map == true)
+		if (map == true || main_menu ==true)
 		{
+			if (main_menu == true)
+			{
+				App->main_menu->menu_background->visible = false; 
+			}
 			if (now >= total_time)
 			{
 				current_step = fade_step::none;
 				map = false;
+				main_menu = false;
 			}
+
 		}
 		else if (scene == true)
 		{
@@ -134,8 +144,10 @@ bool Transitions::Update(float dt)
 bool Transitions::ChangeMap(int newMap, float time)
 {
 	bool ret = false;
-
+	if (newMap != -1)
+	{
 	nextMap = newMap;
+	}
 
 	map = true;
 	if (current_step == fade_step::none)
@@ -155,17 +167,22 @@ bool Transitions::IsChanging() const
 	return current_step != fade_step::none;
 }
 
-bool Transitions::SwitchScene(Module* SceneIn, Module* SceneOut)
+bool Transitions::SwitchScene(Module* SceneIn, Module* SceneOut, float time)
 {
 	bool ret = false;
-
 	scene = true;
+	if (SceneIn == App->scene)
+	{
+	}
 	if (current_step == fade_step::none)
 	{
 		current_step = fade_step::fade_to_black;
 		switchtimer.Start();
 		to_enable = SceneIn;
 		to_disable = SceneOut;
+		start_time = SDL_GetTicks();
+		total_time = (Uint32)(time*0.5f*1000.0f);
+		fading = true;
 
 		ret = true;
 	}
