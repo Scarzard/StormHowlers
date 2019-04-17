@@ -98,8 +98,7 @@ bool Scene::Start()
 		//spritesheet123 = App->tex->Load("textures/Buildings.png");
 	App->map->imagemap = App->tex->Load("textures/map3.png");
 
-	//--- Create Main Buildings
-	SpawnEntities();
+	
 
 	string track = App->audio->folder_music + "/Test.ogg"; 
 	App->audio->PlayMusic(track.c_str()); 
@@ -635,6 +634,17 @@ void Scene::SpawnEntities()
 	//App->entitymanager->AddEntity(false, Entity::entityType::WALLS, { 50,50 });
 	//App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 5000,50 });
 	//App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 350,400 });
+
+	Collider collider;
+
+	pair<int, int> pos = { 1420, 30 };
+	pair<int, int> pos2 = { 0, 900 };
+
+	//pos = App->map->MapToWorld(pos.first, pos.second);
+	//pos2 = App->map->MapToWorld(pos2.first, pos2.second);
+
+	App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, pos , collider);
+	App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, pos2, collider);
 	
 	//--- WALLS
 	LoadWalls();

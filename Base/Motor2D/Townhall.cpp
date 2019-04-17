@@ -20,6 +20,10 @@ Townhall::Townhall(bool isPlayer1, pair<int,int> pos, Collider collider): Buildi
 
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
+	//position = pos;
+	Current_Animation = building;
+
+	
 }
 
 bool Townhall::Update(float dt)
@@ -62,7 +66,9 @@ bool Townhall::Update(float dt)
 			//player 2 lose
 		}
 	}
-	ChangeAnimation();
+
+	Current_Animation = building;
+	//ChangeAnimation();
 
 	Building::Update(dt);
 
@@ -80,4 +86,12 @@ void Townhall::CleanUp()
 
 void Townhall::LoadAnimations(bool isPlayer1, string path)
 {
+	if (isPlayer1)
+	{
+		building = building->LoadAnimation(path.data(), "soviet");
+	}
+	else
+	{
+		building = building->LoadAnimation(path.data(), "allied");
+	}
 }

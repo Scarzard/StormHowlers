@@ -242,6 +242,11 @@ bool EntityManager::Draw(float dt) //sprite ordering
 		{
 			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 		}
+		
+		if ((*tmp)->type == Entity::entityType::TOWNHALL)
+		{
+			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
+		}
 		tmp++;
 	}
 
@@ -347,7 +352,7 @@ char* EntityManager::GetName(Entity::entityType type) {
 	switch (type)
 	{
 	case Entity::entityType::TOWNHALL:
-		return"Townhall";
+		return"townhall";
 		break;
 	case Entity::entityType::MAIN_DEFENSE:
 		return"sentrygun";
