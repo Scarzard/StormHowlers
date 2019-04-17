@@ -20,8 +20,12 @@ Townhall::Townhall(bool isPlayer1, pair<int,int> pos, Collider collider): Buildi
 
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
-	//position = pos;
+	position = pos;
 	Current_Animation = building;
+
+	health = 2000;
+
+
 
 	
 }
@@ -29,7 +33,17 @@ Townhall::Townhall(bool isPlayer1, pair<int,int> pos, Collider collider): Buildi
 bool Townhall::Update(float dt)
 {
 	BROFILER_CATEGORY("Townhall Update", Profiler::Color::SandyBrown);
+	
 
+	// ------ This is awful ------ but works ;D
+
+	if(fromPlayer1)
+		position = { 700, 550 };
+	else
+		position = { -1150, 1650 };
+	//---------------------------------------
+			
+	
 	if (fromPlayer1)
 	{
 		if (health > 0) //if not destroyed
@@ -67,7 +81,7 @@ bool Townhall::Update(float dt)
 		}
 	}
 
-	Current_Animation = building;
+
 	//ChangeAnimation();
 
 	Building::Update(dt);
@@ -79,7 +93,7 @@ void Townhall::CleanUp()
 {
 	LOG("---Townhall Deleted");
 
-	Building::CleanUp();
+	//Building::CleanUp();
 
 
 }

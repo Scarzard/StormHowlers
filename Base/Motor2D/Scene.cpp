@@ -613,7 +613,7 @@ bool Scene::Load_level(int map)
 {
 	//App->entitymanager->DeleteEntities();
 	App->map->SwitchMaps(map_names[map]);
-	SpawnEntities();
+	//SpawnEntities();
 
 	return true;
 }
@@ -636,15 +636,14 @@ void Scene::SpawnEntities()
 	//App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 350,400 });
 
 	Collider collider;
+	collider.dimensions = { 3,3 };
 
 	pair<int, int> pos = { 1420, 30 };
 	pair<int, int> pos2 = { 0, 900 };
+	collider.tiles.push_back(pos);
 
-	//pos = App->map->MapToWorld(pos.first, pos.second);
-	//pos2 = App->map->MapToWorld(pos2.first, pos2.second);
-
-	App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, pos , collider);
-	App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, pos2, collider);
+	App->player1->Townhall = App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, pos , collider);
+	App->player2->Townhall = App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, pos2, collider);
 	
 	//--- WALLS
 	LoadWalls();
@@ -837,11 +836,11 @@ void Scene::LoadWalls()
 
 void Scene::DrawLiveBar(Player* player)
 {
-	player->LiveBar.w = (348 * player->live) / 2000; // (maximum rect width * town hall live) / MAX town hall live
+	player->LiveBar.w = (348 * player->Townhall->health) / 2000; // (maximum rect width * town hall live) / MAX town hall live
 
-	if (player->live >= 1500)
+	if (player->Townhall->health >= 1500)
 		App->render->DrawQuad(player->LiveBar, 0, 255, 0, 255, true, false);
-	else if (player->live >= 750 && player->live <= 1500)
+	else if (player->Townhall->health >= 750 && player->Townhall->health <= 1500)
 		App->render->DrawQuad(player->LiveBar, 255, 150, 0, 255, true, false);
 	else
 		App->render->DrawQuad(player->LiveBar, 255, 0, 0, 255, true, false);

@@ -226,6 +226,7 @@ bool EntityManager::Draw(float dt) //sprite ordering
 
 	while (tmp != entity_list.end())
 	{
+		
 		//if (entitiesTextures[(*tmp)->type] != nullptr) {
 
 		//	int posy = (*tmp)->position.second - (*tmp)->Current_Animation->GetCurrentFrame(dt).h;// - ((*tmp)->Current_Animation->GetCurrentFrame(dt).h - (*tmp)->position.second);
