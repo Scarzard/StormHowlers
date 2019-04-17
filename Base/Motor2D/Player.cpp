@@ -249,29 +249,32 @@ bool Player::Update(float dt)
 
 		if (gamepad.Controller[RIGHT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
 		{
-			if ((*focus) == Music_Settings)
+			if ((*focus) == Music_Settings && App->audio->musicVolume < 100)
 			{
 				App->audio->musicVolume += 10;
 				App->audio->SetMusicVolume();
 
 
 			}
-			else
+			else if ((*focus) == FX_Settings && App->audio->sfxVolume < 100)
 			{
 				App->audio->sfxVolume += 10;
+
 				App->audio->SetSfxVolume();
 			}
 		}
 		else if (gamepad.Controller[LEFT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
 		{
-			if ((*focus) == Music_Settings)
+			if ((*focus) == Music_Settings && App->audio->musicVolume > 0)
 			{
 				App->audio->musicVolume -= 10;
+
 				App->audio->SetMusicVolume();
 			}
-			else
+			else if ((*focus) == FX_Settings && App->audio->sfxVolume > 0)
 			{
 				App->audio->sfxVolume -= 10;
+			
 				App->audio->SetSfxVolume();
 			}
 		}
