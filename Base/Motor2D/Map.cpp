@@ -49,45 +49,33 @@ void Map::Draw(float dt)
 	if (map_loaded == false)
 		return;
 
-	//testing image blit
-
-	/*pair <int, int> position_back_image;
-
-	
-	position_back_image = WorldToMap(App->render->camera.x, App->render->camera.y);
-
-*/
 	App->render->Blit(imagemap, -2900, 0, &rect_for_back_image, SDL_FLIP_NONE);
 
-
 	list<Tiles>::const_iterator iterator;
-
 	for (iterator = TileList.begin(); iterator != TileList.end(); ++iterator)
 	{
-
 		App->render->Blit((*iterator).texture, (*iterator).x, (*iterator).y, &(*iterator).Tile_rect, SDL_FLIP_NONE);
-	
 	}
 
 	
 
-	//testing animation uncoment to blit example
-	App->render->Blit(App->scene->spritesheet123, data.main_building.first, data.main_building.second, &idleRight123->GetCurrentFrame(dt));
-	App->render->Blit(App->scene->spritesheet123, data.main_building2.first, data.main_building2.second, &idleRight123->GetCurrentFrame(dt));
-	
-	App->render->Blit(App->scene->spritesheet123, data.main_tower.first, data.main_tower.second, &idleRight123->GetCurrentFrame(dt));
-	App->render->Blit(App->scene->spritesheet123, data.main_tower2.first, data.main_tower2.second, &idleRight123->GetCurrentFrame(dt));
+	////testing animation uncoment to blit example
+	//App->render->Blit(App->scene->spritesheet123, data.main_building.first, data.main_building.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.main_building2.first, data.main_building2.second, &idleRight123->GetCurrentFrame(dt));
+	//
+	//App->render->Blit(App->scene->spritesheet123, data.main_tower.first, data.main_tower.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.main_tower2.first, data.main_tower2.second, &idleRight123->GetCurrentFrame(dt));
 
-	App->render->Blit(App->scene->spritesheet123, data.special_skill.first, data.special_skill.second, &idleRight123->GetCurrentFrame(dt));
-	App->render->Blit(App->scene->spritesheet123, data.special_skill2.first, data.special_skill2.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.special_skill.first, data.special_skill.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.special_skill2.first, data.special_skill2.second, &idleRight123->GetCurrentFrame(dt));
 
-	App->render->Blit(App->scene->spritesheet123, data.tower.first, data.tower.second, &idleRight123->GetCurrentFrame(dt));
-	App->render->Blit(App->scene->spritesheet123, data.tower2.first, data.tower2.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.tower.first, data.tower.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.tower2.first, data.tower2.second, &idleRight123->GetCurrentFrame(dt));
 
-	App->render->Blit(App->scene->spritesheet123, data.barrack.first, data.barrack.second, &idleRight123->GetCurrentFrame(dt));
-	App->render->Blit(App->scene->spritesheet123, data.barrack2.first, data.barrack2.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.barrack.first, data.barrack.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.barrack2.first, data.barrack2.second, &idleRight123->GetCurrentFrame(dt));
 
-	App->render->Blit(App->scene->spritesheet123, data.mid_building.first, data.mid_building.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.mid_building.first, data.mid_building.second, &idleRight123->GetCurrentFrame(dt));
 	
 }
 
@@ -713,7 +701,6 @@ void Map::LoadTileList()
 		{
 			if (layer->properties.Get("Visible") == 1)
 			{
-
 				for (int y = 0; y < data.height; y++)
 				{
 					for (int x = data.width; x >= 0; x--)
@@ -738,20 +725,13 @@ void Map::LoadTileList()
 
 							TileList.push_back(Tile);
 							//}
-
 						}
 					}
 				}
-
-
-			}
-			
+			}			
 		}
-	}
-
-	
+	}	
 }
-
 
 void Map::DrawWalkability(float dt)
 {

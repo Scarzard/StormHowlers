@@ -485,8 +485,8 @@ bool Scene::Update(float dt)
 	//----
 	App->map->Draw(dt);
 
-	App->map->DrawWalkability(dt);
 	App->entitymanager->Draw(dt);
+	App->map->DrawWalkability(dt);
 
 	App->gui->Draw();	
 
@@ -622,7 +622,7 @@ void Scene::SpawnEntities()
 	//--- PLAYER 1
 	pair<int, int> pos = { 700, 550 };
 	pair<int, int> map_pos = App->map->WorldToMap(pos.first, pos.second);
-	App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, pos, App->player1->GetCollider({ 3,3 }, { map_pos.first, map_pos.second }));
+	App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, pos, App->player1->GetCollider({ 4,4 }, { map_pos.first + 4, map_pos.second + 1 }));
 
 	//App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, { 50,50 });
 	//App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, { 50,50 });
