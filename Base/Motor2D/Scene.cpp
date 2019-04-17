@@ -1050,18 +1050,22 @@ void Scene::ResetGame()
 	pausetimer = false;
 	world_seconds.Start();
 
-	App->scene->CleanUp();
-	App->entitymanager->CleanUp();
-	App->player2->CleanUp();
-	App->player1->CleanUp();
-	App->gui->CleanUp();
-	App->map->CleanUp();
-	App->font->CleanUp();
+	
+	App->entitymanager->Disable();
+	App->player2->Disable();
+	App->player1->Disable();
+	App->gui->Disable();
+	App->map->Disable();
+	App->font->Disable();
 
-	App->font->Start();
-	App->map->Start();
-	App->gui->Start();
-	App->player1->Start();
-	App->player2->Start();
-	App->scene->Start();
+	App->scene->Disable(); //Here fadetoblack
+	App->scene->Enable();
+
+	App->font->Enable();
+	App->map->Enable();
+	App->gui->Enable();
+	App->player1->Enable();
+	App->player2->Enable();
+	App->entitymanager->Enable();
+	
 }

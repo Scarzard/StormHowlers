@@ -927,21 +927,22 @@ void Player::DoLogic(UI_Element* data)
 		break;
 	case::UI_Element::Action::RESTART:
 		
-		App->scene->CleanUp();
-		App->entitymanager->CleanUp();
-		App->player2->CleanUp();
-		App->player1->CleanUp();
-		App->gui->CleanUp();
-		App->map->CleanUp();
-		App->font->CleanUp();
-		
-		App->font->Start();
-		App->map->Start();
-		App->gui->Start();
-		App->player1->Start();
-		App->player2->Start();
-		App->entitymanager->Start();
-		App->scene->Start();
+		App->entitymanager->Disable();
+		App->player2->Disable();
+		App->player1->Disable();
+		App->gui->Disable();
+		App->map->Disable();
+		App->font->Disable();
+
+		App->scene->Disable();	//Here fadetoblack
+		App->scene->Enable();
+
+		App->font->Enable();
+		App->map->Enable();
+		App->gui->Enable();
+		App->player1->Enable();
+		App->player2->Enable();
+		App->entitymanager->Enable();
 
 		break;
 	}
