@@ -289,27 +289,15 @@ bool Scene::Update(float dt)
 	}
 
 	
-
-	//else if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) //Go to main menu
-	//{
-	//	App->scenechange->SwitchScene(App->main_menu, App->scene);
-	//}
-	//else if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) //Save game state
-	//{
-	//	App->SaveGame();
-	//}
-
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
+		App->map->debug = !App->map->debug;
 		App->player1->isBuilding = !App->player1->isBuilding;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{
-		App->player2->isBuilding = !App->player2->isBuilding;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-	{
 		App->map->debug = !App->map->debug;
+		App->player2->isBuilding = !App->player2->isBuilding;
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT) //View colliders
@@ -485,8 +473,8 @@ bool Scene::Update(float dt)
 	//----
 	App->map->Draw(dt);
 
-	App->entitymanager->Draw(dt);
 	App->map->DrawWalkability(dt);
+	App->entitymanager->Draw(dt);
 
 	App->gui->Draw();	
 
@@ -834,12 +822,12 @@ void Scene::DrawLiveBar(Player* player)
 {
 	player->LiveBar.w = (348 * player->health) / player->max_health; // (maximum rect width * town hall live) / MAX town hall live
 
-	if (player->health >= player->max_health - 500)
-		App->render->DrawQuad(player->LiveBar, 0, 255, 0, 255, true, false);
+	if (player->health >= player->max_health - (player->max_health / 3))
+		App->render->DrawQuad(player->LiveBar, 0, 255, 0, 255, true, false); //green
 
-	else if (player->health >= player->max_health / 3 && player->health <= player->max_health - 500)
-		App->render->DrawQuad(player->LiveBar, 255, 150, 0, 255, true, false);
+	else if (player->health >= player->max_health / 4 && player->health <= player->max_health - (player->max_health / 3))
+		App->render->DrawQuad(player->LiveBar, 255, 150, 0, 255, true, false); //orange
 
 	else
-		App->render->DrawQuad(player->LiveBar, 255, 0, 0, 255, true, false);
+		App->render->DrawQuad(player->LiveBar, 255, 0, 0, 255, true, false); //red
 }

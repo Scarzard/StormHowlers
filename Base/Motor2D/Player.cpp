@@ -45,7 +45,6 @@ bool Player::Update(float dt)
 	}
 
 
-
 	// Button with focus changes state to HOVER 
 	if (currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
 	{
@@ -72,11 +71,9 @@ bool Player::Update(float dt)
 			UpdateFocus(currentUI);
 	}
 
-
 	if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
 	{
 		(*focus)->state = UI_Element::State::IDLE;
-
 
 		if (currentUI == CURR_BUILD)
 		{
@@ -97,8 +94,6 @@ bool Player::Update(float dt)
 			GotoPrevWindows(currentUI);
 			UpdateFocus(currentUI);
 		}
-
-
 	}
 
 	if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
@@ -124,7 +119,6 @@ bool Player::Update(float dt)
 		{
 			focus++;
 		}
-
 	}
 
 	if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false)
@@ -138,22 +132,7 @@ bool Player::Update(float dt)
 		{
 			focus--;
 		}
-
 	}
-
-
-
-
-
-	// Just to test the LiveBar
-	if (gamepad.Controller[UP] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		health -= 100;
-
-		if (health < 0)
-			health = 0;
-	}
-
 
 
 	// DEBUG PURPOSES DO NOT DELETE PLEASE

@@ -1,3 +1,6 @@
+#include "Defs.h"
+#include "Log.h"
+
 #include "EntityManager.h"
 #include "App.h"
 #include "Audio.h"
@@ -22,6 +25,8 @@
 
 #include "Brofiler\Brofiler.h"
 #include "PugiXml/src/pugixml.hpp"
+#include <cmath>
+
 
 EntityManager::EntityManager()
 {
@@ -244,21 +249,16 @@ bool EntityManager::Draw(float dt) //sprite ordering
 		//--- Draw Life Bar
 		if ((*tmp)->health <= (*tmp)->health_lv[(*tmp)->level] && (*tmp)->health >= 0)
 		{
-			SDL_Rect rect_bg;
-			rect_bg.w = 32;
-			rect_bg.h = 7;
-			rect_bg.x = (int)((*tmp)->position.first + ((*tmp)->size.first / 2) - (rect_bg.w / 2));
-			rect_bg.y = (int)((*tmp)->position.second - 10);
+			SDL_Rect rect, rect_bg;
 
-			SDL_Rect rect, rect_2;
-			rect_2.w = rect_bg.w - 2;
-			rect.w = (int)(rect_2.w * (*tmp)->health / (*tmp)->health_lv[(*tmp)->level]);
-			rect.h = rect_2.h = rect_bg.h - 2;
-			rect.x = rect_2.x = rect_bg.x + 1;
-			rect.y = rect_2.y = rect_bg.y + 1;
+			rect_bg.w = 30;
+			rect.w = rect_bg.w * (*tmp)->health / (*tmp)->health_lv[(*tmp)->level];
 
-			App->render->DrawQuad(rect_bg, 255, 255, 255, 255); //background (black)
-			App->render->DrawQuad(rect_2, 0, 255, 0, 255); //background (red)
+			rect_bg.h = rect.h = 5;
+			rect_bg.x = rect.x = (*tmp)->position.first + ((*tmp)->Current_Animation->GetCurrentFrame(dt).w / 2) - (rect_bg.w / 1.5);
+			rect_bg.y = rect.y = (*tmp)->position.second - 10;
+
+			App->render->DrawQuad(rect_bg, 255, 0, 0, 255); //background (red)
 			App->render->DrawQuad(rect, 0, 255, 0, 255); //life (green)
 		}
 
