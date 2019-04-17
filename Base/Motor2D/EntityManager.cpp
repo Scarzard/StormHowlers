@@ -239,15 +239,11 @@ bool EntityManager::Draw(float dt) //sprite ordering
 		//	App->render->Blit(entitiesTextures[(*tmp)->type], pos.first, pos.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
 
 		//}
-		if ((*tmp)->type == Entity::entityType::WALLS)
+		if ((*tmp)->type == Entity::entityType::WALLS || (*tmp)->type == Entity::entityType::TOWNHALL)
 		{
 			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 		}
 		
-		if ((*tmp)->type == Entity::entityType::TOWNHALL)
-		{
-			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
-		}
 		tmp++;
 	}
 

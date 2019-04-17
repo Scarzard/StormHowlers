@@ -146,7 +146,7 @@ bool Player::Update(float dt)
 
 
 	// Just to test the LiveBar
-	if (gamepad.Controller[UP] == KEY_DOWN)
+	if (gamepad.Controller[UP] == KEY_DOWN && Townhall!=nullptr)
 	{
 		
 		Townhall->health -= 100;
