@@ -247,7 +247,7 @@ bool EntityManager::Draw(float dt) //sprite ordering
 		App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 
 		//--- Draw Life Bar
-		if ((*tmp)->health < (*tmp)->health_lv[(*tmp)->level] && (*tmp)->health >= 0)
+		if ((*tmp)->health < (*tmp)->health_lv[(*tmp)->level] && (*tmp)->health > 0)
 		{
 			SDL_Rect rect, rect_bg;
 
