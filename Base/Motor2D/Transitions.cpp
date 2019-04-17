@@ -52,7 +52,7 @@ bool Transitions::Update(float dt)
 	}
 
 	uint now = SDL_GetTicks() - start_time;
-	float normalized = 1.0f < ((float)now / (float)total_time) ? 1.0f : ((float)now / (float)total_time);
+	float normalized = (1.0f < ((float)now / (float)total_time) ? 1.0f : ((float)now / (float)total_time));
 
 
 	switch (current_step)
@@ -76,7 +76,7 @@ bool Transitions::Update(float dt)
 		}
 		else if (scene == true)
 		{
-			if (switchtimer.ReadSec() >= fadetime)
+			if (switchtimer.ReadSec() >= fadetime && normalized == 1.0f)
 			{
 				to_disable->Disable();
 				App->gui->CleanUp();
@@ -100,6 +100,10 @@ bool Transitions::Update(float dt)
 				{
 					App->LoadGame();
 				}
+				if (main_menu == true)
+				{
+					App->main_menu->menu_background->visible = false;
+				}
 				current_step = fade_step::fade_from_black;
 			}
 		}
@@ -109,26 +113,24 @@ bool Transitions::Update(float dt)
 	{
 		normalized = 1.0f - normalized;
 
-		if (map == true || main_menu ==true)
+		if (map == true )
 		{
-			if (main_menu == true)
-			{
-				App->main_menu->menu_background->visible = false; 
-			}
-			if (now >= total_time)
+			
+			if (now >= total_time /*&& normalized == 0*/)
 			{
 				current_step = fade_step::none;
 				map = false;
-				main_menu = false;
+				
 			}
 
 		}
-		else if (scene == true)
+		else if (scene == true || main_menu == true)
 		{
-			if (switchtimer.ReadSec() >= fadetime)
+			if (switchtimer.Read() >= fadetime*2 /*&& normalized == 0*/)
 			{
 				current_step = fade_step::none;
 				scene = false;
+				main_menu = false;
 			}
 		}
 	}break;
@@ -155,6 +157,7 @@ bool Transitions::ChangeMap(int newMap, float time)
 		current_step = fade_step::fade_to_black;
 		start_time = SDL_GetTicks();
 		total_time = (Uint32)(time*0.5f*1000.0f);
+		//fadetime = time * 0.5f*10.0f / 2.0;
 		fading = true;
 		ret = true;
 	}
@@ -170,9 +173,13 @@ bool Transitions::IsChanging() const
 bool Transitions::SwitchScene(Module* SceneIn, Module* SceneOut, float time)
 {
 	bool ret = false;
-	scene = true;
 	if (SceneIn == App->scene)
 	{
+	scene = true;
+	}
+	if (SceneOut == App->main_menu)
+	{
+		main_menu = true;
 	}
 	if (current_step == fade_step::none)
 	{
@@ -182,6 +189,7 @@ bool Transitions::SwitchScene(Module* SceneIn, Module* SceneOut, float time)
 		to_disable = SceneOut;
 		start_time = SDL_GetTicks();
 		total_time = (Uint32)(time*0.5f*1000.0f);
+		//fadetime = time * 0.5f*10.0f / 2.0;
 		fading = true;
 
 		ret = true;
