@@ -157,12 +157,12 @@ public:
 
 public:
 	Animation*	Current_Animation = nullptr;
-	Animation*	building = nullptr;
-	Animation*	level1 = nullptr;
-	Animation*	level2 = nullptr;
-	Animation*	level3 = nullptr;
-	Animation*	damaged = nullptr;
-	Animation*	destroyed = nullptr;
+	Animation*	building;
+	Animation*	level1;
+	Animation*	level2;
+	Animation*	level3;
+	Animation*	damaged;
+	Animation*	destroyed;
 
 	entityType	type;
 	string		name;
@@ -205,7 +205,7 @@ public:
 			switch (type)
 			{
 			case Entity::entityType::TOWNHALL:
-				return"townhall";
+				return"Townhall";
 				break;
 			case Entity::entityType::MAIN_DEFENSE:
 				return"sentrygun";

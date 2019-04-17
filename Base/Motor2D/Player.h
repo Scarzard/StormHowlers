@@ -89,7 +89,8 @@ public:
 
 	SDL_Rect LiveBar;
 
-	
+	// Live of TOWN HALL
+	int live = 2000;
 	//index for testing previews
 	int curr = 1;
 
@@ -101,8 +102,6 @@ public:
 
 	list<Building*> buildings;
 	list<Troop*> troops;
-
-	Entity* Townhall;
 
 
 	//---
