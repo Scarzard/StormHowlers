@@ -30,6 +30,7 @@ bool Player::Start()
 	isBuilding = isDeploying = isCasting = entityAdded = false;
 	currentTile = { 13,0 };
 
+
 	preview_rects = vector<SDL_Rect>(Entity::entityType::WAR_HOUND, { 0,0,0,0 });
 
 	pugi::xml_document	config_file;
@@ -45,6 +46,7 @@ bool Player::Start()
 		config = config.next_sibling();
 	}
 
+
 	return true;
 }
 
@@ -58,6 +60,7 @@ bool Player::Update(float dt)
 		onUI = !onUI;
 	}
 
+	
 
 	// Button with focus changes state to HOVER 
 	if (currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
@@ -162,12 +165,14 @@ bool Player::Update(float dt)
 	if (gamepad.Controller[UP] == KEY_DOWN)
 	{
 
-		live -= 100;
+		
+		Townhall->health -= 100;
+
+		if (Townhall->health < 0)
+			Townhall->health = 0;
 	}
 
-	if (live < 0)
-		live = 0;
-
+  
 	// DEBUG PURPOSES DO NOT DELETE PLEASE
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 		isPreviewing = !isPreviewing;
