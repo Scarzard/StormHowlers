@@ -59,6 +59,7 @@ bool Transitions::Update(float dt)
 	{
 	case fade_step::fade_to_black:
 	{
+	
 		if (map == true)
 		{
 			if (now >= total_time) //screen->black & map->loaded
@@ -76,7 +77,7 @@ bool Transitions::Update(float dt)
 		}
 		else if (scene == true)
 		{
-			if (switchtimer.ReadSec() >= fadetime && normalized == 1.0f)
+			if (now >= total_time)
 			{
 				to_disable->Disable();
 				App->gui->CleanUp();
@@ -104,6 +105,19 @@ bool Transitions::Update(float dt)
 				{
 					App->main_menu->menu_background->visible = false;
 				}
+
+				total_time += total_time;
+				start_time = SDL_GetTicks();
+				current_step = fade_step::fade_from_black;
+				current_step = fade_step::fade_from_black;
+			}
+		}
+		else
+		{
+			if (now >= total_time)
+			{
+				total_time += total_time;
+				start_time = SDL_GetTicks();
 				current_step = fade_step::fade_from_black;
 			}
 		}
@@ -116,7 +130,7 @@ bool Transitions::Update(float dt)
 		if (map == true )
 		{
 			
-			if (now >= total_time /*&& normalized == 0*/)
+			if (now >= total_time )
 			{
 				current_step = fade_step::none;
 				map = false;
@@ -126,13 +140,22 @@ bool Transitions::Update(float dt)
 		}
 		else if (scene == true || main_menu == true)
 		{
-			if (switchtimer.Read() >= fadetime*2 /*&& normalized == 0*/)
+			if (now >= total_time)
 			{
 				current_step = fade_step::none;
 				scene = false;
 				main_menu = false;
 			}
 		}
+		else
+		{
+
+			if (now >= total_time)
+			{
+				current_step = fade_step::none;
+			}
+		}
+
 	}break;
 
 	}

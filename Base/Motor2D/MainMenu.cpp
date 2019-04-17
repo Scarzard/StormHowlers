@@ -151,8 +151,8 @@ void MainMenu::DoLogic(UI_Element* data)
 		//---- Main menu buttons
 	case::UI_Element::Action::NEW_GAME:
 		App->scenechange->ContinueGame = true;
-		App->scenechange->SwitchScene(App->scene, App->main_menu,3); //Here fadetoblack
-		//App->scenechange->ChangeMap(-1, 2);
+		App->scenechange->SwitchScene(App->scene, App->main_menu,2); //Here fadetoblack
+		
 		break;
 
 	case::UI_Element::Action::CONTINUE:
