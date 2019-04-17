@@ -19,7 +19,7 @@ class Entity
 public:
 	enum entityType
 	{
-		TOWNHALL = 1,
+		TOWNHALL,
 		MAIN_DEFENSE,
 		COMMAND_CENTER,
 		WALLS,

@@ -50,6 +50,7 @@ public:
 
 	bool Start();
 	bool Update(float dt);
+	void PreviewEntity();
 	void SpawnEntity();
 	bool PostUpdate();
 	bool CleanUp();
@@ -110,6 +111,9 @@ public:
 	list<UI_Element*>::iterator focus;
 	list<UI_Element*>::iterator last_element;
 
+
+	vector<SDL_Rect> preview_rects;
+	bool isPreviewing = false;
 
 	// --- UI --- //
 
