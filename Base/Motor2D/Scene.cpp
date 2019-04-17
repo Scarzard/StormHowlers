@@ -485,16 +485,10 @@ bool Scene::Update(float dt)
 	//----
 	App->map->Draw(dt);
 
-	App->entitymanager->Draw(dt);
 	App->map->DrawWalkability(dt);
+	App->entitymanager->Draw(dt);
 
-	App->gui->Draw();
-
-	//DRAW LIVE BARS 
-	DrawLiveBar(App->player1);
-	DrawLiveBar(App->player2);
-
-	
+	App->gui->Draw();	
 
 	return true;
 }
@@ -505,6 +499,10 @@ bool Scene::PostUpdate()
 	BROFILER_CATEGORY("Scene PostUpdate", Profiler::Color::DarkOrange);
 
 	bool ret = true;
+
+	//DRAW LIVE BARS 
+	DrawLiveBar(App->player1);
+	DrawLiveBar(App->player2);
 
 	//--- Pause
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -620,31 +618,29 @@ bool Scene::Load_level(int map)
 
 void Scene::SpawnEntities()
 {
+
 	//--- PLAYER 1
-	//App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 50,50 });
+	pair<int, int> pos = { 700, 550 };
+	pair<int, int> map_pos = App->map->WorldToMap(pos.first, pos.second);
+	App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, pos, App->player1->GetCollider({ 3,3 }, { map_pos.first, map_pos.second }));
+
 	//App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, { 50,50 });
 	//App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, { 50,50 });
 	//App->entitymanager->AddEntity(true, Entity::entityType::WALLS, { 50,50 });
 	//App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, { 50,50 });
 
+
 	//--- PLAYER 2
-	//App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, { 50,50 });
+	pos = { -1150, 1650 };
+	map_pos = App->map->WorldToMap(pos.first, pos.second);
+	App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, { 0,900 }, App->player2->GetCollider({ 7,3 }, { map_pos.first + 3, map_pos.second + 2 }));
+	
 	//App->entitymanager->AddEntity(false, Entity::entityType::MAIN_DEFENSE, { 50,50 });
 	//App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, { 50,50 });
 	//App->entitymanager->AddEntity(false, Entity::entityType::WALLS, { 50,50 });
 	//App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 5000,50 });
 	//App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 350,400 });
 
-	Collider collider;
-	collider.dimensions = { 3,3 };
-
-	pair<int, int> pos = { 1420, 30 };
-	pair<int, int> pos2 = { 0, 900 };
-	collider.tiles.push_back(pos);
-
-	App->player1->Townhall = App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, pos , collider);
-	App->player2->Townhall = App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, pos2, collider);
-	
 	//--- WALLS
 	LoadWalls();
 }
@@ -836,12 +832,14 @@ void Scene::LoadWalls()
 
 void Scene::DrawLiveBar(Player* player)
 {
-	player->LiveBar.w = (348 * player->Townhall->health) / 2000; // (maximum rect width * town hall live) / MAX town hall live
+	player->LiveBar.w = (348 * player->health) / player->max_health; // (maximum rect width * town hall live) / MAX town hall live
 
-	if (player->Townhall->health >= 1500)
+	if (player->health >= player->max_health - 500)
 		App->render->DrawQuad(player->LiveBar, 0, 255, 0, 255, true, false);
-	else if (player->Townhall->health >= 750 && player->Townhall->health <= 1500)
+
+	else if (player->health >= player->max_health / 3 && player->health <= player->max_health - 500)
 		App->render->DrawQuad(player->LiveBar, 255, 150, 0, 255, true, false);
+
 	else
 		App->render->DrawQuad(player->LiveBar, 255, 0, 0, 255, true, false);
 }

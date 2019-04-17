@@ -56,12 +56,12 @@ bool EntityManager::Start()
 		string n = GetName(Entity::entityType(i));
 		n += "_anim.png";
 
-		if (i == Entity::entityType::TANKMAN || i == Entity::entityType::DEFENSE_AOE) 
+		if (i == Entity::entityType::TANKMAN || i == Entity::entityType::DEFENSE_AOE)
 			entitiesTextures[i] = nullptr;
 		else
 			entitiesTextures[i] = App->tex->Load(PATH(folder.data(), n.data()));
 	}
-	
+
 	return ret;
 }
 
@@ -150,7 +150,7 @@ bool EntityManager::PostUpdate()
 
 
 	}
-	
+
 	return ret;
 }
 
@@ -226,7 +226,7 @@ bool EntityManager::Draw(float dt) //sprite ordering
 
 	while (tmp != entity_list.end())
 	{
-		
+
 		//if (entitiesTextures[(*tmp)->type] != nullptr) {
 
 		//	int posy = (*tmp)->position.second - (*tmp)->Current_Animation->GetCurrentFrame(dt).h;// - ((*tmp)->Current_Animation->GetCurrentFrame(dt).h - (*tmp)->position.second);
@@ -239,15 +239,33 @@ bool EntityManager::Draw(float dt) //sprite ordering
 		//	App->render->Blit(entitiesTextures[(*tmp)->type], pos.first, pos.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
 
 		//}
-		if ((*tmp)->type == Entity::entityType::WALLS || (*tmp)->type == Entity::entityType::TOWNHALL)
+		App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
+
+		//--- Draw Life Bar
+		if ((*tmp)->health <= (*tmp)->health_lv[(*tmp)->level] && (*tmp)->health >= 0)
 		{
-			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
+			SDL_Rect rect_bg;
+			rect_bg.w = 32;
+			rect_bg.h = 7;
+			rect_bg.x = (int)((*tmp)->position.first + ((*tmp)->size.first / 2) - (rect_bg.w / 2));
+			rect_bg.y = (int)((*tmp)->position.second - 10);
+
+			SDL_Rect rect, rect_2;
+			rect_2.w = rect_bg.w - 2;
+			rect.w = (int)(rect_2.w * (*tmp)->health / (*tmp)->health_lv[(*tmp)->level]);
+			rect.h = rect_2.h = rect_bg.h - 2;
+			rect.x = rect_2.x = rect_bg.x + 1;
+			rect.y = rect_2.y = rect_bg.y + 1;
+
+			App->render->DrawQuad(rect_bg, 255, 255, 255, 255); //background (black)
+			App->render->DrawQuad(rect_2, 0, 255, 0, 255); //background (red)
+			App->render->DrawQuad(rect, 0, 255, 0, 255); //life (green)
 		}
-		
+
 		tmp++;
 	}
 
-	
+
 	return ret;
 }
 
@@ -315,6 +333,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building
 			{
 				App->player1->buildings.push_back((Building*)tmp);
+				App->player1->UpdateWalkabilityMap(false, collider);
 			}
 			else if (type > Entity::entityType::BARRACKS) //if troops
 			{
@@ -329,6 +348,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS)
 			{
 				App->player2->buildings.push_back((Building*)tmp);
+				App->player2->UpdateWalkabilityMap(false, collider);
 			}
 			else if (type > Entity::entityType::BARRACKS)
 			{
@@ -340,7 +360,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		}
 	}
 
-	
+
 	return tmp;
 
 }

@@ -82,7 +82,7 @@
       </CommandCenter>
 
       <Walls>
-        <health value="100"/>
+        <health lvl1="100" lvl2="100" lvl3="100"/>
         <upgrade_cost ToLvl2="50" ToLvl3="30"/>
         <size width="1" height="1"/>
       </Walls>

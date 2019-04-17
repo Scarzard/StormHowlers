@@ -152,8 +152,8 @@ public:
 		
 	};
 
-	pair<int, int> GetSize(Entity* entity) { return entity->size; };
-	pair<int, int> GetPos(Entity* entity) { return entity->position; };
+	pair<int, int> GetSize() { return size; };
+	pair<int, int> GetPos() { return position; };
 
 public:
 	Animation*	Current_Animation = nullptr;
@@ -167,9 +167,9 @@ public:
 	entityType	type;
 	string		name;
 
-	vector<uint>	health_lv;
-	vector<uint>	damage_lv;
-	vector<uint>	upgrade_cost;
+	vector<uint> health_lv;
+	vector<uint> damage_lv;
+	vector<uint> upgrade_cost;
 
 	pair<int, int> position;
 	pair<int,int> size;
@@ -205,7 +205,7 @@ public:
 			switch (type)
 			{
 			case Entity::entityType::TOWNHALL:
-				return"townhall";
+				return"Townhall";
 				break;
 			case Entity::entityType::MAIN_DEFENSE:
 				return"sentrygun";

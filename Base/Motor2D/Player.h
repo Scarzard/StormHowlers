@@ -64,6 +64,7 @@ public:
 	UI_Element* GetUI_Element(uint data); //returns the window we are currently on
 
 	bool CheckBuildingPos();
+	Collider GetCollider(pair<int, int> dimensions, pair<int,int> topTile_pos);
 	void UpdateWalkabilityMap(bool isWalkable, Collider collider);
 	bool DeleteEntity(Entity* entity);
 
@@ -87,6 +88,7 @@ public:
 
 
 	SDL_Rect LiveBar;
+	int health, max_health;
 
 	
 	//index for testing previews
@@ -101,16 +103,11 @@ public:
 	list<Building*> buildings;
 	list<Troop*> troops;
 
-	Entity* Townhall;
-
-
 	//---
 	list<UI_Element*> UI_elements;
 
-
 	list<UI_Element*>::iterator focus;
 	list<UI_Element*>::iterator last_element;
-
 
 	// --- UI --- //
 

@@ -23,11 +23,7 @@ Townhall::Townhall(bool isPlayer1, pair<int,int> pos, Collider collider): Buildi
 	position = pos;
 	Current_Animation = building;
 
-	health = 2000;
-
-
-
-	
+	health = health_lv[level];
 }
 
 bool Townhall::Update(float dt)
@@ -46,6 +42,9 @@ bool Townhall::Update(float dt)
 	
 	if (fromPlayer1)
 	{
+		App->player1->health = health; //update health bar ui
+		App->player1->max_health = health_lv[level];
+		
 		if (health > 0) //if not destroyed
 		{
 			if (upgrade == true) //upgrade
@@ -64,6 +63,9 @@ bool Townhall::Update(float dt)
 	}
 	else if (!fromPlayer1)
 	{
+		App->player2->health = health; //update health bar ui
+		App->player2->max_health = health_lv[level];
+
 		if (health > 0) //if not destroyed
 		{
 			if (upgrade == true) //upgrade
