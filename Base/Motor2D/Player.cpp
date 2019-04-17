@@ -276,14 +276,15 @@ void Player::SpawnEntity() {
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
 		if (entityAdded){
 			if (type >= Entity::entityType::BARRACKS) {
-				troops.pop_back();
-				App->entitymanager->entity_list.pop_back();
+				if (troops.empty() == false)
+					troops.pop_back();
 
 				previewEntity = nullptr;
 			}
 			else {
-				buildings.pop_back();
-				App->entitymanager->entity_list.pop_back();
+				if (troops.empty() == false)
+					buildings.pop_back();
+
 				previewEntity = nullptr;
 			}
 		}

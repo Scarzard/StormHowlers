@@ -33,15 +33,11 @@ public:
 	string			texture_path;
 	SDL_Texture*	texture;
 
-	vector<SDL_Texture*> entitiesTextures;
-
 	list<Entity*>	entity_list;
+	vector<SDL_Texture*> entitiesTextures;
 
 	bool draw_path = false;
 	bool godmode = false;
-
-	list<wall_parts*> wall_parts_list;
-	SDL_Texture* wall_text;
 };
 
 #endif //

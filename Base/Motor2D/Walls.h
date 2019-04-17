@@ -3,27 +3,17 @@
 
 #include "Building.h"
 
-struct wall_parts
-{
-	pair <int, int> coordinates;
-	int health;
-	Animation* wall_anim;
-};
-
 class Walls : public Building
 {
 public:
 	Walls();
-	Walls(bool isPlayer1, pair<int, int> position, Collider collider);
+	Walls(bool isPlayer1, pair<int, int> position, Collider collider, Animation* current_anim);
 	~Walls();
 
-	bool LoadWalls();
 	bool Update(float dt);
 	void CleanUp();
-	void LoadAnimations(bool isPlayer1, string path);
-
-	
-	
+		
+public:
 	Animation* tower;
 	Animation* front;
 	Animation* side;
@@ -31,7 +21,6 @@ public:
 	Animation* corner_down_right;
 	Animation* corner_up_left;
 	Animation* corner_up_right;
-
 };
 
 #endif

@@ -10,13 +10,6 @@
 
 struct SDL_Texture;
 
-struct wall_coordinates
-{
-
-	pair<int, int> wall_pair;
-
-};
-
 struct Tiles
 {
 	SDL_Texture* texture;
@@ -163,8 +156,8 @@ struct MapData
 	pair<int, int> barrack2;
 	pair<int, int> mid_building;
 
-	list<wall_coordinates*> wall_list;
-	list<wall_coordinates*> wall_list2;
+	list<pair<int,int>> wall_list;
+	list<pair<int,int>> wall_list2;
 
 };
 
@@ -202,7 +195,7 @@ public:
 	void LoadTileList();
 
 	//Draw wakability
-	void DrawWakability(float dt);
+	void DrawWalkability(float dt);
 
 private:
 

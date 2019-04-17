@@ -18,6 +18,7 @@
 #include "Audio.h"
 #include "Building.h"
 #include "Troop.h"
+#include "Walls.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -97,22 +98,8 @@ bool Scene::Start()
 		//spritesheet123 = App->tex->Load("textures/Buildings.png");
 	App->map->imagemap = App->tex->Load("textures/map3.png");
 
-
-	//--------- CREATE MAIN BUILDINGS -------------// (falta cambiar posicion)
-	//--- PLAYER 1
-	/*App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 50,50 });
-	App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, { 50,50 });
-	App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, { 50,50 });
-	App->entitymanager->AddEntity(true, Entity::entityType::WALLS, { 50,50 });
-	App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, { 50,50 });
-
-	//--- PLAYER 2
-	App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, { 50,50 });
-	App->entitymanager->AddEntity(false, Entity::entityType::MAIN_DEFENSE, { 50,50 });
-	App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, { 50,50 });
-	App->entitymanager->AddEntity(false, Entity::entityType::WALLS, { 50,50 });
-	App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 5000,50 });
-	App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 350,400 });*/
+	//--- Create Main Buildings
+	SpawnEntities();
 
 	string track = App->audio->folder_music + "/Test.ogg"; 
 	App->audio->PlayMusic(track.c_str()); 
@@ -223,12 +210,12 @@ bool Scene::Start()
 
 	//-----------
 
-	pair <int, int> test;
-	Collider collider_test;
-	test.first = 0;
-	test.second = 0;
-	App->entitymanager->AddEntity(true, Entity::entityType::WALLS, test, collider_test);
-	App->entitymanager->AddEntity(false, Entity::entityType::WALLS, test, collider_test);
+	//pair <int, int> test;
+	//Collider collider_test;
+	//test.first = 0;
+	//test.second = 0;
+	//App->entitymanager->AddEntity(true, Entity::entityType::WALLS, test, collider_test);
+	//App->entitymanager->AddEntity(false, Entity::entityType::WALLS, test, collider_test);
 	SpawnEntities();
 
 	App->font->font_iterator = App->font->fonts.begin();
@@ -312,19 +299,20 @@ bool Scene::Update(float dt)
 	//{
 	//	App->SaveGame();
 	//}
-	//else if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) //Load game state
-	//{
-	//	App->LoadGame();
-	//}
-	//else if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) //Debug UI
-	//{
-	//	App->gui->UI_Debug = !App->gui->UI_Debug;
-	//}
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) //View colliders
+
+	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	{
+		App->player1->isBuilding = !App->player1->isBuilding;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	{
+		App->player2->isBuilding = !App->player2->isBuilding;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
 		App->map->debug = !App->map->debug;
-		App->entitymanager->draw_path = !App->entitymanager->draw_path;
 	}
+
 	else if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT) //View colliders
 	{
 		App->render->camera.x+=5;
@@ -337,8 +325,6 @@ bool Scene::Update(float dt)
 	{
 		App->render->zoom -= 0.01f;
 	}
-
-	
 
 	if (true) {
 
@@ -500,8 +486,8 @@ bool Scene::Update(float dt)
 	//----
 	App->map->Draw(dt);
 
-	App->map->DrawWakability(dt);
 	App->entitymanager->Draw(dt);
+	App->map->DrawWalkability(dt);
 
 	App->gui->Draw();
 
@@ -633,19 +619,25 @@ bool Scene::Load_level(int map)
 	return true;
 }
 
-void Scene::SpawnEntities() //
+void Scene::SpawnEntities()
 {
-	//App->entitymanager->DeleteEntities();
-	SpawnEnemies();
+	//--- PLAYER 1
+	//App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { 50,50 });
+	//App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, { 50,50 });
+	//App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, { 50,50 });
+	//App->entitymanager->AddEntity(true, Entity::entityType::WALLS, { 50,50 });
+	//App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, { 50,50 });
 
-	pugi::xml_document	config_file;
-	pugi::xml_node		config;
-
-	config = App->LoadConfig(config_file);
-
-	//Entity* player = App->entitymanager->AddEntity(Entity::entityType::PLAYER, { 0,0 }, { 0,0 });
-	//player->Awake(config.child(App->entitymanager->name.data()));
-	//player->Start();
+	//--- PLAYER 2
+	//App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, { 50,50 });
+	//App->entitymanager->AddEntity(false, Entity::entityType::MAIN_DEFENSE, { 50,50 });
+	//App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, { 50,50 });
+	//App->entitymanager->AddEntity(false, Entity::entityType::WALLS, { 50,50 });
+	//App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 5000,50 });
+	//App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 350,400 });
+	
+	//--- WALLS
+	LoadWalls();
 }
 
 //void Scene::changeSize(float time, int maxsize)
@@ -654,25 +646,184 @@ void Scene::SpawnEntities() //
 //}
 
 
-void Scene::SpawnEnemies() //
+void Scene::LoadWalls()
 {
-	//for (p2List_item<ObjectsGroup*>* object = App->map->data.objLayers.start; object; object = object->next)
-	//{
-	//	if (object->data->name == ("Enemies"))
-	//	{
-	//		for (p2List_item<ObjectsData*>* objectdata = object->data->objects.start; objectdata; objectdata = objectdata->next)
-	//		{
-	//		}
-	//	}
-	//	if (object->data->name == ("Collision"))
-	//	{
-	//		for (p2List_item<ObjectsData*>* objectdata = object->data->objects.start; objectdata; objectdata = objectdata->next)
-	//		{
-	//		}
-	//	}
-	//}
-}
+	// Load Animations
+	Animation* current_anim = nullptr;
+	Animation* front = nullptr;
+	Animation* side = nullptr;
+	Animation* corner_down_left = nullptr;
+	Animation* tower = nullptr;
+	Animation* corner_down_right = nullptr;
+	Animation* corner_up_left = nullptr;
+	Animation* corner_up_right = nullptr;
 
+	front = front->LoadAnimation("animation/walls.tmx", "principal_wall");
+	side = side->LoadAnimation("animation/walls.tmx", "side_wall");
+	corner_down_left = corner_down_left->LoadAnimation("animation/walls.tmx", "corner_east");
+	tower = tower->LoadAnimation("animation/walls.tmx", "small_wall");
+	corner_down_right = corner_down_right->LoadAnimation("animation/walls.tmx", "corner_north");
+	corner_up_left = corner_up_left->LoadAnimation("animation/walls.tmx", "corner_south");
+	corner_up_right = corner_up_right->LoadAnimation("animation/walls.tmx", "corner_west");
+
+	//---
+	Entity* entity;
+	Collider collider;
+	collider.dimensions = { 1,1 };
+	pair<int, int> pos;
+
+
+	//--- Player 1
+	list<pair<int, int>>::iterator item = App->map->data.wall_list.begin();
+	while (item != App->map->data.wall_list.end())
+	{
+		pos = App->map->MapToWorld((*item).first, (*item).second);
+		collider.tiles.push_back(pos);
+		bool right = false, left = false, up = false, down = false;
+
+		list<pair<int, int>>::iterator item2 = App->map->data.wall_list.begin();
+		while (item2 != App->map->data.wall_list.end())
+		{
+			if ((*item2).first - 1 == (*item).first && (*item2).second == (*item).second)
+			{
+				right = true;
+			}
+			else if ((*item2).first + 1 == (*item).first && (*item2).second == (*item).second)
+			{																			
+				left = true;															
+			}																			
+			else if ((*item2).first == (*item).first && (*item2).second - 1 == (*item).second)
+			{													
+				down = true;									
+			}													
+			else if ((*item2).first == (*item).first && (*item2).second + 1 == (*item).second)
+			{
+				up = true;
+			}
+
+			item2++;
+		}
+
+		if (down && up)
+		{
+			//side
+			current_anim = side;
+		}
+		else if (left && right)
+		{
+			//frontal
+			current_anim = front;
+		}
+		else if (down && right)
+		{
+			//corner
+			current_anim = corner_down_right;
+		}
+		else if (down && left)
+		{
+			//corner
+			current_anim = corner_down_left;
+		}
+		else if (up && left)
+		{
+			//corner
+			current_anim = corner_up_left;
+		}
+		else if (up && right)
+		{
+			//corner
+			current_anim = corner_up_right;
+		}
+		else if (up || down || left || right)
+		{
+			//only tower
+			current_anim = tower;
+		}
+
+		entity = new Walls(true, *item, collider, current_anim); //add entity
+		App->player1->buildings.push_back((Building*)entity);
+		App->entitymanager->entity_list.push_back(entity);
+
+		App->player1->UpdateWalkabilityMap(false, collider);
+
+		item++;
+	}
+
+	//--- Player 2
+	item = App->map->data.wall_list2.begin();
+	while (item != App->map->data.wall_list2.end())
+	{
+		pos = App->map->MapToWorld((*item).first, (*item).second);
+		collider.tiles.push_back(pos);
+		bool right = false, left = false, up = false, down = false;
+
+		list<pair<int, int>>::iterator item2 = App->map->data.wall_list2.begin();
+		while (item2 != App->map->data.wall_list2.end())
+		{
+			if ((*item2).first - 1 == (*item).first && (*item2).second == (*item).second)
+			{
+				right = true;
+			}
+			else if ((*item2).first + 1 == (*item).first && (*item2).second == (*item).second)
+			{
+				left = true;
+			}
+			else if ((*item2).first == (*item).first && (*item2).second - 1 == (*item).second)
+			{
+				down = true;
+			}
+			else if ((*item2).first == (*item).first && (*item2).second + 1 == (*item).second)
+			{
+				up = true;
+			}
+
+			item2++;
+		}
+
+		if (down && up)
+		{
+			//side
+			current_anim = side;
+		}
+		else if (left && right)
+		{
+			//frontal
+			current_anim = front;
+		}
+		else if (down && right)
+		{
+			//corner
+			current_anim = corner_down_right;
+		}
+		else if (down && left)
+		{
+			//corner
+			current_anim = corner_down_left;
+		}
+		else if (up && left)
+		{
+			//corner
+			current_anim = corner_up_left;
+		}
+		else if (up && right)
+		{
+			//corner
+			current_anim = corner_up_right;
+		}
+		else if (up || down || left || right)
+		{
+			//only tower
+			current_anim = tower;
+		}
+
+		entity = new Walls(false, *item, collider, current_anim); //add entity
+		App->player2->buildings.push_back((Building*)entity);
+		App->entitymanager->entity_list.push_back(entity);
+		App->player2->UpdateWalkabilityMap(false, collider);
+
+		item++;
+	}
+}
 
 void Scene::DrawLiveBar(Player* player)
 {
@@ -685,4 +836,3 @@ void Scene::DrawLiveBar(Player* player)
 	else
 		App->render->DrawQuad(player->LiveBar, 255, 0, 0, 255, true, false);
 }
-

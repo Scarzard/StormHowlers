@@ -85,8 +85,8 @@ public:
 	bool Save(pugi::xml_node& data) const;
 
 	bool Load_level(int map);
-	void SpawnEnemies();
 	void SpawnEntities();
+	void LoadWalls();
 
 	void DrawLiveBar(Player* player);
 

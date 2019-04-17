@@ -61,7 +61,6 @@ bool EntityManager::Start()
 		else
 			entitiesTextures[i] = App->tex->Load(PATH(folder.data(), n.data()));
 	}
-	//wall_text = App->tex->Load("animation/Walls_anim.png");
 	
 	return ret;
 }
@@ -160,18 +159,7 @@ bool EntityManager::CleanUp()
 	App->tex->UnLoad(texture);
 	entity_list.clear();
 
-	list<wall_parts*>::iterator item = wall_parts_list.begin();
-	while (item != wall_parts_list.end())
-	{
-		RELEASE(*item);
-		item++;
-	}
-	wall_parts_list.clear();
-
-
 	//Building::CleanUp();
-
-
 	return true;
 }
 
@@ -250,26 +238,10 @@ bool EntityManager::Draw(float dt) //sprite ordering
 		//	App->render->Blit(entitiesTextures[(*tmp)->type], pos.first, pos.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
 
 		//}
-	  	
-		
 		if ((*tmp)->type == Entity::entityType::WALLS)
 		{
-			list<wall_parts*>::iterator tmp2 = (wall_parts_list.begin());
-			while (tmp2 != wall_parts_list.end())
-			{
-				pair<int, int> pos;
-				pos.first = (*tmp2)->coordinates.first;
-				pos.second = (*tmp2)->coordinates.second;
-				pos = App->map->MapToWorld(pos.first, pos.second);
-
-				App->render->Blit(entitiesTextures[(*tmp)->type], pos.first, pos.second, &((*tmp2)->wall_anim->GetCurrentFrame(dt)));
-				tmp2++;
-			}
-
-
+			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 		}
-		
-
 		tmp++;
 	}
 
@@ -295,10 +267,6 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		tmp = new CmdCenter(isPlayer1, position, collider);
 		break;
 
-	case Entity::entityType::WALLS:
-		tmp = new Walls(isPlayer1,position, collider);
-		break;
-
 	case Entity::entityType::DEFENSE_AOE:
 		tmp = new DefenseAoe(isPlayer1, position, collider);
 		break;
@@ -314,18 +282,23 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 	case Entity::entityType::BARRACKS:
 		tmp = new Barracks(isPlayer1, position, collider);
 		break;
+
 	case Entity::entityType::SOLDIER:
 		tmp = new Soldier(isPlayer1, position, collider);
 		break;
+
 	case Entity::entityType::ENGINEER:
 		//tmp = new Engineer(isPlayer1, position, collider);
 		break;
+
 	case Entity::entityType::TANKMAN:
 		//tmp = new Tankman(isPlayer1, position, collider);
 		break;
+
 	case Entity::entityType::INFILTRATOR:
 		//tmp = new Infiltrator(isPlayer1, position, collider);
 		break;
+
 	case Entity::entityType::WAR_HOUND:
 		//tmp = new War_hound(isPlayer1, position, collider);
 		break;
@@ -345,6 +318,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			{
 				App->player1->troops.push_back((Troop*)tmp);
 			}
+
 			App->player1->collider.dimensions.first = tmp->size.first;
 			App->player1->collider.dimensions.second = tmp->size.second;
 		}
@@ -358,6 +332,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			{
 				App->player2->troops.push_back((Troop*)tmp);
 			}
+
 			App->player2->collider.dimensions.first = tmp->size.first;
 			App->player2->collider.dimensions.second = tmp->size.second;
 		}
