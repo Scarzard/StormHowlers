@@ -12,6 +12,8 @@ struct Collider
 {
 	pair<int, int> dimensions;
 	vector<pair<int, int>> tiles;
+
+	
 };
 
 class Entity
@@ -19,7 +21,7 @@ class Entity
 public:
 	enum entityType
 	{
-		TOWNHALL = 1,
+		TOWNHALL,
 		MAIN_DEFENSE,
 		COMMAND_CENTER,
 		WALLS,
@@ -42,7 +44,12 @@ public:
 		char *s_type = (type > BARRACKS) ? "troops" : "buildings";
 		name = "ERROR";
 		name = GetName(type);
-		collider = Collider;
+
+		for (int i = 0; i < Collider.tiles.size(); i++) {
+
+			collider.tiles[i].first = Collider.tiles[i].first;
+			collider.tiles[i].second = Collider.tiles[i].second;
+		}
 
 		LOG("Player %d: Loading %s",(isPlayer1)?1:2,name.data());
 
@@ -71,6 +78,9 @@ public:
 		size.first = config.child("size").attribute("width").as_int(6);
 		size.second = config.child("size").attribute("height").as_int(6);
 		
+		collider.dimensions.first = size.first;
+		collider.dimensions.second = size.second;
+
 		rate_of_fire = config.child("attack").attribute("rate").as_float(0);
 		max_targets  = config.child("attack").attribute("targets").as_int(0);
 		range		 = config.child("attack").attribute("range").as_int(0);
@@ -152,8 +162,8 @@ public:
 		
 	};
 
-	pair<int, int> GetSize() { return size; };
-	pair<int, int> GetPos() { return position; };
+	pair<int, int> GetSize(Entity* entity) { return entity->size; };
+	pair<int, int> GetPos(Entity* entity) { return entity->position; };
 
 public:
 	Animation*	Current_Animation = nullptr;
@@ -167,9 +177,9 @@ public:
 	entityType	type;
 	string		name;
 
-	vector<uint> health_lv;
-	vector<uint> damage_lv;
-	vector<uint> upgrade_cost;
+	vector<uint>	health_lv;
+	vector<uint>	damage_lv;
+	vector<uint>	upgrade_cost;
 
 	pair<int, int> position;
 	pair<int,int> size;
@@ -205,7 +215,7 @@ public:
 			switch (type)
 			{
 			case Entity::entityType::TOWNHALL:
-				return"Townhall";
+				return"townhall";
 				break;
 			case Entity::entityType::MAIN_DEFENSE:
 				return"sentrygun";

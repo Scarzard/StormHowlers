@@ -15,9 +15,9 @@ Walls::Walls()
 
 Walls::Walls(bool isPlayer1, pair<int, int> pos, Collider Collider, Animation* current_anim) : Building(entityType::WALLS, isPlayer1, pos, Collider)
 {
-	health = health_lv[level];
+	health = 100;
 	position = App->map->MapToWorld(pos.first, pos.second);
-	collider = Collider;
+	//collider = Collider;
 	Current_Animation = current_anim;
 }
 
@@ -28,23 +28,6 @@ Walls::~Walls()
 bool Walls::Update(float dt)
 {
 	BROFILER_CATEGORY("Walls Update", Profiler::Color::SandyBrown);
-
-	if (fromPlayer1)  // --- Player 1 --------------------------------
-	{
-		if (health <= 0) //destroyed
-		{
-			App->player1->UpdateWalkabilityMap(false, collider);
-			App->player1->DeleteEntity(this);
-		}
-	}
-	else if (!fromPlayer1) // --- Player 2 ---------------------------
-	{
-		if (health <= 0) //destroyed
-		{
-			App->player2->UpdateWalkabilityMap(false, collider);
-			App->player2->DeleteEntity(this);
-		}
-	}
 
 	Building::Update(dt);
 	return true;
