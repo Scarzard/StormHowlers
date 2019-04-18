@@ -20,7 +20,20 @@ Townhall::Townhall(bool isPlayer1, pair<int,int> pos, Collider collider): Buildi
 
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
-	position = pos;
+	if (isPlayer1 == true)
+	{
+		position = App->map->data.main_building2;
+	}
+	else if (isPlayer1 == false)
+	{
+		position = App->map->data.main_building;
+	}
+	else
+	{
+		position = pos;
+	}
+
+	
 	Current_Animation = building;
 
 	health = health_lv[level];
@@ -33,11 +46,15 @@ bool Townhall::Update(float dt)
 
 	// ------ This is awful ------ but works ;D
 
-	if(fromPlayer1)
-		position = { 700, 550 };
-	else
-		position = { -1150, 1650 };
-	//---------------------------------------
+	/*if (fromPlayer1 == true)
+	{
+		position = App->map->data.main_building2;
+	}
+	else 
+	{
+		position = App->map->data.main_building;
+	}*/
+	////---------------------------------------
 			
 	
 	if (fromPlayer1)
