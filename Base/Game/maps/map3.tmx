@@ -14424,10 +14424,10 @@
   <object id="31" x="1131" y="2233" width="29" height="29"/>
  </objectgroup>
  <objectgroup name="main tower">
-  <object id="35" x="1334" y="493" width="29" height="29"/>
+  <object id="35" x="1189" y="377" width="29" height="29"/>
  </objectgroup>
  <objectgroup name="special skills">
-  <object id="36" x="928" y="493" width="29" height="29"/>
+  <object id="36" x="725" y="290" width="29" height="29"/>
  </objectgroup>
  <objectgroup name="tower">
   <object id="28" x="1508" y="783" width="29" height="29"/>
@@ -14443,10 +14443,10 @@
   <object id="33" x="899" y="232" width="29" height="29"/>
  </objectgroup>
  <objectgroup name="special skills 2">
-  <object id="46" x="1334" y="2088" width="29" height="29"/>
+  <object id="46" x="1247" y="1972" width="29" height="29"/>
  </objectgroup>
  <objectgroup name="main tower 2">
-  <object id="44" x="928" y="2088" width="29" height="29"/>
+  <object id="44" x="1015" y="2088" width="29" height="29"/>
  </objectgroup>
  <objectgroup name="tower 2">
   <object id="42" x="783" y="1798" width="29" height="29"/>

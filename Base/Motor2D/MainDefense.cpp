@@ -24,6 +24,15 @@ MainDefense::MainDefense(bool isPlayer1, pair<int, int> pos, Collider collider) 
 bool MainDefense::Update(float dt)
 {
 	BROFILER_CATEGORY("Main Defense Update", Profiler::Color::SandyBrown);
+	
+	if (fromPlayer1 == true)
+	{
+		position = App->map->data.main_tower;
+	}
+	else
+	{
+		position = App->map->data.main_tower2;
+	}
 
 	if (fromPlayer1)
 	{
