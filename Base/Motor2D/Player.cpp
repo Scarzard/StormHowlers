@@ -33,7 +33,7 @@ bool Player::Start()
 
 	live = 2000;
 
-	isBuilding = isDeploying = isCasting = false;
+	isBuilding = isDeploying = isCasting = Y_pressed = false;
 	currentTile = { 13,0 };
 	
 
@@ -790,6 +790,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Settings_UI->visible = false;
 		win_screen->visible = false;
 		General_UI->visible = true;
+		
 
 		break;
 
@@ -839,6 +840,10 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = true;
 		Gold_UI->visible = false;
 		General_UI->visible = false;
+		Y_to_Main2->visible = false;
+		Y_to_Main->visible = false;
+		LB_img->visible = false;
+		RB_img->visible = false;
 		break;
 	case::Player::CURRENT_UI::ENDGAME: //Dont show the other player win screen
 		Main_UI->visible = false;
@@ -852,6 +857,10 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Gold_UI->visible = false;
 		App->scene->ui_timer->visible = false;
 		General_UI->visible = false;
+		Y_to_Main2->visible = false;
+		Y_to_Main->visible = false;
+		LB_img->visible = false;
+		RB_img->visible = false;
 		break;
 
 
