@@ -84,6 +84,16 @@ bool Scene::Start()
 
 	App->map->debug_tex = App->tex->Load("maps/meta.png");
 
+	trees_tex = App->tex->Load("animation/Trees_anim.png"); 
+	bush_rect = { 276 ,0, 92, 78 }; 
+	fit_tree =  { 184 ,0, 92, 78 };
+	wide_tree = { 92 ,0, 92, 78 };
+	tall_tree = { 0 ,0, 92, 78 };
+
+	flags_tex = App->tex->Load("animation/Flags_anim.png"); 
+	allied_flag_anim = allied_flag_anim->LoadAnimation("animation/Flags.tmx", "flag_allied");
+	soviet_flag_anim = soviet_flag_anim->LoadAnimation("animation/Flags.tmx", "flag_soviet");
+
 	App->player1->LiveBar = { 51, 18 , 348, 19 }; //LiveBar for player1
 	App->player2->LiveBar = { 1232, 921 , 348, 19 }; //LiveBar for player2
 
@@ -461,8 +471,6 @@ bool Scene::PreUpdate()
 		
 	}
 	
-
-
 	return true;
 }
 
@@ -472,8 +480,6 @@ bool Scene::Update(float dt)
 	BROFILER_CATEGORY("Scene Update", Profiler::Color::DarkOrange);
 	int x, y;
 	App->input->GetMousePosition(x, y);
-
-
 	
 	// Player 1 -> number / Player2 -> letter
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) 
@@ -761,7 +767,7 @@ bool Scene::Update(float dt)
 
 	App->map->DrawWakability(dt);
 	App->entitymanager->Draw(dt);
-
+	DrawDecorations(dt);
 	App->gui->Draw();
 
 	//DRAW LIVE BARS 
@@ -770,7 +776,7 @@ bool Scene::Update(float dt)
 		DrawLiveBar(App->player1);
 		DrawLiveBar(App->player2);
 	}
-	
+
 	return true;
 }
 
@@ -1068,4 +1074,41 @@ void Scene::ResetGame()
 	App->player2->Enable();
 	App->entitymanager->Enable();
 	
+}
+
+void Scene::DrawDecorations(float dt)
+{
+	list<decoration_coordinates*>::iterator tmp = (App->map->data.decoration_list.begin());
+
+	while (tmp != App->map->data.decoration_list.end())
+	{
+		pair<int, int> pos;
+		string n; 
+
+		pos.first = (*tmp)->position.first;
+		pos.second = (*tmp)->position.second;
+		pos = App->map->MapToWorld(pos.first, pos.second); 
+
+		n = (*tmp)->name; 
+
+		if (n == "bush")
+			App->render->Blit(trees_tex, pos.first, pos.second, &bush_rect);
+
+		if (n == "fit_tree")
+			App->render->Blit(trees_tex, pos.first, pos.second, &fit_tree);
+
+		if (n == "wide_tree")
+			App->render->Blit(trees_tex, pos.first, pos.second, &wide_tree);
+
+		if (n == "tall_tree")
+			App->render->Blit(trees_tex, pos.first, pos.second, &tall_tree);
+
+		if (n == "allied_flag")
+			App->render->Blit(flags_tex, pos.first, pos.second, &allied_flag_anim->GetCurrentFrame(dt)); 
+
+		if (n == "soviet_flag")
+			App->render->Blit(flags_tex, pos.first, pos.second, &soviet_flag_anim->GetCurrentFrame(dt));
+
+		tmp++;
+	}
 }

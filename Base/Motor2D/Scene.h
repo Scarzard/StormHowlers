@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "UI_Element.h"
 #include <stdio.h>
+#include "Animation.h"
 
 struct SDL_Texture;
 
@@ -92,6 +93,7 @@ public:
 	void Victorious(Player* player);
 	void ResetGame();
 
+	void DrawDecorations(float dt); 
 
 	//void changeSize(float time, int maxsize);
 
@@ -116,7 +118,7 @@ public:
 	string pause_soviet;
 	SDL_Texture* pause_soviet_texture = nullptr;
 
-	
+	//list<decoration_coordinates*> dec_coords_list; 
 
 	//testing animation
 	SDL_Texture* spritesheet123 = nullptr;
@@ -155,8 +157,15 @@ public:
 	string soviet_win_name;
 	SDL_Texture* soviet_win_tex = nullptr;
 
+	SDL_Texture* trees_tex = nullptr; 
+	SDL_Rect bush_rect, fit_tree, wide_tree, tall_tree; 
+
+	SDL_Texture* flags_tex = nullptr; 
+	Animation* allied_flag_anim = nullptr;
+	Animation* soviet_flag_anim = nullptr;
 
 private:
+	
 	SDL_Texture* debug_tex = nullptr;
 	SDL_Texture* cursor_tex = nullptr;
 

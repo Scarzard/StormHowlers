@@ -495,7 +495,78 @@ bool Map::LoadMap()
 				data.mid_building =MapToWorld(data.mid_building.first, data.mid_building.second);
 				
 			}
+			else if (tmp == "bush")
+			{
+				for (pugi::xml_node bushIterator = mapIterator.child("object"); bushIterator; bushIterator = bushIterator.next_sibling("object"))
+				{
+					decoration_coordinates * bush = new decoration_coordinates();
+					bush->position.first = bushIterator.attribute("x").as_int() / data.tile_height;
+					bush->position.second = bushIterator.attribute("y").as_int() / data.tile_height;
+					bush->name = tmp;
 
+					data.decoration_list.push_back(bush);
+				}
+			}
+			else if (tmp == "fit_tree")
+			{
+				for (pugi::xml_node treeIterator = mapIterator.child("object"); treeIterator; treeIterator = treeIterator.next_sibling("object"))
+				{
+					decoration_coordinates * tree = new decoration_coordinates();
+					tree->position.first = treeIterator.attribute("x").as_int() / data.tile_height;
+					tree->position.second = treeIterator.attribute("y").as_int() / data.tile_height;
+					tree->name = tmp;
+
+					data.decoration_list.push_back(tree);
+				}
+			}
+			else if (tmp == "wide_tree")
+			{
+				for (pugi::xml_node treeIterator = mapIterator.child("object"); treeIterator; treeIterator = treeIterator.next_sibling("object"))
+				{
+					decoration_coordinates * tree = new decoration_coordinates();
+					tree->position.first = treeIterator.attribute("x").as_int() / data.tile_height;
+					tree->position.second = treeIterator.attribute("y").as_int() / data.tile_height;
+					tree->name = tmp;
+
+					data.decoration_list.push_back(tree);
+				}
+			}
+			else if (tmp == "tall_tree")
+			{
+				for (pugi::xml_node treeIterator = mapIterator.child("object"); treeIterator; treeIterator = treeIterator.next_sibling("object"))
+				{
+					decoration_coordinates * tree = new decoration_coordinates();
+					tree->position.first = treeIterator.attribute("x").as_int() / data.tile_height;
+					tree->position.second = treeIterator.attribute("y").as_int() / data.tile_height;
+					tree->name = tmp;
+
+					data.decoration_list.push_back(tree);
+				}
+			}
+			else if (tmp == "allied_flag")
+			{
+				for (pugi::xml_node flagIterator = mapIterator.child("object"); flagIterator; flagIterator = flagIterator.next_sibling("object"))
+				{
+					decoration_coordinates * flag = new decoration_coordinates();
+					flag->position.first = flagIterator.attribute("x").as_int() / data.tile_height;
+					flag->position.second = flagIterator.attribute("y").as_int() / data.tile_height;
+					flag->name = tmp;
+
+					data.decoration_list.push_back(flag);
+				}
+			}
+			else if (tmp == "soviet_flag")
+				{
+				for (pugi::xml_node flagIterator = mapIterator.child("object"); flagIterator; flagIterator = flagIterator.next_sibling("object"))
+				{
+					decoration_coordinates * flag = new decoration_coordinates();
+					flag->position.first = flagIterator.attribute("x").as_int() / data.tile_height;
+					flag->position.second = flagIterator.attribute("y").as_int() / data.tile_height;
+					flag->name = tmp;
+
+					data.decoration_list.push_back(flag);
+				}
+			}
 		}
 	}
 

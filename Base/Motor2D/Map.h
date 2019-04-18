@@ -17,6 +17,13 @@ struct Tiles
 	SDL_Rect Tile_rect;
 
 };
+
+struct decoration_coordinates
+{
+	pair<int, int> position; 
+	string name; 
+};
+
 struct Properties
 {
 	struct Property
@@ -154,6 +161,8 @@ struct MapData
 	pair<int, int> barrack;
 	pair<int, int> barrack2;
 	pair<int, int> mid_building;
+
+	list<decoration_coordinates*> decoration_list;
 };
 
 // ----------------------------------------------------
