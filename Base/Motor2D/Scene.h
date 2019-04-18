@@ -4,7 +4,7 @@
 #include "Module.h"
 #include "UI_Element.h"
 #include <stdio.h>
-#include "Animation.h"
+//DO NOT INCLUDE ANIMATION.H
 
 struct SDL_Texture;
 
@@ -161,8 +161,6 @@ public:
 	SDL_Rect bush_rect, fit_tree, wide_tree, tall_tree; 
 
 	SDL_Texture* flags_tex = nullptr; 
-	Animation* allied_flag_anim = nullptr;
-	Animation* soviet_flag_anim = nullptr;
 
 private:
 	

@@ -865,3 +865,40 @@ void Map::DrawWakability(float dt)
 
 
 }
+
+void Map::DrawDecorations(float dt)
+{
+	list<decoration_coordinates*>::iterator tmp = (data.decoration_list.begin());
+
+	while (tmp != data.decoration_list.end())
+	{
+		pair<int, int> pos;
+		string n;
+
+		pos.first = (*tmp)->position.first;
+		pos.second = (*tmp)->position.second;
+		pos = App->map->MapToWorld(pos.first, pos.second);
+
+		n = (*tmp)->name;
+
+		if (n == "bush")
+			App->render->Blit(App->scene->trees_tex, pos.first, pos.second, &App->scene->bush_rect);
+
+		else if (n == "fit_tree")
+			App->render->Blit(App->scene->trees_tex, pos.first, pos.second, &App->scene->fit_tree);
+
+		else if (n == "wide_tree")
+			App->render->Blit(App->scene->trees_tex, pos.first, pos.second, &App->scene->wide_tree);
+
+		else if (n == "tall_tree")
+			App->render->Blit(App->scene->trees_tex, pos.first, pos.second, &App->scene->tall_tree);
+
+		else if (n == "allied_flag")
+			App->render->Blit(App->scene->flags_tex, pos.first, pos.second, &allied_flag_anim->GetCurrentFrame(dt));
+
+		else if (n == "soviet_flag")
+			App->render->Blit(App->scene->flags_tex, pos.first, pos.second, &soviet_flag_anim->GetCurrentFrame(dt));
+
+		tmp++;
+	}
+}

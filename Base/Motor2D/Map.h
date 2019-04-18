@@ -201,6 +201,10 @@ public:
 	//Draw wakability
 	void DrawWakability(float dt);
 
+	void DrawDecorations(float dt);
+	Animation* allied_flag_anim = nullptr;
+	Animation* soviet_flag_anim = nullptr;
+
 private:
 
 	bool LoadMap();
@@ -214,7 +218,6 @@ private:
 
 	//testing animation
 	Animation* idleRight123 = nullptr;
-	
 
 	//map framerate
 	list<Tiles>		TileList;
