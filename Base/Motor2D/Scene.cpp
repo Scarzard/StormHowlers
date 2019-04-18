@@ -156,14 +156,33 @@ bool Scene::Start()
 	App->player1->Mines_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { 274, 55 }, { 85,81 }, App->player1->Build_UI, false);
 	App->player1->Barracks_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { 375, 55 }, { 85, 81 }, App->player1->Build_UI, false);
 
+	// DEPLOY TROOPS UI ------------------
+
 	App->player1->Deploy_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player1->Deploy_UI->rect = { 569, 411, 566, 163 };
-	App->player1->Soldier_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_SOLDIER, { 68, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
-	App->player1->Tankman_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_TANKMAN, { 171, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
-	App->player1->Engineer_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_ENGINEER, { 274, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
-	App->player1->War_hound_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { 377, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
-	App->player1->Infiltrator_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { 480, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
 
+	App->player1->Soldier_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_SOLDIER, { 68, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
+	App->player1->Soldier_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player1->Soldier_icon, false, { false, false });
+	App->player1->Soldier_text->label = App->player1->soldier_label;
+	
+	App->player1->Tankman_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_TANKMAN, { 171, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
+	App->player1->Tankman_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player1->Tankman_icon, false, { false, false });
+	App->player1->Tankman_text->label = App->player1->tankman_label;
+
+	App->player1->Engineer_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_ENGINEER, { 274, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
+	App->player1->Engineer_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player1->Engineer_icon, false, { false, false });
+	App->player1->Engineer_text->label = App->player1->engineer_label;
+
+	App->player1->Infiltrator_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { 377, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
+	App->player1->Infiltrator_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player1->Infiltrator_icon, false, { false, false });
+	App->player1->Infiltrator_text->label = App->player1->infiltrator_label;
+
+	App->player1->War_hound_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { 480, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
+	App->player1->War_hound_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 2 , 2 }, { 0, 0 }, App->player1->War_hound_icon, false, { false, false }); 
+	App->player1->War_hound_text->label = App->player1->war_hound_label;
+
+	
+	//------------------------------
 
 	App->player1->Cast_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player1->Cast_UI->rect = { 0, 573, 566, 163 };
@@ -216,6 +235,36 @@ bool Scene::Start()
 	App->player1->Level_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 237 , 60 }, { 0, 0 }, App->player1->Repair_icon, false, { false, false });
 	App->player1->Level_text->label = App->player1->level_label;
 	App->player1->Level_text->color = { 255, 255, 255, 255 };
+
+	//-------- CREATE TROOPS MENU ------------
+
+	App->player1->Create_Troops_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
+	App->player1->Create_Troops_UI->rect = { 0, 739, 566, 163 };
+
+	App->player1->accept_button= App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 470 , 60 }, { 80, 31 }, App->player1->Create_Troops_UI, false);
+	App->player1->accept_button->rect = { 1277, 248, 80, 31 };
+
+	App->player1->cancel_button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 470 , 100 }, { 80, 31 }, App->player1->Create_Troops_UI, false);
+	App->player1->cancel_button->rect = { 1194, 250, 81, 29 };
+
+	App->player1->plus = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 390 , 50 }, { 51, 40 }, App->player1->Create_Troops_UI, false);
+	App->player1->plus->rect = { 1444, 254, 51, 40 };
+
+	App->player1->minus = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 270 , 50 }, { 51, 40 }, App->player1->Create_Troops_UI, false);
+	App->player1->minus->rect = { 1379, 254, 52, 40 };
+
+	App->player1->left_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 65 , 75 }, { 40, 40 }, App->player1->Create_Troops_UI, false);
+	App->player1->left_img->rect = { 1397, 311, 40, 40 };
+
+	App->player1->right_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 220 , 75 }, { 40, 40 }, App->player1->Create_Troops_UI, false);
+	App->player1->right_img->rect = { 1437, 311, 40, 40 };
+
+	App->player1->troop_icon = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 120 , 55 }, { 85, 81 }, App->player1->Create_Troops_UI, false);
+	App->player1->troop_icon->rect = { 662, 0, 85, 81 };
+
+	App->player1->num_troops_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 350, 65 }, { 0, 0 }, App->player1->Create_Troops_UI, false, { false, false });
+	App->player1->num_troops_text->label = App->player1->num_troops_label;
+	App->player1->num_troops_text->color = { 255, 255, 255,255 };
 
 
 	//---- GOLD ----- 
@@ -322,13 +371,32 @@ bool Scene::Start()
 	App->player2->Mines_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { 274, 55 }, { 85,81 }, App->player2->Build_UI, false);
 	App->player2->Barracks_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { 375, 55 }, { 85, 81 }, App->player2->Build_UI, false);
 
+	// DEPLOY TROOPS UI ------------------
+
 	App->player2->Deploy_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
 	App->player2->Deploy_UI->rect = { 569, 411, 566, 163 };
+
 	App->player2->Soldier_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_SOLDIER, { 68, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
+	App->player2->Soldier_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player2->Soldier_icon, false, { false, false });
+	App->player2->Soldier_text->label = App->player2->soldier_label;
+
 	App->player2->Tankman_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_TANKMAN, { 171, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
+	App->player2->Tankman_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player2->Tankman_icon, false, { false, false });
+	App->player2->Tankman_text->label = App->player2->tankman_label;
+
 	App->player2->Engineer_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_ENGINEER, { 274, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
-	App->player2->War_hound_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { 377, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
-	App->player2->Infiltrator_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { 480, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
+	App->player2->Engineer_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player2->Engineer_icon, false, { false, false });
+	App->player2->Engineer_text->label = App->player2->engineer_label;
+
+	App->player2->Infiltrator_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { 377, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
+	App->player2->Infiltrator_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player2->Infiltrator_icon, false, { false, false });
+	App->player2->Infiltrator_text->label = App->player2->infiltrator_label;
+
+	App->player2->War_hound_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { 480, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
+	App->player2->War_hound_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 2 , 2 }, { 0, 0 }, App->player2->War_hound_icon, false, { false, false });
+	App->player2->War_hound_text->label = App->player2->war_hound_label;
+
+	//-----------------------------------------
 
 	App->player2->Cast_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
 	App->player2->Cast_UI->rect = { 0, 573, 566, 163 };
@@ -374,6 +442,36 @@ bool Scene::Start()
 	App->player2->Level_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 237 , 60 }, { 0, 0 }, App->player2->Repair_icon, false, { false, false });
 	App->player2->Level_text->label = App->player2->level_label;
 	App->player2->Level_text->color = { 255, 255, 255, 255 };
+
+	//-------- CREATE TROOPS MENU ------------
+
+	App->player2->Create_Troops_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
+	App->player2->Create_Troops_UI->rect = { 0, 739, 566, 163 };
+
+	App->player2->accept_button = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 470 , 60 }, { 80, 31 }, App->player2->Create_Troops_UI, false);
+	App->player2->accept_button->rect = { 1277, 248, 80, 31 };
+
+	App->player2->cancel_button = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 470 , 100 }, { 80, 31 }, App->player2->Create_Troops_UI, false);
+	App->player2->cancel_button->rect = { 1194, 250, 81, 29 };
+
+	App->player2->plus = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 390 , 50 }, { 51, 40 }, App->player2->Create_Troops_UI, false);
+	App->player2->plus->rect = { 1444, 254, 51, 40 };
+
+	App->player2->minus = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 270 , 50 }, { 51, 40 }, App->player2->Create_Troops_UI, false);
+	App->player2->minus->rect = { 1379, 254, 52, 40 };
+
+	App->player2->left_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 65 , 75 }, { 40, 40 }, App->player2->Create_Troops_UI, false);
+	App->player2->left_img->rect = { 1397, 311, 40, 40 };
+
+	App->player2->right_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 220 , 75 }, { 40, 40 }, App->player2->Create_Troops_UI, false);
+	App->player2->right_img->rect = { 1437, 311, 40, 40 };
+
+	App->player2->troop_icon = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 120 , 55 }, { 85, 81 }, App->player2->Create_Troops_UI, false);
+	App->player2->troop_icon->rect = { 662, 0, 85, 81 };
+
+	App->player2->num_troops_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 350, 65 }, { 0, 0 }, App->player2->Create_Troops_UI, false, { false, false });
+	App->player2->num_troops_text->label = App->player2->num_troops_label;
+	App->player2->num_troops_text->color = { 255, 255, 255,255 };
 
 	// ------- GOLD
 
@@ -920,6 +1018,81 @@ bool Scene::PostUpdate()
 			sprintf_s(App->player1->FX_Slider_label, "%u", App->audio->sfxVolume);
 			(*item)->label = App->player1->FX_Slider_label;
 		}
+		else if ((*item) == App->player1->num_troops_text) //CREATING TROOPS: number of troops
+		{
+			sprintf_s(App->player1->num_troops_label, "%i", App->player1->number_of_troops);
+			(*item)->label = App->player1->num_troops_label;
+		}
+		else if ((*item) == App->player1->Soldier_text) //NUMBER OF SOLDIERS
+		{
+			sprintf_s(App->player1->soldier_label, "%i", App->player1->SoldiersCreated);
+			
+
+			if (App->player1->SoldiersCreated > 0)
+			{
+				(*item)->color = {0, 0, 0 , 255}; //BLACK
+			}
+			else
+			{
+				(*item)->color = { 255 , 0, 0 , 255 }; //RED
+			}
+		}
+		else if ((*item) == App->player1->Tankman_text) //NUMBER OF TANKMANS
+		{
+			sprintf_s(App->player1->tankman_label, "%i", App->player1->TankmansCreated);
+			
+
+			if (App->player1->TankmansCreated > 0)
+			{
+				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
+			}
+			else
+			{
+				(*item)->color = { 255 , 0, 0 , 255 }; //RED
+			}
+		}
+		else if ((*item) == App->player1->Infiltrator_text) //NUMBER OF INFILTRATORS
+		{
+			sprintf_s(App->player1->infiltrator_label, "%i", App->player1->InfiltratorsCreated);
+
+
+			if (App->player1->InfiltratorsCreated > 0)
+			{
+				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
+			}
+			else
+			{
+				(*item)->color = { 255 , 0, 0 , 255 }; //RED
+			}
+		}
+		else if ((*item) == App->player1->Engineer_text) //NUMBER OF ENGINEERS
+		{
+			sprintf_s(App->player1->engineer_label, "%i", App->player1->EngineersCreated);
+
+
+			if (App->player1->EngineersCreated > 0)
+			{
+				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
+			}
+			else
+			{
+				(*item)->color = { 255 , 0, 0 , 255 }; //RED
+			}
+		}
+		else if ((*item) == App->player1->War_hound_text) //NUMBER OF WAR_HOUNDS
+		{
+			sprintf_s(App->player1->war_hound_label, "%i", App->player1->WarHoundsCreated);
+
+
+			if (App->player1->WarHoundsCreated > 0)
+			{
+				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
+			}
+			else
+			{
+				(*item)->color = { 255 , 0, 0 , 255 }; //RED
+			}
+		}
 		else if ((*item) == App->player1->Music_Slider_Button) //MUSIC SLIDER POS
 		{
 			App->player1->Music_Slider_Button->position.first = (550 * App->audio->musicVolume) / 100;
@@ -952,6 +1125,81 @@ bool Scene::PostUpdate()
 		{
 			sprintf_s(App->player2->FX_Slider_label, "%u", App->audio->sfxVolume);
 			(*item)->label = App->player2->FX_Slider_label;
+		}
+		else if ((*item) == App->player2->num_troops_text) //CREATING TROOPS: number of troops
+		{
+			sprintf_s(App->player2->num_troops_label, "%i", App->player2->number_of_troops);
+			(*item)->label = App->player2->num_troops_label;
+		}
+		else if ((*item) == App->player2->Soldier_text) //NUMBER OF SOLDIERS
+		{
+			sprintf_s(App->player2->soldier_label, "%i", App->player2->SoldiersCreated);
+
+
+			if (App->player2->SoldiersCreated > 0)
+			{
+				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
+			}
+			else
+			{
+				(*item)->color = { 255 , 0, 0 , 255 }; //RED
+			}
+		}
+		else if ((*item) == App->player2->Tankman_text) //NUMBER OF TANKMANS
+		{
+			sprintf_s(App->player2->tankman_label, "%i", App->player2->TankmansCreated);
+
+
+			if (App->player2->TankmansCreated > 0)
+			{
+				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
+			}
+			else
+			{
+				(*item)->color = { 255 , 0, 0 , 255 }; //RED
+			}
+		}
+		else if ((*item) == App->player2->Infiltrator_text) //NUMBER OF INFILTRATORS
+		{
+			sprintf_s(App->player2->infiltrator_label, "%i", App->player2->InfiltratorsCreated);
+
+
+			if (App->player2->InfiltratorsCreated > 0)
+			{
+				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
+			}
+			else
+			{
+				(*item)->color = { 255 , 0, 0 , 255 }; //RED
+			}
+		}
+		else if ((*item) == App->player2->Engineer_text) //NUMBER OF ENGINEERS
+		{
+			sprintf_s(App->player2->engineer_label, "%i", App->player2->EngineersCreated);
+
+
+			if (App->player2->EngineersCreated > 0)
+			{
+				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
+			}
+			else
+			{
+				(*item)->color = { 255 , 0, 0 , 255 }; //RED
+			}
+		}
+		else if ((*item) == App->player2->War_hound_text) //NUMBER OF WAR_HOUNDS
+		{
+			sprintf_s(App->player2->war_hound_label, "%i", App->player2->WarHoundsCreated);
+
+
+			if (App->player2->WarHoundsCreated > 0)
+			{
+				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
+			}
+			else
+			{
+				(*item)->color = { 255 , 0, 0 , 255 }; //RED
+			}
 		}
 		else if ((*item) == App->player2->Music_Slider_Button) //MUSIC SLIDER POS
 		{
