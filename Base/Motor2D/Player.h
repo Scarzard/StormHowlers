@@ -129,6 +129,12 @@ public:
 	
 	UI_Element* Gold_UI = nullptr;
 
+	UI_Element* Y_to_Main = nullptr;
+	UI_Element* Y_to_Main2 = nullptr;
+	UI_Element* RB_img = nullptr;
+	UI_Element* LB_img = nullptr;
+	bool Y_pressed = false;
+
 	UI_Element* Main_UI = nullptr;
 	UI_Element* Build_icon = nullptr;
 	UI_Element* Deploy_icon = nullptr;
@@ -156,11 +162,16 @@ public:
 	UI_Element* General_UI = nullptr;
 	UI_Element* Upgrade_icon = nullptr;
 	UI_Element* Repair_icon = nullptr;
-	UI_Element* Name_text = nullptr;
-	UI_Element* Level_text = nullptr;
-	UI_Element* Health_text = nullptr;
 	UI_Element* UpgradeCost_text = nullptr;
+	char upgrade_cost_label[10] = " - 0000 $";
 	UI_Element* RepairCost_text = nullptr;
+	char repair_cost_label[10] = " - 0000 $";
+	UI_Element* Name_text = nullptr;
+	char name_label[10] = "Name:  ";
+	UI_Element* Level_text = nullptr;
+	char level_label[10] = "Lvl:  ";
+	UI_Element* Health_text = nullptr;
+	char health_label[10] = "HP:  ";
 	UI_Element* Damage_text = nullptr; //only for defense buildings
 	UI_Element* Prod_text = nullptr; //only for townhall & mines
 	UI_Element* Capacity_text = nullptr; //only for barracks

@@ -97,6 +97,14 @@ bool Player::Update(float dt)
 
 		}
 
+		// --TEST-- GENERAL UI (menu of selected building)
+		if (gamepad.Controller[BACK] == KEY_DOWN && currentUI == CURRENT_UI::NONE && App->scene->active)
+		{
+			currentUI = CURRENT_UI::CURR_GENERAL;
+			UpdateVisibility();
+			UpdateFocus(currentUI);
+		}
+
 		// Button A to clcik a button
 		if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
 		{
@@ -104,7 +112,8 @@ bool Player::Update(float dt)
 				(*focus)->state = UI_Element::State::LOGIC;
 		}
 
-		if (!App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
+		// Do button action
+		if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
 		{
 			if (App->scene->pause && isPaused == true)
 			{
@@ -127,7 +136,7 @@ bool Player::Update(float dt)
 
 		}
 
-
+		// Go back
 		if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
 		{
 			(*focus)->state = UI_Element::State::IDLE;
@@ -174,16 +183,38 @@ bool Player::Update(float dt)
 			}
 		}
 
-		if (!App->scene->endgame && gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
+		// Enter to UI ingame Menus
+		if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
 		{
 			if (App->scene->active)
 				currentUI = CURRENT_UI::CURR_MAIN;
 
+			Y_pressed = true;
+
 			UpdateFocus(currentUI);
 		}
 
+		//Change the side images from the menus
+		if (App->scene->active)
+		{
+			if (Y_pressed == false)
+			{
+				Y_to_Main->visible = true;
+				Y_to_Main2->visible = true;
+				RB_img->visible = false;
+				LB_img->visible = false;
+			}
+			else if (Y_pressed == true)
+			{
+				Y_to_Main->visible = false;
+				Y_to_Main2->visible = false;
+				RB_img->visible = true;
+				LB_img->visible = true;
+			}
+		}
+		
 
-
+		// Travel through the different buttons
 		if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			(*focus)->state = UI_Element::State::IDLE;
@@ -199,7 +230,7 @@ bool Player::Update(float dt)
 			}
 
 		}
-
+		// Travel through the different buttons
 		if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			(*focus)->state = UI_Element::State::IDLE;
@@ -214,6 +245,7 @@ bool Player::Update(float dt)
 
 		}
 
+		//Travel through buttons with DPAD in pause and mainmenu
 		if (App->main_menu->active || App->scene->pause)
 		{
 			if (gamepad.Controller[UP] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
@@ -247,6 +279,7 @@ bool Player::Update(float dt)
 			}
 		}
 
+		// Increase or decrease volume
 		if (gamepad.Controller[RIGHT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
 		{
 			if ((*focus) == Music_Settings && App->audio->musicVolume < 100)
@@ -557,6 +590,12 @@ void Player::UpdateFocus(uint data)
 		last_element--;
 		break;
 
+	case::Player::CURRENT_UI::CURR_GENERAL:
+		focus = General_UI->children.begin();
+		last_element = General_UI->children.end();
+		last_element--;
+		break;
+
 	case::Player::CURRENT_UI::CURR_BUILD:
 		focus = Build_UI->children.begin();
 		last_element = Build_UI->children.end();
@@ -603,6 +642,7 @@ void Player::GotoPrevWindows(uint data)
 	{
 	case Player::CURRENT_UI::CURR_MAIN :
 		currentUI = CURRENT_UI::NONE;
+		Y_pressed = false;
 		UpdateVisibility();
 		break;
 
@@ -671,6 +711,9 @@ UI_Element* Player::GetUI_Element(uint data)
 	case::Player::CURRENT_UI::CURR_PAUSE_ABORT:
 		return Abort_UI;
 
+	case::Player::CURRENT_UI::CURR_GENERAL:
+		return General_UI;
+
 	}
 }
 
@@ -687,7 +730,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Abort_UI->visible = false;
 		Settings_UI->visible = false;
 		win_screen->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
 		break;
 	case::Player::CURRENT_UI::CURR_MAIN:
 		Main_UI->visible = true;
@@ -698,7 +741,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Settings_UI->visible = false;
 		Abort_UI->visible = false;
 		win_screen->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_BUILD:
@@ -710,7 +753,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Settings_UI->visible = false;
 		Abort_UI->visible = false;
 		win_screen->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_DEPLOY:
@@ -722,7 +765,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Settings_UI->visible = false;
 		Abort_UI->visible = false;
 		win_screen->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_CAST:
@@ -734,15 +777,19 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Settings_UI->visible = false;
 		Abort_UI->visible = false;
 		win_screen->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_GENERAL:
-		//Main_UI->visible = false;
-		//Build_UI->visible = false;
-		//Deploy_UI->visible = false;
-		//Cast_UI->visible = false;
-		//General_UI->visible = true;
+		Main_UI->visible = false;
+		Build_UI->visible = false;
+		Deploy_UI->visible = false;
+		Cast_UI->visible = false;
+		Pause_UI->visible = false;
+		Abort_UI->visible = false;
+		Settings_UI->visible = false;
+		win_screen->visible = false;
+		General_UI->visible = true;
 
 		break;
 
@@ -755,7 +802,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Settings_UI->visible = false;
 		Abort_UI->visible = false;
 		win_screen->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_PAUSE_SETTINGS:
@@ -767,7 +814,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Settings_UI->visible = true;
 		Abort_UI->visible = false;
 		win_screen->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_PAUSE_ABORT:
@@ -779,7 +826,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Settings_UI->visible = false;
 		Abort_UI->visible = true;
 		win_screen->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
 		break;
 	case::Player::CURRENT_UI::CURR_WIN_SCREEN:
 		Main_UI->visible = false;
@@ -791,9 +838,9 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Abort_UI->visible = false;
 		win_screen->visible = true;
 		Gold_UI->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
 		break;
-	case::Player::CURRENT_UI::ENDGAME:
+	case::Player::CURRENT_UI::ENDGAME: //Dont show the other player win screen
 		Main_UI->visible = false;
 		Build_UI->visible = false;
 		Deploy_UI->visible = false;
@@ -804,7 +851,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		Gold_UI->visible = false;
 		App->scene->ui_timer->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
 		break;
 
 
