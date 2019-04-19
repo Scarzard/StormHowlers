@@ -331,6 +331,21 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 				data->rect = { 162, 81, 75, 79 }; //BLUE
 			break;
 
+			// General UI buttons
+		case UI_Element::Action::ACT_UPGRADE:
+			if (App->player1->Upgrade_icon == data)
+				data->rect = { 1077, 202, 62,36 }; // RED
+			else
+				data->rect = { 1077, 166, 62,36 }; //BLUE
+			break;
+
+		case UI_Element::Action::ACT_REPAIR:
+			if (App->player1->Repair_icon == data)
+				data->rect = { 1013, 202, 62, 36 }; // RED
+			else
+				data->rect = { 1013, 166, 62, 36 }; //BLUE
+			break;
+
 
 			//--------- Building buttons
 		case UI_Element::Action::ACT_BUILD_AOE: //POWER PLANT
@@ -457,6 +472,21 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 				data->rect = { 396, 81, 80, 79 };
 			break;
 
+			// General UI buttons
+		case UI_Element::Action::ACT_UPGRADE:
+			if (App->player1->Upgrade_icon == data)
+				data->rect = { 1205, 202, 62,36 }; // RED
+			else
+				data->rect = { 1205, 166, 62,36 }; //BLUE
+			break;
+
+		case UI_Element::Action::ACT_REPAIR:
+			if (App->player1->Repair_icon == data)
+				data->rect = { 1141, 202, 62, 36 }; // RED
+			else
+				data->rect = { 1141, 166, 62, 36 }; //BLUE
+			break;
+
 			//--------- Building buttons
 		case UI_Element::Action::ACT_BUILD_AOE: //POWER PLANT
 			data->rect = { 1671, 81, 85, 81 };
@@ -572,6 +602,15 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			data->rect = { 396, 163, 79, 80 };
 			break;
 
+			// General UI buttons
+		case UI_Element::Action::ACT_UPGRADE:
+			data->rect = { 1334, 166, 62, 36 };
+			break;
+		case UI_Element::Action::ACT_REPAIR:
+			data->rect = { 1270, 166, 62, 36 };
+			break;
+
+
 			//--------- Building buttons
 		case UI_Element::Action::ACT_BUILD_AOE: //POWER PLANT
 			data->rect = { 746, 81, 85, 81 };
@@ -683,6 +722,14 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 
 		case UI_Element::Action::ACT_GOTO_CAST:
 			data->rect = { 162, 163, 75, 80 };
+			break;
+
+			// General UI buttons
+		case UI_Element::Action::ACT_UPGRADE:
+			data->rect = { 1334, 202, 62, 36 };
+			break;
+		case UI_Element::Action::ACT_REPAIR:
+			data->rect = { 1270, 202, 62, 36 };
 			break;
 
 			//--------- Building buttons
