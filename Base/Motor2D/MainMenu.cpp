@@ -47,20 +47,23 @@ bool MainMenu::Start()
 	App->render->zoom = 1;
 
 	new_game_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 1273, 432 }, { 371, 87 }, menu_background, true);
-	new_game_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 22 }, { 0, 0 }, new_game_button, true, { false, false });
+	new_game_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, new_game_button, true, { false, false });
 	new_game_text->label = new_game_label;
-	new_game_text->color = { 255,255,9,255 };
+	new_game_text->color = { 255, 255, 9, 255 };
 
-	//exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 519 }, { 371, 87 }, menu_background, true);
-	//exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 616 }, { 371, 87 }, menu_background, true);
 	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 706 }, { 371, 87 }, menu_background, true);
-	exit_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 1273, 432 }, { 371, 87 }, new_game_button, true);
-	
+	exit_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0,0 }, exit_button, true, { false, false });
+	exit_text->label = exit_label;
+	exit_text->color = { 255, 255, 9, 255 };
+
 
 	//ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 800 ,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
 
 	App->player1->currentUI = Player::CURRENT_UI::CURR_MAIN_MENU;
 	App->player1->UpdateFocus(App->player1->currentUI);
+
+	string track = App->audio->folder_music + "/MainMenuSong.ogg";
+	App->audio->PlayMusic(track.c_str());
 
 	return true;
 }
