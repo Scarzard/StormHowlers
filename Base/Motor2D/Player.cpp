@@ -13,6 +13,7 @@
 #include "Fonts.h"
 #include "Audio.h"
 #include "Scene.h"
+#include "Transitions.h"
 
 
 #include "Brofiler\Brofiler.h"
@@ -1089,6 +1090,7 @@ void Player::DoLogic(UI_Element* data)
 		App->map->Disable();
 		App->font->Disable();
 
+		App->scenechange->ChangeMap(-1, 2);
 		App->scene->Disable();	//Here fadetoblack
 		App->scene->Enable();
 

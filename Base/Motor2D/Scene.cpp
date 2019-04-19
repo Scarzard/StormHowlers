@@ -1420,6 +1420,7 @@ void Scene::ResetGame()
 	App->map->Disable();
 	App->font->Disable();
 
+	App->scenechange->ChangeMap(-1, 2);
 	App->scene->Disable(); //Here fadetoblack
 	App->scene->Enable();
 

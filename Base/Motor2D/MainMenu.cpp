@@ -89,7 +89,7 @@ bool MainMenu::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		App->scenechange->ContinueGame = true;
-		App->scenechange->SwitchScene(App->scene, App->main_menu);
+		App->scenechange->SwitchScene(App->scene, App->main_menu,2);
 		menu_background->visible = false;
 	}
 
@@ -132,6 +132,8 @@ bool MainMenu::CleanUp()
 	//}
 	//App->player1->UI_elements.clear();
 
+	/**/
+
 	return true;
 }
 
@@ -152,8 +154,8 @@ void MainMenu::DoLogic(UI_Element* data)
 		//---- Main menu buttons
 	case::UI_Element::Action::NEW_GAME:
 		App->scenechange->ContinueGame = true;
-		App->scenechange->SwitchScene(App->scene, App->main_menu); //Here fadetoblack
-		menu_background->visible = false;
+		App->scenechange->SwitchScene(App->scene, App->main_menu,2); //Here fadetoblack
+		
 		break;
 
 	case::UI_Element::Action::CONTINUE:
