@@ -608,23 +608,35 @@ void Scene::SpawnEntities()
 {
 
 	//--- PLAYER 1
-	pair<int, int> pos = { 700, 550 };
-	pair<int, int> map_pos = App->map->WorldToMap(pos.first, pos.second);
-	App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, pos, App->player1->GetCollider({ 4,4 }, { map_pos.first + 4, map_pos.second + 1 }));
+	
 
-	//App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, { 50,50 });
-	//App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, { 50,50 });
+	pair<int, int> map_pos = App->map->WorldToMap(App->map->data.main_building2.first , App->map->data.main_building2.second);
+	App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, App->map->data.main_building2, App->player1->GetCollider({ 4,4 }, { map_pos.first + 4, map_pos.second + 1 }));
+
+	
+	map_pos = App->map->WorldToMap(App->map->data.special_skill.first, App->map->data.special_skill.second);
+	App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill, App->player1->GetCollider({ 4,3 }, { map_pos.first + 6, map_pos.second + 5 }));
+
+	map_pos = App->map->WorldToMap(App->map->data.main_tower.first, App->map->data.main_tower.second);
+	App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower, App->player1->GetCollider({ 2,2 }, { map_pos.first + 2, map_pos.second + 2}));
+
 	//App->entitymanager->AddEntity(true, Entity::entityType::WALLS, { 50,50 });
-	//App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, { 50,50 });
+	//App->entitymanager->AddEntity(true, Entity::entityType::main_defense, { 50,50 });
 
 
 	//--- PLAYER 2
-	pos = { -1150, 1650 };
-	map_pos = App->map->WorldToMap(pos.first, pos.second);
-	App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, { 0,900 }, App->player2->GetCollider({ 7,3 }, { map_pos.first + 3, map_pos.second + 2 }));
 	
+
+	map_pos = App->map->WorldToMap(App->map->data.main_building.first, App->map->data.main_building.second);
+	App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, App->map->data.main_building, App->player2->GetCollider({ 7,3 }, { map_pos.first + 3, map_pos.second + 2 }));
+	
+	map_pos = App->map->WorldToMap(App->map->data.special_skill2.first, App->map->data.special_skill2.second);
+	App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill2, App->player2->GetCollider({ 4,3 }, { map_pos.first + 6, map_pos.second + 5 }));
+
+	map_pos = App->map->WorldToMap(App->map->data.main_tower2.first, App->map->data.main_tower2.second);
+	App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower2, App->player2->GetCollider({ 2,2 }, { map_pos.first + 2, map_pos.second + 2 }));
+
 	//App->entitymanager->AddEntity(false, Entity::entityType::MAIN_DEFENSE, { 50,50 });
-	//App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, { 50,50 });
 	//App->entitymanager->AddEntity(false, Entity::entityType::WALLS, { 50,50 });
 	//App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 5000,50 });
 	//App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 350,400 });

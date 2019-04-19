@@ -39,6 +39,15 @@ bool CmdCenter::Update(float dt)
 {
 	BROFILER_CATEGORY("CmdCenter Update", Profiler::Color::SandyBrown);
 
+	if (fromPlayer1 == true)
+	{
+		position = App->map->data.special_skill;
+	}
+	else
+	{
+		position = App->map->data.special_skill2;
+	}
+
 	if (fromPlayer1)
 	{
 		if (health > 0) //if not destroyed
@@ -117,8 +126,8 @@ void CmdCenter::CleanUp()
 
 void CmdCenter::LoadAnimations(bool isPlayer1, string path)
 {
-	building = building->LoadAnimation(path.data(), (!isPlayer1) ? "red" : "blue");
-	level1 = level1->LoadAnimation(path.data(), (!isPlayer1) ? "red" : "blue");
+	building = building->LoadAnimation(path.data(), (isPlayer1) ? "red" : "blue");
+	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "red" : "blue");
 	//level1->PushBack(building->GetLastAnimationFrame());// level1->LoadAnimation(&path[0], (!isPlayer1) ? "red" : "blue");
 	level1->speed = 3;
 	building->speed = 3;
