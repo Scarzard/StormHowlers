@@ -132,6 +132,7 @@ bool Input::PreUpdate()
 						App->player1->gamepad.State[BUTTON_X] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_X);
 						App->player1->gamepad.State[BUTTON_Y] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_Y);
 						App->player1->gamepad.State[START] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_START);
+						App->player1->gamepad.State[BACK] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_BACK);
 						App->player1->gamepad.State[LT] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_LEFTSTICK);
 						App->player1->gamepad.State[RT] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_RIGHTSTICK);
 						App->player1->gamepad.State[LB] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
@@ -175,6 +176,7 @@ bool Input::PreUpdate()
 						App->player2->gamepad.State[BUTTON_X] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_X);
 						App->player2->gamepad.State[BUTTON_Y] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_Y);
 						App->player2->gamepad.State[START] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_START);
+						App->player2->gamepad.State[BACK] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_BACK);
 						App->player2->gamepad.State[LT] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_LEFTSTICK);
 						App->player2->gamepad.State[RT] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_RIGHTSTICK);
 						App->player2->gamepad.State[LB] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);

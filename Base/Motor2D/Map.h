@@ -17,6 +17,13 @@ struct Tiles
 	SDL_Rect Tile_rect;
 
 };
+
+struct decoration_coordinates
+{
+	pair<int, int> position; 
+	string name; 
+};
+
 struct Properties
 {
 	struct Property
@@ -154,6 +161,8 @@ struct MapData
 	pair<int, int> barrack;
 	pair<int, int> barrack2;
 	pair<int, int> mid_building;
+
+	list<decoration_coordinates*> decoration_list;
 };
 
 // ----------------------------------------------------
@@ -192,6 +201,10 @@ public:
 	//Draw wakability
 	void DrawWakability(float dt);
 
+	void DrawDecorations(float dt);
+	Animation* allied_flag_anim = nullptr;
+	Animation* soviet_flag_anim = nullptr;
+
 private:
 
 	bool LoadMap();
@@ -205,7 +218,6 @@ private:
 
 	//testing animation
 	Animation* idleRight123 = nullptr;
-	
 
 	//map framerate
 	list<Tiles>		TileList;

@@ -29,11 +29,15 @@ Player::~Player()
 bool Player::Start()
 {
 
-	gold = actual_capacity = time_iterator = 0;
+	gold = actual_capacity = time_iterator = number_of_troops = 0;
+	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = 0;
+
 
 	live = 2000;
 
-	isBuilding = isDeploying = isCasting = false;
+	UI_troop_type = 9;
+
+	isBuilding = isDeploying = isCasting = Y_pressed = isPaused = false;
 	currentTile = { 13,0 };
 	
 
@@ -97,14 +101,85 @@ bool Player::Update(float dt)
 
 		}
 
+		// --TEST-- from GENERAL UI to CREATE TROOPS UI (only for barracks)
+		if (gamepad.Controller[BACK] == KEY_DOWN && currentUI == CURRENT_UI::CURR_GENERAL && App->scene->active)
+		{
+			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
+			UpdateVisibility();
+			//UpdateFocus(currentUI);
+		}
+
+		//Creating TROOPS
+		if (currentUI == CURRENT_UI::CURR_CREATE_TROOPS)
+		{
+			if (gamepad.Controller[LEFT] == KEY_DOWN)
+			{
+				UI_troop_type--;
+				if (UI_troop_type < 9) //soldier
+				{
+					UI_troop_type = 13; // war_hound
+				}
+				Update_troop_image(UI_troop_type);
+				
+			}
+			
+			if (gamepad.Controller[RIGHT] == KEY_DOWN)
+			{
+				UI_troop_type++;
+				if (UI_troop_type > 13) // war_hound
+				{
+					UI_troop_type = 9;//soldier
+				}
+				Update_troop_image(UI_troop_type);
+			}
+
+			if (gamepad.Controller[LB] == KEY_DOWN)
+			{
+				number_of_troops--;
+				if (number_of_troops < 0)
+				{
+					number_of_troops = 0;
+				}
+
+			}
+
+			if (gamepad.Controller[RB] == KEY_DOWN)
+			{
+				number_of_troops++;
+				/*if (number_of_troops + number_troops_in_barrack > barracks->capacity) 
+				{
+					number_of_troops = barracks->capacity - number_troops_in_barrack; 
+				}*/
+			}
+
+			if (gamepad.Controller[BUTTON_A] == KEY_UP)
+			{
+				CreateTroop(UI_troop_type, number_of_troops);
+				Update_troop_image(UI_troop_type);
+				GotoPrevWindows(currentUI);
+			}
+			
+		}
+
+		// --TEST-- GENERAL UI (menu of selected building)
+		if (gamepad.Controller[BACK] == KEY_DOWN && currentUI == CURRENT_UI::NONE && App->scene->active)
+		{
+			currentUI = CURRENT_UI::CURR_GENERAL;
+			UpdateVisibility();
+			UpdateFocus(currentUI);
+		}
+
+		
+
 		// Button A to clcik a button
-		if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
+		if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
 		{
 			if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
 				(*focus)->state = UI_Element::State::LOGIC;
 		}
 
-		if (!App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS)
+		// Do button action
+		if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
 		{
 			if (App->scene->pause && isPaused == true)
 			{
@@ -127,7 +202,7 @@ bool Player::Update(float dt)
 
 		}
 
-
+		// Go back
 		if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
 		{
 			(*focus)->state = UI_Element::State::IDLE;
@@ -174,17 +249,40 @@ bool Player::Update(float dt)
 			}
 		}
 
-		if (!App->scene->endgame && gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
+		// Enter to UI ingame Menus
+		if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
 		{
 			if (App->scene->active)
 				currentUI = CURRENT_UI::CURR_MAIN;
+
+			Y_pressed = true;
 
 			UpdateFocus(currentUI);
 		}
 
 
+		//Change the side images from the menus
+		if (App->scene->active)
+		{
+			if (Y_pressed == false)
+			{
+				Y_to_Main->visible = true;
+				Y_to_Main2->visible = true;
+				RB_img->visible = false;
+				LB_img->visible = false;
+			}
+			else if (Y_pressed == true)
+			{
+				Y_to_Main->visible = false;
+				Y_to_Main2->visible = false;
+				RB_img->visible = true;
+				LB_img->visible = true;
+			}
+		}
+		
 
-		if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
+		// Travel through the different buttons
+		if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			(*focus)->state = UI_Element::State::IDLE;
 
@@ -199,8 +297,8 @@ bool Player::Update(float dt)
 			}
 
 		}
-
-		if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
+		// Travel through the different buttons
+		if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			(*focus)->state = UI_Element::State::IDLE;
 			if (focus == GetUI_Element(currentUI)->children.begin())
@@ -214,6 +312,7 @@ bool Player::Update(float dt)
 
 		}
 
+		//Travel through buttons with DPAD in pause and mainmenu
 		if (App->main_menu->active || App->scene->pause)
 		{
 			if (gamepad.Controller[UP] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
@@ -247,53 +346,51 @@ bool Player::Update(float dt)
 			}
 		}
 
+		// Increase or decrease volume
 		if (gamepad.Controller[RIGHT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
 		{
-			if ((*focus) == Music_Settings)
+			if ((*focus) == Music_Settings && App->audio->musicVolume < 100)
 			{
 				App->audio->musicVolume += 10;
 				App->audio->SetMusicVolume();
 
 
 			}
-			else
+			else if ((*focus) == FX_Settings && App->audio->sfxVolume < 100)
 			{
 				App->audio->sfxVolume += 10;
+
 				App->audio->SetSfxVolume();
 			}
 		}
 		else if (gamepad.Controller[LEFT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
 		{
-			if ((*focus) == Music_Settings)
+			if ((*focus) == Music_Settings && App->audio->musicVolume > 0)
 			{
 				App->audio->musicVolume -= 10;
+
 				App->audio->SetMusicVolume();
 			}
-			else
+			else if ((*focus) == FX_Settings && App->audio->sfxVolume > 0)
 			{
 				App->audio->sfxVolume -= 10;
+			
 				App->audio->SetSfxVolume();
 			}
 		}
 
-
-
-
-		// Just to test the LiveBar
-		if (!App->scene->pause && gamepad.Controller[UP] == KEY_DOWN && live > 0 && App->scene->active)
+		// Just to test the LiveBar. Can only be used in GodMode (Press F10)
+		if (!App->scene->pause && gamepad.Controller[UP] == KEY_DOWN && live > 0 && App->scene->active && App->scene->godmode)
 		{
 			live -= 1000;
 			if (live < 0)
 			{
 				live = 0;
 			}
-			if (live == 0)
-				isDead = true;
-
+			
 		}
 	}
 
-	
 	
 	if (App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_DOWN)
 	{
@@ -554,6 +651,12 @@ void Player::UpdateFocus(uint data)
 		last_element--;
 		break;
 
+	case::Player::CURRENT_UI::CURR_GENERAL:
+		focus = General_UI->children.begin();
+		last_element = General_UI->children.end();
+		last_element--;
+		break;
+
 	case::Player::CURRENT_UI::CURR_BUILD:
 		focus = Build_UI->children.begin();
 		last_element = Build_UI->children.end();
@@ -600,11 +703,22 @@ void Player::GotoPrevWindows(uint data)
 	{
 	case Player::CURRENT_UI::CURR_MAIN :
 		currentUI = CURRENT_UI::NONE;
+		Y_pressed = false;
 		UpdateVisibility();
 		break;
 
 	case Player::CURRENT_UI::CURR_GENERAL:
 		currentUI = CURRENT_UI::NONE;
+		UpdateVisibility();
+		break;
+
+	case Player::CURRENT_UI::CURR_CREATE_TROOPS:
+		currentUI = CURRENT_UI::CURR_GENERAL;
+
+		UI_troop_type = 9; 
+		number_of_troops = 0;
+		Update_troop_image(number_of_troops);
+
 		UpdateVisibility();
 		break;
 
@@ -668,6 +782,9 @@ UI_Element* Player::GetUI_Element(uint data)
 	case::Player::CURRENT_UI::CURR_PAUSE_ABORT:
 		return Abort_UI;
 
+	case::Player::CURRENT_UI::CURR_GENERAL:
+		return General_UI;
+
 	}
 }
 
@@ -684,7 +801,8 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Abort_UI->visible = false;
 		Settings_UI->visible = false;
 		win_screen->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
+		Create_Troops_UI->visible = false;
 		break;
 	case::Player::CURRENT_UI::CURR_MAIN:
 		Main_UI->visible = true;
@@ -695,7 +813,8 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Settings_UI->visible = false;
 		Abort_UI->visible = false;
 		win_screen->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
+		Create_Troops_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_BUILD:
@@ -707,7 +826,8 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Settings_UI->visible = false;
 		Abort_UI->visible = false;
 		win_screen->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
+		Create_Troops_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_DEPLOY:
@@ -719,7 +839,8 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Settings_UI->visible = false;
 		Abort_UI->visible = false;
 		win_screen->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
+		Create_Troops_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_CAST:
@@ -731,15 +852,36 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Settings_UI->visible = false;
 		Abort_UI->visible = false;
 		win_screen->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
+		Create_Troops_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_GENERAL:
-		//Main_UI->visible = false;
-		//Build_UI->visible = false;
-		//Deploy_UI->visible = false;
-		//Cast_UI->visible = false;
-		//General_UI->visible = true;
+		Main_UI->visible = false;
+		Build_UI->visible = false;
+		Deploy_UI->visible = false;
+		Cast_UI->visible = false;
+		Pause_UI->visible = false;
+		Abort_UI->visible = false;
+		Settings_UI->visible = false;
+		win_screen->visible = false;
+		General_UI->visible = true;
+		Create_Troops_UI->visible = false;
+
+		break;
+
+	case::Player::CURRENT_UI::CURR_CREATE_TROOPS:
+
+		Main_UI->visible = false;
+		Build_UI->visible = false;
+		Deploy_UI->visible = false;
+		Cast_UI->visible = false;
+		Pause_UI->visible = false;
+		Abort_UI->visible = false;
+		Settings_UI->visible = false;
+		win_screen->visible = false;
+		General_UI->visible = false;
+		Create_Troops_UI->visible = true;
 
 		break;
 
@@ -752,7 +894,8 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Settings_UI->visible = false;
 		Abort_UI->visible = false;
 		win_screen->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
+		Create_Troops_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_PAUSE_SETTINGS:
@@ -764,7 +907,8 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Settings_UI->visible = true;
 		Abort_UI->visible = false;
 		win_screen->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
+		Create_Troops_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_PAUSE_ABORT:
@@ -776,7 +920,8 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Settings_UI->visible = false;
 		Abort_UI->visible = true;
 		win_screen->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
+		Create_Troops_UI->visible = false;
 		break;
 	case::Player::CURRENT_UI::CURR_WIN_SCREEN:
 		Main_UI->visible = false;
@@ -788,9 +933,14 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Abort_UI->visible = false;
 		win_screen->visible = true;
 		Gold_UI->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
+		Create_Troops_UI->visible = false;
+		Y_to_Main2->visible = false;
+		Y_to_Main->visible = false;
+		LB_img->visible = false;
+		RB_img->visible = false;
 		break;
-	case::Player::CURRENT_UI::ENDGAME:
+	case::Player::CURRENT_UI::ENDGAME: //Dont show the other player win screen
 		Main_UI->visible = false;
 		Build_UI->visible = false;
 		Deploy_UI->visible = false;
@@ -801,7 +951,12 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		Gold_UI->visible = false;
 		App->scene->ui_timer->visible = false;
-		//General_UI->visible = false;
+		General_UI->visible = false;
+		Create_Troops_UI->visible = false;
+		Y_to_Main2->visible = false;
+		Y_to_Main->visible = false;
+		LB_img->visible = false;
+		RB_img->visible = false;
 		break;
 
 
@@ -971,4 +1126,56 @@ bool Player::DeleteEntity(Entity* entity)
 		}
 	}
 	return true;
+}
+
+void Player::Update_troop_image(int type) // Changes sprite depending on the entity type
+{
+	switch (type)
+	{
+	case Entity::entityType::SOLDIER:
+		troop_icon->rect = { 662, 0, 85, 81 };
+		break;
+
+	case Entity::entityType::TANKMAN:
+		troop_icon->rect = { 576, 0, 85, 81 };
+		break;
+
+	case Entity::entityType::INFILTRATOR:
+		troop_icon->rect = { 832, 0, 85, 81 };
+		break;
+
+	case Entity::entityType::ENGINEER:
+		troop_icon->rect = { 492, 0, 85, 81 };
+		break;
+
+	case Entity::entityType::WAR_HOUND:
+		troop_icon->rect = { 746, 0, 85, 81 };
+		break;
+	}
+}
+
+void Player::CreateTroop(int type, int number)
+{
+	switch (type)
+	{
+	case Entity::entityType::SOLDIER:
+		SoldiersCreated += number;
+		break;
+
+	case Entity::entityType::TANKMAN:
+		TankmansCreated += number;
+		break;
+
+	case Entity::entityType::INFILTRATOR:
+		InfiltratorsCreated += number;
+		break;
+
+	case Entity::entityType::ENGINEER:
+		EngineersCreated += number;
+		break;
+
+	case Entity::entityType::WAR_HOUND:
+		WarHoundsCreated += number;
+		break;
+	}
 }
