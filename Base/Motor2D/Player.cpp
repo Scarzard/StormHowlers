@@ -30,6 +30,20 @@ bool Player::Start()
 	isBuilding = isDeploying = isCasting = entityAdded = false;
 	currentTile = { 13,0 };
 
+	preview_rects = vector<SDL_Rect>(Entity::entityType::WAR_HOUND, { 0,0,0,0 });
+
+	pugi::xml_document	config_file;
+	pugi::xml_node config;
+	config = App->LoadConfig(config_file);
+	config = config.child("entitymanager").child("rect_previews").first_child();
+
+	for (int i = Entity::entityType::TOWNHALL; i <= Entity::entityType::WAR_HOUND; i++) {
+		preview_rects[i].x = config.attribute((isPlayer1) ? "rx" : "x").as_int(0);
+		preview_rects[i].y = config.attribute((isPlayer1) ? "ry" : "y").as_int(0);
+		preview_rects[i].w = config.attribute("w").as_int(0);
+		preview_rects[i].h = config.attribute("h").as_int(0);
+		config = config.next_sibling();
+	}
 
 	return true;
 }
@@ -37,6 +51,16 @@ bool Player::Start()
 bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("Player Update", Profiler::Color::Black);
+
+	//Preview all player1 entities with M
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+		isBuilding = !isBuilding;
+	}
+
+	if (isBuilding && App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
+		isPlayer1 = true;
+		type = (Entity::entityType)((curr++) % (int)Entity::entityType::TANKMAN);
+	}
 
 	//--- Press X (Square)
 	if (gamepad.Controller[BUTTON_X] == KEY_DOWN)
@@ -134,11 +158,6 @@ bool Player::Update(float dt)
 		}
 	}
 
-
-	// DEBUG PURPOSES DO NOT DELETE PLEASE
-	SpawnEntity();
-
-
 	//--- Building ---------------------
 	if (isBuilding)
 	{
@@ -214,10 +233,20 @@ bool Player::Update(float dt)
 		App->map->debug = true;
 		if (CheckBuildingPos() == true) // Can build
 		{
+			//Preview entity to spawn
+			pair<int, int> pos;
+			App->input->GetMousePosition(pos.first, pos.second);
+			pos = App->render->ScreenToWorld(pos.first, pos.second);
+			pos.first--;
+
+			App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &preview_rects[type]);
+
+
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				//play fx (build);
-				//App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ });
+				App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ },collider);
+
 				entityAdded = false;
 				isBuilding = false;
 				currentUI == CURRENT_UI::CURR_GENERAL;
@@ -250,52 +279,6 @@ bool Player::Update(float dt)
 	return true;
 }
 
-
-void Player::SpawnEntity() {
-
-	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
-		if (entityAdded) {
-			if (type >= Entity::entityType::BARRACKS) {
-				if (troops.empty() == false)
-					troops.pop_back();
-
-				previewEntity = nullptr;
-			}
-			else {
-				if (troops.empty() == false)
-					buildings.pop_back();
-
-				previewEntity = nullptr;
-			}
-		}
-		entityAdded = false;
-		isBuilding = true;
-		isPlayer1 = true;
-		type = (Entity::entityType)((curr++) % (int)Entity::entityType::TANKMAN);
-		/*if (type == Entity::entityType::WALLS || type == Entity::entityType::TANKMAN
-		|| type == Entity::entityType::)*/
-		currentUI == CURRENT_UI::CURR_BUILD;
-
-	}
-	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
-		if (type >= Entity::entityType::BARRACKS)
-		{
-			if (troops.empty() == false)
-				troops.pop_back();
-		}
-		else
-		{
-			if (buildings.empty() == false)
-				buildings.pop_back();
-		}
-		entityAdded = false;
-		isBuilding = true;
-		isPlayer1 = false;
-		type = (Entity::entityType)curr++;
-		currentUI == CURRENT_UI::CURR_BUILD;
-	}
-
-}
 bool Player::PostUpdate()
 {
 	BROFILER_CATEGORY("Player PostUpdate", Profiler::Color::Black);
@@ -365,18 +348,6 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 		pos = App->map->WorldToMap(pos.first, pos.second);
 		pos.first--;
 	}
-
-	//Preview Building
-	if (!entityAdded) {
-		if (isPlayer1)
-			previewEntity = App->entitymanager->AddEntity(isPlayer1, type, { pos.first,pos.second }, collider);
-		else
-			previewEntity = App->entitymanager->AddEntity(isPlayer1, type, { pos.first,pos.second }, collider);
-
-		entityAdded = true;
-	}
-	previewEntity->position = App->map->MapToWorld(pos.first, pos.second);
-
 
 
 	// Check what tiles is the collider occupying
@@ -621,22 +592,18 @@ void Player::DoLogic(UI_Element* data)
 	case::UI_Element::Action::ACT_BUILD_AOE:
 		isBuilding = true;
 		type = Entity::entityType::DEFENSE_AOE;
-		//collider.dimensions = { 3,4 };
 		offset = { 60,30 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_TARGET:
 		isBuilding = true;
-
 		type = Entity::entityType::DEFENSE_TARGET;
-		//collider.dimensions = { 3,4 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_MINE:
 		isBuilding = true;
 
 		type = Entity::entityType::MINES;
-		//collider.dimensions = { 3,4 };
 
 		break;
 

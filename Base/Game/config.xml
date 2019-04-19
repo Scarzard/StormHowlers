@@ -164,6 +164,21 @@
         <speed value="10"/>
       </war_hound>
     </troops>
+     <rect_previews>
+      <townhall       x="" y="" w="" h="" rx="" ry=""/>      <!--<townhall x=""        -->
+      <sentrygun      x="62" y="195" w="62" h="39" rx="186" ry="0" />  <!--<main_defense x>      -->
+      <cmd_center     x="424" y="2556" w="212" h="213" rx="0" ry="2556" />    <!--<cmd_center x="       -->
+      <walls          x="" y="" w="" h="" rx="" ry="" />         <!--<walls x="" y="       -->
+      <defense_aoe    x="" y="" w="" h="" rx="" ry="" />   <!--<defense_aoe x=       -->
+      <defense_target x="0" y="756" w="82" h="84" rx="0" ry="336"/> <!--<defense_target />    -->
+      <gold_mine      x="1218" y="1278" w="174" h="142" rx="522" ry="1278" />     <!--<gold_mine x=""       -->
+      <barracks       x="620" y="938" w="155" h="134" rx="0" ry="938" />      <!--<barracks x=""        -->
+      <soldier        x="352" y="0" w="44" h="33" rx="0" ry="0"  />       <!--<soldier x="" y       -->
+      <tankman        x="" y="" w="" h="" rx="" ry="" />       <!--<tankman x="" y       -->
+      <infiltrator    x="" y="" w="" h="" rx="" ry="" />   <!--<infiltrator x=       -->
+      <engineer       x="" y="" w="" h="" rx="" ry="" />      <!--<engineer x=""        -->
+      <war_hound      x="" y="" w="" h="" rx="" ry="" />     <!--<war_hound x=""       -->
+    </rect_previews>
   </entitymanager>
 
   <buildings_animations>

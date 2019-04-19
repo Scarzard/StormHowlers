@@ -164,6 +164,13 @@ bool EntityManager::CleanUp()
 	App->tex->UnLoad(texture);
 	entity_list.clear();
 
+	for (int i = Entity::entityType::TOWNHALL; i < Entity::entityType::WAR_HOUND; i++) {
+
+			if (entitiesTextures[i] = nullptr) {
+				App->tex->UnLoad(entitiesTextures[i]);
+			}
+	}
+
 	//Building::CleanUp();
 	return true;
 }
@@ -369,7 +376,7 @@ char* EntityManager::GetName(Entity::entityType type) {
 	switch (type)
 	{
 	case Entity::entityType::TOWNHALL:
-		return"townhall";
+		return"Townhall";
 		break;
 	case Entity::entityType::MAIN_DEFENSE:
 		return"sentrygun";
@@ -441,7 +448,7 @@ list<Entity*> EntityManager::OrderEntities(list<Entity*> List)
 
 int EntityManager::GetDepth(Entity* entity)
 {
-	entity->position = App->map->WorldToMap(entity->position.first, entity->position.second); // get map coords
+	pair<int,int> postemp = App->map->WorldToMap(entity->position.first, entity->position.second); // get map coords
 
-	return (entity->position.first + entity->position.second); // return depth
+	return (postemp.first + postemp.second); // return depth
 }
