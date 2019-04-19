@@ -660,110 +660,19 @@ bool Scene::Update(float dt)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 
+	//Enter GodMode
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) //Godmode
+	{
+		godmode = !godmode;
+	}
+	//else if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) //Framerate Cap On/Off
+	//{
+	//	App->fpsCapON = !App->fpsCapON;
+	//}
 
-	
-	// Player 1 -> number / Player2 -> letter
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) 
-	{
-		App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(false, Entity::entityType::MAIN_DEFENSE, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(true, Entity::entityType::BARRACKS, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(false, Entity::entityType::BARRACKS, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_AOE, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_AOE, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_TARGET, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(true, Entity::entityType::MINES, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(false, Entity::entityType::MINES, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(true, Entity::entityType::SOLDIER, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(true, Entity::entityType::WALLS, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-	{
-		App->entitymanager->AddEntity(false, Entity::entityType::WALLS, { x,y });
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) //Movecamera Up
-	{
-		App->render->camera.y -= 10;
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) //Movecamera Down
-	{
-		App->render->camera.y += 10;
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) //Movecamera Left
-	{
-		App->render->camera.x += 10;
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) //Movecamera Right
-	{
-		App->render->camera.x -= 10;
-	}
-	
-	//else if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) //Go to main menu
-	//{
-	//	App->scenechange->SwitchScene(App->main_menu, App->scene);
-	//}
-	//else if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) //Save game state
-	//{
-	//	App->SaveGame();
-	//}
-	//else if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) //Load game state
-	//{
-	//	App->LoadGame();
-	//}
+	// testing timer
+
+	//Debug functionalities that can be used anywhere
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) //Debug UI
 	{
 		App->gui->UI_Debug = !App->gui->UI_Debug;
@@ -773,82 +682,180 @@ bool Scene::Update(float dt)
 		App->map->debug = !App->map->debug;
 		App->entitymanager->draw_path = !App->entitymanager->draw_path;
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT) //View colliders
-	{
-		App->render->camera.x+=5;
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT) //View colliders
-	{
-		App->render->zoom += 0.01f;
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) //View colliders
-	{
-		App->render->zoom -= 0.01f;
-	}
 
-	
-
-	if (true) {
-
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN) {
-			LOG("CLICK");
-			App->input->GetMousePosition(camera_motion.first, camera_motion.second);
-			start_motion = true;
+	//Debug functionalities in-game. Press F10 to enter GodMode and activate said features
+	if (App->scene->active && !App->scene->pause && godmode)
+	{
+		//Keyboard debug
+		// Player 1 -> number / Player2 -> letter
+		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(false, Entity::entityType::MAIN_DEFENSE, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(true, Entity::entityType::BARRACKS, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(false, Entity::entityType::BARRACKS, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_AOE, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_AOE, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_TARGET, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(true, Entity::entityType::MINES, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(false, Entity::entityType::MINES, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(true, Entity::entityType::SOLDIER, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(true, Entity::entityType::WALLS, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(false, Entity::entityType::WALLS, { x,y });
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) //Movecamera Up
+		{
+			App->render->camera.y -= 10;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) //Movecamera Down
+		{
+			App->render->camera.y += 10;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) //Movecamera Left
+		{
+			App->render->camera.x += 10;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) //Movecamera Right
+		{
+			App->render->camera.x -= 10;
 		}
 
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_UP) {
-			LOG("CLICK UP");
-			start_motion = false;
-			//App->input->GetMousePosition(camera_motion.x, camera_motion.y);
+		//Timer debug
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+		{
+			if (pausetimer == false)
+			{
+				//if the pause timer is false, the clock is running and you want to stop it
+				pausetimer = true;
+				world_seconds.Stop();
+			}
+			else if (pausetimer == true)
+			{
+				//if the pause timer is true, the clock is stop and you want to start it
+				pausetimer = false;
+				world_seconds.Start();
+
+			}
 		}
-		if (start_motion) {
 
-			pair<int,int> final;
-			App->input->GetMousePosition(final.first, final.second);
-			SDL_SetRenderDrawColor(App->render->renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
-			if (App->map->debug)SDL_RenderDrawLine(App->render->renderer, camera_motion.first, camera_motion.second, final.first, final.second);
+		//else if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) //Go to main menu
+		//{
+		//	App->scenechange->SwitchScene(App->main_menu, App->scene);
+		//}
+		//else if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) //Save game state
+		//{
+		//	App->SaveGame();
+		//}
+		//else if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) //Load game state
+		//{
+		//	App->LoadGame();
+		//}
+		else if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT) //View colliders
+		{
+			App->render->camera.x += 5;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT) //View colliders
+		{
+			App->render->zoom += 0.01f;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) //View colliders
+		{
+			App->render->zoom -= 0.01f;
+		}
 
-			App->input->GetMouseMotion(final.first, final.second);
-			LOG("final_motio: %d,%d", final.first, final.second);
-			LOG("last_motion: %d,%d", last_motion.first, last_motion.second);
+		//Mouse debug
+		if (true) {
 
-			last_motion.first -= final.first;
-			last_motion.second -= final.second;
-			LOG("minus_motio: %d,%d", last_motion.first, last_motion.second);
-
-			if (last_motion.first != 0 && last_motion.second != 0) {
-				App->render->camera.x += final.first;
-				App->render->camera.y += final.second;
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN) {
+				LOG("CLICK");
+				App->input->GetMousePosition(camera_motion.first, camera_motion.second);
+				start_motion = true;
 			}
 
-			last_motion = { final.first, final.second };
-		}
-	}
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_UP) {
+				LOG("CLICK UP");
+				start_motion = false;
+				//App->input->GetMousePosition(camera_motion.x, camera_motion.y);
+			}
+			if (start_motion) {
 
-	//else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) //Godmode
-	//{
-	//	godmode = !godmode;
-	//}
-	//else if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) //Framerate Cap On/Off
-	//{
-	//	App->fpsCapON = !App->fpsCapON;
-	//}
+				pair<int, int> final;
+				App->input->GetMousePosition(final.first, final.second);
+				SDL_SetRenderDrawColor(App->render->renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+				if (App->map->debug)SDL_RenderDrawLine(App->render->renderer, camera_motion.first, camera_motion.second, final.first, final.second);
 
-	// testing timer
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
-	{
-		if (pausetimer == false)
-		{
-			//if the pause timer is false, the clock is running and you want to stop it
-			pausetimer=true;
-			world_seconds.Stop();
-		}
-		else if (pausetimer == true)
-		{
-			//if the pause timer is true, the clock is stop and you want to start it
-			pausetimer = false;
-			world_seconds.Start();
-			
+				App->input->GetMouseMotion(final.first, final.second);
+				LOG("final_motio: %d,%d", final.first, final.second);
+				LOG("last_motion: %d,%d", last_motion.first, last_motion.second);
+
+				last_motion.first -= final.first;
+				last_motion.second -= final.second;
+				LOG("minus_motio: %d,%d", last_motion.first, last_motion.second);
+
+				if (last_motion.first != 0 && last_motion.second != 0) {
+					App->render->camera.x += final.first;
+					App->render->camera.y += final.second;
+				}
+
+				last_motion = { final.first, final.second };
+			}
 		}
 	}
 

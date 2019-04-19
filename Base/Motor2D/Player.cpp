@@ -379,11 +379,8 @@ bool Player::Update(float dt)
 			}
 		}
 
-
-
-
-		// Just to test the LiveBar
-		if (!App->scene->pause && gamepad.Controller[UP] == KEY_DOWN && live > 0 && App->scene->active)
+		// Just to test the LiveBar. Can only be used in GodMode (Press F10)
+		if (!App->scene->pause && gamepad.Controller[UP] == KEY_DOWN && live > 0 && App->scene->active && App->scene->godmode)
 		{
 			live -= 1000;
 			if (live < 0)
@@ -394,7 +391,6 @@ bool Player::Update(float dt)
 		}
 	}
 
-	
 	
 	if (App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_DOWN)
 	{
