@@ -495,7 +495,78 @@ bool Map::LoadMap()
 				data.mid_building =MapToWorld(data.mid_building.first, data.mid_building.second);
 				
 			}
+			else if (tmp == "bush")
+			{
+				for (pugi::xml_node bushIterator = mapIterator.child("object"); bushIterator; bushIterator = bushIterator.next_sibling("object"))
+				{
+					decoration_coordinates * bush = new decoration_coordinates();
+					bush->position.first = bushIterator.attribute("x").as_int() / data.tile_height;
+					bush->position.second = bushIterator.attribute("y").as_int() / data.tile_height;
+					bush->name = tmp;
 
+					data.decoration_list.push_back(bush);
+				}
+			}
+			else if (tmp == "fit_tree")
+			{
+				for (pugi::xml_node treeIterator = mapIterator.child("object"); treeIterator; treeIterator = treeIterator.next_sibling("object"))
+				{
+					decoration_coordinates * tree = new decoration_coordinates();
+					tree->position.first = treeIterator.attribute("x").as_int() / data.tile_height;
+					tree->position.second = treeIterator.attribute("y").as_int() / data.tile_height;
+					tree->name = tmp;
+
+					data.decoration_list.push_back(tree);
+				}
+			}
+			else if (tmp == "wide_tree")
+			{
+				for (pugi::xml_node treeIterator = mapIterator.child("object"); treeIterator; treeIterator = treeIterator.next_sibling("object"))
+				{
+					decoration_coordinates * tree = new decoration_coordinates();
+					tree->position.first = treeIterator.attribute("x").as_int() / data.tile_height;
+					tree->position.second = treeIterator.attribute("y").as_int() / data.tile_height;
+					tree->name = tmp;
+
+					data.decoration_list.push_back(tree);
+				}
+			}
+			else if (tmp == "tall_tree")
+			{
+				for (pugi::xml_node treeIterator = mapIterator.child("object"); treeIterator; treeIterator = treeIterator.next_sibling("object"))
+				{
+					decoration_coordinates * tree = new decoration_coordinates();
+					tree->position.first = treeIterator.attribute("x").as_int() / data.tile_height;
+					tree->position.second = treeIterator.attribute("y").as_int() / data.tile_height;
+					tree->name = tmp;
+
+					data.decoration_list.push_back(tree);
+				}
+			}
+			else if (tmp == "allied_flag")
+			{
+				for (pugi::xml_node flagIterator = mapIterator.child("object"); flagIterator; flagIterator = flagIterator.next_sibling("object"))
+				{
+					decoration_coordinates * flag = new decoration_coordinates();
+					flag->position.first = flagIterator.attribute("x").as_int() / data.tile_height;
+					flag->position.second = flagIterator.attribute("y").as_int() / data.tile_height;
+					flag->name = tmp;
+
+					data.decoration_list.push_back(flag);
+				}
+			}
+			else if (tmp == "soviet_flag")
+				{
+				for (pugi::xml_node flagIterator = mapIterator.child("object"); flagIterator; flagIterator = flagIterator.next_sibling("object"))
+				{
+					decoration_coordinates * flag = new decoration_coordinates();
+					flag->position.first = flagIterator.attribute("x").as_int() / data.tile_height;
+					flag->position.second = flagIterator.attribute("y").as_int() / data.tile_height;
+					flag->name = tmp;
+
+					data.decoration_list.push_back(flag);
+				}
+			}
 		}
 	}
 
@@ -793,4 +864,41 @@ void Map::DrawWakability(float dt)
 	
 
 
+}
+
+void Map::DrawDecorations(float dt)
+{
+	list<decoration_coordinates*>::iterator tmp = (data.decoration_list.begin());
+
+	while (tmp != data.decoration_list.end())
+	{
+		pair<int, int> pos;
+		string n;
+
+		pos.first = (*tmp)->position.first;
+		pos.second = (*tmp)->position.second;
+		pos = App->map->MapToWorld(pos.first, pos.second);
+
+		n = (*tmp)->name;
+
+		if (n == "bush")
+			App->render->Blit(App->scene->trees_tex, pos.first, pos.second, &App->scene->bush_rect);
+
+		else if (n == "fit_tree")
+			App->render->Blit(App->scene->trees_tex, pos.first, pos.second, &App->scene->fit_tree);
+
+		else if (n == "wide_tree")
+			App->render->Blit(App->scene->trees_tex, pos.first, pos.second, &App->scene->wide_tree);
+
+		else if (n == "tall_tree")
+			App->render->Blit(App->scene->trees_tex, pos.first, pos.second, &App->scene->tall_tree);
+
+		else if (n == "allied_flag")
+			App->render->Blit(App->scene->flags_tex, pos.first, pos.second, &allied_flag_anim->GetCurrentFrame(dt));
+
+		else if (n == "soviet_flag")
+			App->render->Blit(App->scene->flags_tex, pos.first, pos.second, &soviet_flag_anim->GetCurrentFrame(dt));
+
+		tmp++;
+	}
 }

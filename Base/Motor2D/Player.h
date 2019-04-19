@@ -50,6 +50,7 @@ public:
 		CURR_DEPLOY,
 		CURR_CAST,
 		CURR_GENERAL,
+		CURR_CREATE_TROOPS,
 		CURR_PAUSE,
 		CURR_PAUSE_SETTINGS,
 		CURR_PAUSE_ABORT,
@@ -67,24 +68,29 @@ public:
 
 	void GetCurrentTile(int& x, int& y);
 
+	// ---------------------- UI functions -----------------------------------------
+
 	void UpdateVisibility(); //update gui visibility
 	void DoLogic(UI_Element* data); //gui actions
-
 	void UpdateFocus(uint data);	//updates where the focus is pointing
 	void GotoPrevWindows(uint data);
 	UI_Element* GetUI_Element(uint data); //returns the window we are currently on
+	void Update_troop_image(int type);
+
+	// -----------------------------------------------------------------------------
+
+	void CreateTroop(int type, int number);
 
 	bool CheckBuildingPos();
 	void UpdateWalkabilityMap(bool isWalkable);
 	bool DeleteEntity(Entity* entity);
-
+	
 public:
 	bool onUI = false;
 	bool isBuilding = false;
 	bool isDeploying = false;
 	bool isCasting = false;
 	bool isPaused = false;
-	bool isDead = false;
 
 	Collider collider;
 	pair<int, int> offset;
@@ -117,6 +123,13 @@ public:
 	list<Troop*> troops;
 
 
+	int SoldiersCreated = 0;
+	int TankmansCreated = 0;
+	int InfiltratorsCreated = 0;
+	int EngineersCreated = 0;
+	int WarHoundsCreated = 0;
+
+
 	//---
 	list<UI_Element*> UI_elements;
 
@@ -128,6 +141,12 @@ public:
 	// --- UI --- //
 	
 	UI_Element* Gold_UI = nullptr;
+
+	UI_Element* Y_to_Main = nullptr;
+	UI_Element* Y_to_Main2 = nullptr;
+	UI_Element* RB_img = nullptr;
+	UI_Element* LB_img = nullptr;
+	bool Y_pressed = false;
 
 	UI_Element* Main_UI = nullptr;
 	UI_Element* Build_icon = nullptr;
@@ -142,10 +161,20 @@ public:
 
 	UI_Element* Deploy_UI = nullptr;
 	UI_Element* Soldier_icon = nullptr;
+	UI_Element* Soldier_text = nullptr;
+	char soldier_label[4] = "0";
 	UI_Element* Tankman_icon = nullptr;
+	UI_Element* Tankman_text = nullptr;
+	char tankman_label[4] = "0";
 	UI_Element* Infiltrator_icon = nullptr;
+	UI_Element* Infiltrator_text = nullptr;
+	char infiltrator_label[4] = "0";
 	UI_Element* Engineer_icon = nullptr;
+	UI_Element* Engineer_text = nullptr;
+	char engineer_label[4] = "0";
 	UI_Element* War_hound_icon = nullptr;
+	UI_Element* War_hound_text = nullptr;
+	char war_hound_label[4] = "0";
 
 	UI_Element* Cast_UI = nullptr;
 	UI_Element* Missiles_icon = nullptr;
@@ -156,14 +185,37 @@ public:
 	UI_Element* General_UI = nullptr;
 	UI_Element* Upgrade_icon = nullptr;
 	UI_Element* Repair_icon = nullptr;
-	UI_Element* Name_text = nullptr;
-	UI_Element* Level_text = nullptr;
-	UI_Element* Health_text = nullptr;
 	UI_Element* UpgradeCost_text = nullptr;
+	char upgrade_cost_label[10] = " - 0000 $";
 	UI_Element* RepairCost_text = nullptr;
+	char repair_cost_label[10] = " - 0000 $";
+	UI_Element* Name_text = nullptr;
+	char name_label[10] = "Name:  ";
+	UI_Element* Level_text = nullptr;
+	char level_label[10] = "Lvl:  ";
+	UI_Element* Health_text = nullptr;
+	char health_label[10] = "HP:  ";
 	UI_Element* Damage_text = nullptr; //only for defense buildings
 	UI_Element* Prod_text = nullptr; //only for townhall & mines
 	UI_Element* Capacity_text = nullptr; //only for barracks
+
+	// Create troops UI --------------------------
+	UI_Element* Create_Troops_UI = nullptr;
+	UI_Element* left_img = nullptr;
+	UI_Element* troop_icon = nullptr;
+	UI_Element* right_img= nullptr;
+	UI_Element* plus = nullptr;
+	UI_Element* minus = nullptr;
+	UI_Element* accept_button = nullptr;
+	UI_Element* cancel_button = nullptr;
+
+	int UI_troop_type = 9; //select type of troop (9 is soldier) 
+	int number_of_troops = 0;
+
+	UI_Element* num_troops_text = nullptr;
+	char num_troops_label[4] = "0";
+
+	// ---------------------------------------------
 
 	// Pause Menu
 	UI_Element* Pause_UI = nullptr;
