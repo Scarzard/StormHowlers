@@ -86,6 +86,8 @@ public:
 	bool entityAdded;
 	Entity* previewEntity;
 
+	vector<SDL_Rect> preview_rects;
+
 
 	SDL_Rect LiveBar;
 	int health, max_health;
