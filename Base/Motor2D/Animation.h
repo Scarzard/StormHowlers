@@ -3,7 +3,6 @@
 #include <assert.h>
 #include "SDL/include/SDL_rect.h"
 #include "Scene.h"
-
 #define MAX_FRAMES 50
 
 class Animation

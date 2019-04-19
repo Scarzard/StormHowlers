@@ -84,6 +84,17 @@ bool Scene::Start()
 
 	App->map->debug_tex = App->tex->Load("maps/meta.png");
 
+	trees_tex = App->tex->Load("animation/Trees_anim.png"); 
+	bush_rect = { 276 ,0, 92, 78 }; 
+	fit_tree =  { 184 ,0, 92, 78 };
+	wide_tree = { 92 ,0, 92, 78 };
+	tall_tree = { 0 ,0, 92, 78 };
+
+	flags_tex = App->tex->Load("animation/Flags_anim.png"); 
+
+	App->map->allied_flag_anim = App->map->allied_flag_anim->LoadAnimation("animation/Flags.tmx", "flag_allied");
+	App->map->soviet_flag_anim = App->map->soviet_flag_anim->LoadAnimation("animation/Flags.tmx", "flag_soviet");
+
 	App->player1->LiveBar = { 51, 18 , 348, 19 }; //LiveBar for player1
 	App->player2->LiveBar = { 1232, 921 , 348, 19 }; //LiveBar for player2
 
@@ -651,8 +662,6 @@ bool Scene::PreUpdate()
 		
 	}
 	
-
-
 	return true;
 }
 
@@ -662,6 +671,7 @@ bool Scene::Update(float dt)
 	BROFILER_CATEGORY("Scene Update", Profiler::Color::DarkOrange);
 	int x, y;
 	App->input->GetMousePosition(x, y);
+
 
 	//Enter GodMode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) //Godmode
@@ -963,7 +973,7 @@ bool Scene::Update(float dt)
 
 	App->map->DrawWakability(dt);
 	App->entitymanager->Draw(dt);
-
+	App->map->DrawDecorations(dt);
 	App->gui->Draw();
 
 	//DRAW LIVE BARS 
@@ -972,7 +982,7 @@ bool Scene::Update(float dt)
 		DrawLiveBar(App->player1);
 		DrawLiveBar(App->player2);
 	}
-	
+
 	return true;
 }
 
@@ -1421,3 +1431,4 @@ void Scene::ResetGame()
 	App->entitymanager->Enable();
 	
 }
+
