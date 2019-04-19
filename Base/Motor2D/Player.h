@@ -4,7 +4,7 @@
 #include "Module.h"
 #include "Troop.h"
 #include "Building.h"
-#include "Building.h"
+#include "Entity.h"
 #include "Troop.h"
 #include "SDL\include\SDL_gamecontroller.h"
 
@@ -31,13 +31,6 @@ struct GeneralUI
 	uint level, health, unique;
 };
 
-struct Collider
-{
-	pair<int, int> dimensions;
-	vector<pair<int,int>> tiles;
-};
-
-
 class Player : public Module
 {
 public:
@@ -63,6 +56,7 @@ public:
 
 	bool Start();
 	bool Update(float dt);
+	void SpawnEntity();
 	bool PostUpdate();
 	bool CleanUp();
 
@@ -82,7 +76,8 @@ public:
 	void CreateTroop(int type, int number);
 
 	bool CheckBuildingPos();
-	void UpdateWalkabilityMap(bool isWalkable);
+	Collider GetCollider(pair<int, int> dimensions, pair<int,int> topTile_pos);
+	void UpdateWalkabilityMap(bool isWalkable, Collider collider);
 	bool DeleteEntity(Entity* entity);
 	
 public:
@@ -105,13 +100,20 @@ public:
 	uint last_currentUI = 0;
 	uint currentUI = 0;
 	int actual_capacity = 0;
+  
+	//bool entityAdded;
+	//Entity* previewEntity;
 
+	vector<SDL_Rect> preview_rects;
 
 	SDL_Rect LiveBar;
+	int health, max_health;
 
 	// Live of TOWN HALL
-	int live = 0;
-	Entity* TownHall = nullptr;
+	//int live = 0;
+	
+	//index for testing previews
+	int curr = 1;
 
 	GamePad gamepad;
 
@@ -122,21 +124,17 @@ public:
 	list<Building*> buildings;
 	list<Troop*> troops;
 
-
 	int SoldiersCreated = 0;
 	int TankmansCreated = 0;
 	int InfiltratorsCreated = 0;
 	int EngineersCreated = 0;
 	int WarHoundsCreated = 0;
 
-
 	//---
 	list<UI_Element*> UI_elements;
 
-
 	list<UI_Element*>::iterator focus;
 	list<UI_Element*>::iterator last_element;
-
 
 	// --- UI --- //
 	

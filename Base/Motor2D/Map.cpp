@@ -49,45 +49,33 @@ void Map::Draw(float dt)
 	if (map_loaded == false)
 		return;
 
-	//testing image blit
-
-	/*pair <int, int> position_back_image;
-
-	
-	position_back_image = WorldToMap(App->render->camera.x, App->render->camera.y);
-
-*/
 	App->render->Blit(imagemap, -2900, 0, &rect_for_back_image, SDL_FLIP_NONE);
 
-
 	list<Tiles>::const_iterator iterator;
-
 	for (iterator = TileList.begin(); iterator != TileList.end(); ++iterator)
 	{
-
 		App->render->Blit((*iterator).texture, (*iterator).x, (*iterator).y, &(*iterator).Tile_rect, SDL_FLIP_NONE);
-	
 	}
 
 	
 
-	//testing animation uncoment to blit example
-	App->render->Blit(App->scene->spritesheet123, data.main_building.first, data.main_building.second, &idleRight123->GetCurrentFrame(dt));
-	App->render->Blit(App->scene->spritesheet123, data.main_building2.first, data.main_building2.second, &idleRight123->GetCurrentFrame(dt));
-	
-	App->render->Blit(App->scene->spritesheet123, data.main_tower.first, data.main_tower.second, &idleRight123->GetCurrentFrame(dt));
-	App->render->Blit(App->scene->spritesheet123, data.main_tower2.first, data.main_tower2.second, &idleRight123->GetCurrentFrame(dt));
+	////testing animation uncoment to blit example
+	//App->render->Blit(App->scene->spritesheet123, data.main_building.first, data.main_building.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.main_building2.first, data.main_building2.second, &idleRight123->GetCurrentFrame(dt));
+	//
+	//App->render->Blit(App->scene->spritesheet123, data.main_tower.first, data.main_tower.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.main_tower2.first, data.main_tower2.second, &idleRight123->GetCurrentFrame(dt));
 
-	App->render->Blit(App->scene->spritesheet123, data.special_skill.first, data.special_skill.second, &idleRight123->GetCurrentFrame(dt));
-	App->render->Blit(App->scene->spritesheet123, data.special_skill2.first, data.special_skill2.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.special_skill.first, data.special_skill.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.special_skill2.first, data.special_skill2.second, &idleRight123->GetCurrentFrame(dt));
 
-	App->render->Blit(App->scene->spritesheet123, data.tower.first, data.tower.second, &idleRight123->GetCurrentFrame(dt));
-	App->render->Blit(App->scene->spritesheet123, data.tower2.first, data.tower2.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.tower.first, data.tower.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.tower2.first, data.tower2.second, &idleRight123->GetCurrentFrame(dt));
 
-	App->render->Blit(App->scene->spritesheet123, data.barrack.first, data.barrack.second, &idleRight123->GetCurrentFrame(dt));
-	App->render->Blit(App->scene->spritesheet123, data.barrack2.first, data.barrack2.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.barrack.first, data.barrack.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.barrack2.first, data.barrack2.second, &idleRight123->GetCurrentFrame(dt));
 
-	App->render->Blit(App->scene->spritesheet123, data.mid_building.first, data.mid_building.second, &idleRight123->GetCurrentFrame(dt));
+	//App->render->Blit(App->scene->spritesheet123, data.mid_building.first, data.mid_building.second, &idleRight123->GetCurrentFrame(dt));
 	
 }
 
@@ -223,21 +211,13 @@ bool Map::CleanUp()
 	// Clean up the pugui tree
 	map_file.reset();
 
-
-	// Remove all layers
-	list<Tiles>::iterator item3 = TileList.begin();
-	//while (item3 != TileList.end())
-	//{
-	//	if ((*item)->texture != nullptr)
-	//	{
-	//		(*item)->texture = nullptr;
-	//	}
-	//	item3++;
-	//	//delete *item3;
-
-	//}
+	// clear list
 	TileList.clear();
 
+	// clear list 
+	// Remove all layers
+	data.wall_list.clear();
+	data.wall_list2.clear();
 	
 
 	return true;
@@ -474,7 +454,7 @@ bool Map::LoadMap()
 			{
 				data.tower2.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
 				data.tower2.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
-			data.tower2 = MapToWorld(data.tower2.first, data.tower2.second);
+				data.tower2 = MapToWorld(data.tower2.first, data.tower2.second);
 			}
 			else if (tmp == "barrack")
 			{
@@ -493,7 +473,6 @@ bool Map::LoadMap()
 				data.mid_building.first = mapIterator.child("object").attribute("x").as_int()/ data.tile_height;
 				data.mid_building.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
 				data.mid_building =MapToWorld(data.mid_building.first, data.mid_building.second);
-				
 			}
 			else if (tmp == "bush")
 			{
@@ -556,7 +535,7 @@ bool Map::LoadMap()
 				}
 			}
 			else if (tmp == "soviet_flag")
-				{
+			{
 				for (pugi::xml_node flagIterator = mapIterator.child("object"); flagIterator; flagIterator = flagIterator.next_sibling("object"))
 				{
 					decoration_coordinates * flag = new decoration_coordinates();
@@ -565,6 +544,28 @@ bool Map::LoadMap()
 					flag->name = tmp;
 
 					data.decoration_list.push_back(flag);
+        }
+      }
+			else if (tmp == "walls")
+			{
+				for (pugi::xml_node wallIterator = mapIterator.child("object"); wallIterator; wallIterator = wallIterator.next_sibling("object"))
+				{
+					pair<int, int> wall_pos;
+					wall_pos.first = wallIterator.attribute("x").as_int() / data.tile_height;
+					wall_pos.second = wallIterator.attribute("y").as_int() / data.tile_height;
+
+					data.wall_list.push_back(wall_pos);
+				}
+			}
+			else if (tmp == "walls2")
+			{
+				for (pugi::xml_node wallIterator = mapIterator.child("object"); wallIterator; wallIterator = wallIterator.next_sibling("object"))
+				{
+					pair<int, int> wall_pos;
+					wall_pos.first = wallIterator.attribute("x").as_int() / data.tile_height;
+					wall_pos.second = wallIterator.attribute("y").as_int() / data.tile_height;
+
+					data.wall_list2.push_back(wall_pos);
 				}
 			}
 		}
@@ -774,7 +775,6 @@ void Map::LoadTileList()
 		{
 			if (layer->properties.Get("Visible") == 1)
 			{
-
 				for (int y = 0; y < data.height; y++)
 				{
 					for (int x = data.width; x >= 0; x--)
@@ -799,24 +799,17 @@ void Map::LoadTileList()
 
 							TileList.push_back(Tile);
 							//}
-
 						}
 					}
 				}
-
-
-			}
-			
+			}			
 		}
-	}
-
-	
+	}	
 }
 
-
-void Map::DrawWakability(float dt)
+void Map::DrawWalkability(float dt)
 {
-	BROFILER_CATEGORY("Wakability Draw", Profiler::Color::CadetBlue);
+	BROFILER_CATEGORY("Walkability Draw", Profiler::Color::CadetBlue);
 
 	if (map_loaded == false)
 		return;
@@ -854,16 +847,11 @@ void Map::DrawWakability(float dt)
 						}
 						int x = (App->player1->isBuilding) ? 0 : data.width / 2;
 					}
+					return;
 				}
-				
 			}
 		}
-
-
 	}
-	
-
-
 }
 
 void Map::DrawDecorations(float dt)

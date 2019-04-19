@@ -13,8 +13,10 @@ DefenseAoe::~DefenseAoe()
 {
 }
 
-DefenseAoe::DefenseAoe(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::DEFENSE_AOE, isPlayer1, pos)
+DefenseAoe::DefenseAoe(bool isPlayer1, pair<int, int> pos, Collider collider) : Building(Entity::entityType::DEFENSE_AOE, isPlayer1, pos, collider)
 {
+	string path = "animation/" + name + ".tmx";
+	LoadAnimations(isPlayer1, path.data());
 }
 
 bool DefenseAoe::Start()
@@ -56,5 +58,9 @@ bool DefenseAoe::Is_inRange(pair<int, int> pos, int &distance) {
 	distance = (int)(sqrt(pow(vector_distance.first, 2) + pow(vector_distance.second, 2)));
 
 	return distance <= range;
+}
+
+void DefenseAoe::LoadAnimations(bool isPlayer1, string path)
+{
 }
 

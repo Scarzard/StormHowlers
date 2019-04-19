@@ -1,3 +1,6 @@
+#include "Defs.h"
+#include "Log.h"
+
 #include "EntityManager.h"
 #include "App.h"
 #include "Audio.h"
@@ -22,10 +25,12 @@
 
 #include "Brofiler\Brofiler.h"
 #include "PugiXml/src/pugixml.hpp"
+#include <cmath>
+
 
 EntityManager::EntityManager()
 {
-	name.append("EntityManager");
+	name.append("entitymanager");
 }
 
 EntityManager::~EntityManager()
@@ -35,8 +40,16 @@ EntityManager::~EntityManager()
 bool EntityManager::Awake(pugi::xml_node &config)
 {
 	bool ret = true;
+
+	/*pugi::xml_document	config_file;
+	pugi::xml_node config;
+	config = App->LoadConfig(config_file);
+	config = config.child("entitymanager").child(s_type).child(&name[0]);*/
+
 	folder.append(config.child("folder").child_value());
 	texture_path = config.child("sprite_sheet").attribute("source").as_string();
+	entitiesTextures = vector<SDL_Texture*>(Entity::entityType::WAR_HOUND, nullptr);
+
 
 	return ret;
 }
@@ -44,7 +57,15 @@ bool EntityManager::Awake(pugi::xml_node &config)
 bool EntityManager::Start()
 {
 	bool ret = true;
-	texture = App->tex->Load(PATH(folder.data(), texture_path.data()));
+	for (int i = Entity::entityType::TOWNHALL; i < Entity::entityType::WAR_HOUND; i++) {
+		string n = GetName(Entity::entityType(i));
+		n += "_anim.png";
+
+		if (i == Entity::entityType::TANKMAN || i == Entity::entityType::DEFENSE_AOE)
+			entitiesTextures[i] = nullptr;
+		else
+			entitiesTextures[i] = App->tex->Load(PATH(folder.data(), n.data()));
+	}
 
 	return ret;
 }
@@ -134,7 +155,7 @@ bool EntityManager::PostUpdate()
 
 
 	}
-	
+
 	return ret;
 }
 
@@ -143,6 +164,14 @@ bool EntityManager::CleanUp()
 	App->tex->UnLoad(texture);
 	entity_list.clear();
 
+	for (int i = Entity::entityType::TOWNHALL; i < Entity::entityType::WAR_HOUND; i++) {
+
+			if (entitiesTextures[i] = nullptr) {
+				App->tex->UnLoad(entitiesTextures[i]);
+			}
+	}
+
+	//Building::CleanUp();
 	return true;
 }
 
@@ -205,96 +234,221 @@ bool EntityManager::Draw(float dt) //sprite ordering
 {
 	bool ret = true;
 
-	/*list<Entity*>::iterator tmp = entity_list.begin();
+	list<Entity*>::iterator tmp = entity_list.begin();
 
 	while (tmp != entity_list.end())
 	{
-		//App->render->Blit(texture, (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
+
+		//if (entitiesTextures[(*tmp)->type] != nullptr) {
+
+		//	int posy = (*tmp)->position.second - (*tmp)->Current_Animation->GetCurrentFrame(dt).h;// - ((*tmp)->Current_Animation->GetCurrentFrame(dt).h - (*tmp)->position.second);
+		//	App->render->Blit(entitiesTextures[(*tmp)->type],  (*tmp)->position.first ,posy, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
+		//	
+		//	pair<int,int> pos = App->map->WorldToMap((*tmp)->position.first /*- (*tmp)->size.first * App->map->data.tile_width*0.5f*/, (*tmp)->position.second - (*tmp)->size.second*App->map->data.tile_height*0.5f);
+		//	pos = App->map->MapToWorld(pos.first, pos.second);
+
+		//	pair<int, int> pos = { (*tmp)->position.first,(*tmp)->position.second - (*tmp)->offset };
+		//	App->render->Blit(entitiesTextures[(*tmp)->type], pos.first, pos.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
+
+		//}
+		App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
+
+		//--- Draw Life Bar
+		if ((*tmp)->health < (*tmp)->health_lv[(*tmp)->level] && (*tmp)->health > 0)
+		{
+			SDL_Rect rect, rect_bg;
+
+			rect_bg.w = 30;
+			rect.w = rect_bg.w * (*tmp)->health / (*tmp)->health_lv[(*tmp)->level];
+
+			rect_bg.h = rect.h = 5;
+			rect_bg.x = rect.x = (*tmp)->position.first + ((*tmp)->Current_Animation->GetCurrentFrame(dt).w / 2) - (rect_bg.w / 1.5);
+			rect_bg.y = rect.y = (*tmp)->position.second - 10;
+
+			App->render->DrawQuad(rect_bg, 255, 0, 0, 255); //background (red)
+			App->render->DrawQuad(rect, 0, 255, 0, 255); //life (green)
+		}
+
 		tmp++;
-	}*/
+	}
+
+
 	return ret;
 }
 
-Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<int, int> position)
+Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<int, int> position, Collider collider)
 {
 	Entity* tmp = nullptr;
 
 	switch (type)
 	{
 	case Entity::entityType::TOWNHALL:
-		tmp = new Townhall(isPlayer1, position);
+		tmp = new Townhall(isPlayer1, position, collider);
 		break;
 
 	case Entity::entityType::MAIN_DEFENSE:
-		tmp = new MainDefense(isPlayer1, position);
+		tmp = new MainDefense(isPlayer1, position, collider);
 		break;
 
 	case Entity::entityType::COMMAND_CENTER:
-		tmp = new CmdCenter(isPlayer1, position);
-		break;
-
-	case Entity::entityType::WALLS:
-		tmp = new Walls(isPlayer1, position);
+		tmp = new CmdCenter(isPlayer1, position, collider);
 		break;
 
 	case Entity::entityType::DEFENSE_AOE:
-		tmp = new DefenseAoe(isPlayer1, position);
+		tmp = new DefenseAoe(isPlayer1, position, collider);
 		break;
 
 	case Entity::entityType::DEFENSE_TARGET:
-		tmp = new DefenseTarget(isPlayer1, position);
+		tmp = new DefenseTarget(isPlayer1, position, collider);
 		break;
 
 	case Entity::entityType::MINES:
-		tmp = new Mines(isPlayer1, position);
+		tmp = new Mines(isPlayer1, position, collider);
 		break;
 
 	case Entity::entityType::BARRACKS:
-		tmp = new Barracks(isPlayer1, position);
+		tmp = new Barracks(isPlayer1, position, collider);
 		break;
+
 	case Entity::entityType::SOLDIER:
-		tmp = new Soldier(isPlayer1, position);
+		tmp = new Soldier(isPlayer1, position, collider);
 		break;
+
 	case Entity::entityType::ENGINEER:
-		//tmp = new Engineer(isPlayer1, position);
+		//tmp = new Engineer(isPlayer1, position, collider);
 		break;
+
 	case Entity::entityType::TANKMAN:
-		//tmp = new Tankman(isPlayer1, position);
+		//tmp = new Tankman(isPlayer1, position, collider);
 		break;
+
 	case Entity::entityType::INFILTRATOR:
-		//tmp = new Infiltrator(isPlayer1, position);
+		//tmp = new Infiltrator(isPlayer1, position, collider);
 		break;
+
 	case Entity::entityType::WAR_HOUND:
-		//tmp = new War_hound(isPlayer1, position);
+		//tmp = new War_hound(isPlayer1, position, collider);
 		break;
 	}
 
 	if (tmp)
 	{
 		entity_list.push_back(tmp); // add to main entity list
+		entity_list = OrderEntities(entity_list);
 		if (isPlayer1 == true)
 		{
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building
 			{
 				App->player1->buildings.push_back((Building*)tmp);
+				App->player1->UpdateWalkabilityMap(false, collider);
 			}
 			else if (type > Entity::entityType::BARRACKS) //if troops
 			{
 				App->player1->troops.push_back((Troop*)tmp);
 			}
+
+			App->player1->collider.dimensions.first = tmp->size.first;
+			App->player1->collider.dimensions.second = tmp->size.second;
 		}
 		else // Player 2 -------------------------------
 		{
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS)
 			{
 				App->player2->buildings.push_back((Building*)tmp);
+				App->player2->UpdateWalkabilityMap(false, collider);
 			}
 			else if (type > Entity::entityType::BARRACKS)
 			{
 				App->player2->troops.push_back((Troop*)tmp);
 			}
+
+			App->player2->collider.dimensions.first = tmp->size.first;
+			App->player2->collider.dimensions.second = tmp->size.second;
 		}
 	}
+
+
 	return tmp;
+
 }
 
+char* EntityManager::GetName(Entity::entityType type) {
+	switch (type)
+	{
+	case Entity::entityType::TOWNHALL:
+		return"Townhall";
+		break;
+	case Entity::entityType::MAIN_DEFENSE:
+		return"sentrygun";
+		break;
+	case Entity::entityType::COMMAND_CENTER:
+		return"CommandCenter";
+		break;
+	case Entity::entityType::WALLS:
+		return"Walls";
+		break;
+	case Entity::entityType::DEFENSE_AOE:
+		return"defense_aoe";
+		break;
+	case Entity::entityType::DEFENSE_TARGET:
+		return"Tesla";
+		break;
+	case Entity::entityType::MINES:
+		return"GoldMine";
+		break;
+	case Entity::entityType::BARRACKS:
+		return"Barracks";
+		break;
+	case Entity::entityType::SOLDIER:
+		return"BasicSoldier";
+		break;
+	case Entity::entityType::TANKMAN:
+		return"tankman";
+		break;
+	case Entity::entityType::INFILTRATOR:
+		return"infiltrator";
+		break;
+	case Entity::entityType::ENGINEER:
+		return"engineer";
+		break;
+	case Entity::entityType::WAR_HOUND:
+		return"war_hound";
+		break;
+	default:
+		break;
+	}
+}
+
+list<Entity*> EntityManager::OrderEntities(list<Entity*> List)
+{
+	list<Entity*> ListOrder;
+	ListOrder.push_back(List.front()); // push first element of List to OrderList
+	bool found = false;
+
+	for (list<Entity*>::iterator tmp = List.begin(); tmp != List.end(); tmp++) // traverse entity list (unordered)
+	{
+		for (list<Entity*>::iterator tmp2 = ListOrder.begin(); tmp2 != ListOrder.end(); tmp2++) // traverse Ordered List
+		{
+			if (GetDepth(*tmp) < GetDepth(*tmp2)) // if tmp is further than tmp2
+			{
+				ListOrder.insert(tmp2, *tmp); // add tmp in front of tmp2
+				found = true;
+				break;
+			}
+		}
+		if (found == false) // if tmp is the closest
+		{
+			ListOrder.push_back(*tmp); // push to last place
+		}
+		found = false;
+	}
+
+	return ListOrder;
+}
+
+int EntityManager::GetDepth(Entity* entity)
+{
+	pair<int,int> postemp = App->map->WorldToMap(entity->position.first, entity->position.second); // get map coords
+
+	return (postemp.first + postemp.second); // return depth
+}

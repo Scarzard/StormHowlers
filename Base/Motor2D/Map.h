@@ -9,6 +9,7 @@
 
 
 struct SDL_Texture;
+
 struct Tiles
 {
 	SDL_Texture* texture;
@@ -163,6 +164,8 @@ struct MapData
 	pair<int, int> mid_building;
 
 	list<decoration_coordinates*> decoration_list;
+	list<pair<int,int>> wall_list;
+	list<pair<int,int>> wall_list2;
 };
 
 // ----------------------------------------------------
@@ -199,7 +202,7 @@ public:
 	void LoadTileList();
 
 	//Draw wakability
-	void DrawWakability(float dt);
+	void DrawWalkability(float dt);
 
 	void DrawDecorations(float dt);
 	Animation* allied_flag_anim = nullptr;

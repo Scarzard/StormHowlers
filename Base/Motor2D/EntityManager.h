@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Entity.h"
+#include "Walls.h"
 
 class Entity;
 
@@ -20,8 +21,12 @@ public:
 
 	bool Draw(float dt);
 
-	Entity* AddEntity(bool player1, Entity::entityType type, pair<int,int> position);
+	Entity* AddEntity(bool player1, Entity::entityType type, pair<int,int> position, Collider collider);
+	char * GetName(Entity::entityType type);
 	void DeleteAllEntities();
+
+	list<Entity*> EntityManager::OrderEntities(list<Entity*> List);
+	int EntityManager::GetDepth(Entity* entity);
 
 public:
 	string			folder;
@@ -29,6 +34,7 @@ public:
 	SDL_Texture*	texture;
 
 	list<Entity*>	entity_list;
+	vector<SDL_Texture*> entitiesTextures;
 
 	bool draw_path = false;
 	bool godmode = false;

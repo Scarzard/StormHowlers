@@ -8,12 +8,12 @@ class Building   : public Entity
 public:
 
 	Building() {};
-	Building(entityType type, bool isPlayer1, pair<int, int> pos) : Entity(type, isPlayer1, pos) {
+	Building(entityType type, bool isPlayer1, pair<int, int> pos, Collider collider) : Entity(type, isPlayer1, pos, collider) {
 		pugi::xml_document	config_file;
 		pugi::xml_node config;
 		config = App->LoadConfig(config_file);
 		config = config.child("entitymanager").child("buildings").child(&name[0]);
-
+		
 		capacity_lv.push_back(config.child("capacity").attribute("lvl1").as_uint(0));
 		capacity_lv.push_back(config.child("capacity").attribute("lvl2").as_uint(0));
 		capacity_lv.push_back(config.child("capacity").attribute("lvl3").as_uint(0));
@@ -25,14 +25,16 @@ public:
 		capacity = capacity_lv[level];
 		production = production_lv[level];
 
-		//DEBUG PURPOSES
+		////DEBUG PURPOSES
+		//collider = { 0,0,59,28 };
+		//if (!isPlayer1)
+		//	collider = { 60,0,59,28 };
 
-		collider = { 0,0,59,28 };
-		if (!isPlayer1)
-			collider = { 60,0,59,28 };
 
 	}
 	~Building() {};
+
+	void LoadAnimations(bool isPlayer1, string path) {};
 
 	void CleanUp() {
 		production_lv.clear();
@@ -45,8 +47,8 @@ public:
 	}
 
 	bool Update(float dt) {
-		SDL_Rect r = { position.first, position.second,size.first,size.second*0.5 };
-		SDL_RenderCopy(App->render->renderer, tex, &collider, &r);
+		//SDL_Rect r = { position.first, position.second,size.first,size.second*0.5 };
+		//SDL_RenderCopy(App->render->renderer, tex, &collider, &r);
 		return true;
 	}
 

@@ -11,9 +11,10 @@ DefenseTarget::~DefenseTarget()
 {
 }
 
-DefenseTarget::DefenseTarget(bool isPlayer1, pair<int, int> pos) : Building(entityType::DEFENSE_TARGET, isPlayer1, pos)
+DefenseTarget::DefenseTarget(bool isPlayer1, pair<int, int> pos, Collider collider) : Building(entityType::DEFENSE_TARGET, isPlayer1, pos, collider)
 {
-	
+	string path = "animation/" + name + ".tmx";
+	LoadAnimations(isPlayer1, path.data());
 
 }
 
@@ -35,46 +36,55 @@ bool DefenseTarget::PreUpdate()
 bool DefenseTarget::Update(float dt)
 {
 	BROFILER_CATEGORY("DefenseTarget Update", Profiler::Color::SandyBrown);
-
-	// Moves building to mouse position 
-	int x = 0;
-	int y = 0;
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE)) {
-
-		App->input->GetMousePosition(x, y);
-		position.first = x;
-		position.second = y;
+	
+	if (fromPlayer1 == true)
+	{
+		position = App->map->data.main_tower;
 	}
+	else
+	{
+		position = App->map->data.main_tower2;
+	}
+
+	//// Moves building to mouse position 
+	//int x = 0;
+	//int y = 0;
+	//if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE)) {
+
+	//	App->input->GetMousePosition(x, y);
+	//	position.first = x;
+	//	position.second = y;
+	//}
 
 	// Checks where to look for enemies
-	Player* tmpMod = (fromPlayer1) ? App->player2 : App->player1;
-	list<Troop*>::iterator tmp = tmpMod->troops.begin();
-	
-	// Finds the closest one
-	Troop* closest = *tmpMod->troops.begin();
-	if (closest != nullptr) {
-		int min_distance;
-		int d = 0;
+	//Player* tmpMod = (fromPlayer1) ? App->player2 : App->player1;
+	//list<Troop*>::iterator tmp = tmpMod->troops.begin();
+	//
+	//// Finds the closest one
+	//Troop* closest = *tmpMod->troops.begin();
+	//if (closest != nullptr) {
+	//	int min_distance;
+	//	int d = 0;
 
-		Is_inRange(closest->position, min_distance);
+	//	Is_inRange(closest->position, min_distance);
 
-		while (tmp != tmpMod->troops.end())
-		{
-			if (Is_inRange((*tmp)->position, d) && min_distance >= d) {
-				closest = *tmp;
-				min_distance = d;
-			}
-			tmp++;
-		}
+	//	while (tmp != tmpMod->troops.end())
+	//	{
+	//		if (Is_inRange((*tmp)->position, d) && min_distance >= d) {
+	//			closest = *tmp;
+	//			min_distance = d;
+	//		}
+	//		tmp++;
+	//	}
 
-		// Shoots the closest one if in range
-		if (timer.ReadSec() >= rate_of_fire && Is_inRange(closest->position, d))
-		{
-			closest->TakeDamage(damage_lv[level]);
-			timer.Start();
-			//LOG("Distance: %d", d);
-		}
-	}
+	//	// Shoots the closest one if in range
+	//	if (timer.ReadSec() >= rate_of_fire && Is_inRange(closest->position, d))
+	//	{
+	//		closest->TakeDamage(damage_lv[level]);
+	//		timer.Start();
+	//		//LOG("Distance: %d", d);
+	//	}
+	//}
 	Building::Update(dt);
 	return true;
 }
@@ -92,5 +102,16 @@ bool DefenseTarget::Is_inRange(pair<int, int> pos, int &distance) {
 	distance = (int)(sqrt(pow(vector_distance.first, 2) + pow(vector_distance.second, 2)));
 	
 	return distance <= range;
+}
+
+void DefenseTarget::LoadAnimations(bool isPlayer1, string path)
+{
+	building = building->LoadAnimation(path.data(), (isPlayer1) ? "red" : "blue");
+	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "red" : "blue");
+	level1->speed = 3;
+	building->speed = 3;
+	building->loop = false;
+	level1->loop = false;
+	Current_Animation = building;
 }
 

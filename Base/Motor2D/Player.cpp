@@ -39,8 +39,23 @@ bool Player::Start()
 	UI_troop_type = 9;
 
 	isBuilding = isDeploying = isCasting = Y_pressed = isPaused = false;
+  
 	currentTile = { 13,0 };
-	
+
+	preview_rects = vector<SDL_Rect>(Entity::entityType::WAR_HOUND, { 0,0,0,0 });
+
+	pugi::xml_document	config_file;
+	pugi::xml_node config;
+	config = App->LoadConfig(config_file);
+	config = config.child("entitymanager").child("rect_previews").first_child();
+
+	for (int i = Entity::entityType::TOWNHALL; i <= Entity::entityType::WAR_HOUND; i++) {
+		preview_rects[i].x = config.attribute((isPlayer1) ? "rx" : "x").as_int(0);
+		preview_rects[i].y = config.attribute((isPlayer1) ? "ry" : "y").as_int(0);
+		preview_rects[i].w = config.attribute("w").as_int(0);
+		preview_rects[i].h = config.attribute("h").as_int(0);
+		config = config.next_sibling();
+	}
 
 	return true;
 }
@@ -49,7 +64,20 @@ bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("Player Update", Profiler::Color::Black);
 
-	if (!App->scene->endgame)
+	if (!App->scene->endgame){
+    
+	//Preview all player1 entities with M
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+		isBuilding = !isBuilding;
+	}
+
+	if (isBuilding && App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
+		isPlayer1 = true;
+		type = (Entity::entityType)((curr++) % (int)Entity::entityType::TANKMAN);
+	}
+
+	//--- Press X (Square)
+	if (gamepad.Controller[BUTTON_X] == KEY_DOWN)
 	{
 		//--- Press X (Square)
 		if (gamepad.Controller[BUTTON_X] == KEY_DOWN)
@@ -59,7 +87,6 @@ bool Player::Update(float dt)
 
 		// Button with focus changes state to HOVER 
 		if (currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::ENDGAME && currentUI != CURRENT_UI::CURR_WIN_SCREEN && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
-
 		{
 			(*focus)->state = UI_Element::State::HOVER;
 		}
@@ -104,6 +131,38 @@ bool Player::Update(float dt)
 
 		// --TEST-- from GENERAL UI to CREATE TROOPS UI (only for barracks)
 		if (gamepad.Controller[BACK] == KEY_DOWN && currentUI == CURRENT_UI::CURR_GENERAL && App->scene->active)
+    {
+	// Button with focus changes state to HOVER 
+	if (currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
+	{
+		(*focus)->state = UI_Element::State::HOVER;
+	}
+
+	// Button A to clcik a button
+	if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
+	{
+		if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
+			(*focus)->state = UI_Element::State::LOGIC;
+	}
+
+	if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE)
+	{
+		if (!isBuilding)
+			(*focus)->state = UI_Element::State::IDLE;
+		if (App->scene->active)
+			DoLogic((*focus));
+		else
+			App->main_menu->DoLogic((*focus));
+
+		if ((*focus) == Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
+			UpdateFocus(currentUI);
+	}
+
+	if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
+	{
+		(*focus)->state = UI_Element::State::IDLE;
+
+		if (currentUI == CURR_BUILD)
 		{
 			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
 			UpdateVisibility();
@@ -168,9 +227,7 @@ bool Player::Update(float dt)
 			currentUI = CURRENT_UI::CURR_GENERAL;
 			UpdateVisibility();
 			UpdateFocus(currentUI);
-		}
-
-		
+		}		
 
 		// Button A to clcik a button
 		if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
@@ -178,7 +235,15 @@ bool Player::Update(float dt)
 			if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
 				(*focus)->state = UI_Element::State::LOGIC;
 		}
+	}
 
+	if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
+	{
+		if (App->scene->active)
+			currentUI = CURRENT_UI::CURR_MAIN;
+		else if (App->main_menu->active)
+			currentUI = CURRENT_UI::CURR_MAIN_MENU;
+    
 		// Do button action
 		if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
 		{
@@ -248,6 +313,8 @@ bool Player::Update(float dt)
 					UpdateFocus(currentUI);
 				}
 			}
+      // BUILDING MERGE LINE BELOW
+			focus = GetUI_Element(currentUI)->children.begin();
 		}
 
 		// Enter to UI ingame Menus
@@ -280,8 +347,6 @@ bool Player::Update(float dt)
 				LB_img->visible = true;
 			}
 		}
-		
-
 		// Travel through the different buttons
 		if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
@@ -390,7 +455,8 @@ bool Player::Update(float dt)
 			}
 			
 		}
-	}
+	
+  }
 
 	
 	if (App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_DOWN)
@@ -398,18 +464,17 @@ bool Player::Update(float dt)
 		App->scene->ResetGame();
 	}
 
-
 	//--- Building ---------------------
 	if (isBuilding && !App->scene->pause)
 	{
 		//--- Movement
-		if (gamepad.Controller[JOY_UP] == KEY_REPEAT || gamepad.Controller[UP] == KEY_DOWN || 
+		if (gamepad.Controller[JOY_UP] == KEY_REPEAT || gamepad.Controller[UP] == KEY_DOWN ||
 			App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT)
 		{
 			currentTile.second--;
 		}
-		else if (gamepad.Controller[JOY_DOWN] == KEY_REPEAT || gamepad.Controller[DOWN] == KEY_DOWN || 
-		App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
+		else if (gamepad.Controller[JOY_DOWN] == KEY_REPEAT || gamepad.Controller[DOWN] == KEY_DOWN ||
+			App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
 		{
 			currentTile.second++;
 		}
@@ -427,7 +492,7 @@ bool Player::Update(float dt)
 
 		//--- Limits
 		//need to modify, when player1 is building we must chehk its width
-		if (isPlayer1==true)
+		if (isPlayer1 == true)
 		{
 			if (currentTile.first <= x_limits_player1.first) //left limit
 			{
@@ -435,12 +500,12 @@ bool Player::Update(float dt)
 			}
 			else if (currentTile.first + collider.dimensions.first >= x_limits_player1.second) //right limit
 			{
-				currentTile.first = x_limits_player1.second- collider.dimensions.first;
+				currentTile.first = x_limits_player1.second - collider.dimensions.first;
 			}
 
-			if (currentTile.second < y_limits_player1.first ) //up limit
+			if (currentTile.second < y_limits_player1.first) //up limit
 			{
-				currentTile.second = y_limits_player1.first ;
+				currentTile.second = y_limits_player1.first;
 			}
 			else if (currentTile.second + collider.dimensions.second >= y_limits_player1.second) //down limit
 			{
@@ -451,9 +516,9 @@ bool Player::Update(float dt)
 		{
 			if (currentTile.first + collider.dimensions.first >= x_limits_player2.second) // right limit
 			{
-				currentTile.first = x_limits_player2.second-collider.dimensions.first;
+				currentTile.first = x_limits_player2.second - collider.dimensions.first;
 			}
-			else if (currentTile.first  <= x_limits_player2.first) //left limit
+			else if (currentTile.first <= x_limits_player2.first) //left limit
 			{
 				currentTile.first = x_limits_player2.first;
 			}
@@ -469,39 +534,53 @@ bool Player::Update(float dt)
 
 		}
 
+
 		//--- Press A
 		App->map->debug = true;
 		if (CheckBuildingPos() == true) // Can build
 		{
+			//Preview entity to spawn
+			pair<int, int> pos;
+			App->input->GetMousePosition(pos.first, pos.second);
+			pos = App->render->ScreenToWorld(pos.first, pos.second);
+			pos.first--;
+
+			App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &preview_rects[type]);
+
+
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				//play fx (build);
-				App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first - offset.first, collider.tiles[0].second - offset.second });
-				UpdateWalkabilityMap(false);
+				App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ },collider);
+
+				entityAdded = false;
+				isBuilding = false;
+				currentUI == CURRENT_UI::CURR_GENERAL;
 			}
 		}
 		else
 		{
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
+				if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building
+				{
+					//buildings.pop_back();
+
+				}
+				else if (type > Entity::entityType::BARRACKS) //if troops
+				{
+					//troops.pop_back();
+				}
+				entityAdded = true;
+				isBuilding = false;
+				currentUI == CURRENT_UI::CURR_GENERAL;
+
 				//play fx (error);
 			}
 		}
 	}
 
-	// DEBUG PURPOSES DO NOT DELETE PLEASE
-	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT) {
 
-		
-
-		isBuilding = true;
-		type = Entity::entityType::DEFENSE_TARGET;
-		isPlayer1 = true;
-		collider.dimensions = { 3,4 };
-		currentUI == CURRENT_UI::CURR_BUILD;
-		//CheckBuildingPos();
-		
-	}
 
 	return true;
 }
@@ -509,7 +588,6 @@ bool Player::Update(float dt)
 bool Player::PostUpdate()
 {
 	BROFILER_CATEGORY("Player PostUpdate", Profiler::Color::Black);
-
 
 	return true;
 }
@@ -562,24 +640,20 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 	bool ret = true;
 
 	pair<int, int> pos, real_pos;
-
 	pos = currentTile;
 
 	if (gamepad.Connected == true)
 	{
 		pos = currentTile;
-
 	}
 	else
 	{
 		App->input->GetMousePosition(pos.first, pos.second);
-		pos = App -> render->ScreenToWorld(pos.first, pos.second);
+		pos = App->render->ScreenToWorld(pos.first, pos.second);
+
 		pos = App->map->WorldToMap(pos.first, pos.second);
 		pos.first--;
 	}
-	
-	
-	
 
 
 	// Check what tiles is the collider occupying
@@ -598,7 +672,7 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 		pos.second -= cont + 1;
 	}
 
-	// compare tiles with walkability map
+	// Compare tiles with walkability map
 	for (int i = 0; i < collider.tiles.size(); i++)
 	{
 		pos = App->map->WorldToMap(collider.tiles[i].first, collider.tiles[i].second);
@@ -623,16 +697,39 @@ bool Player::CheckBuildingPos() // Check collider with walkability map
 	return ret;
 }
 
-void Player::UpdateWalkabilityMap(bool isWalkable) //update walkable tiles
+Collider Player::GetCollider(pair<int, int> dimensions, pair<int, int> topTile_pos)
+{
+	int cont = 0;
+	pair<int, int> real_pos;
+
+	Collider new_collider;
+	new_collider.dimensions = dimensions;
+
+	for (int i = 0; i < new_collider.dimensions.first; i++)
+	{
+		for (int j = 0; j < new_collider.dimensions.second; j++)
+		{
+			real_pos = App->map->MapToWorld(topTile_pos.first, topTile_pos.second);
+			new_collider.tiles.push_back(real_pos);
+			topTile_pos.second++;
+			cont = j;
+		}
+		topTile_pos.first++;
+		topTile_pos.second -= cont + 1;
+	}
+	return new_collider;
+}
+
+
+void Player::UpdateWalkabilityMap(bool isWalkable, Collider collider) //update walkable tiles
 {
 	for (int i = 0; i < collider.tiles.size(); ++i)
 	{
-		pair <int,int> pos = App->map->WorldToMap(collider.tiles[i].first, collider.tiles[i].second);
+		pair <int, int> pos = App->map->WorldToMap(collider.tiles[i].first, collider.tiles[i].second);
 		if (App->pathfinding->GetTileAt(pos) != isWalkable)
 		{
 			App->pathfinding->ChangeWalkability(pos, isWalkable);
 			App->map->walkability_layer->Set(pos.first, pos.second, 1);
-
 		}
 	}
 }
@@ -675,7 +772,7 @@ void Player::UpdateFocus(uint data)
 		last_element = Deploy_UI->children.end();
 		last_element--;
 		break;
-
+      
 	case::Player::CURRENT_UI::CURR_PAUSE:
 		focus = Pause_UI->children.begin();
 		last_element = Pause_UI->children.end();
@@ -702,7 +799,7 @@ void Player::GotoPrevWindows(uint data)
 {
 	switch (data)
 	{
-	case Player::CURRENT_UI::CURR_MAIN :
+	case Player::CURRENT_UI::CURR_MAIN:
 		currentUI = CURRENT_UI::NONE;
 		Y_pressed = false;
 		UpdateVisibility();
@@ -723,7 +820,7 @@ void Player::GotoPrevWindows(uint data)
 		UpdateVisibility();
 		break;
 
-	case Player::CURRENT_UI::CURR_BUILD :
+	case Player::CURRENT_UI::CURR_BUILD:
 		currentUI = CURRENT_UI::CURR_MAIN;
 		UpdateVisibility();
 		break;
@@ -999,34 +1096,29 @@ void Player::DoLogic(UI_Element* data)
 	case::UI_Element::Action::ACT_BUILD_AOE:
 		isBuilding = true;
 		type = Entity::entityType::DEFENSE_AOE;
-		collider.dimensions = { 3,4 };
-		//offset = { 60,30 };
+		offset = { 60,30 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_TARGET:
 		isBuilding = true;
-
-		type = Entity::entityType::DEFENSE_AOE;
-		collider.dimensions = { 3,4 };
+		type = Entity::entityType::DEFENSE_TARGET;
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_MINE:
 		isBuilding = true;
-
-		type = Entity::entityType::DEFENSE_AOE;
-		collider.dimensions = { 1,1 };
-
+		type = Entity::entityType::MINES;
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_BARRACKS:
 		isBuilding = true;
-
-		type = Entity::entityType::DEFENSE_AOE;
-		collider.dimensions = { 3,4 };
-
+		type = Entity::entityType::BARRACKS;
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
+		//isBuilding = true;
+
+		type = Entity::entityType::SOLDIER;
+		//collider.dimensions = { 1,1 };
 		//
 		break;
 

@@ -15,9 +15,10 @@ Mines::~Mines()
 {
 }
 
-Mines::Mines(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::MINES, isPlayer1, pos)
+Mines::Mines(bool isPlayer1, pair<int, int> pos, Collider collider) : Building(Entity::entityType::MINES, isPlayer1, pos, collider)
 {
-
+	string path = "animation/" + name + ".tmx";
+	LoadAnimations(isPlayer1, path.data());
 }
 
 bool Mines::PreUpdate()
@@ -46,6 +47,12 @@ bool Mines::Update(float dt)
 					//play fx (upgrade);
 				}
 			}
+			else //destroyed
+			{
+				App->player1->UpdateWalkabilityMap(false, collider);
+				App->player1->DeleteEntity(this);
+			}
+
 			if (repair == true) //repair
 			{
 				App->player1->gold -= repair_cost;
@@ -67,6 +74,12 @@ bool Mines::Update(float dt)
 					//play fx (upgrade);
 				}
 			}
+			else //destroyed
+			{
+				App->player2->UpdateWalkabilityMap(false, collider);
+				App->player2->DeleteEntity(this);
+			}
+
 			if (repair == true) //repair
 			{
 				App->player2->gold -= repair_cost;
@@ -88,5 +101,17 @@ void Mines::CleanUp()
 	LOG("---Mine Deleted");
 	Building::CleanUp();
 
+}
+
+void Mines::LoadAnimations(bool isPlayer1, string path)
+{
+	building = building->LoadAnimation(path.data(), (!isPlayer1) ? "red_constructing" : "blue_constructing");
+	level1 = level1->LoadAnimation(path.data(), (!isPlayer1) ? "red_idle" : "blue_idle");
+	//level1->PushBack(building->GetLastAnimationFrame());// level1->LoadAnimation(&path[0], (!isPlayer1) ? "red" : "blue");
+	level1->speed = 3;
+	building->speed = 3;
+	building->loop = false;
+	level1->loop = false;
+	Current_Animation = building;
 }
 

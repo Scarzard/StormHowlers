@@ -3,12 +3,26 @@
 
 #include "Entity.h"
 
+enum entityDir {
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST,
+	NORTHEAST,
+	NORTHWEST,
+	SOUTHEAST,
+	SOUTHWEST,
+
+	MAX
+};
+
+
 class Troop : public Entity
 {
 public:
 
 	Troop() {};
-	Troop(entityType type, bool isPlayer1, pair<int, int> pos) : Entity(type, isPlayer1, pos) {
+	Troop(entityType type, bool isPlayer1, pair<int, int> pos, Collider Collider) : Entity(type, isPlayer1, pos, Collider) {
 
 		pugi::xml_document	config_file;
 		pugi::xml_node config;
@@ -17,9 +31,11 @@ public:
 
 		speed = config.child("speed").attribute("value").as_int();
 
-		collider = { 180,0,59,28 };
-		if (!isPlayer1)
-			collider = { 120,0,59,28 };
+		collider = Collider;
+
+		//collider = { 180,0,59,28 };
+		//if (!isPlayer1)
+		//	collider = { 120,0,59,28 };
 
 	}
 	~Troop() {};
@@ -29,14 +45,20 @@ public:
 	}
 	bool Update(float dt) {
 
-		SDL_Rect r = { position.first, position.second,size.first,size.second*0.5 };
-		SDL_RenderCopy(App->render->renderer, tex, &collider, &r);
+		//SDL_Rect r = { position.first, position.second,size.first,size.second*0.5 };
+		//SDL_RenderCopy(App->render->renderer, tex, &collider, &r);
 		return true;
 	}
 
 public:
 
 	int speed;
+
+	Animation* idle;
+	vector<Animation*> moving;
+	vector<Animation*> shooting;
+	//Animation idle;
+	int curr = 0;
 };
 
 #endif

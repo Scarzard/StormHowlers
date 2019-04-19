@@ -8,7 +8,7 @@ class DefenseAoe : public Building
 {
 public:
 	DefenseAoe();
-	DefenseAoe(bool isPlayer1, pair<int, int> pos);
+	DefenseAoe(bool isPlayer1, pair<int, int> pos, Collider collider);
 	~DefenseAoe();
 
 	bool Start();
@@ -17,7 +17,7 @@ public:
 	void CleanUp();
 
 	bool Is_inRange(pair<int, int> pos, int & distance);
-
+	void LoadAnimations(bool isPlayer1, string path);
 
 public:
 	SDL_Rect	collider;

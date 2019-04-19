@@ -15,13 +15,24 @@ MainDefense::~MainDefense()
 {
 }
 
-MainDefense::MainDefense(bool isPlayer1, pair<int, int> pos) : Building(Entity::entityType::MAIN_DEFENSE, isPlayer1, pos)
+MainDefense::MainDefense(bool isPlayer1, pair<int, int> pos, Collider collider) : Building(Entity::entityType::MAIN_DEFENSE, isPlayer1, pos, collider)
 {
+	string path = "animation/" + name + ".tmx";
+	LoadAnimations(isPlayer1, path.data());
 }
 
 bool MainDefense::Update(float dt)
 {
 	BROFILER_CATEGORY("Main Defense Update", Profiler::Color::SandyBrown);
+	
+	if (fromPlayer1 == true)
+	{
+		position = App->map->data.main_tower;
+	}
+	else
+	{
+		position = App->map->data.main_tower2;
+	}
 
 	if (fromPlayer1)
 	{
@@ -40,7 +51,7 @@ bool MainDefense::Update(float dt)
 		}
 		else
 		{
-			//destroyed
+			App->player1->UpdateWalkabilityMap(false, collider); //destroyed
 		}
 	}
 	else if (!fromPlayer1)
@@ -60,7 +71,7 @@ bool MainDefense::Update(float dt)
 		}
 		else
 		{
-			//destroyed
+			App->player2->UpdateWalkabilityMap(false, collider); //destroyed
 		}
 	}
 	ChangeAnimation();
@@ -77,6 +88,17 @@ void MainDefense::CleanUp()
 	LOG("---Main Defense Deleted");
 	Building::CleanUp();
 
+}
+
+void MainDefense::LoadAnimations(bool isPlayer1, string path)
+{
+	building = building->LoadAnimation(path.data(), (!isPlayer1) ? "red_constructing" : "blue_constructing");
+	level1 = level1->LoadAnimation(path.data(), (!isPlayer1) ? "red_idle" : "blue_idle");
+	level1->speed = 3;
+	building->speed = 3;
+	building->loop = false;
+	level1->loop = false;
+	Current_Animation = building;
 }
 
 
