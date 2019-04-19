@@ -174,7 +174,7 @@ bool Transitions::ChangeMap(int newMap, float time)
 	nextMap = newMap;
 	}
 
-	map = true;
+	//map = true;
 	if (current_step == fade_step::none)
 	{
 		current_step = fade_step::fade_to_black;
