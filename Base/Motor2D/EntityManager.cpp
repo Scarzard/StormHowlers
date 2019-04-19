@@ -1,6 +1,3 @@
-#include "Defs.h"
-#include "Log.h"
-
 #include "EntityManager.h"
 #include "App.h"
 #include "Audio.h"
@@ -25,8 +22,6 @@
 
 #include "Brofiler\Brofiler.h"
 #include "PugiXml/src/pugixml.hpp"
-#include <cmath>
-
 
 EntityManager::EntityManager()
 {
@@ -61,12 +56,12 @@ bool EntityManager::Start()
 		string n = GetName(Entity::entityType(i));
 		n += "_anim.png";
 
-		if (i == Entity::entityType::TANKMAN || i == Entity::entityType::DEFENSE_AOE)
+		if (i == Entity::entityType::TANKMAN || i == Entity::entityType::DEFENSE_AOE) 
 			entitiesTextures[i] = nullptr;
 		else
 			entitiesTextures[i] = App->tex->Load(PATH(folder.data(), n.data()));
 	}
-
+	
 	return ret;
 }
 
@@ -155,7 +150,7 @@ bool EntityManager::PostUpdate()
 
 
 	}
-
+	
 	return ret;
 }
 
@@ -231,41 +226,28 @@ bool EntityManager::Draw(float dt) //sprite ordering
 
 	while (tmp != entity_list.end())
 	{
+		
+		if (entitiesTextures[(*tmp)->type] != nullptr) {
 
-		//if (entitiesTextures[(*tmp)->type] != nullptr) {
+			//int posy = (*tmp)->position.second - (*tmp)->Current_Animation->GetCurrentFrame(dt).h;// - ((*tmp)->Current_Animation->GetCurrentFrame(dt).h - (*tmp)->position.second);
+			//App->render->Blit(entitiesTextures[(*tmp)->type],  (*tmp)->position.first ,posy, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
+			//
+			//pair<int,int> pos = App->map->WorldToMap((*tmp)->position.first /*- (*tmp)->size.first * App->map->data.tile_width*0.5f*/, (*tmp)->position.second - (*tmp)->size.second*App->map->data.tile_height*0.5f);
+			//pos = App->map->MapToWorld(pos.first, pos.second);
 
-		//	int posy = (*tmp)->position.second - (*tmp)->Current_Animation->GetCurrentFrame(dt).h;// - ((*tmp)->Current_Animation->GetCurrentFrame(dt).h - (*tmp)->position.second);
-		//	App->render->Blit(entitiesTextures[(*tmp)->type],  (*tmp)->position.first ,posy, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
-		//	
-		//	pair<int,int> pos = App->map->WorldToMap((*tmp)->position.first /*- (*tmp)->size.first * App->map->data.tile_width*0.5f*/, (*tmp)->position.second - (*tmp)->size.second*App->map->data.tile_height*0.5f);
-		//	pos = App->map->MapToWorld(pos.first, pos.second);
+			pair<int, int> pos = { (*tmp)->position.first,(*tmp)->position.second - (*tmp)->offset };
+			App->render->Blit(entitiesTextures[(*tmp)->type], pos.first, pos.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
 
-		//	pair<int, int> pos = { (*tmp)->position.first,(*tmp)->position.second - (*tmp)->offset };
-		//	App->render->Blit(entitiesTextures[(*tmp)->type], pos.first, pos.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
-
-		//}
-		App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
-
-		//--- Draw Life Bar
-		if ((*tmp)->health < (*tmp)->health_lv[(*tmp)->level] && (*tmp)->health > 0)
-		{
-			SDL_Rect rect, rect_bg;
-
-			rect_bg.w = 30;
-			rect.w = rect_bg.w * (*tmp)->health / (*tmp)->health_lv[(*tmp)->level];
-
-			rect_bg.h = rect.h = 5;
-			rect_bg.x = rect.x = (*tmp)->position.first + ((*tmp)->Current_Animation->GetCurrentFrame(dt).w / 2) - (rect_bg.w / 1.5);
-			rect_bg.y = rect.y = (*tmp)->position.second - 10;
-
-			App->render->DrawQuad(rect_bg, 255, 0, 0, 255); //background (red)
-			App->render->DrawQuad(rect, 0, 255, 0, 255); //life (green)
 		}
-
+		if ((*tmp)->type == Entity::entityType::WALLS || (*tmp)->type == Entity::entityType::TOWNHALL)
+		{
+			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
+		}
+		
 		tmp++;
 	}
 
-
+	
 	return ret;
 }
 
@@ -333,34 +315,32 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building
 			{
 				App->player1->buildings.push_back((Building*)tmp);
-				App->player1->UpdateWalkabilityMap(false, collider);
 			}
 			else if (type > Entity::entityType::BARRACKS) //if troops
 			{
 				App->player1->troops.push_back((Troop*)tmp);
 			}
 
-			App->player1->collider.dimensions.first = tmp->size.first;
-			App->player1->collider.dimensions.second = tmp->size.second;
+			//App->player1->collider.dimensions.first = tmp->size.first;
+			//App->player1->collider.dimensions.second = tmp->size.second;
 		}
 		else // Player 2 -------------------------------
 		{
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS)
 			{
 				App->player2->buildings.push_back((Building*)tmp);
-				App->player2->UpdateWalkabilityMap(false, collider);
 			}
 			else if (type > Entity::entityType::BARRACKS)
 			{
 				App->player2->troops.push_back((Troop*)tmp);
 			}
 
-			App->player2->collider.dimensions.first = tmp->size.first;
-			App->player2->collider.dimensions.second = tmp->size.second;
+			//App->player2->collider.dimensions.first = tmp->size.first;
+			//App->player2->collider.dimensions.second = tmp->size.second;
 		}
 	}
 
-
+	
 	return tmp;
 
 }
