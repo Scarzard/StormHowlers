@@ -163,6 +163,9 @@ private:
 	pair<int, int>	camera_motion;
 	pair<int, int>	last_motion;
 	bool	start_motion = false;
+
+	UI_Element* debug_text;
+	char debug_label[42] = "GodMode: ON. Debug functionalities active";
 };
 
 #endif // __Scene_H__

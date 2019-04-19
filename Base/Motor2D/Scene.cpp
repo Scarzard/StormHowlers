@@ -97,7 +97,10 @@ bool Scene::Start()
 		LOG("Create walkability map");
 	}
 
-	
+	debug_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 0, 200 }, { 0, 0 }, nullptr, true, { false, false });
+	debug_text->label = debug_label;
+	debug_text->color = { 255, 255, 255, 255};
+	debug_text->visible = false;
 
 	//--------- INIT BUILD ZONE LIMITS ------------- (falta cambiar con valores de las build Zones
 	App->player1->x_limits_player1 = { 20,60 };
@@ -686,6 +689,8 @@ bool Scene::Update(float dt)
 	//Debug functionalities in-game. Press F10 to enter GodMode and activate said features
 	if (App->scene->active && !App->scene->pause && godmode)
 	{
+		
+		debug_text->visible = true;
 		//Keyboard debug
 		// Player 1 -> number / Player2 -> letter
 		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
@@ -858,6 +863,9 @@ bool Scene::Update(float dt)
 			}
 		}
 	}
+
+	if (!godmode)
+		debug_text->visible = false;
 
 	reference_active = change_font_size;
 	
