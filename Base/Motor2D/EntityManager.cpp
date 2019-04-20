@@ -251,6 +251,12 @@ bool EntityManager::Draw(float dt) //sprite ordering
 		//	App->render->Blit(entitiesTextures[(*tmp)->type], pos.first, pos.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)), SDL_FLIP_NONE);
 
 		//}
+		//if (entitiesTextures[(*tmp)->type] != nullptr)
+			if ((*tmp)->Current_Animation == nullptr) {
+				int a = 1;
+
+			}
+			
 		App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 
 		//--- Draw Life Bar

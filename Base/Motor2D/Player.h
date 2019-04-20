@@ -110,7 +110,7 @@ public:
 	int health, max_health;
 
 	// Live of TOWN HALL
-	//int live = 0;
+	int live = 0;
 	
 	//index for testing previews
 	int curr = 1;

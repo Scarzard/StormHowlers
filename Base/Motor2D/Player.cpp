@@ -64,21 +64,20 @@ bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("Player Update", Profiler::Color::Black);
 
-	if (!App->scene->endgame){
-    
-	//Preview all player1 entities with M
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
-		isBuilding = !isBuilding;
-	}
+	
 
-	if (isBuilding && App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
-		isPlayer1 = true;
-		type = (Entity::entityType)((curr++) % (int)Entity::entityType::TANKMAN);
-	}
-
-	//--- Press X (Square)
-	if (gamepad.Controller[BUTTON_X] == KEY_DOWN)
+	if (!App->scene->endgame)
 	{
+		//Preview all player1 entities with M
+		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+			isBuilding = !isBuilding;
+		}
+
+		if (isBuilding && App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
+			isPlayer1 = true;
+			type = (Entity::entityType)((curr++) % (int)Entity::entityType::TANKMAN);
+		}
+
 		//--- Press X (Square)
 		if (gamepad.Controller[BUTTON_X] == KEY_DOWN)
 		{
@@ -87,6 +86,7 @@ bool Player::Update(float dt)
 
 		// Button with focus changes state to HOVER 
 		if (currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::ENDGAME && currentUI != CURRENT_UI::CURR_WIN_SCREEN && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
+
 		{
 			(*focus)->state = UI_Element::State::HOVER;
 		}
@@ -131,38 +131,6 @@ bool Player::Update(float dt)
 
 		// --TEST-- from GENERAL UI to CREATE TROOPS UI (only for barracks)
 		if (gamepad.Controller[BACK] == KEY_DOWN && currentUI == CURRENT_UI::CURR_GENERAL && App->scene->active)
-    {
-	// Button with focus changes state to HOVER 
-	if (currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
-	{
-		(*focus)->state = UI_Element::State::HOVER;
-	}
-
-	// Button A to clcik a button
-	if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
-	{
-		if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
-			(*focus)->state = UI_Element::State::LOGIC;
-	}
-
-	if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE)
-	{
-		if (!isBuilding)
-			(*focus)->state = UI_Element::State::IDLE;
-		if (App->scene->active)
-			DoLogic((*focus));
-		else
-			App->main_menu->DoLogic((*focus));
-
-		if ((*focus) == Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
-			UpdateFocus(currentUI);
-	}
-
-	if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
-	{
-		(*focus)->state = UI_Element::State::IDLE;
-
-		if (currentUI == CURR_BUILD)
 		{
 			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
 			UpdateVisibility();
@@ -180,9 +148,9 @@ bool Player::Update(float dt)
 					UI_troop_type = 13; // war_hound
 				}
 				Update_troop_image(UI_troop_type);
-				
+
 			}
-			
+
 			if (gamepad.Controller[RIGHT] == KEY_DOWN)
 			{
 				UI_troop_type++;
@@ -206,9 +174,9 @@ bool Player::Update(float dt)
 			if (gamepad.Controller[RB] == KEY_DOWN)
 			{
 				number_of_troops++;
-				/*if (number_of_troops + number_troops_in_barrack > barracks->capacity) 
+				/*if (number_of_troops + number_troops_in_barrack > barracks->capacity)
 				{
-					number_of_troops = barracks->capacity - number_troops_in_barrack; 
+					number_of_troops = barracks->capacity - number_troops_in_barrack;
 				}*/
 			}
 
@@ -218,7 +186,7 @@ bool Player::Update(float dt)
 				Update_troop_image(UI_troop_type);
 				GotoPrevWindows(currentUI);
 			}
-			
+
 		}
 
 		// --TEST-- GENERAL UI (menu of selected building)
@@ -227,7 +195,9 @@ bool Player::Update(float dt)
 			currentUI = CURRENT_UI::CURR_GENERAL;
 			UpdateVisibility();
 			UpdateFocus(currentUI);
-		}		
+		}
+
+
 
 		// Button A to clcik a button
 		if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
@@ -235,15 +205,7 @@ bool Player::Update(float dt)
 			if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
 				(*focus)->state = UI_Element::State::LOGIC;
 		}
-	}
 
-	if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
-	{
-		if (App->scene->active)
-			currentUI = CURRENT_UI::CURR_MAIN;
-		else if (App->main_menu->active)
-			currentUI = CURRENT_UI::CURR_MAIN_MENU;
-    
 		// Do button action
 		if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
 		{
@@ -313,8 +275,6 @@ bool Player::Update(float dt)
 					UpdateFocus(currentUI);
 				}
 			}
-      // BUILDING MERGE LINE BELOW
-			focus = GetUI_Element(currentUI)->children.begin();
 		}
 
 		// Enter to UI ingame Menus
@@ -347,6 +307,8 @@ bool Player::Update(float dt)
 				LB_img->visible = true;
 			}
 		}
+
+
 		// Travel through the different buttons
 		if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
@@ -440,7 +402,7 @@ bool Player::Update(float dt)
 			else if ((*focus) == FX_Settings && App->audio->sfxVolume > 0)
 			{
 				App->audio->sfxVolume -= 10;
-			
+
 				App->audio->SetSfxVolume();
 			}
 		}
@@ -453,11 +415,9 @@ bool Player::Update(float dt)
 			{
 				live = 0;
 			}
-			
-		}
-	
-  }
 
+		}
+	}
 	
 	if (App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_DOWN)
 	{
@@ -553,7 +513,6 @@ bool Player::Update(float dt)
 				//play fx (build);
 				App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ },collider);
 
-				entityAdded = false;
 				isBuilding = false;
 				currentUI == CURRENT_UI::CURR_GENERAL;
 			}
@@ -571,7 +530,6 @@ bool Player::Update(float dt)
 				{
 					//troops.pop_back();
 				}
-				entityAdded = true;
 				isBuilding = false;
 				currentUI == CURRENT_UI::CURR_GENERAL;
 
