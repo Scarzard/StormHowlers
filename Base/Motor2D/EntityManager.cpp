@@ -252,10 +252,6 @@ bool EntityManager::Draw(float dt) //sprite ordering
 
 		//}
 		//if (entitiesTextures[(*tmp)->type] != nullptr)
-			if ((*tmp)->Current_Animation == nullptr) {
-				int a = 1;
-
-			}
 			
 		App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 
@@ -340,7 +336,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 	if (tmp)
 	{
 		entity_list.push_back(tmp); // add to main entity list
-		entity_list = OrderEntities(entity_list);
+		//entity_list = OrderEntities(entity_list);
 		if (isPlayer1 == true)
 		{
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building

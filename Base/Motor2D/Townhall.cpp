@@ -123,8 +123,6 @@ bool Townhall::Update(float dt)
 
 	}
 
-	ChangeAnimation();
-
 	Building::Update(dt);
 
 	return true;
@@ -150,6 +148,6 @@ void Townhall::LoadAnimations(bool isPlayer1, string path)
 		building = building->LoadAnimation(path.data(), "allied");
 	}
 
-	building->speed = 0;
+	building->speed = 1;
 	Current_Animation = building;
 }
