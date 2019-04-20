@@ -626,17 +626,23 @@ bool Scene::PreUpdate()
 		{
 			if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
 			{
-				if ((int)world_clock.ReadSec() > App->player1->time_iterator)
+				if (App->player1->gold_added == false)
 				{
-					App->player1->gold += (*item)->production;
-					App->player1->time_iterator = (int)world_clock.ReadSec();
+					App->player1->gold_persecond += (*item)->production;
 				}
-				
+							
 			}
 		}
+		App->player1->gold_added = true;
+
+		if ((int)world_clock.ReadSec() > App->player1->time_iterator)
+		{
+			App->player1->gold += App->player1->gold_persecond;
+			App->player1->gold_persecond = 0;
+			App->player1->gold_added = false;
+			App->player1->time_iterator = (int)world_clock.ReadSec();
+		}
 		
-
-
 
 		// Gold Player 2 -----------
 		item = App->player2->buildings.begin();
@@ -644,13 +650,21 @@ bool Scene::PreUpdate()
 		{
 			if ((*item)->type == Entity::entityType::TOWNHALL || (*item)->type == Entity::entityType::MINES)
 			{
-				if ((int)world_clock.ReadSec() > App->player2->time_iterator)
+				if (App->player2->gold_added == false)
 				{
-					App->player2->gold += (*item)->production;
-					App->player2->time_iterator = (int)world_clock.ReadSec();
+					App->player2->gold_persecond += (*item)->production;
 				}
+
 			}
-				
+		}
+		App->player2->gold_added = true;
+
+		if ((int)world_clock.ReadSec() > App->player2->time_iterator)
+		{
+			App->player2->gold += App->player2->gold_persecond;
+			App->player2->gold_persecond = 0;
+			App->player2->gold_added = false;
+			App->player2->time_iterator = (int)world_clock.ReadSec();
 		}
 		
 	}

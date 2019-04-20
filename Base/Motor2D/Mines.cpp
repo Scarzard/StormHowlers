@@ -19,6 +19,8 @@ Mines::Mines(bool isPlayer1, pair<int, int> pos, Collider collider) : Building(E
 {
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
+	production = production_lv[level];
+	
 }
 
 bool Mines::PreUpdate()
