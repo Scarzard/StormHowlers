@@ -55,6 +55,7 @@ public:
 	~Player();
 
 	bool Start();
+	//bool Awake(pugi::xml_node &config);
 	bool Update(float dt);
 	void SpawnEntity();
 	bool PostUpdate();
