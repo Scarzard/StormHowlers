@@ -505,7 +505,7 @@ bool Player::Update(float dt)
 			pos = App->render->ScreenToWorld(pos.first, pos.second);
 			pos.first--;
 
-			App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &preview_rects[type]);
+			App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &preview_rects[type]);
 
 
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
@@ -514,7 +514,7 @@ bool Player::Update(float dt)
 				App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ },collider);
 
 				isBuilding = false;
-				currentUI == CURRENT_UI::CURR_GENERAL;
+				
 			}
 		}
 		else
@@ -531,7 +531,7 @@ bool Player::Update(float dt)
 					//troops.pop_back();
 				}
 				isBuilding = false;
-				currentUI == CURRENT_UI::CURR_GENERAL;
+				
 
 				//play fx (error);
 			}
