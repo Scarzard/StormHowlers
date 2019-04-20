@@ -69,6 +69,51 @@ bool EntityManager::Start()
 
 	return ret;
 }
+bool EntityManager::PreUpdate()
+{
+	BROFILER_CATEGORY("EntityManager PostUpdate", Profiler::Color::Blue);
+
+	bool ret = true;
+
+	if (App->scene->pause == false)
+	{
+		// Player 1 Buildings
+		list<Building*>::const_iterator tmp = App->player1->buildings.begin();
+		while (tmp != App->player1->buildings.end())
+		{
+			ret = (*tmp)->PreUpdate();
+			tmp++;
+		}
+
+		// Player 2 Buildings
+		tmp = App->player2->buildings.begin();
+		while (tmp != App->player2->buildings.end())
+		{
+			ret = (*tmp)->PreUpdate();
+			tmp++;
+		}
+		// Player 1 Troops
+		list<Troop*>::const_iterator ttmp = App->player1->troops.begin();
+		while (ttmp != App->player1->troops.end())
+		{
+			ret = (*ttmp)->PreUpdate();
+			ttmp++;
+		}
+
+		// Player 2 Troops
+		ttmp = App->player2->troops.begin();
+		while (ttmp != App->player2->troops.end())
+		{
+			ret = (*ttmp)->PreUpdate();
+			ttmp++;
+		}
+
+
+	}
+
+	return ret;
+}
+
 
 bool EntityManager::Update(float dt)
 {

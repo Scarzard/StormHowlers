@@ -87,6 +87,11 @@ bool Barracks::Update(float dt)
 		}
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+	{
+		health -= 10;
+	}
+
 	ChangeAnimation();
 
 	Building::Update(dt);

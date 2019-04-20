@@ -38,6 +38,7 @@ public:
 	{
 		NONE,
 		CURR_MAIN_MENU,
+		CURR_SELECTING_BUILDING,
 		CURR_MAIN,
 		CURR_BUILD,
 		CURR_DEPLOY,
@@ -70,6 +71,7 @@ public:
 	void GotoPrevWindows(uint data);
 	UI_Element* GetUI_Element(uint data); //returns the window we are currently on
 	void Update_troop_image(int type);
+	void UpdateGeneralUI(Entity* building);
 
 	// -----------------------------------------------------------------------------
 
@@ -81,7 +83,6 @@ public:
 	bool DeleteEntity(Entity* entity);
 	
 public:
-	bool onUI = false;
 	bool isBuilding = false;
 	bool isDeploying = false;
 	bool isCasting = false;
@@ -124,6 +125,10 @@ public:
 	pair<int, int> x_limits_player2, y_limits_player2;
 
 	list<Building*> buildings;
+	SDL_Rect selected_texture = { 0,0,0,0 };
+	list<Building*>::iterator building_selected;
+	list<Building*>::iterator last_building;
+
 	list<Troop*> troops;
 
 	int SoldiersCreated = 0;
@@ -186,18 +191,21 @@ public:
 	UI_Element* Upgrade_icon = nullptr;
 	UI_Element* Repair_icon = nullptr;
 	UI_Element* UpgradeCost_text = nullptr;
-	char upgrade_cost_label[10] = " - 0000 $";
+	char upgrade_cost_label[20] = " - 0000 $";
 	UI_Element* RepairCost_text = nullptr;
-	char repair_cost_label[10] = " - 0000 $";
+	char repair_cost_label[20] = " - 0000 $";
 	UI_Element* Name_text = nullptr;
-	char name_label[10] = "Name:  ";
+	char name_label[20] = "Name:  ";
 	UI_Element* Level_text = nullptr;
-	char level_label[10] = "Lvl:  ";
+	char level_label[20] = "Lvl:  ";
 	UI_Element* Health_text = nullptr;
-	char health_label[10] = "HP:  ";
+	char health_label[20] = "HP:  ";
 	UI_Element* Damage_text = nullptr; //only for defense buildings
+	char dmg_label[20] = "DMG:  ";
 	UI_Element* Prod_text = nullptr; //only for townhall & mines
+	char prod_label[20] = "$/s:  ";
 	UI_Element* Capacity_text = nullptr; //only for barracks
+	char capacity_label[20] = "$/s:  ";
 
 	// Create troops UI --------------------------
 	UI_Element* Create_Troops_UI = nullptr;

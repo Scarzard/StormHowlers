@@ -33,6 +33,7 @@ bool Player::Start()
 	gold = actual_capacity = time_iterator = number_of_troops = 0;
 	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = 0;
 
+	selected_texture = { 0,0, 100, 100 };
 
 	live = 2000;
 
@@ -44,7 +45,7 @@ bool Player::Start()
 
 	preview_rects = vector<SDL_Rect>(Entity::entityType::WAR_HOUND, { 0,0,0,0 });
 
-	pugi::xml_document	config_file;
+	/*pugi::xml_document	config_file;
 	pugi::xml_node config;
 	config = App->LoadConfig(config_file);
 	config = config.child("entitymanager").child("rect_previews").first_child();
@@ -55,7 +56,7 @@ bool Player::Start()
 		preview_rects[i].w = config.attribute("w").as_int(0);
 		preview_rects[i].h = config.attribute("h").as_int(0);
 		config = config.next_sibling();
-	}
+	}*/
 
 	return true;
 }
@@ -78,14 +79,37 @@ bool Player::Update(float dt)
 			type = (Entity::entityType)((curr++) % (int)Entity::entityType::TANKMAN);
 		}
 
-		//--- Press X (Square)
-		if (gamepad.Controller[BUTTON_X] == KEY_DOWN)
+		//--- Press X (Square) To SELECT BUILDINGS
+		if (gamepad.Controller[BUTTON_X] == KEY_UP && currentUI == CURRENT_UI::NONE)
 		{
-			onUI = !onUI;
+			building_selected = buildings.begin();
+			last_building = buildings.end();
+			last_building--;
+			currentUI = CURRENT_UI::CURR_SELECTING_BUILDING;
+		}
+		else if (gamepad.Controller[BUTTON_B] == KEY_UP && currentUI == CURRENT_UI::CURR_SELECTING_BUILDING)
+		{
+			building_selected._Ptr = nullptr;
+			currentUI = CURRENT_UI::NONE;
 		}
 
+		// DRAW QUAD on SELECTED BUILDING 
+		if (currentUI == CURRENT_UI::CURR_SELECTING_BUILDING)
+		{
+
+			selected_texture.x = (*building_selected)->position.first;
+			selected_texture.y = (*building_selected)->position.second;
+			selected_texture.w = ((*building_selected)->Current_Animation->GetCurrentFrame(dt).w);
+			selected_texture.h = ((*building_selected)->Current_Animation->GetCurrentFrame(dt).h);
+			if(isPlayer1)
+				App->render->DrawQuad(selected_texture, 255, 0,0, 100, true);
+			else
+				App->render->DrawQuad(selected_texture, 0, 0, 255, 100, true);
+		}
+
+		
 		// Button with focus changes state to HOVER 
-		if (currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::ENDGAME && currentUI != CURRENT_UI::CURR_WIN_SCREEN && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
+		if (currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::ENDGAME && currentUI != CURRENT_UI::CURR_WIN_SCREEN && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
 
 		{
 			(*focus)->state = UI_Element::State::HOVER;
@@ -189,25 +213,19 @@ bool Player::Update(float dt)
 
 		}
 
-		// --TEST-- GENERAL UI (menu of selected building)
-		if (gamepad.Controller[BACK] == KEY_DOWN && currentUI == CURRENT_UI::NONE && App->scene->active)
-		{
-			currentUI = CURRENT_UI::CURR_GENERAL;
-			UpdateVisibility();
-			UpdateFocus(currentUI);
-		}
+		
 
 
 
 		// Button A to clcik a button
-		if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
+		if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
 		{
 			if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
 				(*focus)->state = UI_Element::State::LOGIC;
 		}
 
 		// Do button action
-		if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
+		if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
 		{
 			if (App->scene->pause && isPaused == true)
 			{
@@ -230,10 +248,24 @@ bool Player::Update(float dt)
 
 		}
 
+		// --TEST-- GENERAL UI (menu of selected building)
+		if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI == CURRENT_UI::CURR_SELECTING_BUILDING && App->scene->active)
+		{
+			currentUI = CURRENT_UI::CURR_GENERAL;
+			UpdateVisibility();
+			UpdateFocus(currentUI);
+		}
+
+		if (currentUI == CURRENT_UI::CURR_GENERAL)
+		{
+			UpdateGeneralUI((*building_selected));
+		}
+
 		// Go back
 		if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
 		{
-			(*focus)->state = UI_Element::State::IDLE;
+			if(focus._Ptr != nullptr)
+				(*focus)->state = UI_Element::State::IDLE;
 
 			if (App->scene->pause && isPaused && currentUI == CURRENT_UI::CURR_PAUSE)
 			{
@@ -312,31 +344,84 @@ bool Player::Update(float dt)
 		// Travel through the different buttons
 		if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
-			(*focus)->state = UI_Element::State::IDLE;
-
-			if (focus == last_element)
+			if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING)
 			{
-				focus = GetUI_Element(currentUI)->children.begin();
+				(*focus)->state = UI_Element::State::IDLE;
 
+				if (focus == last_element)
+				{
+					focus = GetUI_Element(currentUI)->children.begin();
+
+				}
+				else
+				{
+					focus++;
+				}
 			}
 			else
 			{
-				focus++;
+				if (building_selected == last_building)
+				{
+					building_selected = buildings.begin();
+
+				}
+				else
+				{
+					building_selected++;
+										
+				}
+
+				if ((*building_selected)->type == Entity::entityType::WALLS)
+				{
+					while ((*building_selected)->type == Entity::entityType::WALLS)
+					{
+						building_selected++;
+						if (building_selected == last_building)
+						{
+							building_selected = buildings.begin();
+
+						}
+					}
+				}
 			}
+			
 
 		}
 		// Travel through the different buttons
 		if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
-			(*focus)->state = UI_Element::State::IDLE;
-			if (focus == GetUI_Element(currentUI)->children.begin())
+			if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING)
 			{
-				focus = last_element;
+				(*focus)->state = UI_Element::State::IDLE;
+				if (focus == GetUI_Element(currentUI)->children.begin())
+				{
+					focus = last_element;
+				}
+				else
+				{
+					focus--;
+				}
 			}
 			else
 			{
-				focus--;
+				if (building_selected == buildings.begin())
+				{
+					building_selected = last_building;
+				}
+				else
+				{
+					building_selected--;
+				}
+
+				if ((*building_selected)->type == Entity::entityType::WALLS)
+				{
+					while ((*building_selected)->type == Entity::entityType::WALLS)
+					{
+						building_selected--;
+					}
+				}
 			}
+			
 
 		}
 
@@ -1101,11 +1186,12 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_UPGRADE:
-		//
+		//(*building_selected)->upgrade = true;
 		break;
 
 	case::UI_Element::Action::ACT_REPAIR:
-		//
+		(*building_selected)->repair = true;
+		sprintf_s(repair_cost_label, " - %i $", (*building_selected)->repair_cost); //Update label
 		break;
 	case::UI_Element::Action::RESUME_PAUSE:
 		
@@ -1230,4 +1316,16 @@ void Player::CreateTroop(int type, int number)
 		WarHoundsCreated += number;
 		break;
 	}
+}
+
+void Player::UpdateGeneralUI(Entity* building)
+{
+	sprintf_s(name_label, "%s", building->GetName(building->type));
+
+	sprintf_s(health_label, "HP: %i", building->health);
+
+	sprintf_s(level_label, "Lvl: %i", building->level);
+
+	sprintf_s(repair_cost_label, " - %i $", building->repair_cost);
+
 }
