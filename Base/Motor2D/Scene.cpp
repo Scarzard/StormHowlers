@@ -679,7 +679,7 @@ bool Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) //Debug UI
 	{
 		App->gui->UI_Debug = !App->gui->UI_Debug;
-  }
+	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
@@ -787,14 +787,14 @@ bool Scene::Update(float dt)
 		{
 			App->render->camera.x -= 10;
 		}
-    else if (App->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT) //View colliders
-	  {
-		  App->render->zoom += 0.01f;
-	  }
-	  else if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) //View colliders
-	  {
-	  	App->render->zoom -= 0.01f;
-	  }
+		else if (App->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT) //View colliders
+		{
+			App->render->zoom += 0.01f;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) //View colliders
+		{
+			App->render->zoom -= 0.01f;
+		}
     
 		//Timer debug
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
@@ -810,21 +810,9 @@ bool Scene::Update(float dt)
 				//if the pause timer is true, the clock is stop and you want to start it
 				pausetimer = false;
 				world_seconds.Start();
-      }
-    }
+			}
+		}
 
-		//else if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) //Go to main menu
-		//{
-		//	App->scenechange->SwitchScene(App->main_menu, App->scene);
-		//}
-		//else if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) //Save game state
-		//{
-		//	App->SaveGame();
-		//}
-		//else if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) //Load game state
-		//{
-		//	App->LoadGame();
-		//}
 		
 		//Mouse debug
 		if (true) {
@@ -983,10 +971,6 @@ bool Scene::PostUpdate()
 	BROFILER_CATEGORY("Scene PostUpdate", Profiler::Color::DarkOrange);
 
 	bool ret = true;
-
-	//DRAW LIVE BARS 
-	DrawLiveBar(App->player1);
-	DrawLiveBar(App->player2);
 
 	//--- Pause
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -1312,7 +1296,7 @@ void Scene::SpawnEntities()
 	
 
 	pair<int, int> map_pos = App->map->WorldToMap(App->map->data.main_building2.first , App->map->data.main_building2.second);
-	App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, App->map->data.main_building2, App->player1->GetCollider({ 4,4 }, { map_pos.first + 4, map_pos.second + 1 }));
+	App->player1->Townhall = App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, App->map->data.main_building2, App->player1->GetCollider({ 4,4 }, { map_pos.first + 4, map_pos.second + 1 }));
 
 	
 	map_pos = App->map->WorldToMap(App->map->data.special_skill.first, App->map->data.special_skill.second);
@@ -1329,7 +1313,7 @@ void Scene::SpawnEntities()
 	
 
 	map_pos = App->map->WorldToMap(App->map->data.main_building.first, App->map->data.main_building.second);
-	App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, App->map->data.main_building, App->player2->GetCollider({ 7,3 }, { map_pos.first + 3, map_pos.second + 2 }));
+	App->player2->Townhall = App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, App->map->data.main_building, App->player2->GetCollider({ 7,3 }, { map_pos.first + 3, map_pos.second + 2 }));
 	
 	map_pos = App->map->WorldToMap(App->map->data.special_skill2.first, App->map->data.special_skill2.second);
 	App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill2, App->player2->GetCollider({ 4,3 }, { map_pos.first + 6, map_pos.second + 5 }));

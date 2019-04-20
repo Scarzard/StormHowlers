@@ -91,6 +91,8 @@ public:
 	pair<int, int> offset;
 	Entity::entityType type;
 
+	Entity* Townhall = nullptr;
+
 	bool isPlayer1 = false;
 	string team;
 
