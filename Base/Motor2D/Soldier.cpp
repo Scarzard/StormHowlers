@@ -31,7 +31,7 @@ bool Soldier::Update(float dt)
 
 	if (isMoving == false)
 	{
-		closest = App->entitymanager->findEntity(map_pos, fromPlayer1,1);
+		closest = App->entitymanager->findEntity(map_pos, fromPlayer1,3);
 		if (closest != nullptr)
 		{
 				// Shoots the closest one if in range

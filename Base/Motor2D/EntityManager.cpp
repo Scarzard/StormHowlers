@@ -520,12 +520,13 @@ Entity* EntityManager::findEntity(pair <int,int> pos,bool fromplayer1, int attac
 		}
 		
 	}
-	if (min_dist < attackrange)
+	if (min_dist <= attackrange)
 	{
-		found = nullptr;
+		return found;
 	}
 
-	return found;
+	return found = nullptr;
+	
 }
 
 bool EntityManager::Is_inRange(pair<int, int> pos, int &distance, pair <int,int> position, int range) {
