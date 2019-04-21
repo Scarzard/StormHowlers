@@ -99,6 +99,9 @@ public:
 	string team;
 
 	uint gold = 0;
+	uint gold_persecond = 0;
+	bool gold_added = false;
+
 	uint time_iterator = 0;
 
 	uint last_currentUI = 0;

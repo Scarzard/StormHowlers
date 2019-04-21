@@ -46,7 +46,7 @@ bool Player::Awake(pugi::xml_node& config) {
 bool Player::Start()
 {
 
-	gold = actual_capacity = time_iterator = number_of_troops = 0;
+	gold = gold_persecond = actual_capacity = time_iterator = number_of_troops = 0;
 	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = 0;
 
 	selected_texture = { 0,0, 100, 100 };
@@ -55,7 +55,7 @@ bool Player::Start()
 
 	UI_troop_type = 9;
 
-	isBuilding = isDeploying = isCasting = Y_pressed = isPaused = false;
+	isBuilding = isDeploying = gold_added = isCasting = Y_pressed = isPaused = false;
   
 	currentTile = { 13,0 };
 
