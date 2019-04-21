@@ -29,7 +29,7 @@ public:
 	list<Entity*> EntityManager::OrderEntities(list<Entity*> List);
 	int EntityManager::GetDepth(Entity* entity);
 
-	Entity * findEntity(pair<int, int> pos, bool fromplayer1);
+	Entity * findEntity(pair<int, int> pos, bool fromplayer1, int attackrange);
 
 public:
 	string			folder;

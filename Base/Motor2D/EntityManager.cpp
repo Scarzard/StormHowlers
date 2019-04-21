@@ -500,14 +500,16 @@ int EntityManager::GetDepth(Entity* entity)
 	return (postemp.first + postemp.second); // return depth
 }
 
-Entity* EntityManager::findEntity(pair <int,int> pos,bool fromplayer1)
+Entity* EntityManager::findEntity(pair <int,int> pos,bool fromplayer1, int attackrange)
 {
 	Entity* found = nullptr;
 	
 
 	for (list<Entity*>::iterator tmp = entity_list.begin(); tmp != entity_list.end(); tmp++) // traverse entity list (unordered)
 	{
-		if ((*tmp)->fromPlayer1 == !fromplayer1 && (*tmp)->position.first == pos.first)
+		pair<int, int> map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+		if ((*tmp)->fromPlayer1 == !fromplayer1 && pos.first +attackrange >= map_pos.first  && map_pos.first >= pos.first - attackrange)
 		{
 			found = (*tmp);
 			break;
