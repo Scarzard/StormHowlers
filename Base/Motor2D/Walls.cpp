@@ -45,7 +45,7 @@ bool Walls::Update(float dt)
 			App->player2->DeleteEntity(this);
 		}
 	}
-
+	
 	Building::Update(dt);
 	return true;
 }

@@ -2,6 +2,7 @@
 #include "Pathfinding.h"
 
 
+
 Soldier::Soldier()
 {
 	
@@ -11,6 +12,7 @@ Soldier::Soldier(bool isPlayer1, pair<int, int> pos, Collider collider):Troop(En
 {
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
+	rate_of_fire = 1;
 
 }
 
@@ -25,7 +27,26 @@ bool Soldier::Update(float dt)
 
 	pair<int, int> pos;
 	pair<int, int> map_pos = App->map->WorldToMap(position.first, position.second);
+	Entity* closest;
 
+	if (isMoving == false)
+	{
+		closest = App->entitymanager->findEntity(position, fromPlayer1);
+		if (closest != nullptr)
+		{
+				// Shoots the closest one if in range
+				if (timer.ReadSec() >= rate_of_fire )
+				{
+					closest->TakeDamage(10/*damage_lv[level]*/);
+					timer.Start(); 
+					
+					//LOG("Damage to wall: %i     Wall life:%i", 1, closest.;
+				}
+		}
+		
+
+		
+	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
 
 		LOG("Soldier pathfinding player %d", (fromPlayer1) ? 1 : 2);

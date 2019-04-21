@@ -1,6 +1,7 @@
 #ifndef __Soldier_H__
 #define __Soldier_H__
 #include "Troop.h"
+#include "EntityManager.h"
 
 class Soldier :	public Troop
 {

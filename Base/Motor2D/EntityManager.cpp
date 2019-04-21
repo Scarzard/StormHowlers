@@ -499,3 +499,21 @@ int EntityManager::GetDepth(Entity* entity)
 
 	return (postemp.first + postemp.second); // return depth
 }
+
+Entity* EntityManager::findEntity(pair <int,int> pos,bool fromplayer1)
+{
+	Entity* found = nullptr;
+	
+
+	for (list<Entity*>::iterator tmp = entity_list.begin(); tmp != entity_list.end(); tmp++) // traverse entity list (unordered)
+	{
+		if ((*tmp)->fromPlayer1 == !fromplayer1 && (*tmp)->position.first == pos.first)
+		{
+			found = (*tmp);
+			break;
+		}
+		
+	}
+
+	return found;
+}
