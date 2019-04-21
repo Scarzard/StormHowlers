@@ -1169,19 +1169,19 @@ void Player::DoLogic(UI_Element* data)
 	case::UI_Element::Action::ACT_BUILD_TARGET:
 		isBuilding = true;
 		type = Entity::entityType::DEFENSE_TARGET;
-		collider.dimensions = { 1,1 };
+		collider.dimensions = { 2,2 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_MINE:
 		isBuilding = true;
 		type = Entity::entityType::MINES;
-		collider.dimensions = { 3,2 };
+		collider.dimensions = { 4,4 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_BARRACKS:
 		isBuilding = true;
 		type = Entity::entityType::BARRACKS;
-		collider.dimensions = { 2,2 };
+		collider.dimensions = { 3,4 };
 		
 		break;
 
