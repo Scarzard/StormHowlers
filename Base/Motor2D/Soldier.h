@@ -16,6 +16,8 @@ public:
 	void ChangeAnimation();
 
 	void LoadAnimations(bool isPlayer1, string path);
+
+	bool Is_inRange(pair<int, int> pos, int & distance);
 	
 };
 

@@ -31,6 +31,10 @@ public:
 
 	Entity * findEntity(pair<int, int> pos, bool fromplayer1, int attackrange);
 
+	//bool Is_inRange(pair<int, int> pos, int distance, pair<int, int> position, int range);
+
+	bool Is_inRange(pair<int, int> pos, int & distance, pair<int, int> position, int range);
+
 public:
 	string			folder;
 	string			texture_path;

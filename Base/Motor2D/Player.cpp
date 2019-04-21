@@ -1282,6 +1282,7 @@ bool Player::DeleteEntity(Entity* entity)
 		{
 			if ((*item) == entity)
 				buildings.erase(item);
+			item++;
 		}
 	}
 	else if (type > Entity::entityType::BARRACKS) //if entity = troop
@@ -1291,6 +1292,7 @@ bool Player::DeleteEntity(Entity* entity)
 		{
 			if ((*item) == entity)
 				troops.erase(item);
+			item++;
 		}
 	}
 	return true;

@@ -502,20 +502,39 @@ int EntityManager::GetDepth(Entity* entity)
 
 Entity* EntityManager::findEntity(pair <int,int> pos,bool fromplayer1, int attackrange)
 {
-	Entity* found = nullptr;
-	
+	Entity* found = *entity_list.begin();
+	int distance = 0;
+	pair<int, int> map_pos = App->map->WorldToMap(found->position.first, found->position.second);
+	Is_inRange(pos,distance,map_pos,attackrange);
+	int min_dist = distance;
 
 	for (list<Entity*>::iterator tmp = entity_list.begin(); tmp != entity_list.end(); tmp++) // traverse entity list (unordered)
 	{
-		pair<int, int> map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
-
-		if ((*tmp)->fromPlayer1 == !fromplayer1 && pos.first +attackrange >= map_pos.first  && map_pos.first >= pos.first - attackrange)
+		map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+		
+		if ((*tmp)->fromPlayer1 == !fromplayer1 &&  Is_inRange(pos,distance,map_pos,attackrange)/*pos.second+attackrange >= map_pos.second  && map_pos.second >= pos.second - attackrange && map_pos.first==pos.first*/)
 		{
+
 			found = (*tmp);
-			break;
+			min_dist = distance;
 		}
 		
 	}
+	if (min_dist < attackrange)
+	{
+		found = nullptr;
+	}
 
 	return found;
+}
+
+bool EntityManager::Is_inRange(pair<int, int> pos, int &distance, pair <int,int> position, int range) {
+
+	//posicion entre dos entidades cualquiera
+	//determina si esta en el rango
+
+	pair <int, int> vector_distance = { position.first - pos.first, position.second - pos.second };
+	distance = (int)(sqrt(pow(vector_distance.first, 2) + pow(vector_distance.second, 2)));
+
+	return distance <= range;
 }
