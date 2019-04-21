@@ -7,6 +7,8 @@
 #include "App.h"
 #include "Animation.h"
 #include "Render.h"
+#include "Group.h"
+#include "MovementManager.h"
 
 struct Collider
 {
@@ -191,10 +193,17 @@ public:
 
 	// DEBUG PURPOSES
 	SDL_Rect	debug_collider;
+	SDL_Rect	rect = { 180,0,60,30 };
 	SDL_Texture* tex;
 
 	int offset = 0;
 	Collider collider;
+
+	// Group Movement
+	int speed;
+	Group_Unit info;
+	bool isSelected = false;
+
 
 public:
 

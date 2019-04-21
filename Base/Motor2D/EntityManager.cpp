@@ -123,6 +123,8 @@ bool EntityManager::Update(float dt)
 
 	if (App->scene->pause == false)
 	{
+		
+
 		// Player 1 Buildings
 		list<Building*>::const_iterator tmp = App->player1->buildings.begin();
 		while (tmp != App->player1->buildings.end())
@@ -138,8 +140,27 @@ bool EntityManager::Update(float dt)
 			ret = (*tmp)->Update(dt);
 			tmp++;
 		}
+
 		// Player 1 Troops
 		list<Troop*>::const_iterator ttmp = App->player1->troops.begin();
+
+		if (ttmp != App->player1->troops.end()) {
+
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
+				pathfinding = true;
+			}
+
+			if (pathfinding && MovementState::MovementState_DestinationReached != (*ttmp)->info.UnitMovementState){
+				App->move_manager->Move((*ttmp)->info.current_group, dt);
+			}
+			if (MovementState::MovementState_DestinationReached == (*ttmp)->info.UnitMovementState) {
+				(*ttmp)->info.UnitMovementState = MovementState::MovementState_NoState;
+				pathfinding = false;
+				//App->move_manager->CreateGroup();
+			}
+
+		}
+
 		while (ttmp != App->player1->troops.end())
 		{
 			ret = (*ttmp)->Update(dt);
@@ -391,7 +412,9 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			}
 			else if (type > Entity::entityType::BARRACKS) //if troops
 			{
+				tmp->isSelected = true;
 				App->player1->troops.push_back((Troop*)tmp);
+				App->move_manager->CreateGroup();
 			}
 
 			//App->player1->collider.dimensions.first = tmp->size.first;
@@ -406,7 +429,10 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			}
 			else if (type > Entity::entityType::BARRACKS)
 			{
+				tmp->isSelected = true;
 				App->player2->troops.push_back((Troop*)tmp);
+				App->move_manager->CreateGroup();
+
 			}
 
 			//App->player2->collider.dimensions.first = tmp->size.first;

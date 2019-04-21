@@ -21,6 +21,7 @@ class EntityManager;
 class Fonts;
 class Gui;
 class Player;
+class MovementManager;
 
 class MainApp
 {
@@ -99,6 +100,7 @@ public:
 	Gui*			gui = NULL;
 	Player*			player1 = NULL;
 	Player*			player2 = NULL;
+	MovementManager* move_manager = NULL;
 
 	bool			fpsCapON = true;
 	bool			vsyncON = false;

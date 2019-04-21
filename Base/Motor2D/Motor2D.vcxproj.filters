@@ -94,6 +94,12 @@
     <ClCompile Include="Soldier.cpp">
       <Filter>Desenvolupament  ========\Entities\Troops</Filter>
     </ClCompile>
+    <ClCompile Include="Group.cpp">
+      <Filter>Desenvolupament  ========\Entities\EntityMovement</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementManager.cpp">
+      <Filter>Desenvolupament  ========\Entities\EntityMovement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PugiXml\src\pugiconfig.hpp">
@@ -210,6 +216,12 @@
     <ClInclude Include="Troop.h">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Group.h">
+      <Filter>Desenvolupament  ========\Entities\EntityMovement</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementManager.h">
+      <Filter>Desenvolupament  ========\Entities\EntityMovement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Desenvolupament  ========">
@@ -241,6 +253,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Entities\Troops">
       <UniqueIdentifier>{09b60214-5efb-46e2-bb27-876d56110c60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Entities\EntityMovement">
+      <UniqueIdentifier>{930ee431-765f-42cb-9d5c-282fc2197d13}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
