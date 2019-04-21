@@ -264,6 +264,11 @@ bool EntityManager::Draw(float dt) //sprite ordering
 			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first-((*tmp)->collider.dimensions.first*8), (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second * 40), &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 
 		}
+		else if ((*tmp)->type == Entity::entityType::BARRACKS || (*tmp)->type == Entity::entityType::MINES)
+		{
+			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first - ((*tmp)->collider.dimensions.first * 20), (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second * 20), &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
+
+		}
 		else
 		{
  			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first/*-((*tmp)->collider.dimensions.first*29)*/, (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second*20), &((*tmp)->Current_Animation->GetCurrentFrame(dt)));

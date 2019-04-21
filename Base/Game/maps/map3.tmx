@@ -14431,7 +14431,6 @@
  </objectgroup>
  <objectgroup name="tower">
   <object id="28" x="1508" y="783" width="29" height="29"/>
-  <object id="29" x="2744.96" y="2002.87"/>
  </objectgroup>
  <objectgroup name="barrack">
   <object id="37" x="812" y="754" width="29" height="29"/>
