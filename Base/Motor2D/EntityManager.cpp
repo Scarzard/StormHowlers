@@ -66,7 +66,7 @@ bool EntityManager::Start()
 		else
 			entitiesTextures[i] = App->tex->Load(PATH(folder.data(), n.data()));
 	}
-
+	entitiesTextures[Entity::entityType::DEFENSE_AOE] = entitiesTextures[Entity::entityType::DEFENSE_TARGET];
 	return ret;
 }
 bool EntityManager::PreUpdate()
@@ -394,8 +394,8 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 				App->player1->troops.push_back((Troop*)tmp);
 			}
 
-			App->player1->collider.dimensions.first = tmp->size.first;
-			App->player1->collider.dimensions.second = tmp->size.second;
+			//App->player1->collider.dimensions.first = tmp->size.first;
+			//App->player1->collider.dimensions.second = tmp->size.second;
 		}
 		else // Player 2 -------------------------------
 		{
@@ -409,8 +409,8 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 				App->player2->troops.push_back((Troop*)tmp);
 			}
 
-			App->player2->collider.dimensions.first = tmp->size.first;
-			App->player2->collider.dimensions.second = tmp->size.second;
+			//App->player2->collider.dimensions.first = tmp->size.first;
+			//App->player2->collider.dimensions.second = tmp->size.second;
 		}
 	}
 
@@ -435,7 +435,7 @@ char* EntityManager::GetName(Entity::entityType type) {
 		return"Walls";
 		break;
 	case Entity::entityType::DEFENSE_AOE:
-		return"defense_aoe";
+		return"Tesla";
 		break;
 	case Entity::entityType::DEFENSE_TARGET:
 		return"Tesla";

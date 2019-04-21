@@ -3,10 +3,12 @@
 #include "Player.h"
 #include "Render.h"
 #include "Log.h"
+#include <map>
 
 
 DefenseAoe::DefenseAoe()
 {
+	// NOW IS A COPY OF DEFENSE TARGET WITH DIFERENT BEHAVIOUR (UPDATE)
 }
 
 DefenseAoe::~DefenseAoe()
@@ -62,5 +64,12 @@ bool DefenseAoe::Is_inRange(pair<int, int> pos, int &distance) {
 
 void DefenseAoe::LoadAnimations(bool isPlayer1, string path)
 {
+	building = building->LoadAnimation(path.data(), (isPlayer1) ? "red" : "blue");
+	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "red" : "blue");
+	level1->speed = 3;
+	building->speed = 3;
+	building->loop = false;
+	level1->loop = false;
+	Current_Animation = building;
 }
 

@@ -30,6 +30,8 @@ public:
 	// To request all tiles involved in the last generated path
 	const std::vector<pair<int,int>>* GetLastPath() const;
 
+	std::vector<pair<int, int>>* GetLastPathNotConst();
+
 	void ResetPath(vector<pair<int, int>>& path_to_reset);
 
 	void ChangeWalkability(const pair<int, int>& pos, bool isWalkable) const;
@@ -84,6 +86,7 @@ struct PathNode
 
 	// Calculates this tile score
 	int Score() const;
+	int DistanceTo(const pair<int, int>& destination);
 	// Calculate the F for a specific destination tile
 	int CalculateF(const pair<int,int>& destination);
 

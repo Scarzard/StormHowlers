@@ -19,7 +19,7 @@ class Entity
 public:
 	enum entityType
 	{
-		TOWNHALL = 1,
+		TOWNHALL,
 		MAIN_DEFENSE,
 		COMMAND_CENTER,
 		WALLS,
@@ -53,9 +53,6 @@ public:
 
 		// Parsing data
 
-		// name is given by entity type
-		//name = config.child("name").attribute("string").as_string("ERROR");
-
 		health_lv.push_back(config.child("health").attribute("lvl1").as_uint(0));
 		health_lv.push_back(config.child("health").attribute("lvl2").as_uint(0));
 		health_lv.push_back(config.child("health").attribute("lvl3").as_uint(0));
@@ -86,10 +83,10 @@ public:
 		health		= health_lv[level];
 		damage		= damage_lv[level];
 
-		//ChangeAnimation();
 
 		// DEBUG PURPOSES
 		tex = App->tex->Load("maps/meta.png");
+
 	};
 
 	~Entity() {};
@@ -121,7 +118,7 @@ public:
 
 	// Damage animation does not care about levels(?)
 	virtual void ChangeAnimation() {
-		if (health <= 0)
+		/*if (health <= 0)
 			Current_Animation = destroyed;
 
 		else if (health < (health_lv[level] / 2))
@@ -134,7 +131,7 @@ public:
 			Current_Animation = level2;
 
 		else if (level == 2)
-			Current_Animation = level3;
+			Current_Animation = level3;*/
 	};
 
 	virtual void TakeDamage(int damage) {
@@ -217,7 +214,7 @@ public:
 				return"Walls";
 				break;
 			case Entity::entityType::DEFENSE_AOE:
-				return"defense_aoe";
+				return"Tesla";
 				break;
 			case Entity::entityType::DEFENSE_TARGET:
 				return"Tesla";

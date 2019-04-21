@@ -64,7 +64,10 @@ const std::vector<pair<int,int>>* Pathfinding::GetLastPath() const
 {
 	return &last_path;
 }
-
+std::vector<pair<int, int>>* Pathfinding::GetLastPathNotConst()
+{
+	return &last_path;
+}
 void Pathfinding::ResetPath(vector<pair<int, int>>& path_to_reset)
 {
 	path_to_reset.clear();
@@ -193,13 +196,21 @@ int PathNode::Score() const
 	return g + h;
 }
 
+int PathNode::DistanceTo(const pair<int, int>& destination) {
+
+	int fx = pos.first - destination.first;
+	int fy = pos.second - destination.second;
+
+	return int(sqrtf((fx*fx) + (fy*fy)));
+}
+
 // PathNode -------------------------------------------------------------------------
 // Calculate the F for a specific destination tile
 // ----------------------------------------------------------------------------------
 int PathNode::CalculateF(const pair<int,int>& destination)
 {
 	g = parent->g + 1;
-	//h = pos.DistanceTo(destination);
+	h = DistanceTo(destination);
 
 	//You can also try:
 	//h = pos.DistanceManhattan(destination);
@@ -290,7 +301,7 @@ int Pathfinding::CreatePath(const pair<int,int>& origin, const pair<int,int>& de
 
 	LOG("Path Steps: %i", last_path.size());
 
-	return ret;
+	return 0;
 }
 
 

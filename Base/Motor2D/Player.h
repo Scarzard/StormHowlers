@@ -53,11 +53,12 @@ public:
 	};
 
 	Player();
+	
+	bool Awake(pugi::xml_node & config);
 	~Player();
 
 	bool Start();
 	bool Update(float dt);
-	void SpawnEntity();
 	bool PostUpdate();
 	bool CleanUp();
 
@@ -107,7 +108,7 @@ public:
 	//bool entityAdded;
 	//Entity* previewEntity;
 
-	vector<SDL_Rect> preview_rects;
+	vector<SDL_Rect>* preview_rects;
 
 	SDL_Rect LiveBar;
 	int health, max_health;

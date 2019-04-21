@@ -73,7 +73,7 @@ bool Scene::Start()
 	// Variables init
 	currentMap = 0;
 	pause = false;
-	godmode = false;
+	godmode = true;
 	to_end = false;
 	change = false;
 	endgame = false;
@@ -662,8 +662,11 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	BROFILER_CATEGORY("Scene Update", Profiler::Color::DarkOrange);
-	int x, y;
-	App->input->GetMousePosition(x, y);
+
+	pair<int, int> pos;
+	App->input->GetMousePosition(pos.first, pos.second);
+	pos = App->render->ScreenToWorld(pos.first, pos.second);
+	pos.first--;
 
 	//Enter GodMode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) //Godmode
@@ -699,77 +702,77 @@ bool Scene::Update(float dt)
 		debug_text->visible = true;
 		//Keyboard debug
 		// Player 1 -> number / Player2 -> letter
-		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		/*if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, {x,y},App->player1->collider);
+			App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, {pos.first,pos.second},App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, {x,y},App->player2->collider);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+			App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, {pos.first,pos.second},App->player2->collider);
+		}*/
+		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, {x,y},App->player1->collider);
+			App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, {pos.first,pos.second},App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(false, Entity::entityType::MAIN_DEFENSE, {x,y},App->player2->collider);
+			App->entitymanager->AddEntity(false, Entity::entityType::MAIN_DEFENSE, {pos.first,pos.second},App->player2->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, {x,y},App->player1->collider);
+			App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, {pos.first,pos.second},App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, {x,y},App->player2->collider);
+			App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, {pos.first,pos.second},App->player2->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(true, Entity::entityType::BARRACKS, {x,y},App->player1->collider);
+			App->entitymanager->AddEntity(true, Entity::entityType::BARRACKS, {pos.first,pos.second},App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(false, Entity::entityType::BARRACKS, {x,y},App->player2->collider);
+			App->entitymanager->AddEntity(false, Entity::entityType::BARRACKS, {pos.first,pos.second},App->player2->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_AOE, {x,y},App->player1->collider);
+			App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_AOE, {pos.first,pos.second},App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_AOE, {x,y},App->player2->collider);
+			App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_AOE, {pos.first,pos.second},App->player2->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, {x,y},App->player1->collider);
+			App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, {pos.first,pos.second},App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_TARGET, {x,y},App->player2->collider);
+			App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_TARGET, {pos.first,pos.second},App->player2->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(true, Entity::entityType::MINES, {x,y},App->player1->collider);
+			App->entitymanager->AddEntity(true, Entity::entityType::MINES, {pos.first,pos.second},App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(false, Entity::entityType::MINES, {x,y},App->player2->collider);
+			App->entitymanager->AddEntity(false, Entity::entityType::MINES, {pos.first,pos.second},App->player2->collider);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
+		else if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(true, Entity::entityType::SOLDIER, {x,y},App->player1->collider);
+			App->entitymanager->AddEntity(true, Entity::entityType::SOLDIER, {pos.first,pos.second},App->player1->collider);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+		else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, {x,y},App->player2->collider);
+			App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, {pos.first,pos.second},App->player2->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(true, Entity::entityType::WALLS, {x,y},App->player1->collider);
+			App->entitymanager->AddEntity(true, Entity::entityType::WALLS, {pos.first,pos.second},App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(false, Entity::entityType::WALLS, {x,y},App->player2->collider);
+			App->entitymanager->AddEntity(false, Entity::entityType::WALLS, {pos.first,pos.second},App->player2->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) //Movecamera Up
 		{

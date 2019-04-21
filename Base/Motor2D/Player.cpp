@@ -21,10 +21,26 @@
 
 Player::Player() : Module()
 {
+	name = "player";
 }
 
 Player::~Player()
 {
+}
+
+bool Player::Awake(pugi::xml_node& config) {
+	preview_rects = new vector<SDL_Rect>(Entity::entityType::WAR_HOUND, SDL_Rect({ 0,0,0,0 }));
+
+	config = config.child("rect_previews").first_child();
+
+	for (int i = Entity::entityType::TOWNHALL; i < Entity::entityType::WAR_HOUND; i++) {
+		preview_rects->at(i).x = config.attribute((isPlayer1) ? "rx" : "x").as_int(0);
+		preview_rects->at(i).y = config.attribute((isPlayer1) ? "ry" : "y").as_int(0);
+		preview_rects->at(i).w = config.attribute("w").as_int(0);
+		preview_rects->at(i).h = config.attribute("h").as_int(0);
+		config = config.next_sibling();
+	}
+	return true;
 }
 
 bool Player::Start()
@@ -43,20 +59,7 @@ bool Player::Start()
   
 	currentTile = { 13,0 };
 
-	preview_rects = vector<SDL_Rect>(Entity::entityType::WAR_HOUND, { 0,0,0,0 });
-
-	/*pugi::xml_document	config_file;
-	pugi::xml_node config;
-	config = App->LoadConfig(config_file);
-	config = config.child("entitymanager").child("rect_previews").first_child();
-
-	for (int i = Entity::entityType::TOWNHALL; i <= Entity::entityType::WAR_HOUND; i++) {
-		preview_rects[i].x = config.attribute((isPlayer1) ? "rx" : "x").as_int(0);
-		preview_rects[i].y = config.attribute((isPlayer1) ? "ry" : "y").as_int(0);
-		preview_rects[i].w = config.attribute("w").as_int(0);
-		preview_rects[i].h = config.attribute("h").as_int(0);
-		config = config.next_sibling();
-	}*/
+	
 
 	return true;
 }
@@ -75,8 +78,9 @@ bool Player::Update(float dt)
 		}
 
 		if (isBuilding && App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
-			isPlayer1 = true;
+			isPlayer1 = false;
 			type = (Entity::entityType)((curr++) % (int)Entity::entityType::TANKMAN);
+
 		}
 
 		//--- Press X (Square) To SELECT BUILDINGS
@@ -588,12 +592,15 @@ bool Player::Update(float dt)
 			pair<int, int> pos;
 			App->input->GetMousePosition(pos.first, pos.second);
 			pos = App->render->ScreenToWorld(pos.first, pos.second);
-			pos.first--;
+			//pos.first--;
 
-			App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &preview_rects[type]);
+			// Swap once commit to work with controller
+			// App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
+
+			App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &(preview_rects->at(type)));
 
 
-			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 			{
 				//play fx (build);
 				App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ },collider);
@@ -1158,11 +1165,10 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
-		//isBuilding = true;
-
+		isBuilding = true;
 		type = Entity::entityType::SOLDIER;
-		//collider.dimensions = { 1,1 };
-		//
+		collider.dimensions = { 1,1 };
+
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_TANKMAN:
