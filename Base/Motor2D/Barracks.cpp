@@ -87,9 +87,9 @@ bool Barracks::Update(float dt)
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) //test
 	{
-		health -= 10;
+		health -= 100;
 	}
 
 	ChangeAnimation();

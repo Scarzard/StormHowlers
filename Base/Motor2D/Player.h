@@ -208,8 +208,11 @@ public:
 	char dmg_label[20] = "DMG:  ";
 	UI_Element* Prod_text = nullptr; //only for townhall & mines
 	char prod_label[20] = "$/s:  ";
+
 	UI_Element* Capacity_text = nullptr; //only for barracks
 	char capacity_label[20] = "$/s:  ";
+	UI_Element* Create_troops = nullptr;
+	UI_Element* Upgrade_troops = nullptr;
 
 	// Create troops UI --------------------------
 	UI_Element* Create_Troops_UI = nullptr;

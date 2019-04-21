@@ -53,7 +53,7 @@ bool Player::Start()
 
 	live = 2000;
 
-	UI_troop_type = 9;
+	UI_troop_type = Entity::entityType::SOLDIER;
 
 	isBuilding = isDeploying = gold_added = isCasting = Y_pressed = isPaused = false;
   
@@ -158,7 +158,7 @@ bool Player::Update(float dt)
 		}
 
 		// --TEST-- from GENERAL UI to CREATE TROOPS UI (only for barracks)
-		if (gamepad.Controller[BACK] == KEY_DOWN && currentUI == CURRENT_UI::CURR_GENERAL && App->scene->active)
+		if (gamepad.Controller[BUTTON_X] == KEY_DOWN && currentUI == CURRENT_UI::CURR_GENERAL && (*building_selected)->type == Entity::entityType::BARRACKS )
 		{
 			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
 			UpdateVisibility();
@@ -171,9 +171,9 @@ bool Player::Update(float dt)
 			if (gamepad.Controller[LEFT] == KEY_DOWN)
 			{
 				UI_troop_type--;
-				if (UI_troop_type < 9) //soldier
+				if (UI_troop_type < Entity::entityType::SOLDIER) //soldier
 				{
-					UI_troop_type = 13; // war_hound
+					UI_troop_type = Entity::entityType::WAR_HOUND; // war_hound
 				}
 				Update_troop_image(UI_troop_type);
 
@@ -182,9 +182,9 @@ bool Player::Update(float dt)
 			if (gamepad.Controller[RIGHT] == KEY_DOWN)
 			{
 				UI_troop_type++;
-				if (UI_troop_type > 13) // war_hound
+				if (UI_troop_type > Entity::entityType::WAR_HOUND) // war_hound
 				{
-					UI_troop_type = 9;//soldier
+					UI_troop_type = Entity::entityType::SOLDIER;//soldier
 				}
 				Update_troop_image(UI_troop_type);
 			}
@@ -291,7 +291,7 @@ bool Player::Update(float dt)
 			}
 			else if (!App->scene->pause)
 			{
-				if (currentUI == CURR_BUILD)
+				if (currentUI == CURR_BUILD || currentUI == CURR_DEPLOY)
 				{
 					if (isBuilding == true)
 					{
@@ -342,6 +342,9 @@ bool Player::Update(float dt)
 				RB_img->visible = true;
 				LB_img->visible = true;
 			}
+
+			if (currentUI != CURRENT_UI::CURR_GENERAL && Create_troops!=nullptr)
+				Create_troops->visible = false;
 		}
 
 
@@ -595,9 +598,8 @@ bool Player::Update(float dt)
 			//pos.first--;
 
 			// Swap once commit to work with controller
-			// App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
-
-			App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &(preview_rects->at(type)));
+			App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
+			//App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &(preview_rects->at(type)));
 
 
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
@@ -605,7 +607,21 @@ bool Player::Update(float dt)
 				//play fx (build);
 				App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ },collider);
 
+				if (type > Entity::entityType::BARRACKS)//if troops
+				{
+					switch (type)
+					{
+					case Entity::entityType::SOLDIER:
+						SoldiersCreated--;
+						break;
+					}
+
+				}
+
 				isBuilding = false;
+				/*currentUI = CURRENT_UI::CURR_BUILD;
+				UpdateVisibility();
+				UpdateFocus(currentUI);*/
 				
 			}
 		}
@@ -1146,29 +1162,37 @@ void Player::DoLogic(UI_Element* data)
 	case::UI_Element::Action::ACT_BUILD_AOE:
 		isBuilding = true;
 		type = Entity::entityType::DEFENSE_AOE;
+		collider.dimensions = { 1,1 };
 		offset = { 60,30 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_TARGET:
 		isBuilding = true;
 		type = Entity::entityType::DEFENSE_TARGET;
+		collider.dimensions = { 1,1 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_MINE:
 		isBuilding = true;
 		type = Entity::entityType::MINES;
+		collider.dimensions = { 3,2 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_BARRACKS:
 		isBuilding = true;
 		type = Entity::entityType::BARRACKS;
+		collider.dimensions = { 2,2 };
+		
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
-		isBuilding = true;
-		type = Entity::entityType::SOLDIER;
-		collider.dimensions = { 1,1 };
-
+		if (SoldiersCreated > 0)
+		{
+			isBuilding = true;
+			type = Entity::entityType::SOLDIER;
+			collider.dimensions = { 1,1 };
+		}
+		
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_TANKMAN:
@@ -1333,5 +1357,14 @@ void Player::UpdateGeneralUI(Entity* building)
 	sprintf_s(level_label, "Lvl: %i", building->level);
 
 	sprintf_s(repair_cost_label, " - %i $", building->repair_cost);
+
+	if (building->type == Entity::entityType::BARRACKS)
+	{
+		Create_troops->visible = true;
+	}
+	else
+	{
+		Create_troops->visible = false;
+	}
 
 }

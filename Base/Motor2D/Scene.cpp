@@ -236,6 +236,13 @@ bool Scene::Start()
 	App->player1->Level_text->label = App->player1->level_label;
 	App->player1->Level_text->color = { 255, 255, 255, 255 };
 
+	App->player1->Create_troops = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 480 , 50 }, { 83, 35 }, nullptr, false);
+	App->player1->Create_troops->rect = { 1194, 285, 83, 35 };
+
+	//App->player1->Upgrade_troops = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 515 , -12 }, { 83, 35 }, nullptr, false);
+	//App->player1->Upgrade_troops->rect = { 1280, 285, 83, 35 };
+
+
 	//-------- CREATE TROOPS MENU ------------
 
 	App->player1->Create_Troops_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
@@ -442,6 +449,9 @@ bool Scene::Start()
 	App->player2->Level_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 237 , 60 }, { 0, 0 }, App->player2->Repair_icon, false, { false, false });
 	App->player2->Level_text->label = App->player2->level_label;
 	App->player2->Level_text->color = { 255, 255, 255, 255 };
+
+	App->player2->Create_troops = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 330 , App->win->height + 175 }, { 83, 35 }, nullptr, false);
+	App->player2->Create_troops->rect = { 1194, 285, 83, 35 };
 
 	//-------- CREATE TROOPS MENU ------------
 
