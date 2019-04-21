@@ -21,6 +21,8 @@ Soldier::~Soldier()
 
 bool Soldier::Update(float dt)
 {
+	if (!alive) return true;
+
 	pair<int, int> pos;
 	pair<int, int> map_pos = App->map->WorldToMap(position.first, position.second);
 
@@ -59,7 +61,7 @@ bool Soldier::Update(float dt)
 		Speed.second = Speed.second * speed;
 		//LOG("Speed: [%d,%d]", Speed.first, Speed.second);
 
-		// Is quiet, change to next path tile
+		// If it's still, change to next path tile
 		if (Speed.first == 0 && Speed.second == 0 ) {
 			if (path.size() > path_count + 1)
 				path_count++;

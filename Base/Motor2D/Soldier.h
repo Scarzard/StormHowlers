@@ -15,12 +15,7 @@ public:
 	void ChangeAnimation();
 
 	void LoadAnimations(bool isPlayer1, string path);
-	vector<pair<int, int>> path;
-	int path_count = 1;
-	SDL_Rect rect = { 180,0,60,30 };
-
-	bool isMoving = false;
-	bool isShooting = false;
+	
 };
 
 #endif

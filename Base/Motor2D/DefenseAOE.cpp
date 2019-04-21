@@ -9,6 +9,7 @@
 DefenseAoe::DefenseAoe()
 {
 	// NOW IS A COPY OF DEFENSE TARGET WITH DIFERENT BEHAVIOUR (UPDATE)
+	// NEED TO CHANGE THE NAME INSIDE GetName() TO "defense_aoe" ONCE ANIMATIONS PARSED
 }
 
 DefenseAoe::~DefenseAoe()
@@ -39,7 +40,52 @@ bool DefenseAoe::PreUpdate()
 bool DefenseAoe::Update(float dt)
 {
 	BROFILER_CATEGORY("DefenseAoe Update", Profiler::Color::SandyBrown);
+	//Checks where to look for enemies
+	Player* tmpMod = (fromPlayer1) ? App->player2 : App->player1;
+	list<Troop*>::iterator tmp = tmpMod->troops.begin();
 
+	// Finds the closest one
+	vector<pair<int,Troop*>> enemies;
+
+	if (tmp != tmpMod->troops.end()) {
+		int d = 0;
+
+		// Gets first distance
+		Is_inRange((*tmp)->position, d);
+
+		while (tmp != tmpMod->troops.end())
+		{
+			if ((*tmp)->alive && Is_inRange((*tmp)->position, d)) {
+
+				if (enemies.size() < max_targets) {
+					enemies.push_back({ d,*tmp });
+				}
+				else {
+					int i = max_targets-1;
+					while (i > 0 && enemies.at(i).first > d) {
+						
+						i--;
+					}
+					if (i != max_targets - 1) {
+						enemies.at(i).first = d;
+						enemies.at(i).second = *tmp;
+					}
+				}
+			}
+			tmp++;
+		}
+
+		// Shoots
+		if (timer.ReadSec() >= rate_of_fire)
+		{
+			for (int i = 0; i < enemies.size(); i++) {
+
+				enemies.at(i).second->TakeDamage(damage_lv[level]);
+			}
+			timer.Start();
+			//LOG("Distance: %d", d);
+		}
+	}
 	Building::Update(dt);
 
 	
