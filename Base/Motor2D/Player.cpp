@@ -101,6 +101,10 @@ bool Player::Update(float dt)
 		if (currentUI == CURRENT_UI::CURR_SELECTING_BUILDING)
 		{
 
+			if (In_SelectBuilding->visible == false)
+				In_SelectBuilding->visible = true;
+			
+
 			selected_texture.x = (*building_selected)->position.first;
 			selected_texture.y = (*building_selected)->position.second;
 			selected_texture.w = ((*building_selected)->Current_Animation->GetCurrentFrame(dt).w);
@@ -109,6 +113,11 @@ bool Player::Update(float dt)
 				App->render->DrawQuad(selected_texture, 255, 0,0, 100, true);
 			else
 				App->render->DrawQuad(selected_texture, 0, 0, 255, 100, true);
+		}
+		else
+		{
+			if(In_SelectBuilding!=nullptr && In_SelectBuilding->visible == true )
+				In_SelectBuilding->visible = false;
 		}
 
 		
@@ -162,6 +171,7 @@ bool Player::Update(float dt)
 		{
 			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
 			UpdateVisibility();
+			UI_troop_type = Entity::entityType::SOLDIER;
 			//UpdateFocus(currentUI);
 		}
 
@@ -334,6 +344,10 @@ bool Player::Update(float dt)
 				Y_to_Main2->visible = true;
 				RB_img->visible = false;
 				LB_img->visible = false;
+
+				
+					
+				
 			}
 			else if (Y_pressed == true)
 			{
@@ -345,6 +359,11 @@ bool Player::Update(float dt)
 
 			if (currentUI != CURRENT_UI::CURR_GENERAL && Create_troops!=nullptr)
 				Create_troops->visible = false;
+
+			if(currentUI == NONE)
+				SelectBuilding->visible = true;
+			else
+				SelectBuilding->visible = false;
 		}
 
 

@@ -149,6 +149,12 @@ bool Scene::Start()
 	App->player1->Y_to_Main2 = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 590 , 70 }, { 39, 39 }, nullptr, true);
 	App->player1->Y_to_Main2->rect = { 1289, 373, 39, 39 };
 
+	App->player1->SelectBuilding = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 630 , 30 }, { 39, 39 }, nullptr, true);
+	App->player1->SelectBuilding->rect = { 1226, 488, 45, 107 };
+	App->player1->In_SelectBuilding = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 630 , 30 }, { 39, 39 }, nullptr, false);
+	App->player1->In_SelectBuilding->rect = { 1326, 488, 45, 107 };
+
+
 	App->player1->Build_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player1->Build_UI->rect = { 569, 246, 566, 163 };
 	App->player1->Def_AOE_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { 68, 55 }, { 85, 81 }, App->player1->Build_UI, false);
@@ -370,6 +376,12 @@ bool Scene::Start()
 	App->player2->Y_to_Main->rect = { 1289, 373, 39, 39 }; 
 	App->player2->Y_to_Main2 = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 445 , App->win->height + 192 }, { 39, 39 }, nullptr, false);
 	App->player2->Y_to_Main2->rect = { 1289, 373, 39, 39 };
+
+
+	App->player2->SelectBuilding = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 190 ,App->win->height + 152 }, { 39, 39 }, nullptr, true);
+	App->player2->SelectBuilding->rect = { 1177, 488, 45, 107 };
+	App->player2->In_SelectBuilding = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 191 ,App->win->height + 152 }, { 39, 39 }, nullptr, false);
+	App->player2->In_SelectBuilding->rect = { 1276, 488, 45, 107 };
 
 	App->player2->Build_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
 	App->player2->Build_UI->rect = { 569, 246, 566, 163 };
