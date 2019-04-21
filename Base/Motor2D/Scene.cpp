@@ -1308,7 +1308,7 @@ void Scene::SpawnEntities()
 	map_pos = App->map->WorldToMap(App->map->data.main_tower.first, App->map->data.main_tower.second);
 	App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower, App->player1->GetCollider({ 2,2 }, { map_pos.first , map_pos.second }));
 
-	map_pos = App->map->WorldToMap(App->map->data.barrack.first, App->map->data.barrack.second);
+	/*map_pos = App->map->WorldToMap(App->map->data.barrack.first, App->map->data.barrack.second);
 	App->entitymanager->AddEntity(true, Entity::entityType::BARRACKS, App->map->data.barrack, App->player1->GetCollider({ 3,4 }, { map_pos.first , map_pos.second }));
 
 	map_pos = App->map->WorldToMap(App->map->data.tower.first, App->map->data.tower.second);
@@ -1316,7 +1316,7 @@ void Scene::SpawnEntities()
 
 	map_pos = App->map->WorldToMap(App->map->data.tower2.first, App->map->data.tower2.second);
 	App->entitymanager->AddEntity(true, Entity::entityType::MINES, App->map->data.tower2, App->player1->GetCollider({ 4,4 }, { map_pos.first , map_pos.second }));
-
+*/
 
 	//--- PLAYER 2
 	
