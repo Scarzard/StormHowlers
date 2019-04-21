@@ -1292,6 +1292,9 @@ bool Scene::Load_level(int map)
 void Scene::SpawnEntities()
 {
 
+	//--- WALLS
+	LoadWalls();
+	
 	//--- PLAYER 1
 	
 
@@ -1332,8 +1335,6 @@ void Scene::SpawnEntities()
 	//App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 5000,50 });
 	//App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 350,400 });
 
-	//--- WALLS
-	LoadWalls();
 }
 
 //void Scene::changeSize(float time, int maxsize)

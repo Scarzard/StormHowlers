@@ -28,6 +28,11 @@ public:
 	list<Entity*> EntityManager::OrderEntities(list<Entity*> List);
 	int EntityManager::GetDepth(Entity* entity);
 
+	bool FindInList(list<Entity*> List, pair<int, int> pos, bool fromplayer1, Entity::entityType type);
+
+
+
+
 public:
 	string			folder;
 	string			texture_path;
