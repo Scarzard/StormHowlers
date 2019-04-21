@@ -78,7 +78,7 @@ bool Townhall::Update(float dt)
 		}
 		else
 		{
-			App->scene->Victorious(App->player1);
+			App->scene->Victorious(App->player1, dt);
 		}
 
 		// Just to test the LiveBar
@@ -109,7 +109,7 @@ bool Townhall::Update(float dt)
 		}
 		else
 		{
-			App->scene->Victorious(App->player2);
+			App->scene->Victorious(App->player2, dt);
 		}
 
 		// Just to test the LiveBar

@@ -129,7 +129,7 @@ void CmdCenter::LoadAnimations(bool isPlayer1, string path)
 	building = building->LoadAnimation(path.data(), (isPlayer1) ? "red" : "blue");
 	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "red" : "blue");
 	//level1->PushBack(building->GetLastAnimationFrame());// level1->LoadAnimation(&path[0], (!isPlayer1) ? "red" : "blue");
-	level1->speed = 3;
+	level1->speed = 10;
 	building->speed = 3;
 	building->loop = false;
 	level1->loop = false;

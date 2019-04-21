@@ -90,9 +90,8 @@ public:
 	void LoadWalls();
 
 	void DrawLiveBar(Player* player);
-	void Victorious(Player* player);
+	void Victorious(Player* player, float dt);
 	void ResetGame();
-
 	void DrawDecorations(float dt); 
 
 	//void changeSize(float time, int maxsize);
@@ -161,6 +160,7 @@ public:
 	SDL_Rect bush_rect, fit_tree, wide_tree, tall_tree; 
 
 	SDL_Texture* flags_tex = nullptr; 
+	SDL_Texture* explosion_tex = nullptr;
 
 private:
 	

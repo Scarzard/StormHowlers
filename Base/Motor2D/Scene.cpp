@@ -96,6 +96,9 @@ bool Scene::Start()
 	App->map->allied_flag_anim = App->map->allied_flag_anim->LoadAnimation("animation/Flags.tmx", "flag_allied");
 	App->map->soviet_flag_anim = App->map->soviet_flag_anim->LoadAnimation("animation/Flags.tmx", "flag_soviet");
 
+	explosion_tex = App->tex->Load("animation/explosion_anim.png");
+	App->map->explosion_anim = App->map->explosion_anim->LoadAnimation("animation/explosion.tmx", "animation");
+
 	App->player1->LiveBar = { 51, 18 , 348, 19 }; //LiveBar for player1
 	App->player2->LiveBar = { 1232, 921 , 348, 19 }; //LiveBar for player2
 
@@ -1558,9 +1561,32 @@ void Scene::DrawLiveBar(Player* player)
 		App->render->DrawQuad(player->LiveBar, 255, 0, 0, 255, true, false); //red
 }
 
-void Scene::Victorious(Player* player)
+void Scene::Victorious(Player* player, float dt)
 {
-	if (player == App->player1)
+	pair<int, int> tmp_pos1 = App->player1->Townhall->GetPos();
+	pair<int, int> tmp_pos2 = App->player2->Townhall->GetPos();
+	App->map->explosion_anim->speed = 1.2f;
+	//Explosion, after it has finished, blit continue with function
+	if (player == App->player1 && !App->map->explosion_anim->Finished())
+	{
+		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first, tmp_pos1.second, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first + 58, tmp_pos1.second + 42, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first - 73, tmp_pos1.second + 86, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first + 37, tmp_pos1.second - 76, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first - 42, tmp_pos1.second - 19, &App->map->explosion_anim->GetCurrentFrame(dt));
+	}
+	else if (player == App->player2 && !App->map->explosion_anim->Finished())
+	{
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first, tmp_pos2.second, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first + 8, tmp_pos2.second + 22, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first - 3, tmp_pos2.second + 16, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first + 17, tmp_pos2.second - 6, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first - 12, tmp_pos2.second - 9, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first + 120, tmp_pos2.second + 18, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first - 120, tmp_pos2.second - 18, &App->map->explosion_anim->GetCurrentFrame(dt));
+	}
+
+	if (player == App->player1 && App->map->explosion_anim->Finished())
 	{
 		pausetimer = true;
 		world_seconds.Stop();
@@ -1577,7 +1603,7 @@ void Scene::Victorious(Player* player)
 			App->scene->pause = true;
 		}
 	}
-	else if (player == App->player2)
+	else if (player == App->player2 && App->map->explosion_anim->Finished())
 	{
 		pausetimer = true;
 		world_seconds.Stop();
