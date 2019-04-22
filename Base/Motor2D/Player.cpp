@@ -1300,7 +1300,7 @@ bool Player::DeleteEntity(Entity* entity)
 			item2++;
 		}
 	}
-	else if (type > Entity::entityType::BARRACKS) //if entity = troop
+	else if (entity->type > Entity::entityType::BARRACKS) //if entity = troop
 	{
 		list<Troop*>::iterator item = troops.begin();
 		while (item != troops.end())

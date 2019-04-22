@@ -140,7 +140,7 @@ public:
 			health -= damage;
 
 			if (health <= 0) {
-				alive = false;
+				//alive = false;
 				LOG("P[%d] %s DEAD", (fromPlayer1) ? 1 : 2, &name[0]);
 			}
 
