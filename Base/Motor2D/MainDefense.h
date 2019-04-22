@@ -13,6 +13,7 @@ public:
 	bool Update(float dt);
 	void CleanUp();
 	void LoadAnimations(bool isPlayer1, string path);
+	bool Is_inRange(pair<int, int> pos, int & distance);
 };
 
 #endif

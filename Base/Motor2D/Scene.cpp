@@ -125,10 +125,10 @@ bool Scene::Start()
 
 	//--------- INIT BUILD ZONE LIMITS ------------- (falta cambiar con valores de las build Zones
 	App->player1->x_limits_player1 = { 20,60 };
-	App->player1->y_limits_player1 = { 11,33 };
+	App->player1->y_limits_player1 = { 20,33 };
 
 	App->player2->x_limits_player2 = { 20,60 };
-	App->player2->y_limits_player2 = { 56,78 };
+	App->player2->y_limits_player2 = { 56,69 };
 
 		//spritesheet123 = App->tex->Load("textures/Buildings.png");
 	App->map->imagemap = App->tex->Load("textures/map3.png");

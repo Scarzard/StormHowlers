@@ -34,49 +34,52 @@ bool MainDefense::Update(float dt)
 		position = App->map->data.tower2;
 	}*/
 
-	if (fromPlayer1)
-	{
-		if (health > 0) //if not destroyed
-		{
-			if (upgrade == true) //upgrade
-			{
-				App->player2->gold -= upgrade_cost[level]; //pay costs
-				level++;
-				damage = damage_lv[level]; //update production
-				upgrade = false;
-				//play fx (upgrade);
-			}
+	//Checks where to look for enemies
+	Player* tmpMod = (fromPlayer1) ? App->player2 : App->player1;
+	list<Troop*>::iterator tmp = tmpMod->troops.begin();
 
-			//if troops in range -> attack
-		}
-		else
+	// Finds the closest one
+	Troop* closest = *tmpMod->troops.begin();
+	if (tmp != tmpMod->troops.end()) {
+		int min_distance;
+		int d = 0;
+
+		// Gets first distance
+		Is_inRange(closest->position, min_distance);
+
+		while (tmp != tmpMod->troops.end())
 		{
+			if ((*tmp)->alive && Is_inRange((*tmp)->position, d) && min_distance >= d) {
+				closest = *tmp;
+				min_distance = d;
+			}
+			tmp++;
+		}
+
+		// Shoots the closest one if in range
+		if (timer.ReadSec() >= rate_of_fire && Is_inRange(closest->position, d))
+		{
+			closest->TakeDamage(damage_lv[level]);
+			timer.Start();
+			//LOG("Distance: %d", d);
+		}
+	}
+	if (fromPlayer1)  // --- Player 1 --------------------------------
+	{
+		if (health <= 0) //destroyed
+		{
+			App->player1->UpdateWalkabilityMap(true, collider);
 			App->player1->DeleteEntity(this);
-			App->player1->UpdateWalkabilityMap(true, collider); //destroyed
 		}
 	}
-	else if (!fromPlayer1)
+	else if (!fromPlayer1) // --- Player 2 ---------------------------
 	{
-		if (health > 0) //if not destroyed
+		if (health <= 0) //destroyed
 		{
-			if (upgrade == true) //upgrade
-			{
-				App->player2->gold -= upgrade_cost[level]; //pay costs
-				level++;
-				damage = damage_lv[level]; //update production
-				upgrade = false;
-				//play fx (upgrade);
-			}
-
-			//if troops in range -> attack
-		}
-		else
-		{
+			App->player2->UpdateWalkabilityMap(true, collider);
 			App->player2->DeleteEntity(this);
-			App->player2->UpdateWalkabilityMap(true, collider); //destroyed
 		}
 	}
-	ChangeAnimation();
 
 	if (Current_Animation->Finished() == true)
 		Current_Animation = level1;
@@ -105,4 +108,12 @@ void MainDefense::LoadAnimations(bool isPlayer1, string path)
 	building->loop = false;
 	level1->loop = false;
 	Current_Animation = building;
+}
+
+bool MainDefense::Is_inRange(pair<int, int> pos, int &distance) {
+
+	pair <int, int> vector_distance = { position.first - pos.first, position.second - pos.second };
+	distance = (int)(sqrt(pow(vector_distance.first, 2) + pow(vector_distance.second, 2)));
+
+	return distance <= range;
 }
