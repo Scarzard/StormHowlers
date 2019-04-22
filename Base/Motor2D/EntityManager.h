@@ -29,6 +29,7 @@ public:
 	list<Entity*> EntityManager::OrderEntities(list<Entity*> List);
 	int EntityManager::GetDepth(Entity* entity);
 
+
 	Entity * findEntity(pair<int, int> pos, bool fromplayer1, int attackrange);
 
 	//bool Is_inRange(pair<int, int> pos, int distance, pair<int, int> position, int range);
@@ -38,6 +39,11 @@ public:
 	//void Remove_fromList(Entity * entity);
 
 	//void Erase_fromList(list<Entity*>::iterator tmp);
+
+	bool FindInList(list<Entity*> List, pair<int, int> pos, bool fromplayer1, Entity::entityType type);
+
+
+
 
 public:
 	string			folder;

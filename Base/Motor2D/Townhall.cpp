@@ -46,15 +46,15 @@ bool Townhall::Update(float dt)
 
 	// ------ This is awful ------ but works ;D
 
-	if (fromPlayer1 == true)
-	{
-		position = App->map->data.main_building2;
-	}
-	else 
-	{
-		position = App->map->data.main_building;
-	}
-	////---------------------------------------
+	//if (fromPlayer1 == true)
+	//{
+	//	position = App->map->data.main_building2;
+	//}
+	//else 
+	//{
+	//	position = App->map->data.main_building;
+	//}
+	//////---------------------------------------
 			
 	
 	if (fromPlayer1)

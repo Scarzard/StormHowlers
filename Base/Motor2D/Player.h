@@ -66,6 +66,7 @@ public:
 	~Player();
 
 	bool Start();
+	//bool Awake(pugi::xml_node &config);
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();

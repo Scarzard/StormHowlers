@@ -314,8 +314,29 @@ bool EntityManager::Draw(float dt) //sprite ordering
 
 		//}
 		//if (entitiesTextures[(*tmp)->type] != nullptr)
+
+
+		if ((*tmp)->type == Entity::entityType::TOWNHALL && (*tmp)->fromPlayer1 == true)
+		{
+			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first-((*tmp)->collider.dimensions.first*20), (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second * 20), &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
+
+		}
+		else if (((*tmp)->type == Entity::entityType::TOWNHALL && (*tmp)->fromPlayer1 == false))
+		{
+			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first-((*tmp)->collider.dimensions.first*8), (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second * 40), &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
+
+		}
+		else if ((*tmp)->type == Entity::entityType::BARRACKS || (*tmp)->type == Entity::entityType::MINES)
+		{
+			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first - ((*tmp)->collider.dimensions.first * 20), (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second * 20), &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
+
+		}
+		else
+		{
+ 			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first/*-((*tmp)->collider.dimensions.first*29)*/, (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second*20), &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
+		
+		}
 			
-		App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first, (*tmp)->position.second, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 
 		//--- Draw Life Bar
 		if ((*tmp)->health < (*tmp)->health_lv[(*tmp)->level] && (*tmp)->health > 0)
@@ -402,7 +423,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 	if (tmp)
 	{
 		entity_list.push_back(tmp); // add to main entity list
-		//entity_list = OrderEntities(entity_list);
+		entity_list = OrderEntities(entity_list);
 		if (isPlayer1 == true)
 		{
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building
@@ -496,6 +517,7 @@ list<Entity*> EntityManager::OrderEntities(list<Entity*> List)
 {
 	list<Entity*> ListOrder;
 	ListOrder.push_back(List.front()); // push first element of List to OrderList
+
 	bool found = false;
 
 	for (list<Entity*>::iterator tmp = List.begin(); tmp != List.end(); tmp++) // traverse entity list (unordered)
@@ -504,14 +526,21 @@ list<Entity*> EntityManager::OrderEntities(list<Entity*> List)
 		{
 			if (GetDepth(*tmp) < GetDepth(*tmp2)) // if tmp is further than tmp2
 			{
-				ListOrder.insert(tmp2, *tmp); // add tmp in front of tmp2
-				found = true;
+				if (FindInList(ListOrder,(*tmp)->position,(*tmp)->fromPlayer1,(*tmp)->type)==false)
+				{
+					ListOrder.insert(tmp2, *tmp); // add tmp in front of tmp2
+					found = true;
+				}
+				
 				break;
 			}
 		}
 		if (found == false) // if tmp is the closest
 		{
-			ListOrder.push_back(*tmp); // push to last place
+			if (FindInList(ListOrder, (*tmp)->position, (*tmp)->fromPlayer1, (*tmp)->type)==false)
+			{
+			ListOrder.push_back(*tmp); // push to last place	
+			}
 		}
 		found = false;
 	}
@@ -525,6 +554,7 @@ int EntityManager::GetDepth(Entity* entity)
 
 	return (postemp.first + postemp.second); // return depth
 }
+
 
 Entity* EntityManager::findEntity(pair <int,int> pos,bool fromplayer1, int attackrange)
 {
@@ -581,3 +611,18 @@ bool EntityManager::Is_inRange(pair<int, int> pos, int &distance, pair <int,int>
 //	
 //	entity_list.erase(tmp);
 //}
+
+bool EntityManager::FindInList(list<Entity*> List, pair <int,int> pos, bool fromplayer1, Entity::entityType type)
+{
+	bool ret = false;
+	for (list<Entity*>::iterator tmp = List.begin(); tmp != List.end(); tmp++) // traverse entity list (unordered)
+	{
+		if ((*tmp)->fromPlayer1 == fromplayer1 && (*tmp)->position == pos && (*tmp)->type == type)
+		{
+			ret = true;
+			break;
+		}
+	}
+	return ret;
+}
+

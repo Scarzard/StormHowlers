@@ -1379,33 +1379,53 @@ bool Scene::Load_level(int map)
 
 void Scene::SpawnEntities()
 {
+
+
+	//--- WALLS
+	LoadWalls();
+	
 	
 	//--- PLAYER 1
 	pair<int, int> map_pos = App->map->WorldToMap(App->map->data.main_building2.first , App->map->data.main_building2.second);
-	App->player1->Townhall = App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, App->map->data.main_building2, App->player1->GetCollider({ 4,4 }, { map_pos.first + 4, map_pos.second + 1 }));
+	App->player1->Townhall = App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, App->map->data.main_building2, App->player1->GetCollider({ 4,4 }, { map_pos.first, map_pos.second  }));
 
 	
 	map_pos = App->map->WorldToMap(App->map->data.special_skill.first, App->map->data.special_skill.second);
-	App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill, App->player1->GetCollider({ 4,3 }, { map_pos.first + 6, map_pos.second + 5 }));
+	App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill, App->player1->GetCollider({ 4,3 }, { map_pos.first , map_pos.second }));
 
 	map_pos = App->map->WorldToMap(App->map->data.main_tower.first, App->map->data.main_tower.second);
-	App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower, App->player1->GetCollider({ 2,2 }, { map_pos.first + 2, map_pos.second + 2}));
-	   
+
+	App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower, App->player1->GetCollider({ 2,2 }, { map_pos.first , map_pos.second }));
+
+	/*map_pos = App->map->WorldToMap(App->map->data.barrack.first, App->map->data.barrack.second);
+	App->entitymanager->AddEntity(true, Entity::entityType::BARRACKS, App->map->data.barrack, App->player1->GetCollider({ 3,4 }, { map_pos.first , map_pos.second }));
+
+	map_pos = App->map->WorldToMap(App->map->data.tower.first, App->map->data.tower.second);
+	App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, App->map->data.tower, App->player1->GetCollider({ 2,2 }, { map_pos.first , map_pos.second }));
+
+	map_pos = App->map->WorldToMap(App->map->data.tower2.first, App->map->data.tower2.second);
+	App->entitymanager->AddEntity(true, Entity::entityType::MINES, App->map->data.tower2, App->player1->GetCollider({ 4,4 }, { map_pos.first , map_pos.second }));
+*/
+
 
 	//--- PLAYER 2
 	map_pos = App->map->WorldToMap(App->map->data.main_building.first, App->map->data.main_building.second);
-	App->player2->Townhall = App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, App->map->data.main_building, App->player2->GetCollider({ 7,3 }, { map_pos.first + 3, map_pos.second + 2 }));
-
-	//--- WALLS 
-	LoadWalls();
+	App->player2->Townhall = App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, App->map->data.main_building, App->player2->GetCollider({ 7,3 }, { map_pos.first , map_pos.second }));
+	
 
 	map_pos = App->map->WorldToMap(App->map->data.special_skill2.first, App->map->data.special_skill2.second);
-	App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill2, App->player2->GetCollider({ 4,3 }, { map_pos.first + 6, map_pos.second + 5 }));
+	App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill2, App->player2->GetCollider({ 4,3 }, { map_pos.first, map_pos.second}));
 
 	map_pos = App->map->WorldToMap(App->map->data.main_tower2.first, App->map->data.main_tower2.second);
-	App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower2, App->player2->GetCollider({ 2,2 }, { map_pos.first + 2, map_pos.second + 2 }));
+	App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower2, App->player2->GetCollider({ 2,2 }, { map_pos.first , map_pos.second}));
 
-		
+
+	//App->entitymanager->AddEntity(false, Entity::entityType::MAIN_DEFENSE, { 50,50 });
+	//App->entitymanager->AddEntity(false, Entity::entityType::WALLS, { 50,50 });
+	//App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 5000,50 });
+	//App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, { 350,400 });
+
+
 }
 
 //void Scene::changeSize(float time, int maxsize)

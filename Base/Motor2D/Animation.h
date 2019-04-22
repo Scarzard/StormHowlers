@@ -52,7 +52,6 @@ public:
 					y = sprite.attribute("y").as_int();
 					w = sprite.attribute("width").as_int();
 					h = sprite.attribute("height").as_int();
-
 					animation->PushBack({ x, y, w, h });
 				}
 

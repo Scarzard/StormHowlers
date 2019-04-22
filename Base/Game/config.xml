@@ -167,8 +167,9 @@
     </troops>
   </entitymanager>
 
-  <player>
-     <rect_previews>
+ <player>
+  <rect_previews>
+
       <townhall       x="" y="" w="" h="" rx="" ry=""/>      <!--<townhall x=""        -->
       <sentrygun      x="62" y="195" w="62" h="39" rx="186" ry="0" />  <!--<main_defense x>      -->
       <cmd_center     x="424" y="2556" w="212" h="213" rx="0" ry="2556" />    <!--<cmd_center x="       -->
@@ -185,6 +186,7 @@
     </rect_previews>
   </player>
 
+
   <scene>
     <map_name name="map3.tmx"></map_name>
     <pause_menu_alied file="gui/Pause_Menu_Alied.png"></pause_menu_alied>
@@ -195,7 +197,7 @@
   </scene>
 
   <main_menu>
-    <menu_bg file="gui/mainmenu.PNG"/>
+    <menu_bg file="gui/mainmenu2.png"/>
     <credits file="gui/credits.png"/>
     <music vol="40" sfx="100"/>
   </main_menu>
