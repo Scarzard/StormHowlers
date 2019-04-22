@@ -68,7 +68,10 @@ public:
 	bool isMoving = false;
 	bool isShooting = false;
 
-	
+	// Group Movement
+	int speed;
+	Group_Unit info;
+	bool isSelected = true;
 	
 };
 

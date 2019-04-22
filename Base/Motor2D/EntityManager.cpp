@@ -140,6 +140,7 @@ bool EntityManager::Update(float dt)
 
 		// Player 1 Troops
 
+		// TO DO: CHECK IF TTMP != nullptr
 		list<Troop*>::const_iterator ttmp = App->player1->troops.begin();
 
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
@@ -482,7 +483,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			}
 			else if (type > Entity::entityType::BARRACKS) //if troops
 			{
-				tmp->isSelected = true;
+				//tmp->isSelected = true;
 				App->player1->troops.push_back((Troop*)tmp);
 				App->move_manager->CreateGroup(App->player1);
 			}
@@ -496,7 +497,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			}
 			else if (type > Entity::entityType::BARRACKS)
 			{
-				tmp->isSelected = true;
+				//tmp->isSelected = true;
 				App->player2->troops.push_back((Troop*)tmp);
 				App->move_manager->CreateGroup(App->player2);
 

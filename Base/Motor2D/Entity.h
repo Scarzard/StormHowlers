@@ -143,10 +143,10 @@ public:
 
 			if (health <= 0) {
 				//alive = false;
-				LOG("P[%d] %s DEAD", (fromPlayer1) ? 1 : 2, &name[0]);
+				//LOG("P[%d] %s DEAD", (fromPlayer1) ? 1 : 2, &name[0]);
 			}
 
-			LOG("P[%d] %s health: %d", (fromPlayer1)?1:2, &name[0], health);
+			//LOG("P[%d] %s health: %d", (fromPlayer1)?1:2, &name[0], health);
 		}
 		
 	};
@@ -198,11 +198,6 @@ public:
 
 	int offset = 0;
 	Collider collider;
-
-	// Group Movement
-	int speed;
-	Group_Unit info;
-	bool isSelected = false;
 
 
 public:
