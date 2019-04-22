@@ -143,6 +143,10 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 
 	while (unit != group->Units.end())
 	{
+		if (unit._Ptr == nullptr)
+		{
+			unit++;
+		}
 		// --- We Get the map coords of the Entity ---
 		Map_Entityposition.first = (*unit)->position.first;
 		Map_Entityposition.second = (*unit)->position.second;
@@ -205,7 +209,7 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 				(*unit)->state = MOVING;
 
 				// --- If a path is created, the unit will start following it ---
-
+				(*unit)->isMoving = true;
 				next_tile_world = App->map->MapToWorld((*unit)->info.next_tile.first, (*unit)->info.next_tile.second);
 
 				distanceToNextTile = { (float)next_tile_world.first - (*unit)->position.first,(float)next_tile_world.second - (*unit)->position.second };
@@ -276,7 +280,7 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 				// --- The unit reaches the end of the path, thus stopping and returning to NoState ---
 				(*unit)->state = IDLE;
 				(*unit)->info.UnitMovementState = MovementState::MovementState_NoState;
-
+				(*unit)->isMoving = false;
 
 				break;
 		}

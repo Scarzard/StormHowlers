@@ -63,7 +63,7 @@ public:
 	
 	pair<int, int> Speed = { 1,1 };
 
-	Animation* idle;
+	Animation* idle = nullptr;
 	vector<Animation*> moving;
 	vector<Animation*> shooting;
 
@@ -80,7 +80,7 @@ public:
 	bool isShooting = false;*/
 
 	// Group Movement
-	int speed;
+	int speed = 0;
 	Group_Unit info;
 	bool isSelected = true;
 	

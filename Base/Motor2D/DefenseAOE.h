@@ -20,8 +20,9 @@ public:
 	void LoadAnimations(bool isPlayer1, string path);
 
 public:
-	SDL_Rect	collider;
-	SDL_Texture* tex;
+
+	Collider	colider;
+	SDL_Texture* tex = nullptr;
 };
 
 #endif

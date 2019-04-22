@@ -20,9 +20,9 @@ public:
 
 private:
 
-	bool	running;
-	uint32	started_at;
-	uint32	stopped_at;
+	bool	running = false;
+	uint32	started_at = 0;
+	uint32	stopped_at = 0;
 };
 
 #endif //__Timer_H__
