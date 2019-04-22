@@ -58,13 +58,6 @@ bool EntityManager::Start()
 		entitiesTextures[i] = App->tex->Load(PATH(folder.data(), n.data()));
 	}
 
-	/*entitiesTextures[Entity::entityType::DEFENSE_AOE] = entitiesTextures[Entity::entityType::DEFENSE_TARGET];
-		if (i == Entity::entityType::TANKMAN)
-			entitiesTextures[i] = nullptr;
-		else
-			entitiesTextures[i] = App->tex->Load(PATH(folder.data(), n.data()));
-	}*/
-	//entitiesTextures[Entity::entityType::DEFENSE_AOE] = entitiesTextures[Entity::entityType::DEFENSE_TARGET];
 	return ret;
 }
 bool EntityManager::PreUpdate()
@@ -143,6 +136,10 @@ bool EntityManager::Update(float dt)
 			pathfinding = false;
 		}
 
+		pair<int, int> mouse_pos;
+		App->input->GetMousePosition(mouse_pos.first, mouse_pos.second);
+		mouse_pos = App->render->ScreenToWorld(mouse_pos.first, mouse_pos.second);
+
 		// Player 1 Troops
 
 		// TO DO: CHECK IF TTMP != nullptr
@@ -153,7 +150,7 @@ bool EntityManager::Update(float dt)
 		}
 		
 		if (pathfinding) {
-			pathfinding = !App->move_manager->Move((*ttmp)->info.current_group, dt);
+			pathfinding = !App->move_manager->Move((*ttmp)->info.current_group, dt,mouse_pos);
 		}		
 
 		while (ttmp != App->player1->troops.end())
@@ -170,7 +167,7 @@ bool EntityManager::Update(float dt)
 		}
 
 		if (pathfinding2 ) {
-			pathfinding2 = !App->move_manager->Move((*ttmp)->info.current_group, dt);
+			pathfinding2 = !App->move_manager->Move((*ttmp)->info.current_group, dt, mouse_pos);
 		}
 
 		while (ttmp != App->player2->troops.end())

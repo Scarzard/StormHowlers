@@ -48,7 +48,7 @@ int Group::GetSize()
 
 void Group::CheckForMovementRequest(float dt)
 {
- 	App->move_manager->Move(this,dt);
+ 	//App->move_manager->Move(this,dt);
 }
 
 bool Group::IsGroupLead(Troop * entity)

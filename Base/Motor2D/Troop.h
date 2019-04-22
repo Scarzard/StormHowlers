@@ -4,7 +4,15 @@
 #include "Entity.h"
 #include "Group.h"
 
-enum entityDir {
+enum TroopState{
+	IDLE,
+	MOVING,
+	SHOOTING,
+
+	MAX_STATE
+};
+
+enum TroopDir {
 	NORTH,
 	SOUTH,
 	EAST,
@@ -14,7 +22,7 @@ enum entityDir {
 	SOUTHEAST,
 	SOUTHWEST,
 
-	MAX
+	MAX_DIR
 };
 
 
@@ -63,10 +71,13 @@ public:
 
 	vector<pair<int, int>> path;
 	int path_count = 1;
-	
 
-	bool isMoving = false;
-	bool isShooting = false;
+
+	TroopState state;
+	bool isInvulnerable = false;
+	// CHANGED TO TROOP STATE
+	/*bool isMoving = false;
+	bool isShooting = false;*/
 
 	// Group Movement
 	int speed;

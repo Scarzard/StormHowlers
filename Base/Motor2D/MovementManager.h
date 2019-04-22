@@ -33,11 +33,11 @@ public:
 	bool CleanUp();
 
 	// --- Group Tools ---
-	void SelectEntities_inRect(SDL_Rect SRect);
+	//void SelectEntities_inRect(SDL_Rect SRect);
 	void CreateGroup(Player* player);
 
 	// --- Move Unit ---
-	bool Move(Group* unit, float dt);
+	bool Move(Group* unit, float dt, pair<int,int> destination);
 
 	int DistanceTo(pair<int, int> pos, pair<float, float> destination);
 

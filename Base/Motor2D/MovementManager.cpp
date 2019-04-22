@@ -107,8 +107,9 @@ void MovementManager::CreateGroup(Player* player)
 		delete group;
 
 }
-
-bool MovementManager::Move(Group * group, float dt)
+/// Manages movement of groups
+/** group to move, delta time, destination in world coordinates */
+bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 {
 	BROFILER_CATEGORY("GroupMovement::Move", Profiler::Color::Gold);
 
@@ -123,11 +124,12 @@ bool MovementManager::Move(Group * group, float dt)
 	pair<float, float> to_fPoint;
 	pair<int,int> goal_world;
 
-	// --- We get the map coords of the mouse ---
-	pair<int,int> Map_mouseposition;
+	// --- We get the map coords of the destinaiton ---
+	/*pair<int,int> Map_mouseposition;
 	App->input->GetMousePosition(Map_mouseposition.first, Map_mouseposition.second);
-	Map_mouseposition = App->render->ScreenToWorld(Map_mouseposition.first, Map_mouseposition.second);
-	Map_mouseposition = App->map->WorldToMap(Map_mouseposition.first, Map_mouseposition.second);
+	Map_mouseposition = App->render->ScreenToWorld(Map_mouseposition.first, Map_mouseposition.second);*/
+
+	destination = App->map->WorldToMap(destination.first, destination.second);
 
 	bool everyone_arrived = true;
 	while (unit != group->Units.end()) {
@@ -172,7 +174,7 @@ bool MovementManager::Move(Group * group, float dt)
 					{	
 						// --- Clear previous path request occupied goal tiles ---
 						group->ClearOccupiedlist();
-						(*unit)->info.goal_tile = Map_mouseposition;
+						(*unit)->info.goal_tile = destination;
 						group->Occupied_tiles.push_back(&(*unit)->info.goal_tile);
 					}
 
@@ -199,6 +201,8 @@ bool MovementManager::Move(Group * group, float dt)
 				break;
 
 			case MovementState::MovementState_FollowPath:
+
+				(*unit)->state = MOVING;
 
 				// --- If a path is created, the unit will start following it ---
 
@@ -270,7 +274,7 @@ bool MovementManager::Move(Group * group, float dt)
 			case MovementState::MovementState_DestinationReached:
 
 				// --- The unit reaches the end of the path, thus stopping and returning to NoState ---
-
+				(*unit)->state = IDLE;
 				(*unit)->info.UnitMovementState = MovementState::MovementState_NoState;
 
 

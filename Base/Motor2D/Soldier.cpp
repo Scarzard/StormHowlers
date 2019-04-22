@@ -13,9 +13,11 @@ Soldier::Soldier(bool isPlayer1, pair<int, int> pos, Collider collider):Troop(En
 {
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
-	rate_of_fire = 1;
-	fromPlayer1 = isPlayer1;
-	type = Entity::entityType::SOLDIER;
+
+	//Managed in entity.h constructor
+	//rate_of_fire = 1;
+	//fromPlayer1 = isPlayer1;
+	//type = Entity::entityType::SOLDIER;
 
 }
 
@@ -26,13 +28,14 @@ Soldier::~Soldier()
 
 bool Soldier::Update(float dt)
 {
+	// Notice this line
 	if (!alive) return true;
 
 	pair<int, int> pos;
 	pair<int, int> map_pos = App->map->WorldToMap(position.first, position.second);
 	Entity* closest;
 
-	if (isMoving == false)
+	if (state == IDLE || state == SHOOTING)
 	{
 		closest = App->entitymanager->findEntity(map_pos, fromPlayer1, 3);
 		if (closest != nullptr)
@@ -43,6 +46,7 @@ bool Soldier::Update(float dt)
 				closest->TakeDamage(20/*damage_lv[level]*/);
 				timer.Start(); 
 				App->audio->PlayFx(SOLDIER_ATTACK);
+				state = SHOOTING;
 				//LOG("Damage to wall: %i     Wall life:%i", 1, closest.;
 			}
 		}
@@ -64,7 +68,7 @@ bool Soldier::Update(float dt)
 		}
 	}
 
-	// OLD PATHFINDING WITHOUT GROUP MOVEMENT
+	// OLD PATHFINDING WITHOUT GROUP MOVEMENT (NOT USED)
 	if (false){
 
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
@@ -96,7 +100,7 @@ bool Soldier::Update(float dt)
 
 
 		if (path.size() > 1) {
-			isMoving = true;
+			//isMoving = true;
 			Speed = { path.at(path_count).first - map_pos.first, path.at(path_count).second - map_pos.second };
 			Speed.first = Speed.first * speed;
 			Speed.second = Speed.second * speed;
@@ -106,8 +110,8 @@ bool Soldier::Update(float dt)
 			if (Speed.first == 0 && Speed.second == 0) {
 				if (path.size() > path_count + 1)
 					path_count++;
-				else
-					isMoving = false;
+				//else
+					//isMoving = false;
 			}
 
 			//Visual path debug
@@ -152,18 +156,18 @@ void Soldier::CleanUp() {
 }
 void Soldier::ChangeAnimation() {
 	Current_Animation = idle;
-	if (isMoving) {
+	if (state == MOVING) {
 		Current_Animation = moving[curr];
 	}
-	else if (isShooting) {
+	else if (state == SHOOTING) {
 		Current_Animation = shooting[curr];
 	}
 }
 
 void Soldier::LoadAnimations(bool isPlayer1, string path)
 {
-	moving = vector<Animation*>(entityDir::MAX, nullptr);
-	shooting = vector<Animation*>(entityDir::MAX, nullptr);
+	moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
 	idle = idle->LoadAnimation(path.data(), (isPlayer1) ? "red_idle" : "blue_idle");
 
