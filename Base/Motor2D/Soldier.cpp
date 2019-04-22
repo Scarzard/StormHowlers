@@ -1,6 +1,7 @@
 #include "Soldier.h"
 #include "Pathfinding.h"
 #include "Player.h"
+#include "Audio.h"
 
 
 Soldier::Soldier()
@@ -37,11 +38,11 @@ bool Soldier::Update(float dt)
 		if (closest != nullptr)
 		{
 			// Shoots the closest one if in range
-			if (timer.ReadSec() >= rate_of_fire)
+			if (timer.ReadSec() >= rate_of_fire )
 			{
 				closest->TakeDamage(20/*damage_lv[level]*/);
-				timer.Start();
-
+				timer.Start(); 
+				App->audio->PlayFx(SOLDIER_ATTACK);
 				//LOG("Damage to wall: %i     Wall life:%i", 1, closest.;
 			}
 		}

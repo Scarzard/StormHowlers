@@ -430,14 +430,18 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		break;
 
 	case Entity::entityType::DEFENSE_AOE:
+		//tesla
+		App->audio->PlayFx(TESLA_BUILD);
 		tmp = new DefenseAoe(isPlayer1, position, collider);
 		break;
 
 	case Entity::entityType::DEFENSE_TARGET:
+		App->audio->PlayFx(SENTRYGUN_BUILD);
 		tmp = new DefenseTarget(isPlayer1, position, collider);
 		break;
 
 	case Entity::entityType::MINES:
+		App->audio->PlayFx(MINE_BUILD);
 		tmp = new Mines(isPlayer1, position, collider);
 		break;
 
@@ -446,6 +450,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		break;
 
 	case Entity::entityType::BARRACKS:
+		App->audio->PlayFx(BARRACKS_BUILD);
 		tmp = new Barracks(isPlayer1, position, collider);
 		break;
 

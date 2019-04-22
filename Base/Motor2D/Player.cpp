@@ -258,9 +258,6 @@ bool Player::Update(float dt)
 
 		}
 
-		
-
-
 
 		// Button A to clcik a button
 		if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
@@ -400,6 +397,7 @@ bool Player::Update(float dt)
 		// Travel through the different buttons
 		if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
+			App->audio->PlayFx(CHANGE_FOCUS);
 			if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING)
 			{
 				(*focus)->state = UI_Element::State::IDLE;
@@ -446,6 +444,7 @@ bool Player::Update(float dt)
 		// Travel through the different buttons
 		if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
+			App->audio->PlayFx(CHANGE_FOCUS);
 			if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING)
 			{
 				(*focus)->state = UI_Element::State::IDLE;
@@ -486,6 +485,7 @@ bool Player::Update(float dt)
 		{
 			if (gamepad.Controller[UP] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
 			{
+				App->audio->PlayFx(CHANGE_FOCUS);
 				(*focus)->state = UI_Element::State::IDLE;
 
 				if (focus == last_element)
@@ -502,6 +502,7 @@ bool Player::Update(float dt)
 
 			if (gamepad.Controller[DOWN] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
 			{
+				App->audio->PlayFx(CHANGE_FOCUS);
 				(*focus)->state = UI_Element::State::IDLE;
 				if (focus == GetUI_Element(currentUI)->children.begin())
 				{
@@ -518,6 +519,7 @@ bool Player::Update(float dt)
 		// Increase or decrease volume
 		if (gamepad.Controller[RIGHT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
 		{
+			App->audio->PlayFx(SLIDER_UP);
 			if ((*focus) == Music_Settings && App->audio->musicVolume < 100)
 			{
 				App->audio->musicVolume += 10;
@@ -534,6 +536,7 @@ bool Player::Update(float dt)
 		}
 		else if (gamepad.Controller[LEFT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
 		{
+			App->audio->PlayFx(SLIDER_DOWN);
 			if ((*focus) == Music_Settings && App->audio->musicVolume > 0)
 			{
 				App->audio->musicVolume -= 10;
@@ -1343,6 +1346,7 @@ void Player::DoLogic(UI_Element* data)
 
 		break;
 	}
+	App->audio->PlayFx(INGAME_CLICK);
 }
 
 bool Player::DeleteEntity(Entity* entity)

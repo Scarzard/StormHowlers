@@ -26,12 +26,31 @@
     </music>
     <fx>
       <folder>audio/fx</folder>
-      <sound>10 min.wav</sound>
-      <sound>5 min.wav</sound>
       <sound>1 min.wav</sound>
-      <sound>timer startwav</sound>
-      <sound>timer stop.wav</sound>
       <sound>3 min.wav</sound>
+      <sound>5 min.wav</sound>
+      <sound>10 min.wav</sound>
+      <sound>barracks_build_fx.wav</sound>
+      <sound>building_repair_fx.wav</sound>
+      <sound>button_slide_fx.wav</sound>
+      <sound>change_focus_fx.wav</sound>
+      <sound>exit_fx.wav</sound>
+      <sound>in_game_click_fx.wav</sound>
+      <sound>invincible_fx.wav</sound>
+      <sound>launch_missiles_fx.wav</sound>
+      <sound>mine_build_fx.wav</sound>
+      <sound>play_fx.wav</sound>     
+      <sound>sentrygun_attack_fx.wav</sound>
+      <sound>sentrygun_build_fx.wav</sound>
+      <sound>slider_up_fx.wav</sound>
+      <sound>slider_down_fx.wav</sound>
+      <sound>soldier_attack_fx.wav</sound>
+      <sound>tesla_build_fx.wav</sound>
+      <sound>tesla_repair_fx.wav</sound>
+      <sound>tesla_attack_fx.wav</sound>
+      <sound>timer_started.wav</sound>
+      <sound>timer_stopped.wav</sound>
+      
     </fx>
   </audio>
 
