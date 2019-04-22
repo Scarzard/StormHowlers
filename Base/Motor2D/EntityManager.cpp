@@ -148,7 +148,7 @@ bool EntityManager::Update(float dt)
 		// TO DO: CHECK IF TTMP != nullptr
 		list<Troop*>::const_iterator ttmp = App->player1->troops.begin();
 
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN && ttmp != App->player1->troops.end()) {
 			pathfinding = true;
 		}
 		
@@ -165,11 +165,11 @@ bool EntityManager::Update(float dt)
 		// Player 2 Troops
 		ttmp = App->player2->troops.begin();
 
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN && ttmp != App->player2->troops.end()) {
 			pathfinding2 = true;
 		}
 
-		if (pathfinding2) {
+		if (pathfinding2 ) {
 			pathfinding2 = !App->move_manager->Move((*ttmp)->info.current_group, dt);
 		}
 

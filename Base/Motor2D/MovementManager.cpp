@@ -205,7 +205,7 @@ bool MovementManager::Move(Group * group, float dt)
 			case MovementState::MovementState_FollowPath:
 
 				// --- If a path is created, the unit will start following it ---
-
+				(*unit)->isMoving = true;
 				next_tile_world = App->map->MapToWorld((*unit)->info.next_tile.first, (*unit)->info.next_tile.second);
 
 				distanceToNextTile = { (float)next_tile_world.first - (*unit)->position.first,(float)next_tile_world.second - (*unit)->position.second };
@@ -242,6 +242,9 @@ bool MovementManager::Move(Group * group, float dt)
 				{
 					(*unit)->position.first += distanceToNextTile.first;
 					(*unit)->position.second += distanceToNextTile.second;
+
+					(*unit)->Speed.first = distanceToNextTile.first;
+					(*unit)->Speed.second = distanceToNextTile.second;
 				}
 			
 				// --- Blit Unit's goal tile ---
@@ -273,7 +276,7 @@ bool MovementManager::Move(Group * group, float dt)
 				// --- The unit reaches the end of the path, thus stopping and returning to NoState ---
 
 				(*unit)->info.UnitMovementState = MovementState::MovementState_NoState;
-
+				(*unit)->isMoving = false;
 
 				break;
 		}

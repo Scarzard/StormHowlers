@@ -26,9 +26,9 @@ struct GamePad
 
 struct GeneralUI
 {
-	bool upgrade, repair;
+	bool upgrade, repair = false;
 	string name;
-	uint level, health, unique;
+	uint level, health, unique = 0;
 };
 
 class Player : public Module
@@ -130,7 +130,7 @@ public:
 	vector<SDL_Rect>* preview_rects;
 
 	SDL_Rect LiveBar;
-	int health, max_health;
+	int health, max_health = 0;
 
 	// Live of TOWN HALL
 	int live = 0;

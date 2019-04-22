@@ -5,6 +5,73 @@
 We are an indie game development team formed by 7 students taking the bachelor's degree in Game design and development in the UPC.
 The game will be developed for the subject Project II. We will be making a tribute to the well-known RTS game: Command&Conquer: Red Alert 2.
 
+## Game controls
+### Controller
+#### Main menu/ingame menu
+- Dpad: Cycle through options
+- A: Use current button
+- B: Go back to previous window
+- Dpad right(on a slider): Increase value
+- Dpad left(on a slider): Decrease value
+
+#### In-game
+- Y: Go to go to main UI window
+- X: Select buildings
+- RB: Go to button/building in the right side
+- LB: Go to button/building in the left side
+- A: Use current button
+- A(with troop/building selected): Place it in the current location
+- A(with a building selected with X): Show building options
+- B: Go back to previous window/options
+- Dpad(with troop/building selected): Slow movement through the map
+- Left Joystick(with troop/building selected): Quick movement through the map
+- Start: Trigger pause menu
+
+## Debug functionalities
+### Keyboard
+#### Main menu/ingame menu
+N/A
+
+#### In-game
+This functionalities can be used anytime
+- F7: Map Debug
+- F8: UI Debug
+- F10: Toggle Godmode. 
+
+Godmode must be on to access debug functionalities below
+
+- 2: Add main defense from player 1 in the location of the mouse
+- W: Add main defense from player 2 in the location of the mouse
+
+- 3: Add command center from player 1 in the location of the mouse
+- E: Add command center from player 2 in the location of the mouse
+
+- 4: Add barrack from player 1 in the location of the mouse
+- R: Add bararck from player 2 in the location of the mouse
+
+- 5: Add AoE defense (tesla) from player 1 in the location of the mouse
+- T: Add AoE defense (tesla) from player 2 in the location of the mouse
+
+- 6: Add single-target defense (sentry gun) from player 1 in the location of the mouse
+- Y: Add single-target defense (sentry gun) from player 2 in the location of the mouse
+
+- 7: Add mines from player 1 in the location of the mouse
+- U: Add mines from player 2 in the location of the mouse
+
+- 0: Add walls from player 1 in the location of the mouse
+- P: Add walls from player 2 in the location of the mouse
+
+- Arrow keys: Move camera
+
+- I: Increase zoom
+- K: Decrease zoom
+
+- D: Toggle timer
+
+### Mouse
+- Middle click(wheel, while clicked): Drag map
+- Left click: Set goal for soldiers, begin pathfinding.
+
 
 ## The team
    

@@ -48,7 +48,7 @@ public:
 public:
 	string			folder;
 	string			texture_path;
-	SDL_Texture*	texture;
+	SDL_Texture*	texture = nullptr;
 
 	list<Entity*>	entity_list;
 	vector<SDL_Texture*> entitiesTextures;

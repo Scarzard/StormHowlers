@@ -176,26 +176,26 @@ public:
 	
 	Timer timer;
 
-	bool fromPlayer1;
-	bool upgrade;
-	bool repair;
+	bool fromPlayer1 = false;
+	bool upgrade = false;
+	bool repair = false;
 	bool flip	= false;
 	bool alive	= true;
 	
-	int health;
-	int damage;
-	int level;
-	int range;
-	int repair_cost;
+	int health = 0;
+	int damage = 0;
+	int level = 0;
+	int range = 0;
+	int repair_cost = 0;
 	int frame = 0;
-	int max_targets;
+	int max_targets = 0;
 
-	float rate_of_fire;
+	float rate_of_fire = 0.0f;
 
 	// DEBUG PURPOSES
 	SDL_Rect	debug_collider;
 	SDL_Rect	rect = { 180,0,60,30 };
-	SDL_Texture* tex;
+	SDL_Texture* tex = nullptr;
 
 	int offset = 0;
 	Collider collider;

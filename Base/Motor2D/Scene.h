@@ -171,7 +171,7 @@ private:
 	pair<int, int>	last_motion;
 	bool	start_motion = false;
 
-	UI_Element* debug_text;
+	UI_Element* debug_text = nullptr;
 	char debug_label[42] = "GodMode: ON. Debug functionalities active";
 };
 

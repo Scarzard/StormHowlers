@@ -53,7 +53,7 @@ public:
 	UI_Element* exit_text = nullptr;
 	char exit_label[5] = "EXIT";
 
-	string current_track ;
+	string current_track;
 	string current_fx;
 private:
 	bool close_app = true;
