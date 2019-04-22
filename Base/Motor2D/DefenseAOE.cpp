@@ -20,6 +20,7 @@ DefenseAoe::DefenseAoe(bool isPlayer1, pair<int, int> pos, Collider collider) : 
 {
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
+	colider = collider;
 }
 
 bool DefenseAoe::Start()
@@ -40,6 +41,7 @@ bool DefenseAoe::PreUpdate()
 bool DefenseAoe::Update(float dt)
 {
 	BROFILER_CATEGORY("DefenseAoe Update", Profiler::Color::SandyBrown);
+
 	//Checks where to look for enemies
 	Player* tmpMod = (fromPlayer1) ? App->player2 : App->player1;
 	list<Troop*>::iterator tmp = tmpMod->troops.begin();
@@ -84,6 +86,23 @@ bool DefenseAoe::Update(float dt)
 			}
 			timer.Start();
 			//LOG("Distance: %d", d);
+		}
+	}
+
+	if (fromPlayer1)  // --- Player 1 --------------------------------
+	{
+		if (health <= 0) //destroyed
+		{
+			App->player1->UpdateWalkabilityMap(true, colider);
+			App->player1->DeleteEntity(this);
+		}
+	}
+	else if (!fromPlayer1) // --- Player 2 ---------------------------
+	{
+		if (health <= 0) //destroyed
+		{
+			App->player2->UpdateWalkabilityMap(true, colider);
+			App->player2->DeleteEntity(this);
 		}
 	}
 
