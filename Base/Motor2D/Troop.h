@@ -2,6 +2,7 @@
 #define  __Troop_H__
 
 #include "Entity.h"
+#include "Group.h"
 
 enum entityDir {
 	NORTH,
@@ -51,7 +52,7 @@ public:
 
 public:
 
-	int speed;
+	
 	pair<int, int> Speed = { 1,1 };
 
 	Animation* idle;
@@ -62,10 +63,13 @@ public:
 
 	vector<pair<int, int>> path;
 	int path_count = 1;
-	SDL_Rect rect = { 180,0,60,30 };
+	
 
 	bool isMoving = false;
 	bool isShooting = false;
+
+	
+	
 };
 
 #endif

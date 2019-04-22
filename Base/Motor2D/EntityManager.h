@@ -49,6 +49,7 @@ public:
 
 	bool draw_path = false;
 	bool godmode = false;
+	bool pathfinding = false;
 };
 
 #endif //
