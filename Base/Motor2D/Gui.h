@@ -49,7 +49,7 @@ public:
 
 private:
 	string atlas_file_name;
-	SDL_Texture* atlas;
+	SDL_Texture* atlas = nullptr;
 
 public:
 	bool UI_Debug = false;

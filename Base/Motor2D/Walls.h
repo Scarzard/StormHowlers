@@ -14,13 +14,13 @@ public:
 	void CleanUp();
 
 public:
-	Animation* tower;
-	Animation* front;
-	Animation* side;
-	Animation* corner_down_left;
-	Animation* corner_down_right;
-	Animation* corner_up_left;
-	Animation* corner_up_right;
+	Animation* tower = nullptr;
+	Animation* front = nullptr;
+	Animation* side = nullptr;
+	Animation* corner_down_left = nullptr;
+	Animation* corner_down_right = nullptr;
+	Animation* corner_up_left = nullptr;
+	Animation* corner_up_right = nullptr;
 };
 
 #endif

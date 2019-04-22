@@ -41,14 +41,14 @@ public:
 	//The surface contained by the window
 	SDL_Surface* screen_surface;
 
-	int		width;
-	int		height;
-	int		scale;
-	float zoom_scale;
+	int		width = 0;
+	int		height = 0;
+	int		scale = 0;
+	float	zoom_scale = 0;
 
 private:
 	string	title;
-	bool fullscreen=false;
+	bool fullscreen = false;
 };
 
 #endif // __Window_H__

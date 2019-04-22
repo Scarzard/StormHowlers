@@ -57,8 +57,8 @@ public:
 	vector<uint>	production_lv;
 	vector<uint>	capacity_lv;
 
-	int production;
-	int capacity;
+	int production = 0;
+	int capacity = 0;
 };
 
 #endif

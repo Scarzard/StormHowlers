@@ -59,10 +59,10 @@ public:
 private:
 
 	// size of the map
-	uint width;
-	uint height;
+	uint width = 0.0f;
+	uint height = 0.0f;
 	// all map walkability values [0..255]
-	uchar* map;
+	uchar* map = nullptr;
 	// we store the created path here
 	std::vector<pair<int,int>> last_path;
 };
@@ -91,10 +91,10 @@ struct PathNode
 	int CalculateF(const pair<int,int>& destination);
 
 	// -----------
-	int g;
-	int h;
+	int g = 0;
+	int h = 0;
 	pair<int,int> pos;
-	PathNode* parent; // needed to reconstruct the path in the end
+	PathNode* parent = nullptr; // needed to reconstruct the path in the end
 };
 
 
