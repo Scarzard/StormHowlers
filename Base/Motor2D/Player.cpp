@@ -109,15 +109,8 @@ bool Player::Update(float dt)
 			if (In_SelectBuilding->visible == false)
 				In_SelectBuilding->visible = true;
 			
-
-			selected_texture.x = (*building_selected)->position.first;
-			selected_texture.y = (*building_selected)->position.second;
-			selected_texture.w = ((*building_selected)->Current_Animation->GetCurrentFrame(dt).w);
-			selected_texture.h = ((*building_selected)->Current_Animation->GetCurrentFrame(dt).h);
-			if(isPlayer1)
-				App->render->DrawQuad(selected_texture, 255, 0,0, 100, true);
-			else
-				App->render->DrawQuad(selected_texture, 0, 0, 255, 100, true);
+			DrawBuildingCollider((*building_selected)->type, isPlayer1);
+			
 		}
 		else
 		{
@@ -1495,4 +1488,46 @@ void Player::UpdateGeneralUI(Entity* building)
 		Create_abilities->visible = false;
 	}
 
+}
+
+void Player::DrawBuildingCollider(int type, bool isPlayer1)
+{
+	
+	if(type == Entity::entityType::TOWNHALL && isPlayer1 == true)
+	{
+
+		selected_texture.x = (*building_selected)->position.first - ((*building_selected)->collider.dimensions.first * 20);
+		selected_texture.y = (*building_selected)->position.second - (*building_selected)->Current_Animation->frames->h + ((*building_selected)->collider.dimensions.second * 20);
+		selected_texture.w = (*building_selected)->Current_Animation->frames->w;
+		selected_texture.h = (*building_selected)->Current_Animation->frames->h;
+	}
+	else if (type == Entity::entityType::TOWNHALL && isPlayer1 == false)
+	{
+		selected_texture.x = (*building_selected)->position.first - ((*building_selected)->collider.dimensions.first * 8);
+		selected_texture.y = (*building_selected)->position.second - (*building_selected)->Current_Animation->frames->h + ((*building_selected)->collider.dimensions.second * 40);
+		selected_texture.w = (*building_selected)->Current_Animation->frames->w;
+		selected_texture.h = (*building_selected)->Current_Animation->frames->h;
+	}
+	else if (type == Entity::entityType::MINES || type == Entity::entityType::BARRACKS)
+	{
+		selected_texture.x = (*building_selected)->position.first - ((*building_selected)->collider.dimensions.first * 20);
+		selected_texture.y = (*building_selected)->position.second - (*building_selected)->Current_Animation->frames->h + ((*building_selected)->collider.dimensions.second * 20);
+		selected_texture.w = (*building_selected)->Current_Animation->frames->w;
+		selected_texture.h = (*building_selected)->Current_Animation->frames->h;
+	}
+	else
+	{
+		selected_texture.x = (*building_selected)->position.first;
+		selected_texture.y = (*building_selected)->position.second - (*building_selected)->Current_Animation->frames->h + ((*building_selected)->collider.dimensions.second * 20);
+		selected_texture.w = (*building_selected)->Current_Animation->frames->w;
+		selected_texture.h = (*building_selected)->Current_Animation->frames->h;
+	}
+
+
+
+
+	if (isPlayer1)
+		App->render->DrawQuad(selected_texture, 255, 0, 0, 100, true);
+	else
+		App->render->DrawQuad(selected_texture, 0, 0, 255, 100, true);
 }
