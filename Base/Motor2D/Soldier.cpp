@@ -33,19 +33,19 @@ bool Soldier::Update(float dt)
 
 	if (isMoving == false)
 	{
-		closest = App->entitymanager->findEntity(map_pos, fromPlayer1,3);
+		closest = App->entitymanager->findEntity(map_pos, fromPlayer1, 3);
 		if (closest != nullptr)
 		{
-				// Shoots the closest one if in range
-				if (timer.ReadSec() >= rate_of_fire )
-				{
-					closest->TakeDamage(20/*damage_lv[level]*/);
-					timer.Start(); 
-					
-					//LOG("Damage to wall: %i     Wall life:%i", 1, closest.;
-				}
+			// Shoots the closest one if in range
+			if (timer.ReadSec() >= rate_of_fire)
+			{
+				closest->TakeDamage(20/*damage_lv[level]*/);
+				timer.Start();
+
+				//LOG("Damage to wall: %i     Wall life:%i", 1, closest.;
+			}
 		}
-		
+
 	}
 
 	if (fromPlayer1)  // --- Player 1 --------------------------------
@@ -63,65 +63,67 @@ bool Soldier::Update(float dt)
 		}
 	}
 
-		
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+	// OLD PATHFINDING WITHOUT GROUP MOVEMENT
+	if (false){
 
-		LOG("Soldier pathfinding player %d", (fromPlayer1) ? 1 : 2);
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
 
-		//Getting positions
-		App->input->GetMousePosition(pos.first, pos.second);
-		pos = App->render->ScreenToWorld(pos.first, pos.second);
-		pos = App->map->WorldToMap(pos.first, pos.second);
-		//pos.first--;
-		LOG("mouseInMap: [%d,%d]", pos.first, pos.second);
-		LOG("soldierInMap: [%d,%d]", map_pos.first, map_pos.second);
-		
-		
-		//Creating path, reset path index counter
-		if (App->pathfinding->CreatePath(map_pos, pos, false) == -1) {
+			LOG("Soldier pathfinding player %d", (fromPlayer1) ? 1 : 2);
 
-			LOG("Pathfinding soldier: origin or destination not walkable");
+			//Getting positions
+			App->input->GetMousePosition(pos.first, pos.second);
+			pos = App->render->ScreenToWorld(pos.first, pos.second);
+			pos = App->map->WorldToMap(pos.first, pos.second);
+			//pos.first--;
+			LOG("mouseInMap: [%d,%d]", pos.first, pos.second);
+			LOG("soldierInMap: [%d,%d]", map_pos.first, map_pos.second);
+
+
+			//Creating path, reset path index counter
+			if (App->pathfinding->CreatePath(map_pos, pos, false) == -1) {
+
+				LOG("Pathfinding soldier: origin or destination not walkable");
+			}
+			else {
+				path.clear();
+				path_count = 1;
+				path = *App->pathfinding->GetLastPath();
+
+			}
+
 		}
-		else {
-			path.clear();
-			path_count = 1;
-			path = *App->pathfinding->GetLastPath();
 
+
+		if (path.size() > 1) {
+			isMoving = true;
+			Speed = { path.at(path_count).first - map_pos.first, path.at(path_count).second - map_pos.second };
+			Speed.first = Speed.first * speed;
+			Speed.second = Speed.second * speed;
+			//LOG("Speed: [%d,%d]", Speed.first, Speed.second);
+
+			// If it's still, change to next path tile
+			if (Speed.first == 0 && Speed.second == 0) {
+				if (path.size() > path_count + 1)
+					path_count++;
+				else
+					isMoving = false;
+			}
+
+			//Visual path debug
+			pair<int, int> tmppair;
+			for (int i = 0; i < path.size(); i++) {
+				tmppair = App->map->MapToWorld(path.at(i).first, path.at(i).second);
+				App->render->Blit(tex, tmppair.first, tmppair.second, &rect);
+			}
 		}
+
+
+
+		position.first += (int)(Speed.first * dt);
+		position.second += (int)(Speed.second * dt);
+		//App->render->Blit(tex, position.first, position.second, &rect);
 
 	}
-
-
-	if (path.size() > 1) {
-		isMoving = true;
-		Speed = { path.at(path_count).first - map_pos.first, path.at(path_count).second - map_pos.second };
-		Speed.first = Speed.first * speed;
-		Speed.second = Speed.second * speed;
-		//LOG("Speed: [%d,%d]", Speed.first, Speed.second);
-
-		// If it's still, change to next path tile
-		if (Speed.first == 0 && Speed.second == 0 ) {
-			if (path.size() > path_count + 1)
-				path_count++;
-			else
-				isMoving = false;
-		}
-
-		//Visual path debug
-		pair<int, int> tmppair;
-		for (int i = 0; i < path.size(); i++) {
-			tmppair = App->map->MapToWorld(path.at(i).first, path.at(i).second);
-			App->render->Blit(tex, tmppair.first, tmppair.second, &rect);
-		}
-	}
-		
-
-	
-	position.first += (int)(Speed.first * dt);
-	position.second += (int)(Speed.second * dt);
-	//App->render->Blit(tex, position.first, position.second, &rect);
-
-
 	
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
 		Current_Animation =  moving[(curr++)%SOUTHWEST];

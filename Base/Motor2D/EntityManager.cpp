@@ -39,34 +39,27 @@ EntityManager::~EntityManager()
 
 bool EntityManager::Awake(pugi::xml_node &config)
 {
-	bool ret = true;
-
-	/*pugi::xml_document	config_file;
-	pugi::xml_node config;
-	config = App->LoadConfig(config_file);
-	config = config.child("entitymanager").child(s_type).child(&name[0]);*/
-
 	folder.append(config.child("folder").child_value());
 	texture_path = config.child("sprite_sheet").attribute("source").as_string();
+
 	entitiesTextures = vector<SDL_Texture*>(Entity::entityType::WAR_HOUND, nullptr);
-
-
-	return ret;
+	
+	return true;
 }
 
 bool EntityManager::Start()
 {
 	bool ret = true;
 	for (int i = Entity::entityType::TOWNHALL; i < Entity::entityType::WAR_HOUND; i++) {
+
 		string n = GetName(Entity::entityType(i));
 		n += "_anim.png";
 
-		if (i == Entity::entityType::TANKMAN || i == Entity::entityType::DEFENSE_AOE)
-			entitiesTextures[i] = nullptr;
-		else
-			entitiesTextures[i] = App->tex->Load(PATH(folder.data(), n.data()));
+		entitiesTextures[i] = App->tex->Load(PATH(folder.data(), n.data()));
 	}
+
 	entitiesTextures[Entity::entityType::DEFENSE_AOE] = entitiesTextures[Entity::entityType::DEFENSE_TARGET];
+
 	return ret;
 }
 bool EntityManager::PreUpdate()
@@ -165,6 +158,15 @@ bool EntityManager::Update(float dt)
 
 		// Player 2 Troops
 		ttmp = App->player2->troops.begin();
+
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+			pathfinding2 = true;
+		}
+
+		if (pathfinding2) {
+			pathfinding2 = !App->move_manager->Move((*ttmp)->info.current_group, dt);
+		}
+
 		while (ttmp != App->player2->troops.end())
 		{
 			ret = (*ttmp)->Update(dt);
@@ -482,11 +484,8 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			{
 				tmp->isSelected = true;
 				App->player1->troops.push_back((Troop*)tmp);
-				App->move_manager->CreateGroup();
+				App->move_manager->CreateGroup(App->player1);
 			}
-
-			//App->player1->collider.dimensions.first = tmp->size.first;
-			//App->player1->collider.dimensions.second = tmp->size.second;
 		}
 		else // Player 2 -------------------------------
 		{
@@ -499,12 +498,9 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			{
 				tmp->isSelected = true;
 				App->player2->troops.push_back((Troop*)tmp);
-				App->move_manager->CreateGroup();
+				App->move_manager->CreateGroup(App->player2);
 
 			}
-
-			//App->player2->collider.dimensions.first = tmp->size.first;
-			//App->player2->collider.dimensions.second = tmp->size.second;
 		}
 	}
 

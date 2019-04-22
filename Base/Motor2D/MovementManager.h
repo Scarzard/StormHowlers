@@ -16,6 +16,7 @@ enum class MovementState
 };
 
 class Group;
+class Player;
 
 class MovementManager : public Module
 {
@@ -33,7 +34,7 @@ public:
 
 	// --- Group Tools ---
 	void SelectEntities_inRect(SDL_Rect SRect);
-	void CreateGroup();
+	void CreateGroup(Player* player);
 
 	// --- Move Unit ---
 	bool Move(Group* unit, float dt);

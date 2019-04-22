@@ -10,6 +10,7 @@
 #include "Input.h"
 #include "Brofiler\Brofiler.h"
 #include "Render.h"
+#include "Player.h"
 
 MovementManager::MovementManager()
 {
@@ -41,29 +42,29 @@ bool MovementManager::CleanUp()
 	return true;
 }
 
-void MovementManager::SelectEntities_inRect(SDL_Rect SRect)
-{
-	BROFILER_CATEGORY("GroupMovement::SelectEntities_inRect", Profiler::Color::DarkOliveGreen);
+//void MovementManager::SelectEntities_inRect(SDL_Rect SRect)
+//{
+//	BROFILER_CATEGORY("GroupMovement::SelectEntities_inRect", Profiler::Color::DarkOliveGreen);
+//
+//	std::list<Entity*>::iterator entity = App->entitymanager->entity_list.begin();
+//	SDL_Rect entityrect = { 0,0,0,0 };
+//
+//	while (entity != App->entitymanager->entity_list.end())
+//	{
+//		entityrect = { (int)(*entity)->position.first, (int)(*entity)->position.second, (*entity)->size.first, (*entity)->size.second };
+//
+//		// --- Check entity's rect against the given SRect, select it if overlap is positive ---
+//		if (SDL_HasIntersection(&entityrect, &SRect))
+//			(*entity)->isSelected = true;
+//		else
+//			(*entity)->isSelected = false;
+//
+//		entity++;
+//	}
+//
+//}
 
-	std::list<Entity*>::iterator entity = App->entitymanager->entity_list.begin();
-	SDL_Rect entityrect = { 0,0,0,0 };
-
-	while (entity != App->entitymanager->entity_list.end())
-	{
-		entityrect = { (int)(*entity)->position.first, (int)(*entity)->position.second, (*entity)->size.first, (*entity)->size.second };
-
-		// --- Check entity's rect against the given SRect, select it if overlap is positive ---
-		if (SDL_HasIntersection(&entityrect, &SRect))
-			(*entity)->isSelected = true;
-		else
-			(*entity)->isSelected = false;
-
-		entity++;
-	}
-
-}
-
-void MovementManager::CreateGroup()
+void MovementManager::CreateGroup(Player* player)
 {
 	BROFILER_CATEGORY("GroupMovement::CreateGroup", Profiler::Color::GhostWhite);
 
@@ -71,9 +72,9 @@ void MovementManager::CreateGroup()
 
 	Group* group = new Group;
 
-	std::list<Entity*>::iterator entity = App->entitymanager->entity_list.begin();
+	std::list<Troop*>::iterator entity = player->troops.begin();
 
-	while (entity != App->entitymanager->entity_list.end())
+	while (entity != player->troops.end())
 	{
 
 		// --- Check for entities that have been selected ---
@@ -111,7 +112,7 @@ bool MovementManager::Move(Group * group, float dt)
 {
 	BROFILER_CATEGORY("GroupMovement::Move", Profiler::Color::Gold);
 
-	std::list <Entity*>::const_iterator unit = group->Units.begin();
+	std::list <Troop*>::const_iterator unit = group->Units.begin();
 
 	//LOG("On Move Function");
 

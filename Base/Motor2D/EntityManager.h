@@ -56,6 +56,7 @@ public:
 	bool draw_path = false;
 	bool godmode = false;
 	bool pathfinding = false;
+	bool pathfinding2 = false;
 };
 
 #endif //
