@@ -323,7 +323,7 @@ bool EntityManager::Draw(float dt) //sprite ordering
 	return ret;
 }
 
-Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<int, int> position, Collider collider)
+Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<int, int> position, Collider collider,Animation* animation)
 {
 	Entity* tmp = nullptr;
 
@@ -351,6 +351,10 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 
 	case Entity::entityType::MINES:
 		tmp = new Mines(isPlayer1, position, collider);
+		break;
+
+	case Entity::entityType::WALLS:
+		tmp = new Walls(isPlayer1, position, collider, animation);
 		break;
 
 	case Entity::entityType::BARRACKS:
@@ -543,3 +547,15 @@ bool EntityManager::Is_inRange(pair<int, int> pos, int &distance, pair <int,int>
 
 	return distance <= range;
 }
+
+//void EntityManager:: Remove_fromList(Entity* entity)
+//{
+//	RELEASE(entity);
+//	entity_list.remove(entity);
+//}
+//
+//void EntityManager::Erase_fromList(list<Entity*>::iterator tmp)
+//{
+//	
+//	entity_list.erase(tmp);
+//}

@@ -1281,8 +1281,23 @@ bool Player::DeleteEntity(Entity* entity)
 		while (item != buildings.end())
 		{
 			if ((*item) == entity)
+			{
 				buildings.erase(item);
+				
+			}
+				
 			item++;
+		}
+		list<Entity*>::iterator item2 = App->entitymanager->entity_list.begin();
+		while (item2 != App->entitymanager->entity_list.end())
+		{
+			if ((*item2) == entity)
+			{
+				App->entitymanager->entity_list.erase(item2);
+				
+			}
+
+			item2++;
 		}
 	}
 	else if (type > Entity::entityType::BARRACKS) //if entity = troop
@@ -1293,6 +1308,17 @@ bool Player::DeleteEntity(Entity* entity)
 			if ((*item) == entity)
 				troops.erase(item);
 			item++;
+		}
+		list<Entity*>::iterator item2 = App->entitymanager->entity_list.begin();
+		while (item2 != App->entitymanager->entity_list.end())
+		{
+			if ((*item2) == entity)
+			{
+				App->entitymanager->entity_list.erase(item2);
+
+			}
+
+			item2++;
 		}
 	}
 	return true;

@@ -80,7 +80,7 @@ int main(int argc, char* args[])
 			break;
 
 			// Loop all Module until we are asked to leave ---------------------
-			case LOOP:
+			case LOOP: 
 			{
 				BROFILER_FRAME("Grip or Slip Brofiler Test");
 

@@ -22,7 +22,7 @@ public:
 
 	bool Draw(float dt);
 
-	Entity* AddEntity(bool player1, Entity::entityType type, pair<int,int> position, Collider collider);
+	Entity* AddEntity(bool player1, Entity::entityType type, pair<int, int> position, Collider collider, Animation* animation = nullptr);
 	char * GetName(Entity::entityType type);
 	void DeleteAllEntities();
 
@@ -34,6 +34,10 @@ public:
 	//bool Is_inRange(pair<int, int> pos, int distance, pair<int, int> position, int range);
 
 	bool Is_inRange(pair<int, int> pos, int & distance, pair<int, int> position, int range);
+
+	//void Remove_fromList(Entity * entity);
+
+	//void Erase_fromList(list<Entity*>::iterator tmp);
 
 public:
 	string			folder;

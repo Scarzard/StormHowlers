@@ -1376,7 +1376,7 @@ void Scene::LoadWalls()
 	//---
 	Entity* entity;
 	Collider collider;
-	collider.dimensions = { 1,1 };
+
 	pair<int, int> pos;
 
 
@@ -1385,7 +1385,7 @@ void Scene::LoadWalls()
 	while (item != App->map->data.wall_list.end())
 	{
 		pos = App->map->MapToWorld((*item).first, (*item).second);
-		collider.tiles.push_back(pos);
+		collider = App->player2->GetCollider({ 1,1 }, {(*item).first, (*item).second});
 		bool right = false, left = false, up = false, down = false;
 
 		list<pair<int, int>>::iterator item2 = App->map->data.wall_list.begin();
@@ -1447,11 +1447,12 @@ void Scene::LoadWalls()
 			current_anim = tower;
 		}
 
-		entity = new Walls(false, *item, collider, current_anim); //add entity
-		App->player2->buildings.push_back((Building*)entity);
-		App->entitymanager->entity_list.push_back(entity);
+		App->entitymanager->AddEntity(false, Entity::entityType::WALLS, *item, collider, current_anim);
+		//entity = new Walls(false, *item, collider, current_anim); //add entity
+		//App->player2->buildings.push_back((Building*)entity);
+		//App->entitymanager->entity_list.push_back(entity);
 
-		App->player1->UpdateWalkabilityMap(false, collider);
+		//App->player1->UpdateWalkabilityMap(false, collider);
 
 		item++;
 	}
@@ -1461,7 +1462,7 @@ void Scene::LoadWalls()
 	while (item != App->map->data.wall_list2.end())
 	{
 		pos = App->map->MapToWorld((*item).first, (*item).second);
-		collider.tiles.push_back(pos);
+		collider = App->player1->GetCollider({ 1,1 }, { (*item).first , (*item).second});
 		bool right = false, left = false, up = false, down = false;
 
 		list<pair<int, int>>::iterator item2 = App->map->data.wall_list2.begin();

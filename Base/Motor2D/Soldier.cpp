@@ -31,13 +31,13 @@ bool Soldier::Update(float dt)
 
 	if (isMoving == false)
 	{
-		closest = App->entitymanager->findEntity(map_pos, fromPlayer1,30);
+		closest = App->entitymanager->findEntity(map_pos, fromPlayer1,range);
 		if (closest != nullptr)
 		{
 				// Shoots the closest one if in range
 				if (timer.ReadSec() >= rate_of_fire )
 				{
-					closest->TakeDamage(10/*damage_lv[level]*/);
+					closest->TakeDamage(25/*damage_lv[level]*/);
 					timer.Start(); 
 					
 					//LOG("Damage to wall: %i     Wall life:%i", 1, closest.;
