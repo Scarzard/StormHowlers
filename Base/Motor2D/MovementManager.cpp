@@ -176,7 +176,7 @@ bool MovementManager::Move(Group * group, float dt)
 						group->Occupied_tiles.push_back(&(*unit)->info.goal_tile);
 					}
 
-					if (App->pathfinding->CreatePath(Map_Entityposition, (*unit)->info.goal_tile,false) != -1)
+					if (App->pathfinding->CreatePath(Map_Entityposition, (*unit)->info.goal_tile,true) != -1)
 					{
 						(*unit)->info.Current_path = *App->pathfinding->GetLastPath();
 						(*unit)->info.Current_path.erase((*unit)->info.Current_path.begin());
