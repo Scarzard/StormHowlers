@@ -37,6 +37,7 @@ public:
 	void GetViewPort(SDL_Rect& rect);
 	void ResetViewPort();
 	pair<int,int> ScreenToWorld(int x, int y) const;
+	pair<int, int> WorldtoScreen(int x, int y) const;
 	bool MoveCamera(const int & vel_x, const int & vel_y);
 	bool Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX) const;
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool filled = true, bool use_camera = true) const;
