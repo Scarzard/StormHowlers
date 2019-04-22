@@ -25,14 +25,14 @@ bool MainDefense::Update(float dt)
 {
 	BROFILER_CATEGORY("Main Defense Update", Profiler::Color::SandyBrown);
 	
-	if (fromPlayer1 == true)
+	/*if (fromPlayer1 == true)
 	{
 		position = App->map->data.tower;
 	}
 	else
 	{
 		position = App->map->data.tower2;
-	}
+	}*/
 
 	if (fromPlayer1)
 	{
@@ -78,6 +78,8 @@ bool MainDefense::Update(float dt)
 	}
 	ChangeAnimation();
 
+	if (Current_Animation->Finished() == true)
+		Current_Animation = level1;
 
 	Building::Update(dt);
 
@@ -95,7 +97,7 @@ void MainDefense::CleanUp()
 void MainDefense::LoadAnimations(bool isPlayer1, string path)
 {
 	building = building->LoadAnimation(path.data(), (isPlayer1) ? "red_constructing" : "blue_constructing");
-	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "red_idle" : "blue_idle");
+	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "red_SW" : "blue_NE");
 
 	level1->speed = 10;
 	building->speed = 10;
@@ -104,5 +106,3 @@ void MainDefense::LoadAnimations(bool isPlayer1, string path)
 	level1->loop = false;
 	Current_Animation = building;
 }
-
-

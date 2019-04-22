@@ -1239,13 +1239,13 @@ void Player::DoLogic(UI_Element* data)
 	case::UI_Element::Action::ACT_BUILD_AOE:
 		isBuilding = true;
 		type = Entity::entityType::DEFENSE_AOE;
-		collider.dimensions = { 1,1 };
+		collider.dimensions = { 2,2 };
 		offset = { 60,30 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_TARGET:
 		isBuilding = true;
-		type = Entity::entityType::DEFENSE_TARGET;
+		type = Entity::entityType::MAIN_DEFENSE;
 		collider.dimensions = { 2,2 };
 		break;
 

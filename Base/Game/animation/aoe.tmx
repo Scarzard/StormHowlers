@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="7" height="12" tilewidth="108" tileheight="92" nextobjectid="68">
+ <layer name="Capa de Patrones 1" width="7" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0
+</data>
+ </layer>
+ <imagelayer name="Capa de Imagen 1">
+  <image source="aoe_tiled.png" width="756" height="1104"/>
+ </imagelayer>
+ <objectgroup name="soviet_aoe_build">
+  <object id="1" x="0" y="0" width="108" height="92"/>
+  <object id="2" x="108" y="0" width="108" height="92"/>
+  <object id="3" x="216" y="0" width="108" height="92"/>
+  <object id="4" x="324" y="0" width="108" height="92"/>
+  <object id="5" x="432" y="0" width="108" height="92"/>
+  <object id="6" x="540" y="0" width="108" height="92"/>
+  <object id="7" x="648" y="0" width="108" height="92"/>
+  <object id="8" x="0" y="92" width="108" height="92"/>
+  <object id="9" x="108" y="92" width="108" height="92"/>
+  <object id="10" x="216" y="92" width="108" height="92"/>
+  <object id="11" x="324" y="92" width="108" height="92"/>
+  <object id="12" x="432" y="92" width="108" height="92"/>
+  <object id="13" x="540" y="92" width="108" height="92"/>
+  <object id="14" x="648" y="92" width="108" height="92"/>
+  <object id="15" x="0" y="184" width="108" height="92"/>
+  <object id="16" x="108" y="184" width="108" height="92"/>
+  <object id="17" x="216" y="184" width="108" height="92"/>
+  <object id="18" x="324" y="184" width="108" height="92"/>
+  <object id="19" x="432" y="184" width="108" height="92"/>
+  <object id="20" x="540" y="184" width="108" height="92"/>
+  <object id="21" x="648" y="184" width="108" height="92"/>
+  <object id="22" x="0" y="276" width="108" height="92"/>
+  <object id="23" x="108" y="276" width="108" height="92"/>
+  <object id="24" x="216" y="276" width="108" height="92"/>
+ </objectgroup>
+ <objectgroup name="soviet_aoe_idle">
+  <object id="26" x="0" y="368" width="108" height="92"/>
+  <object id="27" x="108" y="368" width="108" height="92"/>
+  <object id="28" x="216" y="368" width="108" height="92"/>
+  <object id="29" x="324" y="368" width="108" height="92"/>
+  <object id="30" x="432" y="368" width="108" height="92"/>
+  <object id="31" x="540" y="368" width="108" height="92"/>
+  <object id="32" x="648" y="368" width="108" height="92"/>
+  <object id="33" x="0" y="460" width="108" height="92"/>
+ </objectgroup>
+ <objectgroup name="allied_aoe_build">
+  <object id="34" x="0" y="552" width="108" height="92"/>
+  <object id="35" x="108" y="552" width="108" height="92"/>
+  <object id="36" x="216" y="552" width="108" height="92"/>
+  <object id="37" x="324" y="552" width="108" height="92"/>
+  <object id="38" x="432" y="552" width="108" height="92"/>
+  <object id="39" x="540" y="552" width="108" height="92"/>
+  <object id="40" x="648" y="552" width="108" height="92"/>
+  <object id="41" x="0" y="644" width="108" height="92"/>
+  <object id="42" x="108" y="644" width="108" height="92"/>
+  <object id="43" x="216" y="644" width="108" height="92"/>
+  <object id="44" x="324" y="644" width="108" height="92"/>
+  <object id="45" x="432" y="644" width="108" height="92"/>
+  <object id="46" x="540" y="644" width="108" height="92"/>
+  <object id="47" x="648" y="644" width="108" height="92"/>
+  <object id="49" x="0" y="736" width="108" height="92"/>
+  <object id="50" x="108" y="736" width="108" height="92"/>
+  <object id="51" x="216" y="736" width="108" height="92"/>
+  <object id="52" x="324" y="736" width="108" height="92"/>
+  <object id="53" x="432" y="736" width="108" height="92"/>
+  <object id="54" x="540" y="736" width="108" height="92"/>
+  <object id="55" x="648" y="736" width="108" height="92"/>
+  <object id="56" x="0" y="828" width="108" height="92"/>
+  <object id="57" x="108" y="828" width="108" height="92"/>
+  <object id="58" x="216" y="828" width="108" height="92"/>
+  <object id="59" x="324" y="828" width="108" height="92"/>
+ </objectgroup>
+ <objectgroup name="allied_aoe_idle">
+  <object id="60" x="0" y="920" width="108" height="92"/>
+  <object id="61" x="108" y="920" width="108" height="92"/>
+  <object id="62" x="216" y="920" width="108" height="92"/>
+  <object id="63" x="324" y="920" width="108" height="92"/>
+  <object id="64" x="432" y="920" width="108" height="92"/>
+  <object id="65" x="540" y="920" width="108" height="92"/>
+  <object id="66" x="648" y="920" width="108" height="92"/>
+  <object id="67" x="0" y="1012" width="108" height="92"/>
+ </objectgroup>
+</map>

@@ -93,6 +93,9 @@ bool Mines::Update(float dt)
 
 	ChangeAnimation();
 
+	if(Current_Animation->Finished() == true)
+		Current_Animation = level1;
+
 	Building::Update(dt);
 
 	return true;
@@ -110,10 +113,10 @@ void Mines::LoadAnimations(bool isPlayer1, string path)
 	building = building->LoadAnimation(path.data(), (isPlayer1) ? "red_constructing" : "blue_constructing");
 	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "red_idle" : "blue_idle");
 	//level1->PushBack(building->GetLastAnimationFrame());// level1->LoadAnimation(&path[0], (!isPlayer1) ? "red" : "blue");
-	level1->speed = 10;
+	level1->speed = 3;
 	building->speed = 10;
 	building->loop = false;
-	level1->loop = false;
+	level1->loop = true;
 	Current_Animation = building;
 }
 
