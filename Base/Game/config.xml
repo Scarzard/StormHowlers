@@ -85,9 +85,9 @@
       <sentrygun>
         <health lvl1="500" lvl2="600" lvl3="750"/>
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
-        <damage lvl1="300" lvl2="400" lvl3="550"/>
+        <damage lvl1="30" lvl2="400" lvl3="550"/>
         <size width="1" height="1"/>
-        <attack rate="1" targets="5" range="170"/>
+        <attack rate="3" targets="5" range="100"/>
       </sentrygun>
 
       <CommandCenter>
@@ -102,7 +102,7 @@
       </CommandCenter>
 
       <Walls>
-        <health lvl1="100" lvl2="100" lvl3="100"/>
+        <health lvl1="500" lvl2="100" lvl3="100"/>
         <upgrade_cost ToLvl2="50" ToLvl3="30"/>
         <size width="1" height="1"/>
       </Walls>
@@ -112,15 +112,15 @@
         <size width="2" height="2"/>
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <damage lvl1="15" lvl2="150" lvl3="200"/>
-        <attack rate="1" targets="5" range="200"/>
+        <attack rate="2" targets="5" range="200"/>
       </Tesla>
 
       <defense_aoe>
         <health lvl1="100" lvl2="120" lvl3="150"/>
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <size width="3" height="3"/>
-        <damage lvl1="100" lvl2="150" lvl3="200"/>
-        <attack rate="1" targets="5" range="50"/>
+        <damage lvl1="10" lvl2="150" lvl3="200"/>
+        <attack rate="2" targets="5" range="50"/>
       </defense_aoe>
       
       <Barracks>
@@ -147,8 +147,8 @@
         <health lvl1="120" lvl2="130" lvl3="150"/>
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <size width="1" height="1"/>
-        <damage lvl1="100" lvl2="150" lvl3="200"/>
-        <attack rate="1" targets="1" range="50"/>
+        <damage lvl1="10" lvl2="150" lvl3="200"/>
+        <attack rate="1" targets="1" range="3"/>
         <speed value="150"/>
       </BasicSoldier>
       <tankman>
