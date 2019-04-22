@@ -207,6 +207,7 @@ public:
 	void DrawDecorations(float dt);
 	Animation* allied_flag_anim = nullptr;
 	Animation* soviet_flag_anim = nullptr;
+	Animation* explosion_anim = nullptr;
 
 private:
 

@@ -95,8 +95,15 @@ bool Scene::Start()
 
 	App->map->allied_flag_anim = App->map->allied_flag_anim->LoadAnimation("animation/Flags.tmx", "flag_allied");
 	App->map->soviet_flag_anim = App->map->soviet_flag_anim->LoadAnimation("animation/Flags.tmx", "flag_soviet");
+
 	App->map->allied_flag_anim->speed = 6;
 	App->map->soviet_flag_anim->speed = 6;
+
+
+	explosion_tex = App->tex->Load("animation/explosion_anim.png");
+	App->map->explosion_anim = App->map->explosion_anim->LoadAnimation("animation/explosion.tmx", "animation");
+
+
 	App->player1->LiveBar = { 51, 18 , 348, 19 }; //LiveBar for player1
 	App->player2->LiveBar = { 1232, 921 , 348, 19 }; //LiveBar for player2
 
@@ -150,6 +157,12 @@ bool Scene::Start()
 	App->player1->Y_to_Main2 = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 590 , 70 }, { 39, 39 }, nullptr, true);
 	App->player1->Y_to_Main2->rect = { 1289, 373, 39, 39 };
 
+	App->player1->SelectBuilding = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 630 , 30 }, { 39, 39 }, nullptr, true);
+	App->player1->SelectBuilding->rect = { 1226, 488, 45, 107 };
+	App->player1->In_SelectBuilding = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 630 , 30 }, { 39, 39 }, nullptr, false);
+	App->player1->In_SelectBuilding->rect = { 1326, 488, 45, 107 };
+
+
 	App->player1->Build_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player1->Build_UI->rect = { 569, 246, 566, 163 };
 	App->player1->Def_AOE_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { 68, 55 }, { 85, 81 }, App->player1->Build_UI, false);
@@ -183,12 +196,17 @@ bool Scene::Start()
 	App->player1->War_hound_text->label = App->player1->war_hound_label;
 
 	
-	//------------------------------
+	//----- CAST -------------------------
 
 	App->player1->Cast_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player1->Cast_UI->rect = { 0, 573, 566, 163 };
-	App->player1->Cast2_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_TANKS, { 171 ,55 }, { 85, 81 }, App->player1->Cast_UI, false);
+
+	App->player1->Cast2_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_TANKS, { 171 ,55 }, { 85, 81 }, App->player1->Cast_UI, false); 
+
 	App->player1->Cast3_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_INVULNERABILITY, { 273, 55 }, { 85, 81 }, App->player1->Cast_UI, false);
+	App->player1->invulnerable_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 35 , 0 }, { 0, 0 }, App->player1->Cast3_icon, false, { false, false });
+	App->player1->invulnerable_text->label = App->player1->invulnerable_label;
+
 	App->player1->Missiles_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_MISSILES, { 375, 55 }, { 85, 81 }, App->player1->Cast_UI, false);
 
 	//App->player1->General_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
@@ -239,6 +257,9 @@ bool Scene::Start()
 
 	App->player1->Create_troops = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 480 , 50 }, { 83, 35 }, nullptr, false);
 	App->player1->Create_troops->rect = { 1194, 285, 83, 35 };
+
+	App->player1->Create_abilities = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 480 , 110 }, { 83, 35 }, nullptr, false);
+	App->player1->Create_abilities->rect = { 1194, 329, 84, 35 };
 
 	//App->player1->Upgrade_troops = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 515 , -12 }, { 83, 35 }, nullptr, false);
 	//App->player1->Upgrade_troops->rect = { 1280, 285, 83, 35 };
@@ -372,6 +393,12 @@ bool Scene::Start()
 	App->player2->Y_to_Main2 = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 445 , App->win->height + 192 }, { 39, 39 }, nullptr, false);
 	App->player2->Y_to_Main2->rect = { 1289, 373, 39, 39 };
 
+
+	App->player2->SelectBuilding = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 190 ,App->win->height + 152 }, { 39, 39 }, nullptr, true);
+	App->player2->SelectBuilding->rect = { 1177, 488, 45, 107 };
+	App->player2->In_SelectBuilding = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 191 ,App->win->height + 152 }, { 39, 39 }, nullptr, false);
+	App->player2->In_SelectBuilding->rect = { 1276, 488, 45, 107 };
+
 	App->player2->Build_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
 	App->player2->Build_UI->rect = { 569, 246, 566, 163 };
 	App->player2->Def_AOE_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { 68, 55 }, { 85, 81 }, App->player2->Build_UI, false);
@@ -410,6 +437,8 @@ bool Scene::Start()
 	App->player2->Cast_UI->rect = { 0, 573, 566, 163 };
 	App->player2->Cast2_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_TANKS, { 171 ,55 }, { 85, 81 }, App->player2->Cast_UI, false);
 	App->player2->Cast3_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_INVULNERABILITY, { 273, 55 }, { 85, 81 }, App->player2->Cast_UI, false);
+	App->player2->invulnerable_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 35 , 0 }, { 0, 0 }, App->player2->Cast3_icon, false, { false, false });
+	App->player2->invulnerable_text->label = App->player2->invulnerable_label;
 	App->player2->Missiles_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_MISSILES, { 375, 55 }, { 85, 81 }, App->player2->Cast_UI, false);
 
 	//App->player2->General_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
@@ -453,6 +482,9 @@ bool Scene::Start()
 
 	App->player2->Create_troops = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 330 , App->win->height + 175 }, { 83, 35 }, nullptr, false);
 	App->player2->Create_troops->rect = { 1194, 285, 83, 35 };
+
+	App->player2->Create_abilities = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 330 , App->win->height + 233 }, { 83, 35 }, nullptr, false);
+	App->player2->Create_abilities->rect = { 1194, 329, 84, 35 };
 
 	//-------- CREATE TROOPS MENU ------------
 
@@ -1125,6 +1157,20 @@ bool Scene::PostUpdate()
 				(*item)->color = { 255 , 0, 0 , 255 }; //RED
 			}
 		}
+		else if ((*item) == App->player1->invulnerable_text) //NUMBER OF INVULNERABLE ABILITIES
+		{
+			sprintf_s(App->player1->invulnerable_label, "%i", App->player1->Invulnerable_abilities);
+
+
+			if (App->player1->Invulnerable_abilities > 0)
+			{
+				(*item)->color = { 0, 255, 0 , 255 }; //BLACK
+			}
+			else
+			{
+				(*item)->color = { 255 , 0, 0 , 255 }; //RED
+			}
+		}
 		else if ((*item) == App->player1->Music_Slider_Button) //MUSIC SLIDER POS
 		{
 			App->player1->Music_Slider_Button->position.first = (550 * App->audio->musicVolume) / 100;
@@ -1227,6 +1273,20 @@ bool Scene::PostUpdate()
 			if (App->player2->WarHoundsCreated > 0)
 			{
 				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
+			}
+			else
+			{
+				(*item)->color = { 255 , 0, 0 , 255 }; //RED
+			}
+		}
+		else if ((*item) == App->player2->invulnerable_text) //NUMBER OF INVULNERABLE ABILITIES
+		{
+			sprintf_s(App->player2->invulnerable_label, "%i", App->player2->Invulnerable_abilities);
+
+
+			if (App->player2->Invulnerable_abilities > 0)
+			{
+				(*item)->color = { 0, 255, 0 , 255 }; //GREEN
 			}
 			else
 			{
@@ -1548,9 +1608,32 @@ void Scene::DrawLiveBar(Player* player)
 		App->render->DrawQuad(player->LiveBar, 255, 0, 0, 255, true, false); //red
 }
 
-void Scene::Victorious(Player* player)
+void Scene::Victorious(Player* player, float dt)
 {
-	if (player == App->player1)
+	pair<int, int> tmp_pos1 = App->player1->Townhall->GetPos();
+	pair<int, int> tmp_pos2 = App->player2->Townhall->GetPos();
+	App->map->explosion_anim->speed = 1.2f;
+	//Explosion, after it has finished, blit continue with function
+	if (player == App->player1 && !App->map->explosion_anim->Finished())
+	{
+		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first, tmp_pos1.second, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first + 58, tmp_pos1.second + 42, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first - 73, tmp_pos1.second + 86, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first + 37, tmp_pos1.second - 76, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first - 42, tmp_pos1.second - 19, &App->map->explosion_anim->GetCurrentFrame(dt));
+	}
+	else if (player == App->player2 && !App->map->explosion_anim->Finished())
+	{
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first, tmp_pos2.second, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first + 8, tmp_pos2.second + 22, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first - 3, tmp_pos2.second + 16, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first + 17, tmp_pos2.second - 6, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first - 12, tmp_pos2.second - 9, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first + 120, tmp_pos2.second + 18, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first - 120, tmp_pos2.second - 18, &App->map->explosion_anim->GetCurrentFrame(dt));
+	}
+
+	if (player == App->player1 && App->map->explosion_anim->Finished())
 	{
 		pausetimer = true;
 		world_seconds.Stop();
@@ -1567,7 +1650,7 @@ void Scene::Victorious(Player* player)
 			App->scene->pause = true;
 		}
 	}
-	else if (player == App->player2)
+	else if (player == App->player2 && App->map->explosion_anim->Finished())
 	{
 		pausetimer = true;
 		world_seconds.Stop();

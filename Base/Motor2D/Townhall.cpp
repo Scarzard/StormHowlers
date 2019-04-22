@@ -78,9 +78,10 @@ bool Townhall::Update(float dt)
 		}
 		else
 		{
+
 			App->player1->UpdateWalkabilityMap(true, collider);
 			App->player1->DeleteEntity(this);
-			App->scene->Victorious(App->player1);
+			App->scene->Victorious(App->player1, dt);
 		}
 
 		// Just to test the LiveBar
@@ -111,9 +112,11 @@ bool Townhall::Update(float dt)
 		}
 		else
 		{
+
 			App->player2->UpdateWalkabilityMap(true, collider);
 			App->player2->DeleteEntity(this);
-			App->scene->Victorious(App->player2);
+			App->scene->Victorious(App->player2, dt);
+
 		}
 
 		// Just to test the LiveBar

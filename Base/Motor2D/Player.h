@@ -45,11 +45,19 @@ public:
 		CURR_CAST,
 		CURR_GENERAL,
 		CURR_CREATE_TROOPS,
+		CURR_CREATE_ABILITIES,
 		CURR_PAUSE,
 		CURR_PAUSE_SETTINGS,
 		CURR_PAUSE_ABORT,
 		CURR_WIN_SCREEN,
 		ENDGAME
+	};
+
+	enum ABILITIES
+	{
+		INVULNERABLE,
+		TANK,
+		ROCKET
 	};
 
 	Player();
@@ -77,6 +85,7 @@ public:
 	// -----------------------------------------------------------------------------
 
 	void CreateTroop(int type, int number);
+	void CreateAbility(int type, int number);
 
 	bool CheckBuildingPos();
 	Collider GetCollider(pair<int, int> dimensions, pair<int,int> topTile_pos);
@@ -141,6 +150,8 @@ public:
 	int EngineersCreated = 0;
 	int WarHoundsCreated = 0;
 
+	int Invulnerable_abilities = 0;
+
 	//---
 	list<UI_Element*> UI_elements;
 
@@ -153,9 +164,14 @@ public:
 
 	UI_Element* Y_to_Main = nullptr;
 	UI_Element* Y_to_Main2 = nullptr;
+	bool Y_pressed = false;
+
+	UI_Element* SelectBuilding = nullptr;
+	UI_Element* In_SelectBuilding = nullptr;
+
 	UI_Element* RB_img = nullptr;
 	UI_Element* LB_img = nullptr;
-	bool Y_pressed = false;
+	
 
 	UI_Element* Main_UI = nullptr;
 	UI_Element* Build_icon = nullptr;
@@ -187,8 +203,12 @@ public:
 
 	UI_Element* Cast_UI = nullptr;
 	UI_Element* Missiles_icon = nullptr;
+	char missiles_label[4] = "0";
 	UI_Element* Cast2_icon = nullptr;
+	UI_Element* invulnerable_text = nullptr;
+	char invulnerable_label[4] = "0";
 	UI_Element* Cast3_icon = nullptr;
+	char tank_label[4] = "0";
 
 	// Selected Building UI
 	UI_Element* General_UI = nullptr;
@@ -212,9 +232,9 @@ public:
 	UI_Element* Capacity_text = nullptr; //only for barracks
 	char capacity_label[20] = "$/s:  ";
 	UI_Element* Create_troops = nullptr;
-	UI_Element* Upgrade_troops = nullptr;
+	UI_Element* Create_abilities = nullptr;
 
-	// Create troops UI --------------------------
+	// Create troops and abilities UI --------------------------
 	UI_Element* Create_Troops_UI = nullptr;
 	UI_Element* left_img = nullptr;
 	UI_Element* troop_icon = nullptr;
@@ -225,6 +245,7 @@ public:
 	UI_Element* cancel_button = nullptr;
 
 	int UI_troop_type = 9; //select type of troop (9 is soldier) 
+	int UI_ability_type = 0;
 	int number_of_troops = 0;
 
 	UI_Element* num_troops_text = nullptr;
