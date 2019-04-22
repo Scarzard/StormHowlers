@@ -19,6 +19,12 @@
 #include "Brofiler\Brofiler.h"
 
 
+Player::Player(bool isplayer) : Module()
+{
+	name = "player";
+	isPlayer1 = isplayer;
+}
+
 Player::Player() : Module()
 {
 	name = "player";
@@ -59,23 +65,7 @@ bool Player::Start()
   
 	currentTile = { 13,0 };
 
-
-	return true;
-}
-
-bool Player::Awake(pugi::xml_node & config)
-{
-	preview_rects = vector<SDL_Rect>(Entity::entityType::WAR_HOUND, { 0,0,0,0 });
-
-	config = config.child("rect_previews").first_child();
-
-	for (int i = Entity::entityType::TOWNHALL; i <= Entity::entityType::WAR_HOUND; i++) {
-		preview_rects[i].x = config.attribute((isPlayer1) ? "rx" : "x").as_int(0);
-		preview_rects[i].y = config.attribute((isPlayer1) ? "ry" : "y").as_int(0);
-		preview_rects[i].w = config.attribute("w").as_int(0);
-		preview_rects[i].h = config.attribute("h").as_int(0);
-		config = config.next_sibling();
-	}
+	
 	return true;
 }
 
@@ -664,8 +654,8 @@ bool Player::Update(float dt)
 			//pos.first--;
 
 			// Swap once commit to work with controller
-			//App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
-			App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &(preview_rects->at(type)));
+			App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
+			//App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &(preview_rects->at(type)));
 
 
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)

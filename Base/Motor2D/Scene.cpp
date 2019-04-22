@@ -51,6 +51,7 @@ bool Scene::Awake(pugi::xml_node& config)
 	allied_win_name = config.child("allied").attribute("file").as_string("");
 	soviet_win_name = config.child("soviet").attribute("file").as_string("");
 
+	
 	return ret;
 }
 
@@ -77,9 +78,9 @@ bool Scene::Start()
 	to_end = false;
 	change = false;
 	endgame = false;
-	App->player1->isPlayer1 = true;
+	/*App->player1->isPlayer1 = true;
 	App->player2->isPlayer1 = false;
-
+*/
 	App->player1->currentUI = Player::CURRENT_UI::NONE;
 	App->player2->currentUI = Player::CURRENT_UI::NONE;
 

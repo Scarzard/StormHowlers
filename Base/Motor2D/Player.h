@@ -61,12 +61,11 @@ public:
 	};
 
 	Player();
-	
-	bool Awake(pugi::xml_node & config);
+	Player(bool isplayer);
 	~Player();
 
 	bool Start();
-	//bool Awake(pugi::xml_node &config);
+	bool Awake(pugi::xml_node &config);
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();

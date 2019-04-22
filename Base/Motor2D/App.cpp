@@ -41,8 +41,8 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	entitymanager = new EntityManager();
 	font = new Fonts();
 	gui = new Gui();
-	player1 = new Player();
-	player2 = new Player();
+	player1 = new Player(true);
+	player2 = new Player(false);
 	main_menu = new MainMenu();
 	scene = new Scene();
 	move_manager = new MovementManager();
