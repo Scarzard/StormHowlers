@@ -78,9 +78,9 @@ bool Townhall::Update(float dt)
 		}
 		else
 		{
-
+/*
 			App->player1->UpdateWalkabilityMap(true, collider);
-			App->player1->DeleteEntity(this);
+			App->player1->DeleteEntity(this);*/
 			App->scene->Victorious(App->player1, dt);
 		}
 
@@ -113,8 +113,8 @@ bool Townhall::Update(float dt)
 		else
 		{
 
-			App->player2->UpdateWalkabilityMap(true, collider);
-			App->player2->DeleteEntity(this);
+			/*App->player2->UpdateWalkabilityMap(true, collider);
+			App->player2->DeleteEntity(this);*/
 			App->scene->Victorious(App->player2, dt);
 
 		}

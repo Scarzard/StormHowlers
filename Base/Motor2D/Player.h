@@ -87,6 +87,8 @@ public:
 	void CreateTroop(int type, int number);
 	void CreateAbility(int type, int number);
 
+	void DrawBuildingCollider(int type, bool isPlayer1);
+
 	bool CheckBuildingPos();
 	Collider GetCollider(pair<int, int> dimensions, pair<int,int> topTile_pos);
 	void UpdateWalkabilityMap(bool isWalkable, Collider collider);

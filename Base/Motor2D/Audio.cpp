@@ -67,16 +67,16 @@ bool Audio::Awake(pugi::xml_node& config)
 		tracks_path.push_back(music_node.child_value());
 		LOG("Loading paths %s", tracks_path[i++].data());
 	}
-
+	//Load fx data
 	pugi::xml_node fx_node = config.child("fx").child("sound");
-	i = 0;
+	int j = 0;
 	for (fx_node; fx_node; fx_node = fx_node.next_sibling("sound"))
 	{
 		fx_path.push_back(fx_node.child_value());
-		LOG("Loading fx path %s  i: %d", fx_path[i].data(), i - 1);
-		i++;
+		LOG("Loading fx path %s  i: %d", fx_path[j].data(), j - 1);
+		j++;
 	}
-
+	
 	for (uint i = 0; i < fx_path.size(); i++)
 	{
 		LoadFx(PATH(folder_fx.data(), fx_path[i].data()));
