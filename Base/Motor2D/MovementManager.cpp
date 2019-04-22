@@ -238,6 +238,9 @@ bool MovementManager::Move(Group * group, float dt)
 				{
 					(*unit)->position.first += distanceToNextTile.first;
 					(*unit)->position.second += distanceToNextTile.second;
+
+					(*unit)->Speed.first = distanceToNextTile.first;
+					(*unit)->Speed.second = distanceToNextTile.second;
 				}
 			
 				// --- Blit Unit's goal tile ---
