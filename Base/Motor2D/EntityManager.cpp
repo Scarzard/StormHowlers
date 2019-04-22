@@ -141,25 +141,21 @@ bool EntityManager::Update(float dt)
 			tmp++;
 		}
 
+		if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
+			pathfinding = false;
+		}
+
 		// Player 1 Troops
+
 		list<Troop*>::const_iterator ttmp = App->player1->troops.begin();
 
-		if (ttmp != App->player1->troops.end()) {
-
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
-				pathfinding = true;
-			}
-
-			if (pathfinding && MovementState::MovementState_DestinationReached != (*ttmp)->info.UnitMovementState){
-				App->move_manager->Move((*ttmp)->info.current_group, dt);
-			}
-			if (MovementState::MovementState_DestinationReached == (*ttmp)->info.UnitMovementState) {
-				(*ttmp)->info.UnitMovementState = MovementState::MovementState_NoState;
-				pathfinding = false;
-				//App->move_manager->CreateGroup();
-			}
-
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
+			pathfinding = true;
 		}
+		
+		if (pathfinding) {
+			pathfinding = !App->move_manager->Move((*ttmp)->info.current_group, dt);
+		}		
 
 		while (ttmp != App->player1->troops.end())
 		{

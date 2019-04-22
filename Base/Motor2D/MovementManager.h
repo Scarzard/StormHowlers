@@ -36,7 +36,7 @@ public:
 	void CreateGroup();
 
 	// --- Move Unit ---
-	void Move(Group* unit, float dt);
+	bool Move(Group* unit, float dt);
 
 	int DistanceTo(pair<int, int> pos, pair<float, float> destination);
 

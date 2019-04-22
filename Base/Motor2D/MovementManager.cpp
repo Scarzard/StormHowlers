@@ -107,7 +107,7 @@ void MovementManager::CreateGroup()
 
 }
 
-void MovementManager::Move(Group * group, float dt)
+bool MovementManager::Move(Group * group, float dt)
 {
 	BROFILER_CATEGORY("GroupMovement::Move", Profiler::Color::Gold);
 
@@ -128,6 +128,15 @@ void MovementManager::Move(Group * group, float dt)
 	Map_mouseposition = App->render->ScreenToWorld(Map_mouseposition.first, Map_mouseposition.second);
 	Map_mouseposition = App->map->WorldToMap(Map_mouseposition.first, Map_mouseposition.second);
 
+	bool everyone_arrived = true;
+	while (unit != group->Units.end()) {
+		if ((*unit)->info.UnitMovementState != MovementState::MovementState_NoState) {
+			everyone_arrived = false;
+			break;
+		}
+		unit++;
+	}
+	unit = group->Units.begin();
 
 	while (unit != group->Units.end())
 	{
@@ -143,119 +152,125 @@ void MovementManager::Move(Group * group, float dt)
 		switch ((*unit)->info.UnitMovementState)
 		{
 
-		case MovementState::MovementState_NoState:
+			case MovementState::MovementState_NoState:
 
-			// --- On call to Move, Units will request a path to the destination ---
+				// --- On call to Move, Units will request a path to the destination ---
 
-			//if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN && (*unit)->info.IsSelected)
-			//{
+				//if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN && (*unit)->info.IsSelected)
+				//{
+
+				if (everyone_arrived) {
 				
-				if (group->IsGroupLead((*unit)) == false)
-				{
-					// --- If any other unit of the group has the same goal, change the goal tile ---
-					group->SetUnitGoalTile((*unit));
-				}
-				else
-				{	
-					// --- Clear previous path request occupied goal tiles ---
-					group->ClearOccupiedlist();
-					(*unit)->info.goal_tile = Map_mouseposition;
-					group->Occupied_tiles.push_back(&(*unit)->info.goal_tile);
+				
+					if (group->IsGroupLead((*unit)) == false)
+					{
+						// --- If any other unit of the group has the same goal, change the goal tile ---
+						group->SetUnitGoalTile((*unit));
+					}
+					else
+					{	
+						// --- Clear previous path request occupied goal tiles ---
+						group->ClearOccupiedlist();
+						(*unit)->info.goal_tile = Map_mouseposition;
+						group->Occupied_tiles.push_back(&(*unit)->info.goal_tile);
+					}
+
+					if (App->pathfinding->CreatePath(Map_Entityposition, (*unit)->info.goal_tile,false) != -1)
+					{
+						(*unit)->info.Current_path = *App->pathfinding->GetLastPath();
+						(*unit)->info.Current_path.erase((*unit)->info.Current_path.begin());
+						//(*unit)->info.Current_path.erase((*unit)->info.Current_path.begin());
+
+						(*unit)->info.UnitMovementState = MovementState::MovementState_NextStep;
+					}
+					else {
+						LOG("GroupMovement Error: Destination or Origin not Walkable");
+						stop_iteration = true;
+					}
 				}
 
-				if (App->pathfinding->CreatePath(Map_Entityposition, (*unit)->info.goal_tile,false) != -1)
+				break;
+
+			case MovementState::MovementState_Wait:
+
+				// --- Whenever the unit faces an obstacle of any type during a scheduled path, overcome it ---
+
+				break;
+
+			case MovementState::MovementState_FollowPath:
+
+				// --- If a path is created, the unit will start following it ---
+
+				next_tile_world = App->map->MapToWorld((*unit)->info.next_tile.first, (*unit)->info.next_tile.second);
+
+				distanceToNextTile = { (float)next_tile_world.first - (*unit)->position.first,(float)next_tile_world.second - (*unit)->position.second };
+
+				// --- We compute the module of our vector ---
+				DirectDistance = sqrtf(pow(distanceToNextTile.first, 2.0f) + pow(distanceToNextTile.second, 2.0f));
+
+				//LOG("Next tile pos : x = %i y= %i", next_tile_world.x, next_tile_world.y);
+
+				// --- We want a unitary vector to update the unit's direction/position ---
+				if (DirectDistance > 0.0f)
 				{
-					(*unit)->info.Current_path = *App->pathfinding->GetLastPath();
-					(*unit)->info.Current_path.erase((*unit)->info.Current_path.begin());
-					(*unit)->info.Current_path.erase((*unit)->info.Current_path.begin());
+					distanceToNextTile.first /= DirectDistance;
+					distanceToNextTile.second /= DirectDistance;
+				}
+
+				// --- Now we Apply the unit's Speed and the dt to the unitary vector  ---
+				distanceToNextTile.first  *= (*unit)->speed*dt;
+				distanceToNextTile.second *= (*unit)->speed*dt;
+
+				// --- We convert an pair<int,int> to fPoint for comparing purposes ---
+				to_fPoint.first = next_tile_world.first;
+				to_fPoint.second = next_tile_world.second;
+
+				if (DistanceTo((*unit)->position,to_fPoint) < 1)
+				{
+					(*unit)->position.first = next_tile_world.first;
+					(*unit)->position.second = next_tile_world.second;
 
 					(*unit)->info.UnitMovementState = MovementState::MovementState_NextStep;
 				}
+
 				else
-					stop_iteration = true;
-			//}
-
-			break;
-
-		case MovementState::MovementState_Wait:
-
-			// --- Whenever the unit faces an obstacle of any type during a scheduled path, overcome it ---
-
-			break;
-
-		case MovementState::MovementState_FollowPath:
-
-			// --- If a path is created, the unit will start following it ---
-
-			next_tile_world = App->map->MapToWorld((*unit)->info.next_tile.first, (*unit)->info.next_tile.second);
-
-			distanceToNextTile = { (float)next_tile_world.first - (*unit)->position.first,(float)next_tile_world.second - (*unit)->position.second };
-
-			// --- We compute the module of our vector ---
-			DirectDistance = sqrtf(pow(distanceToNextTile.first, 2.0f) + pow(distanceToNextTile.second, 2.0f));
-
-			//LOG("Next tile pos : x = %i y= %i", next_tile_world.x, next_tile_world.y);
-
-			// --- We want a unitary vector to update the unit's direction/position ---
-			if (DirectDistance > 0.0f)
-			{
-				distanceToNextTile.first /= DirectDistance;
-				distanceToNextTile.second /= DirectDistance;
-			}
-
-			// --- Now we Apply the unit's Speed and the dt to the unitary vector  ---
-			distanceToNextTile.first  *= (*unit)->speed*dt;
-			distanceToNextTile.second *= (*unit)->speed*dt;
-
-			// --- We convert an pair<int,int> to fPoint for comparing purposes ---
-			to_fPoint.first = next_tile_world.first;
-			to_fPoint.second = next_tile_world.second;
-
-			if (DistanceTo((*unit)->position,to_fPoint) < 1)
-			{
-				(*unit)->position.first = next_tile_world.first;
-				(*unit)->position.second = next_tile_world.second;
-
-				(*unit)->info.UnitMovementState = MovementState::MovementState_NextStep;
-			}
-
-			else
-			{
-				(*unit)->position.first += distanceToNextTile.first;
-				(*unit)->position.second += distanceToNextTile.second;
-			}
+				{
+					(*unit)->position.first += distanceToNextTile.first;
+					(*unit)->position.second += distanceToNextTile.second;
+				}
 			
-			// --- Blit Unit's goal tile ---
-			goal_world = App->map->MapToWorld((*unit)->info.goal_tile.first, (*unit)->info.goal_tile.second);
-			App->render->Blit((*unit)->tex, goal_world.first, goal_world.second, &(*unit)->rect);
+				// --- Blit Unit's goal tile ---
+				goal_world = App->map->MapToWorld((*unit)->info.goal_tile.first, (*unit)->info.goal_tile.second);
+				App->render->Blit((*unit)->tex, goal_world.first, goal_world.second, &(*unit)->rect);
 
-			break;
+				break;
 
-		case MovementState::MovementState_NextStep:
+			case MovementState::MovementState_NextStep:
 
-			// --- If a path is being followed, the unit will get the next tile in the path ---
+				// --- If a path is being followed, the unit will get the next tile in the path ---
 
-			if ((*unit)->info.Current_path.size() > 0)
-			{
-				(*unit)->info.next_tile = (*unit)->info.Current_path.front();
-				(*unit)->info.Current_path.erase((*unit)->info.Current_path.begin());
+				if ((*unit)->info.Current_path.size() > 0)
+				{
+					(*unit)->info.next_tile = (*unit)->info.Current_path.front();
+					(*unit)->info.Current_path.erase((*unit)->info.Current_path.begin());
 
-				(*unit)->info.UnitMovementState = MovementState::MovementState_FollowPath;
-			}
-			else
-			{
-				(*unit)->info.UnitMovementState = MovementState::MovementState_DestinationReached;
-			}
+					(*unit)->info.UnitMovementState = MovementState::MovementState_FollowPath;
+				}
+				else
+				{
+					(*unit)->info.UnitMovementState = MovementState::MovementState_DestinationReached;
+				}
 
-			break;
+				break;
 
-		case MovementState::MovementState_DestinationReached:
+			case MovementState::MovementState_DestinationReached:
 
-			// --- The unit reaches the end of the path, thus stopping and returning to NoState ---
+				// --- The unit reaches the end of the path, thus stopping and returning to NoState ---
 
-			(*unit)->info.UnitMovementState = MovementState::MovementState_NoState;
+				(*unit)->info.UnitMovementState = MovementState::MovementState_NoState;
 
-			break;
+
+				break;
 		}
 
 
@@ -268,6 +283,16 @@ void MovementManager::Move(Group * group, float dt)
 		unit++;
 
 	}
+
+	unit = group->Units.begin();
+	while (unit != group->Units.end()) {
+		if ((*unit)->info.UnitMovementState != MovementState::MovementState_NoState) {
+			return false;
+		}
+		unit++;
+	}
+
+	return true;
 
 }
 
