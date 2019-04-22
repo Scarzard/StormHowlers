@@ -94,10 +94,10 @@ void MainDefense::CleanUp()
 
 void MainDefense::LoadAnimations(bool isPlayer1, string path)
 {
-	building = building->LoadAnimation(path.data(), (!isPlayer1) ? "red_constructing" : "blue_constructing");
-	level1 = level1->LoadAnimation(path.data(), (!isPlayer1) ? "red_idle" : "blue_idle");
-	level1->speed = 3;
-	building->speed = 3;
+	building = building->LoadAnimation(path.data(), (isPlayer1) ? "red_constructing" : "blue_constructing");
+	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "red_idle" : "blue_idle");
+	level1->speed = 10;
+	building->speed = 10;
 	building->loop = false;
 	level1->loop = false;
 	Current_Animation = building;

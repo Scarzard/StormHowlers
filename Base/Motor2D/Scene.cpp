@@ -95,7 +95,8 @@ bool Scene::Start()
 
 	App->map->allied_flag_anim = App->map->allied_flag_anim->LoadAnimation("animation/Flags.tmx", "flag_allied");
 	App->map->soviet_flag_anim = App->map->soviet_flag_anim->LoadAnimation("animation/Flags.tmx", "flag_soviet");
-
+	App->map->allied_flag_anim->speed = 6;
+	App->map->soviet_flag_anim->speed = 6;
 	App->player1->LiveBar = { 51, 18 , 348, 19 }; //LiveBar for player1
 	App->player2->LiveBar = { 1232, 921 , 348, 19 }; //LiveBar for player2
 

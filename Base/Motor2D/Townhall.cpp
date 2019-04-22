@@ -152,6 +152,6 @@ void Townhall::LoadAnimations(bool isPlayer1, string path)
 		building = building->LoadAnimation(path.data(), "allied");
 	}
 
-	building->speed = 1;
+	building->speed = 10;
 	Current_Animation = building;
 }
