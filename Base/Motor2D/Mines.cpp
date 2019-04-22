@@ -51,7 +51,7 @@ bool Mines::Update(float dt)
 			}
 			else //destroyed
 			{
-				App->player1->UpdateWalkabilityMap(false, collider);
+				App->player1->UpdateWalkabilityMap(true, collider);
 				App->player1->DeleteEntity(this);
 			}
 
@@ -78,7 +78,7 @@ bool Mines::Update(float dt)
 			}
 			else //destroyed
 			{
-				App->player2->UpdateWalkabilityMap(false, collider);
+				App->player2->UpdateWalkabilityMap(true, collider);
 				App->player2->DeleteEntity(this);
 			}
 

@@ -76,6 +76,22 @@ bool DefenseTarget::Update(float dt)
 			//LOG("Distance: %d", d);
 		}
 	}
+	if (fromPlayer1)  // --- Player 1 --------------------------------
+	{
+		if (health <= 0) //destroyed
+		{
+			App->player1->UpdateWalkabilityMap(true, collider);
+			App->player1->DeleteEntity(this);
+		}
+	}
+	else if (!fromPlayer1) // --- Player 2 ---------------------------
+	{
+		if (health <= 0) //destroyed
+		{
+			App->player2->UpdateWalkabilityMap(true, collider);
+			App->player2->DeleteEntity(this);
+		}
+	}
 	Building::Update(dt);
 	return true;
 }

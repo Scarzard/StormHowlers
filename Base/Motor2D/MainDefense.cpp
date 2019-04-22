@@ -51,7 +51,8 @@ bool MainDefense::Update(float dt)
 		}
 		else
 		{
-			App->player1->UpdateWalkabilityMap(false, collider); //destroyed
+			App->player1->DeleteEntity(this);
+			App->player1->UpdateWalkabilityMap(true, collider); //destroyed
 		}
 	}
 	else if (!fromPlayer1)
@@ -71,7 +72,8 @@ bool MainDefense::Update(float dt)
 		}
 		else
 		{
-			App->player2->UpdateWalkabilityMap(false, collider); //destroyed
+			App->player2->DeleteEntity(this);
+			App->player2->UpdateWalkabilityMap(true, collider); //destroyed
 		}
 	}
 	ChangeAnimation();
