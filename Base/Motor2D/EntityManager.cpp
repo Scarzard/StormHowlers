@@ -517,6 +517,10 @@ Entity* EntityManager::findEntity(pair <int,int> pos,bool fromplayer1, int attac
 
 			found = (*tmp);
 			min_dist = distance;
+			if (min_dist <= attackrange && map_pos.first == pos.first)
+			{
+				break;
+			}
 		}
 		
 	}
