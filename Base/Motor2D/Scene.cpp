@@ -191,12 +191,17 @@ bool Scene::Start()
 	App->player1->War_hound_text->label = App->player1->war_hound_label;
 
 	
-	//------------------------------
+	//----- CAST -------------------------
 
 	App->player1->Cast_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player1->Cast_UI->rect = { 0, 573, 566, 163 };
-	App->player1->Cast2_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_TANKS, { 171 ,55 }, { 85, 81 }, App->player1->Cast_UI, false);
+
+	App->player1->Cast2_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_TANKS, { 171 ,55 }, { 85, 81 }, App->player1->Cast_UI, false); 
+
 	App->player1->Cast3_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_INVULNERABILITY, { 273, 55 }, { 85, 81 }, App->player1->Cast_UI, false);
+	App->player1->invulnerable_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 35 , 0 }, { 0, 0 }, App->player1->Cast3_icon, false, { false, false });
+	App->player1->invulnerable_text->label = App->player1->invulnerable_label;
+
 	App->player1->Missiles_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_MISSILES, { 375, 55 }, { 85, 81 }, App->player1->Cast_UI, false);
 
 	//App->player1->General_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
@@ -247,6 +252,9 @@ bool Scene::Start()
 
 	App->player1->Create_troops = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 480 , 50 }, { 83, 35 }, nullptr, false);
 	App->player1->Create_troops->rect = { 1194, 285, 83, 35 };
+
+	App->player1->Create_abilities = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 480 , 110 }, { 83, 35 }, nullptr, false);
+	App->player1->Create_abilities->rect = { 1194, 329, 84, 35 };
 
 	//App->player1->Upgrade_troops = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 515 , -12 }, { 83, 35 }, nullptr, false);
 	//App->player1->Upgrade_troops->rect = { 1280, 285, 83, 35 };
@@ -424,6 +432,8 @@ bool Scene::Start()
 	App->player2->Cast_UI->rect = { 0, 573, 566, 163 };
 	App->player2->Cast2_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_TANKS, { 171 ,55 }, { 85, 81 }, App->player2->Cast_UI, false);
 	App->player2->Cast3_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_INVULNERABILITY, { 273, 55 }, { 85, 81 }, App->player2->Cast_UI, false);
+	App->player2->invulnerable_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 35 , 0 }, { 0, 0 }, App->player2->Cast3_icon, false, { false, false });
+	App->player2->invulnerable_text->label = App->player2->invulnerable_label;
 	App->player2->Missiles_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_MISSILES, { 375, 55 }, { 85, 81 }, App->player2->Cast_UI, false);
 
 	//App->player2->General_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
@@ -467,6 +477,9 @@ bool Scene::Start()
 
 	App->player2->Create_troops = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 330 , App->win->height + 175 }, { 83, 35 }, nullptr, false);
 	App->player2->Create_troops->rect = { 1194, 285, 83, 35 };
+
+	App->player2->Create_abilities = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 330 , App->win->height + 233 }, { 83, 35 }, nullptr, false);
+	App->player2->Create_abilities->rect = { 1194, 329, 84, 35 };
 
 	//-------- CREATE TROOPS MENU ------------
 
@@ -1139,6 +1152,20 @@ bool Scene::PostUpdate()
 				(*item)->color = { 255 , 0, 0 , 255 }; //RED
 			}
 		}
+		else if ((*item) == App->player1->invulnerable_text) //NUMBER OF INVULNERABLE ABILITIES
+		{
+			sprintf_s(App->player1->invulnerable_label, "%i", App->player1->Invulnerable_abilities);
+
+
+			if (App->player1->Invulnerable_abilities > 0)
+			{
+				(*item)->color = { 0, 255, 0 , 255 }; //BLACK
+			}
+			else
+			{
+				(*item)->color = { 255 , 0, 0 , 255 }; //RED
+			}
+		}
 		else if ((*item) == App->player1->Music_Slider_Button) //MUSIC SLIDER POS
 		{
 			App->player1->Music_Slider_Button->position.first = (550 * App->audio->musicVolume) / 100;
@@ -1241,6 +1268,20 @@ bool Scene::PostUpdate()
 			if (App->player2->WarHoundsCreated > 0)
 			{
 				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
+			}
+			else
+			{
+				(*item)->color = { 255 , 0, 0 , 255 }; //RED
+			}
+		}
+		else if ((*item) == App->player2->invulnerable_text) //NUMBER OF INVULNERABLE ABILITIES
+		{
+			sprintf_s(App->player2->invulnerable_label, "%i", App->player2->Invulnerable_abilities);
+
+
+			if (App->player2->Invulnerable_abilities > 0)
+			{
+				(*item)->color = { 0, 255, 0 , 255 }; //GREEN
 			}
 			else
 			{

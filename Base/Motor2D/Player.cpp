@@ -47,7 +47,7 @@ bool Player::Start()
 {
 
 	gold = gold_persecond = actual_capacity = time_iterator = number_of_troops = 0;
-	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = 0;
+	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = 0;
 
 	selected_texture = { 0,0, 100, 100 };
 
@@ -166,13 +166,20 @@ bool Player::Update(float dt)
 
 		}
 
-		// --TEST-- from GENERAL UI to CREATE TROOPS UI (only for barracks)
+		// From GENERAL UI to CREATE TROOPS UI (only for barracks)
 		if (gamepad.Controller[BUTTON_X] == KEY_DOWN && currentUI == CURRENT_UI::CURR_GENERAL && (*building_selected)->type == Entity::entityType::BARRACKS )
 		{
 			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
 			UpdateVisibility();
 			UI_troop_type = Entity::entityType::SOLDIER;
-			//UpdateFocus(currentUI);
+		}
+		// From GENERAL UI to CREATE ABILITIES UI (only for command center)
+		if (gamepad.Controller[BUTTON_X] == KEY_DOWN && currentUI == CURRENT_UI::CURR_GENERAL && (*building_selected)->type == Entity::entityType::COMMAND_CENTER)
+		{
+			currentUI = CURRENT_UI::CURR_CREATE_ABILITIES;
+			UpdateVisibility();
+			troop_icon->rect = { 576, 161, 85, 81 };
+			
 		}
 
 		//Creating TROOPS
@@ -222,6 +229,32 @@ bool Player::Update(float dt)
 			{
 				CreateTroop(UI_troop_type, number_of_troops);
 				Update_troop_image(UI_troop_type);
+				GotoPrevWindows(currentUI);
+			}
+
+		}
+
+		//Creating ABILITIES
+		if (currentUI == CURRENT_UI::CURR_CREATE_ABILITIES)
+		{
+			if (gamepad.Controller[LB] == KEY_DOWN)
+			{
+				number_of_troops--;
+				if (number_of_troops < 0)
+				{
+					number_of_troops = 0;
+				}
+
+			}
+
+			if (gamepad.Controller[RB] == KEY_DOWN)
+			{
+				number_of_troops++;
+			}
+
+			if (gamepad.Controller[BUTTON_A] == KEY_UP)
+			{
+				CreateAbility(ABILITIES::INVULNERABLE, number_of_troops);
 				GotoPrevWindows(currentUI);
 			}
 
@@ -344,10 +377,6 @@ bool Player::Update(float dt)
 				Y_to_Main2->visible = true;
 				RB_img->visible = false;
 				LB_img->visible = false;
-
-				
-					
-				
 			}
 			else if (Y_pressed == true)
 			{
@@ -360,6 +389,9 @@ bool Player::Update(float dt)
 			if (currentUI != CURRENT_UI::CURR_GENERAL && Create_troops!=nullptr)
 				Create_troops->visible = false;
 
+			if (currentUI != CURRENT_UI::CURR_GENERAL && Create_abilities != nullptr)
+				Create_abilities->visible = false;
+
 			if(currentUI == NONE)
 				SelectBuilding->visible = true;
 			else
@@ -368,7 +400,7 @@ bool Player::Update(float dt)
 
 
 		// Travel through the different buttons
-		if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
+		if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING)
 			{
@@ -414,7 +446,7 @@ bool Player::Update(float dt)
 
 		}
 		// Travel through the different buttons
-		if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
+		if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING)
 			{
@@ -897,11 +929,13 @@ void Player::GotoPrevWindows(uint data)
 
 	case Player::CURRENT_UI::CURR_CREATE_TROOPS:
 		currentUI = CURRENT_UI::CURR_GENERAL;
-
-		UI_troop_type = 9; 
 		number_of_troops = 0;
-		Update_troop_image(number_of_troops);
+		UpdateVisibility();
+		break;
 
+	case Player::CURRENT_UI::CURR_CREATE_ABILITIES:
+		currentUI = CURRENT_UI::CURR_GENERAL;
+		number_of_troops = 0;
 		UpdateVisibility();
 		break;
 
@@ -1068,6 +1102,21 @@ void Player::UpdateVisibility() // Update GUI Visibility
 
 		break;
 
+	case::Player::CURRENT_UI::CURR_CREATE_ABILITIES:
+
+		Main_UI->visible = false;
+		Build_UI->visible = false;
+		Deploy_UI->visible = false;
+		Cast_UI->visible = false;
+		Pause_UI->visible = false;
+		Abort_UI->visible = false;
+		Settings_UI->visible = false;
+		win_screen->visible = false;
+		General_UI->visible = false;
+		Create_Troops_UI->visible = true;
+
+		break;
+
 	case::Player::CURRENT_UI::CURR_PAUSE:
 		Main_UI->visible = false;
 		Build_UI->visible = false;
@@ -1118,10 +1167,14 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Gold_UI->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = false;
+		Create_abilities->visible = false;
+		Create_troops->visible = false;
 		Y_to_Main2->visible = false;
 		Y_to_Main->visible = false;
 		LB_img->visible = false;
 		RB_img->visible = false;
+		SelectBuilding->visible = false;
+		In_SelectBuilding->visible = false;
 		break;
 	case::Player::CURRENT_UI::ENDGAME: //Dont show the other player win screen
 		Main_UI->visible = false;
@@ -1136,10 +1189,14 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		App->scene->ui_timer->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = false;
+		Create_troops->visible = false;
+		Create_abilities->visible = false;
 		Y_to_Main2->visible = false;
 		Y_to_Main->visible = false;
 		LB_img->visible = false;
 		RB_img->visible = false;
+		SelectBuilding->visible = false;
+		In_SelectBuilding->visible = false;
 		break;
 
 
@@ -1367,6 +1424,16 @@ void Player::CreateTroop(int type, int number)
 	}
 }
 
+void Player::CreateAbility(int type, int number)
+{
+	switch (type)
+	{
+	case ABILITIES::INVULNERABLE:
+		Invulnerable_abilities += number;
+		break;
+	}
+}
+
 void Player::UpdateGeneralUI(Entity* building)
 {
 	sprintf_s(name_label, "%s", building->GetName(building->type));
@@ -1384,6 +1451,15 @@ void Player::UpdateGeneralUI(Entity* building)
 	else
 	{
 		Create_troops->visible = false;
+	}
+
+	if (building->type == Entity::entityType::COMMAND_CENTER)
+	{
+		Create_abilities->visible = true;
+	}
+	else
+	{
+		Create_abilities->visible = false;
 	}
 
 }
