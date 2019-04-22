@@ -32,6 +32,27 @@
       <sound>timer startwav</sound>
       <sound>timer stop.wav</sound>
       <sound>3 min.wav</sound>
+      <build_folder>audio/fx/game_fx/building_fx</build_folder>
+      <sound1>barracks_build_fx.wav</sound1>
+      <sound1>building_repair_fx.wav</sound1>
+      <sound1>invincible_fx.wav</sound1>
+      <sound1>launch_missiles.wav</sound1>
+      <sound1>mine_build_fx.wav</sound1>
+      <sound1>sentrygun_attack_fx.wav</sound1>
+      <sound1>sentrygun_build_fx.wav</sound1>
+      <sound1>soldier_attack_fx.wav</sound1>
+      <sound1>tesla_build_fx.wav</sound1>
+      <sound1>tesla_repair_fx.wav</sound1>
+      <sound1>tesla_attack_fx.wav</sound1>
+      <ui_folder>audio/fx/game_fx/ui_fx</ui_folder>
+      <sound2>button_slide_fx.wav</sound2>
+      <sound2>change_focus.wav</sound2>
+      <sound2>exit_fx.wav</sound2>
+      <sound2>in_game_click_fx.wav</sound2>
+      <sound2>play_fx.wav</sound2>
+      <sound2>slider_up_fx.wav</sound2>
+      <sound2>slider_down_fx.wav</sound2>
+      
     </fx>
   </audio>
 

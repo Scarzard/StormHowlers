@@ -19,6 +19,29 @@ enum FX
 	TIMERSTOP,
 	MIN3
 };
+enum BUILD_FX
+{
+	BARRACKS_BUILD = 1,
+	BUILDING_REPAIR,
+	INVINCIBLE,
+	MINE_BUILD,
+	SENTRYGUN_BUILD,
+	SENTRYGUN_ATTACK,
+	SOLDIER_ATTACK,
+	TESLA_BUILD,
+	TESLA_REPAIR,
+	TESLA_ATTACK
+};
+enum UI_FX
+{
+	BUTTON_SLIDE = 1,
+	CHANGE_FOCUS,
+	EXIT,
+	INGAME_CLICK,
+	PLAY,
+	SLIDER_UP,
+	SLIDER_DOWN
+};
 
 class Audio : public Module
 {
@@ -79,8 +102,14 @@ public:
 public:
 	string			folder_music;
 	string			folder_fx;
+	string			folder_building;
+	string			folder_ui;
+
 	vector<string>	tracks_path;
 	vector<string>	fx_path;
+	vector<string>  building_fx_path;
+	vector<string>  ui_fx_path;
+
 
 private:
 
