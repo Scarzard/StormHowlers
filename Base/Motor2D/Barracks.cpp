@@ -89,6 +89,9 @@ bool Barracks::Update(float dt)
 
 	ChangeAnimation();
 
+	if (Current_Animation->Finished() == true)
+		Current_Animation = level1;
+
 	Building::Update(dt);
 
 	return true;
@@ -98,8 +101,8 @@ void Barracks::LoadAnimations(bool isPlayer1, string path) {
 	level1 = level1->LoadAnimation(&path[0], (isPlayer1) ? "red_idle" : "blue_idle");
 	building = building->LoadAnimation(&path[0], (isPlayer1) ? "red_constructing" : "blue_constructing");
 
-	level1->speed = 10;
-	building->speed = 10;
+	level1->speed = 5;
+	building->speed = 8;
 
 	building->loop = false;
 	Current_Animation = building;

@@ -120,6 +120,7 @@ public:
 
 	// Damage animation does not care about levels(?)
 	virtual void ChangeAnimation() {
+
 		/*if (health <= 0)
 			Current_Animation = destroyed;
 
@@ -223,7 +224,7 @@ public:
 				return"Walls";
 				break;
 			case Entity::entityType::DEFENSE_AOE:
-				return"Tesla";
+				return"aoe";
 				break;
 			case Entity::entityType::DEFENSE_TARGET:
 				return"Tesla";

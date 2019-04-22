@@ -61,12 +61,12 @@ bool EntityManager::Start()
 		string n = GetName(Entity::entityType(i));
 		n += "_anim.png";
 
-		if (i == Entity::entityType::TANKMAN || i == Entity::entityType::DEFENSE_AOE)
+		if (i == Entity::entityType::TANKMAN)
 			entitiesTextures[i] = nullptr;
 		else
 			entitiesTextures[i] = App->tex->Load(PATH(folder.data(), n.data()));
 	}
-	entitiesTextures[Entity::entityType::DEFENSE_AOE] = entitiesTextures[Entity::entityType::DEFENSE_TARGET];
+	//entitiesTextures[Entity::entityType::DEFENSE_AOE] = entitiesTextures[Entity::entityType::DEFENSE_TARGET];
 	return ret;
 }
 bool EntityManager::PreUpdate()
@@ -482,7 +482,7 @@ char* EntityManager::GetName(Entity::entityType type) {
 		return"Walls";
 		break;
 	case Entity::entityType::DEFENSE_AOE:
-		return"Tesla";
+		return"aoe";
 		break;
 	case Entity::entityType::DEFENSE_TARGET:
 		return"Tesla";
