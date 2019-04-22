@@ -650,7 +650,7 @@ bool Player::Update(float dt)
 			//pos.first--;
 
 			// Swap once commit to work with controller
-			App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
+			App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first - offset.first, collider.tiles[0].second - offset.second, &(preview_rects->at(type)));
 			//App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &(preview_rects->at(type)));
 
 
@@ -1240,26 +1240,28 @@ void Player::DoLogic(UI_Element* data)
 		isBuilding = true;
 		type = Entity::entityType::DEFENSE_AOE;
 		collider.dimensions = { 2,2 };
-		offset = { 60,30 };
+		offset = { 20,30 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_TARGET:
 		isBuilding = true;
 		type = Entity::entityType::MAIN_DEFENSE;
 		collider.dimensions = { 2,2 };
+		offset = { 10 , 0 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_MINE:
 		isBuilding = true;
 		type = Entity::entityType::MINES;
 		collider.dimensions = { 4,4 };
+		offset = { 60, 30 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_BARRACKS:
 		isBuilding = true;
 		type = Entity::entityType::BARRACKS;
 		collider.dimensions = { 3,4 };
-		
+		offset = { 40 , 50 };
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
