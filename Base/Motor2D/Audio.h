@@ -12,35 +12,30 @@ struct Mix_Chunk;
 
 enum FX
 {
-	MIN10 = 1,
+	MIN1 = 1,
+	MIN3,
 	MIN5,
-	MIN1,
-	TIMERSTART,
-	TIMERSTOP,
-	MIN3
-};
-enum BUILD_FX
-{
-	BARRACKS_BUILD = 1,
+	MIN10,
+	BARRACKS_BUILD,
 	BUILDING_REPAIR,
-	INVINCIBLE,
-	MINE_BUILD,
-	SENTRYGUN_BUILD,
-	SENTRYGUN_ATTACK,
-	SOLDIER_ATTACK,
-	TESLA_BUILD,
-	TESLA_REPAIR,
-	TESLA_ATTACK
-};
-enum UI_FX
-{
-	BUTTON_SLIDE = 1,
+	BUTTON_SLIDE,
 	CHANGE_FOCUS,
 	EXIT,
 	INGAME_CLICK,
+	INVINCIBLE,
+	LAUNCH_MISSILES,
+	MINE_BUILD,
 	PLAY,
+	SENTRYGUN_ATTACK,
+	SENTRYGUN_BUILD,
 	SLIDER_UP,
-	SLIDER_DOWN
+	SLIDER_DOWN,
+	SOLDIER_ATTACK,
+	TESLA_BUILD,
+	TESLA_REPAIR,
+	TESLA_ATTACK,
+	TIMERSTART,
+	TIMERSTOP,
 };
 
 class Audio : public Module
@@ -102,13 +97,9 @@ public:
 public:
 	string			folder_music;
 	string			folder_fx;
-	string			folder_building;
-	string			folder_ui;
 
 	vector<string>	tracks_path;
 	vector<string>	fx_path;
-	vector<string>  building_fx_path;
-	vector<string>  ui_fx_path;
 
 
 private:

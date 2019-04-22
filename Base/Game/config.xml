@@ -26,32 +26,30 @@
     </music>
     <fx>
       <folder>audio/fx</folder>
-      <sound>10 min.wav</sound>
-      <sound>5 min.wav</sound>
       <sound>1 min.wav</sound>
-      <sound>timer startwav</sound>
-      <sound>timer stop.wav</sound>
       <sound>3 min.wav</sound>
-      <build_folder>audio/fx/game_fx/building_fx</build_folder>
-      <sound1>barracks_build_fx.wav</sound1>
-      <sound1>building_repair_fx.wav</sound1>
-      <sound1>invincible_fx.wav</sound1>
-      <sound1>launch_missiles.wav</sound1>
-      <sound1>mine_build_fx.wav</sound1>
-      <sound1>sentrygun_attack_fx.wav</sound1>
-      <sound1>sentrygun_build_fx.wav</sound1>
-      <sound1>soldier_attack_fx.wav</sound1>
-      <sound1>tesla_build_fx.wav</sound1>
-      <sound1>tesla_repair_fx.wav</sound1>
-      <sound1>tesla_attack_fx.wav</sound1>
-      <ui_folder>audio/fx/game_fx/ui_fx</ui_folder>
-      <sound2>button_slide_fx.wav</sound2>
-      <sound2>change_focus.wav</sound2>
-      <sound2>exit_fx.wav</sound2>
-      <sound2>in_game_click_fx.wav</sound2>
-      <sound2>play_fx.wav</sound2>
-      <sound2>slider_up_fx.wav</sound2>
-      <sound2>slider_down_fx.wav</sound2>
+      <sound>5 min.wav</sound>
+      <sound>10 min.wav</sound>
+      <sound>barracks_build_fx.wav</sound>
+      <sound>building_repair_fx.wav</sound>
+      <sound>button_slide_fx.wav</sound>
+      <sound>change_focus_fx.wav</sound>
+      <sound>exit_fx.wav</sound>
+      <sound>in_game_click_fx.wav</sound>
+      <sound>invincible_fx.wav</sound>
+      <sound>launch_missiles_fx.wav</sound>
+      <sound>mine_build_fx.wav</sound>
+      <sound>play_fx.wav</sound>     
+      <sound>sentrygun_attack_fx.wav</sound>
+      <sound>sentrygun_build_fx.wav</sound>
+      <sound>slider_up_fx.wav</sound>
+      <sound>slider_down_fx.wav</sound>
+      <sound>soldier_attack_fx.wav</sound>
+      <sound>tesla_build_fx.wav</sound>
+      <sound>tesla_repair_fx.wav</sound>
+      <sound>tesla_attack_fx.wav</sound>
+      <sound>timer_started.wav</sound>
+      <sound>timer_stopped.wav</sound>
       
     </fx>
   </audio>

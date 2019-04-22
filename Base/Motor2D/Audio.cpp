@@ -57,12 +57,8 @@ bool Audio::Awake(pugi::xml_node& config)
 	//initialize music and fx
 	folder_music.assign(config.child("music").child("folder").child_value());
 	folder_fx.assign(config.child("fx").child("folder").child_value());
-	folder_building.assign(config.child("fx").child("build_folder").child_value());
-	folder_ui.assign(config.child("fx").child("ui_folder").child_value());
 	LOG("Folder music %s", folder_music.data());
 	LOG("Folder fx %s", folder_fx.data());
-	LOG("Folder folder_building %s", folder_building.data());
-	LOG("Folder folder_ui %s", folder_ui.data());
 
 	pugi::xml_node music_node = config.child("music").child("track");
 	int i = 0;
@@ -80,40 +76,11 @@ bool Audio::Awake(pugi::xml_node& config)
 		LOG("Loading fx path %s  i: %d", fx_path[j].data(), j - 1);
 		j++;
 	}
-
+	
 	for (uint i = 0; i < fx_path.size(); i++)
 	{
 		LoadFx(PATH(folder_fx.data(), fx_path[i].data()));
 	}
-	//Laod building fx data
-	pugi::xml_node building_fx_node = config.child("fx").child("sound1");
-	int k = 0;
-	for (building_fx_node; building_fx_node; building_fx_node = building_fx_node.next_sibling("sound1"))
-	{
-		building_fx_path.push_back(building_fx_node.child_value());
-		LOG("Loading fx path %s  i: %d", building_fx_path[i].data(), k - 1);
-		k++;
-	}
-
-	for (uint i = 0; i < building_fx_path.size(); i++)
-	{
-		LoadFx(PATH(folder_building.data(), building_fx_path[i].data()));
-	}
-	//Load ui fx data
-	pugi::xml_node ui_fx_node = config.child("fx").child("sound2");
-	int a = 0;
-	for (ui_fx_node; ui_fx_node;  ui_fx_node = ui_fx_node.next_sibling("sound2"))
-	{
-		ui_fx_path.push_back(ui_fx_node.child_value());
-		LOG("Loading ui_fx %s  i: %d", ui_fx_path[a].data(), a - 1);
-		i++;
-	}
-
-	for (uint i = 0; i < ui_fx_path.size(); i++)
-	{
-		LoadFx(PATH(folder_ui.data(), ui_fx_path[i].data()));
-	}
-	
 
 	SetMusicVolume();
 	SetSfxVolume();
