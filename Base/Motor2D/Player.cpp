@@ -1363,16 +1363,19 @@ void Player::DoLogic(UI_Element* data)
 	case::UI_Element::Action::ACT_GOTO_BUILD:
 		currentUI = CURR_BUILD;
 		UpdateVisibility();
+		App->audio->PlayFx(INGAME_CLICK);
 		break;
 
 	case::UI_Element::Action::ACT_GOTO_DEPLOY:
 		currentUI = CURR_DEPLOY;
 		UpdateVisibility();
+		App->audio->PlayFx(INGAME_CLICK);
 		break;
 
 	case::UI_Element::Action::ACT_GOTO_CAST:
 		currentUI = CURR_CAST;
 		UpdateVisibility();
+		App->audio->PlayFx(INGAME_CLICK);
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_AOE:
@@ -1406,31 +1409,41 @@ void Player::DoLogic(UI_Element* data)
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
 		if (SoldiersCreated > 0)
 		{
+			App->audio->PlayFx(INGAME_CLICK);
 			isBuilding = true;
 			type = Entity::entityType::SOLDIER;
 			collider.dimensions = { 1,1 };
+		}
+		else
+		{
+			App->audio->PlayFx(WRONG -1);
 		}
 		
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_TANKMAN:
 		//
+		App->audio->PlayFx(WRONG - 1);
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_INFILTRATOR:
 		//
+		App->audio->PlayFx(WRONG - 1);
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_ENGINEER:
 		//
+		App->audio->PlayFx(WRONG - 1);
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_WARHOUND:
 		//
+		App->audio->PlayFx(WRONG - 1);
 		break;
 
 	case::UI_Element::Action::ACT_CAST_MISSILES:
 		//
+		App->audio->PlayFx(WRONG - 1);
 		break;
 
 	case::UI_Element::Action::ACT_UPGRADE:
@@ -1447,7 +1460,7 @@ void Player::DoLogic(UI_Element* data)
 		App->render->zoom = 0.77;
 		Pause_UI->visible = false;
 		isPaused = false;
-
+		App->audio->PlayFx(INGAME_CLICK);
 		App->scene->pause = !App->scene->pause;
 
 		currentUI = last_currentUI;
@@ -1459,14 +1472,18 @@ void Player::DoLogic(UI_Element* data)
 		Settings_UI->visible = true;
 		currentUI = CURR_PAUSE_SETTINGS;
 		UpdateFocus(currentUI);
+		App->audio->PlayFx(INGAME_CLICK);
 		break;
 	case::UI_Element::Action::ABORT_PAUSE:
 		currentUI = CURR_PAUSE_ABORT;
 		UpdateVisibility();
 		UpdateFocus(currentUI);
+		App->audio->PlayFx(INGAME_CLICK);
 		break;
 	case::UI_Element::Action::RESTART:
 		
+		App->audio->PlayFx(INGAME_CLICK);
+
 		App->entitymanager->Disable();
 		App->player2->Disable();
 		App->player1->Disable();
@@ -1487,7 +1504,7 @@ void Player::DoLogic(UI_Element* data)
 
 		break;
 	}
-	App->audio->PlayFx(INGAME_CLICK);
+	
 }
 
 bool Player::DeleteEntity(Entity* entity)
