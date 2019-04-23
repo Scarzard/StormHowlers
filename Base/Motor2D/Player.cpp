@@ -884,6 +884,33 @@ void Player::UpdateWalkabilityMap(bool isWalkable, Collider collider) //update w
 	}
 }
 
+int Player::CheckCost(Entity* entity)
+{
+	if (entity->type == Entity::entityType::BARRACKS)
+		return 1000;
+
+	else if (entity->type == Entity::entityType::DEFENSE_AOE)
+		return 2500;
+
+	else if (entity->type == Entity::entityType::DEFENSE_TARGET)
+		return 2000;
+
+	else if (entity->type == Entity::entityType::MINES)
+		return 1500;
+
+	else
+		return 0;
+}
+
+int Player::GoldKill(Entity* entity)
+{
+	if (entity->type == Entity::entityType::SOLDIER)
+		return 100;
+
+	else
+		return 0;
+}
+
 void Player::UpdateFocus(uint data)
 {
 	switch (data)
@@ -1414,6 +1441,14 @@ bool Player::DeleteEntity(Entity* entity)
 	}
 	else if (entity->type > Entity::entityType::BARRACKS) //if entity = troop
 	{
+		// Update Gold per Kill
+		if (isPlayer1 == true)
+			App->player2->gold += GoldKill(entity);
+
+		else if (isPlayer1 == false)
+			App->player1->gold += GoldKill(entity);
+		// ---
+
 		list<Troop*>::iterator item = troops.begin();
 		while (item != troops.end())
 		{

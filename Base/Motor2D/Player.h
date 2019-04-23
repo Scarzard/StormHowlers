@@ -95,6 +95,9 @@ public:
 	Collider GetCollider(pair<int, int> dimensions, pair<int,int> topTile_pos);
 	void UpdateWalkabilityMap(bool isWalkable, Collider collider);
 	bool DeleteEntity(Entity* entity);
+
+	int CheckCost(Entity* entity);
+	int GoldKill(Entity* entity);
 	
 public:
 	bool isBuilding = false;
