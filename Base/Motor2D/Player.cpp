@@ -701,7 +701,7 @@ bool Player::Update(float dt)
 				}
 				isBuilding = false;
 				
-				App->audio->PlayFx(WRONG);
+				App->audio->PlayFx(WRONG - 1);
 				//play fx (error);
 			}
 		}
