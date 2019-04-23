@@ -111,11 +111,6 @@ bool Player::Update(float dt)
 				pos.first += i*3;
 				 e = (Troop*)App->entitymanager->AddEntity(true, Entity::entityType::SOLDIER, pos, collider);
 				 e->isSelected = true;
-
-				 /*if (i == 0) {
-					 
-				 }*/
-				 /*else {}*/
 			}
 			groups.push_back(App->move_manager->CreateGroup(pl));
 			group++;

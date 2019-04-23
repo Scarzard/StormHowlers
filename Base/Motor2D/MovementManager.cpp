@@ -213,8 +213,8 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 
 				// --- If a path is created, the unit will start following it ---
 				//(*unit)->isMoving = true;
-				//next_tile_world = App->map->MapToWorld((*unit)->info.next_tile.first, (*unit)->info.next_tile.second);
-				next_tile_world = (*unit)->info.next_tile;
+				next_tile_world = App->map->MapToWorld((*unit)->info.next_tile.first, (*unit)->info.next_tile.second);
+				//next_tile_world = (*unit)->info.next_tile;
 				
 
 				distanceToNextTile = { (float)next_tile_world.first - (*unit)->position.first,(float)next_tile_world.second - (*unit)->position.second };
