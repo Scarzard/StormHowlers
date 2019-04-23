@@ -86,9 +86,13 @@ bool Textures::UnLoad(SDL_Texture* texture)
 	{
 		if(texture == (*item))
 		{
-			SDL_DestroyTexture(texture);
-			textures.remove(texture);
-			return true;
+			if (texture != nullptr)
+			{
+				SDL_DestroyTexture(texture);
+				textures.remove(texture);
+				return true;
+			}
+			
 		}
 	}
 
