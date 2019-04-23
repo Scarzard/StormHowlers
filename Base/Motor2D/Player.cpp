@@ -782,7 +782,7 @@ bool Player::Update(float dt)
 				}
 				isBuilding = false;
 				
-				App->audio->PlayFx(WRONG - 1);
+				App->audio->PlayFx(WRONG);
 				//play fx (error);
 			}
 		}
@@ -1416,34 +1416,34 @@ void Player::DoLogic(UI_Element* data)
 		}
 		else
 		{
-			App->audio->PlayFx(WRONG -1);
+			App->audio->PlayFx(WRONG);
 		}
 		
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_TANKMAN:
 		//
-		App->audio->PlayFx(WRONG - 1);
+		App->audio->PlayFx(WRONG);
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_INFILTRATOR:
 		//
-		App->audio->PlayFx(WRONG - 1);
+		App->audio->PlayFx(WRONG);
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_ENGINEER:
 		//
-		App->audio->PlayFx(WRONG - 1);
+		App->audio->PlayFx(WRONG);
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_WARHOUND:
 		//
-		App->audio->PlayFx(WRONG - 1);
+		App->audio->PlayFx(WRONG);
 		break;
 
 	case::UI_Element::Action::ACT_CAST_MISSILES:
 		//
-		App->audio->PlayFx(WRONG - 1);
+		App->audio->PlayFx(WRONG);
 		break;
 
 	case::UI_Element::Action::ACT_UPGRADE:
