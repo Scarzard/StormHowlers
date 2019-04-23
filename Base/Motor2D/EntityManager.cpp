@@ -42,7 +42,7 @@ bool EntityManager::Awake(pugi::xml_node &config)
 	folder.append(config.child("folder").child_value());
 	texture_path = config.child("sprite_sheet").attribute("source").as_string();
 
-	entitiesTextures = vector<SDL_Texture*>(Entity::entityType::WAR_HOUND, nullptr);
+	entitiesTextures = vector<SDL_Texture*> (Entity::entityType::WAR_HOUND, nullptr);
 	
 	return true;
 }

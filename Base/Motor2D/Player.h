@@ -50,7 +50,8 @@ public:
 		CURR_PAUSE_SETTINGS,
 		CURR_PAUSE_ABORT,
 		CURR_WIN_SCREEN,
-		ENDGAME
+		ENDGAME, 
+		DRAW
 	};
 
 	enum ABILITIES
@@ -323,6 +324,7 @@ public:
 	char Restart_label[13] = "Restart Game";
 	
 	UI_Element* win_screen = nullptr;
+	UI_Element* draw_screen = nullptr;
 };
 
 #endif // !__Player_H__

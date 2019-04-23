@@ -4,6 +4,7 @@
 #include "Render.h"
 #include "Map.h"
 #include "Player.h"
+#include "Audio.h"
 #include "Brofiler\Brofiler.h"
 
 
@@ -59,17 +60,29 @@ bool MainDefense::Update(float dt)
 		// Shoots the closest one if in range
 		if (timer.ReadSec() >= rate_of_fire && Is_inRange(closest->position, d))
 		{
+			 isShooting = true;
 			closest->TakeDamage(damage_lv[level]);
 			timer.Start();
+			App->audio->PlayFx(TESLA_ATTACK);
 			//LOG("Distance: %d", d);
 		}
 	}
+	if (timer.ReadSec() >= 3)
+	{
+		isShooting = false;
+		Current_Animation = idle;
+	}
+
+
+
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
 		if (health <= 0) //destroyed
 		{
 			App->player1->UpdateWalkabilityMap(true, collider);
 			App->player1->DeleteEntity(this);
+			App->audio->PlayFx(BUILDING_EXPLOSION);
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
@@ -78,11 +91,12 @@ bool MainDefense::Update(float dt)
 		{
 			App->player2->UpdateWalkabilityMap(true, collider);
 			App->player2->DeleteEntity(this);
+			App->audio->PlayFx(BUILDING_EXPLOSION);
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 
-	if (Current_Animation->Finished() == true)
-		Current_Animation = level1;
+	ChangeAnimation(closest);
 
 	Building::Update(dt);
 
@@ -99,12 +113,53 @@ void MainDefense::CleanUp()
 
 void MainDefense::LoadAnimations(bool isPlayer1, string path)
 {
+	//moving = vector<Animation*>(entityDir::MAX, nullptr);
+	shooting = vector<Animation*>(entityDir::MAX, nullptr);
+
+	//idle = idle->LoadAnimation(path.data(), (isPlayer1) ? "red_constructing" : "blue_constructing");
+
+	/*moving[NORTH] = moving[NORTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_north" : "blue_north");
+	moving[SOUTH] = moving[SOUTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_south" : "blue_south");
+	moving[EAST] = moving[EAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_east" : "blue_east");
+	moving[WEST] = moving[WEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_west" : "blue_west");
+	moving[NORTHEAST] = moving[NORTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_northeast" : "blue_northeast");
+	moving[NORTHWEST] = moving[NORTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_northwest" : "blue_northwest");
+	moving[SOUTHEAST] = moving[SOUTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_southeast" : "blue_southeast");
+	moving[SOUTHWEST] = moving[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_southwest" : "blue_southwest");*/
+
+	shooting[NORTH] = shooting[NORTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_N" : "blue_N");
+	shooting[SOUTH] = shooting[SOUTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_S" : "blue_S");
+	shooting[EAST] = shooting[EAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_E" : "blue_E");
+	shooting[WEST] = shooting[WEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_W" : "blue_W");
+	shooting[NORTHEAST] = shooting[NORTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_NE" : "blue_NE");
+	shooting[NORTHWEST] = shooting[NORTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_NW" : "blue_NW");
+	shooting[SOUTHEAST] = shooting[SOUTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_SE" : "bluet_SE");
+	shooting[SOUTHWEST] = shooting[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_SW" : "blue_SW");
+
+	for (int i = NORTH; i <= SOUTHWEST; i++) {
+		//moving[i]->speed = 3;
+		shooting[i]->speed = 3;
+	}
+
+	
+	if (fromPlayer1)
+	{
+		idle = shooting[SOUTHWEST];
+	}
+	else
+	{
+		idle = shooting[NORTHEAST];
+	}
+
 	building = building->LoadAnimation(path.data(), (isPlayer1) ? "red_constructing" : "blue_constructing");
 	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "red_SW" : "blue_NE");
-
+	
+	idle->speed = 0;
 	level1->speed = 10;
 	building->speed = 10;
 
+
+	idle->loop = false;
 	building->loop = false;
 	level1->loop = false;
 	Current_Animation = building;
@@ -117,3 +172,93 @@ bool MainDefense::Is_inRange(pair<int, int> pos, int &distance) {
 
 	return distance <= range;
 }
+
+void MainDefense::ChangeAnimation( Entity* closest) {
+
+		
+		if (isShooting)
+		{
+			if (closest != nullptr)
+			{
+
+				if (closest->position == position)
+				{
+					if (fromPlayer1)
+					{
+						Current_Animation = shooting[SOUTH];
+					}
+					else
+					{
+						Current_Animation = shooting[NORTH];
+					}
+				}
+				else if (closest->position.second <= position.second && closest->position.first >= position.first)
+				{
+					//noth
+					Current_Animation = shooting[NORTH];
+					if (closest->position.second == position.second)
+					{
+						//northwest
+						Current_Animation = shooting[NORTHWEST];
+					}
+					//else if (closest->position.second > position.second)
+					//{
+					//	//north
+					//	Current_Animation = shooting[NORTH];
+					//}
+					else if (closest->position.first == position.first)
+					{
+						//northeast
+						Current_Animation = shooting[NORTHEAST];
+					}
+				}
+				else if (closest->position.first >= position.first && closest->position.second >= position.second)
+				{
+					//south
+					Current_Animation = shooting[SOUTH];
+					if (closest->position.second == position.second)
+					{
+						//southwest
+						Current_Animation = shooting[SOUTHWEST];
+					}
+					//else if (closest->position.second > position.second)
+					//{
+					//	//north
+					//	Current_Animation = shooting[NORTH];
+					//}
+					else if (closest->position.first == position.first)
+					{
+						//southeast
+						Current_Animation = shooting[SOUTHEAST];
+					}
+				}
+				else if (closest->position.second > position.second && closest->position.first > position.first)
+				{
+					//east
+					Current_Animation = shooting[EAST];
+
+				}
+				else if (closest->position.second < position.second && closest->position.first < position.first)
+				{
+					//west
+					Current_Animation = shooting[WEST];
+
+				}
+			}
+
+			else
+			{
+				if (fromPlayer1)
+				{
+					Current_Animation = shooting[SOUTH];
+				}
+				else
+				{
+					Current_Animation = shooting[NORTH];
+				}
+			}
+
+
+		}
+	}
+

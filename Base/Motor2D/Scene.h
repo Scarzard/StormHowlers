@@ -92,6 +92,7 @@ public:
 	void DrawLiveBar(Player* player);
 	void Victorious(Player* player, float dt);
 	void ResetGame();
+	void MatchDraw();
 	void DrawDecorations(float dt); 
 
 	//void changeSize(float time, int maxsize);
@@ -155,6 +156,9 @@ public:
 
 	string soviet_win_name;
 	SDL_Texture* soviet_win_tex = nullptr;
+
+	string draw_name;
+	SDL_Texture* draw_tex = nullptr;
 
 	SDL_Texture* trees_tex = nullptr; 
 	SDL_Rect bush_rect, fit_tree, wide_tree, tall_tree; 

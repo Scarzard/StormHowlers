@@ -278,19 +278,20 @@ void Soldier::ChangeAnimation(pair<int, int> Speed, Entity* closest) {
 						Current_Animation = shooting[WEST];
 
 					}
-				}
-
-				else
-				{
-					if (fromPlayer1)
-					{
-						Current_Animation = shooting[SOUTH];
-					}
 					else
 					{
-						Current_Animation = shooting[NORTH];
+						if (fromPlayer1)
+						{
+							Current_Animation = shooting[SOUTH];
+						}
+						else
+						{
+							Current_Animation = shooting[NORTH];
+						}
 					}
 				}
+
+				
 				
 
 			}
