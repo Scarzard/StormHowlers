@@ -17,6 +17,13 @@ enum entityDir {
 	MAX
 };
 
+enum state {
+	NORMAL,
+	INMUNE,
+
+	MAX
+};
+
 
 class Troop : public Entity
 {
@@ -73,6 +80,7 @@ public:
 	Group_Unit info;
 	bool isSelected = true;
 	
+	state actual = NORMAL;
 };
 
 #endif

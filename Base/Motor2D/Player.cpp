@@ -73,7 +73,26 @@ bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("Player Update", Profiler::Color::Black);
 
-	
+	if (inmune == false /*&& pressA*/)
+	{
+		timer_ref_sec = App->scene->worldseconds;
+		timer_ref_min = App->scene->worldminutes;
+		desired_second = timer_ref_sec + 30;
+		desired_min = timer_ref_min;
+
+		if (desired_second >= 60)
+		{
+			int extra = 60 - desired_second;
+			desired_second = extra;
+			desired_min++;
+		}
+		inmune = true;
+	}
+
+	if (inmune && App->scene->worldseconds == desired_second && App->scene->worldminutes == desired_min)
+	{
+		inmune = false;
+	}
 
 	if (!App->scene->endgame)
 	{
