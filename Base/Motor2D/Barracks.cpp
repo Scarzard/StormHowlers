@@ -65,6 +65,7 @@ bool Barracks::Update(float dt)
 			App->player1->gold -= repair_cost;
 			health = health_lv[level];
 			repair = false;
+			App->audio->PlayFx(BUILDING_REPAIR);
 			//play fx (repair);
 		}
 	}
@@ -95,6 +96,7 @@ bool Barracks::Update(float dt)
 			App->player2->gold -= repair_cost;
 			health = health_lv[level];
 			repair = false;
+			App->audio->PlayFx(BUILDING_REPAIR);
 			//play fx (repair);
 		}
 	}
