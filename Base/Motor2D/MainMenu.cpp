@@ -156,7 +156,6 @@ void MainMenu::DoLogic(UI_Element* data)
 		App->scenechange->ContinueGame = true;
 		App->scenechange->SwitchScene(App->scene, App->main_menu,2); //Here fadetoblack
 		App->audio->PlayFx(PLAY);
-		
 		break;
 
 	case::UI_Element::Action::CONTINUE:

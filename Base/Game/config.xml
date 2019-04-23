@@ -47,9 +47,9 @@
       <sound>slider_down_fx.wav</sound>
       <sound>slider_up_fx.wav</sound>
       <sound>soldier_attack_fx.wav</sound>
+      <sound>tesla_attack_fx.wav</sound>
       <sound>tesla_build_fx.wav</sound>
       <sound>tesla_repair_fx.wav</sound>
-      <sound>tesla_attack_fx.wav</sound>
       <sound>timer_started.wav</sound>
       <sound>timer_stopped.wav</sound>
       <sound>wrong_fx.wav</sound>

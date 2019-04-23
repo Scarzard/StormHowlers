@@ -85,7 +85,7 @@ bool Mines::Update(float dt)
 				App->player2->UpdateWalkabilityMap(true, collider);
 				App->player2->DeleteEntity(this);
 				App->audio->PlayFx(BUILDING_EXPLOSION);
-				App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
+				App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
 			}
 
 			if (repair == true) //repair

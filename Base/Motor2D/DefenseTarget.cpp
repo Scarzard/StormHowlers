@@ -74,7 +74,7 @@ bool DefenseTarget::Update(float dt)
 		{
 			closest->TakeDamage(damage_lv[level]);
 			timer.Start();
-			App->audio->PlayFx(SENTRYGUN_ATTACK);
+			App->audio->PlayFx(TESLA_ATTACK);
 			//LOG("Distance: %d", d);
 		}
 	}

@@ -63,7 +63,7 @@ bool MainDefense::Update(float dt)
 			 isShooting = true;
 			closest->TakeDamage(damage_lv[level]);
 			timer.Start();
-			App->audio->PlayFx(TESLA_ATTACK);
+			App->audio->PlayFx(SENTRYGUN_ATTACK);
 			//LOG("Distance: %d", d);
 		}
 	}
@@ -82,7 +82,7 @@ bool MainDefense::Update(float dt)
 			App->player1->UpdateWalkabilityMap(true, collider);
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
-			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
@@ -92,7 +92,7 @@ bool MainDefense::Update(float dt)
 			App->player2->UpdateWalkabilityMap(true, collider);
 			App->player2->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
-			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 

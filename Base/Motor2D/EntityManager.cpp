@@ -428,8 +428,9 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		tmp = new Townhall(isPlayer1, position, collider);
 		break;
 
-	case Entity::entityType::MAIN_DEFENSE:
+	case Entity::entityType::MAIN_DEFENSE: // this is the actual sentrygun
 		tmp = new MainDefense(isPlayer1, position, collider);
+		App->audio->PlayFx(SENTRYGUN_BUILD);
 		break;
 
 	case Entity::entityType::COMMAND_CENTER:
