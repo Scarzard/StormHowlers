@@ -149,7 +149,7 @@
         <size width="1" height="1"/>
         <damage lvl1="10" lvl2="150" lvl3="200"/>
         <attack rate="1" targets="1" range="3"/>
-        <speed value="150"/>
+        <speed value="25"/>
       </BasicSoldier>
       <tankman>
         <health lvl1="100" lvl2="120" lvl3="150"/>

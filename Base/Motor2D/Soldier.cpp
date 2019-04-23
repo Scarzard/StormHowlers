@@ -14,6 +14,8 @@ Soldier::Soldier(bool isPlayer1, pair<int, int> pos, Collider collider):Troop(En
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
 
+	destination = pos;
+	original_range = range;
 	//Managed in entity.h constructor
 	//rate_of_fire = 1;
 	//fromPlayer1 = isPlayer1;
@@ -29,86 +31,126 @@ Soldier::~Soldier()
 bool Soldier::Update(float dt)
 {
 	
-	
-
 	if (alive) {
 		
 		pair<int, int> map_pos = App->map->WorldToMap(position.first, position.second);
 		pair<int, int> map_init_pos = App->map->WorldToMap(init_position.first, init_position.second);
 		int time_to_act = 2;
-		
 
-		// Defensive
-		if (defensive) {
+		//ENTITY TO ATTACK IS FOUND
+		// Checks for group defined closest entity
+		if (info.closest != nullptr && info.closest->health > 0)
+		{
+			//PrintState();
+			//LOG("Closest FOUND");
+			int d = 0;
+			// Modify the goal tile to make it walkable
+			destination = App->map->WorldToMap(info.closest->position.first, info.closest->position.second);
+			if (!App->pathfinding->IsWalkable(destination)) {
+				destination.second -= 1;
+				if (!App->pathfinding->IsWalkable(destination)) {
+					destination.second += 2;
+					if (!App->pathfinding->IsWalkable(destination)) {
 
-			if (closest != nullptr && closest->health > 0)
-			{
+						destination.first -= 1;
+						destination.second -= 1;
+						if (!App->pathfinding->IsWalkable(destination)) {
+							destination.first += 2;
+
+						}
+					}
+				
+				}
+
+			}
+			/*if (fromPlayer1) {
+			}
+			else {
+				destination.second += 1;
+			}*/
+
+			if (!Is_inRange(map_pos, d, destination/*App->map->WorldToMap(destination.first, destination.second)*/, original_range)) {
+				state = MOVING;
+				destination = App->map->MapToWorld(destination.first, destination.second);
+				//destination = info.closest->position;
+				LOG("Closest FOUND - NOT in range => MOVING");
+				//PrintState();
+
+			}
+			else {
+				info.UnitMovementState = MovementState::MovementState_NoState;
 				state = SHOOTING;
 				// Shoots the closest one if in range
 				if (timer.ReadSec() >= rate_of_fire)
 				{
-					closest->TakeDamage(damage_lv[level]);
+					info.closest->TakeDamage(damage_lv[level]+100);
 					timer.Start();
 					App->audio->PlayFx(SOLDIER_ATTACK);
-					//LOG("Damage to wall: %i     Wall life:%i", 1, closest.;
-				}
-			}
-			else {
-
-				int time = (timer.ReadSec());
-				if (time % time_to_act == 0){
-					//LOG("DGKLGSK");
-					closest = App->entitymanager->findEntity(map_pos, fromPlayer1, range);
-				}
-
-				if (state == MOVING) {
-					App->move_manager->Move(info.current_group, dt, init_position);
-
-				}
-				else if (closest == nullptr && state == TROOP_IDLE) {
-
-					if (map_init_pos.first != map_pos.first && map_init_pos.second != map_pos.second) {
-						// If no enemies in range and not at home, go home
-						if (info.current_group->IsGroupLead(this)) {
-							//MOVING home
-							state = MOVING;
-						}
+					if (info.closest->health <= 0) {
+						state = TROOP_IDLE;
+						info.closest = nullptr;
 					}
-					
 				}
 				
-				
+				LOG("Closest FOUND - IN range => SHOOTING");
+				//PrintState();
 
-				pair<int, int> pos;
-				App->input->GetMousePosition(pos.first, pos.second);
-				pos = App->render->ScreenToWorld(pos.first, pos.second);
-
-				if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
-					position = pos;
-				}
 
 			}
-
-			//if (state == MOVING || state == SHOOTING)
-			//{
-			//	
-			//	// Unsuccessful search
-			//	// Continues IDLE
-			//	if (state = SHOOTING) {
-			//		if (init_position.first != position.first && init_position.second != position.second) {
-			//			state = ALERT;
-			//		}
-			//	}
-
-			//}
 		}
+		//ENTITY TO ATTACK IS NOT FOUND OR JUST DIED
+
+		if (state != SHOOTING){				
+
+			//closest = App->entitymanager->findEntity(map_pos, fromPlayer1, original_range);
+			PrintState();
+			//LOG("State != SHOOTING");
+
+			if (state == MOVING) {
+				info.current_group->CheckForMovementRequest(dt, destination);
+				rest.Start();
+				//LOG("MOVING");
+				//PrintState();
+
+			}
+			//if (info.closest == nullptr && (state == TROOP_IDLE || state == SHOOTING)) {
+			if (state == TROOP_IDLE) {
+				LOG("Closest NOT FOUND - STRATEGY");
+
+				//offensive mode
+				if (true) {
+					LOG("Closest NOT FOUND - SEARCHING");
+
+					// ONLY GROUP LEAD
+					if (/*rest.ReadSec() >= resting_time &&*/ info.current_group->IsGroupLead(this)) {
+
+						info.closest = App->entitymanager->findEntity(map_pos, fromPlayer1, range);
+						if (info.closest == nullptr) {
+							range += 5;
+
+						}
+						else {
+							range = original_range;
+						}
+
+						//PrintState();
+
+					}
+				}
+					
+			}
+		}
+
 	}
 	else {
 		//Current_Animation = Die;
 
 	}
 	
-	
+	//int time = (timer.ReadSec());
+			//if (time % time_to_act == 0){
+			//	//LOG("DGKLGSK");
+			//}
 	
 	//
 	//if (Speed.first == 0 && Speed.second == 0) {
@@ -123,6 +165,42 @@ bool Soldier::Update(float dt)
 
 	Troop::Update(dt);
 	return true;
+}
+bool Soldier::Is_inRange(pair<int, int> pos, int &distance, pair <int, int> position, int range) {
+
+	//posicion entre dos entidades cualquiera
+	//determina si esta en el rango
+
+	pair <int, int> vector_distance = { position.first - pos.first, position.second - pos.second };
+	distance = (int)(sqrt(pow(vector_distance.first, 2) + pow(vector_distance.second, 2)));
+
+	return distance <= range;
+}
+void Soldier::PrintState() {
+	switch (state)
+	{
+	case NOT_DEPLOYED:
+		LOG("STATE = NOT_DEPLOYED");
+
+		break;
+	case TROOP_IDLE:
+		LOG("STATE = IDLE");
+		break;
+	case MOVING:
+		LOG("STATE = MOVING");
+		break;
+	case SHOOTING:
+		LOG("STATE = SHOOTING");
+		break;
+	case REST:
+		LOG("STATE = REST");
+		break;
+	case MAX_STATE:
+		LOG("MOVING");
+		break;
+	default:
+		break;
+	}
 }
 
 void Soldier::ForceAnimations() {
@@ -146,6 +224,14 @@ void Soldier::ActOnDestroyed() {
 	{
 		if (health <= 0) //destroyed
 		{
+			std::list <Entity*>::const_iterator unit = info.current_group->Units.begin();
+			while (unit != info.current_group->Units.end()) {
+				(*unit)->isSelected = true;
+				unit++;
+			}
+			isSelected = false;
+			App->move_manager->CreateGroup(App->player1);
+			//info.current_group->removeUnit(this);
 			App->player1->DeleteEntity(this);
 		}
 	}
@@ -153,6 +239,7 @@ void Soldier::ActOnDestroyed() {
 	{
 		if (health <= 0) //destroyed
 		{
+			info.current_group->removeUnit(this);
 			App->player2->DeleteEntity(this);
 		}
 	}

@@ -15,6 +15,16 @@ struct Collider
 	pair<int, int> dimensions;
 	vector<pair<int, int>> tiles;
 };
+enum TroopState {
+	NOT_DEPLOYED,
+	TROOP_IDLE,
+	MOVING,
+	SHOOTING,
+	REST,
+
+	MAX_STATE
+};
+
 
 class Entity
 {
@@ -200,6 +210,12 @@ public:
 	int offset = 0;
 	Collider collider;
 
+	// Group Movement
+	int speed = 0;
+	Group_Unit info;
+	bool isSelected = true;
+	TroopState state;
+	pair<int, int> Speed = { 1,1 };
 
 public:
 

@@ -620,11 +620,11 @@ Entity* EntityManager::findEntity(pair <int,int> pos,bool fromplayer1, int attac
 		if ((*tmp)->fromPlayer1 == !fromplayer1 &&  Is_inRange(pos,distance,map_pos,attackrange)/*pos.second+attackrange >= map_pos.second  && map_pos.second >= pos.second - attackrange && map_pos.first==pos.first*/)
 		{
 
-			found = (*tmp);
-			min_dist = distance;
-			if (min_dist <= attackrange && map_pos.first == pos.first)
+			if (min_dist >= distance /*&& map_pos.first == pos.first*/)
 			{
-				break;
+				found = (*tmp);
+				min_dist = distance;
+				//break;
 			}
 		}
 		

@@ -4,16 +4,6 @@
 #include "Entity.h"
 #include "Group.h"
 
-enum TroopState{
-	NOT_DEPLOYED,
-	TROOP_IDLE,
-	MOVING,
-	SHOOTING,
-	ALERT,
-
-	MAX_STATE
-};
-
 enum TroopDir {
 	NORTH,
 	SOUTH,
@@ -44,6 +34,7 @@ public:
 		collider = Collider;
 		state = TROOP_IDLE;
 		init_position = pos;
+		
 
 	}
 	~Troop() {};
@@ -60,7 +51,7 @@ public:
 public:
 
 	
-	pair<int, int> Speed = { 1,1 };
+	
 
 	Animation* idle = nullptr;
 	vector<Animation*> moving;
@@ -72,16 +63,13 @@ public:
 	int path_count = 1;
 
 
-	TroopState state;
+	
 	bool isInvulnerable = false;
 	bool offensive_mode = false;
 	float time_to_awake = 2.0f;
 
 
-	// Group Movement
-	int speed = 0;
-	Group_Unit info;
-	bool isSelected = true;
+	
 	
 	pair<int, int> init_position;
 

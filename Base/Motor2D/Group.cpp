@@ -1,4 +1,4 @@
-#include "Troop.h"
+#include "Entity.h"
 #include "Group.h"
 #include "MovementManager.h"
 #include "App.h"
@@ -13,12 +13,12 @@ Group::~Group()
 {
 }
 
-void Group::addUnit(Troop * unit_toadd)
+void Group::addUnit(Entity * unit_toadd)
 {
 	Units.push_back(unit_toadd);
 }
 
-void Group::removeUnit(Troop * unit_toremove)
+void Group::removeUnit(Entity * unit_toremove)
 {
 	Units.remove(unit_toremove);
 }
@@ -46,19 +46,26 @@ int Group::GetSize()
 	return Units.size();
 }
 
-void Group::CheckForMovementRequest(float dt)
+void Group::CheckForMovementRequest(float dt,pair<int,int> destination)
 {
- 	//App->move_manager->Move(this,dt);
+ 	App->move_manager->Move(this,dt,destination);
 }
 
-bool Group::IsGroupLead(Troop * entity)
+bool Group::IsGroupLead(Entity * entity)
 {
 	return (*Units.begin()) == entity;
 }
 
-void Group::SetUnitGoalTile(Troop* entity)
+Entity* Group::GetLead() {
+	if (!Units.empty()) {
+		return *Units.begin();
+	}
+	return nullptr;
+}
+
+void Group::SetUnitGoalTile(Entity* entity)
 {
-	std::list <Troop*>::const_iterator it = Units.begin();
+	std::list <Entity*>::const_iterator it = Units.begin();
 
 	bool Goal_found = false;
 

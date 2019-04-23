@@ -92,11 +92,33 @@ bool Player::Update(float dt)
 			pair<int, int> pos;
 			App->input->GetMousePosition(pos.first, pos.second);
 			pos = App->render->ScreenToWorld(pos.first, pos.second);
+			collider.dimensions = { 1,1 };
+			
+			Player* pl = App->player1;
+			if (!isPlayer1) {
+
+			}
+			std::list<Troop*>::iterator entity = pl->troops.begin();
+
+
+			while (entity != pl->troops.end())
+			{
+				(*entity)->isSelected = false;
+				entity++;
+			}
+			Troop* e;
 			for (int i = 0; i < 9; i++) {
 				pos.first += i*3;
-				Troop* e = (Troop*)App->entitymanager->AddEntity(true, Entity::entityType::SOLDIER, pos, collider);
-				groups.push_back(e->info.current_group);
+				 e = (Troop*)App->entitymanager->AddEntity(true, Entity::entityType::SOLDIER, pos, collider);
+				 e->isSelected = true;
+
+				 /*if (i == 0) {
+					 
+				 }*/
+				 /*else {}*/
 			}
+			groups.push_back(App->move_manager->CreateGroup(pl));
+			group++;
 		}
 		/*if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
 			pathfinding = true;

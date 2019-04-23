@@ -4,7 +4,7 @@
 #include <list>
 #include "MovementManager.h"
 
-class Troop;
+class Entity;
 
 
 class Group 
@@ -16,8 +16,8 @@ public:
 	~Group();
 
 	// --- Add/Remove ---
-	void addUnit(Troop* unit_toadd);
-	void removeUnit(Troop* unit_toremove);
+	void addUnit(Entity* unit_toadd);
+	void removeUnit(Entity* unit_toremove);
 	void AddTiletoOccupied(pair<int,int> to_add);
 
 	// --- Clear Stuff ---
@@ -28,24 +28,27 @@ public:
 	int GetSize();
 
 	// --- Check Movement Request ---
-	void CheckForMovementRequest(float dt);
+	void CheckForMovementRequest(float dt, pair<int,int> destination);
 
 	// --- Enquiries ---
-	bool IsGroupLead(Troop* entity);
-	void SetUnitGoalTile(Troop* entity);
+	bool IsGroupLead(Entity* entity);
+	Entity* GetLead();
+	void SetUnitGoalTile(Entity* entity);
 	bool FindFreeAdjacents(pair<int,int> * base_tile);
 	bool IsTileFree(pair<int,int>* adjacent);
 
+	std::list <Entity*> Units;
 private:
 	pair<int,int> last_goal = { 0,0 };
 
-	std::list <Troop*> Units;
 	std::list <pair<int,int>*> Occupied_tiles;
 };
 
 struct Group_Unit
 {
 	bool IsSelected = false;
+	Entity* closest = nullptr;
+
 	//Entity* lead = nullptr;
 
 	// --- Path to follow ---

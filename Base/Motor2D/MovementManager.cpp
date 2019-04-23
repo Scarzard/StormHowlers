@@ -115,7 +115,7 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 {
 	BROFILER_CATEGORY("GroupMovement::Move", Profiler::Color::Gold);
 
-	std::list <Troop*>::const_iterator unit = group->Units.begin();
+	std::list <Entity*>::const_iterator unit = group->Units.begin();
 
 	//LOG("On Move Function");
 
@@ -125,6 +125,7 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 	float DirectDistance;
 	pair<float, float> to_fPoint;
 	pair<int,int> goal_world;
+	vector<pair<int, int>>::const_iterator it;
 
 	// --- We get the map coords of the destinaiton ---
 	/*pair<int,int> Map_mouseposition;
@@ -212,9 +213,26 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 
 				// --- If a path is created, the unit will start following it ---
 				//(*unit)->isMoving = true;
-				next_tile_world = App->map->MapToWorld((*unit)->info.next_tile.first, (*unit)->info.next_tile.second);
+				//next_tile_world = App->map->MapToWorld((*unit)->info.next_tile.first, (*unit)->info.next_tile.second);
+				next_tile_world = (*unit)->info.next_tile;
+				
 
 				distanceToNextTile = { (float)next_tile_world.first - (*unit)->position.first,(float)next_tile_world.second - (*unit)->position.second };
+				//distanceToNextTile = { next_tile_world.first - Map_Entityposition.first,next_tile_world.second - Map_Entityposition.second };
+
+				/*if (distanceToNextTile.first > 0) {
+					distanceToNextTile.first = 1;
+				}
+				else if (distanceToNextTile.first < 0) {
+					distanceToNextTile.first = -1;
+				}
+
+				if (distanceToNextTile.second > 0) {
+					distanceToNextTile.second = 1;
+				}
+				else if (distanceToNextTile.second < 0) {
+					distanceToNextTile.second = -1;
+				}*/
 
 				// --- We compute the module of our vector ---
 				DirectDistance = sqrtf(pow(distanceToNextTile.first, 2.0f) + pow(distanceToNextTile.second, 2.0f));
@@ -254,8 +272,15 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 				}
 			
 				// --- Blit Unit's goal tile ---
-				goal_world = App->map->MapToWorld((*unit)->info.goal_tile.first, (*unit)->info.goal_tile.second);
-				App->render->Blit((*unit)->tex, goal_world.first, goal_world.second, &(*unit)->rect);
+				//goal_world = App->map->MapToWorld((*unit)->info.goal_tile.first, (*unit)->info.goal_tile.second);
+				//App->render->Blit((*unit)->tex, goal_world.first, goal_world.second, &(*unit)->rect);
+
+				it = (*unit)->info.Current_path.begin();
+				while (it != (*unit)->info.Current_path.end()) {
+					goal_world = App->map->MapToWorld(it->first, it->second);
+					App->render->Blit((*unit)->tex, goal_world.first, goal_world.second, &(*unit)->rect);
+					it++;
+				}
 
 				break;
 
