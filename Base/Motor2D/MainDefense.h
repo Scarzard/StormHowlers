@@ -14,6 +14,11 @@ public:
 	void CleanUp();
 	void LoadAnimations(bool isPlayer1, string path);
 	bool Is_inRange(pair<int, int> pos, int & distance);
+	void ChangeAnimation(Entity * closest);
+	Animation* idle;
+	/*vector<Animation*> moving;*/
+	vector<Animation*> shooting;
+	bool isShooting = false;
 };
 
 #endif

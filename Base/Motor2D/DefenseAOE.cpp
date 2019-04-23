@@ -1,5 +1,6 @@
 #include "DefenseAoe.h"
 #include "Brofiler\Brofiler.h"
+#include "Audio.h"
 #include "Player.h"
 #include "Render.h"
 #include "Log.h"
@@ -95,6 +96,8 @@ bool DefenseAoe::Update(float dt)
 		{
 			App->player1->UpdateWalkabilityMap(true, colider);
 			App->player1->DeleteEntity(this);
+			App->audio->PlayFx(BUILDING_EXPLOSION);
+			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
@@ -103,6 +106,8 @@ bool DefenseAoe::Update(float dt)
 		{
 			App->player2->UpdateWalkabilityMap(true, colider);
 			App->player2->DeleteEntity(this);
+			App->audio->PlayFx(BUILDING_EXPLOSION);
+			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 
