@@ -701,7 +701,7 @@ bool Player::Update(float dt)
 				}
 				isBuilding = false;
 				
-
+				App->audio->PlayFx(WRONG);
 				//play fx (error);
 			}
 		}
@@ -1239,6 +1239,8 @@ void Player::UpdateVisibility() // Update GUI Visibility
 
 void Player::DoLogic(UI_Element* data)
 {
+		
+
 	switch (data->action)
 	{
 
