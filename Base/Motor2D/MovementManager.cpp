@@ -122,6 +122,7 @@ bool MovementManager::Move(Group * group, float dt)
 	float DirectDistance;
 	pair<float, float> to_fPoint;
 	pair<int,int> goal_world;
+	vector<pair<int, int>>::const_iterator it;
 
 	// --- We get the map coords of the mouse ---
 	pair<int,int> Map_mouseposition;
@@ -250,6 +251,14 @@ bool MovementManager::Move(Group * group, float dt)
 				// --- Blit Unit's goal tile ---
 				goal_world = App->map->MapToWorld((*unit)->info.goal_tile.first, (*unit)->info.goal_tile.second);
 				App->render->Blit((*unit)->tex, goal_world.first, goal_world.second, &(*unit)->rect);
+
+
+				it = (*unit)->info.Current_path.begin();
+				while (it != (*unit)->info.Current_path.end()) {
+					goal_world = App->map->MapToWorld(it->first, it->second);
+					App->render->Blit((*unit)->tex, goal_world.first, goal_world.second, &(*unit)->rect);
+					it++;
+				}
 
 				break;
 
