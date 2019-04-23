@@ -1691,6 +1691,7 @@ void Scene::Victorious(Player* player, float dt)
 	//Explosion, after it has finished, blit continue with function
 	if (player == App->player1 && !App->map->explosion_anim->Finished())
 	{
+		App->audio->PlayFx(FINAL_EXPLOSION);
 		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first, tmp_pos1.second, &App->map->explosion_anim->GetCurrentFrame(dt));
 		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first + 58, tmp_pos1.second + 42, &App->map->explosion_anim->GetCurrentFrame(dt));
 		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first - 73, tmp_pos1.second + 86, &App->map->explosion_anim->GetCurrentFrame(dt));
@@ -1699,6 +1700,7 @@ void Scene::Victorious(Player* player, float dt)
 	}
 	else if (player == App->player2 && !App->map->explosion_anim->Finished())
 	{
+		App->audio->PlayFx(FINAL_EXPLOSION);
 		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first, tmp_pos2.second, &App->map->explosion_anim->GetCurrentFrame(dt));
 		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first + 8, tmp_pos2.second + 22, &App->map->explosion_anim->GetCurrentFrame(dt));
 		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first - 3, tmp_pos2.second + 16, &App->map->explosion_anim->GetCurrentFrame(dt));

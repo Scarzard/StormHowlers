@@ -1,5 +1,6 @@
 #include "EntityManager.h"
 #include "Barracks.h"
+#include "Audio.h"
 #include "Scene.h"
 #include "Render.h"
 #include "Map.h"
@@ -55,6 +56,8 @@ bool Barracks::Update(float dt)
 			App->player1->total_capacity -= 10;
 			App->player1->UpdateWalkabilityMap(true, collider);
 			App->player1->DeleteEntity(this);
+			App->audio->PlayFx(BUILDING_EXPLOSION);
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 
 		if (repair == true) //repair
@@ -83,6 +86,8 @@ bool Barracks::Update(float dt)
 
 			App->player2->UpdateWalkabilityMap(true, collider);
 			App->player2->DeleteEntity(this);
+			App->audio->PlayFx(BUILDING_EXPLOSION);
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 
 		if (repair == true) //repair

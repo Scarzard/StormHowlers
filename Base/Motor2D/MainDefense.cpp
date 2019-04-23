@@ -4,6 +4,7 @@
 #include "Render.h"
 #include "Map.h"
 #include "Player.h"
+#include "Audio.h"
 #include "Brofiler\Brofiler.h"
 
 
@@ -61,6 +62,7 @@ bool MainDefense::Update(float dt)
 		{
 			closest->TakeDamage(damage_lv[level]);
 			timer.Start();
+			App->audio->PlayFx(TESLA_ATTACK);
 			//LOG("Distance: %d", d);
 		}
 	}
@@ -70,6 +72,8 @@ bool MainDefense::Update(float dt)
 		{
 			App->player1->UpdateWalkabilityMap(true, collider);
 			App->player1->DeleteEntity(this);
+			App->audio->PlayFx(BUILDING_EXPLOSION);
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
@@ -78,6 +82,8 @@ bool MainDefense::Update(float dt)
 		{
 			App->player2->UpdateWalkabilityMap(true, collider);
 			App->player2->DeleteEntity(this);
+			App->audio->PlayFx(BUILDING_EXPLOSION);
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 

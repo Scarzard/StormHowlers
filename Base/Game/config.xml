@@ -31,10 +31,12 @@
       <sound>5 min.wav</sound>
       <sound>10 min.wav</sound>
       <sound>barracks_build_fx.wav</sound>
+      <sound>building_explision_fx.wav</sound>
       <sound>building_repair_fx.wav</sound>
       <sound>button_slide_fx.wav</sound>
       <sound>change_focus_fx.wav</sound>
       <sound>exit_fx.wav</sound>
+      <sound>final_explosion_fx.wav</sound>
       <sound>in_game_click_fx.wav</sound>
       <sound>invincible_fx.wav</sound>
       <sound>launch_missiles_fx.wav</sound>
@@ -50,6 +52,7 @@
       <sound>tesla_attack_fx.wav</sound>
       <sound>timer_started.wav</sound>
       <sound>timer_stopped.wav</sound>
+      <sound>wrong_fx.wav</sound>
       
     </fx>
   </audio>

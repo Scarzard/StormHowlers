@@ -1,5 +1,6 @@
 #include "EntityManager.h"
 #include "CommandCenter.h"
+#include "Audio.h"
 #include "Scene.h"
 #include "Render.h"
 #include "Map.h"
@@ -74,6 +75,8 @@ bool CmdCenter::Update(float dt)
 		{
 			App->player1->DeleteEntity(this);
 			App->player1->UpdateWalkabilityMap(true, collider); //destroyed
+			App->audio->PlayFx(BUILDING_EXPLOSION);
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 	else if (!fromPlayer1)
@@ -101,6 +104,8 @@ bool CmdCenter::Update(float dt)
 		else
 		{
 			App->player2->DeleteEntity(this);
+			App->audio->PlayFx(BUILDING_EXPLOSION);
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 			App->player2->UpdateWalkabilityMap(true, collider); //destroyed
 		}
 	}
