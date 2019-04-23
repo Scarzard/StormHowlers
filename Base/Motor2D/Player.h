@@ -197,6 +197,9 @@ public:
 	UI_Element* Def_Target_icon = nullptr;
 	UI_Element* Mines_icon = nullptr;
 	UI_Element* Barracks_icon = nullptr;
+	UI_Element* Building_cost_text = nullptr;
+	char Building_cost_label[10] = "0000 $";
+	int BuildingCost = 0;
 
 	UI_Element* Deploy_UI = nullptr;
 	UI_Element* Soldier_icon = nullptr;
@@ -214,6 +217,10 @@ public:
 	UI_Element* War_hound_icon = nullptr;
 	UI_Element* War_hound_text = nullptr;
 	char war_hound_label[4] = "0";
+
+	UI_Element* Troop_cost_text = nullptr;
+	char Troop_cost_label[10] = "0000 $";
+	int TroopCost = 0;
 
 	UI_Element* Cast_UI = nullptr;
 	UI_Element* Missiles_icon = nullptr;

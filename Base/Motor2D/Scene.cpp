@@ -171,6 +171,10 @@ bool Scene::Start()
 	App->player1->Mines_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { 274, 55 }, { 85,81 }, App->player1->Build_UI, false);
 	App->player1->Barracks_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { 375, 55 }, { 85, 81 }, App->player1->Build_UI, false);
 
+	App->player1->Building_cost_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 110 , 27 }, { 0, 0 }, App->player1->Barracks_icon, false, { false, false });
+	App->player1->Building_cost_text->label = App->player1->Building_cost_label;
+	App->player1->Building_cost_text->color = {255, 0, 0, 255};
+
 	// DEPLOY TROOPS UI ------------------
 
 	App->player1->Deploy_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
@@ -308,6 +312,10 @@ bool Scene::Start()
 	App->player1->num_troops_text->label = App->player1->num_troops_label;
 	App->player1->num_troops_text->color = { 255, 255, 255,255 };
 
+	App->player1->Troop_cost_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 320 , 110 }, { 0, 0 }, App->player1->Create_Troops_UI, false, { false, false });
+	App->player1->Troop_cost_text->label = App->player1->Troop_cost_label;
+	App->player1->Troop_cost_text->color = { 255, 0, 0, 255 };
+
 
 	//---- GOLD ----- 
 	App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 470, 19 }, { 0, 0 }, nullptr, true, { false,false }, "$ 0000");
@@ -418,6 +426,10 @@ bool Scene::Start()
 	App->player2->Def_Target_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { 171, 55 }, { 85, 81 }, App->player2->Build_UI, false);
 	App->player2->Mines_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { 274, 55 }, { 85,81 }, App->player2->Build_UI, false);
 	App->player2->Barracks_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { 375, 55 }, { 85, 81 }, App->player2->Build_UI, false);
+
+	App->player2->Building_cost_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 110 , 27 }, { 0, 0 }, App->player2->Barracks_icon, false, { false, false });
+	App->player2->Building_cost_text->label = App->player2->Building_cost_label;
+	App->player2->Building_cost_text->color = { 255, 0, 0, 255 };
 
 	// DEPLOY TROOPS UI ------------------
 
@@ -540,6 +552,10 @@ bool Scene::Start()
 	App->player2->num_troops_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 350, 65 }, { 0, 0 }, App->player2->Create_Troops_UI, false, { false, false });
 	App->player2->num_troops_text->label = App->player2->num_troops_label;
 	App->player2->num_troops_text->color = { 255, 255, 255,255 };
+
+	App->player2->Troop_cost_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 320 , 110 }, { 0, 0 }, App->player2->Create_Troops_UI, false, { false, false });
+	App->player2->Troop_cost_text->label = App->player2->Troop_cost_label;
+	App->player2->Troop_cost_text->color = { 255, 0, 0, 255 };
 
 	// ------- GOLD
 
@@ -1195,6 +1211,19 @@ bool Scene::PostUpdate()
 			{
 				(*item)->color = { 255 , 0, 0 , 255 }; //RED
 			}
+			
+		}
+		else if ((*item) == App->player1->Building_cost_text) //BUILDING COST
+		{
+			
+			sprintf_s(App->player1->Building_cost_label, "%i $", App->player1->BuildingCost);
+	
+		}
+		else if ((*item) == App->player1->Troop_cost_text) //TROOP COST
+		{
+
+			sprintf_s(App->player1->Troop_cost_label, "%i $", App->player1->TroopCost);
+
 		}
 		else if ((*item) == App->player1->Music_Slider_Button) //MUSIC SLIDER POS
 		{
@@ -1333,6 +1362,18 @@ bool Scene::PostUpdate()
 			{
 				(*item)->color = { 255 , 0, 0 , 255 }; //RED
 			}
+		}
+		else if ((*item) == App->player2->Building_cost_text) //BUILDING COST
+		{
+
+			sprintf_s(App->player2->Building_cost_label, "%i $", App->player2->BuildingCost);
+
+		}
+		else if ((*item) == App->player2->Troop_cost_text) //TROOP COST
+		{
+
+			sprintf_s(App->player2->Troop_cost_label, "%i $", App->player2->TroopCost);
+
 		}
 		else if ((*item) == App->player2->Music_Slider_Button) //MUSIC SLIDER POS
 		{

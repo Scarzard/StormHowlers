@@ -52,7 +52,7 @@ bool Player::Awake(pugi::xml_node& config) {
 bool Player::Start()
 {
 
-	gold = gold_persecond = actual_capacity = total_capacity = time_iterator = number_of_troops = 0;
+	gold = gold_persecond = actual_capacity = total_capacity = time_iterator = number_of_troops = BuildingCost = TroopCost = 0;
 	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = 0;
 
 	selected_texture = { 0,0, 100, 100 };
@@ -168,6 +168,7 @@ bool Player::Update(float dt)
 		if (gamepad.Controller[BUTTON_X] == KEY_DOWN && currentUI == CURRENT_UI::CURR_GENERAL && (*building_selected)->type == Entity::entityType::BARRACKS )
 		{
 			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
+			troop_icon->rect = { 662, 0, 85, 81 };
 			UpdateVisibility();
 			UI_troop_type = Entity::entityType::SOLDIER;
 		}
@@ -226,6 +227,27 @@ bool Player::Update(float dt)
 				
 			}
 
+			if (UI_troop_type == Entity::entityType::SOLDIER)
+			{
+				TroopCost = 250 * number_of_troops;
+			}
+			else if (UI_troop_type == Entity::entityType::TANKMAN)
+			{
+				TroopCost = 500 * number_of_troops;
+			}
+			else if (UI_troop_type == Entity::entityType::INFILTRATOR)
+			{
+				TroopCost = 1000 * number_of_troops;
+			}
+			else if (UI_troop_type == Entity::entityType::ENGINEER)
+			{
+				TroopCost = 2000 * number_of_troops;
+			}
+			else if (UI_troop_type == Entity::entityType::WAR_HOUND)
+			{
+				TroopCost = 1250 * number_of_troops;
+			}
+
 			if (gamepad.Controller[BUTTON_A] == KEY_UP)
 			{
 				CreateTroop(UI_troop_type, number_of_troops);
@@ -251,7 +273,13 @@ bool Player::Update(float dt)
 			if (gamepad.Controller[RB] == KEY_DOWN)
 			{
 				number_of_troops++;
+				if (number_of_troops > 5)
+				{
+					number_of_troops = 5;
+				}
 			}
+
+			TroopCost = 2000 * number_of_troops; //2000 RANDOM INVULNERABILITY PRICE 
 
 			if (gamepad.Controller[BUTTON_A] == KEY_UP)
 			{
@@ -304,6 +332,26 @@ bool Player::Update(float dt)
 		if (currentUI == CURRENT_UI::CURR_GENERAL)
 		{
 			UpdateGeneralUI((*building_selected));
+		}
+
+		if (currentUI == CURRENT_UI::CURR_BUILD)
+		{
+			if ((*focus) == Def_AOE_icon)
+			{
+				BuildingCost = 7000;
+			}
+			else if ((*focus) == Def_Target_icon)
+			{
+				BuildingCost = 3500;
+			}
+			else if ((*focus) == Mines_icon)
+			{
+				BuildingCost = 1000;
+			}
+			else if ((*focus) == Barracks_icon)
+			{
+				BuildingCost = 4500;
+			}
 		}
 
 		// Go back
