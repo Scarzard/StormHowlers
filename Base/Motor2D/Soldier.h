@@ -11,16 +11,20 @@ public:
 	~Soldier();
 
 	bool Update(float dt);
+	void ForceAnimations();
+	void ActOnDestroyed();
 	void CleanUp();
 
 	void ChangeAnimation(pair<int, int> Speed, Entity * closest);
 
-	void ChangeAnimation();
 
 	void LoadAnimations(bool isPlayer1, string path);
 
 	bool Is_inRange(pair<int, int> pos, int & distance);
-	
+	bool defensive = true;
+	bool offensive = true;
+
+	Entity* closest = nullptr;
 };
 
 #endif

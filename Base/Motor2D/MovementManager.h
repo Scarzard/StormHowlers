@@ -34,7 +34,7 @@ public:
 
 	// --- Group Tools ---
 	//void SelectEntities_inRect(SDL_Rect SRect);
-	void CreateGroup(Player* player);
+	Group* CreateGroup(Player* player);
 
 	// --- Move Unit ---
 	bool Move(Group* unit, float dt, pair<int,int> destination);

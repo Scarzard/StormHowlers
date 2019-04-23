@@ -132,27 +132,23 @@ bool EntityManager::Update(float dt)
 			tmp++;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
-			pathfinding = false;
-		}
-
 		pair<int, int> mouse_pos;
 		App->input->GetMousePosition(mouse_pos.first, mouse_pos.second);
 		mouse_pos = App->render->ScreenToWorld(mouse_pos.first, mouse_pos.second);
 
 		// Player 1 Troops
 
-		// TO DO: CHECK IF TTMP != nullptr
 		list<Troop*>::const_iterator ttmp = App->player1->troops.begin();
 
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN && ttmp != App->player1->troops.end()) {
 			pathfinding = true;
 		}
 		
-		if (pathfinding) {
+		/*if (pathfinding && ttmp != App->player1->troops.end() && (*ttmp)->info.current_group->IsGroupLead(*ttmp)) {
 			pathfinding = !App->move_manager->Move((*ttmp)->info.current_group, dt,mouse_pos);
-		}		
+		}	*/	
 
+		
 		while (ttmp != App->player1->troops.end())
 		{
 			ret = (*ttmp)->Update(dt);
@@ -166,9 +162,9 @@ bool EntityManager::Update(float dt)
 			pathfinding2 = true;
 		}
 
-		if (pathfinding2 ) {
+		/*if (pathfinding2 && ttmp != App->player2->troops.end()) {
 			pathfinding2 = !App->move_manager->Move((*ttmp)->info.current_group, dt, mouse_pos);
-		}
+		}*/
 
 		while (ttmp != App->player2->troops.end())
 		{
@@ -638,7 +634,7 @@ Entity* EntityManager::findEntity(pair <int,int> pos,bool fromplayer1, int attac
 		return found;
 	}
 
-	return found = nullptr;
+	return nullptr;
 	
 }
 

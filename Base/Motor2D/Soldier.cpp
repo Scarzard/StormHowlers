@@ -28,39 +28,119 @@ Soldier::~Soldier()
 
 bool Soldier::Update(float dt)
 {
-	// Notice this line
-	if (!alive) return true;
-
-	pair<int, int> pos;
-	pair<int, int> map_pos = App->map->WorldToMap(position.first, position.second);
-
-	Entity* closest = nullptr;
 	
-	if (state == IDLE || state == SHOOTING)
-	{
-		closest = App->entitymanager->findEntity(map_pos, fromPlayer1, range);
-		if (closest != nullptr && closest->health >0)
-		{
-			state = SHOOTING;
-			// Shoots the closest one if in range
-			if (timer.ReadSec() >= rate_of_fire )
+	
+
+	if (alive) {
+		
+		pair<int, int> map_pos = App->map->WorldToMap(position.first, position.second);
+		pair<int, int> map_init_pos = App->map->WorldToMap(init_position.first, init_position.second);
+		int time_to_act = 2;
+		
+
+		// Defensive
+		if (defensive) {
+
+			if (closest != nullptr && closest->health > 0)
 			{
-				closest->TakeDamage(damage_lv[level]);
-				timer.Start(); 
-				App->audio->PlayFx(SOLDIER_ATTACK);
-				//LOG("Damage to wall: %i     Wall life:%i", 1, closest.;
+				state = SHOOTING;
+				// Shoots the closest one if in range
+				if (timer.ReadSec() >= rate_of_fire)
+				{
+					closest->TakeDamage(damage_lv[level]);
+					timer.Start();
+					App->audio->PlayFx(SOLDIER_ATTACK);
+					//LOG("Damage to wall: %i     Wall life:%i", 1, closest.;
+				}
 			}
+			else {
+
+				int time = (timer.ReadSec());
+				if (time % time_to_act == 0){
+					//LOG("DGKLGSK");
+					closest = App->entitymanager->findEntity(map_pos, fromPlayer1, range);
+				}
+
+				if (state == MOVING) {
+					App->move_manager->Move(info.current_group, dt, init_position);
+
+				}
+				else if (closest == nullptr && state == TROOP_IDLE) {
+
+					if (map_init_pos.first != map_pos.first && map_init_pos.second != map_pos.second) {
+						// If no enemies in range and not at home, go home
+						if (info.current_group->IsGroupLead(this)) {
+							//MOVING home
+							state = MOVING;
+						}
+					}
+					
+				}
+				
+				
+
+				pair<int, int> pos;
+				App->input->GetMousePosition(pos.first, pos.second);
+				pos = App->render->ScreenToWorld(pos.first, pos.second);
+
+				if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
+					position = pos;
+				}
+
+			}
+
+			//if (state == MOVING || state == SHOOTING)
+			//{
+			//	
+			//	// Unsuccessful search
+			//	// Continues IDLE
+			//	if (state = SHOOTING) {
+			//		if (init_position.first != position.first && init_position.second != position.second) {
+			//			state = ALERT;
+			//		}
+			//	}
+
+			//}
 		}
-		if (closest != nullptr && closest->health <= 0)
-		{
-			state = IDLE;
-		}
+	}
+	else {
+		//Current_Animation = Die;
 
 	}
-	if (timer.ReadSec() >= 3)
-	{
-		state = IDLE;
+	
+	
+	
+	//
+	//if (Speed.first == 0 && Speed.second == 0) {
+	//	state == TROOP_IDLE;
+	//}
+	ActOnDestroyed();
+	ChangeAnimation(Speed,closest);
+
+	// ONLY INPUT INSIDE -¬
+	ForceAnimations();
+	//            _|
+
+	Troop::Update(dt);
+	return true;
+}
+
+void Soldier::ForceAnimations() {
+
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
+		Current_Animation = moving[(curr++) % SOUTHWEST];
+
 	}
+	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
+		Current_Animation = shooting[(curr++) % SOUTHWEST];
+
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
+		Current_Animation = idle;
+		idle->SetCurrentFrame((curr++) % SOUTHWEST);
+	}
+}
+void Soldier::ActOnDestroyed() {
 
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
@@ -76,87 +156,6 @@ bool Soldier::Update(float dt)
 			App->player2->DeleteEntity(this);
 		}
 	}
-
-	// OLD PATHFINDING WITHOUT GROUP MOVEMENT (NOT USED)
-	if (false){
-
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
-
-			LOG("Soldier pathfinding player %d", (fromPlayer1) ? 1 : 2);
-
-			//Getting positions
-			App->input->GetMousePosition(pos.first, pos.second);
-			pos = App->render->ScreenToWorld(pos.first, pos.second);
-			pos = App->map->WorldToMap(pos.first, pos.second);
-			//pos.first--;
-			LOG("mouseInMap: [%d,%d]", pos.first, pos.second);
-			LOG("soldierInMap: [%d,%d]", map_pos.first, map_pos.second);
-
-
-			//Creating path, reset path index counter
-			if (App->pathfinding->CreatePath(map_pos, pos, false) == -1) {
-
-				LOG("Pathfinding soldier: origin or destination not walkable");
-			}
-			else {
-				path.clear();
-				path_count = 1;
-				path = *App->pathfinding->GetLastPath();
-
-			}
-
-		}
-
-
-		if (path.size() > 1) {
-			//isMoving = true;
-			Speed = { path.at(path_count).first - map_pos.first, path.at(path_count).second - map_pos.second };
-			Speed.first = Speed.first * speed;
-			Speed.second = Speed.second * speed;
-			//LOG("Speed: [%d,%d]", Speed.first, Speed.second);
-
-			// If it's still, change to next path tile
-			if (Speed.first == 0 && Speed.second == 0) {
-				if (path.size() > path_count + 1)
-					path_count++;
-				//else
-					//isMoving = false;
-			}
-
-			//Visual path debug
-			pair<int, int> tmppair;
-			for (int i = 0; i < path.size(); i++) {
-				tmppair = App->map->MapToWorld(path.at(i).first, path.at(i).second);
-				App->render->Blit(tex, tmppair.first, tmppair.second, &rect);
-			}
-		}
-
-
-
-		position.first += (int)(Speed.first * dt);
-		position.second += (int)(Speed.second * dt);
-		//App->render->Blit(tex, position.first, position.second, &rect);
-
-	}
-	
-	/*if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
-		Current_Animation =  moving[(curr++)%SOUTHWEST];
-		
-	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
-		Current_Animation = shooting[(curr++) % SOUTHWEST];
-
-	}
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
-		Current_Animation = idle;
-		idle->SetCurrentFrame((curr++) % SOUTHWEST);
-
-	}*/
-	
-	ChangeAnimation(Speed,closest);
-
-	Troop::Update(dt);
-	return true;
 }
 
 void Soldier::CleanUp() {
@@ -210,81 +209,19 @@ void Soldier::ChangeAnimation(pair<int, int> Speed, Entity* closest) {
 			Current_Animation = moving[SOUTHWEST];
 		}
 	}
-	else if (state == SHOOTING)
+	else if (state == SHOOTING && closest != nullptr)
 	{
 		
-	//Current_Animation = idle;
-	//if (isShooting)
-	//{
-		if (closest != nullptr)
+		if (fromPlayer1)
 		{
-
-			if (closest->position == position)
-			{
-				if (fromPlayer1)
-				{
-					Current_Animation = shooting[SOUTH];
-				}
-				else
-				{
-					Current_Animation = shooting[NORTH];
-				}
-			}
-			else if (closest->position.second <= position.second && closest->position.first >= position.first)
-			{
-				//noth
-				Current_Animation = shooting[NORTH];
-				if (closest->position.second == position.second)
-				{
-					//northwest
-					Current_Animation = shooting[NORTHWEST];
-				}
-				//else if (closest->position.second > position.second)
-				//{
-				//	//north
-				//	Current_Animation = shooting[NORTH];
-				//}
-				else if (closest->position.first==position.first)
-				{
-					//northeast
-					Current_Animation = shooting[NORTHEAST];
-				}
-			}
-			else if (closest->position.first >= position.first && closest->position.second >= position.second)
-			{
-				//south
-				Current_Animation = shooting[SOUTH];
-				if (closest->position.second == position.second)
-				{
-					//southwest
-					Current_Animation = shooting[SOUTHWEST];
-				}
-				//else if (closest->position.second > position.second)
-				//{
-				//	//north
-				//	Current_Animation = shooting[NORTH];
-				//}
-				else if (closest->position.first == position.first)
-				{
-					//southeast
-					Current_Animation = shooting[SOUTHEAST];
-				}
-			}
-			else if (closest->position.second > position.second && closest->position.first > position.first)
-			{
-				//east
-				Current_Animation = shooting[EAST];
-
-			}
-			else if (closest->position.second < position.second && closest->position.first < position.first)
-			{
-				//west
-				Current_Animation = shooting[WEST];
-
-			}
+			Current_Animation = shooting[SOUTH];
+		}
+		else
+		{
+			Current_Animation = shooting[NORTH];
 		}
 
-		else
+		if (closest->position == position)
 		{
 			if (fromPlayer1)
 			{
@@ -295,7 +232,60 @@ void Soldier::ChangeAnimation(pair<int, int> Speed, Entity* closest) {
 				Current_Animation = shooting[NORTH];
 			}
 		}
-				
+		else if (closest->position.second <= position.second && closest->position.first >= position.first)
+		{
+			//noth
+			Current_Animation = shooting[NORTH];
+			if (closest->position.second == position.second)
+			{
+				//northwest
+				Current_Animation = shooting[NORTHWEST];
+			}
+			//else if (closest->position.second > position.second)
+			//{
+			//	//north
+			//	Current_Animation = shooting[NORTH];
+			//}
+			else if (closest->position.first==position.first)
+			{
+				//northeast
+				Current_Animation = shooting[NORTHEAST];
+			}
+		}
+		else if (closest->position.first >= position.first && closest->position.second >= position.second)
+		{
+			//south
+			Current_Animation = shooting[SOUTH];
+			if (closest->position.second == position.second)
+			{
+				//southwest
+				Current_Animation = shooting[SOUTHWEST];
+			}
+			//else if (closest->position.second > position.second)
+			//{
+			//	//north
+			//	Current_Animation = shooting[NORTH];
+			//}
+			else if (closest->position.first == position.first)
+			{
+				//southeast
+				Current_Animation = shooting[SOUTHEAST];
+			}
+		}
+		else if (closest->position.second > position.second && closest->position.first > position.first)
+		{
+			//east
+			Current_Animation = shooting[EAST];
+
+		}
+		else if (closest->position.second < position.second && closest->position.first < position.first)
+		{
+			//west
+			Current_Animation = shooting[WEST];
+
+		}
+		
+	
 
 	//}
 	}
@@ -329,8 +319,8 @@ void Soldier::LoadAnimations(bool isPlayer1, string path)
 	shooting[SOUTHWEST] = shooting[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_SW" : "blue_shoot_SW");
 
 	for (int i = NORTH; i <= SOUTHWEST; i++) {
-		moving[i]->speed = 3;
-		shooting[i]->speed = 3;
+		moving[i]->speed = 6;
+		shooting[i]->speed = 6;
 	}
 
 	idle->speed = 0;

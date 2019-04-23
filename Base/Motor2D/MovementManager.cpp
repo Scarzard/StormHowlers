@@ -64,7 +64,7 @@ bool MovementManager::CleanUp()
 //
 //}
 
-void MovementManager::CreateGroup(Player* player)
+Group* MovementManager::CreateGroup(Player* player)
 {
 	BROFILER_CATEGORY("GroupMovement::CreateGroup", Profiler::Color::GhostWhite);
 
@@ -101,8 +101,10 @@ void MovementManager::CreateGroup(Player* player)
 	}
 
 	// --- Finally, If the group is Valid add it to our Groups list, else delete it ---
-	if (Validgroup)
+	if (Validgroup) {
 		Groups.push_back(group);
+		return group;
+	}
 	else
 		delete group;
 
@@ -209,7 +211,7 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 				(*unit)->state = MOVING;
 
 				// --- If a path is created, the unit will start following it ---
-				(*unit)->isMoving = true;
+				//(*unit)->isMoving = true;
 				next_tile_world = App->map->MapToWorld((*unit)->info.next_tile.first, (*unit)->info.next_tile.second);
 
 				distanceToNextTile = { (float)next_tile_world.first - (*unit)->position.first,(float)next_tile_world.second - (*unit)->position.second };
@@ -258,7 +260,7 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 				break;
 
 			case MovementState::MovementState_NextStep:
-
+				(*unit)->state = MOVING;
 				// --- If a path is being followed, the unit will get the next tile in the path ---
 
 				if ((*unit)->info.Current_path.size() > 0)
@@ -278,9 +280,9 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 			case MovementState::MovementState_DestinationReached:
 
 				// --- The unit reaches the end of the path, thus stopping and returning to NoState ---
-				(*unit)->state = IDLE;
 				(*unit)->info.UnitMovementState = MovementState::MovementState_NoState;
-				(*unit)->isMoving = false;
+				(*unit)->state = TROOP_IDLE;
+				//(*unit)->isMoving = false;
 
 				break;
 		}

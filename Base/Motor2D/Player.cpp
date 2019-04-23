@@ -64,7 +64,6 @@ bool Player::Start()
 	isBuilding = isDeploying = gold_added = isCasting = Y_pressed = isPaused = false;
   
 	currentTile = { 13,0 };
-
 	
 	return true;
 }
@@ -87,6 +86,28 @@ bool Player::Update(float dt)
 			type = (Entity::entityType)((curr++) % (int)Entity::entityType::TANKMAN);
 
 		}
+		if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
+
+			//Simulating a Deploy
+			pair<int, int> pos;
+			App->input->GetMousePosition(pos.first, pos.second);
+			pos = App->render->ScreenToWorld(pos.first, pos.second);
+			for (int i = 0; i < 9; i++) {
+				pos.first += i*3;
+				Troop* e = (Troop*)App->entitymanager->AddEntity(true, Entity::entityType::SOLDIER, pos, collider);
+				groups.push_back(e->info.current_group);
+			}
+		}
+		/*if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
+			pathfinding = true;
+		}*/
+
+
+		/*if (pathfinding) {
+			pathfinding = !App->move_manager->Move(groups.at(group), dt, groups.at(group));
+
+		}*/
+
 
 		//--- Press X (Square) To SELECT BUILDINGS
 		if (gamepad.Controller[BUTTON_X] == KEY_UP && currentUI == CURRENT_UI::NONE)

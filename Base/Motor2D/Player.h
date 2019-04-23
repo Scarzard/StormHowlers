@@ -101,6 +101,7 @@ public:
 	bool isDeploying = false;
 	bool isCasting = false;
 	bool isPaused = false;
+	bool pathfinding = true;
 
 	Collider collider;
 	pair<int, int> offset;
@@ -148,6 +149,8 @@ public:
 	SDL_Rect selected_texture = { 0,0,0,0 };
 	list<Building*>::iterator building_selected;
 	list<Building*>::iterator last_building;
+	vector<Group*> groups = vector<Group*>();
+	int group = 0;
 
 	list<Troop*> troops;
 

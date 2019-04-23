@@ -5,9 +5,11 @@
 #include "Group.h"
 
 enum TroopState{
-	IDLE,
+	NOT_DEPLOYED,
+	TROOP_IDLE,
 	MOVING,
 	SHOOTING,
+	ALERT,
 
 	MAX_STATE
 };
@@ -36,15 +38,12 @@ public:
 		pugi::xml_document	config_file;
 		pugi::xml_node config;
 		config = App->LoadConfig(config_file);
-		config = config.child("entitymanager").child("troops").child(&name[0]);
+		config = config.child("entitymanager").child("troops").child(name.data());
 
 		speed = config.child("speed").attribute("value").as_int();
-
 		collider = Collider;
-
-		//collider = { 180,0,59,28 };
-		//if (!isPlayer1)
-		//	collider = { 120,0,59,28 };
+		state = TROOP_IDLE;
+		init_position = pos;
 
 	}
 	~Troop() {};
@@ -75,15 +74,23 @@ public:
 
 	TroopState state;
 	bool isInvulnerable = false;
-	// CHANGED TO TROOP STATE
-	/*bool isMoving = false;
-	bool isShooting = false;*/
+	bool offensive_mode = false;
+	float time_to_awake = 2.0f;
+
 
 	// Group Movement
 	int speed = 0;
 	Group_Unit info;
 	bool isSelected = true;
 	
+	pair<int, int> init_position;
+
+
+
+
+	// CHANGED TO TROOP STATE
+	/*bool isMoving = false;
+	bool isShooting = false;*/
 };
 
 #endif
