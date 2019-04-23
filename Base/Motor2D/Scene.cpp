@@ -196,6 +196,18 @@ bool Scene::Start()
 	App->player1->War_hound_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 2 , 2 }, { 0, 0 }, App->player1->War_hound_icon, false, { false, false }); 
 	App->player1->War_hound_text->label = App->player1->war_hound_label;
 
+	App->player1->X_spawn = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 0 , 0 }, { 33,32 }, nullptr, false);
+	App->player1->X_spawn->rect = {1443,357,33,32};
+	App->player1->X_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 40 , 0 }, { 0, 0 }, App->player1->X_spawn, false, { false, false });
+	App->player1->X_text->label = App->player1->X_label;
+	App->player1->X_text->color = { 0,0,0,255 };
+
+	App->player1->A_spawn = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 0 , 0 }, { 33,32 }, nullptr, false);
+	App->player1->A_spawn->rect = { 1401,357,33,32 };
+	App->player1->A_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 40 , 0 }, { 0, 0 }, App->player1->A_spawn, false, { false, false });
+	App->player1->A_text->label = App->player1->A_label;
+	App->player1->A_text->color = { 0,0,0,255 };
+
 	
 	//----- CAST -------------------------
 
@@ -431,6 +443,18 @@ bool Scene::Start()
 	App->player2->War_hound_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { 480, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
 	App->player2->War_hound_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 2 , 2 }, { 0, 0 }, App->player2->War_hound_icon, false, { false, false });
 	App->player2->War_hound_text->label = App->player2->war_hound_label;
+
+	App->player2->X_spawn = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 0 , 0 }, { 33,32 }, nullptr, false);
+	App->player2->X_spawn->rect = { 1443,357,33,32 };
+	App->player2->X_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 40 , 0 }, { 0, 0 }, App->player2->X_spawn, false, { false, false });
+	App->player2->X_text->label = App->player2->X_label;
+	App->player2->X_text->color = { 0,0,0,255 };
+
+	App->player2->A_spawn = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 0 , 0 }, { 33,32 }, nullptr, false);
+	App->player2->A_spawn->rect = { 1401,357,33,32 };
+	App->player2->A_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 40 , 0 }, { 0, 0 }, App->player2->A_spawn, false, { false, false });
+	App->player2->A_text->label = App->player2->A_label;
+	App->player2->A_text->color = { 0,0,0,255 };
 
 	//-----------------------------------------
 
@@ -1180,6 +1204,22 @@ bool Scene::PostUpdate()
 		{
 			App->player1->FX_Slider_Button->position.first = (550 * App->audio->sfxVolume) / 100;
 		}
+		else if ((*item) == App->player1->X_spawn && App->player1->X_spawn->visible == true)
+		{
+			pair <int, int> pos = App->map->MapToWorld(App->player1->currentTile.first, App->player1->currentTile.second);
+			App->player1->X_spawn->globalpos = App->render->WorldtoScreen(pos.first, pos.second);
+			App->player1->X_spawn->globalpos.first += 200;
+			App->player1->X_spawn->globalpos.second -= 70;
+			
+		}
+		else if ((*item) == App->player1->A_spawn && App->player1->A_spawn->visible == true)
+		{
+		pair <int, int> pos = App->map->MapToWorld(App->player1->currentTile.first, App->player1->currentTile.second);
+		App->player1->A_spawn->globalpos = App->render->WorldtoScreen(pos.first, pos.second);
+		App->player1->A_spawn->globalpos.first += 200;
+		App->player1->A_spawn->globalpos.second -= 40;
+
+		}
 		
 
 		App->gui->UpdateState(*item);
@@ -1301,6 +1341,22 @@ bool Scene::PostUpdate()
 		else if ((*item) == App->player2->FX_Slider_Button) //FX SLIDER POS
 		{
 			App->player2->FX_Slider_Button->position.first = (550 * App->audio->sfxVolume) / 100;
+		}
+		else if ((*item) == App->player2->X_spawn && App->player2->X_spawn->visible == true)
+		{
+			pair <int, int> pos = App->map->MapToWorld(App->player2->currentTile.first, App->player2->currentTile.second);
+			App->player2->X_spawn->globalpos = App->render->WorldtoScreen(pos.first, pos.second);
+			App->player2->X_spawn->globalpos.first += 200;
+			App->player2->X_spawn->globalpos.second -= 70;
+
+		}
+		else if ((*item) == App->player2->A_spawn && App->player2->A_spawn->visible == true)
+		{
+			pair <int, int> pos = App->map->MapToWorld(App->player2->currentTile.first, App->player2->currentTile.second);
+			App->player2->A_spawn->globalpos = App->render->WorldtoScreen(pos.first, pos.second);
+			App->player2->A_spawn->globalpos.first += 200;
+			App->player2->A_spawn->globalpos.second -= 40;
+
 		}
 		App->gui->UpdateState(*item);
 		item++;

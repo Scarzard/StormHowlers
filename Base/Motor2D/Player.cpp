@@ -52,7 +52,7 @@ bool Player::Awake(pugi::xml_node& config) {
 bool Player::Start()
 {
 
-	gold = gold_persecond = actual_capacity = time_iterator = number_of_troops = 0;
+	gold = gold_persecond = actual_capacity = total_capacity = time_iterator = number_of_troops = 0;
 	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = 0;
 
 	selected_texture = { 0,0, 100, 100 };
@@ -180,6 +180,8 @@ bool Player::Update(float dt)
 			
 		}
 
+		
+
 		//Creating TROOPS
 		if (currentUI == CURRENT_UI::CURR_CREATE_TROOPS)
 		{
@@ -217,10 +219,11 @@ bool Player::Update(float dt)
 			if (gamepad.Controller[RB] == KEY_DOWN)
 			{
 				number_of_troops++;
-				/*if (number_of_troops + number_troops_in_barrack > barracks->capacity)
+				if (number_of_troops + actual_capacity > total_capacity)
 				{
-					number_of_troops = barracks->capacity - number_troops_in_barrack;
-				}*/
+					number_of_troops = total_capacity - actual_capacity;
+				}
+				
 			}
 
 			if (gamepad.Controller[BUTTON_A] == KEY_UP)
@@ -650,6 +653,7 @@ bool Player::Update(float dt)
 			//pos.first--;
 
 			// Swap once commit to work with controller
+
 			if (type == Entity::entityType::TOWNHALL)
 			{
 				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
@@ -681,6 +685,8 @@ bool Player::Update(float dt)
 			{
 				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
 			}
+
+
 			//App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &(preview_rects->at(type)));
 
 
@@ -695,16 +701,22 @@ bool Player::Update(float dt)
 					{
 					case Entity::entityType::SOLDIER:
 						SoldiersCreated--;
+						actual_capacity--;
 						break;
 					}
 
 				}
 
 				isBuilding = false;
-				/*currentUI = CURRENT_UI::CURR_BUILD;
-				UpdateVisibility();
-				UpdateFocus(currentUI);*/
-				
+							
+			}
+
+			if (gamepad.Controller[BUTTON_X] == KEY_DOWN && type > Entity::entityType::BARRACKS)
+			{
+				SpawnMultipleTroops(type);
+				actual_capacity -= SoldiersCreated;
+				SoldiersCreated = 0;
+				isBuilding = false;
 			}
 		}
 		else
@@ -726,6 +738,29 @@ bool Player::Update(float dt)
 				//play fx (error);
 			}
 		}
+		if (type > Entity::entityType::BARRACKS) //if troops
+		{
+			if (X_spawn->visible == false)
+			{
+				X_spawn->visible = true;
+			}
+
+			if (A_spawn->visible == false)
+			{
+				A_spawn->visible = true;
+			}
+		}
+		
+			
+
+	}
+	else
+	{
+		if (X_spawn!=nullptr && X_spawn->visible == true)
+			X_spawn->visible = false;
+
+		if (A_spawn != nullptr && A_spawn->visible == true)
+			A_spawn->visible = false;
 	}
 
 
@@ -1270,26 +1305,28 @@ void Player::DoLogic(UI_Element* data)
 		isBuilding = true;
 		type = Entity::entityType::DEFENSE_AOE;
 		collider.dimensions = { 2,2 };
-		offset = { 60,30 };
+		offset = { 20,30 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_TARGET:
 		isBuilding = true;
 		type = Entity::entityType::MAIN_DEFENSE;
 		collider.dimensions = { 2,2 };
+		offset = { 10 , 0 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_MINE:
 		isBuilding = true;
 		type = Entity::entityType::MINES;
 		collider.dimensions = { 4,4 };
+		offset = { 60, 30 };
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_BARRACKS:
 		isBuilding = true;
 		type = Entity::entityType::BARRACKS;
 		collider.dimensions = { 3,4 };
-		
+		offset = { 40 , 50 };
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
@@ -1482,6 +1519,9 @@ void Player::CreateTroop(int type, int number)
 		WarHoundsCreated += number;
 		break;
 	}
+	
+	//Update actual capacity
+	actual_capacity += number;
 }
 
 void Player::CreateAbility(int type, int number)
@@ -1565,3 +1605,29 @@ void Player::DrawBuildingCollider(int type, bool isPlayer1)
 	else
 		App->render->DrawQuad(selected_texture, 0, 0, 255, 100, true);
 }
+
+void Player::SpawnMultipleTroops(uint type)
+{
+	switch (type)
+	{
+	case Entity::entityType::SOLDIER:
+		pair<int, int> offset;
+		int row;
+			for(int i=0; i< SoldiersCreated; i++)
+			{
+				if(i%5 == 0)
+					row = i / 5;
+
+				offset.first = (i - 4 * row);
+				offset.second = (i - 6 * row);
+			
+				if(isPlayer1)
+					App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, { collider.tiles[0].first + offset.first * 30 , collider.tiles[0].second + offset.second * 15}, collider);
+				else
+					App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, { collider.tiles[0].first + (offset.second * 30) , collider.tiles[0].second + offset.first * 15}, collider);
+			}
+
+
+	}
+}
+

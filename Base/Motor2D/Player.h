@@ -26,9 +26,9 @@ struct GamePad
 
 struct GeneralUI
 {
-	bool upgrade, repair;
+	bool upgrade, repair = false;
 	string name;
-	uint level, health, unique;
+	uint level, health, unique = 0;
 };
 
 class Player : public Module
@@ -87,6 +87,8 @@ public:
 	void CreateTroop(int type, int number);
 	void CreateAbility(int type, int number);
 
+	void SpawnMultipleTroops(uint type);
+
 	void DrawBuildingCollider(int type, bool isPlayer1);
 
 	bool CheckBuildingPos();
@@ -117,7 +119,10 @@ public:
 
 	uint last_currentUI = 0;
 	uint currentUI = 0;
-	int actual_capacity = 0;
+
+	int total_capacity = 0; //sum of all barracks capacities
+	int actual_capacity = 0; //sum of all created troops
+	
   
 	//bool entityAdded;
 	//Entity* previewEntity;
@@ -125,7 +130,7 @@ public:
 	vector<SDL_Rect>* preview_rects;
 
 	SDL_Rect LiveBar;
-	int health, max_health;
+	int health, max_health = 0;
 
 	// Live of TOWN HALL
 	int live = 0;
@@ -162,6 +167,13 @@ public:
 
 	// --- UI --- //
 	
+	UI_Element* X_spawn = nullptr;
+	UI_Element* X_text = nullptr;
+	char X_label[10] = "Spawn All";
+	UI_Element* A_spawn = nullptr;
+	UI_Element* A_text = nullptr;
+	char A_label[10] = "Spawn One";
+
 	UI_Element* Gold_UI = nullptr;
 
 	UI_Element* Y_to_Main = nullptr;

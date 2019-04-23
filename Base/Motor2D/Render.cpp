@@ -151,6 +151,15 @@ pair<int,int> Render::ScreenToWorld(int x, int y) const
 	return ret;
 }
 
+pair<int, int> Render::WorldtoScreen(int x, int y) const
+{
+	pair<int, int> ret;
+	int scale = App->win->GetScale();
+	ret.first = (x + camera.x / scale);
+	ret.second = (y + camera.y / scale);
+	return ret;
+}
+
 // Blit to screen
 bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip, float speed, double angle, int pivot_x, int pivot_y) const
 {

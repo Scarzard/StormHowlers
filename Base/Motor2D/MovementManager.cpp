@@ -141,6 +141,10 @@ bool MovementManager::Move(Group * group, float dt)
 
 	while (unit != group->Units.end())
 	{
+		if (unit._Ptr == nullptr)
+		{
+			unit++;
+		}
 		// --- We Get the map coords of the Entity ---
 		Map_Entityposition.first = (*unit)->position.first;
 		Map_Entityposition.second = (*unit)->position.second;

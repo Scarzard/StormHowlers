@@ -418,6 +418,8 @@ bool EntityManager::Draw(float dt) //sprite ordering
 
 Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<int, int> position, Collider collider,Animation* animation)
 {
+	BROFILER_CATEGORY("EntityManager AddEntity", Profiler::Color::AliceBlue);
+
 	Entity* tmp = nullptr;
 
 	switch (type)
