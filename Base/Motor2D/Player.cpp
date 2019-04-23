@@ -253,6 +253,7 @@ bool Player::Update(float dt)
 				CreateTroop(UI_troop_type, number_of_troops);
 				Update_troop_image(UI_troop_type);
 				GotoPrevWindows(currentUI);
+				gold -= TroopCost;
 			}
 
 		}
@@ -338,7 +339,7 @@ bool Player::Update(float dt)
 		{
 			if ((*focus) == Def_AOE_icon)
 			{
-				BuildingCost = 7000;
+				BuildingCost = 2000;
 			}
 			else if ((*focus) == Def_Target_icon)
 			{
@@ -346,11 +347,11 @@ bool Player::Update(float dt)
 			}
 			else if ((*focus) == Mines_icon)
 			{
-				BuildingCost = 1000;
+				BuildingCost = 2000;
 			}
 			else if ((*focus) == Barracks_icon)
 			{
-				BuildingCost = 4500;
+				BuildingCost = 3000;
 			}
 		}
 
@@ -968,19 +969,20 @@ void Player::UpdateWalkabilityMap(bool isWalkable, Collider collider) //update w
 int Player::CheckCost(Entity* entity)
 {
 	if (entity->type == Entity::entityType::BARRACKS)
-		return 1000;
+		return 3000;
 
 	else if (entity->type == Entity::entityType::DEFENSE_AOE)
-		return 2500;
-
-	else if (entity->type == Entity::entityType::DEFENSE_TARGET)
 		return 2000;
 
+	else if (entity->type == Entity::entityType::DEFENSE_TARGET)
+		return 3500;
+
 	else if (entity->type == Entity::entityType::MINES)
-		return 1500;
+		return 2000;
 
 	else
 		return 0;
+
 }
 
 int Player::GoldKill(Entity* entity)
