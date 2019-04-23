@@ -1208,6 +1208,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		RB_img->visible = false;
 		SelectBuilding->visible = false;
 		In_SelectBuilding->visible = false;
+		draw_screen->visible = false;
 		break;
 	case::Player::CURRENT_UI::ENDGAME: //Dont show the other player win screen
 		Main_UI->visible = false;
@@ -1230,6 +1231,29 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		RB_img->visible = false;
 		SelectBuilding->visible = false;
 		In_SelectBuilding->visible = false;
+		draw_screen->visible = false;
+	case::Player::CURRENT_UI::DRAW: //Dont show the other player win screen
+		Main_UI->visible = false;
+		Build_UI->visible = false;
+		Deploy_UI->visible = false;
+		Cast_UI->visible = false;
+		Pause_UI->visible = false;
+		Settings_UI->visible = false;
+		Abort_UI->visible = false;
+		win_screen->visible = false;
+		Gold_UI->visible = false;
+		App->scene->ui_timer->visible = false;
+		General_UI->visible = false;
+		Create_Troops_UI->visible = false;
+		Create_troops->visible = false;
+		Create_abilities->visible = false;
+		Y_to_Main2->visible = false;
+		Y_to_Main->visible = false;
+		LB_img->visible = false;
+		RB_img->visible = false;
+		SelectBuilding->visible = false;
+		In_SelectBuilding->visible = false;
+		draw_screen->visible = true;
 		break;
 
 

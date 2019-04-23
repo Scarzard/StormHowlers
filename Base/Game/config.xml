@@ -215,6 +215,7 @@
     <pause_menu_soviet file="gui/Pause_Menu_Soviet.png"></pause_menu_soviet>
     <allied file="gui/Allied_Victorious.png"/>
     <soviet file="gui/Soviet_Victorious.png"/>
+    <draw file="gui/Draw.png"/>
     <fade_time value="1"/>
   </scene>
 

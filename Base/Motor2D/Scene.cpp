@@ -50,6 +50,7 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	allied_win_name = config.child("allied").attribute("file").as_string("");
 	soviet_win_name = config.child("soviet").attribute("file").as_string("");
+	draw_name = config.child("draw").attribute("file").as_string("");
 
 	
 	return ret;
@@ -67,6 +68,7 @@ bool Scene::Start()
 
 	allied_win_tex = App->tex->Load(allied_win_name.data());
 	soviet_win_tex = App->tex->Load(soviet_win_name.data());
+	draw_tex = App->tex->Load(draw_name.data());
 
 	pause_soviet_texture = App->tex->Load(pause_soviet.data());
 	pause_alied_texture = App->tex->Load(pause_alied.data());
@@ -389,6 +391,10 @@ bool Scene::Start()
 	App->player1->win_screen->texture = allied_win_tex;
 	App->player1->win_screen->rect = { 0, 0, 0, App->win->height };
 
+	App->player1->draw_screen = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
+	App->player1->draw_screen->texture = draw_tex;
+	App->player1->draw_screen->rect = { 0, 0, 0, App->win->height };
+
 	//--- PLAYER 2
 	//App->player2->Health_UI = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
 	//App->player2->Gold_UI = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
@@ -635,6 +641,10 @@ bool Scene::Start()
 	App->player2->win_screen->texture = soviet_win_tex;
 	App->player2->win_screen->rect = { 0, 0, 0, App->win->height };
 
+	App->player2->draw_screen = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
+	App->player2->draw_screen->texture = draw_tex;
+	App->player2->draw_screen->rect = { 0, 0, 0, App->win->height };
+
 
 	// --- CURSORS
 	App->player1->currentTile.first = 13;
@@ -879,6 +889,10 @@ bool Scene::Update(float dt)
 		else if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) //View colliders
 		{
 			App->render->zoom -= 0.01f;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT) //View colliders
+		{
+			worldminutes = 10;
 		}
     
 		//Timer debug
@@ -1745,6 +1759,23 @@ void Scene::Victorious(Player* player, float dt)
 		}
 	}
 
+}
+void Scene::MatchDraw()
+{
+	pausetimer = true;
+	world_seconds.Stop();
+
+	App->player1->currentUI = Player::CURRENT_UI::DRAW;
+	App->player1->UpdateVisibility();
+	App->player2->currentUI = Player::CURRENT_UI::ENDGAME;
+	App->player2->UpdateVisibility();
+
+	endgame = true;
+
+	if (App->scene->pause == false)
+	{
+		App->scene->pause = true;
+	}
 }
 
 void Scene::ResetGame()

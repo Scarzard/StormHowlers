@@ -142,6 +142,7 @@ bool Townhall::Update(float dt)
 	else if (App->scene->worldminutes == 10 && App->player2->health == App->player1->health)
 	{
 		//Draw (empate)
+		App->scene->MatchDraw();
 	}
 
 	Building::Update(dt);

@@ -162,6 +162,11 @@ bool Gui::Draw()
 					App->render->DrawQuad({ 0, 0, (int)App->win->width + 520, (int)App->win->height + 300 }, 0, 0, 0, 150, true, false);
 					SDL_RenderCopy(App->render->renderer, App->scene->allied_win_tex, NULL, &r);
 				}
+				else if ((*UI_elem) == App->player1->draw_screen)
+				{
+					App->render->DrawQuad({ 0, 0, (int)App->win->width + 520, (int)App->win->height + 300 }, 0, 0, 0, 150, true, false);
+					SDL_RenderCopy(App->render->renderer, App->scene->draw_tex, NULL, &r);
+				}
 			}
 			else //rest of ui
 			{
