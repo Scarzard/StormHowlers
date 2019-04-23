@@ -650,7 +650,37 @@ bool Player::Update(float dt)
 			//pos.first--;
 
 			// Swap once commit to work with controller
-			App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
+			if (type == Entity::entityType::TOWNHALL)
+			{
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
+			}
+			else if (type == Entity::entityType::BARRACKS)
+			{
+				//157 x 136
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first-75, collider.tiles[0].second-65, &(preview_rects->at(type)));
+			}
+			else if (type == Entity::entityType::MINES)
+			{
+				//190 x 140
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first-80, collider.tiles[0].second-70, &(preview_rects->at(type)));
+			}
+			else if (type == Entity::entityType::DEFENSE_AOE)
+			{
+				//92 x 92
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first-10, collider.tiles[0].second-50, &(preview_rects->at(type)));
+			}
+			else if (type == Entity::entityType::DEFENSE_TARGET)
+			{
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
+			}
+			else if (type == Entity::entityType::MAIN_DEFENSE)
+			{
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
+			}
+			else 
+			{
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
+			}
 			//App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &(preview_rects->at(type)));
 
 
