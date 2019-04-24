@@ -6,14 +6,13 @@ configuration:
 build:
   verbosity: minimal
 before_package:
-- ps: Copy-Item C:\projects\StormHowlers\Base\$env:CONFIGURATION\Base.exe C:\projects\StormHowlers\Base\Game\.
+- ps: Copy-Item C:\projects\Command_and_Conquer_WarZone\$env:CONFIGURATION\Base.exe C:\projects\Command_and_Conquer_WarZone\Game\.
 artifacts:
 - path: Base\Game
-  name: Game
+  name: Release
   type: WebDeployPackage
 deploy:
 - provider: GitHub
-  description: AutoRelease
+  description: Auto Generated Release
   auth_token:
-    secure: xM32VMezbLuX5oOk+2PovegLK+XsbE23dsWldqjSHq5r2VoQH6lmpCW9sLTgMciif2NST12pu/OYLoPlxn2NSaAKAsu8IkdrKRnAle4stYc=
-  draft: true
+    secure: USPF1nw131deRmIhMCZgLFHoCA1WraTJwOflNHG/v4qv0e+ZU/zqrmWZ+Wh3JjCA+7DQcEk47kSdvnoZO4dzY0Txwzovn6FEtDjv739vFuE=
