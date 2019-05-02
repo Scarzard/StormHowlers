@@ -1663,7 +1663,7 @@ void Scene::LoadWalls()
 		entity = new Walls(true, *item, collider, current_anim); //add entity
 		App->player1->buildings.push_back((Building*)entity);
 		App->entitymanager->entity_list.push_back(entity);
-		App->player2->UpdateWalkabilityMap(false, collider);
+		App->player2->UpdateWalkabilityMap(P2_BUILDING, collider);
 
 		item++;
 	}

@@ -484,7 +484,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building
 			{
 				App->player1->buildings.push_back((Building*)tmp);
-				App->player1->UpdateWalkabilityMap(false, collider);
+				App->player1->UpdateWalkabilityMap(P1_BUILDING, collider);
 			}
 			else if (type > Entity::entityType::BARRACKS) //if troops
 			{
@@ -498,7 +498,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS)
 			{
 				App->player2->buildings.push_back((Building*)tmp);
-				App->player2->UpdateWalkabilityMap(false, collider);
+				App->player2->UpdateWalkabilityMap(P2_BUILDING, collider);
 			}
 			else if (type > Entity::entityType::BARRACKS)
 			{

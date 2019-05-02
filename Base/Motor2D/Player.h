@@ -75,7 +75,9 @@ public:
 	// ---------------------- UI functions -----------------------------------------
 
 	void UpdateVisibility(); //update gui visibility
-	void DoLogic(UI_Element* data); //gui actions
+	void DoLogic(UI_Element* data);
+	void UpdateWalkabilityMap(char cell_type, Collider collider);
+	//gui actions
 	void UpdateFocus(uint data);	//updates where the focus is pointing
 	void GotoPrevWindows(uint data);
 	UI_Element* GetUI_Element(uint data); //returns the window we are currently on
@@ -93,7 +95,7 @@ public:
 
 	bool CheckBuildingPos();
 	Collider GetCollider(pair<int, int> dimensions, pair<int,int> topTile_pos);
-	void UpdateWalkabilityMap(bool isWalkable, Collider collider);
+	//void UpdateWalkabilityMap(bool isWalkable, Collider collider);
 	bool DeleteEntity(Entity* entity);
 	
 public:

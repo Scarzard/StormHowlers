@@ -18,8 +18,35 @@ void Group::addUnit(Entity * unit_toadd)
 	Units.push_back(unit_toadd);
 }
 
+/** Removes unit from the group and sets a new lead
+
+*/
 void Group::removeUnit(Entity * unit_toremove)
 {
+	//std::list <Entity*>::const_iterator unit = unit_toremove->info.current_group->Units.begin();
+	//std::list <Entity*>::const_iterator unitEnd = unit_toremove->info.current_group->Units.end();
+
+	//Player* player = App->player1;
+	//if (unit != unitEnd && !(*unit)->fromPlayer1) {
+	//	player = App->player2;
+	//}
+
+	//std::list <Troop*>::const_iterator unitPlayer = player->troops.begin();
+	//std::list <Troop*>::const_iterator unitPlayerEnd = player->troops.end();
+
+	////DANGEROUS (?)
+	//while (unitPlayer != unitPlayerEnd) {
+	//	(*unitPlayer)->isSelected = false;
+	//	unitPlayer++;
+	//}
+
+	//while (unit != unitEnd) {
+	//	(*unit)->isSelected = true;
+	//	unit++;
+	//}
+	//unit_toremove->isSelected = false;
+
+	//App->move_manager->CreateGroup(player);
 	Units.remove(unit_toremove);
 }
 

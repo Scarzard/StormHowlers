@@ -47,7 +47,7 @@ bool Pathfinding::CheckBoundaries(const pair<int,int>& pos) const
 bool Pathfinding::IsWalkable(const pair<int,int>& pos) const
 {
 	uchar t = GetTileAt(pos);
-	return t != INVALID_WALK_CODE && t > 0;
+	return t != INVALID_WALK_CODE && t == WALKABLE;
 }
 
 // Utility: return the walkability value of a tile
@@ -74,14 +74,10 @@ void Pathfinding::ResetPath(vector<pair<int, int>>& path_to_reset)
 	last_path.clear();
 }
 
-void Pathfinding::ChangeWalkability(const pair<int, int>& pos, bool isWalkable) const
+void Pathfinding::ChangeWalkability(const pair<int, int>& pos, char cell_type) const
 {
-	if (isWalkable == true) {
-		map[(pos.second*width) + pos.first] = 1;
-	}
-	else {
-		map[(pos.second*width) + pos.first] = 0;
-	}
+	if (cell_type != NULL) 
+		map[(pos.second*width) + pos.first] = cell_type;
 
 }
 // PathList ------------------------------------------------------------------------

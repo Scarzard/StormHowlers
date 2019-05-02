@@ -73,7 +73,6 @@ bool CmdCenter::Update(float dt)
 		else
 		{
 			App->player1->DeleteEntity(this);
-			App->player1->UpdateWalkabilityMap(true, collider); //destroyed
 		}
 	}
 	else if (!fromPlayer1)
@@ -101,7 +100,6 @@ bool CmdCenter::Update(float dt)
 		else
 		{
 			App->player2->DeleteEntity(this);
-			App->player2->UpdateWalkabilityMap(true, collider); //destroyed
 		}
 	}
 	

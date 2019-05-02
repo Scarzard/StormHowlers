@@ -691,8 +691,8 @@ bool Player::Update(float dt)
 			//pos.first--;
 
 			// Swap once commit to work with controller
-			App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first - offset.first, collider.tiles[0].second - offset.second, &(preview_rects->at(type)));
-			//App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &(preview_rects->at(type)));
+			//App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first - offset.first, collider.tiles[0].second - offset.second, &(preview_rects->at(type)));
+			App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &(preview_rects->at(type)));
 
 
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
@@ -909,14 +909,15 @@ Collider Player::GetCollider(pair<int, int> dimensions, pair<int, int> topTile_p
 }
 
 
-void Player::UpdateWalkabilityMap(bool isWalkable, Collider collider) //update walkable tiles
+void Player::UpdateWalkabilityMap(char cell_type, Collider collider) //update walkable tiles
 {
 	for (int i = 0; i < collider.tiles.size(); ++i)
 	{
 		pair <int, int> pos = App->map->WorldToMap(collider.tiles[i].first, collider.tiles[i].second);
-		if (App->pathfinding->GetTileAt(pos) != isWalkable)
+		if (App->pathfinding->GetTileAt(pos) != cell_type)
 		{
-			App->pathfinding->ChangeWalkability(pos, isWalkable);
+			App->pathfinding->ChangeWalkability(pos, cell_type);
+			// Debug drawing
 			App->map->walkability_layer->Set(pos.first, pos.second, 1);
 		}
 	}
@@ -1423,6 +1424,8 @@ void Player::DoLogic(UI_Element* data)
 
 bool Player::DeleteEntity(Entity* entity)
 {
+	UpdateWalkabilityMap(WALKABLE, entity->collider);
+
 	entity->CleanUp();
 
 	if (entity->type >= Entity::entityType::TOWNHALL && entity->type <= Entity::entityType::BARRACKS) //if entity = building

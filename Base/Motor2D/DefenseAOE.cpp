@@ -93,7 +93,6 @@ bool DefenseAoe::Update(float dt)
 	{
 		if (health <= 0) //destroyed
 		{
-			App->player1->UpdateWalkabilityMap(true, colider);
 			App->player1->DeleteEntity(this);
 		}
 	}
@@ -101,7 +100,6 @@ bool DefenseAoe::Update(float dt)
 	{
 		if (health <= 0) //destroyed
 		{
-			App->player2->UpdateWalkabilityMap(true, colider);
 			App->player2->DeleteEntity(this);
 		}
 	}
