@@ -79,9 +79,9 @@ int Group::GetSize()
 	return Units.size();
 }
 
-void Group::CheckForMovementRequest(float dt,pair<int,int> destination)
+bool Group::CheckForMovementRequest(float dt,pair<int,int> destination)
 {
- 	App->move_manager->Move(this,dt,destination);
+ 	return App->move_manager->Move(this,dt,destination);
 }
 
 bool Group::IsGroupLead(Entity * entity)

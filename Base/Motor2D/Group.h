@@ -28,7 +28,7 @@ public:
 	int GetSize();
 
 	// --- Check Movement Request ---
-	void CheckForMovementRequest(float dt, pair<int,int> destination);
+	bool CheckForMovementRequest(float dt, pair<int,int> destination);
 
 	// --- Enquiries ---
 	bool IsGroupLead(Entity* entity);

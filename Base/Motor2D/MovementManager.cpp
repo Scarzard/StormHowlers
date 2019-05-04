@@ -209,7 +209,7 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 
 			case MovementState::MovementState_FollowPath:
 
-				(*unit)->state = MOVING;
+				//(*unit)->state = MOVING;
 
 				// --- If a path is created, the unit will start following it ---
 				//(*unit)->isMoving = true;
@@ -285,7 +285,7 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 				break;
 
 			case MovementState::MovementState_NextStep:
-				(*unit)->state = MOVING;
+				//(*unit)->state = MOVING;
 				// --- If a path is being followed, the unit will get the next tile in the path ---
 
 				if ((*unit)->info.Current_path.size() > 0)
@@ -323,6 +323,7 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 
 	}
 
+	// Returns if everyone in group has arrived
 	unit = group->Units.begin();
 	while (unit != group->Units.end()) {
 		if ((*unit)->info.UnitMovementState != MovementState::MovementState_NoState) {
