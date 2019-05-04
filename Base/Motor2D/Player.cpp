@@ -93,38 +93,25 @@ bool Player::Update(float dt)
 			App->input->GetMousePosition(pos.first, pos.second);
 			pos = App->render->ScreenToWorld(pos.first, pos.second);
 			collider.dimensions = { 1,1 };
-			
-			Player* pl = App->player1;
-			if (!isPlayer1) {
 
-			}
-			std::list<Troop*>::iterator entity = pl->troops.begin();
+			std::list<Troop*>::iterator entity = troops.begin();
 
 
-			while (entity != pl->troops.end())
+			while (entity != troops.end())
 			{
 				(*entity)->isSelected = false;
 				entity++;
 			}
+
 			Troop* e;
 			for (int i = 0; i < 9; i++) {
-				pos.first += i*3;
-				 e = (Troop*)App->entitymanager->AddEntity(true, Entity::entityType::SOLDIER, pos, collider);
+				 pos.first += i*3;
+				 e = (Troop*)App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, pos, collider);
 				 e->isSelected = true;
 			}
-			groups.push_back(App->move_manager->CreateGroup(pl));
+			groups.push_back(App->move_manager->CreateGroup(this));
 			group++;
 		}
-		/*if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
-			pathfinding = true;
-		}*/
-
-
-		/*if (pathfinding) {
-			pathfinding = !App->move_manager->Move(groups.at(group), dt, groups.at(group));
-
-		}*/
-
 
 		//--- Press X (Square) To SELECT BUILDINGS
 		if (gamepad.Controller[BUTTON_X] == KEY_UP && currentUI == CURRENT_UI::NONE)

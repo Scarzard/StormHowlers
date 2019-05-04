@@ -106,9 +106,15 @@ bool Soldier::Update(float dt)
 			PrintState();
 			//LOG("State != SHOOTING");
 
-			if (state == MOVING) {
-				info.current_group->CheckForMovementRequest(dt, destination);
-				rest.Start();
+			if (state == MOVING ) {
+				if (info.current_group->IsGroupLead(this)) {
+					info.current_group->CheckForMovementRequest(dt, destination);
+					rest.Start();
+
+				}
+				else {
+					state = info.current_group->GetLead()->state;
+				}
 				//LOG("MOVING");
 				//PrintState();
 
@@ -224,14 +230,14 @@ void Soldier::ActOnDestroyed() {
 	{
 		if (health <= 0) //destroyed
 		{
-			std::list <Entity*>::const_iterator unit = info.current_group->Units.begin();
+			/*std::list <Entity*>::const_iterator unit = info.current_group->Units.begin();
 			while (unit != info.current_group->Units.end()) {
 				(*unit)->isSelected = true;
 				unit++;
 			}
 			isSelected = false;
-			App->move_manager->CreateGroup(App->player1);
-			//info.current_group->removeUnit(this);
+			App->move_manager->CreateGroup(App->player1);*/
+			info.current_group->removeUnit(this);
 			App->player1->DeleteEntity(this);
 		}
 	}

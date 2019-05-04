@@ -47,6 +47,8 @@ void Group::removeUnit(Entity * unit_toremove)
 	//unit_toremove->isSelected = false;
 
 	//App->move_manager->CreateGroup(player);
+
+	// TO DO : CHECK IF THE GROUP NEEDS TO BE DELETED
 	Units.remove(unit_toremove);
 }
 

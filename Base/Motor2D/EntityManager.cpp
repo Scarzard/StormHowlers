@@ -490,7 +490,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			{
 				//tmp->isSelected = true;
 				App->player1->troops.push_back((Troop*)tmp);
-				App->move_manager->CreateGroup(App->player1);
+				//App->move_manager->CreateGroup(App->player1);
 			}
 		}
 		else // Player 2 -------------------------------
@@ -504,7 +504,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			{
 				//tmp->isSelected = true;
 				App->player2->troops.push_back((Troop*)tmp);
-				App->move_manager->CreateGroup(App->player2);
+				//App->move_manager->CreateGroup(App->player2);
 
 			}
 		}
