@@ -1480,7 +1480,7 @@ bool Player::DeleteEntity(Entity* entity)
 			if ((*item) == entity)
 			{
 				buildings.erase(item);
-				
+				break;
 			}
 				
 			item++;
@@ -1491,7 +1491,7 @@ bool Player::DeleteEntity(Entity* entity)
 			if ((*item2) == entity)
 			{
 				App->entitymanager->entity_list.erase(item2);
-				
+				break;
 			}
 
 			item2++;
@@ -1502,8 +1502,10 @@ bool Player::DeleteEntity(Entity* entity)
 		list<Troop*>::iterator item = troops.begin();
 		while (item != troops.end())
 		{
-			if ((*item) == entity)
+			if ((*item) == entity) {
 				troops.erase(item);
+				break;
+			}
 			item++;
 		}
 		list<Entity*>::iterator item2 = App->entitymanager->entity_list.begin();
@@ -1512,7 +1514,7 @@ bool Player::DeleteEntity(Entity* entity)
 			if ((*item2) == entity)
 			{
 				App->entitymanager->entity_list.erase(item2);
-
+				break;
 			}
 
 			item2++;

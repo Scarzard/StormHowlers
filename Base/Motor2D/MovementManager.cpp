@@ -115,7 +115,7 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 {
 	BROFILER_CATEGORY("GroupMovement::Move", Profiler::Color::Gold);
 
-	std::list <Entity*>::const_iterator unit = group->Units.begin();
+	std::list <Troop*>::const_iterator unit = group->Units.begin();
 
 	//LOG("On Move Function");
 
@@ -327,11 +327,12 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 	unit = group->Units.begin();
 	while (unit != group->Units.end()) {
 		if ((*unit)->info.UnitMovementState != MovementState::MovementState_NoState) {
+			(*unit)->info.everyone_arrived = false;
 			return false;
 		}
 		unit++;
 	}
-
+	(*unit)->info.everyone_arrived = true;
 	return true;
 
 }

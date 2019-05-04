@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "Troop.h"
 #include "Group.h"
 #include "MovementManager.h"
 #include "App.h"
@@ -13,7 +14,7 @@ Group::~Group()
 {
 }
 
-void Group::addUnit(Entity * unit_toadd)
+void Group::addUnit(Troop * unit_toadd)
 {
 	Units.push_back(unit_toadd);
 }
@@ -21,10 +22,10 @@ void Group::addUnit(Entity * unit_toadd)
 /** Removes unit from the group and sets a new lead
 
 */
-void Group::removeUnit(Entity * unit_toremove)
+void Group::removeUnit(Troop * unit_toremove)
 {
-	std::list <Entity*>::const_iterator unit = Units.begin();
-	std::list <Entity*>::const_iterator unitEnd = Units.end();
+	std::list <Troop*>::const_iterator unit = Units.begin();
+	std::list <Troop*>::const_iterator unitEnd = Units.end();
 
 	//Player* player = App->player1;
 	//if (unit != unitEnd && !(*unit)->fromPlayer1) {
@@ -84,21 +85,33 @@ bool Group::CheckForMovementRequest(float dt,pair<int,int> destination)
  	return App->move_manager->Move(this,dt,destination);
 }
 
-bool Group::IsGroupLead(Entity * entity)
+/** The troop must be inside the group */
+bool Group::CheckForMovementIndividual(Troop* troop, float dt, pair<int, int> destination)
+{
+	Group* g = new Group();
+	g->Units.push_back(troop);
+
+	App->move_manager->Move(g, dt, destination);
+	
+	g->ClearGroup();
+
+	return true;
+}
+bool Group::IsGroupLead(Troop * entity)
 {
 	return (*Units.begin()) == entity;
 }
 
-Entity* Group::GetLead() {
+Troop* Group::GetLead() {
 	if (!Units.empty()) {
 		return *Units.begin();
 	}
 	return nullptr;
 }
 
-void Group::SetUnitGoalTile(Entity* entity)
+void Group::SetUnitGoalTile(Troop* entity)
 {
-	std::list <Entity*>::const_iterator it = Units.begin();
+	std::list <Troop*>::const_iterator it = Units.begin();
 
 	bool Goal_found = false;
 

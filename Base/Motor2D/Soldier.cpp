@@ -63,17 +63,26 @@ bool Soldier::Update(float dt)
 				}
 
 			}
-			/*if (fromPlayer1) {
-			}
-			else {
-				destination.second += 1;
-			}*/
 
-			if (!Is_inRange(map_pos, d, destination/*App->map->WorldToMap(destination.first, destination.second)*/, original_range)) {
+			if (!Is_inRange(map_pos, d, destination, original_range)) {
 				state = MOVING;
 				destination = App->map->MapToWorld(destination.first, destination.second);
+				if (info.current_group->IsGroupLead(this)) {
+
+					info.current_group->CheckForMovementRequest(dt, destination);
+					//rest.Start();
+
+				}
+				else {
+					//Everyone has reached the destination but the target is till out of range, need to move individually
+					//if (info.everyone_arrived == true /*info.UnitMovementState == MovementState::MovementState_NoState*/) {
+					if(info.current_group->GetLead()->state != MOVING){
+						info.current_group->CheckForMovementIndividual(this, dt, destination);
+
+					}
+				}
 				//destination = info.closest->position;
-				//LOG("Closest FOUND - NOT in range => MOVING");
+				LOG("Closest FOUND - NOT in range => MOVING");
 				//PrintState();
 
 			}
@@ -92,52 +101,47 @@ bool Soldier::Update(float dt)
 					}
 				}
 				
-				//LOG("Closest FOUND - IN range => SHOOTING");
+				LOG("Closest FOUND - IN range => SHOOTING");
 				//PrintState();
 
 
 			}
 		}
 		//ENTITY TO ATTACK IS NOT FOUND OR JUST DIED
-
-		if (state != SHOOTING){				
-
+		if (info.closest != nullptr && info.closest->health <= 0) {
+			state = TROOP_IDLE;
+		}
+		if (state != SHOOTING /*  ||  && state != MOVING)*/){
+			
 			//closest = App->entitymanager->findEntity(map_pos, fromPlayer1, original_range);
-			//PrintState();
+			PrintState();
 			//LOG("State != SHOOTING");
 
 			if (state == MOVING ) {
-				if (info.current_group->IsGroupLead(this)) {
-					info.current_group->CheckForMovementRequest(dt, destination);
-					rest.Start();
-
-				}
-				else {
-					state = info.current_group->GetLead()->state;
-				}
+				
 				//LOG("MOVING");
 				//PrintState();
 
 			}
 			//if (info.closest == nullptr && (state == TROOP_IDLE || state == SHOOTING)) {
 			if (state == TROOP_IDLE) {
-				//LOG("Closest NOT FOUND - STRATEGY");
+				LOG("Closest NOT FOUND - STRATEGY");
 
 				//offensive mode
 				if (true) {
-					//LOG("Closest NOT FOUND - SEARCHING");
+					LOG("Closest NOT FOUND - SEARCHING");
 
+					info.closest = App->entitymanager->findEntity(map_pos, fromPlayer1, range);
+					if (info.closest == nullptr) {
+						range += 20;
+
+					}
+					else {
+						range = original_range;
+					}
 					// ONLY GROUP LEAD
-					if (/*rest.ReadSec() >= resting_time &&*/ info.current_group->IsGroupLead(this)) {
+					if (/*rest.ReadSec() >= resting_time &&*/ info.closest == nullptr) {
 
-						info.closest = App->entitymanager->findEntity(map_pos, fromPlayer1, range);
-						if (info.closest == nullptr) {
-							range += 20;
-
-						}
-						else {
-							range = original_range;
-						}
 
 						//PrintState();
 
@@ -145,6 +149,9 @@ bool Soldier::Update(float dt)
 				}
 					
 			}
+		}
+		else if (info.closest == nullptr) {
+			state = TROOP_IDLE;
 		}
 
 	}
@@ -165,7 +172,7 @@ bool Soldier::Update(float dt)
 	ActOnDestroyed();
 	ChangeAnimation(Speed,closest);
 
-	// ONLY INPUT INSIDE -¬
+	//DOES NOT CHANGE ANYTHING BY ITSELF - ONLY INPUT INSIDE -¬
 	ForceAnimations();
 	//            _|
 
@@ -412,7 +419,7 @@ void Soldier::LoadAnimations(bool isPlayer1, string path)
 	shooting[SOUTHWEST] = shooting[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_SW" : "blue_shoot_SW");
 
 	for (int i = NORTH; i <= SOUTHWEST; i++) {
-		moving[i]->speed = 6;
+		moving[i]->speed = 10;
 		shooting[i]->speed = 6;
 	}
 
