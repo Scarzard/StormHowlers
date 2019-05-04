@@ -23,8 +23,8 @@ void Group::addUnit(Entity * unit_toadd)
 */
 void Group::removeUnit(Entity * unit_toremove)
 {
-	//std::list <Entity*>::const_iterator unit = unit_toremove->info.current_group->Units.begin();
-	//std::list <Entity*>::const_iterator unitEnd = unit_toremove->info.current_group->Units.end();
+	std::list <Entity*>::const_iterator unit = Units.begin();
+	std::list <Entity*>::const_iterator unitEnd = Units.end();
 
 	//Player* player = App->player1;
 	//if (unit != unitEnd && !(*unit)->fromPlayer1) {
@@ -40,16 +40,20 @@ void Group::removeUnit(Entity * unit_toremove)
 	//	unitPlayer++;
 	//}
 
-	//while (unit != unitEnd) {
-	//	(*unit)->isSelected = true;
-	//	unit++;
-	//}
+	while (unit != unitEnd) {
+		//(*unit)->isSelected = true;
+		if (*unit == unit_toremove) {
+			Units.erase(unit);
+			return;
+		}
+		unit++;
+	}
 	//unit_toremove->isSelected = false;
 
 	//App->move_manager->CreateGroup(player);
 
 	// TO DO : CHECK IF THE GROUP NEEDS TO BE DELETED
-	Units.remove(unit_toremove);
+	//Units.remove(unit_toremove);
 }
 
 void Group::AddTiletoOccupied(pair<int,int> to_add)

@@ -65,6 +65,7 @@ public:
 	~Player();
 
 	bool Start();
+	void RectangleSelection();
 	bool Awake(pugi::xml_node &config);
 	bool Update(float dt);
 	bool PostUpdate();
@@ -113,6 +114,8 @@ public:
 
 	bool isPlayer1 = false;
 	string team;
+
+	SDL_Rect rectangle_origin = { 0,0,0,0 };
 
 	uint gold = 0;
 	uint gold_persecond = 0;

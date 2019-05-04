@@ -42,27 +42,27 @@ bool MovementManager::CleanUp()
 	return true;
 }
 
-//void MovementManager::SelectEntities_inRect(SDL_Rect SRect)
-//{
-//	BROFILER_CATEGORY("GroupMovement::SelectEntities_inRect", Profiler::Color::DarkOliveGreen);
-//
-//	std::list<Entity*>::iterator entity = App->entitymanager->entity_list.begin();
-//	SDL_Rect entityrect = { 0,0,0,0 };
-//
-//	while (entity != App->entitymanager->entity_list.end())
-//	{
-//		entityrect = { (int)(*entity)->position.first, (int)(*entity)->position.second, (*entity)->size.first, (*entity)->size.second };
-//
-//		// --- Check entity's rect against the given SRect, select it if overlap is positive ---
-//		if (SDL_HasIntersection(&entityrect, &SRect))
-//			(*entity)->isSelected = true;
-//		else
-//			(*entity)->isSelected = false;
-//
-//		entity++;
-//	}
-//
-//}
+void MovementManager::SelectEntities_inRect(SDL_Rect SRect)
+{
+	BROFILER_CATEGORY("GroupMovement::SelectEntities_inRect", Profiler::Color::DarkOliveGreen);
+
+	std::list<Entity*>::iterator entity = App->entitymanager->entity_list.begin();
+	SDL_Rect entityrect = { 0,0,0,0 };
+
+	while (entity != App->entitymanager->entity_list.end())
+	{
+		entityrect = { (int)(*entity)->position.first, (int)(*entity)->position.second, (*entity)->size.first, (*entity)->size.second };
+
+		// --- Check entity's rect against the given SRect, select it if overlap is positive ---
+		if (SDL_HasIntersection(&entityrect, &SRect))
+			(*entity)->isSelected = true;
+		else
+			(*entity)->isSelected = false;
+
+		entity++;
+	}
+
+}
 
 Group* MovementManager::CreateGroup(Player* player)
 {
@@ -96,7 +96,7 @@ Group* MovementManager::CreateGroup(Player* player)
 			group->addUnit(*entity);
 			(*entity)->info.current_group = group;
 		}
-
+		(*entity)->isSelected = false;
 		entity++;
 	}
 

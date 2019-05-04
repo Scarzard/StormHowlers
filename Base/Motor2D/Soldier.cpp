@@ -73,7 +73,7 @@ bool Soldier::Update(float dt)
 				state = MOVING;
 				destination = App->map->MapToWorld(destination.first, destination.second);
 				//destination = info.closest->position;
-				LOG("Closest FOUND - NOT in range => MOVING");
+				//LOG("Closest FOUND - NOT in range => MOVING");
 				//PrintState();
 
 			}
@@ -92,7 +92,7 @@ bool Soldier::Update(float dt)
 					}
 				}
 				
-				LOG("Closest FOUND - IN range => SHOOTING");
+				//LOG("Closest FOUND - IN range => SHOOTING");
 				//PrintState();
 
 
@@ -103,7 +103,7 @@ bool Soldier::Update(float dt)
 		if (state != SHOOTING){				
 
 			//closest = App->entitymanager->findEntity(map_pos, fromPlayer1, original_range);
-			PrintState();
+			//PrintState();
 			//LOG("State != SHOOTING");
 
 			if (state == MOVING ) {
@@ -121,18 +121,18 @@ bool Soldier::Update(float dt)
 			}
 			//if (info.closest == nullptr && (state == TROOP_IDLE || state == SHOOTING)) {
 			if (state == TROOP_IDLE) {
-				LOG("Closest NOT FOUND - STRATEGY");
+				//LOG("Closest NOT FOUND - STRATEGY");
 
 				//offensive mode
 				if (true) {
-					LOG("Closest NOT FOUND - SEARCHING");
+					//LOG("Closest NOT FOUND - SEARCHING");
 
 					// ONLY GROUP LEAD
 					if (/*rest.ReadSec() >= resting_time &&*/ info.current_group->IsGroupLead(this)) {
 
 						info.closest = App->entitymanager->findEntity(map_pos, fromPlayer1, range);
 						if (info.closest == nullptr) {
-							range += 5;
+							range += 20;
 
 						}
 						else {

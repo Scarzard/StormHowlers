@@ -33,7 +33,7 @@ public:
 	bool CleanUp();
 
 	// --- Group Tools ---
-	//void SelectEntities_inRect(SDL_Rect SRect);
+	void SelectEntities_inRect(SDL_Rect SRect);
 	Group* CreateGroup(Player* player);
 
 	// --- Move Unit ---

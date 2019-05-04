@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Group.h"
+#include "Render.h"
 
 enum TroopDir {
 	NORTH,
@@ -44,7 +45,13 @@ public:
 	}
 	bool Update(float dt) {
 
-		
+		if (isSelected) {
+			SDL_Rect r = Current_Animation->GetCurrentFrame(dt);
+			r.x = position.first;
+			r.y = position.second;
+			App->render->DrawQuad(r, 255, 0, 0, 255,false);
+			//LOG("SELECTED");
+		}
 		return true;
 	}
 
