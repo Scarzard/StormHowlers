@@ -97,6 +97,7 @@ Group* MovementManager::CreateGroup(Player* player)
 			(*entity)->info.current_group = group;
 		}
 		(*entity)->isSelected = false;
+		(*entity)->state = TROOP_IDLE;
 		entity++;
 	}
 
@@ -166,9 +167,6 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 
 				// --- On call to Move, Units will request a path to the destination ---
 
-				//if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN && (*unit)->info.IsSelected)
-				//{
-
 				if (everyone_arrived) {
 				
 				
@@ -185,7 +183,7 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 						group->Occupied_tiles.push_back(&(*unit)->info.goal_tile);
 					}
 
-					if (App->pathfinding->CreatePath(Map_Entityposition, (*unit)->info.goal_tile,true) != -1)
+					if (App->pathfinding->CreatePath(Map_Entityposition, (*unit)->info.goal_tile,true) > 0)
 					{
 						(*unit)->info.Current_path = *App->pathfinding->GetLastPath();
 						(*unit)->info.Current_path.erase((*unit)->info.Current_path.begin());
@@ -209,35 +207,13 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 
 			case MovementState::MovementState_FollowPath:
 
-				//(*unit)->state = MOVING;
-
 				// --- If a path is created, the unit will start following it ---
-				//(*unit)->isMoving = true;
 				next_tile_world = App->map->MapToWorld((*unit)->info.next_tile.first, (*unit)->info.next_tile.second);
-				//next_tile_world = (*unit)->info.next_tile;
-				
 
 				distanceToNextTile = { (float)next_tile_world.first - (*unit)->position.first,(float)next_tile_world.second - (*unit)->position.second };
-				//distanceToNextTile = { next_tile_world.first - Map_Entityposition.first,next_tile_world.second - Map_Entityposition.second };
-
-				/*if (distanceToNextTile.first > 0) {
-					distanceToNextTile.first = 1;
-				}
-				else if (distanceToNextTile.first < 0) {
-					distanceToNextTile.first = -1;
-				}
-
-				if (distanceToNextTile.second > 0) {
-					distanceToNextTile.second = 1;
-				}
-				else if (distanceToNextTile.second < 0) {
-					distanceToNextTile.second = -1;
-				}*/
 
 				// --- We compute the module of our vector ---
 				DirectDistance = sqrtf(pow(distanceToNextTile.first, 2.0f) + pow(distanceToNextTile.second, 2.0f));
-
-				//LOG("Next tile pos : x = %i y= %i", next_tile_world.x, next_tile_world.y);
 
 				// --- We want a unitary vector to update the unit's direction/position ---
 				if (DirectDistance > 0.0f)
@@ -275,6 +251,7 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 				//goal_world = App->map->MapToWorld((*unit)->info.goal_tile.first, (*unit)->info.goal_tile.second);
 				//App->render->Blit((*unit)->tex, goal_world.first, goal_world.second, &(*unit)->rect);
 
+				// Show full path
 				it = (*unit)->info.Current_path.begin();
 				while (it != (*unit)->info.Current_path.end()) {
 					goal_world = App->map->MapToWorld(it->first, it->second);
@@ -327,12 +304,12 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 	unit = group->Units.begin();
 	while (unit != group->Units.end()) {
 		if ((*unit)->info.UnitMovementState != MovementState::MovementState_NoState) {
-			(*unit)->info.everyone_arrived = false;
+			//(*unit)->info.everyone_arrived = false;
 			return false;
 		}
 		unit++;
 	}
-	(*unit)->info.everyone_arrived = true;
+	//(*unit)->info.everyone_arrived = true;
 	return true;
 
 }

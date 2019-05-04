@@ -111,6 +111,47 @@ void Player::RectangleSelection()
 
 }
 
+bool Player::DeployTroops(Entity::entityType type, int amount, pair<int,int> pos) {
+
+	if (deploy_state == DeployState::START) {
+		deploying_counter = 0;
+
+		std::list<Troop*>::iterator entity = troops.begin();
+		while (entity != troops.end())
+		{
+			(*entity)->isSelected = false;
+			entity++;
+		}
+		deploy_state = DeployState::DEPLOYING;
+	}
+	else if (deploy_state == DeployState::DEPLOYING){
+		if (deploying_counter >= amount) {
+			deploy_state = DeployState::END;
+		}
+		else {
+			App->input->GetMousePosition(pos.first, pos.second);
+			pos = App->render->ScreenToWorld(pos.first, pos.second);
+			collider.dimensions = { 1,1 };
+
+			Troop* e;
+			pos.first += deploying_counter * 3;
+			e = (Troop*)App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, pos, collider);
+			e->state = NOT_DEPLOYED;
+			e->isSelected = true;
+
+			deploying_counter++;
+		}
+	}
+	else if (deploy_state == DeployState::END) {
+		deploying_counter = 0;
+		isDeploying = false;
+		groups.push_back(App->move_manager->CreateGroup(this));
+		group++;
+		return isDeploying;
+	}
+
+}
+
 bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("Player Update", Profiler::Color::Black);
@@ -119,7 +160,6 @@ bool Player::Update(float dt)
 
 	if (!App->scene->endgame)
 	{
-		
 		RectangleSelection();
 
 		if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) {
@@ -142,33 +182,12 @@ bool Player::Update(float dt)
 			type = (Entity::entityType)((curr++) % (int)Entity::entityType::TANKMAN);
 
 		}
-		if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && (deploy_state == DeployState::END)) {
 
-			//Simulating a Deploy
-			pair<int, int> pos;
-			App->input->GetMousePosition(pos.first, pos.second);
-			pos = App->render->ScreenToWorld(pos.first, pos.second);
-			collider.dimensions = { 1,1 };
-
-			std::list<Troop*>::iterator entity = troops.begin();
-
-
-			while (entity != troops.end())
-			{
-				(*entity)->isSelected = false;
-				entity++;
-			}
-
-			Troop* e;
-			for (int i = 0; i < 9; i++) {
-				 pos.first += i*3;
-				 e = (Troop*)App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, pos, collider);
-				 e->isSelected = true;
-			}
-			groups.push_back(App->move_manager->CreateGroup(this));
-			group++;
+			deploy_state = DeployState::START;
 		}
 
+		DeployTroops(Entity::entityType::SOLDIER, 9, { 0,0 });
 
 		//--- Press X (Square) To SELECT BUILDINGS
 		if (gamepad.Controller[BUTTON_X] == KEY_UP && currentUI == CURRENT_UI::NONE)

@@ -287,17 +287,24 @@ int Pathfinding::CreatePath(const pair<int,int>& origin, const pair<int,int>& de
 
 	int ret = -1;
 
-	if (!IsWalkable(origin) || !IsWalkable(destination))
-		return ret;
+	if (!IsWalkable(origin)) {
+
+		LOG("Origin not Walkable");
+		return -1;
+	}
+	if (!IsWalkable(destination)) {
+		LOG("Destination not Walkable");
+		return 0;
+	}
 
 	if (JPS_active == false)
 		PropagateAStar(origin, destination);
 	else
 		PropagateJPS(origin, destination);
 
-	LOG("Path Steps: %i", last_path.size());
+	//LOG("Path Steps: %i", last_path.size());
 
-	return 0;
+	return last_path.size();
 }
 
 

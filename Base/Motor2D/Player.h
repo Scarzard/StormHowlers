@@ -34,6 +34,11 @@ struct GeneralUI
 class Player : public Module
 {
 public:
+	enum DeployState {
+		START,
+		DEPLOYING,
+		END
+	};
 	enum CURRENT_UI
 	{
 		NONE,
@@ -66,6 +71,7 @@ public:
 
 	bool Start();
 	void RectangleSelection();
+	bool DeployTroops(Entity::entityType type, int amount, pair<int, int> pos);
 	bool Awake(pugi::xml_node &config);
 	bool Update(float dt);
 	bool PostUpdate();
@@ -106,6 +112,7 @@ public:
 	bool isPaused = false;
 	bool pathfinding = true;
 
+
 	Collider collider;
 	pair<int, int> offset;
 	Entity::entityType type;
@@ -129,7 +136,7 @@ public:
 	int total_capacity = 0; //sum of all barracks capacities
 	int actual_capacity = 0; //sum of all created troops
 	
-  
+	DeployState deploy_state = DeployState::END;
 	//bool entityAdded;
 	//Entity* previewEntity;
 
@@ -143,6 +150,7 @@ public:
 	
 	//index for testing previews
 	int curr = 1;
+	int deploying_counter = 0;
 
 	GamePad gamepad;
 

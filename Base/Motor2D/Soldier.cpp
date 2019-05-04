@@ -37,117 +37,66 @@ bool Soldier::Update(float dt)
 		pair<int, int> map_init_pos = App->map->WorldToMap(init_position.first, init_position.second);
 		int time_to_act = 2;
 
-		//ENTITY TO ATTACK IS FOUND
 		// Checks for group defined closest entity
-		if (info.closest != nullptr && info.closest->health > 0)
+		if (info.closest != nullptr)
 		{
-			//PrintState();
-			//LOG("Closest FOUND");
-			int d = 0;
-			// Modify the goal tile to make it walkable
-			destination = App->map->WorldToMap(info.closest->position.first, info.closest->position.second);
-			if (!App->pathfinding->IsWalkable(destination)) {
-				destination.second -= 1;
-				if (!App->pathfinding->IsWalkable(destination)) {
-					destination.second += 2;
-					if (!App->pathfinding->IsWalkable(destination)) {
+			//Entity to attack is found
+			if(info.closest->health > 0){
+				//LOG("Closest FOUND");
+				int d = 0;
 
-						destination.first -= 1;
-						destination.second -= 1;
-						if (!App->pathfinding->IsWalkable(destination)) {
-							destination.first += 2;
+				// Modify the goal tile to make it walkable
+				SetDestination();
 
-						}
+				if (!Is_inRange(map_pos, d, destination, original_range)) {
+					state = MOVING;
+					destination = App->map->MapToWorld(destination.first, destination.second);
+					if (info.current_group->IsGroupLead(this)) {
+
+						info.current_group->CheckForMovementRequest(dt, destination);
+
 					}
-				
-				}
+					else if (info.current_group->GetLead()->state != MOVING) {
+						//Lead has reached the destination but the target is still out of range, need to move individually
 
-			}
-
-			if (!Is_inRange(map_pos, d, destination, original_range)) {
-				state = MOVING;
-				destination = App->map->MapToWorld(destination.first, destination.second);
-				if (info.current_group->IsGroupLead(this)) {
-
-					info.current_group->CheckForMovementRequest(dt, destination);
-					//rest.Start();
-
+						info.current_group->CheckForMovementIndividual(this, dt, destination);
+					}
+					else {
+					}
+					//LOG("Closest FOUND - NOT in range => MOVING");
 				}
 				else {
-					//Everyone has reached the destination but the target is till out of range, need to move individually
-					//if (info.everyone_arrived == true /*info.UnitMovementState == MovementState::MovementState_NoState*/) {
-					if(info.current_group->GetLead()->state != MOVING){
-						info.current_group->CheckForMovementIndividual(this, dt, destination);
+					info.UnitMovementState = MovementState::MovementState_NoState;
+					state = SHOOTING;
 
+					// Shoots the closest one if in range
+					if (timer.ReadSec() >= rate_of_fire)
+					{
+						info.closest->TakeDamage(damage_lv[level]);
+						timer.Start();
+						App->audio->PlayFx(SOLDIER_ATTACK);
+						if (info.closest->health <= 0) {
+							state = TROOP_IDLE;
+							info.closest = nullptr;
+						}
 					}
-				}
-				//destination = info.closest->position;
-				LOG("Closest FOUND - NOT in range => MOVING");
-				//PrintState();
+					//LOG("Closest FOUND - IN range => SHOOTING");
 
+				}
 			}
 			else {
-				info.UnitMovementState = MovementState::MovementState_NoState;
-				state = SHOOTING;
-				// Shoots the closest one if in range
-				if (timer.ReadSec() >= rate_of_fire)
-				{
-					info.closest->TakeDamage(damage_lv[level]+100);
-					timer.Start();
-					App->audio->PlayFx(SOLDIER_ATTACK);
-					if (info.closest->health <= 0) {
-						state = TROOP_IDLE;
-						info.closest = nullptr;
-					}
-				}
-				
-				LOG("Closest FOUND - IN range => SHOOTING");
-				//PrintState();
-
-
+				state = TROOP_IDLE;
 			}
 		}
 		//ENTITY TO ATTACK IS NOT FOUND OR JUST DIED
-		if (info.closest != nullptr && info.closest->health <= 0) {
-			state = TROOP_IDLE;
-		}
-		if (state != SHOOTING /*  ||  && state != MOVING)*/){
-			
-			//closest = App->entitymanager->findEntity(map_pos, fromPlayer1, original_range);
-			PrintState();
-			//LOG("State != SHOOTING");
+		if (state != SHOOTING ){
 
-			if (state == MOVING ) {
-				
-				//LOG("MOVING");
-				//PrintState();
-
-			}
-			//if (info.closest == nullptr && (state == TROOP_IDLE || state == SHOOTING)) {
 			if (state == TROOP_IDLE) {
-				LOG("Closest NOT FOUND - STRATEGY");
+				//LOG("Closest NOT FOUND - SEARCHING");
 
-				//offensive mode
-				if (true) {
-					LOG("Closest NOT FOUND - SEARCHING");
+				info.closest = App->entitymanager->findEntity(map_pos, fromPlayer1, range);
+				range = (info.closest == nullptr) ? range + 20 : original_range;
 
-					info.closest = App->entitymanager->findEntity(map_pos, fromPlayer1, range);
-					if (info.closest == nullptr) {
-						range += 20;
-
-					}
-					else {
-						range = original_range;
-					}
-					// ONLY GROUP LEAD
-					if (/*rest.ReadSec() >= resting_time &&*/ info.closest == nullptr) {
-
-
-						//PrintState();
-
-					}
-				}
-					
 			}
 		}
 		else if (info.closest == nullptr) {
@@ -160,15 +109,6 @@ bool Soldier::Update(float dt)
 
 	}
 	
-	//int time = (timer.ReadSec());
-			//if (time % time_to_act == 0){
-			//	//LOG("DGKLGSK");
-			//}
-	
-	//
-	//if (Speed.first == 0 && Speed.second == 0) {
-	//	state == TROOP_IDLE;
-	//}
 	ActOnDestroyed();
 	ChangeAnimation(Speed,closest);
 
@@ -178,6 +118,28 @@ bool Soldier::Update(float dt)
 
 	Troop::Update(dt);
 	return true;
+}
+void Soldier::SetDestination()
+{
+	destination = App->map->WorldToMap(info.closest->position.first, info.closest->position.second);
+
+	if (!App->pathfinding->IsWalkable(destination)) {
+		destination.second -= 1;
+		if (!App->pathfinding->IsWalkable(destination)) {
+			destination.second += 2;
+			if (!App->pathfinding->IsWalkable(destination)) {
+
+				destination.first -= 1;
+				destination.second -= 1;
+				if (!App->pathfinding->IsWalkable(destination)) {
+					destination.first += 2;
+
+				}
+			}
+
+		}
+
+	}
 }
 bool Soldier::Is_inRange(pair<int, int> pos, int &distance, pair <int, int> position, int range) {
 

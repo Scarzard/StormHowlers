@@ -88,12 +88,18 @@ bool Group::CheckForMovementRequest(float dt,pair<int,int> destination)
 /** The troop must be inside the group */
 bool Group::CheckForMovementIndividual(Troop* troop, float dt, pair<int, int> destination)
 {
-	Group* g = new Group();
-	g->Units.push_back(troop);
+	//Group* g = new Group();
+	//g->Units.push_back(troop);
 
-	App->move_manager->Move(g, dt, destination);
+	removeUnit(troop);
+	Group g;
+	g.Units.push_back(troop);
+
+	App->move_manager->Move(&g, dt, destination);
 	
-	g->ClearGroup();
+	g.ClearGroup();
+
+	Units.push_back(troop);
 
 	return true;
 }
