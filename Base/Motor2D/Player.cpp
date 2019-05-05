@@ -52,7 +52,7 @@ bool Player::Awake(pugi::xml_node& config) {
 bool Player::Start()
 {
 
-	gold = gold_persecond = actual_capacity = total_capacity = time_iterator = number_of_troops = 0;
+	gold = gold_persecond = actual_capacity = total_capacity = time_iterator = number_of_troops = BuildingCost = TroopCost = 0;
 	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = 0;
 
 	selected_texture = { 0,0, 100, 100 };
@@ -269,6 +269,7 @@ bool Player::Update(float dt)
 		if (gamepad.Controller[BUTTON_X] == KEY_DOWN && currentUI == CURRENT_UI::CURR_GENERAL && (*building_selected)->type == Entity::entityType::BARRACKS )
 		{
 			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
+			troop_icon->rect = { 662, 0, 85, 81 };
 			UpdateVisibility();
 			UI_troop_type = Entity::entityType::SOLDIER;
 		}
@@ -327,11 +328,33 @@ bool Player::Update(float dt)
 				
 			}
 
+			if (UI_troop_type == Entity::entityType::SOLDIER)
+			{
+				TroopCost = 250 * number_of_troops;
+			}
+			else if (UI_troop_type == Entity::entityType::TANKMAN)
+			{
+				TroopCost = 500 * number_of_troops;
+			}
+			else if (UI_troop_type == Entity::entityType::INFILTRATOR)
+			{
+				TroopCost = 1000 * number_of_troops;
+			}
+			else if (UI_troop_type == Entity::entityType::ENGINEER)
+			{
+				TroopCost = 2000 * number_of_troops;
+			}
+			else if (UI_troop_type == Entity::entityType::WAR_HOUND)
+			{
+				TroopCost = 1250 * number_of_troops;
+			}
+
 			if (gamepad.Controller[BUTTON_A] == KEY_UP)
 			{
 				CreateTroop(UI_troop_type, number_of_troops);
 				Update_troop_image(UI_troop_type);
 				GotoPrevWindows(currentUI);
+				gold -= TroopCost;
 			}
 
 		}
@@ -352,7 +375,13 @@ bool Player::Update(float dt)
 			if (gamepad.Controller[RB] == KEY_DOWN)
 			{
 				number_of_troops++;
+				if (number_of_troops > 5)
+				{
+					number_of_troops = 5;
+				}
 			}
+
+			TroopCost = 2000 * number_of_troops; //2000 RANDOM INVULNERABILITY PRICE 
 
 			if (gamepad.Controller[BUTTON_A] == KEY_UP)
 			{
@@ -405,6 +434,26 @@ bool Player::Update(float dt)
 		if (currentUI == CURRENT_UI::CURR_GENERAL)
 		{
 			UpdateGeneralUI((*building_selected));
+		}
+
+		if (currentUI == CURRENT_UI::CURR_BUILD)
+		{
+			if ((*focus) == Def_AOE_icon)
+			{
+				BuildingCost = 2000;
+			}
+			else if ((*focus) == Def_Target_icon)
+			{
+				BuildingCost = 3500;
+			}
+			else if ((*focus) == Mines_icon)
+			{
+				BuildingCost = 2000;
+			}
+			else if ((*focus) == Barracks_icon)
+			{
+				BuildingCost = 3000;
+			}
 		}
 
 		// Go back
@@ -753,9 +802,40 @@ bool Player::Update(float dt)
 			pos = App->render->ScreenToWorld(pos.first, pos.second);
 			//pos.first--;
 
-			// Swap once commit to work with controller
-			//App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first - offset.first, collider.tiles[0].second - offset.second, &(preview_rects->at(type)));
-			App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &(preview_rects->at(type)));
+			if (type == Entity::entityType::TOWNHALL)
+			{
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
+			}
+			else if (type == Entity::entityType::BARRACKS)
+			{
+				//157 x 136
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first-75, collider.tiles[0].second-65, &(preview_rects->at(type)));
+			}
+			else if (type == Entity::entityType::MINES)
+			{
+				//190 x 140
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first-80, collider.tiles[0].second-70, &(preview_rects->at(type)));
+			}
+			else if (type == Entity::entityType::DEFENSE_AOE)
+			{
+				//92 x 92
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first-10, collider.tiles[0].second-50, &(preview_rects->at(type)));
+			}
+			else if (type == Entity::entityType::DEFENSE_TARGET)
+			{
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
+			}
+			else if (type == Entity::entityType::MAIN_DEFENSE)
+			{
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
+			}
+			else 
+			{
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
+			}
+
+
+			//App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &(preview_rects->at(type)));
 
 
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
@@ -802,7 +882,7 @@ bool Player::Update(float dt)
 				}
 				isBuilding = false;
 				
-
+				App->audio->PlayFx(WRONG);
 				//play fx (error);
 			}
 		}
@@ -984,6 +1064,34 @@ void Player::UpdateWalkabilityMap(char cell_type, Collider collider) //update wa
 			App->map->walkability_layer->Set(pos.first, pos.second, 1);
 		}
 	}
+}
+
+int Player::CheckCost(Entity* entity)
+{
+	if (entity->type == Entity::entityType::BARRACKS)
+		return 3000;
+
+	else if (entity->type == Entity::entityType::DEFENSE_AOE)
+		return 2000;
+
+	else if (entity->type == Entity::entityType::DEFENSE_TARGET)
+		return 3500;
+
+	else if (entity->type == Entity::entityType::MINES)
+		return 2000;
+
+	else
+		return 0;
+
+}
+
+int Player::GoldKill(Entity* entity)
+{
+	if (entity->type == Entity::entityType::SOLDIER)
+		return 100;
+
+	else
+		return 0;
 }
 
 void Player::UpdateFocus(uint data)
@@ -1310,6 +1418,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		RB_img->visible = false;
 		SelectBuilding->visible = false;
 		In_SelectBuilding->visible = false;
+		draw_screen->visible = false;
 		break;
 	case::Player::CURRENT_UI::ENDGAME: //Dont show the other player win screen
 		Main_UI->visible = false;
@@ -1332,6 +1441,29 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		RB_img->visible = false;
 		SelectBuilding->visible = false;
 		In_SelectBuilding->visible = false;
+		draw_screen->visible = false;
+	case::Player::CURRENT_UI::DRAW: //Dont show the other player win screen
+		Main_UI->visible = false;
+		Build_UI->visible = false;
+		Deploy_UI->visible = false;
+		Cast_UI->visible = false;
+		Pause_UI->visible = false;
+		Settings_UI->visible = false;
+		Abort_UI->visible = false;
+		win_screen->visible = false;
+		Gold_UI->visible = false;
+		App->scene->ui_timer->visible = false;
+		General_UI->visible = false;
+		Create_Troops_UI->visible = false;
+		Create_troops->visible = false;
+		Create_abilities->visible = false;
+		Y_to_Main2->visible = false;
+		Y_to_Main->visible = false;
+		LB_img->visible = false;
+		RB_img->visible = false;
+		SelectBuilding->visible = false;
+		In_SelectBuilding->visible = false;
+		draw_screen->visible = true;
 		break;
 
 
@@ -1341,6 +1473,8 @@ void Player::UpdateVisibility() // Update GUI Visibility
 
 void Player::DoLogic(UI_Element* data)
 {
+		
+
 	switch (data->action)
 	{
 
@@ -1358,16 +1492,19 @@ void Player::DoLogic(UI_Element* data)
 	case::UI_Element::Action::ACT_GOTO_BUILD:
 		currentUI = CURR_BUILD;
 		UpdateVisibility();
+		App->audio->PlayFx(INGAME_CLICK);
 		break;
 
 	case::UI_Element::Action::ACT_GOTO_DEPLOY:
 		currentUI = CURR_DEPLOY;
 		UpdateVisibility();
+		App->audio->PlayFx(INGAME_CLICK);
 		break;
 
 	case::UI_Element::Action::ACT_GOTO_CAST:
 		currentUI = CURR_CAST;
 		UpdateVisibility();
+		App->audio->PlayFx(INGAME_CLICK);
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_AOE:
@@ -1401,31 +1538,41 @@ void Player::DoLogic(UI_Element* data)
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
 		if (SoldiersCreated > 0)
 		{
+			App->audio->PlayFx(INGAME_CLICK);
 			isBuilding = true;
 			type = Entity::entityType::SOLDIER;
 			collider.dimensions = { 1,1 };
+		}
+		else
+		{
+			App->audio->PlayFx(WRONG);
 		}
 		
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_TANKMAN:
 		//
+		App->audio->PlayFx(WRONG);
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_INFILTRATOR:
 		//
+		App->audio->PlayFx(WRONG);
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_ENGINEER:
 		//
+		App->audio->PlayFx(WRONG);
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_WARHOUND:
 		//
+		App->audio->PlayFx(WRONG);
 		break;
 
 	case::UI_Element::Action::ACT_CAST_MISSILES:
 		//
+		App->audio->PlayFx(WRONG);
 		break;
 
 	case::UI_Element::Action::ACT_UPGRADE:
@@ -1442,7 +1589,7 @@ void Player::DoLogic(UI_Element* data)
 		App->render->zoom = 0.77;
 		Pause_UI->visible = false;
 		isPaused = false;
-
+		App->audio->PlayFx(INGAME_CLICK);
 		App->scene->pause = !App->scene->pause;
 
 		currentUI = last_currentUI;
@@ -1454,14 +1601,18 @@ void Player::DoLogic(UI_Element* data)
 		Settings_UI->visible = true;
 		currentUI = CURR_PAUSE_SETTINGS;
 		UpdateFocus(currentUI);
+		App->audio->PlayFx(INGAME_CLICK);
 		break;
 	case::UI_Element::Action::ABORT_PAUSE:
 		currentUI = CURR_PAUSE_ABORT;
 		UpdateVisibility();
 		UpdateFocus(currentUI);
+		App->audio->PlayFx(INGAME_CLICK);
 		break;
 	case::UI_Element::Action::RESTART:
 		
+		App->audio->PlayFx(INGAME_CLICK);
+
 		App->entitymanager->Disable();
 		App->player2->Disable();
 		App->player1->Disable();
@@ -1482,7 +1633,7 @@ void Player::DoLogic(UI_Element* data)
 
 		break;
 	}
-	App->audio->PlayFx(INGAME_CLICK);
+	
 }
 
 bool Player::DeleteEntity(Entity* entity)
@@ -1507,6 +1658,14 @@ bool Player::DeleteEntity(Entity* entity)
 	}
 	else if (entity->type > Entity::entityType::BARRACKS) //if entity = troop
 	{
+		// Update Gold per Kill
+		if (isPlayer1 == true)
+			App->player2->gold += GoldKill(entity);
+
+		else if (isPlayer1 == false)
+			App->player1->gold += GoldKill(entity);
+		// ---
+
 		list<Troop*>::iterator item = troops.begin();
 		while (item != troops.end())
 		{

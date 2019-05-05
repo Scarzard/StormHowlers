@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="6" height="4" tilewidth="62" tileheight="39" nextobjectid="83">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="6" height="4" tilewidth="62" tileheight="39" nextobjectid="93">
  <layer name="Capa de Patrones 1" width="6" height="4">
   <data encoding="csv">
 0,0,0,0,0,0,
@@ -24,8 +24,13 @@
   <object id="20" x="186" y="117" width="62" height="39"/>
   <object id="21" x="248" y="117" width="62" height="39"/>
   <object id="22" x="310" y="117" width="62" height="39"/>
+  <object id="87" x="186" y="0" width="62" height="39"/>
+  <object id="89" x="186" y="39" width="62" height="39"/>
+  <object id="90" x="62" y="0" width="62" height="39"/>
+  <object id="91" x="124" y="39" width="62" height="39"/>
+  <object id="92" x="62" y="39" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_constructing">
+ <objectgroup name="blue_constructing" visible="0">
   <object id="55" x="0" y="234" width="62" height="39"/>
   <object id="56" x="62" y="234" width="62" height="39"/>
   <object id="57" x="124" y="234" width="62" height="39"/>
@@ -39,52 +44,52 @@
   <object id="65" x="248" y="273" width="62" height="39"/>
   <object id="66" x="310" y="273" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="red_NW">
+ <objectgroup name="red_NW" visible="0">
   <object id="67" x="0" y="0" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="red_SE">
+ <objectgroup name="red_SE" visible="0">
   <object id="68" x="62" y="0" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="red_N">
+ <objectgroup name="red_N" visible="0">
   <object id="69" x="124" y="0" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="red_NE">
+ <objectgroup name="red_NE" visible="0">
   <object id="70" x="186" y="0" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="red_W">
+ <objectgroup name="red_W" visible="0">
   <object id="71" x="0" y="39" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="red_SW">
+ <objectgroup name="red_SW" visible="0">
   <object id="72" x="62" y="39" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="red_S">
+ <objectgroup name="red_S" visible="0">
   <object id="73" x="124" y="39" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="red_E">
+ <objectgroup name="red_E" visible="0">
   <object id="74" x="186" y="39" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_NW">
+ <objectgroup name="blue_NW" visible="0">
   <object id="75" x="0" y="156" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_SE">
+ <objectgroup name="blue_SE" visible="0">
   <object id="76" x="62" y="156" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_N">
+ <objectgroup name="blue_N" visible="0">
   <object id="77" x="124" y="156" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_NE">
+ <objectgroup name="blue_NE" visible="0">
   <object id="78" x="186" y="156" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_W">
+ <objectgroup name="blue_W" visible="0">
   <object id="79" x="0" y="195" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_SW">
+ <objectgroup name="blue_SW" visible="0">
   <object id="80" x="62" y="195" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_S">
+ <objectgroup name="blue_S" visible="0">
   <object id="81" x="124" y="195" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_E">
+ <objectgroup name="blue_E" visible="0">
   <object id="82" x="186" y="195" width="62" height="39"/>
  </objectgroup>
 </map>

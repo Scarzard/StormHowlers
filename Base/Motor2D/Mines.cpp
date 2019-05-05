@@ -1,5 +1,6 @@
 #include "EntityManager.h"
 #include "Mines.h"
+#include "Audio.h"
 #include "Scene.h"
 #include "Render.h"
 #include "Map.h"
@@ -52,6 +53,8 @@ bool Mines::Update(float dt)
 			else //destroyed
 			{
 				App->player1->DeleteEntity(this);
+				App->audio->PlayFx(BUILDING_EXPLOSION);
+				App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 			}
 
 			if (repair == true) //repair
@@ -59,6 +62,7 @@ bool Mines::Update(float dt)
 				App->player1->gold -= repair_cost;
 				health = health_lv[level];
 				repair = false;
+				App->audio->PlayFx(BUILDING_REPAIR);
 				//play fx (repair);
 			}
 		}
@@ -78,6 +82,8 @@ bool Mines::Update(float dt)
 			else //destroyed
 			{
 				App->player2->DeleteEntity(this);
+				App->audio->PlayFx(BUILDING_EXPLOSION);
+				App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
 			}
 
 			if (repair == true) //repair
@@ -85,6 +91,7 @@ bool Mines::Update(float dt)
 				App->player2->gold -= repair_cost;
 				health = health_lv[level];
 				repair = false;
+				App->audio->PlayFx(BUILDING_REPAIR);
 				//play fx (repair);
 			}
 		}

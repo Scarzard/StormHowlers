@@ -1,6 +1,7 @@
 #include "DefenseTarget.h"
 #include "Brofiler\Brofiler.h"
 #include "Player.h"
+#include "Audio.h"
 #include "Log.h"
 
 DefenseTarget::DefenseTarget()
@@ -73,6 +74,7 @@ bool DefenseTarget::Update(float dt)
 		{
 			closest->TakeDamage(damage_lv[level]);
 			timer.Start();
+			App->audio->PlayFx(TESLA_ATTACK);
 			//LOG("Distance: %d", d);
 		}
 	}
@@ -81,6 +83,8 @@ bool DefenseTarget::Update(float dt)
 		if (health <= 0) //destroyed
 		{
 			App->player1->DeleteEntity(this);
+			App->audio->PlayFx(BUILDING_EXPLOSION);
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
@@ -88,6 +92,8 @@ bool DefenseTarget::Update(float dt)
 		if (health <= 0) //destroyed
 		{
 			App->player2->DeleteEntity(this);
+			App->audio->PlayFx(BUILDING_EXPLOSION);
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 	Building::Update(dt);

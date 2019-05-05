@@ -42,7 +42,7 @@ bool EntityManager::Awake(pugi::xml_node &config)
 	folder.append(config.child("folder").child_value());
 	texture_path = config.child("sprite_sheet").attribute("source").as_string();
 
-	entitiesTextures = vector<SDL_Texture*>(Entity::entityType::WAR_HOUND, nullptr);
+	entitiesTextures = vector<SDL_Texture*> (Entity::entityType::WAR_HOUND, nullptr);
 	
 	return true;
 }
@@ -509,8 +509,9 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			tmp = new Townhall(isPlayer1, position, collider);
 			break;
 
-		case Entity::entityType::MAIN_DEFENSE:
+		case Entity::entityType::MAIN_DEFENSE: // this is the actual sentrygun
 			tmp = new MainDefense(isPlayer1, position, collider);
+			App->audio->PlayFx(SENTRYGUN_BUILD);
 			break;
 
 		case Entity::entityType::COMMAND_CENTER:
@@ -543,15 +544,17 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			break;
 		}
 		if (tmp) {
-
 			if (isPlayer1 == true)
 			{
+				App->player1->gold -= App->player1->CheckCost(tmp);
 				App->player1->buildings.push_back((Building*)tmp);
 				App->player1->entities.push_back((Building*)tmp);
 				App->player1->UpdateWalkabilityMap(P1_BUILDING, collider);
+
 			}
 			else // Player 2 -------------------------------
 			{
+
 				App->player2->buildings.push_back((Building*)tmp);
 				App->player2->entities.push_back((Building*)tmp);
 				App->player2->UpdateWalkabilityMap(P2_BUILDING, collider);

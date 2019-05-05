@@ -271,7 +271,7 @@ void Soldier::ChangeAnimation() {
 	}
 	else if (state == SHOOTING)
 	{
-		
+
 		if (fromPlayer1)
 		{
 			Current_Animation = shooting[SOUTH];
@@ -306,7 +306,7 @@ void Soldier::ChangeAnimation() {
 			//	//north
 			//	Current_Animation = shooting[NORTH];
 			//}
-			else if (info.closest->position.first==position.first)
+			else if (info.closest->position.first == position.first)
 			{
 				//northeast
 				Current_Animation = shooting[NORTHEAST];
@@ -336,7 +336,6 @@ void Soldier::ChangeAnimation() {
 		{
 			//east
 			Current_Animation = shooting[EAST];
-
 		}
 		else if (info.closest->position.second < position.second && info.closest->position.first < position.first)
 		{
@@ -344,10 +343,18 @@ void Soldier::ChangeAnimation() {
 			Current_Animation = shooting[WEST];
 
 		}
-		
-	
+		else
+		{
+			if (fromPlayer1)
+			{
+				Current_Animation = shooting[SOUTH];
+			}
+			else
+			{
+				Current_Animation = shooting[NORTH];
+			}
+		}
 
-	//}
 	}
 	
 }

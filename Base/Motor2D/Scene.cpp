@@ -50,6 +50,7 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	allied_win_name = config.child("allied").attribute("file").as_string("");
 	soviet_win_name = config.child("soviet").attribute("file").as_string("");
+	draw_name = config.child("draw").attribute("file").as_string("");
 
 	
 	return ret;
@@ -67,6 +68,7 @@ bool Scene::Start()
 
 	allied_win_tex = App->tex->Load(allied_win_name.data());
 	soviet_win_tex = App->tex->Load(soviet_win_name.data());
+	draw_tex = App->tex->Load(draw_name.data());
 
 	pause_soviet_texture = App->tex->Load(pause_soviet.data());
 	pause_alied_texture = App->tex->Load(pause_alied.data());
@@ -170,6 +172,10 @@ bool Scene::Start()
 	App->player1->Def_Target_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { 171, 55 }, { 85, 81 }, App->player1->Build_UI, false);
 	App->player1->Mines_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { 274, 55 }, { 85,81 }, App->player1->Build_UI, false);
 	App->player1->Barracks_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { 375, 55 }, { 85, 81 }, App->player1->Build_UI, false);
+
+	App->player1->Building_cost_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 110 , 27 }, { 0, 0 }, App->player1->Barracks_icon, false, { false, false });
+	App->player1->Building_cost_text->label = App->player1->Building_cost_label;
+	App->player1->Building_cost_text->color = {255, 0, 0, 255};
 
 	// DEPLOY TROOPS UI ------------------
 
@@ -308,6 +314,10 @@ bool Scene::Start()
 	App->player1->num_troops_text->label = App->player1->num_troops_label;
 	App->player1->num_troops_text->color = { 255, 255, 255,255 };
 
+	App->player1->Troop_cost_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 320 , 110 }, { 0, 0 }, App->player1->Create_Troops_UI, false, { false, false });
+	App->player1->Troop_cost_text->label = App->player1->Troop_cost_label;
+	App->player1->Troop_cost_text->color = { 255, 0, 0, 255 };
+
 
 	//---- GOLD ----- 
 	App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 470, 19 }, { 0, 0 }, nullptr, true, { false,false }, "$ 0000");
@@ -389,6 +399,10 @@ bool Scene::Start()
 	App->player1->win_screen->texture = allied_win_tex;
 	App->player1->win_screen->rect = { 0, 0, 0, App->win->height };
 
+	App->player1->draw_screen = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
+	App->player1->draw_screen->texture = draw_tex;
+	App->player1->draw_screen->rect = { 0, 0, 0, App->win->height };
+
 	//--- PLAYER 2
 	//App->player2->Health_UI = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
 	//App->player2->Gold_UI = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
@@ -418,6 +432,10 @@ bool Scene::Start()
 	App->player2->Def_Target_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { 171, 55 }, { 85, 81 }, App->player2->Build_UI, false);
 	App->player2->Mines_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_MINE, { 274, 55 }, { 85,81 }, App->player2->Build_UI, false);
 	App->player2->Barracks_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_BARRACKS, { 375, 55 }, { 85, 81 }, App->player2->Build_UI, false);
+
+	App->player2->Building_cost_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 110 , 27 }, { 0, 0 }, App->player2->Barracks_icon, false, { false, false });
+	App->player2->Building_cost_text->label = App->player2->Building_cost_label;
+	App->player2->Building_cost_text->color = { 255, 0, 0, 255 };
 
 	// DEPLOY TROOPS UI ------------------
 
@@ -541,6 +559,10 @@ bool Scene::Start()
 	App->player2->num_troops_text->label = App->player2->num_troops_label;
 	App->player2->num_troops_text->color = { 255, 255, 255,255 };
 
+	App->player2->Troop_cost_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 320 , 110 }, { 0, 0 }, App->player2->Create_Troops_UI, false, { false, false });
+	App->player2->Troop_cost_text->label = App->player2->Troop_cost_label;
+	App->player2->Troop_cost_text->color = { 255, 0, 0, 255 };
+
 	// ------- GOLD
 
 	App->player2->Gold_UI = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 2000, 1191 }, { 0, 0 }, nullptr, true, { false,false }, "$ 0000");
@@ -634,6 +656,10 @@ bool Scene::Start()
 	App->player2->win_screen  = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
 	App->player2->win_screen->texture = soviet_win_tex;
 	App->player2->win_screen->rect = { 0, 0, 0, App->win->height };
+
+	App->player2->draw_screen = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
+	App->player2->draw_screen->texture = draw_tex;
+	App->player2->draw_screen->rect = { 0, 0, 0, App->win->height };
 
 
 	// --- CURSORS
@@ -879,6 +905,10 @@ bool Scene::Update(float dt)
 		else if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) //View colliders
 		{
 			App->render->zoom -= 0.01f;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT) //View colliders
+		{
+			worldminutes = 10;
 		}
     
 		//Timer debug
@@ -1195,6 +1225,19 @@ bool Scene::PostUpdate()
 			{
 				(*item)->color = { 255 , 0, 0 , 255 }; //RED
 			}
+			
+		}
+		else if ((*item) == App->player1->Building_cost_text) //BUILDING COST
+		{
+			
+			sprintf_s(App->player1->Building_cost_label, "%i $", App->player1->BuildingCost);
+	
+		}
+		else if ((*item) == App->player1->Troop_cost_text) //TROOP COST
+		{
+
+			sprintf_s(App->player1->Troop_cost_label, "%i $", App->player1->TroopCost);
+
 		}
 		else if ((*item) == App->player1->Music_Slider_Button) //MUSIC SLIDER POS
 		{
@@ -1333,6 +1376,18 @@ bool Scene::PostUpdate()
 			{
 				(*item)->color = { 255 , 0, 0 , 255 }; //RED
 			}
+		}
+		else if ((*item) == App->player2->Building_cost_text) //BUILDING COST
+		{
+
+			sprintf_s(App->player2->Building_cost_label, "%i $", App->player2->BuildingCost);
+
+		}
+		else if ((*item) == App->player2->Troop_cost_text) //TROOP COST
+		{
+
+			sprintf_s(App->player2->Troop_cost_label, "%i $", App->player2->TroopCost);
+
 		}
 		else if ((*item) == App->player2->Music_Slider_Button) //MUSIC SLIDER POS
 		{
@@ -1691,6 +1746,7 @@ void Scene::Victorious(Player* player, float dt)
 	//Explosion, after it has finished, blit continue with function
 	if (player == App->player1 && !App->map->explosion_anim->Finished())
 	{
+		App->audio->PlayFx(FINAL_EXPLOSION);
 		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first, tmp_pos1.second, &App->map->explosion_anim->GetCurrentFrame(dt));
 		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first + 58, tmp_pos1.second + 42, &App->map->explosion_anim->GetCurrentFrame(dt));
 		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first - 73, tmp_pos1.second + 86, &App->map->explosion_anim->GetCurrentFrame(dt));
@@ -1699,6 +1755,7 @@ void Scene::Victorious(Player* player, float dt)
 	}
 	else if (player == App->player2 && !App->map->explosion_anim->Finished())
 	{
+		App->audio->PlayFx(FINAL_EXPLOSION);
 		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first, tmp_pos2.second, &App->map->explosion_anim->GetCurrentFrame(dt));
 		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first + 8, tmp_pos2.second + 22, &App->map->explosion_anim->GetCurrentFrame(dt));
 		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first - 3, tmp_pos2.second + 16, &App->map->explosion_anim->GetCurrentFrame(dt));
@@ -1743,6 +1800,23 @@ void Scene::Victorious(Player* player, float dt)
 		}
 	}
 
+}
+void Scene::MatchDraw()
+{
+	pausetimer = true;
+	world_seconds.Stop();
+
+	App->player1->currentUI = Player::CURRENT_UI::DRAW;
+	App->player1->UpdateVisibility();
+	App->player2->currentUI = Player::CURRENT_UI::ENDGAME;
+	App->player2->UpdateVisibility();
+
+	endgame = true;
+
+	if (App->scene->pause == false)
+	{
+		App->scene->pause = true;
+	}
 }
 
 void Scene::ResetGame()

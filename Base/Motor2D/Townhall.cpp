@@ -55,6 +55,7 @@ bool Townhall::Update(float dt)
 	//	position = App->map->data.main_building;
 	//}
 	//////---------------------------------------
+
 			
 	
 	if (fromPlayer1)
@@ -119,6 +120,20 @@ bool Townhall::Update(float dt)
 				health = 0;
 		}
 
+	}
+
+	if (App->scene->worldminutes == 10 && App->player2->health < App->player1->health)
+	{
+		App->scene->Victorious(App->player1, dt);
+	}
+	else if (App->scene->worldminutes == 10 && App->player2->health > App->player1->health)
+	{
+		App->scene->Victorious(App->player2, dt);
+	}
+	else if (App->scene->worldminutes == 10 && App->player2->health == App->player1->health)
+	{
+		//Draw (empate)
+		App->scene->MatchDraw();
 	}
 
 	Building::Update(dt);
