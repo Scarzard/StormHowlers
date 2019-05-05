@@ -7,6 +7,32 @@
 
 class Entity;
 
+struct Sorting
+{
+	bool operator()(Entity* const & entity1, Entity* const & entity2) //true if is printed before
+	{
+		pair<int, int> real_pos1, real_pos2;
+		real_pos1 = App->map->WorldToMap(entity1->position.first, entity1->position.second);
+		real_pos2 = App->map->WorldToMap(entity2->position.first, entity2->position.second);
+
+		if (real_pos1.first + real_pos1.second < real_pos2.first + real_pos2.second)
+			return true;
+
+		else if (real_pos1.first + real_pos1.second > real_pos2.first + real_pos2.second)
+			return false;
+
+		else if (real_pos1.first + real_pos1.second == real_pos2.first + real_pos2.second)
+		{
+			if (real_pos1.second > real_pos2.second) //right to left
+				return true;
+
+			else
+				return false;
+		}
+	}
+};
+
+
 class EntityManager : public Module
 {
 public:
@@ -27,8 +53,8 @@ public:
 	char * GetName(Entity::entityType type);
 	void DeleteAllEntities();
 
-	list<Entity*> EntityManager::OrderEntities(list<Entity*> List);
-	int EntityManager::GetDepth(Entity* entity);
+	void OrderEntities();
+	int GetDepth(Entity* entity);
 
 
 	Entity * findEntity(pair<int, int> pos, bool fromplayer1, int attackrange);

@@ -497,7 +497,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			}
 		
 			entity_list.push_back(tmp); // add to main entity list
-			entity_list = OrderEntities(entity_list);
+			OrderEntities();
 
 		}
 	}
@@ -561,7 +561,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 
 			}
 			entity_list.push_back(tmp); // add to main entity list
-			entity_list = OrderEntities(entity_list);
+			OrderEntities();
 		}
 	}
 
@@ -615,41 +615,23 @@ char* EntityManager::GetName(Entity::entityType type) {
 	}
 }
 
-list<Entity*> EntityManager::OrderEntities(list<Entity*> List)
+void EntityManager::OrderEntities()
 {
 	BROFILER_CATEGORY("EntityManager OrderEntities", Profiler::Color::Blue);
-	list<Entity*> ListOrder;
-	ListOrder.push_back(List.front()); // push first element of List to OrderList
+	priority_queue<Entity*, vector<Entity*>, Sorting> ListOrder;
 
-	bool found = false;
-	BROFILER_CATEGORY("OrderEntities First For", Profiler::Color::Blue);
-	for (list<Entity*>::iterator tmp = List.begin(); tmp != List.end(); tmp++) // traverse entity list (unordered)
+	for (list<Entity*>::iterator tmp = entity_list.begin(); tmp != entity_list.end(); tmp++) //push entity_list items to Ordered List
 	{
-		BROFILER_CATEGORY("OrderEntities Second For", Profiler::Color::Blue);
-		for (list<Entity*>::iterator tmp2 = ListOrder.begin(); tmp2 != ListOrder.end(); tmp2++) // traverse Ordered List
-		{
-			if (GetDepth(*tmp) < GetDepth(*tmp2)) // if tmp is further than tmp2
-			{
-				if (FindInList(ListOrder,(*tmp)->position,(*tmp)->fromPlayer1,(*tmp)->type)==false)
-				{
-					ListOrder.insert(tmp2, *tmp); // add tmp in front of tmp2
-					found = true;
-				}
-				
-				break;
-			}
-		}
-		if (found == false) // if tmp is the closest
-		{
-			if (FindInList(ListOrder, (*tmp)->position, (*tmp)->fromPlayer1, (*tmp)->type)==false)
-			{
-			ListOrder.push_back(*tmp); // push to last place	
-			}
-		}
-		found = false;
+		ListOrder.push(*tmp);
 	}
 
-	return ListOrder;
+	entity_list.clear(); //clear unordered list
+
+	while (ListOrder.empty() == false) //push ordered list to entity_list
+	{
+		entity_list.push_front(ListOrder.top());
+		ListOrder.pop();
+	}
 }
 
 int EntityManager::GetDepth(Entity* entity)
