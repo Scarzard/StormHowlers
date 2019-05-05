@@ -25,7 +25,7 @@ public:
 
 	Troop() {};
 	Troop(entityType type, bool isPlayer1, pair<int, int> pos, Collider Collider) : Entity(type, isPlayer1, pos, Collider) {
-
+		BROFILER_CATEGORY("Troop constructor", Profiler::Color::LimeGreen);
 		pugi::xml_document	config_file;
 		pugi::xml_node config;
 		config = App->LoadConfig(config_file);

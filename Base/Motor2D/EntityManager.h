@@ -14,6 +14,7 @@ public:
 	~EntityManager();
 
 	bool Awake(pugi::xml_node & config);
+	bool LoadSamples();
 	bool Start();
 	bool PreUpdate();
 	bool Update(float dt);
@@ -46,6 +47,8 @@ public:
 
 
 public:
+	//Soldier			soldierSample;
+
 	string			folder;
 	string			texture_path;
 	SDL_Texture*	texture = nullptr;

@@ -11,6 +11,7 @@ Soldier::Soldier()
 
 Soldier::Soldier(bool isPlayer1, pair<int, int> pos, Collider collider):Troop(Entity::entityType::SOLDIER,isPlayer1,pos, collider)
 {
+	BROFILER_CATEGORY("Soldier constructor", Profiler::Color::Red);
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
 
@@ -357,6 +358,7 @@ void Soldier::ChangeAnimation(pair<int, int> Speed, Entity* closest) {
 
 void Soldier::LoadAnimations(bool isPlayer1, string path)
 {
+	BROFILER_CATEGORY("Soldier Load Animations", Profiler::Color::Blue);
 	moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 

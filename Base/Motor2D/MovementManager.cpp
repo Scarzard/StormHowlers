@@ -135,6 +135,7 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 
 	destination = App->map->WorldToMap(destination.first, destination.second);
 
+	/*if (unit == group->Units.begin()){
 	bool everyone_arrived = true;
 	while (unit != group->Units.end()) {
 		if ((*unit)->info.UnitMovementState != MovementState::MovementState_NoState) {
@@ -144,6 +145,7 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 		unit++;
 	}
 	unit = group->Units.begin();
+	}*/
 
 	while (unit != group->Units.end())
 	{
@@ -167,7 +169,7 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 
 				// --- On call to Move, Units will request a path to the destination ---
 
-				if (everyone_arrived) {
+				if (true) {
 				
 				
 					if (group->IsGroupLead((*unit)) == false)

@@ -134,7 +134,7 @@ bool Player::DeployTroops(Entity::entityType type, int amount, pair<int,int> pos
 			collider.dimensions = { 1,1 };
 
 			Troop* e;
-			pos.first += deploying_counter * 3;
+			pos.first += deploying_counter * 9;
 			e = (Troop*)App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, pos, collider);
 			e->state = NOT_DEPLOYED;
 			e->isSelected = true;

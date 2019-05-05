@@ -9,6 +9,7 @@
 #include "Render.h"
 #include "Group.h"
 #include "MovementManager.h"
+#include "Brofiler/Brofiler.h"
 
 struct Collider
 {
@@ -49,6 +50,7 @@ public:
 public:
 	Entity() {};
 	Entity(Entity::entityType type, bool isPlayer1, pair<int, int> pos, Collider Collider) {
+		BROFILER_CATEGORY("Entity constructor", Profiler::Color::Blue);
 		this->type = type;
 	
 		char *s_type = (type > BARRACKS) ? "troops" : "buildings";
@@ -97,7 +99,7 @@ public:
 
 
 		// DEBUG PURPOSES
-		tex = App->tex->Load("maps/meta.png");
+		//tex = App->tex->Load("maps/meta.png");
 
 	};
 
