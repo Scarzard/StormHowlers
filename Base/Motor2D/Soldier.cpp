@@ -111,7 +111,7 @@ bool Soldier::Update(float dt)
 	}
 	
 	ActOnDestroyed();
-	ChangeAnimation(Speed,closest);
+	ChangeAnimation();
 
 	//DOES NOT CHANGE ANYTHING BY ITSELF - ONLY INPUT INSIDE -¬
 	ForceAnimations();
@@ -226,7 +226,7 @@ void Soldier::CleanUp() {
 
 }
 
-void Soldier::ChangeAnimation(pair<int, int> Speed, Entity* closest) {
+void Soldier::ChangeAnimation() {
 	Current_Animation = idle;
 	if (state == MOVING)
 	{
@@ -272,7 +272,7 @@ void Soldier::ChangeAnimation(pair<int, int> Speed, Entity* closest) {
 			Current_Animation = moving[SOUTHWEST];
 		}
 	}
-	else if (state == SHOOTING && closest != nullptr)
+	else if (state == SHOOTING)
 	{
 		
 		if (fromPlayer1)
@@ -284,7 +284,7 @@ void Soldier::ChangeAnimation(pair<int, int> Speed, Entity* closest) {
 			Current_Animation = shooting[NORTH];
 		}
 
-		if (closest->position == position)
+		if (info.closest->position == position)
 		{
 			if (fromPlayer1)
 			{
@@ -295,53 +295,53 @@ void Soldier::ChangeAnimation(pair<int, int> Speed, Entity* closest) {
 				Current_Animation = shooting[NORTH];
 			}
 		}
-		else if (closest->position.second <= position.second && closest->position.first >= position.first)
+		else if (info.closest->position.second <= position.second && info.closest->position.first >= position.first)
 		{
 			//noth
 			Current_Animation = shooting[NORTH];
-			if (closest->position.second == position.second)
+			if (info.closest->position.second == position.second)
 			{
 				//northwest
 				Current_Animation = shooting[NORTHWEST];
 			}
-			//else if (closest->position.second > position.second)
+			//else if (info.closest->position.second > position.second)
 			//{
 			//	//north
 			//	Current_Animation = shooting[NORTH];
 			//}
-			else if (closest->position.first==position.first)
+			else if (info.closest->position.first==position.first)
 			{
 				//northeast
 				Current_Animation = shooting[NORTHEAST];
 			}
 		}
-		else if (closest->position.first >= position.first && closest->position.second >= position.second)
+		else if (info.closest->position.first >= position.first && info.closest->position.second >= position.second)
 		{
 			//south
 			Current_Animation = shooting[SOUTH];
-			if (closest->position.second == position.second)
+			if (info.closest->position.second == position.second)
 			{
 				//southwest
 				Current_Animation = shooting[SOUTHWEST];
 			}
-			//else if (closest->position.second > position.second)
+			//else if (info.closest->position.second > position.second)
 			//{
 			//	//north
 			//	Current_Animation = shooting[NORTH];
 			//}
-			else if (closest->position.first == position.first)
+			else if (info.closest->position.first == position.first)
 			{
 				//southeast
 				Current_Animation = shooting[SOUTHEAST];
 			}
 		}
-		else if (closest->position.second > position.second && closest->position.first > position.first)
+		else if (info.closest->position.second > position.second && info.closest->position.first > position.first)
 		{
 			//east
 			Current_Animation = shooting[EAST];
 
 		}
-		else if (closest->position.second < position.second && closest->position.first < position.first)
+		else if (info.closest->position.second < position.second && info.closest->position.first < position.first)
 		{
 			//west
 			Current_Animation = shooting[WEST];
@@ -361,6 +361,7 @@ void Soldier::LoadAnimations(bool isPlayer1, string path)
 	BROFILER_CATEGORY("Soldier Load Animations", Profiler::Color::Blue);
 	moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+
 
 	idle = idle->LoadAnimation(path.data(), (isPlayer1) ? "red_idle" : "blue_idle");
 

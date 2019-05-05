@@ -720,9 +720,10 @@ list<Entity*> EntityManager::OrderEntities(list<Entity*> List)
 	ListOrder.push_back(List.front()); // push first element of List to OrderList
 
 	bool found = false;
-
+	BROFILER_CATEGORY("OrderEntities First For", Profiler::Color::Blue);
 	for (list<Entity*>::iterator tmp = List.begin(); tmp != List.end(); tmp++) // traverse entity list (unordered)
 	{
+		BROFILER_CATEGORY("OrderEntities Second For", Profiler::Color::Blue);
 		for (list<Entity*>::iterator tmp2 = ListOrder.begin(); tmp2 != ListOrder.end(); tmp2++) // traverse Ordered List
 		{
 			if (GetDepth(*tmp) < GetDepth(*tmp2)) // if tmp is further than tmp2
@@ -751,6 +752,7 @@ list<Entity*> EntityManager::OrderEntities(list<Entity*> List)
 
 int EntityManager::GetDepth(Entity* entity)
 {
+	BROFILER_CATEGORY("Get Depth", Profiler::Color::Blue);
 	pair<int,int> postemp = App->map->WorldToMap(entity->position.first, entity->position.second); // get map coords
 
 	return (postemp.first + postemp.second); // return depth
@@ -815,6 +817,7 @@ bool EntityManager::Is_inRange(pair<int, int> pos, int &distance, pair <int,int>
 
 bool EntityManager::FindInList(list<Entity*> List, pair <int,int> pos, bool fromplayer1, Entity::entityType type)
 {
+	BROFILER_CATEGORY("FindInList", Profiler::Color::Blue);
 	bool ret = false;
 	for (list<Entity*>::iterator tmp = List.begin(); tmp != List.end(); tmp++) // traverse entity list (unordered)
 	{

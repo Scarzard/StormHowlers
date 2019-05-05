@@ -18,7 +18,8 @@ public:
 	void ActOnDestroyed();
 	void CleanUp();
 
-	void ChangeAnimation(pair<int, int> Speed, Entity * closest);
+	void ChangeAnimation();
+
 
 
 	void LoadAnimations(bool isPlayer1, string path);
