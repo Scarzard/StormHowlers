@@ -112,7 +112,7 @@ void MainDefense::CleanUp()
 void MainDefense::LoadAnimations(bool isPlayer1, string path)
 {
 	//moving = vector<Animation*>(entityDir::MAX, nullptr);
-	shooting = vector<Animation*>(entityDir::MAX, nullptr);
+	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
 	//idle = idle->LoadAnimation(path.data(), (isPlayer1) ? "red_constructing" : "blue_constructing");
 
