@@ -489,9 +489,11 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			if (isPlayer1 == true)
 			{
 				App->player1->troops.push_back((Troop*)tmp);
+				App->player1->entities.push_back((Troop*)tmp);
 			}
 			else {
 				App->player2->troops.push_back((Troop*)tmp);
+				App->player2->entities.push_back((Troop*)tmp);
 			}
 		
 			entity_list.push_back(tmp); // add to main entity list
@@ -545,12 +547,15 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			if (isPlayer1 == true)
 			{
 				App->player1->buildings.push_back((Building*)tmp);
+				App->player1->entities.push_back((Building*)tmp);
 				App->player1->UpdateWalkabilityMap(P1_BUILDING, collider);
 			}
 			else // Player 2 -------------------------------
 			{
 				App->player2->buildings.push_back((Building*)tmp);
+				App->player2->entities.push_back((Building*)tmp);
 				App->player2->UpdateWalkabilityMap(P2_BUILDING, collider);
+
 			}
 			entity_list.push_back(tmp); // add to main entity list
 			entity_list = OrderEntities(entity_list);
@@ -559,112 +564,6 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 
 	return tmp;
 }
-
-//Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<int, int> position, Collider collider,Animation* animation)
-//{
-//	BROFILER_CATEGORY("EntityManager AddEntity", Profiler::Color::AliceBlue);
-//
-//	Entity* tmp = nullptr;
-//
-//	switch (type)
-//	{
-//	case Entity::entityType::TOWNHALL:
-//		tmp = new Townhall(isPlayer1, position, collider);
-//		break;
-//
-//	case Entity::entityType::MAIN_DEFENSE:
-//		tmp = new MainDefense(isPlayer1, position, collider);
-//		break;
-//
-//	case Entity::entityType::COMMAND_CENTER:
-//		tmp = new CmdCenter(isPlayer1, position, collider);
-//		break;
-//
-//	case Entity::entityType::DEFENSE_AOE:
-//		//tesla
-//		App->audio->PlayFx(TESLA_BUILD);
-//		tmp = new DefenseAoe(isPlayer1, position, collider);
-//		break;
-//
-//	case Entity::entityType::DEFENSE_TARGET:
-//		App->audio->PlayFx(SENTRYGUN_BUILD);
-//		tmp = new DefenseTarget(isPlayer1, position, collider);
-//		break;
-//
-//	case Entity::entityType::MINES:
-//		App->audio->PlayFx(MINE_BUILD);
-//		tmp = new Mines(isPlayer1, position, collider);
-//		break;
-//
-//	case Entity::entityType::WALLS:
-//		tmp = new Walls(isPlayer1, position, collider, animation);
-//		break;
-//
-//	case Entity::entityType::BARRACKS:
-//		App->audio->PlayFx(BARRACKS_BUILD);
-//		tmp = new Barracks(isPlayer1, position, collider);
-//		break;
-//
-//	case Entity::entityType::SOLDIER:
-//		tmp = new Soldier(isPlayer1, position, collider);
-//		break;
-//
-//	case Entity::entityType::ENGINEER:
-//		//tmp = new Engineer(isPlayer1, position, collider);
-//		break;
-//
-//	case Entity::entityType::TANKMAN:
-//		//tmp = new Tankman(isPlayer1, position, collider);
-//		break;
-//
-//	case Entity::entityType::INFILTRATOR:
-//		//tmp = new Infiltrator(isPlayer1, position, collider);
-//		break;
-//
-//	case Entity::entityType::WAR_HOUND:
-//		//tmp = new War_hound(isPlayer1, position, collider);
-//		break;
-//	}
-//
-//	if (tmp)
-//	{
-//		entity_list.push_back(tmp); // add to main entity list
-//		entity_list = OrderEntities(entity_list);
-//		if (isPlayer1 == true)
-//		{
-//			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building
-//			{
-//				App->player1->buildings.push_back((Building*)tmp);
-//				App->player1->UpdateWalkabilityMap(P1_BUILDING, collider);
-//			}
-//			else if (type > Entity::entityType::BARRACKS) //if troops
-//			{
-//				//tmp->isSelected = true;
-//				App->player1->troops.push_back((Troop*)tmp);
-//				//App->move_manager->CreateGroup(App->player1);
-//			}
-//		}
-//		else // Player 2 -------------------------------
-//		{
-//			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS)
-//			{
-//				App->player2->buildings.push_back((Building*)tmp);
-//				App->player2->UpdateWalkabilityMap(P2_BUILDING, collider);
-//			}
-//			else if (type > Entity::entityType::BARRACKS)
-//			{
-//				//tmp->isSelected = true;
-//				App->player2->troops.push_back((Troop*)tmp);
-//				//App->move_manager->CreateGroup(App->player2);
-//
-//			}
-//		}
-//	}
-//
-//
-//	return tmp;
-//
-//}
 
 char* EntityManager::GetName(Entity::entityType type) {
 	switch (type)
@@ -761,24 +660,25 @@ int EntityManager::GetDepth(Entity* entity)
 
 Entity* EntityManager::findEntity(pair <int,int> pos,bool fromplayer1, int attackrange)
 {
-	Entity* found = *entity_list.begin();
+	Player* enemy = (!fromplayer1)?App->player1:App->player2;
+
+	Entity* found = *enemy->entities.begin();
 	int distance = 0;
 	pair<int, int> map_pos = App->map->WorldToMap(found->position.first, found->position.second);
 	Is_inRange(pos,distance,map_pos,attackrange);
 	int min_dist = distance;
 
-	for (list<Entity*>::iterator tmp = entity_list.begin(); tmp != entity_list.end(); tmp++) // traverse entity list (unordered)
+	for (list<Entity*>::iterator tmp = enemy->entities.begin(); tmp != enemy->entities.end(); tmp++) // traverse entity list (unordered)
 	{
 		map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
 		
-		if ((*tmp)->fromPlayer1 == !fromplayer1 &&  Is_inRange(pos,distance,map_pos,attackrange)/*pos.second+attackrange >= map_pos.second  && map_pos.second >= pos.second - attackrange && map_pos.first==pos.first*/)
+		if (Is_inRange(pos,distance,map_pos,attackrange))
 		{
 
-			if (min_dist >= distance /*&& map_pos.first == pos.first*/)
+			if (min_dist >= distance )
 			{
 				found = (*tmp);
 				min_dist = distance;
-				//break;
 			}
 		}
 		

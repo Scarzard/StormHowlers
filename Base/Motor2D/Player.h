@@ -166,6 +166,7 @@ public:
 	int group = 0;
 
 	list<Troop*> troops;
+	list<Entity*> entities;
 
 	int SoldiersCreated = 0;
 	int TankmansCreated = 0;

@@ -1504,17 +1504,6 @@ bool Player::DeleteEntity(Entity* entity)
 				
 			item++;
 		}
-		list<Entity*>::iterator item2 = App->entitymanager->entity_list.begin();
-		while (item2 != App->entitymanager->entity_list.end())
-		{
-			if ((*item2) == entity)
-			{
-				App->entitymanager->entity_list.erase(item2);
-				break;
-			}
-
-			item2++;
-		}
 	}
 	else if (entity->type > Entity::entityType::BARRACKS) //if entity = troop
 	{
@@ -1527,17 +1516,30 @@ bool Player::DeleteEntity(Entity* entity)
 			}
 			item++;
 		}
-		list<Entity*>::iterator item2 = App->entitymanager->entity_list.begin();
-		while (item2 != App->entitymanager->entity_list.end())
+		
+	}
+	list<Entity*>::iterator item2 = App->entitymanager->entity_list.begin();
+	while (item2 != App->entitymanager->entity_list.end())
+	{
+		if ((*item2) == entity)
 		{
-			if ((*item2) == entity)
-			{
-				App->entitymanager->entity_list.erase(item2);
-				break;
-			}
-
-			item2++;
+			App->entitymanager->entity_list.erase(item2);
+			break;
 		}
+
+		item2++;
+	}
+
+	item2 = entities.begin();
+	while (item2 != entities.end())
+	{
+		if ((*item2) == entity)
+		{
+			entities.erase(item2);
+			break;
+		}
+
+		item2++;
 	}
 	return true;
 }
