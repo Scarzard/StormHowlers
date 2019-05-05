@@ -798,7 +798,7 @@ bool EntityManager::Is_inRange(pair<int, int> pos, int &distance, pair <int,int>
 	//determina si esta en el rango
 
 	pair <int, int> vector_distance = { position.first - pos.first, position.second - pos.second };
-	distance = (int)(sqrt(pow(vector_distance.first, 2) + pow(vector_distance.second, 2)));
+	distance = (int)(sqrt(pow(vector_distance.first, 2) + pow(vector_distance.second/2, 2)));
 
 	return distance <= range;
 }

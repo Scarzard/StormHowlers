@@ -76,10 +76,6 @@ bool Soldier::Update(float dt)
 						info.closest->TakeDamage(damage_lv[level]);
 						timer.Start();
 						App->audio->PlayFx(SOLDIER_ATTACK);
-						if (info.closest->health <= 0) {
-							state = TROOP_IDLE;
-							info.closest = nullptr;
-						}
 					}
 					//LOG("Closest FOUND - IN range => SHOOTING");
 
@@ -87,6 +83,7 @@ bool Soldier::Update(float dt)
 			}
 			else {
 				state = TROOP_IDLE;
+				info.closest = nullptr;
 			}
 		}
 		//ENTITY TO ATTACK IS NOT FOUND OR JUST DIED
@@ -148,7 +145,7 @@ bool Soldier::Is_inRange(pair<int, int> pos, int &distance, pair <int, int> posi
 	//determina si esta en el rango
 
 	pair <int, int> vector_distance = { position.first - pos.first, position.second - pos.second };
-	distance = (int)(sqrt(pow(vector_distance.first, 2) + pow(vector_distance.second, 2)));
+	distance = (int)(sqrt(pow(vector_distance.first, 2) + pow(vector_distance.second/2, 2)));
 
 	return distance <= range;
 }
