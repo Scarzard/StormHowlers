@@ -83,8 +83,8 @@ bool Scene::Start()
 	/*App->player1->isPlayer1 = true;
 	App->player2->isPlayer1 = false;
 */
-	App->player1->currentUI = Player::CURRENT_UI::NONE;
-	App->player2->currentUI = Player::CURRENT_UI::NONE;
+	App->player1->currentUI = Player::CURRENT_UI::CURR_MAIN;
+	App->player2->currentUI = Player::CURRENT_UI::CURR_MAIN;
 
 	App->map->debug_tex = App->tex->Load("maps/meta.png");
 
@@ -702,6 +702,10 @@ bool Scene::Start()
 	world_clock.Start();
 	world_seconds.Start();
 	size_timer.Start();
+
+
+	App->player1->UpdateFocus(App->player1->currentUI);
+	App->player2->UpdateFocus(App->player2->currentUI);
 	
 
 	return true;
@@ -775,6 +779,8 @@ bool Scene::Update(float dt)
 	App->input->GetMousePosition(pos.first, pos.second);
 	pos = App->render->ScreenToWorld(pos.first, pos.second);
 	pos.first--;
+
+	LOG("UI: %u", App->player1->currentUI);
 
 	//Enter GodMode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) //Godmode

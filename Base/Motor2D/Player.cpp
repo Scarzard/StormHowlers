@@ -62,6 +62,8 @@ bool Player::Start()
 	UI_troop_type = Entity::entityType::SOLDIER;
 
 	isBuilding = isDeploying = gold_added = isCasting = Y_pressed = isPaused = false;
+
+	Y_pressed = true;
   
 	currentTile = { 13,0 };
 
@@ -89,7 +91,7 @@ bool Player::Update(float dt)
 		}
 
 		//--- Press X (Square) To SELECT BUILDINGS
-		if (gamepad.Controller[BUTTON_X] == KEY_UP && currentUI == CURRENT_UI::NONE)
+		if (gamepad.Controller[BUTTON_X] == KEY_UP && currentUI == CURRENT_UI::CURR_MAIN)
 		{
 			building_selected = buildings.begin();
 			last_building = buildings.end();
@@ -99,7 +101,7 @@ bool Player::Update(float dt)
 		else if (gamepad.Controller[BUTTON_B] == KEY_UP && currentUI == CURRENT_UI::CURR_SELECTING_BUILDING)
 		{
 			building_selected._Ptr = nullptr;
-			currentUI = CURRENT_UI::NONE;
+			currentUI = CURRENT_UI::CURR_MAIN;
 		}
 
 		// DRAW QUAD on SELECTED BUILDING 
@@ -120,8 +122,7 @@ bool Player::Update(float dt)
 
 		
 		// Button with focus changes state to HOVER 
-		if (currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::ENDGAME && currentUI != CURRENT_UI::CURR_WIN_SCREEN && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
-
+		if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::ENDGAME && currentUI != CURRENT_UI::CURR_WIN_SCREEN && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
 		{
 			(*focus)->state = UI_Element::State::HOVER;
 		}
@@ -356,7 +357,7 @@ bool Player::Update(float dt)
 		}
 
 		// Go back
-		if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
+		if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::CURR_MAIN)
 		{
 			if(focus._Ptr != nullptr)
 				(*focus)->state = UI_Element::State::IDLE;
@@ -403,16 +404,16 @@ bool Player::Update(float dt)
 			}
 		}
 
-		// Enter to UI ingame Menus
-		if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
-		{
-			if (App->scene->active)
-				currentUI = CURRENT_UI::CURR_MAIN;
+		//// Enter to UI ingame Menus
+		//if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
+		//{
+		//	if (App->scene->active)
+		//		currentUI = CURRENT_UI::CURR_MAIN;
 
-			Y_pressed = true;
+		//	Y_pressed = true;
 
-			UpdateFocus(currentUI);
-		}
+		//	UpdateFocus(currentUI);
+		//}
 
 
 		//Change the side images from the menus
@@ -439,7 +440,7 @@ bool Player::Update(float dt)
 			if (currentUI != CURRENT_UI::CURR_GENERAL && Create_abilities != nullptr)
 				Create_abilities->visible = false;
 
-			if(currentUI == NONE)
+			if(currentUI == CURR_MAIN)
 				SelectBuilding->visible = true;
 			else
 				SelectBuilding->visible = false;
@@ -1060,13 +1061,11 @@ void Player::GotoPrevWindows(uint data)
 	switch (data)
 	{
 	case Player::CURRENT_UI::CURR_MAIN:
-		currentUI = CURRENT_UI::NONE;
-		Y_pressed = false;
-		UpdateVisibility();
+		
 		break;
 
 	case Player::CURRENT_UI::CURR_GENERAL:
-		currentUI = CURRENT_UI::NONE;
+		currentUI = CURRENT_UI::CURR_MAIN;
 		UpdateVisibility();
 		break;
 
