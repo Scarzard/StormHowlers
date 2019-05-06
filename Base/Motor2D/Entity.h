@@ -99,7 +99,7 @@ public:
 
 
 		// DEBUG PURPOSES
-		//tex = App->tex->Load("maps/meta.png");
+		tex = App->tex->Load("maps/meta.png");
 
 	};
 

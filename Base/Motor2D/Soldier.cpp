@@ -93,7 +93,7 @@ bool Soldier::Update(float dt)
 				//LOG("Closest NOT FOUND - SEARCHING");
 
 				info.closest = App->entitymanager->findEntity(map_pos, fromPlayer1, range);
-				range = (info.closest == nullptr) ? range + 20 : original_range;
+				range = (info.closest == nullptr) ? range + 10 : original_range;
 
 			}
 		}
