@@ -44,19 +44,19 @@ bool DefenseAoe::Update(float dt)
 	BROFILER_CATEGORY("DefenseAoe Update", Profiler::Color::SandyBrown);
 
 	//Checks where to look for enemies
-	Player* tmpMod = (fromPlayer1) ? App->player2 : App->player1;
-	list<Troop*>::iterator tmp = tmpMod->troops.begin();
+	Player* enemy = (fromPlayer1) ? App->player2 : App->player1;
+	list<Troop*>::iterator tmp = enemy->troops.begin();
 
 	// Finds the closest one
 	vector<pair<int, Troop*>> enemies;
 
-	if (tmp != tmpMod->troops.end()) {
+	if (tmp != enemy->troops.end()) {
 		int d = 0;
 
 		// Gets first distance
 		Is_inRange((*tmp)->position, d);
 
-		while (tmp != tmpMod->troops.end())
+		while (tmp != enemy->troops.end())
 		{
 			if ((*tmp)->alive && Is_inRange((*tmp)->position, d)) {
 

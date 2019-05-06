@@ -1,7 +1,6 @@
 #ifndef __Soldier_H__
 #define __Soldier_H__
 #include "Troop.h"
-#include "EntityManager.h"
 
 class Soldier :	public Troop
 {
@@ -12,6 +11,7 @@ public:
 
 	bool Update(float dt);
 	void SetDestination();
+	Entity * findEntity(pair<int, int> pos, bool fromplayer1, int attackrange);
 	bool Is_inRange(pair<int, int> pos, int & distance, pair<int, int> position, int range);
 	void PrintState();
 	void ForceAnimations();

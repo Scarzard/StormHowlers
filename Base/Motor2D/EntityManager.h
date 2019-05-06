@@ -4,6 +4,8 @@
 #include "Module.h"
 #include "Entity.h"
 #include "Walls.h"
+#include "Soldier.h"
+
 
 class Entity;
 
@@ -49,6 +51,8 @@ public:
 
 	bool Draw(float dt);
 
+	void LoadAnimationSoldier(Troop * troop);
+
 	Entity* AddEntity(bool player1, Entity::entityType type, pair<int, int> position, Collider collider, Animation* animation = nullptr);
 	char * GetName(Entity::entityType type);
 	void DeleteAllEntities();
@@ -73,8 +77,9 @@ public:
 
 
 public:
-	//Soldier			soldierSample;
 
+	Soldier			soldier_p1_sample;
+	Soldier			soldier_p2_sample;
 	string			folder;
 	string			texture_path;
 	SDL_Texture*	texture = nullptr;
@@ -86,6 +91,9 @@ public:
 	bool godmode = false;
 	bool pathfinding = false;
 	bool pathfinding2 = false;
+
+	
 };
+
 
 #endif //

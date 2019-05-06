@@ -17,10 +17,6 @@ Soldier::Soldier(bool isPlayer1, pair<int, int> pos, Collider collider):Troop(En
 
 	destination = pos;
 	original_range = range;
-	//Managed in entity.h constructor
-	//rate_of_fire = 1;
-	//fromPlayer1 = isPlayer1;
-	//type = Entity::entityType::SOLDIER;
 
 }
 
@@ -92,7 +88,7 @@ bool Soldier::Update(float dt)
 			if (state == TROOP_IDLE) {
 				//LOG("Closest NOT FOUND - SEARCHING");
 
-				info.closest = App->entitymanager->findEntity(map_pos, fromPlayer1, range);
+				info.closest = findEntity(map_pos, fromPlayer1, range);
 				range = (info.closest == nullptr) ? range + 10 : original_range;
 
 			}
@@ -126,18 +122,50 @@ void Soldier::SetDestination()
 		if (!App->pathfinding->IsWalkable(destination)) {
 			destination.second += 2;
 			if (!App->pathfinding->IsWalkable(destination)) {
-
 				destination.first -= 1;
 				destination.second -= 1;
 				if (!App->pathfinding->IsWalkable(destination)) {
 					destination.first += 2;
-
 				}
 			}
 
 		}
 
 	}
+}
+
+Entity* Soldier::findEntity(pair <int, int> pos, bool fromplayer1, int attackrange)
+{
+	Player* enemy = (!fromplayer1) ? App->player1 : App->player2;
+
+	Entity* found = *enemy->entities.begin();
+	int distance = 0;
+	pair<int, int> map_pos = App->map->WorldToMap(found->position.first, found->position.second);
+	Is_inRange(pos, distance, map_pos, attackrange);
+	int min_dist = distance;
+
+	for (list<Entity*>::iterator tmp = enemy->entities.begin(); tmp != enemy->entities.end(); tmp++) // traverse entity list (unordered)
+	{
+		map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+		if (Is_inRange(pos, distance, map_pos, attackrange))
+		{
+
+			if (min_dist >= distance)
+			{
+				found = (*tmp);
+				min_dist = distance;
+			}
+		}
+
+	}
+	if (min_dist <= attackrange)
+	{
+		return found;
+	}
+
+	return nullptr;
+
 }
 bool Soldier::Is_inRange(pair<int, int> pos, int &distance, pair <int, int> position, int range) {
 
@@ -169,7 +197,7 @@ void Soldier::PrintState() {
 		LOG("STATE = REST");
 		break;
 	case MAX_STATE:
-		LOG("MOVING");
+		LOG("ERROR : SOLDIER INSIDE MAX_STATE");
 		break;
 	default:
 		break;
@@ -363,7 +391,7 @@ void Soldier::ChangeAnimation() {
 void Soldier::LoadAnimations(bool isPlayer1, string path)
 {
 	BROFILER_CATEGORY("Soldier Load Animations", Profiler::Color::Blue);
-	moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+	/*moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
 
@@ -401,5 +429,5 @@ void Soldier::LoadAnimations(bool isPlayer1, string path)
 	{
 		idle->SetCurrentFrame(6);
 	}
-	Current_Animation = moving[NORTH];
+	Current_Animation = moving[NORTH];*/
 }

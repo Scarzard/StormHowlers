@@ -2,6 +2,7 @@
 #include "Log.h"
 #include "App.h"
 #include "Pathfinding.h"
+#include "Brofiler/Brofiler.h"
 
 
 Pathfinding::Pathfinding() : Module(), map(NULL), width(0), height(0)
@@ -85,6 +86,7 @@ void Pathfinding::ChangeWalkability(const pair<int, int>& pos, char cell_type) c
 // ---------------------------------------------------------------------------------
 std::list<PathNode>::iterator PathList::Find(const pair<int,int>& point)
 {
+	BROFILER_CATEGORY("Pathfinding: Find", Profiler::Color::AliceBlue);
 	std::list<PathNode>::iterator item = list.begin();
 
 	while (item != list.end())
@@ -104,6 +106,7 @@ std::list<PathNode>::iterator PathList::Find(const pair<int,int>& point)
 // ---------------------------------------------------------------------------------
 std::list<PathNode>::iterator PathList::GetNodeLowestScore()
 {
+	BROFILER_CATEGORY("Pathfinding: GetNodeLowestScore", Profiler::Color::AliceBlue);
 	std::list<PathNode>::iterator ret;
 	int min = 65535;
 
@@ -138,6 +141,8 @@ PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), 
 // ----------------------------------------------------------------------------------
 uint PathNode::FindWalkableAdjacents(PathList& list_to_fill)
 {
+	BROFILER_CATEGORY("Pathfinding: FindWalkableAdjacents", Profiler::Color::AliceBlue);
+
 	pair<int,int> cell;
 
 	// north
@@ -220,7 +225,7 @@ int PathNode::CalculateF(const pair<int,int>& destination)
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
 int Pathfinding::PropagateAStar(const pair<int,int>& origin, const pair<int,int>& destination) {
-
+	BROFILER_CATEGORY("Pathfinding: AStar", Profiler::Color::AliceBlue);
 	int ret = -1;
 
 	PathList open;
@@ -285,6 +290,7 @@ int Pathfinding::PropagateAStar(const pair<int,int>& origin, const pair<int,int>
 
 int Pathfinding::CreatePath(const pair<int,int>& origin, const pair<int,int>& destination, bool JPS_active) {
 
+	BROFILER_CATEGORY("Pathfinding: CreatePath", Profiler::Color::AliceBlue);
 	int ret = -1;
 
 	if (!IsWalkable(origin)) {
@@ -312,7 +318,7 @@ int Pathfinding::CreatePath(const pair<int,int>& origin, const pair<int,int>& de
 // JPS algorithm: returns number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
 int Pathfinding::PropagateJPS(const pair<int,int>& origin, const pair<int,int>& destination) {
-
+	BROFILER_CATEGORY("Pathfinding: JPS", Profiler::Color::AliceBlue);
 	int ret = -1;
 
 	PathList open;
@@ -378,6 +384,7 @@ int Pathfinding::PropagateJPS(const pair<int,int>& origin, const pair<int,int>& 
 
 PathList PathNode::PruneNeighbours(const pair<int,int>& destination, Pathfinding* PF_Module) {
 
+	BROFILER_CATEGORY("Pathfinding: PruneNeighbours", Profiler::Color::AliceBlue);
 	PathList ret;
 
 	//TODO 2: Here we do the step that A* does in its core and that we deleted in TODO1
@@ -406,7 +413,7 @@ PathList PathNode::PruneNeighbours(const pair<int,int>& destination, Pathfinding
 
 
 PathNode* Pathfinding::Jump(pair<int,int> current_position, pair<int,int> direction, const pair<int,int>& destination, PathNode* parent) {
-
+	BROFILER_CATEGORY("Pathfinding: Jump", Profiler::Color::AliceBlue);
 	//Determine next possible Jump Point's Position
 	pair<int,int> JumpPoint_pos(current_position.first + direction.first, current_position.second + direction.second);
 
