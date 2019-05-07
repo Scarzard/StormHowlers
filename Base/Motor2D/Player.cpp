@@ -52,7 +52,11 @@ bool Player::Awake(pugi::xml_node& config) {
 bool Player::Start()
 {
 
-	gold = gold_persecond = actual_capacity = total_capacity = time_iterator = number_of_troops = BuildingCost = TroopCost = 0;
+	actual_capacity = total_capacity = time_iterator = number_of_troops = BuildingCost = TroopCost = 0;
+
+	gold = 3500;
+	gold_persecond = 0;
+
 	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = 0;
 
 	selected_texture = { 0,0, 100, 100 };
@@ -404,17 +408,6 @@ bool Player::Update(float dt)
 			}
 		}
 
-		//// Enter to UI ingame Menus
-		//if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
-		//{
-		//	if (App->scene->active)
-		//		currentUI = CURRENT_UI::CURR_MAIN;
-
-		//	Y_pressed = true;
-
-		//	UpdateFocus(currentUI);
-		//}
-
 
 		//Change the side images from the menus
 		if (App->scene->active)
@@ -742,8 +735,12 @@ bool Player::Update(float dt)
 
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 			{
-				//play fx (build);
-				App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ },collider);
+				
+				if(gold >= CheckCost(type))
+					App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ },collider);
+				else
+					App->audio->PlayFx(WRONG);
+				
 
 				if (type > Entity::entityType::BARRACKS)//if troops
 				{
@@ -967,19 +964,22 @@ void Player::UpdateWalkabilityMap(bool isWalkable, Collider collider) //update w
 	}
 }
 
-int Player::CheckCost(Entity* entity)
+int Player::CheckCost(Entity::entityType type)
 {
-	if (entity->type == Entity::entityType::BARRACKS)
+	if (type == Entity::entityType::BARRACKS)
 		return 3000;
 
-	else if (entity->type == Entity::entityType::DEFENSE_AOE)
+	else if (type == Entity::entityType::DEFENSE_AOE)
 		return 2000;
 
-	else if (entity->type == Entity::entityType::DEFENSE_TARGET)
+	else if (type == Entity::entityType::DEFENSE_TARGET) // TESLA (esta al reves?)
 		return 3500;
 
-	else if (entity->type == Entity::entityType::MINES)
+	else if (type == Entity::entityType::MINES)
 		return 2000;
+
+	else if (type == Entity::entityType::MAIN_DEFENSE) // Torreta single target (esta al reves?)
+		return 3500;
 
 	else
 		return 0;

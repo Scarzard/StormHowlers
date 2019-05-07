@@ -780,7 +780,7 @@ bool Scene::Update(float dt)
 	pos = App->render->ScreenToWorld(pos.first, pos.second);
 	pos.first--;
 
-	LOG("UI: %u", App->player1->currentUI);
+	LOG("GOLD: %i", App->player1->gold);
 
 	//Enter GodMode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) //Godmode
@@ -1054,7 +1054,7 @@ bool Scene::Update(float dt)
 			
 
 			 if (increase_decresease>=2 )
-			{
+			 {
 				change_font_size = false;
 				reference_active = false;
 				increase_size = true;
@@ -1062,7 +1062,7 @@ bool Scene::Update(float dt)
 				ui_timer->visible = false;
 			
 				
-			}
+			 }
 		}
 
 	}

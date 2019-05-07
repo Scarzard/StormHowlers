@@ -489,7 +489,9 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		entity_list = OrderEntities(entity_list);
 		if (isPlayer1 == true)
 		{
-			App->player1->gold -= App->player1->CheckCost(tmp);
+			if(App->player1->gold >= App->player1->CheckCost(tmp->type))
+				App->player1->gold -= App->player1->CheckCost(tmp->type);
+
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building
 			{
 				App->player1->buildings.push_back((Building*)tmp);
@@ -504,7 +506,9 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		}
 		else // Player 2 -------------------------------
 		{
-			App->player2->gold -= App->player2->CheckCost(tmp);
+			if (App->player2->gold >= App->player2->CheckCost(tmp->type))
+				App->player2->gold -= App->player2->CheckCost(tmp->type);
+			
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS)
 			{
 				App->player2->buildings.push_back((Building*)tmp);

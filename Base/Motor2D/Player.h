@@ -97,7 +97,7 @@ public:
 	void UpdateWalkabilityMap(bool isWalkable, Collider collider);
 	bool DeleteEntity(Entity* entity);
 
-	int CheckCost(Entity* entity);
+	int CheckCost(Entity::entityType type);
 	int GoldKill(Entity* entity);
 	
 public:
@@ -115,8 +115,8 @@ public:
 	bool isPlayer1 = false;
 	string team;
 
-	uint gold = 0;
-	uint gold_persecond = 0;
+	int gold = 0;
+	int gold_persecond = 0;
 	bool gold_added = false;
 
 	uint time_iterator = 0;
