@@ -5,7 +5,7 @@
 #include "MovementManager.h"
 
 class Troop;
-
+class Entity;
 
 class Group 
 {
@@ -28,24 +28,29 @@ public:
 	int GetSize();
 
 	// --- Check Movement Request ---
-	void CheckForMovementRequest(float dt);
+	bool CheckForMovementRequest(float dt, pair<int,int> destination);
+
+	bool CheckForMovementIndividual(Troop * troop, float dt, pair<int, int> destination);
 
 	// --- Enquiries ---
 	bool IsGroupLead(Troop* entity);
+	Troop* GetLead();
 	void SetUnitGoalTile(Troop* entity);
 	bool FindFreeAdjacents(pair<int,int> * base_tile);
 	bool IsTileFree(pair<int,int>* adjacent);
 
+	std::list <Troop*> Units;
 private:
 	pair<int,int> last_goal = { 0,0 };
 
-	std::list <Troop*> Units;
 	std::list <pair<int,int>*> Occupied_tiles;
 };
 
 struct Group_Unit
 {
 	bool IsSelected = false;
+	bool everyone_arrived = false;
+	Entity* closest = nullptr;
 	//Entity* lead = nullptr;
 
 	// --- Path to follow ---

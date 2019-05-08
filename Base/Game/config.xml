@@ -114,7 +114,7 @@
         <health lvl1="100" lvl2="120" lvl3="150"/>
         <size width="2" height="2"/>
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
-        <damage lvl1="15" lvl2="150" lvl3="200"/>
+        <damage lvl1="50" lvl2="150" lvl3="200"/>
         <attack rate="2" targets="5" range="200"/>
       </Tesla>
 
@@ -123,7 +123,7 @@
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <size width="3" height="3"/>
         <damage lvl1="10" lvl2="150" lvl3="200"/>
-        <attack rate="2" targets="5" range="50"/>
+        <attack rate="2" targets="5" range="150"/>
       </aoe>
       
       <Barracks>
@@ -152,7 +152,7 @@
         <size width="1" height="1"/>
         <damage lvl1="10" lvl2="150" lvl3="200"/>
         <attack rate="1" targets="1" range="3"/>
-        <speed value="150"/>
+        <speed value="200"/>
       </BasicSoldier>
       <tankman>
         <health lvl1="100" lvl2="120" lvl3="150"/>
