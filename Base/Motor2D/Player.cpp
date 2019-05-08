@@ -257,7 +257,7 @@ bool Player::Update(float dt)
 				TroopCost = 1250 * number_of_troops;
 			}
 
-			if (gamepad.Controller[BUTTON_A] == KEY_UP)
+			if (gamepad.Controller[BUTTON_A] == KEY_UP && gold >= TroopCost)
 			{
 				CreateTroop(UI_troop_type, number_of_troops);
 				Update_troop_image(UI_troop_type);
@@ -291,10 +291,11 @@ bool Player::Update(float dt)
 
 			TroopCost = 2000 * number_of_troops; //2000 RANDOM INVULNERABILITY PRICE 
 
-			if (gamepad.Controller[BUTTON_A] == KEY_UP)
+			if (gamepad.Controller[BUTTON_A] == KEY_UP && gold >= TroopCost)
 			{
 				CreateAbility(ABILITIES::INVULNERABLE, number_of_troops);
 				GotoPrevWindows(currentUI);
+				gold -= TroopCost;
 			}
 
 		}
