@@ -64,9 +64,92 @@ bool Player::Start()
 	isBuilding = isDeploying = gold_added = isCasting = Y_pressed = isPaused = false;
   
 	currentTile = { 13,0 };
-
 	
 	return true;
+}
+void Player::RectangleSelection()
+{
+	pair<int, int> mouse_pos;
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	mouse_pos = App->render->ScreenToWorld(x, y);
+
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+		rectangle_origin.x = mouse_pos.first;
+		rectangle_origin.y = mouse_pos.second;
+
+	}
+
+	else if (std::abs(mouse_pos.first - rectangle_origin.x) >= 5 && std::abs(mouse_pos.second - rectangle_origin.y) >= 5 && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
+		// --- Rectangle size ---
+		rectangle_origin.w = mouse_pos.first - rectangle_origin.x;
+		rectangle_origin.h = mouse_pos.second - rectangle_origin.y;
+
+		// --- Draw Rectangle ---
+		//SDL_Rect SRect = { rectangle_origin.x, rectangle_origin.y, rectangle_origin.w, rectangle_origin.h };
+		App->render->DrawQuad(rectangle_origin, 255, 255, 255, 255, false);
+
+		// --- Once we get to the negative side of SRect numbers must be adjusted ---
+		if (rectangle_origin.w < 0) {
+			//SRect.x = mouse_pos.first;
+			rectangle_origin.w *= -1;
+		}
+		if (rectangle_origin.h < 0) {
+			//SRect.y = mouse_pos.second;
+			rectangle_origin.h *= -1;
+		}
+
+		// --- Check for Units in the rectangle, select them ---
+
+		App->move_manager->SelectEntities_inRect(rectangle_origin);
+
+		//LOG("rect is x%i y%i w%i h%i", SRect.x, SRect.y, SRect.w, SRect.h);
+	}
+
+	//else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+	//	App->Mmanager->CreateGroup();
+
+}
+
+bool Player::DeployTroops(Entity::entityType type, int amount, pair<int,int> pos) {
+
+	if (deploy_state == DeployState::START) {
+		deploying_counter = 0;
+
+		std::list<Troop*>::iterator entity = troops.begin();
+		while (entity != troops.end())
+		{
+			(*entity)->isSelected = false;
+			entity++;
+		}
+		deploy_state = DeployState::DEPLOYING;
+	}
+	else if (deploy_state == DeployState::DEPLOYING){
+		if (deploying_counter >= amount) {
+			deploy_state = DeployState::END;
+		}
+		else {
+			App->input->GetMousePosition(pos.first, pos.second);
+			pos = App->render->ScreenToWorld(pos.first, pos.second);
+			collider.dimensions = { 1,1 };
+
+			Troop* e;
+			pos.first += deploying_counter * 9;
+			e = (Troop*)App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, pos, collider);
+			e->state = NOT_DEPLOYED;
+			e->isSelected = true;
+
+			deploying_counter++;
+		}
+	}
+	else if (deploy_state == DeployState::END) {
+		deploying_counter = 0;
+		isDeploying = false;
+		groups.push_back(App->move_manager->CreateGroup(this));
+		group++;
+		return isDeploying;
+	}
+
 }
 
 bool Player::Update(float dt)
@@ -82,6 +165,18 @@ bool Player::Update(float dt)
 
 	if (!App->scene->endgame)
 	{
+		RectangleSelection();
+
+		if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) {
+			std::list <Troop*>::const_iterator unit = troops.begin();
+			while (unit != troops.end()) {
+				if ((*unit)->isSelected) {
+					(*unit)->health = -1;
+				}
+				unit++;
+			}
+		}
+
 		//Preview all player1 entities with M
 		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 			isBuilding = !isBuilding;
@@ -92,6 +187,12 @@ bool Player::Update(float dt)
 			type = (Entity::entityType)((curr++) % (int)Entity::entityType::TANKMAN);
 
 		}
+		if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && (deploy_state == DeployState::END)) {
+
+			deploy_state = DeployState::START;
+		}
+
+		DeployTroops(Entity::entityType::SOLDIER, 9, { 0,0 });
 
 		//--- Press X (Square) To SELECT BUILDINGS
 		if (gamepad.Controller[BUTTON_X] == KEY_UP && currentUI == CURRENT_UI::NONE)
@@ -258,6 +359,7 @@ bool Player::Update(float dt)
 				CreateTroop(UI_troop_type, number_of_troops);
 				Update_troop_image(UI_troop_type);
 				GotoPrevWindows(currentUI);
+				gold -= TroopCost;
 			}
 
 		}
@@ -343,7 +445,7 @@ bool Player::Update(float dt)
 		{
 			if ((*focus) == Def_AOE_icon)
 			{
-				BuildingCost = 7000;
+				BuildingCost = 2000;
 			}
 			else if ((*focus) == Def_Target_icon)
 			{
@@ -351,11 +453,11 @@ bool Player::Update(float dt)
 			}
 			else if ((*focus) == Mines_icon)
 			{
-				BuildingCost = 1000;
+				BuildingCost = 2000;
 			}
 			else if ((*focus) == Barracks_icon)
 			{
-				BuildingCost = 4500;
+				BuildingCost = 3000;
 			}
 		}
 
@@ -705,8 +807,6 @@ bool Player::Update(float dt)
 			pos = App->render->ScreenToWorld(pos.first, pos.second);
 			//pos.first--;
 
-			// Swap once commit to work with controller
-
 			if (type == Entity::entityType::TOWNHALL)
 			{
 				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
@@ -787,7 +887,7 @@ bool Player::Update(float dt)
 				}
 				isBuilding = false;
 				
-				App->audio->PlayFx(WRONG - 1);
+				App->audio->PlayFx(WRONG);
 				//play fx (error);
 			}
 		}
@@ -957,17 +1057,46 @@ Collider Player::GetCollider(pair<int, int> dimensions, pair<int, int> topTile_p
 }
 
 
-void Player::UpdateWalkabilityMap(bool isWalkable, Collider collider) //update walkable tiles
+void Player::UpdateWalkabilityMap(char cell_type, Collider collider) //update walkable tiles
 {
 	for (int i = 0; i < collider.tiles.size(); ++i)
 	{
 		pair <int, int> pos = App->map->WorldToMap(collider.tiles[i].first, collider.tiles[i].second);
-		if (App->pathfinding->GetTileAt(pos) != isWalkable)
+		if (App->pathfinding->GetTileAt(pos) != cell_type)
 		{
-			App->pathfinding->ChangeWalkability(pos, isWalkable);
+			App->pathfinding->ChangeWalkability(pos, cell_type);
+			// Debug drawing
 			App->map->walkability_layer->Set(pos.first, pos.second, 1);
 		}
 	}
+}
+
+int Player::CheckCost(Entity* entity)
+{
+	if (entity->type == Entity::entityType::BARRACKS)
+		return 3000;
+
+	else if (entity->type == Entity::entityType::DEFENSE_AOE)
+		return 2000;
+
+	else if (entity->type == Entity::entityType::DEFENSE_TARGET)
+		return 3500;
+
+	else if (entity->type == Entity::entityType::MINES)
+		return 2000;
+
+	else
+		return 0;
+
+}
+
+int Player::GoldKill(Entity* entity)
+{
+	if (entity->type == Entity::entityType::SOLDIER)
+		return 100;
+
+	else
+		return 0;
 }
 
 void Player::UpdateFocus(uint data)
@@ -1421,34 +1550,34 @@ void Player::DoLogic(UI_Element* data)
 		}
 		else
 		{
-			App->audio->PlayFx(WRONG -1);
+			App->audio->PlayFx(WRONG);
 		}
 		
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_TANKMAN:
 		//
-		App->audio->PlayFx(WRONG - 1);
+		App->audio->PlayFx(WRONG);
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_INFILTRATOR:
 		//
-		App->audio->PlayFx(WRONG - 1);
+		App->audio->PlayFx(WRONG);
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_ENGINEER:
 		//
-		App->audio->PlayFx(WRONG - 1);
+		App->audio->PlayFx(WRONG);
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_WARHOUND:
 		//
-		App->audio->PlayFx(WRONG - 1);
+		App->audio->PlayFx(WRONG);
 		break;
 
 	case::UI_Element::Action::ACT_CAST_MISSILES:
 		//
-		App->audio->PlayFx(WRONG - 1);
+		App->audio->PlayFx(WRONG);
 		break;
 
 	case::UI_Element::Action::ACT_CAST_INVULNERABILITY:
@@ -1533,6 +1662,8 @@ void Player::DoLogic(UI_Element* data)
 
 bool Player::DeleteEntity(Entity* entity)
 {
+	UpdateWalkabilityMap(WALKABLE, entity->collider);
+
 	entity->CleanUp();
 
 	if (entity->type >= Entity::entityType::TOWNHALL && entity->type <= Entity::entityType::BARRACKS) //if entity = building
@@ -1543,43 +1674,55 @@ bool Player::DeleteEntity(Entity* entity)
 			if ((*item) == entity)
 			{
 				buildings.erase(item);
-				
+				break;
 			}
 				
 			item++;
-		}
-		list<Entity*>::iterator item2 = App->entitymanager->entity_list.begin();
-		while (item2 != App->entitymanager->entity_list.end())
-		{
-			if ((*item2) == entity)
-			{
-				App->entitymanager->entity_list.erase(item2);
-				
-			}
-
-			item2++;
 		}
 	}
 	else if (entity->type > Entity::entityType::BARRACKS) //if entity = troop
 	{
+		// Update Gold per Kill
+		if (isPlayer1 == true)
+			App->player2->gold += GoldKill(entity);
+
+		else if (isPlayer1 == false)
+			App->player1->gold += GoldKill(entity);
+		// ---
+
 		list<Troop*>::iterator item = troops.begin();
 		while (item != troops.end())
 		{
-			if ((*item) == entity)
+			if ((*item) == entity) {
 				troops.erase(item);
+				break;
+			}
 			item++;
 		}
-		list<Entity*>::iterator item2 = App->entitymanager->entity_list.begin();
-		while (item2 != App->entitymanager->entity_list.end())
+		
+	}
+	list<Entity*>::iterator item2 = App->entitymanager->entity_list.begin();
+	while (item2 != App->entitymanager->entity_list.end())
+	{
+		if ((*item2) == entity)
 		{
-			if ((*item2) == entity)
-			{
-				App->entitymanager->entity_list.erase(item2);
-
-			}
-
-			item2++;
+			App->entitymanager->entity_list.erase(item2);
+			break;
 		}
+
+		item2++;
+	}
+
+	item2 = entities.begin();
+	while (item2 != entities.end())
+	{
+		if ((*item2) == entity)
+		{
+			entities.erase(item2);
+			break;
+		}
+
+		item2++;
 	}
 	return true;
 }

@@ -42,29 +42,29 @@ bool MovementManager::CleanUp()
 	return true;
 }
 
-//void MovementManager::SelectEntities_inRect(SDL_Rect SRect)
-//{
-//	BROFILER_CATEGORY("GroupMovement::SelectEntities_inRect", Profiler::Color::DarkOliveGreen);
-//
-//	std::list<Entity*>::iterator entity = App->entitymanager->entity_list.begin();
-//	SDL_Rect entityrect = { 0,0,0,0 };
-//
-//	while (entity != App->entitymanager->entity_list.end())
-//	{
-//		entityrect = { (int)(*entity)->position.first, (int)(*entity)->position.second, (*entity)->size.first, (*entity)->size.second };
-//
-//		// --- Check entity's rect against the given SRect, select it if overlap is positive ---
-//		if (SDL_HasIntersection(&entityrect, &SRect))
-//			(*entity)->isSelected = true;
-//		else
-//			(*entity)->isSelected = false;
-//
-//		entity++;
-//	}
-//
-//}
+void MovementManager::SelectEntities_inRect(SDL_Rect SRect)
+{
+	BROFILER_CATEGORY("GroupMovement::SelectEntities_inRect", Profiler::Color::DarkOliveGreen);
 
-void MovementManager::CreateGroup(Player* player)
+	std::list<Entity*>::iterator entity = App->entitymanager->entity_list.begin();
+	SDL_Rect entityrect = { 0,0,0,0 };
+
+	while (entity != App->entitymanager->entity_list.end())
+	{
+		entityrect = { (int)(*entity)->position.first, (int)(*entity)->position.second, (*entity)->size.first, (*entity)->size.second };
+
+		// --- Check entity's rect against the given SRect, select it if overlap is positive ---
+		if (SDL_HasIntersection(&entityrect, &SRect))
+			(*entity)->isSelected = true;
+		else
+			(*entity)->isSelected = false;
+
+		entity++;
+	}
+
+}
+
+Group* MovementManager::CreateGroup(Player* player)
 {
 	BROFILER_CATEGORY("GroupMovement::CreateGroup", Profiler::Color::GhostWhite);
 
@@ -96,19 +96,23 @@ void MovementManager::CreateGroup(Player* player)
 			group->addUnit(*entity);
 			(*entity)->info.current_group = group;
 		}
-
+		(*entity)->isSelected = false;
+		(*entity)->state = TROOP_IDLE;
 		entity++;
 	}
 
 	// --- Finally, If the group is Valid add it to our Groups list, else delete it ---
-	if (Validgroup)
+	if (Validgroup) {
 		Groups.push_back(group);
+		return group;
+	}
 	else
 		delete group;
 
 }
-
-bool MovementManager::Move(Group * group, float dt)
+/// Manages movement of groups
+/** group to move, delta time, destination in world coordinates */
+bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 {
 	BROFILER_CATEGORY("GroupMovement::Move", Profiler::Color::Gold);
 
@@ -124,12 +128,14 @@ bool MovementManager::Move(Group * group, float dt)
 	pair<int,int> goal_world;
 	vector<pair<int, int>>::const_iterator it;
 
-	// --- We get the map coords of the mouse ---
-	pair<int,int> Map_mouseposition;
+	// --- We get the map coords of the destinaiton ---
+	/*pair<int,int> Map_mouseposition;
 	App->input->GetMousePosition(Map_mouseposition.first, Map_mouseposition.second);
-	Map_mouseposition = App->render->ScreenToWorld(Map_mouseposition.first, Map_mouseposition.second);
-	Map_mouseposition = App->map->WorldToMap(Map_mouseposition.first, Map_mouseposition.second);
+	Map_mouseposition = App->render->ScreenToWorld(Map_mouseposition.first, Map_mouseposition.second);*/
 
+	destination = App->map->WorldToMap(destination.first, destination.second);
+
+	/*if (unit == group->Units.begin()){
 	bool everyone_arrived = true;
 	while (unit != group->Units.end()) {
 		if ((*unit)->info.UnitMovementState != MovementState::MovementState_NoState) {
@@ -139,6 +145,7 @@ bool MovementManager::Move(Group * group, float dt)
 		unit++;
 	}
 	unit = group->Units.begin();
+	}*/
 
 	while (unit != group->Units.end())
 	{
@@ -162,10 +169,7 @@ bool MovementManager::Move(Group * group, float dt)
 
 				// --- On call to Move, Units will request a path to the destination ---
 
-				//if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN && (*unit)->info.IsSelected)
-				//{
-
-				if (everyone_arrived) {
+				if (true) {
 				
 				
 					if (group->IsGroupLead((*unit)) == false)
@@ -177,11 +181,11 @@ bool MovementManager::Move(Group * group, float dt)
 					{	
 						// --- Clear previous path request occupied goal tiles ---
 						group->ClearOccupiedlist();
-						(*unit)->info.goal_tile = Map_mouseposition;
+						(*unit)->info.goal_tile = destination;
 						group->Occupied_tiles.push_back(&(*unit)->info.goal_tile);
 					}
 
-					if (App->pathfinding->CreatePath(Map_Entityposition, (*unit)->info.goal_tile,true) != -1)
+					if (App->pathfinding->CreatePath(Map_Entityposition, (*unit)->info.goal_tile,true) > 0)
 					{
 						(*unit)->info.Current_path = *App->pathfinding->GetLastPath();
 						(*unit)->info.Current_path.erase((*unit)->info.Current_path.begin());
@@ -206,15 +210,12 @@ bool MovementManager::Move(Group * group, float dt)
 			case MovementState::MovementState_FollowPath:
 
 				// --- If a path is created, the unit will start following it ---
-				(*unit)->isMoving = true;
 				next_tile_world = App->map->MapToWorld((*unit)->info.next_tile.first, (*unit)->info.next_tile.second);
 
 				distanceToNextTile = { (float)next_tile_world.first - (*unit)->position.first,(float)next_tile_world.second - (*unit)->position.second };
 
 				// --- We compute the module of our vector ---
 				DirectDistance = sqrtf(pow(distanceToNextTile.first, 2.0f) + pow(distanceToNextTile.second, 2.0f));
-
-				//LOG("Next tile pos : x = %i y= %i", next_tile_world.x, next_tile_world.y);
 
 				// --- We want a unitary vector to update the unit's direction/position ---
 				if (DirectDistance > 0.0f)
@@ -249,8 +250,16 @@ bool MovementManager::Move(Group * group, float dt)
 				}
 			
 				// --- Blit Unit's goal tile ---
-				goal_world = App->map->MapToWorld((*unit)->info.goal_tile.first, (*unit)->info.goal_tile.second);
-				App->render->Blit((*unit)->tex, goal_world.first, goal_world.second, &(*unit)->rect);
+				//goal_world = App->map->MapToWorld((*unit)->info.goal_tile.first, (*unit)->info.goal_tile.second);
+				//App->render->Blit((*unit)->tex, goal_world.first, goal_world.second, &(*unit)->rect);
+
+				// Show full path
+				it = (*unit)->info.Current_path.begin();
+				while (it != (*unit)->info.Current_path.end()) {
+					goal_world = App->map->MapToWorld(it->first, it->second);
+					App->render->Blit((*unit)->tex, goal_world.first, goal_world.second, &(*unit)->rect);
+					it++;
+				}
 
 
 				it = (*unit)->info.Current_path.begin();
@@ -263,7 +272,7 @@ bool MovementManager::Move(Group * group, float dt)
 				break;
 
 			case MovementState::MovementState_NextStep:
-
+				//(*unit)->state = MOVING;
 				// --- If a path is being followed, the unit will get the next tile in the path ---
 
 				if ((*unit)->info.Current_path.size() > 0)
@@ -283,9 +292,9 @@ bool MovementManager::Move(Group * group, float dt)
 			case MovementState::MovementState_DestinationReached:
 
 				// --- The unit reaches the end of the path, thus stopping and returning to NoState ---
-
 				(*unit)->info.UnitMovementState = MovementState::MovementState_NoState;
-				(*unit)->isMoving = false;
+				(*unit)->state = TROOP_IDLE;
+				//(*unit)->isMoving = false;
 
 				break;
 		}
@@ -301,14 +310,16 @@ bool MovementManager::Move(Group * group, float dt)
 
 	}
 
+	// Returns if everyone in group has arrived
 	unit = group->Units.begin();
 	while (unit != group->Units.end()) {
 		if ((*unit)->info.UnitMovementState != MovementState::MovementState_NoState) {
+			//(*unit)->info.everyone_arrived = false;
 			return false;
 		}
 		unit++;
 	}
-
+	//(*unit)->info.everyone_arrived = true;
 	return true;
 
 }
