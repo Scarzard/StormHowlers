@@ -163,12 +163,12 @@
         <speed value="100"/>
       </engineer>
       <tankman>
-        <health lvl1="100" lvl2="120" lvl3="150"/>
+        <health lvl1="250" lvl2="280" lvl3="320"/>
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <size width="1" height="1"/>
         <damage lvl1="100" lvl2="150" lvl3="200"/>
-        <attack rate="1" targets="1" range="50"/>
-        <speed value="10"/>
+        <attack rate="1" targets="1" range="1"/>
+        <speed value="50"/>
       </tankman>
       <infiltrator>
         <health lvl1="100" lvl2="120" lvl3="150"/>

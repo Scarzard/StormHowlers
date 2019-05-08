@@ -20,6 +20,8 @@
 #include "Townhall.h"
 #include "Walls.h"
 #include "Soldier.h"
+#include "Engineer.h"
+#include "Tankman.h"
 #include "Building.h"
 #include "Troop.h"
 
@@ -471,7 +473,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			break;
 
 		case Entity::entityType::TANKMAN:
-			//tmp = new Tankman(isPlayer1, position, collider);
+			tmp = new Tankman(isPlayer1, position, collider);
 			break;
 
 		case Entity::entityType::INFILTRATOR:

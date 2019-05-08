@@ -914,6 +914,10 @@ bool Scene::Update(float dt)
 		{
 			App->entitymanager->AddEntity(true, Entity::entityType::ENGINEER, { pos.first,pos.second }, App->player1->collider);
 		}
+		else if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(true, Entity::entityType::TANKMAN, { pos.first,pos.second }, App->player1->collider);
+		}
     
 		//Timer debug
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
