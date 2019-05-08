@@ -105,6 +105,13 @@ public:
 	bool isDeploying = false;
 	bool isCasting = false;
 	bool isPaused = false;
+	bool inmune = false;
+
+	int timer_ref_sec = 0;
+	int timer_ref_min = 0;
+	int desired_second = 0;
+	int desired_min = 0;
+
 
 	Collider collider;
 	pair<int, int> offset;
