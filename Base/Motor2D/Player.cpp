@@ -1638,7 +1638,8 @@ void Player::DoLogic(UI_Element* data)
 
 bool Player::DeleteEntity(Entity* entity)
 {
-	UpdateWalkabilityMap(WALKABLE, entity->collider);
+	if (entity->type <= Entity::entityType::BARRACKS)
+		UpdateWalkabilityMap(WALKABLE, entity->collider);
 
 	entity->CleanUp();
 
@@ -1689,6 +1690,7 @@ bool Player::DeleteEntity(Entity* entity)
 		item2++;
 	}
 
+	//Player itself
 	item2 = entities.begin();
 	while (item2 != entities.end())
 	{
