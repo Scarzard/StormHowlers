@@ -11,7 +11,7 @@ Engineer::Engineer()
 
 Engineer::Engineer(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop(Entity::entityType::ENGINEER, isPlayer1, pos, collider)
 {
-	BROFILER_CATEGORY("Soldier constructor", Profiler::Color::Red);
+	BROFILER_CATEGORY("Engineer constructor", Profiler::Color::Red);
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
 
@@ -362,7 +362,7 @@ void Engineer::ChangeAnimation() {
 
 void Engineer::LoadAnimations(bool isPlayer1, string path)
 {
-	BROFILER_CATEGORY("Soldier Load Animations", Profiler::Color::Blue);
+	BROFILER_CATEGORY("engineer Load Animations", Profiler::Color::Blue);
 	moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 

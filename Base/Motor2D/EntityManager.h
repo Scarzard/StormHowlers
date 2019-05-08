@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Entity.h"
 #include "Walls.h"
+#include "Engineer.h"
 
 class Entity;
 

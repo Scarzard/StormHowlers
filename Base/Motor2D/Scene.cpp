@@ -910,6 +910,10 @@ bool Scene::Update(float dt)
 		{
 			worldminutes = 10;
 		}
+		else if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
+		{
+			App->entitymanager->AddEntity(true, Entity::entityType::ENGINEER, { pos.first,pos.second }, App->player1->collider);
+		}
     
 		//Timer debug
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
