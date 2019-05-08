@@ -15,9 +15,9 @@
 </data>
  </layer>
  <imagelayer name="Capa de Imagen 1">
-  <image source="../textures/Tesla_tiled.png"/>
+  <image source="../textures/Tesla_tiled.png" width="492" height="840"/>
  </imagelayer>
- <objectgroup name="blue">
+ <objectgroup name="red">
   <object id="1" x="0" y="0" width="82" height="84"/>
   <object id="2" x="82" y="0" width="82" height="84"/>
   <object id="3" x="164" y="0" width="82" height="84"/>
@@ -44,7 +44,7 @@
   <object id="27" x="410" y="252" width="82" height="84"/>
   <object id="28" x="0" y="336" width="82" height="84"/>
  </objectgroup>
- <objectgroup name="red">
+ <objectgroup name="blue">
   <object id="29" x="0" y="420" width="82" height="84"/>
   <object id="30" x="82" y="420" width="82" height="84"/>
   <object id="31" x="164" y="420" width="82" height="84"/>

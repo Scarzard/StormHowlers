@@ -1,4 +1,3 @@
-#include "Entity.h"
 #include "Troop.h"
 #include "Group.h"
 #include "MovementManager.h"
@@ -19,42 +18,9 @@ void Group::addUnit(Troop * unit_toadd)
 	Units.push_back(unit_toadd);
 }
 
-/** Removes unit from the group and sets a new lead
-
-*/
 void Group::removeUnit(Troop * unit_toremove)
 {
-	std::list <Troop*>::const_iterator unit = Units.begin();
-	std::list <Troop*>::const_iterator unitEnd = Units.end();
-
-	//Player* player = App->player1;
-	//if (unit != unitEnd && !(*unit)->fromPlayer1) {
-	//	player = App->player2;
-	//}
-
-	//std::list <Troop*>::const_iterator unitPlayer = player->troops.begin();
-	//std::list <Troop*>::const_iterator unitPlayerEnd = player->troops.end();
-
-	////DANGEROUS (?)
-	//while (unitPlayer != unitPlayerEnd) {
-	//	(*unitPlayer)->isSelected = false;
-	//	unitPlayer++;
-	//}
-
-	while (unit != unitEnd) {
-		//(*unit)->isSelected = true;
-		if (*unit == unit_toremove) {
-			Units.erase(unit);
-			return;
-		}
-		unit++;
-	}
-	//unit_toremove->isSelected = false;
-
-	//App->move_manager->CreateGroup(player);
-
-	// TO DO : CHECK IF THE GROUP NEEDS TO BE DELETED
-	//Units.remove(unit_toremove);
+	Units.remove(unit_toremove);
 }
 
 void Group::AddTiletoOccupied(pair<int,int> to_add)
@@ -80,39 +46,14 @@ int Group::GetSize()
 	return Units.size();
 }
 
-bool Group::CheckForMovementRequest(float dt,pair<int,int> destination)
+void Group::CheckForMovementRequest(float dt)
 {
- 	return App->move_manager->Move(this,dt,destination);
+ 	App->move_manager->Move(this,dt);
 }
 
-/** The troop must be inside the group */
-bool Group::CheckForMovementIndividual(Troop* troop, float dt, pair<int, int> destination)
-{
-	//Group* g = new Group();
-	//g->Units.push_back(troop);
-
-	removeUnit(troop);
-	Group g;
-	g.Units.push_back(troop);
-
-	App->move_manager->Move(&g, dt, destination);
-	
-	g.ClearGroup();
-
-	Units.push_back(troop);
-
-	return true;
-}
 bool Group::IsGroupLead(Troop * entity)
 {
 	return (*Units.begin()) == entity;
-}
-
-Troop* Group::GetLead() {
-	if (!Units.empty()) {
-		return *Units.begin();
-	}
-	return nullptr;
 }
 
 void Group::SetUnitGoalTile(Troop* entity)

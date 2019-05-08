@@ -60,7 +60,7 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(main_menu);
 	AddModule(scene, false);
 	AddModule(player1);
-	//AddModule(player2);
+	AddModule(player2);
 	AddModule(scenechange);
 	AddModule(entitymanager);
 	AddModule(move_manager);
@@ -260,9 +260,10 @@ void MainApp::FinishUpdate()
 	pos = App->map->WorldToMap(pos.first, pos.second);
 
 	static char title[256];
-	
-	sprintf_s(title, 256, "FPS: %i | Av.FPS: %.2f | MsLastFrame: %02u ms | Last dt: %.5f | FPS_Cap: %i | Vsync: %i | Tile: %i, %i | Time: %u:%u | Zoom %.2f |Camera x:%i y:%i | P1Troops: %i",
-		prev_last_sec_frame_count, avg_fps, last_frame_ms, dt,  fpsCapON, vsyncON,pos.first, pos.second, scene->worldminutes,scene->worldseconds, render->zoom, render->camera.x, render->camera.y, player1->troops.size());
+
+
+	sprintf_s(title, 256, "FPS: %i | Av.FPS: %.2f | MsLastFrame: %02u ms | Last dt: %.5f | FPS_Cap: %i | Vsync: %i | Tile: %i, %i | Time: %u:%u | Zoom %.2f |Camera x:%i y:%i",
+		prev_last_sec_frame_count, avg_fps, last_frame_ms, dt,  fpsCapON, vsyncON,pos.first, pos.second, scene->worldminutes,scene->worldseconds, render->zoom, render->camera.x, render->camera.y);
 
 
 	App->win->SetTitle(title);

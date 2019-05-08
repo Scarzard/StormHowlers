@@ -34,11 +34,6 @@ struct GeneralUI
 class Player : public Module
 {
 public:
-	enum DeployState {
-		START,
-		DEPLOYING,
-		END
-	};
 	enum CURRENT_UI
 	{
 		NONE,
@@ -71,8 +66,6 @@ public:
 	~Player();
 
 	bool Start();
-	void RectangleSelection();
-	bool DeployTroops(Entity::entityType type, int amount, pair<int, int> pos);
 	bool Awake(pugi::xml_node &config);
 	bool Update(float dt);
 	bool PostUpdate();
@@ -83,9 +76,7 @@ public:
 	// ---------------------- UI functions -----------------------------------------
 
 	void UpdateVisibility(); //update gui visibility
-	void DoLogic(UI_Element* data);
-	void UpdateWalkabilityMap(char cell_type, Collider collider);
-	//gui actions
+	void DoLogic(UI_Element* data); //gui actions
 	void UpdateFocus(uint data);	//updates where the focus is pointing
 	void GotoPrevWindows(uint data);
 	UI_Element* GetUI_Element(uint data); //returns the window we are currently on
@@ -103,27 +94,20 @@ public:
 
 	bool CheckBuildingPos();
 	Collider GetCollider(pair<int, int> dimensions, pair<int,int> topTile_pos);
-	//void UpdateWalkabilityMap(bool isWalkable, Collider collider);
+	void UpdateWalkabilityMap(bool isWalkable, Collider collider);
 	bool DeleteEntity(Entity* entity);
-
-	int CheckCost(Entity* entity);
-	int GoldKill(Entity* entity);
 	
 public:
 	bool isBuilding = false;
 	bool isDeploying = false;
 	bool isCasting = false;
 	bool isPaused = false;
-
 	bool inmune = false;
 
 	int timer_ref_sec = 0;
 	int timer_ref_min = 0;
 	int desired_second = 0;
 	int desired_min = 0;
-	bool pathfinding = true;
-
-
 
 	Collider collider;
 	pair<int, int> offset;
@@ -133,8 +117,6 @@ public:
 
 	bool isPlayer1 = false;
 	string team;
-
-	SDL_Rect rectangle_origin = { 0,0,0,0 };
 
 	uint gold = 0;
 	uint gold_persecond = 0;
@@ -148,7 +130,7 @@ public:
 	int total_capacity = 0; //sum of all barracks capacities
 	int actual_capacity = 0; //sum of all created troops
 	
-	DeployState deploy_state = DeployState::END;
+  
 	//bool entityAdded;
 	//Entity* previewEntity;
 
@@ -162,7 +144,6 @@ public:
 	
 	//index for testing previews
 	int curr = 1;
-	int deploying_counter = 0;
 
 	GamePad gamepad;
 
@@ -174,11 +155,8 @@ public:
 	SDL_Rect selected_texture = { 0,0,0,0 };
 	list<Building*>::iterator building_selected;
 	list<Building*>::iterator last_building;
-	vector<Group*> groups = vector<Group*>();
-	int group = 0;
 
 	list<Troop*> troops;
-	list<Entity*> entities;
 
 	int SoldiersCreated = 0;
 	int TankmansCreated = 0;

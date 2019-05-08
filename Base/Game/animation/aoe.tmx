@@ -19,7 +19,7 @@
  <imagelayer name="Capa de Imagen 1">
   <image source="aoe_tiled.png" width="756" height="1104"/>
  </imagelayer>
- <objectgroup name="allied_aoe_build">
+ <objectgroup name="soviet_aoe_build">
   <object id="1" x="0" y="0" width="108" height="92"/>
   <object id="2" x="108" y="0" width="108" height="92"/>
   <object id="3" x="216" y="0" width="108" height="92"/>
@@ -45,7 +45,7 @@
   <object id="23" x="108" y="276" width="108" height="92"/>
   <object id="24" x="216" y="276" width="108" height="92"/>
  </objectgroup>
- <objectgroup name="allied_aoe_idle">
+ <objectgroup name="soviet_aoe_idle">
   <object id="26" x="0" y="368" width="108" height="92"/>
   <object id="27" x="108" y="368" width="108" height="92"/>
   <object id="28" x="216" y="368" width="108" height="92"/>
@@ -55,7 +55,7 @@
   <object id="32" x="648" y="368" width="108" height="92"/>
   <object id="33" x="0" y="460" width="108" height="92"/>
  </objectgroup>
- <objectgroup name="soviet_aoe_build">
+ <objectgroup name="allied_aoe_build">
   <object id="34" x="0" y="552" width="108" height="92"/>
   <object id="35" x="108" y="552" width="108" height="92"/>
   <object id="36" x="216" y="552" width="108" height="92"/>
@@ -82,7 +82,7 @@
   <object id="58" x="216" y="828" width="108" height="92"/>
   <object id="59" x="324" y="828" width="108" height="92"/>
  </objectgroup>
- <objectgroup name="soviet_aoe_idle">
+ <objectgroup name="allied_aoe_idle">
   <object id="60" x="0" y="920" width="108" height="92"/>
   <object id="61" x="108" y="920" width="108" height="92"/>
   <object id="62" x="216" y="920" width="108" height="92"/>

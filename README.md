@@ -1,19 +1,9 @@
 # StormHowlers
 
-## Objectives
+## Game Info
 
 We are an indie game development team formed by 7 students taking the bachelor's degree in Game design and development in the UPC.
 The game will be developed for the subject Project II. We will be making a tribute to the well-known RTS game: Command&Conquer: Red Alert 2.
-
-## Game info
-
-The game we're developing is a mix between the classic RTS games and the tower defense genre.
-It has one very clear objective for both players: "Crush your opposition without showing any mercy!"
-
-Command and Conquer: WarZone, features a streamlined resource system that allows the player to focus on more important tasks such as fighting and defending your precious base.
-We have also implemented an automatic troop AI, this means that once deployed, they will go to their main objective. It can be everything, defensive structures or the Town Hall itself.
-
-The game is intended to be player with controllers for 2 people at a time. 
 
 ## Game controls
 ### Controller
@@ -48,10 +38,7 @@ This functionalities can be used anytime
 - F8: UI Debug
 - F10: Toggle Godmode. 
 
-**Godmode must be on to access debug functionalities below**
-
-- 1: Spawn soldier from player 1 in the location of the mouse
-- Q: Spawn soldier from player 2 in the location of the mouse
+Godmode must be on to access debug functionalities below
 
 - 2: Add main defense from player 1 in the location of the mouse
 - W: Add main defense from player 2 in the location of the mouse
@@ -113,22 +100,10 @@ This functionalities can be used anytime
 - [StormHowlers Twitter](https://twitter.com/StormHowlers)
 - StormHowlersDevelopers@gmail.com
 
-#### For more information about the game, head to the link below:
-
-<https://github.com/stormhowlers/Command_and_Conquer_WarZone/wiki>
-
 ## Github
 
 As stated on the license, anyone can look at or modify the code of this project. 
-It can be found here: https://github.com/stormhowlers/Command_and_Conquer_WarZone
-
-## Disclosure 
-
-```
-We do not own any of the art such as animations, tilesets or music/SFX.
-
-Everything belong to the creators of the original game: Westwood Studios
-```
+It can be found here: https://github.com/Scarzard/StormHowlers
 
 ## License
 

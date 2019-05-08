@@ -33,6 +33,7 @@ bool Walls::Update(float dt)
 	{
 		if (health <= 0) //destroyed
 		{
+			App->player1->UpdateWalkabilityMap(true, collider);
 			App->player1->DeleteEntity(this);
 		}
 	}
@@ -40,6 +41,7 @@ bool Walls::Update(float dt)
 	{
 		if (health <= 0) //destroyed
 		{
+			App->player2->UpdateWalkabilityMap(true, collider);
 			App->player2->DeleteEntity(this);
 		}
 	}

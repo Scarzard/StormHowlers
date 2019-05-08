@@ -34,10 +34,10 @@ public:
 
 	// --- Group Tools ---
 	void SelectEntities_inRect(SDL_Rect SRect);
-	Group* CreateGroup(Player* player);
+	void CreateGroup(Player* player);
 
 	// --- Move Unit ---
-	bool Move(Group* unit, float dt, pair<int,int> destination);
+	bool Move(Group* unit, float dt);
 
 	int DistanceTo(pair<int, int> pos, pair<float, float> destination);
 

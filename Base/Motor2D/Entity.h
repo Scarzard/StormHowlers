@@ -9,23 +9,12 @@
 #include "Render.h"
 #include "Group.h"
 #include "MovementManager.h"
-#include "Brofiler/Brofiler.h"
 
 struct Collider
 {
 	pair<int, int> dimensions;
 	vector<pair<int, int>> tiles;
 };
-enum TroopState {
-	NOT_DEPLOYED,
-	TROOP_IDLE,
-	MOVING,
-	SHOOTING,
-	REST,
-
-	MAX_STATE
-};
-
 
 class Entity
 {
@@ -50,7 +39,6 @@ public:
 public:
 	Entity() {};
 	Entity(Entity::entityType type, bool isPlayer1, pair<int, int> pos, Collider Collider) {
-		BROFILER_CATEGORY("Entity constructor", Profiler::Color::Blue);
 		this->type = type;
 	
 		char *s_type = (type > BARRACKS) ? "troops" : "buildings";
@@ -99,7 +87,7 @@ public:
 
 
 		// DEBUG PURPOSES
-		//tex = App->tex->Load("maps/meta.png");
+		tex = App->tex->Load("maps/meta.png");
 
 	};
 
@@ -212,12 +200,6 @@ public:
 	int offset = 0;
 	Collider collider;
 
-	// Group Movement
-	int speed = 0;
-	Group_Unit info;
-	bool isSelected = true;
-	TroopState state;
-	pair<int, int> Speed = { 1,1 };
 
 public:
 

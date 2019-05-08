@@ -47,7 +47,7 @@ bool Pathfinding::CheckBoundaries(const pair<int,int>& pos) const
 bool Pathfinding::IsWalkable(const pair<int,int>& pos) const
 {
 	uchar t = GetTileAt(pos);
-	return t != INVALID_WALK_CODE && t == WALKABLE;
+	return t != INVALID_WALK_CODE && t > 0;
 }
 
 // Utility: return the walkability value of a tile
@@ -74,10 +74,14 @@ void Pathfinding::ResetPath(vector<pair<int, int>>& path_to_reset)
 	last_path.clear();
 }
 
-void Pathfinding::ChangeWalkability(const pair<int, int>& pos, char cell_type) const
+void Pathfinding::ChangeWalkability(const pair<int, int>& pos, bool isWalkable) const
 {
-	if (cell_type != NULL) 
-		map[(pos.second*width) + pos.first] = cell_type;
+	if (isWalkable == true) {
+		map[(pos.second*width) + pos.first] = 1;
+	}
+	else {
+		map[(pos.second*width) + pos.first] = 0;
+	}
 
 }
 // PathList ------------------------------------------------------------------------
@@ -287,24 +291,17 @@ int Pathfinding::CreatePath(const pair<int,int>& origin, const pair<int,int>& de
 
 	int ret = -1;
 
-	if (!IsWalkable(origin)) {
-
-		LOG("Origin not Walkable");
-		return -1;
-	}
-	if (!IsWalkable(destination)) {
-		LOG("Destination not Walkable");
-		return 0;
-	}
+	if (!IsWalkable(origin) || !IsWalkable(destination))
+		return ret;
 
 	if (JPS_active == false)
 		PropagateAStar(origin, destination);
 	else
 		PropagateJPS(origin, destination);
 
-	//LOG("Path Steps: %i", last_path.size());
+	LOG("Path Steps: %i", last_path.size());
 
-	return last_path.size();
+	return 0;
 }
 
 

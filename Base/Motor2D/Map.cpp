@@ -735,7 +735,7 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 		if (layer->properties.Get("Navigation") == 0)
 			continue;
 		uchar* map = new uchar[layer->width*layer->height];
-		memset(map, WALKABLE, layer->width*layer->height);
+		memset(map, 1, layer->width*layer->height);
 		for (int y = 0; y < data.height; ++y)
 		{
 			for (int x = 0; x < data.width; ++x)
@@ -745,7 +745,7 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
 				if (tileset != NULL)
 				{
-					map[i] = (tile_id - tileset->firstgid) > 0 ? NO_WALKABLE : WALKABLE;
+					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
 					
 				}
 			}

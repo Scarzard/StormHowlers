@@ -82,6 +82,7 @@ bool DefenseTarget::Update(float dt)
 	{
 		if (health <= 0) //destroyed
 		{
+			App->player1->UpdateWalkabilityMap(true, collider);
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
@@ -91,6 +92,7 @@ bool DefenseTarget::Update(float dt)
 	{
 		if (health <= 0) //destroyed
 		{
+			App->player2->UpdateWalkabilityMap(true, collider);
 			App->player2->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));

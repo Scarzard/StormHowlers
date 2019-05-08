@@ -48,29 +48,44 @@ bool DefenseAoe::Update(float dt)
 	list<Troop*>::iterator tmp = tmpMod->troops.begin();
 
 	// Finds the closest one
-	Troop* closest = *tmpMod->troops.begin();
+	vector<pair<int,Troop*>> enemies;
+
 	if (tmp != tmpMod->troops.end()) {
-		int min_distance;
 		int d = 0;
 
 		// Gets first distance
-		Is_inRange(closest->position, min_distance);
+		Is_inRange((*tmp)->position, d);
 
 		while (tmp != tmpMod->troops.end())
 		{
-			if ((*tmp)->alive && Is_inRange((*tmp)->position, d) && min_distance >= d) {
-				closest = *tmp;
-				min_distance = d;
+			if ((*tmp)->alive && Is_inRange((*tmp)->position, d)) {
+
+				if (enemies.size() < max_targets) {
+					enemies.push_back({ d,*tmp });
+				}
+				else {
+					int i = max_targets-1;
+					while (i > 0 && enemies.at(i).first > d) {
+						
+						i--;
+					}
+					if (i != max_targets - 1) {
+						enemies.at(i).first = d;
+						enemies.at(i).second = *tmp;
+					}
+				}
 			}
 			tmp++;
 		}
 
-		// Shoots the closest one if in range
-		if (timer.ReadSec() >= rate_of_fire && Is_inRange(closest->position, d))
+		// Shoots
+		if (timer.ReadSec() >= rate_of_fire)
 		{
-			closest->TakeDamage(damage_lv[level]);
+			for (int i = 0; i < enemies.size(); i++) {
+
+				enemies.at(i).second->TakeDamage(damage_lv[level]);
+			}
 			timer.Start();
-			App->audio->PlayFx(TESLA_ATTACK);
 			//LOG("Distance: %d", d);
 		}
 	}
@@ -79,6 +94,7 @@ bool DefenseAoe::Update(float dt)
 	{
 		if (health <= 0) //destroyed
 		{
+			App->player1->UpdateWalkabilityMap(true, colider);
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
@@ -88,6 +104,7 @@ bool DefenseAoe::Update(float dt)
 	{
 		if (health <= 0) //destroyed
 		{
+			App->player2->UpdateWalkabilityMap(true, colider);
 			App->player2->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));

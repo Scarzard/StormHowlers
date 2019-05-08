@@ -85,6 +85,15 @@ bool Townhall::Update(float dt)
 			App->scene->Victorious(App->player1, dt);
 		}
 
+		// Just to test the LiveBar
+		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		{
+			health -= 100;
+
+			if (health < 0)
+				health = 0;
+		}
+
 	}
 	else
 	{

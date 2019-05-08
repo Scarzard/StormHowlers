@@ -1491,17 +1491,19 @@ bool Scene::Load_level(int map)
 
 void Scene::SpawnEntities()
 {
-	//--- PLAYER 2
-	pair<int, int> map_pos = App->map->WorldToMap(App->map->data.main_building.first , App->map->data.main_building.second);
-	App->player2->Townhall = App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, App->map->data.main_building, App->player2->GetCollider({ 7,3 }, { map_pos.first, map_pos.second  }));
+
+
+	//--- PLAYER 1
+	pair<int, int> map_pos = App->map->WorldToMap(App->map->data.main_building2.first , App->map->data.main_building2.second);
+	App->player1->Townhall = App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, App->map->data.main_building2, App->player1->GetCollider({ 4,4 }, { map_pos.first, map_pos.second  }));
 
 	
-	map_pos = App->map->WorldToMap(App->map->data.special_skill2.first, App->map->data.special_skill2.second);
-	App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill2, App->player2->GetCollider({ 4,3 }, { map_pos.first , map_pos.second }));
+	map_pos = App->map->WorldToMap(App->map->data.special_skill.first, App->map->data.special_skill.second);
+	App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill, App->player1->GetCollider({ 4,3 }, { map_pos.first , map_pos.second }));
 
-	map_pos = App->map->WorldToMap(App->map->data.main_tower2.first, App->map->data.main_tower2.second);
+	map_pos = App->map->WorldToMap(App->map->data.main_tower.first, App->map->data.main_tower.second);
 
-	App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower2, App->player2->GetCollider({ 2,2 }, { map_pos.first , map_pos.second }));
+	App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower, App->player1->GetCollider({ 2,2 }, { map_pos.first , map_pos.second }));
 
 	/*map_pos = App->map->WorldToMap(App->map->data.barrack.first, App->map->data.barrack.second);
 	App->entitymanager->AddEntity(true, Entity::entityType::BARRACKS, App->map->data.barrack, App->player1->GetCollider({ 3,4 }, { map_pos.first , map_pos.second }));
@@ -1514,18 +1516,18 @@ void Scene::SpawnEntities()
 */
 
 
-	//--- PLAYER 1
-	map_pos = App->map->WorldToMap(App->map->data.main_building2.first, App->map->data.main_building2.second);
-	App->player2->Townhall = App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, App->map->data.main_building2, App->player1->GetCollider( { 4,4 }, { map_pos.first , map_pos.second }));
+	//--- PLAYER 2
+	map_pos = App->map->WorldToMap(App->map->data.main_building.first, App->map->data.main_building.second);
+	App->player2->Townhall = App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, App->map->data.main_building, App->player2->GetCollider({ 7,3 }, { map_pos.first , map_pos.second }));
 	
 	//--- WALLS
 	LoadWalls();
 
-	map_pos = App->map->WorldToMap(App->map->data.special_skill.first, App->map->data.special_skill.second);
-	App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill, App->player1->GetCollider({ 4,3 }, { map_pos.first, map_pos.second}));
+	map_pos = App->map->WorldToMap(App->map->data.special_skill2.first, App->map->data.special_skill2.second);
+	App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill2, App->player2->GetCollider({ 4,3 }, { map_pos.first, map_pos.second}));
 
-	map_pos = App->map->WorldToMap(App->map->data.main_tower.first, App->map->data.main_tower.second);
-	App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower, App->player1->GetCollider({ 2,2 }, { map_pos.first , map_pos.second}));
+	map_pos = App->map->WorldToMap(App->map->data.main_tower2.first, App->map->data.main_tower2.second);
+	App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower2, App->player2->GetCollider({ 2,2 }, { map_pos.first , map_pos.second}));
 
 
 	//App->entitymanager->AddEntity(false, Entity::entityType::MAIN_DEFENSE, { 50,50 });
@@ -1716,7 +1718,7 @@ void Scene::LoadWalls()
 		entity = new Walls(true, *item, collider, current_anim); //add entity
 		App->player1->buildings.push_back((Building*)entity);
 		App->entitymanager->entity_list.push_back(entity);
-		App->player2->UpdateWalkabilityMap(P2_BUILDING, collider);
+		App->player2->UpdateWalkabilityMap(false, collider);
 
 		item++;
 	}
