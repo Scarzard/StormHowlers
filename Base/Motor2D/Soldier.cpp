@@ -41,22 +41,30 @@ bool Soldier::Update(float dt)
 			if (timer.ReadSec() >= rate_of_fire )
 			{
 				isShooting = true;
-				if (fromPlayer1)
-				{
-					if (!App->player2->inmune)
-					{
-						closest->TakeDamage(damage_lv[level]);
 
+				if (closest->type > Entity::entityType::BARRACKS) //troop
+				{
+					if (fromPlayer1)
+					{
+						if (!App->player2->inmune)
+						{
+							closest->TakeDamage(damage_lv[level]);
+
+						}
+					}
+					else if (!fromPlayer1)
+					{
+
+						if (!App->player1->inmune)
+						{
+							closest->TakeDamage(damage_lv[level]);
+
+						}
 					}
 				}
-				else if (!fromPlayer1)
+				else
 				{
-
-					if (!App->player1->inmune)
-					{
-						closest->TakeDamage(damage_lv[level]);
-
-					}
+					closest->TakeDamage(damage_lv[level]);
 				}
 
 				timer.Start(); 
