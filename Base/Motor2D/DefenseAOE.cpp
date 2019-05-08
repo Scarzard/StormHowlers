@@ -77,6 +77,15 @@ bool DefenseAoe::Update(float dt)
 
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
+		if (upgrade == true && level <= 3) //upgrade
+		{
+			App->player1->gold -= upgrade_cost[level]; //pay costs
+			level++;
+			damage = damage_lv[level];
+			upgrade = false;
+			//play fx (upgrade);
+		}
+
 		if (health <= 0) //destroyed
 		{
 			App->player1->UpdateWalkabilityMap(true, colider);
@@ -87,6 +96,16 @@ bool DefenseAoe::Update(float dt)
 	}
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
 	{
+
+		if (upgrade == true && level <= 3) //upgrade
+		{
+			App->player1->gold -= upgrade_cost[level]; //pay costs
+			level++;
+			damage = damage_lv[level];
+			upgrade = false;
+			//play fx (upgrade);
+		}
+
 		if (health <= 0) //destroyed
 		{
 			App->player2->UpdateWalkabilityMap(true, colider);

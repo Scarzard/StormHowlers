@@ -1476,7 +1476,7 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_UPGRADE:
-		//(*building_selected)->upgrade = true;
+		(*building_selected)->upgrade = true;
 		break;
 
 	case::UI_Element::Action::ACT_REPAIR:

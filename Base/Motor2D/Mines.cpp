@@ -41,7 +41,7 @@ bool Mines::Update(float dt)
 		{
 			if (health > 0) //if not destroyed
 			{
-				if (upgrade == true) //upgrade
+				if (upgrade == true && level <= 3) //upgrade
 				{
 					App->player1->gold -= upgrade_cost[level]; //pay costs
 					level++;
