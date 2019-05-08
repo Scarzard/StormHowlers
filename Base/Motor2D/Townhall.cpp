@@ -1,4 +1,5 @@
 #include "EntityManager.h"
+#include "Audio.h"
 #include "Townhall.h"
 #include "Scene.h"
 #include "Render.h"
@@ -66,22 +67,14 @@ bool Townhall::Update(float dt)
 		App->player1->health = health; //update health bar ui
 		App->player1->max_health = health_lv[level];
 		
-		if (health > 0) //if not destroyed
+		if (health == 0) //if destroyed
 		{
-			if (upgrade == true) //upgrade
-			{
-				App->player1->gold -= upgrade_cost[level]; //pay costs
-				level++;
-				production = production_lv[level]; //update production
-				upgrade = false;
-				//play fx (upgrade);
-			}
-		}
-		else
-		{
-/*
+
 			App->player1->UpdateWalkabilityMap(true, collider);
-			App->player1->DeleteEntity(this);*/
+			App->player1->DeleteEntity(this);
+			App->audio->PlayFx(BUILDING_EXPLOSION);
+			App->map->explosion_anim->speed = 0.5f;
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 			App->scene->Victorious(App->player1, dt);
 		}
 
@@ -100,22 +93,14 @@ bool Townhall::Update(float dt)
 		App->player2->health = health; //update health bar ui
 		App->player2->max_health = health_lv[level];
 
-		if (health > 0) //if not destroyed
-		{
-			if (upgrade == true) //upgrade
-			{
-				App->player2->gold -= upgrade_cost[level]; //pay costs
-				level++;
-				production = production_lv[level]; //update production
-				upgrade = false;
-				//play fx (upgrade);
-			}
-		}
-		else
+		if (health == 0) //if not destroyed
 		{
 
-			/*App->player2->UpdateWalkabilityMap(true, collider);
-			App->player2->DeleteEntity(this);*/
+			App->player2->UpdateWalkabilityMap(true, collider);
+			App->player2->DeleteEntity(this);
+			App->audio->PlayFx(BUILDING_EXPLOSION);
+			App->map->explosion_anim->speed = 0.5f;
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 			App->scene->Victorious(App->player2, dt);
 
 		}

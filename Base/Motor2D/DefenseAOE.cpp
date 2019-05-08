@@ -91,7 +91,7 @@ bool DefenseAoe::Update(float dt)
 			App->player1->UpdateWalkabilityMap(true, colider);
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
-			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
@@ -99,7 +99,7 @@ bool DefenseAoe::Update(float dt)
 
 		if (upgrade == true && level <= 3) //upgrade
 		{
-			App->player1->gold -= upgrade_cost[level]; //pay costs
+			App->player2->gold -= upgrade_cost[level]; //pay costs
 			level++;
 			damage = damage_lv[level];
 			upgrade = false;
@@ -111,7 +111,7 @@ bool DefenseAoe::Update(float dt)
 			App->player2->UpdateWalkabilityMap(true, colider);
 			App->player2->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
-			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 

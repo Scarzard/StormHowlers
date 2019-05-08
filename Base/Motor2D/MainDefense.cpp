@@ -77,22 +77,42 @@ bool MainDefense::Update(float dt)
 
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
+
+		if (upgrade == true && level <= 3) //upgrade
+		{
+			App->player1->gold -= upgrade_cost[level]; //pay costs
+			level++;
+			damage = damage_lv[level];
+			upgrade = false;
+			//play fx (upgrade);
+		}
+
 		if (health <= 0) //destroyed
 		{
 			App->player1->UpdateWalkabilityMap(true, collider);
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
-			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
 	{
+
+		if (upgrade == true && level <= 3) //upgrade
+		{
+			App->player2->gold -= upgrade_cost[level]; //pay costs
+			level++;
+			damage = damage_lv[level];
+			upgrade = false;
+			//play fx (upgrade);
+		}
+
 		if (health <= 0) //destroyed
 		{
 			App->player2->UpdateWalkabilityMap(true, collider);
 			App->player2->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
-			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 

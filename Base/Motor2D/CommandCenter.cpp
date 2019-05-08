@@ -53,7 +53,7 @@ bool CmdCenter::Update(float dt)
 	{
 		if (health > 0) //if not destroyed
 		{
-			if (upgrade == true) //upgrade
+			if (upgrade == true && level <= 3) //upgrade
 			{
 				App->player1->gold -= upgrade_cost[level]; //pay costs
 				level++;
@@ -83,13 +83,13 @@ bool CmdCenter::Update(float dt)
 	{
 		if (health > 0) //if not destroyed
 		{
-			if (upgrade == true) //upgrade
+			if (upgrade == true && level <= 3) //upgrade
 			{
-				App->player1->gold -= upgrade_cost[level]; //pay costs
+				App->player2->gold -= upgrade_cost[level]; //pay costs
 				level++;
 				upgrade = false;
 			}
-			if (App->player1->isCasting == true) //player casting
+			if (App->player2->isCasting == true) //player casting
 			{
 				//if (missiles)
 				damage = damage_lv[level];
@@ -105,7 +105,7 @@ bool CmdCenter::Update(float dt)
 		{
 			App->player2->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
-			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 			App->player2->UpdateWalkabilityMap(true, collider); //destroyed
 		}
 	}
