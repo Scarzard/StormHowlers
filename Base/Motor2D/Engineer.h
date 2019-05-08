@@ -1,5 +1,5 @@
-#ifndef __Soldier_H__
-#define __Soldier_H__
+#ifndef __Enginner_H__
+#define __Enginner_H__
 
 #include "Troop.h"
 #include "EntityManager.h"
@@ -22,7 +22,7 @@ public:
 
 	void ChangeAnimation();
 
-
+	Building * FindBuilding(pair<int, int> pos, bool fromplayer1, int attackrange);
 
 	void LoadAnimations(bool isPlayer1, string path);
 
@@ -30,7 +30,7 @@ public:
 	bool defensive = true;
 	bool offensive = true;
 	pair<int, int> destination;
-	Entity* closest = nullptr;
+	Building* closest = nullptr;
 
 	float resting_time = 2.0f;
 	Timer rest;

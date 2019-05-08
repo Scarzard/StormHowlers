@@ -92,7 +92,7 @@ bool Engineer::Update(float dt)
 			if (state == TROOP_IDLE) {
 				//LOG("Closest NOT FOUND - SEARCHING");
 
-				info.closest = App->entitymanager->findEntity(map_pos, fromPlayer1, range);
+				info.closest = FindBuilding(map_pos, fromPlayer1, range);
 				range = (info.closest == nullptr) ? range + 20 : original_range;
 
 			}
@@ -402,4 +402,38 @@ void Engineer::LoadAnimations(bool isPlayer1, string path)
 		idle->SetCurrentFrame(6);
 	}
 	Current_Animation = moving[NORTH];
+}
+
+Building* Engineer::FindBuilding(pair <int, int> pos, bool fromplayer1, int attackrange)
+{
+	Player* enemy = (!fromplayer1) ? App->player1 : App->player2;
+
+	Building* found = *enemy->buildings.begin();
+	int distance = 0;
+	pair<int, int> map_pos = App->map->WorldToMap(found->position.first, found->position.second);
+	Is_inRange(pos, distance, map_pos, attackrange);
+	int min_dist = distance;
+
+	for (list<Building*>::iterator tmp = enemy->buildings.begin(); tmp != enemy->buildings.end(); tmp++) // traverse entity list (unordered)
+	{
+		map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+		if (Is_inRange(pos, distance, map_pos, attackrange))
+		{
+
+			if (min_dist >= distance)
+			{
+				found = (*tmp);
+				min_dist = distance;
+			}
+		}
+
+	}
+	if (min_dist <= attackrange)
+	{
+		return found;
+	}
+
+	return nullptr;
+
 }

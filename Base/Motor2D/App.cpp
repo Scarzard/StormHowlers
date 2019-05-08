@@ -60,7 +60,7 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(main_menu);
 	AddModule(scene, false);
 	AddModule(player1);
-	//AddModule(player2);
+	AddModule(player2);
 	AddModule(scenechange);
 	AddModule(entitymanager);
 	AddModule(move_manager);

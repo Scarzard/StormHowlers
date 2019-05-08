@@ -462,9 +462,9 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 	{
 		switch (type)
 		{
-		//case Entity::entityType::SOLDIER:
-		//	tmp = new Soldier(isPlayer1, position, collider);
-		//	break;
+		case Entity::entityType::SOLDIER:
+			tmp = new Soldier(isPlayer1, position, collider);
+			break;
 
 		case Entity::entityType::ENGINEER:
 			tmp = new Engineer(isPlayer1, position, collider);
