@@ -354,9 +354,11 @@ bool EntityManager::Draw(float dt) //sprite ordering
 		//if (entitiesTextures[(*tmp)->type] != nullptr)
 
 
-		if ((*tmp)->type == Entity::entityType::TOWNHALL && (*tmp)->fromPlayer1 == false)
+		if ((*tmp)->type == Entity::entityType::TOWNHALL && (*tmp)->fromPlayer1 == true)
 		{
-			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first - ((*tmp)->collider.dimensions.first * 8), (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second * 40), &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
+			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first - ((*tmp)->collider.dimensions.first * 8), 
+				(*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second * 40), 
+				&((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 
 
 			//--- Draw Life Bar
@@ -376,7 +378,7 @@ bool EntityManager::Draw(float dt) //sprite ordering
 			}
 
 		}
-		else if (((*tmp)->type == Entity::entityType::TOWNHALL && (*tmp)->fromPlayer1 == true))
+		else if (((*tmp)->type == Entity::entityType::TOWNHALL && (*tmp)->fromPlayer1 == false))
 		{
 			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first - ((*tmp)->collider.dimensions.first * 20), (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second * 20), &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 
