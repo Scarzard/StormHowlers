@@ -211,7 +211,7 @@ bool Gui::Draw()
 			}
 			else //rest of ui
 			{
-				if (!App->scene->pause)
+				if (!App->player1->isPaused)
 					App->render->Blit(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, &(*UI_elem)->rect, SDL_FLIP_NONE, 0);
 			}
 		}
