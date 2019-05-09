@@ -228,7 +228,7 @@ bool Player::Update(float dt)
 		}
 
 		// PAUSE
-		if (gamepad.Controller[START] == KEY_DOWN && App->scene->active)
+		if (gamepad.Controller[CONTROLLER_BUTTONS::START] == KEY_DOWN && App->scene->active)
 		{
 			if (!App->scene->pause)
 			{
