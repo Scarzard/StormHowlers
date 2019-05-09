@@ -85,6 +85,7 @@
     <ClCompile Include="DefenseAOE.cpp" />
     <ClCompile Include="DefenseTarget.cpp" />
     <ClCompile Include="Group.cpp" />
+    <ClCompile Include="MiniGameScene.cpp" />
     <ClCompile Include="MovementManager.cpp" />
     <ClCompile Include="MainDefense.cpp" />
     <ClCompile Include="Mines.cpp" />
@@ -121,6 +122,7 @@
     <ClInclude Include="DefenseAOE.h" />
     <ClInclude Include="DefenseTarget.h" />
     <ClInclude Include="Group.h" />
+    <ClInclude Include="MiniGameScene.h" />
     <ClInclude Include="MovementManager.h" />
     <ClInclude Include="MainDefense.h" />
     <ClInclude Include="Mines.h" />

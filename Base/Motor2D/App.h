@@ -22,6 +22,7 @@ class Fonts;
 class Gui;
 class Player;
 class MovementManager;
+class MiniGameScene;
 
 class MainApp
 {
@@ -101,6 +102,7 @@ public:
 	Player*			player1 = NULL;
 	Player*			player2 = NULL;
 	MovementManager* move_manager = NULL;
+	MiniGameScene*   sceneminigame = NULL;
 
 	bool			fpsCapON = true;
 	bool			vsyncON = false;
