@@ -40,8 +40,8 @@ bool Player::Awake(pugi::xml_node& config) {
 	config = config.child("rect_previews").first_child();
 
 	for (int i = Entity::entityType::TOWNHALL; i < Entity::entityType::WAR_HOUND; i++) {
-		preview_rects->at(i).x = config.attribute((isPlayer1) ? "rx" : "x").as_int(0);
-		preview_rects->at(i).y = config.attribute((isPlayer1) ? "ry" : "y").as_int(0);
+		preview_rects->at(i).x = config.attribute((!isPlayer1) ? "rx" : "x").as_int(0);
+		preview_rects->at(i).y = config.attribute((!isPlayer1) ? "ry" : "y").as_int(0);
 		preview_rects->at(i).w = config.attribute("w").as_int(0);
 		preview_rects->at(i).h = config.attribute("h").as_int(0);
 		config = config.next_sibling();
