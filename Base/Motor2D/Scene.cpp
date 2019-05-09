@@ -107,8 +107,8 @@ bool Scene::Start()
 	App->map->explosion_anim = App->map->explosion_anim->LoadAnimation("animation/explosion.tmx", "animation");
 
 
-	App->player1->LiveBar = { 51, 18 , 348, 19 }; //LiveBar for player1
-	App->player2->LiveBar = { 1232, 921 , 348, 19 }; //LiveBar for player2
+	App->player1->LiveBar = { 1232, 921 , 348, 19 };  //LiveBar for player1
+	App->player2->LiveBar = { 51, 18, 348, 19 };//LiveBar for player2
 
 
 	//walkability map
@@ -148,8 +148,6 @@ bool Scene::Start()
 	//--- PLAYER 1
 	//App->player1->Health_UI = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
 	//App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
-
-
 
 	App->player1->Main_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 122 }, { 566,163 }, nullptr, true);
 	App->player1->Main_UI->rect = { 0, 408, 566, 163 };
