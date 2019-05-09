@@ -63,7 +63,9 @@ bool MiniGameScene::Update(float dt) {
 					seconds_to_start = '1';
 					if (timer.ReadSec() >= 3.0f) {
 						seconds_to_start = '0';
-						mg_state = miniGameState::PLAYING;
+						App->player1->DeployTroops(Entity::entityType::SOLDIER, 1, { 100 , 500 });
+						App->player2->DeployTroops(Entity::entityType::SOLDIER, 1, { 500 , 500 });
+						mg_state = miniGameState::PLAYING;						 
 					}
 				}
 			}
@@ -72,16 +74,17 @@ bool MiniGameScene::Update(float dt) {
 		case miniGameState::PLAYING:
 			if (App->player1->gamepad.Controller[BUTTON_X] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) {
 				player1_counter++;
-				sprintf_s(player1_ct_char,512,"%d",player1_counter);
+				sprintf_s(player1_ct_char,64,"%d",player1_counter);
 				player1_label->label = player1_ct_char;
 			}
 			if (App->player2->gamepad.Controller[BUTTON_X] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) {
 				player2_counter++;
-				sprintf_s(player2_ct_char, 512, "%d", player2_counter);
+				sprintf_s(player2_ct_char, 64, "%d", player2_counter);
 				player2_label->label = player2_ct_char;
 			}
 			break;
 		case miniGameState::END:
+			//Switch scene
 			break;
 
 		default:

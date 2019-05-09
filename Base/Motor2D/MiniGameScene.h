@@ -35,8 +35,8 @@ public:
 
 	int player1_counter = 0;
 	int player2_counter = 0;
-	char player1_ct_char[512] = "0";
-	char player2_ct_char[512] = "0";
+	char player1_ct_char[64] = "0";
+	char player2_ct_char[64] = "0";
 
 	bool player1_ready = false;
 	bool player2_ready = false;
