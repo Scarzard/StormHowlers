@@ -1529,10 +1529,14 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_BARRACKS:
-		isBuilding = true;
-		type = Entity::entityType::BARRACKS;
-		collider.dimensions = { 3,4 };
-		offset = { 40 , 50 };
+		if (BarracksCreated < 3)
+		{
+			isBuilding = true;
+			type = Entity::entityType::BARRACKS;
+			collider.dimensions = { 3,4 };
+			offset = { 40 , 50 };
+			BarracksCreated += 1;
+		}
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:

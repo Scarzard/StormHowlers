@@ -305,7 +305,7 @@ bool Scene::Start()
 
 	// ------- GOLD
 
-	App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 2000, 1191 }, { 0, 0 }, nullptr, true, { false,false }, "$ 0000");
+	App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 470, 19 }, { 0, 0 }, nullptr, true, { false,false }, "$ 0000");
 	App->player1->Gold_UI->color = { 255,255,0,255 };
 
 	//------- PAUSE MENU ------
@@ -572,7 +572,7 @@ bool Scene::Start()
 
 
 	//---- GOLD ----- 
-	App->player2->Gold_UI = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 470, 19 }, { 0, 0 }, nullptr, true, { false,false }, "$ 0000");
+	App->player2->Gold_UI = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 2000, 1191 }, { 0, 0 }, nullptr, true, { false,false }, "$ 0000");
 	App->player2->Gold_UI->color = { 255,255,0,255 };
 
 	// ------ PAUSE MENU ------

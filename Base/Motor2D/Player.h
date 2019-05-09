@@ -177,6 +177,7 @@ public:
 	int InfiltratorsCreated = 0;
 	int EngineersCreated = 0;
 	int WarHoundsCreated = 0;
+	int BarracksCreated = 0;
 
 	int Invulnerable_abilities = 0;
 

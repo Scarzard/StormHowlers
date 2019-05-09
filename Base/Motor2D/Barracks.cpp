@@ -57,6 +57,7 @@ bool Barracks::Update(float dt)
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->player1->BarracksCreated -= 1;
 		}
 
 		if (repair == true) //repair
@@ -87,6 +88,7 @@ bool Barracks::Update(float dt)
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->map->explosion_anim->speed = 0.5f;
 			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->player2->BarracksCreated -= 1; 
 		}
 
 		if (repair == true) //repair
