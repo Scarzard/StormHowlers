@@ -160,6 +160,7 @@ bool Player::Update(float dt)
 
 	if (!App->scene->endgame)
 	{
+		//Currently not working idk why
 		RectangleSelection();
 
 		if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) {
@@ -187,7 +188,7 @@ bool Player::Update(float dt)
 			deploy_state = DeployState::START;
 		}
 
-		DeployTroops(Entity::entityType::SOLDIER, 25, { 0,0 });
+		DeployTroops(Entity::entityType::SOLDIER, 9, { 0,0 });
 
 		//--- Press X (Square) To SELECT BUILDINGS
 		if (gamepad.Controller[BUTTON_X] == KEY_UP && currentUI == CURRENT_UI::NONE)

@@ -194,7 +194,10 @@ public:
 	bool SwitchMaps(string* new_map);
 
 	pair<int,int> MapToWorld(int x, int y) const;
+	pair<int, int> MapToWorld(pair<int, int> p) const;
 	pair<int,int> WorldToMap(int x, int y) const;
+	pair<int, int> WorldToMap(pair<int, int> p) const;
+
 
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 

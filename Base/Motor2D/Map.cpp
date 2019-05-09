@@ -136,6 +136,29 @@ pair<int, int> Map::MapToWorld(int x, int y) const
 	return ret;
 }
 
+pair<int, int> Map::MapToWorld(pair<int,int> p) const
+{
+	pair<int, int> ret;
+
+	if (data.type == MAPTYPE_ORTHOGONAL)
+	{
+		ret.first = p.first * data.tile_width;
+		ret.second = p.second * data.tile_height;
+	}
+	else if (data.type == MAPTYPE_ISOMETRIC)
+	{
+		ret.first  = int((p.first - p.second) * (data.tile_width / 2));
+		ret.second = int((p.first + p.second) * (data.tile_height / 2));
+	}
+	else
+	{
+		LOG("Unknown map type");
+		ret.first = p.first; ret.second = p.second;
+	}
+
+	return ret;
+}
+
 pair<int,int> Map::WorldToMap(int x, int y) const
 {
 	pair<int,int> ret(0,0);
@@ -157,6 +180,32 @@ pair<int,int> Map::WorldToMap(int x, int y) const
 	{
 		LOG("Unknown map type");
 		ret.first = x; ret.second = y;
+	}
+
+	return ret;
+}
+
+pair<int, int> Map::WorldToMap(pair<int,int> p) const
+{
+	pair<int, int> ret(0, 0);
+
+	if (data.type == MAPTYPE_ORTHOGONAL)
+	{
+		ret.first  = p.first / data.tile_width;
+		ret.second = p.second / data.tile_height;
+	}
+	else if (data.type == MAPTYPE_ISOMETRIC)
+	{
+
+		int half_width = data.tile_width / 2;
+		int half_height = data.tile_height / 2;
+		ret.first  = int((p.first / half_width + p.second / half_height) / 2);
+		ret.second = int((p.second / half_height - (p.first / half_width)) / 2);
+	}
+	else
+	{
+		LOG("Unknown map type");
+		ret.first = p.first; ret.second = p.second;
 	}
 
 	return ret;

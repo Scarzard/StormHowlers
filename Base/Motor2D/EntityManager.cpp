@@ -494,12 +494,13 @@ void EntityManager::LoadAnimationSoldier(Troop* troop) {
 		for (int i = NORTH; i < MAX_DIR; i++) {
 			troop->moving[i] = sample->moving[i];
 			troop->shooting[i] = sample->shooting[i];
-			troop->moving[i]->speed = 10;
-			troop->shooting[i]->speed = 6;
+			troop->moving[i]->speed = 0.75;
+			troop->shooting[i]->speed = 0.75;
 		}
 	}
 	troop->Current_Animation = troop->moving[NORTH];
 }
+
 Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<int, int> position, Collider collider, Animation* animation)
 {
 	BROFILER_CATEGORY("EntityManager AddEntity", Profiler::Color::AliceBlue);
