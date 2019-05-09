@@ -211,7 +211,8 @@ bool Gui::Draw()
 			}
 			else //rest of ui
 			{
-				App->render->Blit(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, &(*UI_elem)->rect, SDL_FLIP_NONE, 0);
+				if (!App->scene->pause)
+					App->render->Blit(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, &(*UI_elem)->rect, SDL_FLIP_NONE, 0);
 			}
 		}
 		if (UI_Debug == true)
