@@ -51,6 +51,11 @@ bool CmdCenter::Update(float dt)
 
 	if (fromPlayer1)
 	{
+		if (level == 1)
+		{
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
+		}
+
 		if (health > 0) //if not destroyed
 		{
 			if (upgrade == true && level <= 3) //upgrade
