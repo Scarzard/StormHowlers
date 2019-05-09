@@ -27,6 +27,10 @@ public:
 	void DeleteAllEntities();
 
 	list<Entity*> EntityManager::OrderEntities(list<Entity*> List);
+	list<Building*> EntityManager::OrderBuildings(list<Building*> List, bool player1);
+
+
+
 	int EntityManager::GetDepth(Entity* entity);
 
 
@@ -41,6 +45,7 @@ public:
 	//void Erase_fromList(list<Entity*>::iterator tmp);
 
 	bool FindInList(list<Entity*> List, pair<int, int> pos, bool fromplayer1, Entity::entityType type);
+	bool FindInList2(list<Building*> List, pair<int, int> pos, bool fromplayer1, Entity::entityType type);
 
 
 

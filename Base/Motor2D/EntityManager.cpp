@@ -495,6 +495,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building
 			{
 				App->player1->buildings.push_back((Building*)tmp);
+				App->player1->buildings = OrderBuildings(App->player1->buildings, true);
 				App->player1->UpdateWalkabilityMap(false, collider);
 			}
 			else if (type > Entity::entityType::BARRACKS) //if troops
@@ -512,6 +513,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS)
 			{
 				App->player2->buildings.push_back((Building*)tmp);
+				App->player2->buildings = OrderBuildings(App->player2->buildings, false);
 				App->player2->UpdateWalkabilityMap(false, collider);
 			}
 			else if (type > Entity::entityType::BARRACKS)
@@ -611,6 +613,58 @@ list<Entity*> EntityManager::OrderEntities(list<Entity*> List)
 	return ListOrder;
 }
 
+list<Building*> EntityManager::OrderBuildings(list<Building*> List, bool isPlayer1)
+{
+	list<Building*> ListOrder;
+	ListOrder.push_back(List.front()); // push first element of List to OrderList
+
+	bool found = false;
+
+	for (list<Building*>::iterator tmp = List.begin(); tmp != List.end(); tmp++) // traverse entity list (unordered)
+	{
+		for (list<Building*>::iterator tmp2 = ListOrder.begin(); tmp2 != ListOrder.end(); tmp2++) // traverse Ordered List
+		{
+			if (isPlayer1)
+			{
+				if (GetDepth(*tmp) < GetDepth(*tmp2)) // if tmp is further than tmp2
+				{
+					if (FindInList2(ListOrder, (*tmp)->position, (*tmp)->fromPlayer1, (*tmp)->type) == false)
+					{
+						ListOrder.insert(tmp2, *tmp); // add tmp in front of tmp2
+						found = true;
+					}
+
+					break;
+				}
+			}
+			else
+			{
+				if (GetDepth(*tmp) > GetDepth(*tmp2)) // if tmp is further than tmp2
+				{
+					if (FindInList2(ListOrder, (*tmp)->position, (*tmp)->fromPlayer1, (*tmp)->type) == false)
+					{
+						ListOrder.insert(tmp2, *tmp); // add tmp in front of tmp2
+						found = true;
+					}
+
+					break;
+				}
+			}
+			
+		}
+		if (found == false) // if tmp is the closest
+		{
+			if (FindInList2(ListOrder, (*tmp)->position, (*tmp)->fromPlayer1, (*tmp)->type) == false)
+			{
+				ListOrder.push_back(*tmp); // push to last place	
+			}
+		}
+		found = false;
+	}
+
+	return ListOrder;
+}
+
 int EntityManager::GetDepth(Entity* entity)
 {
 	pair<int,int> postemp = App->map->WorldToMap(entity->position.first, entity->position.second); // get map coords
@@ -689,3 +743,16 @@ bool EntityManager::FindInList(list<Entity*> List, pair <int,int> pos, bool from
 	return ret;
 }
 
+bool EntityManager::FindInList2(list<Building*> List, pair <int, int> pos, bool fromplayer1, Entity::entityType type)
+{
+	bool ret = false;
+	for (list<Building*>::iterator tmp = List.begin(); tmp != List.end(); tmp++) // traverse entity list (unordered)
+	{
+		if ((*tmp)->fromPlayer1 == fromplayer1 && (*tmp)->position == pos && (*tmp)->type == type)
+		{
+			ret = true;
+			break;
+		}
+	}
+	return ret;
+}
