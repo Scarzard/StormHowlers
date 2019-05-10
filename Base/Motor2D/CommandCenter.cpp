@@ -51,7 +51,7 @@ bool CmdCenter::Update(float dt)
 
 	if (fromPlayer1)
 	{
-		if (level == 1)
+		if (level == 0)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 0;
@@ -61,7 +61,7 @@ bool CmdCenter::Update(float dt)
 			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 		}
 
-		if (level == 2)
+		if (level == 1)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 12;
@@ -71,7 +71,7 @@ bool CmdCenter::Update(float dt)
 			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 		}
 
-		if (level == 3)
+		if (level == 2)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 22;
@@ -83,10 +83,11 @@ bool CmdCenter::Update(float dt)
 
 		if (health > 0) //if not destroyed
 		{
-			if (upgrade == true && level <= 3) //upgrade
+			if (upgrade == true && level <= 1) //upgrade
 			{
 				App->player1->gold -= upgrade_cost[level]; //pay costs
 				level++;
+				health = health_lv[level];
 				upgrade = false;
 			}
 			if (App->player1->isCasting == true) //player casting
@@ -114,7 +115,7 @@ bool CmdCenter::Update(float dt)
 		if (health > 0) //if not destroyed
 		{
 
-			if (level == 1)
+			if (level == 0)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 0;
@@ -124,7 +125,7 @@ bool CmdCenter::Update(float dt)
 				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 			}
 
-			if (level == 2)
+			if (level == 1)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 12;
@@ -134,7 +135,7 @@ bool CmdCenter::Update(float dt)
 				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 			}
 
-			if (level == 3)
+			if (level == 2)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 22;
@@ -144,10 +145,11 @@ bool CmdCenter::Update(float dt)
 				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 			}
 			
-			if (upgrade == true && level <= 3) //upgrade
+			if (upgrade == true && level <= 1) //upgrade
 			{
 				App->player2->gold -= upgrade_cost[level]; //pay costs
 				level++;
+				health = health_lv[level];
 				upgrade = false;
 			}
 			if (App->player2->isCasting == true) //player casting

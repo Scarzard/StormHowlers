@@ -1668,7 +1668,7 @@ void Player::UpdateGeneralUI(Entity* building)
 
 	sprintf_s(health_label, "HP: %i", building->health);
 
-	sprintf_s(level_label, "Lvl: %i", building->level);
+	sprintf_s(level_label, "Lvl: %i", building->level + 1);
 
 	sprintf_s(repair_cost_label, " - %i $", building->repair_cost);
 

@@ -43,31 +43,16 @@ Townhall::Townhall(bool isPlayer1, pair<int,int> pos, Collider collider): Buildi
 bool Townhall::Update(float dt)
 {
 	BROFILER_CATEGORY("Townhall Update", Profiler::Color::SandyBrown);
-	
-
-	// ------ This is awful ------ but works ;D
-
-	//if (fromPlayer1 == true)
-	//{
-	//	position = App->map->data.main_building2;
-	//}
-	//else 
-	//{
-	//	position = App->map->data.main_building;
-	//}
-	//////---------------------------------------
-
 			
 	
 	if (fromPlayer1)
 	{
-  // MERGE DEVELOPMENT
-		//if (App->player1->live > 0) //if not destroyed
+  
 
 		App->player1->health = health; //update health bar ui
 		App->player1->max_health = health_lv[level];
 		
-		if (level == 1)
+		if (level == 0)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 0;
@@ -77,7 +62,7 @@ bool Townhall::Update(float dt)
 			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 		}
 
-		if (level == 2)
+		if (level == 1)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 12;
@@ -87,7 +72,7 @@ bool Townhall::Update(float dt)
 			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 		}
 
-		if (level == 3)
+		if (level == 2)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 22;
@@ -107,6 +92,18 @@ bool Townhall::Update(float dt)
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 			App->scene->Victorious(App->player1, dt);
 		}
+		else
+		{
+			if (upgrade == true && level <= 1) //upgrade
+			{
+				App->player1->gold -= upgrade_cost[level]; //pay costs
+				level++;
+				production = production_lv[level]; //update production
+				health = health_lv[level];
+				upgrade = false;
+				//play fx (upgrade);
+			}
+		}
 
 		// Just to test the LiveBar
 		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
@@ -123,7 +120,7 @@ bool Townhall::Update(float dt)
 		App->player2->health = health; //update health bar ui
 		App->player2->max_health = health_lv[level];
 
-		if (level == 1)
+		if (level == 0)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 0;
@@ -133,7 +130,7 @@ bool Townhall::Update(float dt)
 			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 		}
 
-		if (level == 2)
+		if (level == 1)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 12;
@@ -143,7 +140,7 @@ bool Townhall::Update(float dt)
 			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 		}
 
-		if (level == 3)
+		if (level == 2)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 22;
@@ -153,7 +150,7 @@ bool Townhall::Update(float dt)
 			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 		}
 
-		if (health == 0) //if not destroyed
+		if (health == 0) //if destroyed
 		{
 
 			App->player2->UpdateWalkabilityMap(true, collider);
@@ -163,6 +160,18 @@ bool Townhall::Update(float dt)
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 			App->scene->Victorious(App->player2, dt);
 
+		}
+		else
+		{
+			if (upgrade == true && level <= 1) //upgrade
+			{
+				App->player1->gold -= upgrade_cost[level]; //pay costs
+				level++;
+				production = production_lv[level]; //update production
+				health = health_lv[level];
+				upgrade = false;
+				//play fx (upgrade);
+			}
 		}
 
 		// Just to test the LiveBar

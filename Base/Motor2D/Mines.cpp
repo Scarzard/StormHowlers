@@ -40,7 +40,7 @@ bool Mines::Update(float dt)
 		if (fromPlayer1)  // --- Player 1 --------------------------------
 		{
 
-			if (level == 1)
+			if (level == 0)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 0;
@@ -50,7 +50,7 @@ bool Mines::Update(float dt)
 				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 			}
 
-			if (level == 2)
+			if (level == 1)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 12;
@@ -60,7 +60,7 @@ bool Mines::Update(float dt)
 				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 			}
 
-			if (level == 3)
+			if (level == 2)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 22;
@@ -72,11 +72,12 @@ bool Mines::Update(float dt)
 
 			if (health > 0) //if not destroyed
 			{
-				if (upgrade == true && level <= 3) //upgrade
+				if (upgrade == true && level <= 1) //upgrade
 				{
 					App->player1->gold -= upgrade_cost[level]; //pay costs
 					level++;
 					production = production_lv[level]; //update production
+					health = health_lv[level];
 					upgrade = false;
 					//play fx (upgrade);
 				}
@@ -101,7 +102,7 @@ bool Mines::Update(float dt)
 		else if (!fromPlayer1) // --- Player 2 ---------------------------
 		{
 
-			if (level == 1)
+			if (level == 0)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 0;
@@ -111,7 +112,7 @@ bool Mines::Update(float dt)
 				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 			}
 
-			if (level == 2)
+			if (level == 1)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 12;
@@ -121,7 +122,7 @@ bool Mines::Update(float dt)
 				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 			}
 
-			if (level == 3)
+			if (level == 2)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 22;
@@ -133,11 +134,12 @@ bool Mines::Update(float dt)
 
 			if (health > 0) //if not destroyed
 			{
-				if (upgrade == true) //upgrade
+				if (upgrade == true && level<=1) //upgrade
 				{
 					App->player2->gold -= upgrade_cost[level]; //pay costs
 					level++;
 					production = production_lv[level]; //update production
+					health = health_lv[level];
 					upgrade = false;
 					//play fx (upgrade);
 				}

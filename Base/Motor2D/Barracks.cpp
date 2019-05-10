@@ -41,43 +41,44 @@ bool Barracks::Update(float dt)
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
 
-		if (level == 1)
+		if (level == 0)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 0;
 			upgrade.y = 9;
 			upgrade.w = 8;
 			upgrade.h = 5;
-			App->render->Blit(App->scene->upgrade_lvl, position.first+10, position.second-50, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first+10, position.second+100, &upgrade);
 		}
 
-		if (level == 2)
+		if (level == 1)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 12;
 			upgrade.y = 6;
 			upgrade.w = 8;
 			upgrade.h = 9;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second + 100, &upgrade);
 		}
 
-		if (level == 3)
+		if (level == 2)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 22;
 			upgrade.y = 2;
 			upgrade.w = 8;
 			upgrade.h = 13;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second + 100, &upgrade);
 		}
 
 		if (health > 0) //if not destroyed
 		{
-			if (upgrade == true && level <= 3) //upgrade
+			if (upgrade == true && level <= 1) //upgrade
 			{
 				App->player1->gold -= upgrade_cost[level]; //pay costs
 				level++;
 				capacity = capacity_lv[level]; //update capacity
+				health = health_lv[level];
 				upgrade = false;
 				//play fx (upgrade);
 			}
@@ -105,7 +106,7 @@ bool Barracks::Update(float dt)
 		if (health > 0) //if not destroyed
 		{
 
-			if (level == 1)
+			if (level == 0)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 0;
@@ -115,7 +116,7 @@ bool Barracks::Update(float dt)
 				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 			}
 
-			if (level == 2)
+			if (level == 1)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 12;
@@ -125,7 +126,7 @@ bool Barracks::Update(float dt)
 				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 			}
 
-			if (level == 3)
+			if (level == 2)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 22;
@@ -135,11 +136,12 @@ bool Barracks::Update(float dt)
 				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 50, &upgrade);
 			}
 
-			if (upgrade == true && level <= 3) //upgrade
+			if (upgrade == true && level <= 1) //upgrade
 			{
 				App->player2->gold -= upgrade_cost[level]; //pay costs
 				level++;
 				capacity = capacity_lv[level]; //update capacity
+				health = health_lv[level];
 				upgrade = false;
 				//play fx (upgrade);
 			}
