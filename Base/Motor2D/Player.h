@@ -34,6 +34,11 @@ struct GeneralUI
 class Player : public Module
 {
 public:
+	enum DeployState {
+		START,
+		DEPLOYING,
+		END
+	};
 	enum CURRENT_UI
 	{
 		NONE,
@@ -66,6 +71,8 @@ public:
 	~Player();
 
 	bool Start();
+	void RectangleSelection();
+	bool DeployTroops(Entity::entityType type, int amount, pair<int, int> pos);
 	bool Awake(pugi::xml_node &config);
 	bool Update(float dt);
 	bool PostUpdate();
@@ -76,7 +83,9 @@ public:
 	// ---------------------- UI functions -----------------------------------------
 
 	void UpdateVisibility(); //update gui visibility
-	void DoLogic(UI_Element* data); //gui actions
+	void DoLogic(UI_Element* data);
+	void UpdateWalkabilityMap(char cell_type, Collider collider);
+	//gui actions
 	void UpdateFocus(uint data);	//updates where the focus is pointing
 	void GotoPrevWindows(uint data);
 	UI_Element* GetUI_Element(uint data); //returns the window we are currently on
@@ -94,7 +103,7 @@ public:
 
 	bool CheckBuildingPos();
 	Collider GetCollider(pair<int, int> dimensions, pair<int,int> topTile_pos);
-	void UpdateWalkabilityMap(bool isWalkable, Collider collider);
+	//void UpdateWalkabilityMap(bool isWalkable, Collider collider);
 	bool DeleteEntity(Entity* entity);
 
 	int CheckCost(Entity::entityType type);
@@ -112,6 +121,9 @@ public:
 	int desired_second = 0;
 	int desired_min = 0;
 
+	bool pathfinding = true;
+
+
 
 	Collider collider;
 	pair<int, int> offset;
@@ -124,6 +136,9 @@ public:
 
 	int gold = 0;
 	int gold_persecond = 0;
+
+	SDL_Rect rectangle_origin = { 0,0,0,0 };
+
 	bool gold_added = false;
 
 	uint time_iterator = 0;
@@ -134,7 +149,7 @@ public:
 	int total_capacity = 0; //sum of all barracks capacities
 	int actual_capacity = 0; //sum of all created troops
 	
-  
+	DeployState deploy_state = DeployState::END;
 	//bool entityAdded;
 	//Entity* previewEntity;
 
@@ -148,6 +163,7 @@ public:
 	
 	//index for testing previews
 	int curr = 1;
+	int deploying_counter = 0;
 
 	GamePad gamepad;
 
@@ -159,14 +175,18 @@ public:
 	SDL_Rect selected_texture = { 0,0,0,0 };
 	list<Building*>::iterator building_selected;
 	list<Building*>::iterator last_building;
+	vector<Group*> groups = vector<Group*>();
+	int group = 0;
 
 	list<Troop*> troops;
+	list<Entity*> entities;
 
 	int SoldiersCreated = 0;
 	int TankmansCreated = 0;
 	int InfiltratorsCreated = 0;
 	int EngineersCreated = 0;
 	int WarHoundsCreated = 0;
+	int BarracksCreated = 0;
 
 	int Invulnerable_abilities = 0;
 

@@ -7,6 +7,17 @@
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
 
+#define NO_WALKABLE  '0'
+#define WALKABLE	 '1'
+
+#define P1_SOLDIER	 '2'
+#define P1_TROOP	 '4'
+#define P1_BUILDING  '5'
+
+#define P2_SOLDIER	 '3'
+#define P2_TROOP	 '6'
+#define P2_BUILDING  '7'
+
 struct PathNode;
 
 class Pathfinding : public Module
@@ -34,7 +45,9 @@ public:
 
 	void ResetPath(vector<pair<int, int>>& path_to_reset);
 
-	void ChangeWalkability(const pair<int, int>& pos, bool isWalkable) const;
+	void ChangeWalkability(const pair<int, int>& pos, char isWalkable) const;
+
+	//void ChangeWalkability(const pair<int, int>& pos, bool isWalkable) const;
 
 	// Utility: return true if pos is inside the map boundaries
 	bool CheckBoundaries(const pair<int,int>& pos) const;

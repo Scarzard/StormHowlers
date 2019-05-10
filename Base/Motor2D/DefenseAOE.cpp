@@ -95,7 +95,6 @@ bool DefenseAoe::Update(float dt)
 	{
 		if (health <= 0) //destroyed
 		{
-			App->player1->UpdateWalkabilityMap(true, colider);
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
@@ -105,7 +104,6 @@ bool DefenseAoe::Update(float dt)
 	{
 		if (health <= 0) //destroyed
 		{
-			App->player2->UpdateWalkabilityMap(true, colider);
 			App->player2->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));

@@ -84,6 +84,7 @@
     <ClCompile Include="CommandCenter.cpp" />
     <ClCompile Include="DefenseAOE.cpp" />
     <ClCompile Include="DefenseTarget.cpp" />
+    <ClCompile Include="Engineer.cpp" />
     <ClCompile Include="Group.cpp" />
     <ClCompile Include="MovementManager.cpp" />
     <ClCompile Include="MainDefense.cpp" />
@@ -120,6 +121,7 @@
     <ClInclude Include="CommandCenter.h" />
     <ClInclude Include="DefenseAOE.h" />
     <ClInclude Include="DefenseTarget.h" />
+    <ClInclude Include="Engineer.h" />
     <ClInclude Include="Group.h" />
     <ClInclude Include="MovementManager.h" />
     <ClInclude Include="MainDefense.h" />

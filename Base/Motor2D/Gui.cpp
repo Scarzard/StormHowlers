@@ -160,7 +160,7 @@ bool Gui::Draw()
 				else if ((*UI_elem) == App->player1->win_screen)
 				{
 					App->render->DrawQuad({ 0, 0, (int)App->win->width + 520, (int)App->win->height + 300 }, 0, 0, 0, 150, true, false);
-					SDL_RenderCopy(App->render->renderer, App->scene->allied_win_tex, NULL, &r);
+					SDL_RenderCopy(App->render->renderer, App->scene->soviet_win_tex, NULL, &r);
 				}
 				else if ((*UI_elem) == App->player1->draw_screen)
 				{
@@ -206,12 +206,13 @@ bool Gui::Draw()
 				else if ((*UI_elem) == App->player2->win_screen)
 				{
 					App->render->DrawQuad({ 0, 0, (int)App->win->width + 520, (int)App->win->height + 300 }, 0, 0, 0, 150, true, false);
-					SDL_RenderCopy(App->render->renderer, App->scene->soviet_win_tex, NULL, &r);
+					SDL_RenderCopy(App->render->renderer, App->scene->allied_win_tex, NULL, &r);
 				}
 			}
 			else //rest of ui
 			{
-				App->render->Blit(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, &(*UI_elem)->rect, SDL_FLIP_NONE, 0);
+				if (!App->player1->isPaused)
+					App->render->Blit(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, &(*UI_elem)->rect, SDL_FLIP_NONE, 0);
 			}
 		}
 		if (UI_Debug == true)
@@ -315,40 +316,40 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		{
 		case UI_Element::Action::ACT_GOTO_BUILD:
 			if (App->player1->Build_icon == data)
-				data->rect = { 0, 0, 80, 81 };  // RED
-			else
 				data->rect = { 0, 81, 80, 79 }; //BLUE
+			else
+				data->rect = { 0, 0, 80, 81 };  // RED
 
 			break;
 
 		case UI_Element::Action::ACT_GOTO_DEPLOY:
 			if (App->player1->Deploy_icon == data)
-				data->rect = { 80, 0, 80, 81 }; // RED
-			else
 				data->rect = { 80, 81, 82, 79 }; //BLUE
+			else
+				data->rect = { 80, 0, 80, 81 }; // RED
 
 			break;
 
 		case UI_Element::Action::ACT_GOTO_CAST:
 			if (App->player1->Cast_icon == data)
-				data->rect = { 159, 0, 78, 81 }; // RED
-			else
 				data->rect = { 162, 81, 75, 79 }; //BLUE
+			else
+				data->rect = { 159, 0, 78, 81 }; // RED
 			break;
 
 			// General UI buttons
 		case UI_Element::Action::ACT_UPGRADE:
 			if (App->player1->Upgrade_icon == data)
-				data->rect = { 1077, 202, 62,36 }; // RED
-			else
 				data->rect = { 1077, 166, 62,36 }; //BLUE
+			else
+				data->rect = { 1077, 202, 62,36 }; // RED
 			break;
 
 		case UI_Element::Action::ACT_REPAIR:
 			if (App->player1->Repair_icon == data)
-				data->rect = { 1013, 202, 62, 36 }; // RED
-			else
 				data->rect = { 1013, 166, 62, 36 }; //BLUE
+			else
+				data->rect = { 1013, 202, 62, 36 }; // RED
 			break;
 
 
@@ -394,11 +395,10 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			data->rect = { 662, 161, 85, 81 };
 			break;
 
-			//-----Needs to be changed
+			//Main menu
 		case UI_Element::Action::NEW_GAME:
 			data->rect = { 744, 954, 371, 87 };
 			break;
-			//change values
 		case UI_Element::Action::EXIT:
 			data->rect = { 744, 954, 371, 87 };
 			break;
@@ -406,48 +406,48 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			//------ Pause Menu ------
 		case UI_Element::Action::RESUME_PAUSE:
 			if (App->player1->Resume_Button == data)
-				data->rect = { 581, 769, 301,59 };
+				data->rect = { 581, 830, 300, 60 };
 			else
-				data->rect = {581, 830, 300, 60};
+				data->rect = { 581, 769, 301, 59 };
 			break;
 		case UI_Element::Action::SETTINGS_PAUSE:
 			if (App->player1->Settings_Button == data)
-				data->rect = { 581, 769, 301,59 };
-			else
 				data->rect = { 581, 830, 300, 60 };
+			else
+				data->rect = { 581, 769, 301, 59 };
 			break;
 		case UI_Element::Action::ABORT_PAUSE:
-			if (App->player1->Abort_Button== data)
-				data->rect = { 581, 769, 301,59 };
-			else
+			if (App->player1->Abort_Button == data)
 				data->rect = { 581, 830, 300, 60 };
+			else
+				data->rect = { 581, 769, 301, 59 };
 			break;
 
 		case UI_Element::Action::SURRENDER:
 			if (App->player1->Quit == data)
-				data->rect = { 581, 769, 301,59 };
-			else
 				data->rect = { 581, 830, 300, 60 };
+			else
+				data->rect = { 581, 769, 301, 59 };
 			break;
 		case UI_Element::Action::RESTART:
 			if (App->player1->Restart == data)
-				data->rect = { 581, 769, 301,59 };
-			else
 				data->rect = { 581, 830, 300, 60 };
+			else
+				data->rect = { 581, 769, 301, 59 };
 			break;
 
 
 		case UI_Element::Action::MUSIC_VOLUME:
 			if (App->player1->Music_Settings == data)
-				data->rect = { 1517, 830, 291, 54 };
-			else
 				data->rect = { 1816, 830, 291, 54 };
+			else
+				data->rect = { 1517, 830, 291, 54 };
 			break;
 		case UI_Element::Action::FX_VOLUME:
 			if (App->player1->FX_Settings == data)
-				data->rect = { 1517, 830, 291, 54 };
-			else
 				data->rect = { 1816, 830, 291, 54 };
+			else
+				data->rect = { 1517, 830, 291, 54 };
 			break;
 
 		}
@@ -458,38 +458,38 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		{
 		case UI_Element::Action::ACT_GOTO_BUILD:
 			if (App->player1->Build_icon == data)
-				data->rect = { 237, 0, 81, 81 };
-			else
 				data->rect = { 237, 81, 81, 79 };
+			else
+				data->rect = { 237, 0, 81, 81 };
 			break;
 
 		case UI_Element::Action::ACT_GOTO_DEPLOY:
 			if (App->player1->Deploy_icon == data)
-				data->rect = { 318, 0, 78, 81 };
-			else
 				data->rect = { 318, 81, 78, 79 };
+			else
+				data->rect = { 318, 0, 78, 81 };
 			break;
 
 		case UI_Element::Action::ACT_GOTO_CAST:
 			if (App->player1->Cast_icon == data)
-				data->rect = { 396, 0, 80, 81 };
-			else
 				data->rect = { 396, 81, 80, 79 };
+			else
+				data->rect = { 396, 0, 80, 81 };
 			break;
 
 			// General UI buttons
 		case UI_Element::Action::ACT_UPGRADE:
 			if (App->player1->Upgrade_icon == data)
-				data->rect = { 1205, 202, 62,36 }; // RED
-			else
 				data->rect = { 1205, 166, 62,36 }; //BLUE
+			else
+				data->rect = { 1205, 202, 62,36 }; // RED
 			break;
 
 		case UI_Element::Action::ACT_REPAIR:
 			if (App->player1->Repair_icon == data)
-				data->rect = { 1141, 202, 62, 36 }; // RED
-			else
 				data->rect = { 1141, 166, 62, 36 }; //BLUE
+			else
+				data->rect = { 1141, 202, 62, 36 }; // RED
 			break;
 
 			//--------- Building buttons
@@ -547,47 +547,47 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			//------ Pause Menu ------
 		case UI_Element::Action::RESUME_PAUSE:
 			if (App->player1->Resume_Button == data)
-				data->rect = { 881, 769, 301,59 };
-			else
 				data->rect = { 881, 830, 300, 60 };
+			else
+				data->rect = { 881, 769, 301, 59 };
 			break;
 		case UI_Element::Action::SETTINGS_PAUSE:
 			if (App->player1->Settings_Button == data)
-				data->rect = { 881, 769, 301,59 };
-			else
 				data->rect = { 881, 830, 300, 60 };
+			else
+				data->rect = { 881, 769, 301, 59 };
 			break;
 		case UI_Element::Action::ABORT_PAUSE:
 			if (App->player1->Abort_Button == data)
-				data->rect = { 881, 769, 301,59 };
-			else
 				data->rect = { 881, 830, 300, 60 };
+			else
+				data->rect = { 881, 769, 301, 59 };
 			break;
 
 		case UI_Element::Action::SURRENDER:
 			if (App->player1->Quit == data)
-				data->rect = { 881, 769, 301,59 };
-			else
 				data->rect = { 881, 830, 300, 60 };
+			else
+				data->rect = { 881, 769, 301, 59 };
 			break;
 		case UI_Element::Action::RESTART:
 			if (App->player1->Restart == data)
-				data->rect = { 881, 769, 301,59 };
-			else
 				data->rect = { 881, 830, 300, 60 };
+			else
+				data->rect = { 881, 769, 301, 59 };
 			break;
 
 		case UI_Element::Action::MUSIC_VOLUME:
 			if (App->player1->Music_Settings == data)
-				data->rect = { 1517, 884, 291, 54 };
-			else
 				data->rect = { 1816, 884, 291, 54 };
+			else
+				data->rect = { 1517, 884, 291, 54 };
 			break;
 		case UI_Element::Action::FX_VOLUME:
 			if (App->player1->FX_Settings == data)
-				data->rect = { 1517, 884, 291, 54 };
-			else
 				data->rect = { 1816, 884, 291, 54 };
+			else
+				data->rect = { 1517, 884, 291, 54 };
 			break;
 		}
 		break;
@@ -668,48 +668,48 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 
 			//------ Pause Menu ------
 		case UI_Element::Action::RESUME_PAUSE:
-			if(App->player1->Resume_Button == data)
-				data->rect = { 1181, 769, 301,59 };
-			else
+			if (App->player1->Resume_Button == data)
 				data->rect = { 1181, 830, 300, 60 };
+			else
+				data->rect = { 1181, 769, 301, 59 };
 			break;
 		case UI_Element::Action::SETTINGS_PAUSE:
 			if (App->player1->Settings_Button == data)
-				data->rect = { 1181, 769, 301,59 };
-			else
 				data->rect = { 1181, 830, 300, 60 };
+			else
+				data->rect = { 1181, 769, 301, 59 };
 			break;
 		case UI_Element::Action::ABORT_PAUSE:
 			if (App->player1->Abort_Button == data)
-				data->rect = { 1181, 769, 301,59 };
-			else
 				data->rect = { 1181, 830, 300, 60 };
+			else
+				data->rect = { 1181, 769, 301, 59 };
 			break;
 
 		case UI_Element::Action::SURRENDER:
 			if (App->player1->Quit == data)
-				data->rect = { 1181, 769, 301,59 };
-			else
 				data->rect = { 1181, 830, 300, 60 };
+			else
+				data->rect = { 1181, 769, 301, 59 };
 			break;
 		case UI_Element::Action::RESTART:
 			if (App->player1->Restart == data)
-				data->rect = { 1181, 769, 301,59 };
-			else
 				data->rect = { 1181, 830, 300, 60 };
+			else
+				data->rect = { 1181, 769, 301, 59 };
 			break;
 
 		case UI_Element::Action::MUSIC_VOLUME:
 			if (App->player1->Music_Settings == data)
-				data->rect = { 1517, 884, 291, 54 };
-			else
 				data->rect = { 1816, 884, 291, 54 };
+			else
+				data->rect = { 1517, 884, 291, 54 };
 			break;
 		case UI_Element::Action::FX_VOLUME:
 			if (App->player1->FX_Settings == data)
-				data->rect = { 1517, 884, 291, 54 };
-			else
 				data->rect = { 1816, 884, 291, 54 };
+			else
+				data->rect = { 1517, 884, 291, 54 };
 			break;
 		}
 		break;
@@ -798,10 +798,9 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::ABORT_PAUSE:
 			data->rect = { 769, 769, 301,59 };
 			break;
-			
+
 
 		}
 		break;
 	}
 }
-
