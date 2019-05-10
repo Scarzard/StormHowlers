@@ -22,6 +22,8 @@
 #include "Soldier.h"
 #include "Engineer.h"
 #include "Tankman.h"
+#include "Infiltrator.h"
+#include "Hound.h"
 #include "Building.h"
 #include "Troop.h"
 
@@ -89,7 +91,7 @@ bool EntityManager::Start()
 {
 	LoadSamples();
 	bool ret = true;
-	for (int i = Entity::entityType::TOWNHALL; i < Entity::entityType::WAR_HOUND; i++) {
+	for (int i = Entity::entityType::TOWNHALL; i <= Entity::entityType::WAR_HOUND; i++) {
 
 		string n = GetName(Entity::entityType(i));
 		n += "_anim.png";
@@ -477,11 +479,11 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			break;
 
 		case Entity::entityType::INFILTRATOR:
-			//tmp = new Infiltrator(isPlayer1, position, collider);
+			tmp = new Infiltrator(isPlayer1, position, collider);
 			break;
 
 		case Entity::entityType::WAR_HOUND:
-			//tmp = new War_hound(isPlayer1, position, collider);
+			tmp = new Hound(isPlayer1, position, collider);
 			break;
 
 		default:

@@ -255,11 +255,11 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 
 				// Show full path
 				it = (*unit)->info.Current_path.begin();
-				while (it != (*unit)->info.Current_path.end()) {
+				/*while (it != (*unit)->info.Current_path.end()) {
 					goal_world = App->map->MapToWorld(it->first, it->second);
 					App->render->Blit((*unit)->tex, goal_world.first, goal_world.second, &(*unit)->rect);
 					it++;
-				}
+				}*/
 
 				break;
 

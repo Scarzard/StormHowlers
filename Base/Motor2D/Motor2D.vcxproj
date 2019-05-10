@@ -86,6 +86,8 @@
     <ClCompile Include="DefenseTarget.cpp" />
     <ClCompile Include="Engineer.cpp" />
     <ClCompile Include="Group.cpp" />
+    <ClCompile Include="Hound.cpp" />
+    <ClCompile Include="Infiltrator.cpp" />
     <ClCompile Include="MovementManager.cpp" />
     <ClCompile Include="MainDefense.cpp" />
     <ClCompile Include="Mines.cpp" />
@@ -124,6 +126,8 @@
     <ClInclude Include="DefenseTarget.h" />
     <ClInclude Include="Engineer.h" />
     <ClInclude Include="Group.h" />
+    <ClInclude Include="Hound.h" />
+    <ClInclude Include="Infiltrator.h" />
     <ClInclude Include="MovementManager.h" />
     <ClInclude Include="MainDefense.h" />
     <ClInclude Include="Mines.h" />

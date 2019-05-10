@@ -1,17 +1,17 @@
-#include "Soldier.h"
+#include "Infiltrator.h"
 #include "Pathfinding.h"
 #include "Player.h"
 #include "Audio.h"
 
 
-Soldier::Soldier()
+Infiltrator::Infiltrator()
 {
-	
+
 }
 
-Soldier::Soldier(bool isPlayer1, pair<int, int> pos, Collider collider):Troop(Entity::entityType::SOLDIER,isPlayer1,pos, collider)
+Infiltrator::Infiltrator(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop(Entity::entityType::INFILTRATOR, isPlayer1, pos, collider)
 {
-	BROFILER_CATEGORY("Soldier constructor", Profiler::Color::Red);
+	BROFILER_CATEGORY("Infiltrator constructor", Profiler::Color::Red);
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
 
@@ -25,25 +25,24 @@ Soldier::Soldier(bool isPlayer1, pair<int, int> pos, Collider collider):Troop(En
 }
 
 
-Soldier::~Soldier()
+Infiltrator::~Infiltrator()
 {
 }
 
-bool Soldier::Update(float dt)
+bool Infiltrator::Update(float dt)
 {
-	
+
 	if (alive) {
-		
+
 		pair<int, int> map_pos = App->map->WorldToMap(position.first, position.second);
 		pair<int, int> map_init_pos = App->map->WorldToMap(init_position.first, init_position.second);
 		int time_to_act = 2;
 
 		// Checks for group defined closest entity
-		//info.closest = nullptr;
 		if (info.closest != nullptr)
 		{
 			//Entity to attack is found
-			if(info.closest->health > 0){
+			if (info.closest->health > 0) {
 				//LOG("Closest FOUND");
 				int d = 0;
 
@@ -88,12 +87,12 @@ bool Soldier::Update(float dt)
 			}
 		}
 		//ENTITY TO ATTACK IS NOT FOUND OR JUST DIED
-		if (state != SHOOTING ){
+		if (state != SHOOTING) {
 
 			if (state == TROOP_IDLE) {
 				//LOG("Closest NOT FOUND - SEARCHING");
 
-				info.closest = App->entitymanager->findEntity(map_pos, fromPlayer1, range);
+				info.closest = FindBuilding(map_pos, fromPlayer1, range);
 				range = (info.closest == nullptr) ? range + 20 : original_range;
 
 			}
@@ -107,7 +106,7 @@ bool Soldier::Update(float dt)
 		//Current_Animation = Die;
 
 	}
-	
+
 	ActOnDestroyed();
 	ChangeAnimation();
 
@@ -118,7 +117,7 @@ bool Soldier::Update(float dt)
 	Troop::Update(dt);
 	return true;
 }
-void Soldier::SetDestination()
+void Infiltrator::SetDestination()
 {
 	destination = App->map->WorldToMap(info.closest->position.first, info.closest->position.second);
 
@@ -140,17 +139,17 @@ void Soldier::SetDestination()
 
 	}
 }
-bool Soldier::Is_inRange(pair<int, int> pos, int &distance, pair <int, int> position, int range) {
+bool Infiltrator::Is_inRange(pair<int, int> pos, int &distance, pair <int, int> position, int range) {
 
 	//posicion entre dos entidades cualquiera
 	//determina si esta en el rango
 
 	pair <int, int> vector_distance = { position.first - pos.first, position.second - pos.second };
-	distance = (int)(sqrt(pow(vector_distance.first, 2) + pow(vector_distance.second/2, 2)));
+	distance = (int)(sqrt(pow(vector_distance.first, 2) + pow(vector_distance.second / 2, 2)));
 
 	return distance <= range;
 }
-void Soldier::PrintState() {
+void Infiltrator::PrintState() {
 	switch (state)
 	{
 	case NOT_DEPLOYED:
@@ -177,7 +176,7 @@ void Soldier::PrintState() {
 	}
 }
 
-void Soldier::ForceAnimations() {
+void Infiltrator::ForceAnimations() {
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
 		Current_Animation = moving[(curr++) % SOUTHWEST];
@@ -192,7 +191,7 @@ void Soldier::ForceAnimations() {
 		idle->SetCurrentFrame((curr++) % SOUTHWEST);
 	}
 }
-void Soldier::ActOnDestroyed() {
+void Infiltrator::ActOnDestroyed() {
 
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
@@ -200,8 +199,8 @@ void Soldier::ActOnDestroyed() {
 		{
 			/*std::list <Entity*>::const_iterator unit = info.current_group->Units.begin();
 			while (unit != info.current_group->Units.end()) {
-				(*unit)->isSelected = true;
-				unit++;
+			(*unit)->isSelected = true;
+			unit++;
 			}
 			isSelected = false;
 			App->move_manager->CreateGroup(App->player1);*/
@@ -219,12 +218,12 @@ void Soldier::ActOnDestroyed() {
 	}
 }
 
-void Soldier::CleanUp() {
+void Infiltrator::CleanUp() {
 	Troop::CleanUp();
 
 }
 
-void Soldier::ChangeAnimation() {
+void Infiltrator::ChangeAnimation() {
 	Current_Animation = idle;
 	if (state == MOVING)
 	{
@@ -357,13 +356,13 @@ void Soldier::ChangeAnimation() {
 		}
 
 	}
-	
+
 }
 
 
-void Soldier::LoadAnimations(bool isPlayer1, string path)
+void Infiltrator::LoadAnimations(bool isPlayer1, string path)
 {
-	BROFILER_CATEGORY("Soldier Load Animations", Profiler::Color::Blue);
+	BROFILER_CATEGORY("Infiltrator Load Animations", Profiler::Color::Blue);
 	moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
@@ -379,10 +378,10 @@ void Soldier::LoadAnimations(bool isPlayer1, string path)
 	moving[SOUTHEAST] = moving[SOUTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_southeast" : "blue_southeast");
 	moving[SOUTHWEST] = moving[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_southwest" : "blue_southwest");
 
-	shooting[NORTH] = shooting[NORTH]->LoadAnimation(path.data(),		  (isPlayer1) ? "red_shoot_N" : "blue_shoot_N");
-	shooting[SOUTH] = shooting[SOUTH]->LoadAnimation(path.data(),		  (isPlayer1) ? "red_shoot_S" : "blue_shoot_S");
-	shooting[EAST] = shooting[EAST]->LoadAnimation(path.data(),			  (isPlayer1) ? "red_shoot_E" : "blue_shoot_E");
-	shooting[WEST] = shooting[WEST]->LoadAnimation(path.data(),			  (isPlayer1) ? "red_shoot_W" : "blue_shoot_W");
+	shooting[NORTH] = shooting[NORTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_N" : "blue_shoot_N");
+	shooting[SOUTH] = shooting[SOUTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_S" : "blue_shoot_S");
+	shooting[EAST] = shooting[EAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_E" : "blue_shoot_E");
+	shooting[WEST] = shooting[WEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_W" : "blue_shoot_W");
 	shooting[NORTHEAST] = shooting[NORTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_NE" : "blue_shoot_NE");
 	shooting[NORTHWEST] = shooting[NORTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_NW" : "blue_shoot_NW");
 	shooting[SOUTHEAST] = shooting[SOUTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_SE" : "blue_shoot_SE");
@@ -403,4 +402,38 @@ void Soldier::LoadAnimations(bool isPlayer1, string path)
 		idle->SetCurrentFrame(6);
 	}
 	Current_Animation = moving[NORTH];
+}
+
+Building* Infiltrator::FindBuilding(pair <int, int> pos, bool fromplayer1, int attackrange)
+{
+	Player* enemy = (!fromplayer1) ? App->player1 : App->player2;
+
+	Building* found = *enemy->buildings.begin();
+	int distance = 0;
+	pair<int, int> map_pos = App->map->WorldToMap(found->position.first, found->position.second);
+	Is_inRange(pos, distance, map_pos, attackrange);
+	int min_dist = distance;
+
+	for (list<Building*>::iterator tmp = enemy->buildings.begin(); tmp != enemy->buildings.end(); tmp++) // traverse entity list (unordered)
+	{
+		map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+		if (Is_inRange(pos, distance, map_pos, attackrange))
+		{
+
+			if (min_dist >= distance)
+			{
+				found = (*tmp);
+				min_dist = distance;
+			}
+		}
+
+	}
+	if (min_dist <= attackrange && found->type < entityType::DEFENSE_AOE)
+	{
+		return found;
+	}
+
+	return nullptr;
+
 }

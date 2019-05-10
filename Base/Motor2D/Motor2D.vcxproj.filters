@@ -106,6 +106,12 @@
     <ClCompile Include="Tankman.cpp">
       <Filter>Desenvolupament  ========\Entities\Troops</Filter>
     </ClCompile>
+    <ClCompile Include="Infiltrator.cpp">
+      <Filter>Desenvolupament  ========\Entities\Troops</Filter>
+    </ClCompile>
+    <ClCompile Include="Hound.cpp">
+      <Filter>Desenvolupament  ========\Entities\Troops</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PugiXml\src\pugiconfig.hpp">
@@ -232,6 +238,12 @@
       <Filter>Desenvolupament  ========\Entities\Troops</Filter>
     </ClInclude>
     <ClInclude Include="Tankman.h">
+      <Filter>Desenvolupament  ========\Entities\Troops</Filter>
+    </ClInclude>
+    <ClInclude Include="Infiltrator.h">
+      <Filter>Desenvolupament  ========\Entities\Troops</Filter>
+    </ClInclude>
+    <ClInclude Include="Hound.h">
       <Filter>Desenvolupament  ========\Entities\Troops</Filter>
     </ClInclude>
   </ItemGroup>

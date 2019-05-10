@@ -12,8 +12,7 @@ Tankman::Tankman()
 Tankman::Tankman(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop(Entity::entityType::TANKMAN, isPlayer1, pos, collider)
 {
 	BROFILER_CATEGORY("Tankman constructor", Profiler::Color::Red);
-	//string path = "animation/" + name + ".tmx";
-	string path = "animation/engineer.tmx";
+	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
 
 	destination = pos;
@@ -430,7 +429,7 @@ Building* Tankman::FindBuilding(pair <int, int> pos, bool fromplayer1, int attac
 		}
 
 	}
-	if (min_dist <= attackrange)
+	if (min_dist <= attackrange && found->type == entityType::WALLS)
 	{
 		return found;
 	}
