@@ -35,11 +35,16 @@ public:
 
 	int player1_counter = 0;
 	int player2_counter = 0;
+	int goal_counter = 10;
+
 	char player1_ct_char[64] = "0";
 	char player2_ct_char[64] = "0";
 
 	bool player1_ready = false;
 	bool player2_ready = false;
+
+	bool player1_won = false;
+	bool player2_won = false;
 
 	Timer timer;
 

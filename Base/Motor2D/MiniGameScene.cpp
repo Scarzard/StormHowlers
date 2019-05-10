@@ -82,6 +82,15 @@ bool MiniGameScene::Update(float dt) {
 				sprintf_s(player2_ct_char, 64, "%d", player2_counter);
 				player2_label->label = player2_ct_char;
 			}
+
+			if (player1_counter >= goal_counter) {
+				player1_won = true;
+				mg_state = miniGameState::END;
+			}
+			if (player2_counter >= goal_counter) {
+				player2_won = true;
+				mg_state = miniGameState::END;
+			}
 			break;
 		case miniGameState::END:
 			//Switch scene
