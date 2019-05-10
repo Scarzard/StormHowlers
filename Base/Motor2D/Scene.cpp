@@ -102,6 +102,7 @@ bool Scene::Start()
 	App->map->allied_flag_anim->speed = 6;
 	App->map->soviet_flag_anim->speed = 6;
 
+	upgrade_lvl = App->tex->Load("textures/troplevels.png");
 
 	explosion_tex = App->tex->Load("animation/explosion_anim.png");
 	App->map->explosion_anim = App->map->explosion_anim->LoadAnimation("animation/explosion.tmx", "animation");
