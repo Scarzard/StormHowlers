@@ -193,7 +193,10 @@ bool Gui::Draw()
 				(*UI_elem)->texture = App->font->Print((*UI_elem)->label, (*UI_elem)->color);
 				App->font->CalcSize((*UI_elem)->label, (*UI_elem)->size.first, (*UI_elem)->size.second);
 
-				App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
+				if (App->player1->isPaused && (*UI_elem)!=App->player2->Gold_UI)
+					App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
+				else if (!App->player1->isPaused)
+					App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
 			}
 			else if ((*UI_elem)->type == UI_Element::UI_type::TEXTURE) //text
 			{

@@ -537,6 +537,11 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			tmp = new Mines(isPlayer1, position, collider);
 			break;
 
+		case Entity::entityType::BARRACKS:
+			App->audio->PlayFx(BARRACKS_BUILD);
+			tmp = new Barracks(isPlayer1, position, collider);
+			break;
+
 		case Entity::entityType::WALLS:
 			tmp = new Walls(isPlayer1, position, collider, animation);
 			break;
@@ -545,7 +550,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		if (tmp) {
 			if (isPlayer1 == true)
 			{
-				App->player1->gold -= App->player1->CheckCost(tmp);
+				App->player1->gold -= App->player1->CheckCost(tmp->type);
 				App->player1->buildings.push_back((Building*)tmp);
 				App->player1->buildings = OrderBuildings(App->player1->buildings, true);
 				App->player1->entities.push_back((Building*)tmp);
@@ -554,7 +559,7 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			}
 			else // Player 2 -------------------------------
 			{
-
+				App->player2->gold -= App->player2->CheckCost(tmp->type);
 				App->player2->buildings.push_back((Building*)tmp);
 				App->player2->buildings = OrderBuildings(App->player2->buildings, true);
 				App->player2->entities.push_back((Building*)tmp);
