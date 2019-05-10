@@ -106,6 +106,9 @@ bool Scene::Start()
 	explosion_tex = App->tex->Load("animation/explosion_anim.png");
 	App->map->explosion_anim = App->map->explosion_anim->LoadAnimation("animation/explosion.tmx", "animation");
 
+	upgrade_lvl_1 = App->tex->Load("textures/upgrade_lvl1.png");
+	upgrade_lvl_2 = App->tex->Load("textures/upgrade_lvl2.png");
+	upgrade_lvl_3 = App->tex->Load("textures/upgrade_lvl3.png");
 
 	App->player1->LiveBar = { 51, 18 , 348, 19 }; //LiveBar for player1
 	App->player2->LiveBar = { 1232, 921 , 348, 19 }; //LiveBar for player2
@@ -775,6 +778,8 @@ bool Scene::Update(float dt)
 	App->input->GetMousePosition(pos.first, pos.second);
 	pos = App->render->ScreenToWorld(pos.first, pos.second);
 	pos.first--;
+	SDL_Rect upgrade_lvl1 = { 0,0,8,5 };
+	App->render->Blit(App->scene->upgrade_lvl_1, 800, 600, &upgrade_lvl1);
 
 	//Enter GodMode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) //Godmode
