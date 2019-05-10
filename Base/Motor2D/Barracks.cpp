@@ -40,14 +40,6 @@ bool Barracks::Update(float dt)
 
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
-		App->render->Blit(App->scene->upgrade_lvl_1, 100, 120);
-		if (level == 1)
-		{
-
-
-
-		}
-
 		if (health > 0) //if not destroyed
 		{
 			if (upgrade == true && level <= 3) //upgrade

@@ -166,12 +166,6 @@ public:
 	SDL_Texture* flags_tex = nullptr; 
 	SDL_Texture* explosion_tex = nullptr;
 
-	SDL_Texture* upgrade_lvl_1 = nullptr;
-	SDL_Texture* upgrade_lvl_2 = nullptr;
-	SDL_Texture* upgrade_lvl_3 = nullptr;
-
-
-
 private:
 	
 	SDL_Texture* debug_tex = nullptr;
