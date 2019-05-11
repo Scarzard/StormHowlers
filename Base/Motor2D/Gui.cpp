@@ -153,6 +153,10 @@ bool Gui::Draw()
 				{
 					SDL_RenderCopy(App->render->renderer, App->main_menu->menu_background->texture, NULL, &r);
 				}
+				else if ((*UI_elem) == App->main_menu->MM_Settings_UI || App->main_menu->Credits_UI)
+				{
+					SDL_RenderCopy(App->render->renderer, App->main_menu->settings_texture, NULL, &r);//change text
+				}
 				else if ((*UI_elem) == App->player1->Pause_UI || (*UI_elem) == App->player1->Abort_UI)
 				{
 					SDL_RenderCopy(App->render->renderer, App->player1->Pause_UI->texture, NULL, &r);
