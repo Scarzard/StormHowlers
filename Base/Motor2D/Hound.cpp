@@ -22,6 +22,9 @@ Hound::Hound(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop(Entit
 	//fromPlayer1 = isPlayer1;
 	//type = Entity::entityType::SOLDIER;
 
+	state = MOVING;
+	timer.Start();
+	lead = true;
 }
 
 
@@ -31,76 +34,111 @@ Hound::~Hound()
 
 bool Hound::Update(float dt)
 {
-
 	if (alive) {
 
-		pair<int, int> map_pos = App->map->WorldToMap(position.first, position.second);
-		pair<int, int> map_init_pos = App->map->WorldToMap(init_position.first, init_position.second);
-		int time_to_act = 2;
-
-		// Checks for group defined closest entity
-		if (info.closest != nullptr)
+		if (lead)
 		{
-			//Entity to attack is found
-			if (info.closest->health > 0 ) {
-				//LOG("Closest FOUND");
-				int d = 0;
+			
+			pair <int, int > map_pos = App->map->WorldToMap(position.first, position.second);	
 
-				// Modify the goal tile to make it walkable
-				SetDestination();
+			switch (state)
+			{
+			case TROOP_IDLE:
+				break;
 
-				if (!Is_inRange(map_pos, d, destination, original_range)) {
+			case MOVING:
+				if (pathfind)
+				{
+					info.current_group->CheckForMovementRequest(dt, destination);
+				}
+				else if (timer.ReadSec() > 1 && info.closest == nullptr)
+				{
+					state = SEARCH;
+					timer.Start();
+				}
+				else
+				{
+					position.first += -2;
+					position.second += 1;
+
+					//move foward
+				}
+				break;
+
+			case SHOOTING:
+
+				// Shoots the closest one if in range
+				if (timer.ReadSec() >= rate_of_fire)
+				{
+					info.closest->TakeDamage(damage_lv[level]);
+					timer.Start();
+					App->audio->PlayFx(SOLDIER_ATTACK);
+				}
+				if (info.closest->health <= 0)
+				{
+					info.closest->alive = false;
 					state = MOVING;
-					destination = App->map->MapToWorld(destination.first, destination.second);
-					if (info.current_group->IsGroupLead(this)) {
-
-						info.current_group->CheckForMovementRequest(dt, destination);
-
-					}
-					else if (info.current_group->GetLead()->state != MOVING) {
-						//Lead has reached the destination but the target is still out of range, need to move individually
-
-						info.current_group->CheckForMovementIndividual(this, dt, destination);
-					}
-					else {
-					}
-					//LOG("Closest FOUND - NOT in range => MOVING");
+					timer.Start();
+					info.closest = nullptr;
 				}
-				else {
-					info.UnitMovementState = MovementState::MovementState_NoState;
-					state = SHOOTING;
-
-					// Shoots the closest one if in range
-					if (timer.ReadSec() >= rate_of_fire)
+				break;
+			
+			case SEARCH:
+				//ally zone
+				if (map_pos.first > App->map->allyzone.up_limit.first && map_pos.first < App->map->allyzone.down_limit.first)
+				{
+					info.closest = FindEntityInAttackRange(map_pos,fromPlayer1,original_range,entityType::SOLDIER);
+					
+					if (info.closest != nullptr)
 					{
-						info.closest->TakeDamage(damage_lv[level]);
+						state = SHOOTING;
 						timer.Start();
-						App->audio->PlayFx(SOLDIER_ATTACK);
 					}
-					//LOG("Closest FOUND - IN range => SHOOTING");
-
+					else if (info.closest == nullptr)
+					{
+						info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER);
+						SetDestination();
+						destination = App->map->MapToWorld(destination.first, destination.second);
+						state = MOVING;
+						pathfind = true;
+					}
+					else
+					{
+						state = MOVING;
+						//pathfind = true;
+					}
+					
+					
 				}
+				// enemy zone
+				else if (map_pos.first > App->map->sovietzone.up_limit.first && map_pos.first < App->map->sovietzone.down_limit.first)
+				{
+					//find entity in range
+					//if exist, state= shoot;
+					//else, state= move
+				} 
+				// war zone
+				else if (map_pos.first > App->map->warzone.up_limit.first && map_pos.first < App->map->warzone.down_limit.first)
+				{
+					//find entity en shoot range,
+					//if closes exits, state=shoot
+					//else state move
+				}
+				else
+				{
+					state = MOVING;
+					timer.Start();
+				}
+				break;
+		
+			default:
+				break;
 			}
-			else {
-				state = TROOP_IDLE;
-				info.closest = nullptr;
-			}
+
 		}
-		//ENTITY TO ATTACK IS NOT FOUND OR JUST DIED
-		if (state != SHOOTING) {
-
-			if (state == TROOP_IDLE) {
-				//LOG("Closest NOT FOUND - SEARCHING");
-
-				info.closest = FindBuilding(map_pos, fromPlayer1, range);
-				range = (info.closest == nullptr) ? range + 20 : original_range;
-
-			}
-		}
-		else if (info.closest == nullptr) {
-			state = TROOP_IDLE;
-		}
-
+		
+		
+		
 	}
 	else {
 		//Current_Animation = Die;
@@ -111,12 +149,13 @@ bool Hound::Update(float dt)
 	ChangeAnimation();
 
 	//DOES NOT CHANGE ANYTHING BY ITSELF - ONLY INPUT INSIDE -¬
-	ForceAnimations();
+	//ForceAnimations();
 	//            _|
 
 	Troop::Update(dt);
 	return true;
 }
+
 void Hound::SetDestination()
 {
 	destination = App->map->WorldToMap(info.closest->position.first, info.closest->position.second);
@@ -149,8 +188,9 @@ bool Hound::Is_inRange(pair<int, int> pos, int &distance, pair <int, int> positi
 
 	return distance <= range;
 }
+
 void Hound::PrintState() {
-	switch (state)
+	/*switch (state)
 	{
 	case NOT_DEPLOYED:
 		LOG("STATE = NOT_DEPLOYED");
@@ -173,7 +213,7 @@ void Hound::PrintState() {
 		break;
 	default:
 		break;
-	}
+	}*/
 }
 
 void Hound::ForceAnimations() {
@@ -191,19 +231,14 @@ void Hound::ForceAnimations() {
 		idle->SetCurrentFrame((curr++) % SOUTHWEST);
 	}
 }
+
 void Hound::ActOnDestroyed() {
 
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
 		if (health <= 0) //destroyed
 		{
-			/*std::list <Entity*>::const_iterator unit = info.current_group->Units.begin();
-			while (unit != info.current_group->Units.end()) {
-			(*unit)->isSelected = true;
-			unit++;
-			}
-			isSelected = false;
-			App->move_manager->CreateGroup(App->player1);*/
+			
 			info.current_group->removeUnit(this);
 			App->player1->DeleteEntity(this);
 		}
@@ -404,32 +439,41 @@ void Hound::LoadAnimations(bool isPlayer1, string path)
 	Current_Animation = moving[NORTH];
 }
 
-Troop* Hound::FindBuilding(pair <int, int> pos, bool fromplayer1, int attackrange)
+Entity* Hound::FindEntityInAttackRange(pair <int, int> pos, bool fromplayer1, int attackrange, entityType desiredtype )
 {
 	Player* enemy = (!fromplayer1) ? App->player1 : App->player2;
 
-	Troop* found = *enemy->troops.begin();
+	Entity* found = *enemy->entities.begin();
 	int distance = 0;
+	pair<int, int> map_pos;
+	int min_dist;
 
 	if (found != nullptr)
 	{
+		//take the first of de desired group
+		
+			map_pos = App->map->WorldToMap(found->position.first, found->position.second);
+			Is_inRange(pos, distance, map_pos, attackrange);
+			min_dist = distance;
+		
+		
 
-		pair<int, int> map_pos = App->map->WorldToMap(found->position.first, found->position.second);
-		Is_inRange(pos, distance, map_pos, attackrange);
-		int min_dist = distance;
-
-		for (list<Troop*>::iterator tmp = enemy->troops.begin(); tmp != enemy->troops.end(); tmp++) // traverse entity list (unordered)
+		for (list<Entity*>::iterator tmp = enemy->entities.begin(); tmp != enemy->entities.end(); tmp++) // traverse entity list (unordered)
 		{
-			map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
-
-			if (Is_inRange(pos, distance, map_pos, attackrange))
+			if ((*tmp)->type >= desiredtype)
 			{
+				map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
 
-				if (min_dist >= distance)
+				if (Is_inRange(pos, distance, map_pos, attackrange))
 				{
-					found = (*tmp);
-					min_dist = distance;
+
+					if (min_dist >= distance)
+					{
+						found = (*tmp);
+						min_dist = distance;
+					}
 				}
+
 			}
 
 		}
@@ -439,6 +483,49 @@ Troop* Hound::FindBuilding(pair <int, int> pos, bool fromplayer1, int attackrang
 		}
 
 	}
+
 	return nullptr;
+
+}
+
+Entity* Hound::FindNearestEntity(pair <int, int> pos, bool fromplayer1, entityType desiredtype)
+{
+	Player* enemy = (!fromplayer1) ? App->player1 : App->player2;
+
+	Entity* found = *enemy->entities.begin();
+	int distance = 0;
+	pair<int, int> map_pos;
+	int min_dist;
+
+	if (found != nullptr)
+	{
+		//take the first of de desired group
+		map_pos = App->map->WorldToMap(found->position.first, found->position.second);
+		Is_inRange(pos, distance, map_pos, 0);
+		min_dist = distance;
+
+		for (list<Entity*>::iterator tmp = enemy->entities.begin(); tmp != enemy->entities.end(); tmp++) // traverse entity list (unordered)
+		{
+			//if ((*tmp)->type >= desiredtype)
+			{
+				map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+
+				Is_inRange(pos, distance, map_pos, 0);
+				
+
+					if (min_dist > distance)
+					{
+						found = (*tmp);
+						min_dist = distance;
+					}
+				
+			}
+
+		}
+		
+	}
+
+	return found;
 
 }

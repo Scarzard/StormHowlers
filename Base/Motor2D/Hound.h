@@ -22,15 +22,17 @@ public:
 
 	void ChangeAnimation();
 
-	Troop * FindBuilding(pair<int, int> pos, bool fromplayer1, int attackrange);
+	Entity * FindEntityInAttackRange(pair<int, int> pos, bool fromplayer1, int attackrange, entityType type);
+	Entity * FindNearestEntity(pair<int, int> pos, bool fromplayer1, entityType type);
+
 
 	void LoadAnimations(bool isPlayer1, string path);
 
-	bool Is_inRange(pair<int, int> pos, int & distance);
+	//bool Is_inRange(pair<int, int> pos, int & distance);
 	bool defensive = true;
 	bool offensive = true;
 	pair<int, int> destination;
-	Troop* closest = nullptr;
+	Entity* closest = nullptr;
 
 	float resting_time = 2.0f;
 	Timer rest;

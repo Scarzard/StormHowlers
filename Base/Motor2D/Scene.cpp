@@ -774,7 +774,7 @@ bool Scene::Update(float dt)
 	pos = App->render->ScreenToWorld(pos.first, pos.second);
 	pos.first--;
 
-	LOG("GOLD: %i", App->player1->gold);
+	//LOG("GOLD: %i", App->player1->gold);
 
 	//Enter GodMode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) //Godmode
@@ -913,7 +913,7 @@ bool Scene::Update(float dt)
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
 		{
-			//App->entitymanager->AddEntity(true, Entity::entityType::WAR_HOUND, { pos.first,pos.second }, App->player1->collider);
+			App->entitymanager->AddEntity(true, Entity::entityType::WAR_HOUND, { pos.first,pos.second }, App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 		{

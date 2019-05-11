@@ -30,6 +30,23 @@ bool Map::Awake(pugi::xml_node& config)
 	folder.assign(config.child("folder").child_value());
 	debug = false;
 
+	// load zones
+	sovietzone.down_limit.first = config.child("sovietzone").attribute("down_x").as_int();
+	sovietzone.down_limit.second = config.child("sovietzone").attribute("down_y").as_int();
+	sovietzone.up_limit.first = config.child("sovietzone").attribute("up_x").as_int();
+	sovietzone.up_limit.second = config.child("sovietzone").attribute("up_y").as_int();
+
+	allyzone.down_limit.first = config.child("allyzone").attribute("down_x").as_int();
+	allyzone.down_limit.second = config.child("allyzone").attribute("down_y").as_int();
+	allyzone.up_limit.first = config.child("allyzone").attribute("up_x").as_int();
+	allyzone.up_limit.second = config.child("allyzone").attribute("up_y").as_int();
+
+	warzone.down_limit.first = config.child("warzone").attribute("down_x").as_int();
+	warzone.down_limit.second = config.child("warzone").attribute("down_y").as_int();
+	warzone.up_limit.first = config.child("warzone").attribute("up_x").as_int();
+	warzone.up_limit.second = config.child("warzone").attribute("up_y").as_int();
+
+
 	//-----
 	idleRight123 = idleRight123->LoadAnimation("animation/buildings.tmx", "barracks");
 	idleRight123->speed = 1;
