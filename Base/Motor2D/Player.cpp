@@ -1466,7 +1466,15 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		draw_screen->visible = true;
 		break;
 
+	case::MainMenu::CURRENT_MM_UI::CURR_MM_SETTINGS:
+		App->main_menu->menu_background->visible = false;
+		App->main_menu->MM_Settings_UI->visible = true;
+		App->main_menu->Credits_UI->visible = false;
 
+	case::MainMenu::CURRENT_MM_UI::CURR_MM_CREDITS:
+		App->main_menu->menu_background->visible = false;
+		App->main_menu->MM_Settings_UI->visible = false;
+		App->main_menu->Credits_UI->visible = true;
 	}
 	App->gui->UpdateChildren();
 }

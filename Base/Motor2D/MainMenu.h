@@ -6,10 +6,18 @@
 
 struct SDL_Texture;
 
+
+
 class MainMenu : public Module
 {
 public:
-
+	enum CURRENT_MM_UI
+	{
+		NONE,
+		//MM = MAINMENU
+		CURR_MM_SETTINGS = 16,
+		CURR_MM_CREDITS,
+	};
 	MainMenu();
 
 	// Destructor
@@ -39,6 +47,8 @@ public:
 
 public:
 	string menu_bg_file_name;
+	string settings_main_menu_name;
+	SDL_Texture* settings_texture;
 
 	UI_Element* menu_background = nullptr;
 
@@ -57,6 +67,10 @@ public:
 	UI_Element* exit_button = nullptr;
 	UI_Element* exit_text = nullptr;
 	char exit_label[5] = "EXIT";
+
+	UI_Element* MM_Settings_UI = nullptr;
+
+	UI_Element* Credits_UI = nullptr;
 
 	string current_track;
 	string current_fx;

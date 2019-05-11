@@ -32,7 +32,7 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 	LOG("Loading Main Menu");
 
 	menu_bg_file_name = conf.child("menu_bg").attribute("file").as_string("");
-
+	//settings_main_menu_name = conf.child("menu_bg").attribute("file").as_string("");
 	
 	// current_track = App->audio->tracks_path[1];
 	return true;
@@ -41,6 +41,9 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool MainMenu::Start()
 {
+	//settings_texture = App->tex->Load(settings_main_menu_name.data());
+	settings_texture = App->tex->Load("gui/Pause_Menu_Soviet.png");
+
 	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
 	menu_background->texture = App->tex->Load(menu_bg_file_name.data());
 	menu_background->rect = { 0, 0, App->win->width, App->win->height };
@@ -51,20 +54,28 @@ bool MainMenu::Start()
 	new_game_text->label = new_game_label;
 	new_game_text->color = { 255, 255, 9, 255 };
 	//SETTINGS
-	settings_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS, { 1273, 519 }, { 371, 87 }, menu_background, true);
+	settings_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS, { 1273, 524 }, { 371, 87 }, menu_background, true);
 	settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, settings_button, true, { false, false });
 	settings_text->label = settings_label;
 	settings_text->color = { 255, 255, 9, 255 };
 	//CREDITS
-	credits_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::CREDITS, { 1273, 606 }, { 371, 87 }, menu_background, true);
+	credits_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::CREDITS, { 1273, 618 }, { 371, 87 }, menu_background, true);
 	credits_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, credits_button, true, { false, false });
 	credits_text->label = credits_label;
 	credits_text->color = { 255, 255, 9, 255 };
 	//EXIT
-	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 706 }, { 371, 87 }, menu_background, true);
+	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 711 }, { 371, 87 }, menu_background, true);
 	exit_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0,0 }, exit_button, true, { false, false });
 	exit_text->label = exit_label;
 	exit_text->color = { 255, 255, 9, 255 };
+	//SETTINGS WINDOW/BUTTONS
+	MM_Settings_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
+	MM_Settings_UI->texture = settings_texture;//to be changed
+	MM_Settings_UI->rect = { 0, 0, App->win->width, App->win->height };
+	//CREDITS WINDOW/BUTTONS
+	Credits_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
+	Credits_UI->texture = App->scene->pause_alied_texture; //to be changed
+	Credits_UI->rect = { 0, 0, App->win->width, App->win->height };
 
 
 	//ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 800 ,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
@@ -169,13 +180,13 @@ void MainMenu::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::SETTINGS:
-		App->audio->PlayFx(PLAY);
-		//
+		App->player1->currentUI = CURRENT_MM_UI::CURR_MM_SETTINGS;
+		App->player1->UpdateVisibility();
 		break;
 
 	case::UI_Element::Action::CREDITS:
-		App->audio->PlayFx(PLAY);
-		//
+		App->player1->currentUI = CURRENT_MM_UI::CURR_MM_CREDITS;
+		App->player1->UpdateVisibility();
 		break;
 
 	case::UI_Element::Action::EXIT:
