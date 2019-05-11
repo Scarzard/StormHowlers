@@ -399,6 +399,12 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::NEW_GAME:
 			data->rect = { 744, 954, 371, 87 };
 			break;
+		case UI_Element::Action::SETTINGS:
+			data->rect = { 744, 954, 371, 87 };
+			break;
+		case UI_Element::Action::CREDITS:
+			data->rect = { 744, 954, 371, 87 };
+			break;
 		case UI_Element::Action::EXIT:
 			data->rect = { 744, 954, 371, 87 };
 			break;
@@ -535,11 +541,16 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			data->rect = { 1587, 161, 85, 81 };
 			break;
 
-			//-----Needs to be changed
+			//MainMenu
 		case UI_Element::Action::NEW_GAME:
 			data->rect = { 1116, 954, 371, 86 };
 			break;
-			//change values
+		case UI_Element::Action::SETTINGS:
+			data->rect = { 1116, 954, 371, 86 };
+			break;
+		case UI_Element::Action::CREDITS:
+			data->rect = { 1116, 954, 371, 86 };
+			break;
 		case UI_Element::Action::EXIT:
 			data->rect = { 1116, 954, 371, 86 };
 			break;
@@ -658,8 +669,14 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			data->rect = { 662, 161, 85, 81 };
 			break;
 
-			//-----Needs to be changed
+			//MainMenu
 		case UI_Element::Action::NEW_GAME:
+			data->rect = { 1488, 954, 371, 86 };
+			break;
+		case UI_Element::Action::SETTINGS:
+			data->rect = { 1488, 954, 371, 86 };
+			break;
+		case UI_Element::Action::CREDITS:
 			data->rect = { 1488, 954, 371, 86 };
 			break;
 		case UI_Element::Action::EXIT:
@@ -747,6 +764,12 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 
 			//-----Needs to be changed
 		case UI_Element::Action::NEW_GAME:
+			data->rect = { 410,80,39,40 };
+			break;
+		case UI_Element::Action::SETTINGS:
+			data->rect = { 410,80,39,40 };
+			break;
+		case UI_Element::Action::CREDITS:
 			data->rect = { 410,80,39,40 };
 			break;
 		case UI_Element::Action::EXIT:

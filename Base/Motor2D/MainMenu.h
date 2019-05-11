@@ -44,10 +44,15 @@ public:
 
 	UI_Element* new_game_button = nullptr;
 	UI_Element* new_game_text = nullptr;
-	char new_game_label[5] = "Play";
+	char new_game_label[5] = "PLAY";
 
-	UI_Element* continue_button = nullptr;
-	UI_Element* continue_text = nullptr;
+	UI_Element* settings_button = nullptr;
+	UI_Element* settings_text = nullptr;
+	char settings_label[9] = "SETTINGS";
+
+	UI_Element* credits_button = nullptr;
+	UI_Element* credits_text = nullptr;
+	char credits_label[9] = "CREDITS";
 
 	UI_Element* exit_button = nullptr;
 	UI_Element* exit_text = nullptr;

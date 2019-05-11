@@ -45,12 +45,22 @@ bool MainMenu::Start()
 	menu_background->texture = App->tex->Load(menu_bg_file_name.data());
 	menu_background->rect = { 0, 0, App->win->width, App->win->height };
 	App->render->zoom = 1;
-
+	//PLAY
 	new_game_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 1273, 432 }, { 371, 87 }, menu_background, true);
 	new_game_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, new_game_button, true, { false, false });
 	new_game_text->label = new_game_label;
 	new_game_text->color = { 255, 255, 9, 255 };
-
+	//SETTINGS
+	settings_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS, { 1273, 519 }, { 371, 87 }, menu_background, true);
+	settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, settings_button, true, { false, false });
+	settings_text->label = settings_label;
+	settings_text->color = { 255, 255, 9, 255 };
+	//CREDITS
+	credits_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::CREDITS, { 1273, 606 }, { 371, 87 }, menu_background, true);
+	credits_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, credits_button, true, { false, false });
+	credits_text->label = credits_label;
+	credits_text->color = { 255, 255, 9, 255 };
+	//EXIT
 	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 706 }, { 371, 87 }, menu_background, true);
 	exit_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0,0 }, exit_button, true, { false, false });
 	exit_text->label = exit_label;
@@ -158,11 +168,13 @@ void MainMenu::DoLogic(UI_Element* data)
 		App->audio->PlayFx(PLAY);
 		break;
 
-	case::UI_Element::Action::CONTINUE:
+	case::UI_Element::Action::SETTINGS:
+		App->audio->PlayFx(PLAY);
 		//
 		break;
 
-	case::UI_Element::Action::SETTINGS:
+	case::UI_Element::Action::CREDITS:
+		App->audio->PlayFx(PLAY);
 		//
 		break;
 
@@ -171,8 +183,8 @@ void MainMenu::DoLogic(UI_Element* data)
 		close_app = false;
 		break;
 
-	case::UI_Element::Action::WEBPAGE:
-		//ShellExecuteA(NULL, "open", "https://github.com/Scarzard/StormHowlers", NULL, NULL, SW_SHOWNORMAL);
-		break;
+	//case::UI_Element::Action::WEBPAGE:
+	//	//ShellExecuteA(NULL, "open", "https://github.com/Scarzard/StormHowlers", NULL, NULL, SW_SHOWNORMAL);
+	//	break;
 	}
 }

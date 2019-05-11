@@ -54,9 +54,8 @@ public:
 
 		//MainMenu Buttons
 		NEW_GAME,
-		CONTINUE,
 		SETTINGS,
-		WEBPAGE,
+		CREDITS,
 		EXIT,
 
 		//Pause 
