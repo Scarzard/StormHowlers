@@ -106,7 +106,7 @@ public:
 	//void UpdateWalkabilityMap(bool isWalkable, Collider collider);
 	bool DeleteEntity(Entity* entity);
 
-	int CheckCost(Entity* entity);
+	int CheckCost(Entity::entityType type);
 	int GoldKill(Entity* entity);
 	
 public:
@@ -114,7 +114,15 @@ public:
 	bool isDeploying = false;
 	bool isCasting = false;
 	bool isPaused = false;
+	bool inmune = false;
+
+	int timer_ref_sec = 0;
+	int timer_ref_min = 0;
+	int desired_second = 0;
+	int desired_min = 0;
+
 	bool pathfinding = true;
+
 
 
 	Collider collider;
@@ -126,10 +134,11 @@ public:
 	bool isPlayer1 = false;
 	string team;
 
+	int gold = 0;
+	int gold_persecond = 0;
+
 	SDL_Rect rectangle_origin = { 0,0,0,0 };
 
-	uint gold = 0;
-	uint gold_persecond = 0;
 	bool gold_added = false;
 
 	uint time_iterator = 0;
@@ -177,6 +186,7 @@ public:
 	int InfiltratorsCreated = 0;
 	int EngineersCreated = 0;
 	int WarHoundsCreated = 0;
+	int BarracksCreated = 0;
 
 	int Invulnerable_abilities = 0;
 

@@ -31,9 +31,9 @@ Soldier::~Soldier()
 
 bool Soldier::Update(float dt)
 {
-	
+
 	if (alive) {
-		
+
 		pair<int, int> map_pos = App->map->WorldToMap(position.first, position.second);
 		pair<int, int> map_init_pos = App->map->WorldToMap(init_position.first, init_position.second);
 		int time_to_act = 2;
@@ -43,7 +43,7 @@ bool Soldier::Update(float dt)
 		if (info.closest != nullptr)
 		{
 			//Entity to attack is found
-			if(info.closest->health > 0){
+			if (info.closest->health > 0) {
 				//LOG("Closest FOUND");
 				int d = 0;
 
@@ -88,7 +88,7 @@ bool Soldier::Update(float dt)
 			}
 		}
 		//ENTITY TO ATTACK IS NOT FOUND OR JUST DIED
-		if (state != SHOOTING ){
+		if (state != SHOOTING) {
 
 			if (state == TROOP_IDLE) {
 				//LOG("Closest NOT FOUND - SEARCHING");
@@ -107,7 +107,7 @@ bool Soldier::Update(float dt)
 		//Current_Animation = Die;
 
 	}
-	
+
 	ActOnDestroyed();
 	ChangeAnimation();
 
@@ -368,25 +368,25 @@ void Soldier::LoadAnimations(bool isPlayer1, string path)
 	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
 
-	idle = idle->LoadAnimation(path.data(), (isPlayer1) ? "red_idle" : "blue_idle");
+	idle = idle->LoadAnimation(path.data(), (!isPlayer1) ? "red_idle" : "blue_idle");
 
-	moving[NORTH] = moving[NORTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_north" : "blue_north");
-	moving[SOUTH] = moving[SOUTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_south" : "blue_south");
-	moving[EAST] = moving[EAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_east" : "blue_east");
-	moving[WEST] = moving[WEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_west" : "blue_west");
-	moving[NORTHEAST] = moving[NORTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_northeast" : "blue_northeast");
-	moving[NORTHWEST] = moving[NORTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_northwest" : "blue_northwest");
-	moving[SOUTHEAST] = moving[SOUTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_southeast" : "blue_southeast");
-	moving[SOUTHWEST] = moving[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_southwest" : "blue_southwest");
+	moving[NORTH] = moving[NORTH]->LoadAnimation(path.data(), (!isPlayer1) ? "red_north" : "blue_north");
+	moving[SOUTH] = moving[SOUTH]->LoadAnimation(path.data(), (!isPlayer1) ? "red_south" : "blue_south");
+	moving[EAST] = moving[EAST]->LoadAnimation(path.data(), (!isPlayer1) ? "red_east" : "blue_east");
+	moving[WEST] = moving[WEST]->LoadAnimation(path.data(), (!isPlayer1) ? "red_west" : "blue_west");
+	moving[NORTHEAST] = moving[NORTHEAST]->LoadAnimation(path.data(), (!isPlayer1) ? "red_northeast" : "blue_northeast");
+	moving[NORTHWEST] = moving[NORTHWEST]->LoadAnimation(path.data(), (!isPlayer1) ? "red_northwest" : "blue_northwest");
+	moving[SOUTHEAST] = moving[SOUTHEAST]->LoadAnimation(path.data(), (!isPlayer1) ? "red_southeast" : "blue_southeast");
+	moving[SOUTHWEST] = moving[SOUTHWEST]->LoadAnimation(path.data(), (!isPlayer1) ? "red_southwest" : "blue_southwest");
 
-	shooting[NORTH] = shooting[NORTH]->LoadAnimation(path.data(),		  (isPlayer1) ? "red_shoot_N" : "blue_shoot_N");
-	shooting[SOUTH] = shooting[SOUTH]->LoadAnimation(path.data(),		  (isPlayer1) ? "red_shoot_S" : "blue_shoot_S");
-	shooting[EAST] = shooting[EAST]->LoadAnimation(path.data(),			  (isPlayer1) ? "red_shoot_E" : "blue_shoot_E");
-	shooting[WEST] = shooting[WEST]->LoadAnimation(path.data(),			  (isPlayer1) ? "red_shoot_W" : "blue_shoot_W");
-	shooting[NORTHEAST] = shooting[NORTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_NE" : "blue_shoot_NE");
-	shooting[NORTHWEST] = shooting[NORTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_NW" : "blue_shoot_NW");
-	shooting[SOUTHEAST] = shooting[SOUTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_SE" : "blue_shoot_SE");
-	shooting[SOUTHWEST] = shooting[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_SW" : "blue_shoot_SW");
+	shooting[NORTH] = shooting[NORTH]->LoadAnimation(path.data(),		  (!isPlayer1) ? "red_shoot_N" : "blue_shoot_N");
+	shooting[SOUTH] = shooting[SOUTH]->LoadAnimation(path.data(),		  (!isPlayer1) ? "red_shoot_S" : "blue_shoot_S");
+	shooting[EAST] = shooting[EAST]->LoadAnimation(path.data(),			  (!isPlayer1) ? "red_shoot_E" : "blue_shoot_E");
+	shooting[WEST] = shooting[WEST]->LoadAnimation(path.data(),			  (!isPlayer1) ? "red_shoot_W" : "blue_shoot_W");
+	shooting[NORTHEAST] = shooting[NORTHEAST]->LoadAnimation(path.data(), (!isPlayer1) ? "red_shoot_NE" : "blue_shoot_NE");
+	shooting[NORTHWEST] = shooting[NORTHWEST]->LoadAnimation(path.data(), (!isPlayer1) ? "red_shoot_NW" : "blue_shoot_NW");
+	shooting[SOUTHEAST] = shooting[SOUTHEAST]->LoadAnimation(path.data(), (!isPlayer1) ? "red_shoot_SE" : "blue_shoot_SE");
+	shooting[SOUTHWEST] = shooting[SOUTHWEST]->LoadAnimation(path.data(), (!isPlayer1) ? "red_shoot_SW" : "blue_shoot_SW");
 
 	for (int i = NORTH; i <= SOUTHWEST; i++) {
 		moving[i]->speed = 10;

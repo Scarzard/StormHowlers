@@ -358,9 +358,11 @@ bool EntityManager::Draw(float dt) //sprite ordering
 		//if (entitiesTextures[(*tmp)->type] != nullptr)
 
 
-		if ((*tmp)->type == Entity::entityType::TOWNHALL && (*tmp)->fromPlayer1 == false)
+		if ((*tmp)->type == Entity::entityType::TOWNHALL && (*tmp)->fromPlayer1 == true)
 		{
-			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first - ((*tmp)->collider.dimensions.first * 8), (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second * 40), &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
+			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first - ((*tmp)->collider.dimensions.first * 8), 
+				(*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second * 40), 
+				&((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 
 
 			//--- Draw Life Bar
@@ -380,7 +382,7 @@ bool EntityManager::Draw(float dt) //sprite ordering
 			}
 
 		}
-		else if (((*tmp)->type == Entity::entityType::TOWNHALL && (*tmp)->fromPlayer1 == true))
+		else if (((*tmp)->type == Entity::entityType::TOWNHALL && (*tmp)->fromPlayer1 == false))
 		{
 			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first - ((*tmp)->collider.dimensions.first * 20), (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second * 20), &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 
@@ -539,28 +541,31 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			tmp = new Mines(isPlayer1, position, collider);
 			break;
 
-		case Entity::entityType::WALLS:
-			tmp = new Walls(isPlayer1, position, collider, animation);
-			break;
-
 		case Entity::entityType::BARRACKS:
 			App->audio->PlayFx(BARRACKS_BUILD);
 			tmp = new Barracks(isPlayer1, position, collider);
 			break;
+
+		case Entity::entityType::WALLS:
+			tmp = new Walls(isPlayer1, position, collider, animation);
+			break;
+
 		}
 		if (tmp) {
 			if (isPlayer1 == true)
 			{
-				App->player1->gold -= App->player1->CheckCost(tmp);
+				App->player1->gold -= App->player1->CheckCost(tmp->type);
 				App->player1->buildings.push_back((Building*)tmp);
+				App->player1->buildings = OrderBuildings(App->player1->buildings, true);
 				App->player1->entities.push_back((Building*)tmp);
 				App->player1->UpdateWalkabilityMap(P1_BUILDING, collider);
 
 			}
 			else // Player 2 -------------------------------
 			{
-
+				App->player2->gold -= App->player2->CheckCost(tmp->type);
 				App->player2->buildings.push_back((Building*)tmp);
+				App->player2->buildings = OrderBuildings(App->player2->buildings, true);
 				App->player2->entities.push_back((Building*)tmp);
 				App->player2->UpdateWalkabilityMap(P2_BUILDING, collider);
 
@@ -637,6 +642,58 @@ void EntityManager::OrderEntities()
 		entity_list.push_front(ListOrder.top());
 		ListOrder.pop();
 	}
+}
+
+list<Building*> EntityManager::OrderBuildings(list<Building*> List, bool isPlayer1)
+{
+	list<Building*> ListOrder;
+	ListOrder.push_back(List.front()); // push first element of List to OrderList
+
+	bool found = false;
+
+	for (list<Building*>::iterator tmp = List.begin(); tmp != List.end(); tmp++) // traverse entity list (unordered)
+	{
+		for (list<Building*>::iterator tmp2 = ListOrder.begin(); tmp2 != ListOrder.end(); tmp2++) // traverse Ordered List
+		{
+			if (isPlayer1)
+			{
+				if (GetDepth(*tmp) < GetDepth(*tmp2)) // if tmp is further than tmp2
+				{
+					if (FindInList2(ListOrder, (*tmp)->position, (*tmp)->fromPlayer1, (*tmp)->type) == false)
+					{
+						ListOrder.insert(tmp2, *tmp); // add tmp in front of tmp2
+						found = true;
+					}
+
+					break;
+				}
+			}
+			else
+			{
+				if (GetDepth(*tmp) > GetDepth(*tmp2)) // if tmp is further than tmp2
+				{
+					if (FindInList2(ListOrder, (*tmp)->position, (*tmp)->fromPlayer1, (*tmp)->type) == false)
+					{
+						ListOrder.insert(tmp2, *tmp); // add tmp in front of tmp2
+						found = true;
+					}
+
+					break;
+				}
+			}
+			
+		}
+		if (found == false) // if tmp is the closest
+		{
+			if (FindInList2(ListOrder, (*tmp)->position, (*tmp)->fromPlayer1, (*tmp)->type) == false)
+			{
+				ListOrder.push_back(*tmp); // push to last place	
+			}
+		}
+		found = false;
+	}
+
+	return ListOrder;
 }
 
 int EntityManager::GetDepth(Entity* entity)
@@ -720,3 +777,16 @@ bool EntityManager::FindInList(list<Entity*> List, pair <int,int> pos, bool from
 	return ret;
 }
 
+bool EntityManager::FindInList2(list<Building*> List, pair <int, int> pos, bool fromplayer1, Entity::entityType type)
+{
+	bool ret = false;
+	for (list<Building*>::iterator tmp = List.begin(); tmp != List.end(); tmp++) // traverse entity list (unordered)
+	{
+		if ((*tmp)->fromPlayer1 == fromplayer1 && (*tmp)->position == pos && (*tmp)->type == type)
+		{
+			ret = true;
+			break;
+		}
+	}
+	return ret;
+}
