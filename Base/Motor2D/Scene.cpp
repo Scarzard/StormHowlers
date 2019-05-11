@@ -860,7 +860,7 @@ bool Scene::Update(float dt)
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(true, Entity::entityType::MINES, {pos.first,pos.second},App->player1->collider);
+			//App->entitymanager->AddEntity(true, Entity::entityType::ENGINEER, {pos.first,pos.second},App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 		{
@@ -876,7 +876,7 @@ bool Scene::Update(float dt)
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(true, Entity::entityType::INFILTRATOR, { pos.first,pos.second }, App->player1->collider);
+			//App->entitymanager->AddEntity(true, Entity::entityType::INFILTRATOR, { pos.first,pos.second }, App->player1->collider);
 			//	App->entitymanager->AddEntity(true, Entity::entityType::WALLS, {pos.first,pos.second},App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
@@ -913,11 +913,11 @@ bool Scene::Update(float dt)
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(true, Entity::entityType::WAR_HOUND, { pos.first,pos.second }, App->player1->collider);
+			//App->entitymanager->AddEntity(true, Entity::entityType::WAR_HOUND, { pos.first,pos.second }, App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(true, Entity::entityType::TANKMAN, { pos.first,pos.second }, App->player1->collider);
+			//App->entitymanager->AddEntity(true, Entity::entityType::TANKMAN, { pos.first,pos.second }, App->player1->collider);
 		}
     
 		//Timer debug

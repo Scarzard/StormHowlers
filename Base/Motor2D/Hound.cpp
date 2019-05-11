@@ -42,7 +42,7 @@ bool Hound::Update(float dt)
 		if (info.closest != nullptr)
 		{
 			//Entity to attack is found
-			if (info.closest->health > 0) {
+			if (info.closest->health > 0 ) {
 				//LOG("Closest FOUND");
 				int d = 0;
 
