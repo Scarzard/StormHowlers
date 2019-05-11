@@ -355,21 +355,37 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 
 			//--------- Building buttons
 		case UI_Element::Action::ACT_BUILD_AOE: //POWER PLANT
-			data->rect = { 746, 81, 85, 81 };
+			if(App->player1->Def_AOE_icon == data)
+				data->rect = { 2098, 0, 85, 81 };
+			else
+				data->rect = { 746, 81, 85, 81 };
 			break;
+
 		case UI_Element::Action::ACT_BUILD_TARGET://PRISM TOWER
-			data->rect = { 662, 81, 85, 81 };
+			if (App->player1->Def_Target_icon == data)
+				data->rect = { 2012, 0, 85, 81 };
+			else
+				data->rect = { 662, 81, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_BUILD_MINE: //ORE REFINERY
-			data->rect = { 576, 81, 85, 81 };
+			if (App->player1->Mines_icon == data)
+				data->rect = { 1928, 0, 85, 81 };
+			else
+				data->rect = { 576, 81, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_BUILD_BARRACKS: //CLONING VATS
-			data->rect = { 492, 81, 85, 81 };
+			if (App->player1->Barracks_icon == data)
+				data->rect = { 1843, 0, 85, 81 };
+			else
+				data->rect = { 492, 81, 85, 81 };
 			break;
 
 			//--------- Troop buttons
 		case UI_Element::Action::ACT_DEPLOY_SOLDIER: //GI
-			data->rect = { 662, 0, 85, 81 };
+			if (App->player1->Soldier_icon == data)
+				data->rect = { 1843, 162, 85, 81 };
+			else
+				data->rect = { 662, 0, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_DEPLOY_TANKMAN: //TESLA TROOPER
 			data->rect = { 576, 0, 85, 81 };
@@ -494,21 +510,37 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 
 			//--------- Building buttons
 		case UI_Element::Action::ACT_BUILD_AOE: //POWER PLANT
-			data->rect = { 1671, 81, 85, 81 };
+			if (App->player1->Def_AOE_icon == data)
+				data->rect = { 2098, 81, 85, 81 };
+			else
+				data->rect = { 1671, 81, 85, 81 };
 			break;
+
 		case UI_Element::Action::ACT_BUILD_TARGET://PRISM TOWER
-			data->rect = { 1587, 81, 85, 81 };
+			if(App->player1->Def_Target_icon == data)
+				data->rect = { 2012, 81, 85, 81 };
+			else 
+				data->rect = { 1587, 81, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_BUILD_MINE: //ORE REFINERY
-			data->rect = { 1501, 81, 85, 81 };
+			if (App->player1->Mines_icon == data)
+				data->rect = { 1928, 81, 85, 81 };
+			else
+				data->rect = { 1501, 81, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_BUILD_BARRACKS: //CLONING VATS
-			data->rect = { 1417, 81, 85, 81 };
+			if (App->player1->Barracks_icon == data)
+				data->rect = { 1843, 81, 85, 81 };
+			else
+				data->rect = { 1417, 81, 85, 81 };
 			break;
 
 			//--------- Troop buttons
 		case UI_Element::Action::ACT_DEPLOY_SOLDIER: //GI
-			data->rect = { 1587, 0, 85, 81 };
+			if(App->player1->Soldier_icon == data)
+				data->rect = { 1928, 162, 85, 81 };
+			else
+				data->rect = { 1587, 0, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_DEPLOY_TANKMAN: //TESLA TROOPER
 			data->rect = { 1501, 0, 85, 81 };
@@ -629,11 +661,6 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::ACT_BUILD_BARRACKS: //CLONING VATS
 			data->rect = { 492, 81, 85, 81 };
 			break;
-
-			//--------- Building buttons BLUE
-		case UI_Element::Action::ACT_BUILD_AOE_BLUE:
-			data->rect = { 2098, 0, 85, 81 }; 
-			break; 
 
 			//--------- Troop buttons
 		case UI_Element::Action::ACT_DEPLOY_SOLDIER: //GI
