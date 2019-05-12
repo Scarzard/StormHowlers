@@ -34,6 +34,9 @@ Hound::~Hound()
 
 bool Hound::Update(float dt)
 {
+	// change bol from offensive and defensive
+	//offensive = App.scene.offensive ui
+
 	if (alive) {
 
 		if (lead)
@@ -65,16 +68,35 @@ bool Hound::Update(float dt)
 				}
 				else
 				{
-					if (offensive)
+					
+					if (fromPlayer1)
 					{
-						position.first += -2;
-						position.second += 1;
+						if (offensive)
+						{
+							position.first += -2;
+							position.second += 1;
+						}
+						else
+						{
+							position.first += 2;
+							position.second += -1;
+
+						}
+
 					}
 					else
 					{
-						position.first += 2;
-						position.second += -1;
+						if (offensive)
+						{
+							position.first += 2;
+							position.second += -1;
+						}
+						else
+						{
+							position.first += -2;
+							position.second += 1;
 
+						}
 					}
 
 					
@@ -100,60 +122,161 @@ bool Hound::Update(float dt)
 				break;
 			
 			case SEARCH:
+				
+				state = MOVING;
+				timer.Start();
+
 				//ally zone
-				if (map_pos.first > App->map->allyzone.up_limit.first && map_pos.first < App->map->allyzone.down_limit.first)
+				if (map_pos.second > App->map->allyzone.up_limit.second && map_pos.second < App->map->allyzone.down_limit.second)
 				{
-					info.closest = FindEntityInAttackRange(map_pos,fromPlayer1,original_range,entityType::SOLDIER);
+					if (fromPlayer1)
+					{
+						info.closest = FindEntityInAttackRange(map_pos,fromPlayer1,original_range,entityType::SOLDIER);
 					
-					if (info.closest != nullptr)
-					{
-						state = SHOOTING;
-						timer.Start();
-					}
-					else if (info.closest == nullptr)
-					{
-						info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER);
-						SetDestination();
-						destination = App->map->MapToWorld(destination.first, destination.second);
-						state = MOVING;
-						pathfind = true;
+						if (info.closest != nullptr)
+						{
+							state = SHOOTING;
+							timer.Start();
+						}
+						else if (info.closest == nullptr && offensive==false)
+						{
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER);
+							/*SetDestination();
+							destination = App->map->MapToWorld(destination.first, destination.second);*/
+							state = MOVING;
+							pathfind = true;
+						}
+						else
+						{
+							state = MOVING;
+							//pathfind = true;
+						}
+
 					}
 					else
 					{
-						state = MOVING;
-						//pathfind = true;
+						info.closest = FindEntityInAttackRange(map_pos, fromPlayer1, original_range, entityType::SOLDIER);
+
+						if (info.closest != nullptr)
+						{
+							state = SHOOTING;
+							timer.Start();
+						}
+						else if (info.closest == nullptr && offensive == true)
+						{
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER);
+							/*SetDestination();
+							destination = App->map->MapToWorld(destination.first, destination.second);*/
+							state = MOVING;
+							pathfind = true;
+						}
+						else
+						{
+							state = MOVING;
+							//pathfind = true;
+						}
 					}
 					
 					
 				}
 				// enemy zone
-				else if (map_pos.first > App->map->sovietzone.up_limit.first && map_pos.first < App->map->sovietzone.down_limit.first)
+				else if (map_pos.second > App->map->sovietzone.up_limit.second && map_pos.second < App->map->sovietzone.down_limit.second)
 				{
-					//find entity in range
-					//if exist, state= shoot;
-					//else, state= move
+					if (fromPlayer1)
+					{
+						info.closest = FindEntityInAttackRange(map_pos, fromPlayer1, original_range, entityType::SOLDIER);
+
+						if (info.closest != nullptr)
+						{
+							state = SHOOTING;
+							timer.Start();
+						}
+						else if (info.closest == nullptr && offensive == true)
+						{
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER);
+							/*SetDestination();
+							destination = App->map->MapToWorld(destination.first, destination.second);*/
+							state = MOVING;
+							pathfind = true;
+						}
+						else
+						{
+							state = MOVING;
+							//pathfind = true;
+						}
+						//find entity in range
+						//if exist, state= shoot;
+						//else, state= move
+
+
+					}
+					else
+					{
+						info.closest = FindEntityInAttackRange(map_pos, fromPlayer1, original_range, entityType::SOLDIER);
+
+						if (info.closest != nullptr)
+						{
+							state = SHOOTING;
+							timer.Start();
+						}
+						else if (info.closest == nullptr && offensive == false)
+						{
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER);
+							/*SetDestination();
+							destination = App->map->MapToWorld(destination.first, destination.second);*/
+							state = MOVING;
+							pathfind = true;
+						}
+						else
+						{
+							state = MOVING;
+							//pathfind = true;
+						}
+						//find entity in range
+						//if exist, state= shoot;
+						//else, state= move
+					}
 				} 
 				// war zone
 				else if (map_pos.first > App->map->warzone.up_limit.first && map_pos.first < App->map->warzone.down_limit.first)
 				{
+					
+					info.closest = FindEntityInAttackRange(map_pos, fromPlayer1, original_range, entityType::SOLDIER);
+
+					if (info.closest != nullptr)
+					{
+						state = SHOOTING;
+						timer.Start();
+					}
+					else
+					{
+						state == MOVING;
+					}
 					//find entity en shoot range,
 					//if closes exits, state=shoot
 					//else state move
 				}
-				else
-				{
-					state = MOVING;
-					timer.Start();
-				}
+
+				
+					
+				
 				break;
 		
 			default:
+
+				state = MOVING;
+
 				break;
 			}
 
 		}
 		
-		
+		else
+		{
+			// get info from lead
+			// lead gives out an information of state and enemy, and speed of moving, the troops haves 2 stages. move and shoot, when leader shoot, they shoot, when leader does other the move
+
+		}
 		
 	}
 	else {

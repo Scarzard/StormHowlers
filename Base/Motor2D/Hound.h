@@ -29,7 +29,7 @@ public:
 	void LoadAnimations(bool isPlayer1, string path);
 
 	//bool Is_inRange(pair<int, int> pos, int & distance);
-	bool defensive = false;
+	//bool defensive = false;
 	bool offensive = true;
 	pair<int, int> destination;
 	Entity* closest = nullptr;
