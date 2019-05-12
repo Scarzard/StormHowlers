@@ -1870,26 +1870,51 @@ void Player::DrawBuildingCollider(int type, bool isPlayer1)
 
 void Player::SpawnMultipleTroops(uint type)
 {
+	pair<int, int> offset;
+	int row;
+
 	switch (type)
 	{
 	case Entity::entityType::SOLDIER:
-		pair<int, int> offset;
-		int row;
-			for(int i=0; i< SoldiersCreated; i++)
-			{
-				if(i%5 == 0)
-					row = i / 5;
+		
+		for (int i = 0; i < SoldiersCreated; i++)
+		{
+			if (i % 5 == 0)
+				row = i / 5;
 
-				offset.first = (i - 4 * row);
-				offset.second = (i - 6 * row);
-			
-				if(isPlayer1)
-					App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, { collider.tiles[0].first + offset.first * 30 , collider.tiles[0].second + offset.second * 15}, collider);
-				else
-					App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, { collider.tiles[0].first + (offset.second * 30) , collider.tiles[0].second + offset.first * 15}, collider);
-			}
+			offset.first = (i - 4 * row);
+			offset.second = (i - 6 * row);
 
+			if (isPlayer1)
+				App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, { collider.tiles[0].first + offset.first * 30 , collider.tiles[0].second + offset.second * 15 }, collider);
+			else
+				App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, { collider.tiles[0].first + (offset.second * 30) , collider.tiles[0].second + offset.first * 15 }, collider);
+		}
+
+		break;
+	case Entity::entityType::WAR_HOUND:
+		
+		for (int i = 0; i < WarHoundsCreated; i++)
+		{
+			if (i % 5 == 0)
+				row = i / 5;
+
+			offset.first = (i - 4 * row);
+			offset.second = (i - 6 * row);
+
+			if (isPlayer1)
+				App->entitymanager->AddEntity(isPlayer1, Entity::entityType::WAR_HOUND, { collider.tiles[0].first + offset.first * 30 , collider.tiles[0].second + offset.second * 15 }, collider);
+			else
+				App->entitymanager->AddEntity(isPlayer1, Entity::entityType::WAR_HOUND, { collider.tiles[0].first + (offset.second * 30) , collider.tiles[0].second + offset.first * 15 }, collider);
+		}
+		break;
+
+	default:
+			break;
 
 	}
 }
+
+
+
 
