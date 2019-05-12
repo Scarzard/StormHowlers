@@ -51,15 +51,35 @@ public:
 	SDL_Texture* settings_texture;
 
 	UI_Element* menu_background = nullptr;
-
+	//------PLAY
 	UI_Element* new_game_button = nullptr;
 	UI_Element* new_game_text = nullptr;
 	char new_game_label[5] = "PLAY";
-
+	//------SETTINGS
 	UI_Element* settings_button = nullptr;
 	UI_Element* settings_text = nullptr;
 	char settings_label[9] = "SETTINGS";
 
+	UI_Element* Settings_Title = nullptr;
+	char Settings_Title_label[9] = "Settings";
+
+	//SETTINGS SLIDERS
+	UI_Element* Music_Settings = nullptr;
+	UI_Element* Music_text = nullptr;
+	char Music_label[14] = "Music Volume";
+	UI_Element* Music_Slider = nullptr;
+	UI_Element* Music_Slider_text = nullptr;
+	char Music_Slider_label[5] = "0";
+	UI_Element* Music_Slider_Button = nullptr;
+
+	UI_Element* FX_Settings = nullptr;
+	UI_Element* FX_text = nullptr;
+	char FX_label[10] = "FX Volume";
+	UI_Element* FX_Slider = nullptr;
+	UI_Element* FX_Slider_text = nullptr;
+	char FX_Slider_label[5] = "0";
+	UI_Element* FX_Slider_Button = nullptr;
+	//CREDITS
 	UI_Element* credits_button = nullptr;
 	UI_Element* credits_text = nullptr;
 	char credits_label[9] = "CREDITS";

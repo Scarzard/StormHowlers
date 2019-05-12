@@ -149,14 +149,20 @@ bool Gui::Draw()
 			else if ((*UI_elem)->type == UI_Element::UI_type::TEXTURE) //text
 			{
 				SDL_Rect r = { 0,0,App->win->width,App->win->height };
+				//Main Menu textures
 				if ((*UI_elem) == App->main_menu->menu_background)
 				{
 					SDL_RenderCopy(App->render->renderer, App->main_menu->menu_background->texture, NULL, &r);
 				}
-				else if ((*UI_elem) == App->main_menu->MM_Settings_UI || App->main_menu->Credits_UI)
+				else if ((*UI_elem) == App->main_menu->MM_Settings_UI)
 				{
-					SDL_RenderCopy(App->render->renderer, App->main_menu->settings_texture, NULL, &r);//change text
+					SDL_RenderCopy(App->render->renderer, App->main_menu->MM_Settings_UI->texture, NULL, &r);
 				}
+				else if ((*UI_elem) == App->main_menu->Credits_UI)
+				{
+					SDL_RenderCopy(App->render->renderer, App->main_menu->Credits_UI->texture, NULL, &r);
+				}
+				//Scene textures
 				else if ((*UI_elem) == App->player1->Pause_UI || (*UI_elem) == App->player1->Abort_UI)
 				{
 					SDL_RenderCopy(App->render->renderer, App->player1->Pause_UI->texture, NULL, &r);
@@ -171,6 +177,7 @@ bool Gui::Draw()
 					App->render->DrawQuad({ 0, 0, (int)App->win->width + 520, (int)App->win->height + 300 }, 0, 0, 0, 150, true, false);
 					SDL_RenderCopy(App->render->renderer, App->scene->draw_tex, NULL, &r);
 				}
+				
 			}
 			else //rest of ui
 			{

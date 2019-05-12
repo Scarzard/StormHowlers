@@ -42,7 +42,7 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 bool MainMenu::Start()
 {
 	//settings_texture = App->tex->Load(settings_main_menu_name.data());
-	settings_texture = App->tex->Load("gui/Pause_Menu_Soviet.png");
+	settings_texture = App->tex->Load("gui/mainmenu_settings_credits.png");
 
 	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
 	menu_background->texture = App->tex->Load(menu_bg_file_name.data());
@@ -63,19 +63,51 @@ bool MainMenu::Start()
 	credits_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, credits_button, true, { false, false });
 	credits_text->label = credits_label;
 	credits_text->color = { 255, 255, 9, 255 };
+	
+	//SETTINGS WINDOW/BUTTONS
+	MM_Settings_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
+	MM_Settings_UI->texture = settings_texture;
+	MM_Settings_UI->rect = { 0, 0, App->win->width, App->win->height };
+
+	Settings_Title = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 1425, 10 }, { 0, 0 }, MM_Settings_UI, false, { false, false });
+	Settings_Title->label = Settings_Title_label;
+	Settings_Title->color = { 255,255,9,255 };
+
+	Music_Settings = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::MUSIC_VOLUME, { 100 ,100 }, { 301,59 }, MM_Settings_UI, false);
+	Music_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 },  Music_Settings, false, { false, false });
+	Music_text->label =  Music_label;
+	Music_text->color = { 255,255,9,255 };
+
+	Music_Slider = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 50 , 100 }, { 651, 59 },  Music_Settings, false);
+	Music_Slider->rect = { 1483, 709, 651, 59 };
+	Music_Slider_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 640, 18 }, { 0, 0 },  Music_Slider, false, { false, false });
+	Music_Slider_text->label =  Music_Slider_label;
+	Music_Slider_text->color = { 255,255,9,255 };
+	Music_Slider_Button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 },  Music_Slider, false);
+	Music_Slider_Button->rect = { 2135, 712, 29, 55 };
+
+	FX_Settings = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::FX_VOLUME, { 100 ,400 }, { 301,59 }, MM_Settings_UI, false);
+	FX_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 100, 18 }, { 0, 0 },  FX_Settings, false, { false, false });
+	FX_text->label =  FX_label;
+	FX_text->color = { 255,255,9,255 };
+
+	FX_Slider = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 50 , 100 }, { 651, 59 },  FX_Settings, false);
+	FX_Slider->rect = { 1483, 709, 651, 59 };
+	FX_Slider_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 640, 18 }, { 0, 0 },  FX_Slider, false, { false, false });
+	FX_Slider_text->label =  FX_Slider_label;
+	FX_Slider_text->color = { 255,255,9,255 };
+	FX_Slider_Button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 },  FX_Slider, false);
+	FX_Slider_Button->rect = { 2135, 712, 29, 55 };
+	//CREDITS WINDOW/BUTTONS
+	Credits_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
+	Credits_UI->texture = settings_texture; 
+	Credits_UI->rect = { 0, 0, App->win->width, App->win->height };
+
 	//EXIT
 	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 711 }, { 371, 87 }, menu_background, true);
 	exit_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0,0 }, exit_button, true, { false, false });
 	exit_text->label = exit_label;
 	exit_text->color = { 255, 255, 9, 255 };
-	//SETTINGS WINDOW/BUTTONS
-	MM_Settings_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
-	MM_Settings_UI->texture = settings_texture;//to be changed
-	MM_Settings_UI->rect = { 0, 0, App->win->width, App->win->height };
-	//CREDITS WINDOW/BUTTONS
-	Credits_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
-	Credits_UI->texture = App->scene->pause_alied_texture; //to be changed
-	Credits_UI->rect = { 0, 0, App->win->width, App->win->height };
 
 
 	//ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 800 ,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
@@ -114,6 +146,10 @@ bool MainMenu::Update(float dt)
 		menu_background->visible = false;
 	}
 
+	//if (App->player1->currentUI = CURRENT_MM_UI::CURR_MM_SETTINGS || CURRENT_MM_UI::CURR_MM_SETTINGS && App->player1->gamepad.Controller[BUTTON_B])
+	//{
+	//	App->player1->UpdateFocus(App->player1->currentUI);
+	//}
 	App->gui->Draw();
 	
 	return true;

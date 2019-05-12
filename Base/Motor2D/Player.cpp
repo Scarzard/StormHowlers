@@ -1150,6 +1150,12 @@ void Player::UpdateFocus(uint data)
 		last_element = Abort_UI->children.end();
 		last_element--;
 		break;
+
+	//case::MainMenu::CURRENT_MM_UI::CURR_MM_SETTINGS:
+	//	focus = App->main_menu->MM_Settings_UI->children.begin();
+	//	last_element = App->main_menu->MM_Settings_UI->children.end();
+	//	last_element--;
+	//	break;
 	
 	}
 }
@@ -1470,11 +1476,13 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		App->main_menu->menu_background->visible = false;
 		App->main_menu->MM_Settings_UI->visible = true;
 		App->main_menu->Credits_UI->visible = false;
+		break;
 
 	case::MainMenu::CURRENT_MM_UI::CURR_MM_CREDITS:
 		App->main_menu->menu_background->visible = false;
 		App->main_menu->MM_Settings_UI->visible = false;
 		App->main_menu->Credits_UI->visible = true;
+		break;
 	}
 	App->gui->UpdateChildren();
 }
