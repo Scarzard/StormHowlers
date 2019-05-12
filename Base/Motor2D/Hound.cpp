@@ -727,7 +727,10 @@ Entity* Hound::FindNearestEntity(pair <int, int> pos, bool fromplayer1, entityTy
 			//if ((*tmp)->type >= desiredtype)
 			{
 				map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
-
+				if ((*tmp)->type == entityType::WALLS)
+				{
+					int a = 0;
+				}
 
 				Is_inRange(pos, distance, map_pos, 0);
 				
