@@ -54,7 +54,7 @@ bool Hound::Update(float dt)
 				{
 					if (info.closest != nullptr)
 					{
-						Movement(info.closest);
+						Movement(info.closest,map_pos);
 					}
 					else
 					{
@@ -397,9 +397,55 @@ void Hound::CleanUp() {
 
 }
 
-void Hound::Movement(Entity* target)
+void Hound::Movement(Entity* target, pair <int,int> map_pos)
 {
-	if (position.first <= target->position.first - offset)
+	bool north = true;
+	bool south = true;
+	bool west = true;
+	bool east = true;
+	// search tiles around
+	pair <int,int> cell = { map_pos.first, map_pos.second+1};
+
+	if (!App->pathfinding->IsWalkable(cell))
+	{
+		east = false;
+	}
+
+	else if (!App->pathfinding->IsWalkable({ map_pos.first, map_pos.second - 1 }))
+	{
+		west = false;
+	}
+
+	if (!App->pathfinding->IsWalkable({ map_pos.first + 1, map_pos.second }))
+	{
+		north = false;
+	}
+	
+
+	else if (!App->pathfinding->IsWalkable({ map_pos.first - 1, map_pos.second }))
+	{
+		south = false;
+	}
+
+	if (position.first <= target->position.first - offset && east == true)
+	{
+		position.first += 2;
+	}
+	else if (position.first >= target->position.first + offset && west == true)
+	{
+		position.first -= 2;
+	}
+	if (position.second <= target->position.second - offset*2 && south == true )
+	{
+		position.second += 1;
+	}
+	else if (position.second >= target->position.second + offset*2 && north == true)
+	{
+		position.second -= 1;
+	}
+
+
+	/*if (position.first <= target->position.first - offset)
 	{
 		position.first += 2;
 	}
@@ -414,13 +460,19 @@ void Hound::Movement(Entity* target)
 	else if (position.second >= target->position.second + offset)
 	{
 		position.second -= 1;
-	}
-	if (position.first >= target->position.first - offset && 
-		position.first <= target->position.first + offset && 
-		position.second >= target->position.second - offset &&
-		position.second <= target->position.second + offset)
+	}*/
+	if (position.first >= target->position.first - offset*2 && 
+		position.first <= target->position.first + offset*4 && 
+		position.second >= target->position.second - offset*4 &&
+		position.second <= target->position.second + offset*2)
 	{
 		state = SHOOTING;
+		
+	}
+	else 
+	{
+		state = SEARCH;
+		info.closest = nullptr;
 	}
 }
 

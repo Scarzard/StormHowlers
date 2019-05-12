@@ -19,7 +19,7 @@ public:
 	void ForceAnimations();
 	void ActOnDestroyed();
 	void CleanUp();
-	void Movement(Entity* target);
+	void Movement(Entity* target, pair <int, int> map_pos);
 	void ChangeAnimation();
 
 	Entity * FindEntityInAttackRange(pair<int, int> pos, bool fromplayer1, int attackrange, entityType type);
