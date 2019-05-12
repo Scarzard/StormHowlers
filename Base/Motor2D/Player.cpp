@@ -52,7 +52,7 @@ bool Player::Awake(pugi::xml_node& config) {
 bool Player::Start()
 {
 
-	actual_capacity = time_iterator = number_of_troops = BuildingCost = BarracksCreated = TroopCost = 0;
+	time_iterator = number_of_troops = BuildingCost = BarracksCreated = TroopCost = 0;
 
 	gold = 3500;
 	gold_persecond = 0;
@@ -60,8 +60,6 @@ bool Player::Start()
 	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = 0;
 
 	selected_texture = { 0,0, 100, 100 };
-
-	live = 2000;
 
 	UI_troop_type = Entity::entityType::SOLDIER;
 
@@ -838,9 +836,6 @@ bool Player::Update(float dt)
 			}
 
 
-			//App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &(preview_rects->at(type)));
-
-
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 			{
 				
@@ -855,31 +850,11 @@ bool Player::Update(float dt)
 				}
 				else
 					App->audio->PlayFx(WRONG);
-				
-
-				if (type > Entity::entityType::BARRACKS)//if troops
-				{
-					switch (type)
-					{
-					case Entity::entityType::SOLDIER:
-						SoldiersCreated--;
-						actual_capacity--;
-						break;
-					}
-
-				}
 
 				isBuilding = false;
 							
 			}
 
-			if (gamepad.Controller[BUTTON_X] == KEY_DOWN && type > Entity::entityType::BARRACKS)
-			{
-				SpawnMultipleTroops(type);
-				actual_capacity -= SoldiersCreated;
-				SoldiersCreated = 0;
-				isBuilding = false;
-			}
 		}
 		else
 		{
@@ -1554,38 +1529,23 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
-		if (SoldiersCreated > 0)
-		{
-			App->audio->PlayFx(INGAME_CLICK);
-			isBuilding = true;
-			type = Entity::entityType::SOLDIER;
-			collider.dimensions = { 1,1 };
-		}
-		else
-		{
-			App->audio->PlayFx(WRONG);
-		}
 		
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_TANKMAN:
-		//
-		App->audio->PlayFx(WRONG);
+
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_INFILTRATOR:
-		//
-		App->audio->PlayFx(WRONG);
+		
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_ENGINEER:
-		//
-		App->audio->PlayFx(WRONG);
+		
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_WARHOUND:
-		//
-		App->audio->PlayFx(WRONG);
+		
 		break;
 
 	case::UI_Element::Action::ACT_CAST_INVULNERABILITY:
@@ -1876,30 +1836,5 @@ void Player::DrawBuildingCollider(int type, bool isPlayer1)
 		App->render->DrawQuad(selected_texture, 255, 0, 0, 100, true);
 	else
 		App->render->DrawQuad(selected_texture, 0, 0, 255, 100, true);
-}
-
-void Player::SpawnMultipleTroops(uint type)
-{
-	switch (type)
-	{
-	case Entity::entityType::SOLDIER:
-		pair<int, int> offset;
-		int row;
-			for(int i=0; i< SoldiersCreated; i++)
-			{
-				if(i%5 == 0)
-					row = i / 5;
-
-				offset.first = (i - 4 * row);
-				offset.second = (i - 6 * row);
-			
-				if(isPlayer1)
-					App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, { collider.tiles[0].first + offset.first * 30 , collider.tiles[0].second + offset.second * 15}, collider);
-				else
-					App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, { collider.tiles[0].first + (offset.second * 30) , collider.tiles[0].second + offset.first * 15}, collider);
-			}
-
-
-	}
 }
 

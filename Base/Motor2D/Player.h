@@ -97,8 +97,6 @@ public:
 	void CreateTroop(int type, int number);
 	void CreateAbility(int type, int number);
 
-	void SpawnMultipleTroops(uint type);
-
 	void DrawBuildingCollider(int type, bool isPlayer1);
 
 	bool CheckBuildingPos();
@@ -146,21 +144,13 @@ public:
 	uint last_currentUI = 0;
 	uint currentUI = 0;
 
-	int total_capacity = 0; 
-	int actual_capacity = 0; //sum of all created troops
-	
 	DeployState deploy_state = DeployState::END;
-	//bool entityAdded;
-	//Entity* previewEntity;
 
 	vector<SDL_Rect>* preview_rects;
 
 	SDL_Rect LiveBar;
 	int health, max_health = 0;
 
-	// Live of TOWN HALL
-	int live = 0;
-	
 	//index for testing previews
 	int curr = 1;
 	int deploying_counter = 0;
@@ -234,20 +224,11 @@ public:
 
 	UI_Element* Deploy_UI = nullptr;
 	UI_Element* Soldier_icon = nullptr;
-	UI_Element* Soldier_text = nullptr;
-	char soldier_label[4] = "0";
 	UI_Element* Tankman_icon = nullptr;
-	UI_Element* Tankman_text = nullptr;
-	char tankman_label[4] = "0";
 	UI_Element* Infiltrator_icon = nullptr;
-	UI_Element* Infiltrator_text = nullptr;
-	char infiltrator_label[4] = "0";
 	UI_Element* Engineer_icon = nullptr;
-	UI_Element* Engineer_text = nullptr;
-	char engineer_label[4] = "0";
 	UI_Element* War_hound_icon = nullptr;
-	UI_Element* War_hound_text = nullptr;
-	char war_hound_label[4] = "0";
+	
 
 	UI_Element* Troop_cost_text = nullptr;
 	char Troop_cost_label[10] = "0000 $";
