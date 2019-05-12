@@ -19,7 +19,7 @@ public:
 	void ForceAnimations();
 	void ActOnDestroyed();
 	void CleanUp();
-
+	void Movement(Entity* target);
 	void ChangeAnimation();
 
 	Entity * FindEntityInAttackRange(pair<int, int> pos, bool fromplayer1, int attackrange, entityType type);
@@ -29,7 +29,7 @@ public:
 	void LoadAnimations(bool isPlayer1, string path);
 
 	//bool Is_inRange(pair<int, int> pos, int & distance);
-	bool defensive = true;
+	bool defensive = false;
 	bool offensive = true;
 	pair<int, int> destination;
 	Entity* closest = nullptr;

@@ -14,7 +14,7 @@ Hound::Hound(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop(Entit
 	BROFILER_CATEGORY("Hound constructor", Profiler::Color::Red);
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
-	
+	offset = 50;
 	destination = pos;
 	original_range = range;
 	//Managed in entity.h constructor
@@ -49,7 +49,14 @@ bool Hound::Update(float dt)
 			case MOVING:
 				if (pathfind)
 				{
-					info.current_group->CheckForMovementRequest(dt, destination);
+					if (info.closest != nullptr)
+					{
+						Movement(info.closest);
+					}
+					else
+					{
+						pathfind = false;
+					}
 				}
 				else if (timer.ReadSec() > 1 && info.closest == nullptr)
 				{
@@ -58,10 +65,19 @@ bool Hound::Update(float dt)
 				}
 				else
 				{
-					position.first += -2;
-					position.second += 1;
+					if (offensive)
+					{
+						position.first += -2;
+						position.second += 1;
+					}
+					else
+					{
+						position.first += 2;
+						position.second += -1;
 
-					//move foward
+					}
+
+					
 				}
 				break;
 
@@ -256,6 +272,33 @@ void Hound::ActOnDestroyed() {
 void Hound::CleanUp() {
 	Troop::CleanUp();
 
+}
+
+void Hound::Movement(Entity* target)
+{
+	if (position.first <= target->position.first - offset)
+	{
+		position.first += 2;
+	}
+	else if (position.first >= target->position.first + offset)
+	{
+		position.first -= 2;
+	}
+	if (position.second <= target->position.second - offset)
+	{
+		position.second += 1;
+	}
+	else if (position.second >= target->position.second + offset)
+	{
+		position.second -= 1;
+	}
+	if (position.first >= target->position.first - offset && 
+		position.first <= target->position.first + offset && 
+		position.second >= target->position.second - offset &&
+		position.second <= target->position.second + offset)
+	{
+		state = SHOOTING;
+	}
 }
 
 void Hound::ChangeAnimation() {
