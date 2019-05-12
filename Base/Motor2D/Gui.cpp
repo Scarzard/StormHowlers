@@ -413,7 +413,19 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::SETTINGS:
 			data->rect = { 744, 954, 371, 87 };
 			break;
+		case UI_Element::Action::GO_BACK_TO_MM:
+			data->rect = { 744, 954, 371, 87 };
+			break;
 		case UI_Element::Action::CREDITS:
+			data->rect = { 744, 954, 371, 87 };
+			break;
+		case UI_Element::Action::LICENSE:
+			data->rect = { 744, 954, 371, 87 };
+			break;
+		case UI_Element::Action::AUTHORS:
+			data->rect = { 744, 954, 371, 87 };
+			break;
+		case UI_Element::Action::WEBSITE:
 			data->rect = { 744, 954, 371, 87 };
 			break;
 		case UI_Element::Action::EXIT:
@@ -563,7 +575,19 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::SETTINGS:
 			data->rect = { 1116, 954, 371, 86 };
 			break;
+		case UI_Element::Action::GO_BACK_TO_MM:
+			data->rect = { 1116, 954, 371, 86 };
+			break;
 		case UI_Element::Action::CREDITS:
+			data->rect = { 1116, 954, 371, 86 };
+			break;
+		case UI_Element::Action::LICENSE:
+			data->rect = { 1116, 954, 371, 86 };
+			break;
+		case UI_Element::Action::AUTHORS:
+			data->rect = { 1116, 954, 371, 86 };
+			break;
+		case UI_Element::Action::WEBSITE:
 			data->rect = { 1116, 954, 371, 86 };
 			break;
 		case UI_Element::Action::EXIT:
@@ -708,7 +732,19 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::SETTINGS:
 			data->rect = { 1488, 954, 371, 86 };
 			break;
+		case UI_Element::Action::GO_BACK_TO_MM:
+			data->rect = { 1488, 954, 371, 86 };
+			break;
 		case UI_Element::Action::CREDITS:
+			data->rect = { 1488, 954, 371, 86 };
+			break;
+		case UI_Element::Action::LICENSE:
+			data->rect = { 1488, 954, 371, 86 };
+			break;
+		case UI_Element::Action::AUTHORS:
+			data->rect = { 1488, 954, 371, 86 };
+			break;
+		case UI_Element::Action::WEBSITE:
 			data->rect = { 1488, 954, 371, 86 };
 			break;
 		case UI_Element::Action::EXIT:
@@ -801,11 +837,23 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::SETTINGS:
 			data->rect = { 410,80,39,40 };
 			break;
+		case UI_Element::Action::GO_BACK_TO_MM:
+			data->rect = { 410,80,39,40 };
+			break;
 		case UI_Element::Action::CREDITS:
 			data->rect = { 410,80,39,40 };
 			break;
+		case UI_Element::Action::LICENSE:
+			data->rect = { 410,80,39,40 };
+			break;
+		case UI_Element::Action::AUTHORS:
+			data->rect = { 410,80,39,40 };
+			break;
+		case UI_Element::Action::WEBSITE:
+			data->rect = { 410,80,39,40 };
+			break;
 		case UI_Element::Action::EXIT:
-			data->rect = { 332,80,39,40 };
+			data->rect = { 410,80,39,40 };
 			break;
 
 		case UI_Element::Action::ACT_BUILD_MINE: //ORE REFINERY

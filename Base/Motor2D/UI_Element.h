@@ -55,7 +55,11 @@ public:
 		//MainMenu Buttons
 		NEW_GAME,
 		SETTINGS,
+		GO_BACK_TO_MM,
 		CREDITS,
+		LICENSE,
+		AUTHORS,
+		WEBSITE,
 		EXIT,
 
 		//Pause 

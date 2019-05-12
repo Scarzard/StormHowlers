@@ -59,10 +59,16 @@ bool MainMenu::Start()
 	settings_text->label = settings_label;
 	settings_text->color = { 255, 255, 9, 255 };
 	//CREDITS
-	credits_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::CREDITS, { 1273, 618 }, { 371, 87 }, menu_background, true);
+	credits_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::CREDITS, { 1273, 617 }, { 371, 87 }, menu_background, true);
 	credits_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, credits_button, true, { false, false });
 	credits_text->label = credits_label;
 	credits_text->color = { 255, 255, 9, 255 };
+
+	//EXIT
+	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 710 }, { 371, 87 }, menu_background, true);
+	exit_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0,0 }, exit_button, true, { false, false });
+	exit_text->label = exit_label;
+	exit_text->color = { 255, 255, 9, 255 };
 	
 	//SETTINGS WINDOW/BUTTONS
 	MM_Settings_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
@@ -72,6 +78,11 @@ bool MainMenu::Start()
 	Settings_Title = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 1425, 10 }, { 0, 0 }, MM_Settings_UI, false, { false, false });
 	Settings_Title->label = Settings_Title_label;
 	Settings_Title->color = { 255,255,9,255 };
+
+	audio_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS/*goto_audiosettings*/, { 1273, 432 }, { 371, 87 }, MM_Settings_UI, true);
+	audio_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, audio_button, true, { false, false });
+	audio_text->label = audio_label;
+	audio_text->color = { 255, 255, 9, 255 };
 
 	Music_Settings = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::MUSIC_VOLUME, { 100 ,100 }, { 301,59 }, MM_Settings_UI, false);
 	Music_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 },  Music_Settings, false, { false, false });
@@ -98,16 +109,31 @@ bool MainMenu::Start()
 	FX_Slider_text->color = { 255,255,9,255 };
 	FX_Slider_Button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 },  FX_Slider, false);
 	FX_Slider_Button->rect = { 2135, 773, 29, 55 };
+
+	goto_mainmenu_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS/*goto_audiosettings*/, { 1273, 800 }, { 371, 87 }, MM_Settings_UI, true);
+	goto_mainmenu_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, goto_mainmenu_button, true, { false, false });
+	goto_mainmenu_text->label = goto_mainmenu_label;
+	goto_mainmenu_text->color = { 255, 255, 9, 255 };
 	//CREDITS WINDOW/BUTTONS
 	Credits_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
 	Credits_UI->texture = settings_texture; 
 	Credits_UI->rect = { 0, 0, App->win->width, App->win->height };
 
-	//EXIT
-	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 711 }, { 371, 87 }, menu_background, true);
-	exit_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0,0 }, exit_button, true, { false, false });
-	exit_text->label = exit_label;
-	exit_text->color = { 255, 255, 9, 255 };
+	Credits_Title = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 1425, 10 }, { 0, 0 }, Credits_UI, false, { false, false });
+	Credits_Title->label = Credits_Title_label;
+	Credits_Title->color = { 255,255,9,255 };
+	//showlicense
+	view_license_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::LICENSE, { 1273, 432 }, { 371, 87 }, Credits_UI, true);
+	view_license_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, view_license_button, true, { false, false });
+	view_license_text->label = view_license_label;
+	view_license_text->color = { 255, 255, 9, 255 };
+	//show authors
+	view_authors_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::AUTHORS, { 1273, 524 }, { 371, 87 }, Credits_UI, true);
+	view_authors_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, view_authors_button, true, { false, false });
+	view_authors_text->label = view_authors_label;
+	view_authors_text->color = { 255, 255, 9, 255 };
+
+
 
 
 	//ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 800 ,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
@@ -220,18 +246,31 @@ void MainMenu::DoLogic(UI_Element* data)
 		App->player1->UpdateVisibility();
 		break;
 
+	case::UI_Element::Action::GO_BACK_TO_MM: //for both settings/credits
+		//back to mm
+		break;
+
 	case::UI_Element::Action::CREDITS:
 		App->player1->currentUI = CURRENT_MM_UI::CURR_MM_CREDITS;
 		App->player1->UpdateVisibility();
 		break;
+
+	case::UI_Element::Action::LICENSE:
+		//show license
+		break;
+	case::UI_Element::Action::AUTHORS:
+		//show authors
+		break;
+	case::UI_Element::Action::WEBSITE:
+		ShellExecuteA(NULL, "open", "https://github.com/stormhowlers/Command_and_Conquer_WarZone", NULL, NULL, SW_SHOWNORMAL);
+		break;
+
 
 	case::UI_Element::Action::EXIT:
 		App->audio->PlayFx(EXIT);
 		close_app = false;
 		break;
 
-	//case::UI_Element::Action::WEBPAGE:
-	//	//ShellExecuteA(NULL, "open", "https://github.com/Scarzard/StormHowlers", NULL, NULL, SW_SHOWNORMAL);
-	//	break;
+
 	}
 }
