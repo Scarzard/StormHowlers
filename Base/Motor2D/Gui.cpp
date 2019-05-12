@@ -457,14 +457,18 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::MUSIC_VOLUME:
 			if (App->player1->Music_Settings == data)
 				data->rect = { 1816, 830, 291, 54 };
-			else
+			else if (App->player2->Music_Settings == data)
 				data->rect = { 1517, 830, 291, 54 };
+			else
+				data->rect = { 1517, 830, 291, 54 };//change to new button
 			break;
 		case UI_Element::Action::FX_VOLUME:
 			if (App->player1->FX_Settings == data)
 				data->rect = { 1816, 830, 291, 54 };
-			else
+			else if (App->player2->FX_Settings == data)
 				data->rect = { 1517, 830, 291, 54 };
+			else
+				data->rect = { 1517, 830, 291, 54 };//change to new button
 			break;
 
 		}
@@ -599,17 +603,34 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 				data->rect = { 881, 769, 301, 59 };
 			break;
 
-		case UI_Element::Action::MUSIC_VOLUME:
+		//case UI_Element::Action::MUSIC_VOLUME:
+		//	if (App->player1->Music_Settings == data)
+		//		data->rect = { 1816, 884, 291, 54 };
+		//	else
+		//		data->rect = { 1517, 884, 291, 54 };
+		//	break;
+		//case UI_Element::Action::FX_VOLUME:
+		//	if (App->player1->FX_Settings == data)
+		//		data->rect = { 1816, 884, 291, 54 };
+		//	else
+		//		data->rect = { 1517, 884, 291, 54 };
+		//	break;
+
+			case UI_Element::Action::MUSIC_VOLUME:
 			if (App->player1->Music_Settings == data)
 				data->rect = { 1816, 884, 291, 54 };
-			else
+			else if (App->player2->Music_Settings == data)
 				data->rect = { 1517, 884, 291, 54 };
+			else
+				data->rect = { 1517, 884, 291, 54 };//change to new button
 			break;
 		case UI_Element::Action::FX_VOLUME:
 			if (App->player1->FX_Settings == data)
 				data->rect = { 1816, 884, 291, 54 };
-			else
+			else if (App->player2->FX_Settings == data)
 				data->rect = { 1517, 884, 291, 54 };
+			else
+				data->rect = { 1517, 884, 291, 54 };//change to new button
 			break;
 		}
 		break;

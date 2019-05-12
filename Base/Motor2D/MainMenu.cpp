@@ -79,12 +79,12 @@ bool MainMenu::Start()
 	Music_text->color = { 255,255,9,255 };
 
 	Music_Slider = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 50 , 100 }, { 651, 59 },  Music_Settings, false);
-	Music_Slider->rect = { 1483, 709, 651, 59 };
+	Music_Slider->rect = { 1483, 770, 651, 59 };
 	Music_Slider_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 640, 18 }, { 0, 0 },  Music_Slider, false, { false, false });
 	Music_Slider_text->label =  Music_Slider_label;
 	Music_Slider_text->color = { 255,255,9,255 };
 	Music_Slider_Button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 },  Music_Slider, false);
-	Music_Slider_Button->rect = { 2135, 712, 29, 55 };
+	Music_Slider_Button->rect = { 2135, 773, 29, 55 };
 
 	FX_Settings = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::FX_VOLUME, { 100 ,400 }, { 301,59 }, MM_Settings_UI, false);
 	FX_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 100, 18 }, { 0, 0 },  FX_Settings, false, { false, false });
@@ -92,12 +92,12 @@ bool MainMenu::Start()
 	FX_text->color = { 255,255,9,255 };
 
 	FX_Slider = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 50 , 100 }, { 651, 59 },  FX_Settings, false);
-	FX_Slider->rect = { 1483, 709, 651, 59 };
+	FX_Slider->rect = { 1483, 770, 651, 59 };
 	FX_Slider_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 640, 18 }, { 0, 0 },  FX_Slider, false, { false, false });
 	FX_Slider_text->label =  FX_Slider_label;
 	FX_Slider_text->color = { 255,255,9,255 };
 	FX_Slider_Button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 },  FX_Slider, false);
-	FX_Slider_Button->rect = { 2135, 712, 29, 55 };
+	FX_Slider_Button->rect = { 2135, 773, 29, 55 };
 	//CREDITS WINDOW/BUTTONS
 	Credits_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
 	Credits_UI->texture = settings_texture; 
