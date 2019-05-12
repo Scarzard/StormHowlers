@@ -52,7 +52,7 @@ bool Player::Awake(pugi::xml_node& config) {
 bool Player::Start()
 {
 
-	actual_capacity = total_capacity = time_iterator = number_of_troops = BuildingCost = TroopCost = 0;
+	actual_capacity = time_iterator = number_of_troops = BuildingCost = BarracksCreated = TroopCost = 0;
 
 	gold = 3500;
 	gold_persecond = 0;
@@ -203,6 +203,10 @@ bool Player::Update(float dt)
 		if (gamepad.Controller[BUTTON_X] == KEY_UP && currentUI == CURRENT_UI::CURR_MAIN)
 		{
 			building_selected = buildings.begin();
+
+			while ((*building_selected)->type == Entity::entityType::WALLS)
+				building_selected++;
+
 			last_building = buildings.end();
 			last_building--;
 			currentUI = CURRENT_UI::CURR_SELECTING_BUILDING;
@@ -330,9 +334,9 @@ bool Player::Update(float dt)
 			if (gamepad.Controller[RB] == KEY_DOWN)
 			{
 				number_of_troops++;
-				if (number_of_troops + actual_capacity > total_capacity)
+				if (number_of_troops + (*building_selected)->TroopsCreated.size() > 10)
 				{
-					number_of_troops = total_capacity - actual_capacity;
+					number_of_troops = 10 - (*building_selected)->TroopsCreated.size();
 				}
 				
 			}
@@ -840,8 +844,15 @@ bool Player::Update(float dt)
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 			{
 				
-				if(gold >= CheckCost(type))
-					App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ },collider);
+				if (gold >= CheckCost(type))
+				{
+					App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ }, collider);
+					if (type == Entity::entityType::BARRACKS)
+					{
+						BarracksCreated++;
+					}
+
+				}
 				else
 					App->audio->PlayFx(WRONG);
 				
@@ -1539,7 +1550,6 @@ void Player::DoLogic(UI_Element* data)
 			type = Entity::entityType::BARRACKS;
 			collider.dimensions = { 3,4 };
 			offset = { 40 , 50 };
-			BarracksCreated += 1;
 		}
 		break;
 
@@ -1759,31 +1769,31 @@ void Player::Update_troop_image(int type) // Changes sprite depending on the ent
 
 void Player::CreateTroop(int type, int number)
 {
+	Entity::entityType entity_type;
 	switch (type)
 	{
-	case Entity::entityType::SOLDIER:
-		SoldiersCreated += number;
+	case 8:
+		entity_type = Entity::entityType::SOLDIER;
 		break;
-
-	case Entity::entityType::TANKMAN:
-		TankmansCreated += number;
+	case 9:
+		entity_type = Entity::entityType::TANKMAN;
 		break;
-
-	case Entity::entityType::INFILTRATOR:
-		InfiltratorsCreated += number;
+	case 10:
+		entity_type = Entity::entityType::INFILTRATOR;
 		break;
-
-	case Entity::entityType::ENGINEER:
-		EngineersCreated += number;
+	case 11:
+		entity_type = Entity::entityType::ENGINEER;
 		break;
-
-	case Entity::entityType::WAR_HOUND:
-		WarHoundsCreated += number;
+	case 12:
+		entity_type = Entity::entityType::WAR_HOUND;
 		break;
 	}
+
+	for (int i = 0; i < number; i++)
+	{
+		(*building_selected)->TroopsCreated.push_back(entity_type);
+	}
 	
-	//Update actual capacity
-	actual_capacity += number;
 }
 
 void Player::CreateAbility(int type, int number)

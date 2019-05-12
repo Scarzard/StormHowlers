@@ -146,7 +146,7 @@ public:
 	uint last_currentUI = 0;
 	uint currentUI = 0;
 
-	int total_capacity = 0; //sum of all barracks capacities
+	int total_capacity = 0; 
 	int actual_capacity = 0; //sum of all created troops
 	
 	DeployState deploy_state = DeployState::END;
@@ -296,7 +296,7 @@ public:
 	UI_Element* accept_button = nullptr;
 	UI_Element* cancel_button = nullptr;
 
-	int UI_troop_type = 9; //select type of troop (9 is soldier) 
+	int UI_troop_type = 8; //select type of troop (9 is soldier) 
 	int UI_ability_type = 0;
 	int number_of_troops = 0;
 
