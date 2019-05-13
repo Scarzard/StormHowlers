@@ -443,6 +443,7 @@ void Hound::Movement(Entity* target, pair <int,int> map_pos)
 	{
 		position.second -= 1;
 	}
+	
 
 
 	/*if (position.first <= target->position.first - offset)
@@ -461,15 +462,22 @@ void Hound::Movement(Entity* target, pair <int,int> map_pos)
 	{
 		position.second -= 1;
 	}*/
-	if (position.first >= target->position.first - offset*2 && 
-		position.first <= target->position.first + offset*4 && 
-		position.second >= target->position.second - offset*4 &&
-		position.second <= target->position.second + offset*2)
+	if (position.first >= target->position.first - offset && 
+		position.first <= target->position.first + offset && 
+		position.second >= target->position.second - offset &&
+		position.second <= target->position.second + offset 
+		)
 	{
 		state = SHOOTING;
-		
+	
 	}
 	else 
+	{
+		state = SEARCH;
+		info.closest = nullptr;
+	}
+
+	if (north == false || south == false && east == false || west == false)
 	{
 		state = SEARCH;
 		info.closest = nullptr;

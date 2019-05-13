@@ -1575,7 +1575,15 @@ void Player::DoLogic(UI_Element* data)
 
 	case::UI_Element::Action::ACT_DEPLOY_WARHOUND:
 		//
-		App->audio->PlayFx(WRONG);
+		//if (WarHoundsCreated > 0)
+		{
+			App->audio->PlayFx(INGAME_CLICK);
+			isBuilding = true;
+			type = Entity::entityType::WAR_HOUND;
+			collider.dimensions = { 1,1 };
+		}
+		
+		//App->audio->PlayFx(WRONG);
 		break;
 
 	case::UI_Element::Action::ACT_CAST_INVULNERABILITY:
@@ -1833,6 +1841,7 @@ void Player::DrawBuildingCollider(int type, bool isPlayer1)
 	{
 
 		selected_texture.x = (*building_selected)->position.first - ((*building_selected)->collider.dimensions.first * 20);
+
 		selected_texture.y = (*building_selected)->position.second - (*building_selected)->Current_Animation->frames->h + ((*building_selected)->collider.dimensions.second * 20);
 		selected_texture.w = (*building_selected)->Current_Animation->frames->w;
 		selected_texture.h = (*building_selected)->Current_Animation->frames->h;
@@ -1892,6 +1901,7 @@ void Player::SpawnMultipleTroops(uint type)
 		}
 
 		break;
+
 	case Entity::entityType::WAR_HOUND:
 		
 		for (int i = 0; i < WarHoundsCreated; i++)
