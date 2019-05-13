@@ -183,24 +183,15 @@ bool Scene::Start()
 	App->player1->Deploy_UI->rect = { 569, 411, 566, 163 };
 
 	App->player1->Soldier_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_SOLDIER, { 68, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
-	App->player1->Soldier_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player1->Soldier_icon, false, { false, false });
-	App->player1->Soldier_text->label = App->player1->soldier_label;
-
+	
 	App->player1->Tankman_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_TANKMAN, { 171, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
-	App->player1->Tankman_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player1->Tankman_icon, false, { false, false });
-	App->player1->Tankman_text->label = App->player1->tankman_label;
-
+	
 	App->player1->Engineer_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_ENGINEER, { 274, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
-	App->player1->Engineer_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player1->Engineer_icon, false, { false, false });
-	App->player1->Engineer_text->label = App->player1->engineer_label;
-
+	
 	App->player1->Infiltrator_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { 377, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
-	App->player1->Infiltrator_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player1->Infiltrator_icon, false, { false, false });
-	App->player1->Infiltrator_text->label = App->player1->infiltrator_label;
-
+	
 	App->player1->War_hound_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { 480, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
-	App->player1->War_hound_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 2 , 2 }, { 0, 0 }, App->player1->War_hound_icon, false, { false, false });
-	App->player1->War_hound_text->label = App->player1->war_hound_label;
+	
 
 	App->player1->X_spawn = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 0 , 0 }, { 33,32 }, nullptr, false);
 	App->player1->X_spawn->rect = { 1443,357,33,32 };
@@ -435,24 +426,15 @@ bool Scene::Start()
 	App->player2->Deploy_UI->rect = { 569, 411, 566, 163 };
 
 	App->player2->Soldier_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_SOLDIER, { 68, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
-	App->player2->Soldier_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player2->Soldier_icon, false, { false, false });
-	App->player2->Soldier_text->label = App->player2->soldier_label;
-
+	
 	App->player2->Tankman_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_TANKMAN, { 171, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
-	App->player2->Tankman_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player2->Tankman_icon, false, { false, false });
-	App->player2->Tankman_text->label = App->player2->tankman_label;
-
+	
 	App->player2->Engineer_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_ENGINEER, { 274, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
-	App->player2->Engineer_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player2->Engineer_icon, false, { false, false });
-	App->player2->Engineer_text->label = App->player2->engineer_label;
-
+	
 	App->player2->Infiltrator_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { 377, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
-	App->player2->Infiltrator_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player2->Infiltrator_icon, false, { false, false });
-	App->player2->Infiltrator_text->label = App->player2->infiltrator_label;
-
+	
 	App->player2->War_hound_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { 480, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
-	App->player2->War_hound_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 2 , 2 }, { 0, 0 }, App->player2->War_hound_icon, false, { false, false });
-	App->player2->War_hound_text->label = App->player2->war_hound_label;
+	
 
 	App->player2->X_spawn = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 0 , 0 }, { 33,32 }, nullptr, false);
 	App->player2->X_spawn->rect = { 1443,357,33,32 };
@@ -479,19 +461,6 @@ bool Scene::Start()
 	App->player2->invulnerable_text->label = App->player2->invulnerable_label;
 
 	App->player2->Missiles_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_MISSILES, { 375, 55 }, { 85, 81 }, App->player2->Cast_UI, false);
-
-	//App->player2->General_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
-	//App->player2->Upgrade_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_UPGRADE, { x,y }, { w,h }, App->player2->General_UI, false);
-	//App->player2->Repair_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_REPAIR, { x,y }, { w,h }, App->player2->General_UI, false);
-	////falta poner los pointer a los datos del edificio seleccionado (ahora esta como "data") 
-	//App->player2->Name_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
-	//App->player2->Level_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
-	//App->player2->Health_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
-	//App->player2->Damage_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
-	//App->player2->Prod_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
-	//App->player2->Capacity_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
-
-
 
 	App->player2->LB_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { -5 , 70 }, { 55, 27 }, nullptr, false);
 	App->player2->LB_img->rect = { 1269, 437, 55, 27 };
@@ -531,10 +500,6 @@ bool Scene::Start()
 
 	App->player2->Create_abilities = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 480 , 110 }, { 83, 35 }, nullptr, false);
 	App->player2->Create_abilities->rect = { 1194, 329, 84, 35 };
-
-	//App->player2->Upgrade_troops = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 515 , -12 }, { 83, 35 }, nullptr, false);
-	//App->player2->Upgrade_troops->rect = { 1280, 285, 83, 35 };
-
 
 	//-------- CREATE TROOPS MENU ------------
 
@@ -1151,76 +1116,6 @@ bool Scene::PostUpdate()
 			sprintf_s(App->player1->num_troops_label, "%i", App->player1->number_of_troops);
 			(*item)->label = App->player1->num_troops_label;
 		}
-		else if ((*item) == App->player1->Soldier_text) //NUMBER OF SOLDIERS
-		{
-			sprintf_s(App->player1->soldier_label, "%i", App->player1->SoldiersCreated);
-			
-
-			if (App->player1->SoldiersCreated > 0)
-			{
-				(*item)->color = {0, 0, 0 , 255}; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
-		else if ((*item) == App->player1->Tankman_text) //NUMBER OF TANKMANS
-		{
-			sprintf_s(App->player1->tankman_label, "%i", App->player1->TankmansCreated);
-			
-
-			if (App->player1->TankmansCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
-		else if ((*item) == App->player1->Infiltrator_text) //NUMBER OF INFILTRATORS
-		{
-			sprintf_s(App->player1->infiltrator_label, "%i", App->player1->InfiltratorsCreated);
-
-
-			if (App->player1->InfiltratorsCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
-		else if ((*item) == App->player1->Engineer_text) //NUMBER OF ENGINEERS
-		{
-			sprintf_s(App->player1->engineer_label, "%i", App->player1->EngineersCreated);
-
-
-			if (App->player1->EngineersCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
-		else if ((*item) == App->player1->War_hound_text) //NUMBER OF WAR_HOUNDS
-		{
-			sprintf_s(App->player1->war_hound_label, "%i", App->player1->WarHoundsCreated);
-
-
-			if (App->player1->WarHoundsCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
 		else if ((*item) == App->player1->invulnerable_text) //NUMBER OF INVULNERABLE ABILITIES
 		{
 			sprintf_s(App->player1->invulnerable_label, "%i", App->player1->Invulnerable_abilities);
@@ -1301,76 +1196,6 @@ bool Scene::PostUpdate()
 		{
 			sprintf_s(App->player2->num_troops_label, "%i", App->player2->number_of_troops);
 			(*item)->label = App->player2->num_troops_label;
-		}
-		else if ((*item) == App->player2->Soldier_text) //NUMBER OF SOLDIERS
-		{
-			sprintf_s(App->player2->soldier_label, "%i", App->player2->SoldiersCreated);
-
-
-			if (App->player2->SoldiersCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
-		else if ((*item) == App->player2->Tankman_text) //NUMBER OF TANKMANS
-		{
-			sprintf_s(App->player2->tankman_label, "%i", App->player2->TankmansCreated);
-
-
-			if (App->player2->TankmansCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
-		else if ((*item) == App->player2->Infiltrator_text) //NUMBER OF INFILTRATORS
-		{
-			sprintf_s(App->player2->infiltrator_label, "%i", App->player2->InfiltratorsCreated);
-
-
-			if (App->player2->InfiltratorsCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
-		else if ((*item) == App->player2->Engineer_text) //NUMBER OF ENGINEERS
-		{
-			sprintf_s(App->player2->engineer_label, "%i", App->player2->EngineersCreated);
-
-
-			if (App->player2->EngineersCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
-		else if ((*item) == App->player2->War_hound_text) //NUMBER OF WAR_HOUNDS
-		{
-			sprintf_s(App->player2->war_hound_label, "%i", App->player2->WarHoundsCreated);
-
-
-			if (App->player2->WarHoundsCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
 		}
 		else if ((*item) == App->player2->invulnerable_text) //NUMBER OF INVULNERABLE ABILITIES
 		{
