@@ -93,6 +93,22 @@ bool Barracks::Update(float dt)
 				upgrade = false;
 				//play fx (upgrade);
 			}
+
+			if (TroopsCreated.empty() == false)
+			{
+				if (timer.ReadSec() >= 1)
+				{
+					pair<int, int> pos;
+					pos.first = position.first - 100;
+					pos.second = position.second + 60;
+
+					list<Entity::entityType>::iterator first_troop = TroopsCreated.begin();
+					App->entitymanager->AddEntity(false, (*first_troop), pos, collider);
+					TroopsCreated.pop_front();
+					timer.Start();
+
+				}
+			}
 		}
 		else //destroyed
 		{
