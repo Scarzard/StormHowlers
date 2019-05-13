@@ -14,7 +14,7 @@ Hound::Hound(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop(Entit
 	BROFILER_CATEGORY("Hound constructor", Profiler::Color::Red);
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
-	offset = 50;
+	offset = range+10;
 	destination = pos;
 	original_range = range;
 	//Managed in entity.h constructor
@@ -403,6 +403,8 @@ void Hound::Movement(Entity* target, pair <int,int> map_pos)
 	bool south = true;
 	bool west = true;
 	bool east = true;
+	bool move = false;
+
 	// search tiles around
 	pair <int,int> cell = { map_pos.first, map_pos.second+1};
 
@@ -427,55 +429,64 @@ void Hound::Movement(Entity* target, pair <int,int> map_pos)
 		south = false;
 	}
 
-	if (position.first <= target->position.first - offset && east == true)
+	if (position.first <= target->position.first - offset  && east == true)
 	{
 		position.first += 2;
+		move = true;
 	}
 	else if (position.first >= target->position.first + offset && west == true)
 	{
 		position.first -= 2;
+		move = true;
 	}
 	if (position.second <= target->position.second - offset*2 && south == true )
 	{
 		position.second += 1;
+		move = true;
 	}
 	else if (position.second >= target->position.second + offset*2 && north == true)
 	{
 		position.second -= 1;
+		move = true;
 	}
 	
 
+	/*if (move==false )
+	{
+		pathfind = false;
+	}*/
 
-	/*if (position.first <= target->position.first - offset)
+	/*if (move==false && west==false)
 	{
 		position.first += 2;
 	}
-	else if (position.first >= target->position.first + offset)
+	if (move==false && east==false)
 	{
 		position.first -= 2;
 	}
-	if (position.second <= target->position.second - offset)
+	if (move==false && south==false)
 	{
 		position.second += 1;
 	}
-	else if (position.second >= target->position.second + offset)
+	if (move==false && north==false)
 	{
 		position.second -= 1;
 	}*/
-	if (position.first >= target->position.first - offset && 
-		position.first <= target->position.first + offset && 
-		position.second >= target->position.second - offset &&
-		position.second <= target->position.second + offset 
+
+	if (position.first >= target->position.first - offset*2 && 
+		position.first <= target->position.first + offset*2 && 
+		position.second >= target->position.second - offset*4 &&
+		position.second <= target->position.second + offset*4 
 		)
 	{
 		state = SHOOTING;
 	
 	}
-	else 
+	/*else 
 	{
 		state = SEARCH;
 		info.closest = nullptr;
-	}
+	}*/
 
 	if (north == false || south == false && east == false || west == false)
 	{
