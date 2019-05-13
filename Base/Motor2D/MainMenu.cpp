@@ -80,7 +80,7 @@ bool MainMenu::Start()
 	Settings_Title->color = { 255,255,9,255 };
 
 	audio_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS/*goto_audiosettings*/, { 1273, 432 }, { 371, 87 }, MM_Settings_UI, true);
-	audio_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, audio_button, true, { false, false });
+	audio_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 30 }, { 0, 0 }, audio_button, true, { false, false });
 	audio_text->label = audio_label;
 	audio_text->color = { 255, 255, 9, 255 };
 
@@ -110,8 +110,8 @@ bool MainMenu::Start()
 	FX_Slider_Button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 },  FX_Slider, false);
 	FX_Slider_Button->rect = { 2135, 773, 29, 55 };
 
-	goto_mainmenu_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS/*goto_audiosettings*/, { 1273, 800 }, { 371, 87 }, MM_Settings_UI, true);
-	goto_mainmenu_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, goto_mainmenu_button, true, { false, false });
+	goto_mainmenu_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::GO_BACK_TO_MM, { 1273, 894 }, { 371, 87 }, MM_Settings_UI, true);
+	goto_mainmenu_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 30 }, { 0, 0 }, goto_mainmenu_button, true, { false, false });
 	goto_mainmenu_text->label = goto_mainmenu_label;
 	goto_mainmenu_text->color = { 255, 255, 9, 255 };
 	//CREDITS WINDOW/BUTTONS
