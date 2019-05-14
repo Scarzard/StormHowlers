@@ -162,6 +162,14 @@ bool Gui::Draw()
 				{
 					SDL_RenderCopy(App->render->renderer, App->main_menu->Credits_UI->texture, NULL, &r);
 				}
+				else if ((*UI_elem) == App->main_menu->license_texture)
+				{
+					SDL_RenderCopy(App->render->renderer, App->main_menu->license_texture->texture, NULL, &r);
+				}
+				else if ((*UI_elem) == App->main_menu->authors_texture)
+				{
+					SDL_RenderCopy(App->render->renderer, App->main_menu->authors_texture->texture, NULL, &r);
+				}
 				//Scene textures
 				else if ((*UI_elem) == App->player1->Pause_UI || (*UI_elem) == App->player1->Abort_UI)
 				{

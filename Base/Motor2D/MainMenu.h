@@ -48,7 +48,8 @@ public:
 public:
 	string menu_bg_file_name;
 	string settings_main_menu_name;
-	SDL_Texture* settings_texture;
+	string license_name;
+	string credits_name;
 
 	UI_Element* menu_background = nullptr;
 	//------PLAY
@@ -103,16 +104,27 @@ public:
 
 	UI_Element* view_license_button = nullptr;
 	UI_Element* view_license_text = nullptr;
-	char view_license_label[8] = "License";//todo
+	char view_license_label[8] = "License";
+
+	UI_Element* license_texture = nullptr;
 
 	UI_Element* view_authors_button = nullptr;
 	UI_Element* view_authors_text = nullptr;
-	char view_authors_label[8] = "Authors";//todo
+	char view_authors_label[8] = "Authors";
+
+	UI_Element* authors_texture = nullptr;
+
+	UI_Element* website_button = nullptr;
+	UI_Element* website_text = nullptr;
+	char website_label[8] = "Website";
 
 	//For both windows
 	UI_Element* goto_mainmenu_button = nullptr;
 	UI_Element* goto_mainmenu_text = nullptr;
-	char goto_mainmenu_label[18] = "Back to main menu";//done
+	char goto_mainmenu_label[18] = "Back to main menu";
+
+	UI_Element* goto_mainmenu_button1 = nullptr;
+	UI_Element* goto_mainmenu_text1 = nullptr;
 
 	string current_track;
 	string current_fx;

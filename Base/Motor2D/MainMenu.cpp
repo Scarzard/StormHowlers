@@ -32,7 +32,9 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 	LOG("Loading Main Menu");
 
 	menu_bg_file_name = conf.child("menu_bg").attribute("file").as_string("");
-	//settings_main_menu_name = conf.child("menu_bg").attribute("file").as_string("");
+	settings_main_menu_name = conf.child("settings").attribute("file").as_string("");
+	license_name = conf.child("license").attribute("file").as_string("");
+	credits_name = conf.child("credits").attribute("file").as_string("");
 	
 	// current_track = App->audio->tracks_path[1];
 	return true;
@@ -41,8 +43,7 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool MainMenu::Start()
 {
-	//settings_texture = App->tex->Load(settings_main_menu_name.data());
-	settings_texture = App->tex->Load("gui/mainmenu_settings_credits.png");
+	
 
 	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
 	menu_background->texture = App->tex->Load(menu_bg_file_name.data());
@@ -72,7 +73,7 @@ bool MainMenu::Start()
 	
 	//SETTINGS WINDOW/BUTTONS
 	MM_Settings_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
-	MM_Settings_UI->texture = settings_texture;
+	MM_Settings_UI->texture = App->tex->Load(settings_main_menu_name.data());
 	MM_Settings_UI->rect = { 0, 0, App->win->width, App->win->height };
 
 	Settings_Title = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 1425, 10 }, { 0, 0 }, MM_Settings_UI, false, { false, false });
@@ -116,7 +117,7 @@ bool MainMenu::Start()
 	goto_mainmenu_text->color = { 255, 255, 9, 255 };
 	//CREDITS WINDOW/BUTTONS
 	Credits_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
-	Credits_UI->texture = settings_texture; 
+	Credits_UI->texture = App->tex->Load(settings_main_menu_name.data());
 	Credits_UI->rect = { 0, 0, App->win->width, App->win->height };
 
 	Credits_Title = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 1425, 10 }, { 0, 0 }, Credits_UI, false, { false, false });
@@ -127,11 +128,27 @@ bool MainMenu::Start()
 	view_license_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, view_license_button, true, { false, false });
 	view_license_text->label = view_license_label;
 	view_license_text->color = { 255, 255, 9, 255 };
+
+	license_texture = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 50, 50 }, { 0, 0 }, Credits_UI, true);
+	license_texture->texture = App->tex->Load(license_name.data());
 	//show authors
 	view_authors_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::AUTHORS, { 1273, 524 }, { 371, 87 }, Credits_UI, true);
 	view_authors_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, view_authors_button, true, { false, false });
 	view_authors_text->label = view_authors_label;
 	view_authors_text->color = { 255, 255, 9, 255 };
+
+	authors_texture = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 50, 50 }, { 0, 0 }, Credits_UI, true);
+	authors_texture->texture = App->tex->Load(credits_name.data());
+
+	website_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::LICENSE, { 1273, 617 }, { 371, 87 }, Credits_UI, true);
+	website_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, website_button, true, { false, false });
+	website_text->label = website_label;
+	website_text->color = { 255, 255, 9, 255 };
+
+	goto_mainmenu_button1 = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::GO_BACK_TO_MM, { 1273, 894 }, { 371, 87 }, Credits_UI, true);
+	goto_mainmenu_text1 = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 30 }, { 0, 0 }, goto_mainmenu_button1, true, { false, false });
+	goto_mainmenu_text1->label = goto_mainmenu_label;
+	goto_mainmenu_text1->color = { 255, 255, 9, 255 };
 
 
 
@@ -247,7 +264,8 @@ void MainMenu::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::GO_BACK_TO_MM: //for both settings/credits
-		//back to mm
+		App->player1->currentUI = App->player1->CURR_MAIN_MENU;
+		App->player1->UpdateVisibility();
 		break;
 
 	case::UI_Element::Action::CREDITS:
@@ -256,7 +274,8 @@ void MainMenu::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::LICENSE:
-		//show license
+		App->player1->currentUI = CURRENT_MM_UI::CURR_MM_CREDITS;
+		App->player1->UpdateVisibility();
 		break;
 	case::UI_Element::Action::AUTHORS:
 		//show authors
@@ -264,7 +283,6 @@ void MainMenu::DoLogic(UI_Element* data)
 	case::UI_Element::Action::WEBSITE:
 		ShellExecuteA(NULL, "open", "https://github.com/stormhowlers/Command_and_Conquer_WarZone", NULL, NULL, SW_SHOWNORMAL);
 		break;
-
 
 	case::UI_Element::Action::EXIT:
 		App->audio->PlayFx(EXIT);
