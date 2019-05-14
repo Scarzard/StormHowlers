@@ -54,22 +54,25 @@ bool MainMenu::Start()
 	new_game_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, new_game_button, true, { false, false });
 	new_game_text->label = new_game_label;
 	new_game_text->color = { 255, 255, 9, 255 };
-	//SETTINGS
-	settings_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS, { 1273, 524 }, { 371, 87 }, menu_background, true);
-	settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, settings_button, true, { false, false });
-	settings_text->label = settings_label;
-	settings_text->color = { 255, 255, 9, 255 };
-	//CREDITS
-	credits_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::CREDITS, { 1273, 617 }, { 371, 87 }, menu_background, true);
-	credits_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, credits_button, true, { false, false });
-	credits_text->label = credits_label;
-	credits_text->color = { 255, 255, 9, 255 };
 
 	//EXIT
 	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 710 }, { 371, 87 }, menu_background, true);
 	exit_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0,0 }, exit_button, true, { false, false });
 	exit_text->label = exit_label;
 	exit_text->color = { 255, 255, 9, 255 };
+	//CREDITS
+	credits_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::CREDITS, { 1273, 617 }, { 371, 87 }, menu_background, true);
+	credits_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, credits_button, true, { false, false });
+	credits_text->label = credits_label;
+	credits_text->color = { 255, 255, 9, 255 };
+	
+	//SETTINGS
+	settings_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS, { 1273, 524 }, { 371, 87 }, menu_background, true);
+	settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, settings_button, true, { false, false });
+	settings_text->label = settings_label;
+	settings_text->color = { 255, 255, 9, 255 };
+	
+
 	
 	//SETTINGS WINDOW/BUTTONS
 	MM_Settings_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);

@@ -1151,11 +1151,11 @@ void Player::UpdateFocus(uint data)
 		last_element--;
 		break;
 
-	//case::MainMenu::CURRENT_MM_UI::CURR_MM_SETTINGS:
-	//	focus = App->main_menu->MM_Settings_UI->children.begin();
-	//	last_element = App->main_menu->MM_Settings_UI->children.end();
-	//	last_element--;
-	//	break;
+	case::MainMenu::CURRENT_MM_UI::CURR_MM_SETTINGS:
+		focus = App->main_menu->MM_Settings_UI->children.begin();
+		last_element = App->main_menu->MM_Settings_UI->children.end();
+		last_element--;
+		break;
 	
 	}
 }
