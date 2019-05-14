@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2" height="2" tilewidth="74" tileheight="52" nextobjectid="5">
+ <layer name="Capa de Patrones 1" width="2" height="2">
+  <data encoding="csv">
+0,0,
+0,0
+</data>
+ </layer>
+ <imagelayer name="Capa de Imagen 1" offsetx="-0.181818" offsety="0">
+  <image source="tank_tiled.png" width="148" height="104"/>
+ </imagelayer>
+ <objectgroup name="red_tank_SE">
+  <object id="1" x="0" y="0" width="74" height="52"/>
+ </objectgroup>
+ <objectgroup name="red_tank_NW">
+  <object id="2" x="0" y="52" width="74" height="52"/>
+ </objectgroup>
+ <objectgroup name="blue_tank_SE">
+  <object id="3" x="74" y="0" width="74" height="52"/>
+ </objectgroup>
+ <objectgroup name="blue_tank_NW">
+  <object id="4" x="74" y="52" width="74" height="52"/>
+ </objectgroup>
+</map>

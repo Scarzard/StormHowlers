@@ -163,6 +163,9 @@ public:
 	SDL_Texture* trees_tex = nullptr; 
 	SDL_Rect bush_rect, fit_tree, wide_tree, tall_tree; 
 
+	SDL_Texture* tank_tex = nullptr; 
+	SDL_Rect red_tank_SE, red_tank_NW, blue_tank_SE, blue_tank_NW; 
+
 	SDL_Texture* flags_tex = nullptr; 
 	SDL_Texture* explosion_tex = nullptr;
 

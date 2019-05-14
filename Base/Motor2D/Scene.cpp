@@ -99,6 +99,9 @@ bool Scene::Start()
 	App->map->allied_flag_anim = App->map->allied_flag_anim->LoadAnimation("animation/Flags.tmx", "flag_allied");
 	App->map->soviet_flag_anim = App->map->soviet_flag_anim->LoadAnimation("animation/Flags.tmx", "flag_soviet");
 
+	tank_tex = App->tex->Load("animation/tank_anim.png"); 
+
+
 	App->map->allied_flag_anim->speed = 6;
 	App->map->soviet_flag_anim->speed = 6;
 
