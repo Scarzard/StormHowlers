@@ -43,7 +43,7 @@ bool Hound::Update(float dt)
 		{
 			
 			pair <int, int > map_pos = App->map->WorldToMap(position.first, position.second);	
-
+			//state = TROOP_IDLE;
 			switch (state)
 			{
 			case TROOP_IDLE:
@@ -54,18 +54,18 @@ bool Hound::Update(float dt)
 				{
 					if (info.closest != nullptr)
 					{
-						Movement(info.closest,map_pos);
+						MovementPathfind(info.closest,map_pos);
 					}
 					else
 					{
 						pathfind = false;
 					}
 				}
-				else if (timer.ReadSec() > 1 && info.closest == nullptr)
+				/*else if (timer.ReadSec() > 1 && info.closest == nullptr)
 				{
 					state = SEARCH;
 					timer.Start();
-				}
+				}*/
 				else
 				{
 					
@@ -89,24 +89,25 @@ bool Hound::Update(float dt)
 					{
 						if (offensive)
 						{
-							pair <int, int> aux = position;
+							//pair <int, int> aux = position;
 
-							
-							pair <int, int > map_pos_aux = App->map->WorldToMap(position.first+2, position.second-1);
-							if (App->pathfinding->IsWalkable(map_pos_aux))
-							{
-								aux.first += 2;
-								aux.second += -1;
-								position = aux;
-							}
-							else
-							{
-								//move right
-								aux.first += -2;
-								aux.second += -1;
+							//
+							//pair <int, int > map_pos_aux = App->map->WorldToMap(position.first+2, position.second-1);
+							//if (App->pathfinding->IsWalkable(map_pos_aux))
+							//{
+							//	aux.first += 2;
+							//	aux.second += -1;
+							//	position = aux;
+							//}
+							//else
+							//{
+							//	//move right
+							//	aux.first += -2;
+							//	aux.second += -1;
 
-								position = aux;
-							}
+							//	position = aux;
+							//}
+							SimpleMovement(fromPlayer1, facing);
 
 							
 						}
@@ -321,6 +322,7 @@ bool Hound::Update(float dt)
 	//            _|
 	
 	Troop::Update(dt);
+
 	App->render->DrawQuad({position.first,position.second,20,20}, 255, 255, 255, 255, false);
 
 	return true;
@@ -428,7 +430,7 @@ void Hound::CleanUp() {
 
 }
 
-void Hound::Movement(Entity* target, pair <int,int> map_pos)
+void Hound::MovementPathfind(Entity* target, pair <int,int> map_pos)
 {
 	bool north = true;
 	bool south = true;
@@ -524,6 +526,77 @@ void Hound::Movement(Entity* target, pair <int,int> map_pos)
 		state = SEARCH;
 		info.closest = nullptr;
 	}
+}
+
+void Hound::SimpleMovement(bool fromplayer1, TroopDir move)
+{
+	//NOTE: pathfind is wakable is giving prolem, returning the info moved one to the left
+	// for now all fro player 1
+	bool north = true;
+	bool south = true;
+	bool west = true;
+	bool east = true;
+	bool moved = false;
+	
+	pair <int, int> aux = position;
+
+	//north
+	pair <int, int > map_pos_aux = App->map->WorldToMap(aux.first + 2, aux.second - 1);
+	north = App->pathfinding->IsWalkable(map_pos_aux);
+
+	// if can go north, go north
+	if (north)
+	{
+		//move front
+		aux.first += 2;
+		aux.second += -1;
+		position = aux;
+		moved = true;
+	}
+	//else
+
+	//east
+	map_pos_aux = App->map->WorldToMap(aux.first +2, aux.second + 1);
+	east = App->pathfinding->IsWalkable(map_pos_aux);
+
+	//if it cant go north, but can go east, go east
+	if (!north && east)
+	{
+		//move rigth
+		aux.first += 2;
+		aux.second += 1;
+
+		position = aux;
+	}
+
+
+
+	////if it cant go north and cant go east, go between them
+	//if (!north && !east)
+	//{
+	//	//move rigth
+	//	aux.first += 2;
+	//	position = aux;
+	//}
+
+	////west
+	//map_pos_aux = App->map->WorldToMap(position.first - 2, position.second - 1);
+	//west = App->pathfinding->IsWalkable(map_pos_aux);
+
+	////if it cant go north, but can go west, go west
+	//if (!north && west)
+	//{
+	//	//move left
+	//	aux.first += -2;
+	//	aux.second += -1;
+
+	//	position = aux;
+	//}
+
+
+
+
+
 }
 
 void Hound::ChangeAnimation() {

@@ -19,7 +19,8 @@ public:
 	void ForceAnimations();
 	void ActOnDestroyed();
 	void CleanUp();
-	void Movement(Entity* target, pair <int, int> map_pos);
+	void MovementPathfind(Entity* target, pair <int, int> map_pos);
+	void SimpleMovement(bool fromplayer1, TroopDir move);
 	void ChangeAnimation();
 
 	Entity * FindEntityInAttackRange(pair<int, int> pos, bool fromplayer1, int attackrange, entityType type);

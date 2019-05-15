@@ -82,6 +82,7 @@ public:
 	
 	pair<int, int> init_position;
 
+	TroopDir facing;
 
 
 
