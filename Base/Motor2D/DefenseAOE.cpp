@@ -136,10 +136,10 @@ bool DefenseAoe::Is_inRange(pair<int, int> pos, int &distance) {
 
 void DefenseAoe::LoadAnimations(bool isPlayer1, string path)
 {
-	building = building->LoadAnimation(path.data(), (isPlayer1) ? "soviet_aoe_build" : "allied_aoe_build");
-	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "soviet_aoe_idle" : "allied_aoe_idle");
-	level1->speed = 1;
-	building->speed = 9;
+	building = building->LoadAnimation(path.data(), (isPlayer1) ? "allied_aoe_build" : "soviet_aoe_build");
+	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ?  "allied_aoe_idle" : "soviet_aoe_idle");
+	level1->speed = 7;
+	building->speed = 5;
 	building->loop = false;
 	level1->loop = true;
 	Current_Animation = building;
