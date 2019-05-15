@@ -75,6 +75,7 @@ bool Hound::Update(float dt)
 						{
 							position.first += -2;
 							position.second += 1;
+
 						}
 						else
 						{
@@ -88,13 +89,35 @@ bool Hound::Update(float dt)
 					{
 						if (offensive)
 						{
-							position.first += 2;
-							position.second += -1;
+							pair <int, int> aux = position;
+
+							aux.first += 2;
+							aux.second += -1;
+							pair <int, int > map_pos_aux = App->map->WorldToMap(aux.first, aux.second);
+							if (App->pathfinding->IsWalkable(map_pos_aux))
+							{
+								position = aux;
+							}
+							else
+							{
+								//move right
+								aux.first += -2;
+								aux.second += -1;
+							}
+
+							
 						}
 						else
 						{
-							position.first += -2;
-							position.second += 1;
+							pair <int, int> aux = position;
+
+							aux.first += -2;
+							aux.second += 1;
+							pair <int, int > map_pos_aux = App->map->WorldToMap(aux.first, aux.second);
+							if (App->pathfinding->IsWalkable(map_pos_aux))
+							{
+								position = aux;
+							}
 
 						}
 					}
@@ -106,6 +129,8 @@ bool Hound::Update(float dt)
 			case SHOOTING:
 
 				// Shoots the closest one if in range
+				if (info.closest == nullptr)
+					state = SEARCH;
 				if (timer.ReadSec() >= rate_of_fire)
 				{
 					info.closest->TakeDamage(damage_lv[level]);
@@ -140,6 +165,7 @@ bool Hound::Update(float dt)
 						}
 						else if (info.closest == nullptr && offensive==false)
 						{
+							// capar a entidades en la misma zona
 							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER);
 							/*SetDestination();
 							destination = App->map->MapToWorld(destination.first, destination.second);*/
@@ -290,8 +316,10 @@ bool Hound::Update(float dt)
 	//DOES NOT CHANGE ANYTHING BY ITSELF - ONLY INPUT INSIDE -¬
 	//ForceAnimations();
 	//            _|
-
+	
 	Troop::Update(dt);
+	App->render->DrawQuad({position.first,position.second,20,20}, 255, 255, 255, 255, false);
+
 	return true;
 }
 
