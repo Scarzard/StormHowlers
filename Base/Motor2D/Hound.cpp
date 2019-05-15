@@ -91,11 +91,12 @@ bool Hound::Update(float dt)
 						{
 							pair <int, int> aux = position;
 
-							aux.first += 2;
-							aux.second += -1;
-							pair <int, int > map_pos_aux = App->map->WorldToMap(aux.first, aux.second);
+							
+							pair <int, int > map_pos_aux = App->map->WorldToMap(position.first+2, position.second-1);
 							if (App->pathfinding->IsWalkable(map_pos_aux))
 							{
+								aux.first += 2;
+								aux.second += -1;
 								position = aux;
 							}
 							else
@@ -103,6 +104,8 @@ bool Hound::Update(float dt)
 								//move right
 								aux.first += -2;
 								aux.second += -1;
+
+								position = aux;
 							}
 
 							
