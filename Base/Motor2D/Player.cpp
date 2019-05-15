@@ -1523,8 +1523,8 @@ void Player::DoLogic(UI_Element* data)
 		{
 			isBuilding = true;
 			type = Entity::entityType::BARRACKS;
-			collider.dimensions = { 3,4 };
-			offset = { -100 , 0 };
+			collider.dimensions = { 3,3 };
+			offset = { 0, 0 }; 
 		}
 		break;
 

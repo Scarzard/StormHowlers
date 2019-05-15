@@ -166,7 +166,7 @@ void MainDefense::LoadAnimations(bool isPlayer1, string path)
 	}
 
 	building = building->LoadAnimation(path.data(), (isPlayer1) ? "red_constructing" : "blue_constructing");
-	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "red_SW" : "blue_NE");
+	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "red_NE" : "blue_SW");
 	
 	idle->speed = 0;
 	level1->speed = 10;

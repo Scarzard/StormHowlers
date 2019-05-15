@@ -140,8 +140,8 @@ bool Barracks::Update(float dt)
 }
 
 void Barracks::LoadAnimations(bool isPlayer1, string path) {
-	level1 = level1->LoadAnimation(&path[0], (isPlayer1) ? "red_idle" : "blue_idle");
-	building = building->LoadAnimation(&path[0], (isPlayer1) ? "red_constructing" : "blue_constructing");
+	level1 = level1->LoadAnimation(&path[0], (isPlayer1) ? "blue_idle" : "red_idle");
+	building = building->LoadAnimation(&path[0], (isPlayer1) ? "blue_constructing" : "red_constructing");
 
 	level1->speed = 5;
 	building->speed = 8;
