@@ -421,9 +421,6 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::SETTINGS:
 			data->rect = { 744, 954, 371, 87 };
 			break;
-		case UI_Element::Action::GO_BACK_TO_MM:
-			data->rect = { 744, 954, 371, 87 };
-			break;
 		case UI_Element::Action::CREDITS:
 			data->rect = { 744, 954, 371, 87 };
 			break;
@@ -583,9 +580,6 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::SETTINGS:
 			data->rect = { 1116, 954, 371, 86 };
 			break;
-		case UI_Element::Action::GO_BACK_TO_MM:
-			data->rect = { 1116, 954, 371, 86 };
-			break;
 		case UI_Element::Action::CREDITS:
 			data->rect = { 1116, 954, 371, 86 };
 			break;
@@ -740,9 +734,6 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::SETTINGS:
 			data->rect = { 1488, 954, 371, 86 };
 			break;
-		case UI_Element::Action::GO_BACK_TO_MM:
-			data->rect = { 1488, 954, 371, 86 };
-			break;
 		case UI_Element::Action::CREDITS:
 			data->rect = { 1488, 954, 371, 86 };
 			break;
@@ -843,9 +834,6 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			data->rect = { 410,80,39,40 };
 			break;
 		case UI_Element::Action::SETTINGS:
-			data->rect = { 410,80,39,40 };
-			break;
-		case UI_Element::Action::GO_BACK_TO_MM:
 			data->rect = { 410,80,39,40 };
 			break;
 		case UI_Element::Action::CREDITS:

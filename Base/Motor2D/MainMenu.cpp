@@ -43,8 +43,6 @@ bool MainMenu::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool MainMenu::Start()
 {
-	
-
 	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
 	menu_background->texture = App->tex->Load(menu_bg_file_name.data());
 	menu_background->rect = { 0, 0, App->win->width, App->win->height };
@@ -72,7 +70,6 @@ bool MainMenu::Start()
 	settings_text->label = settings_label;
 	settings_text->color = { 255, 255, 9, 255 };
 	
-
 	
 	//SETTINGS WINDOW/BUTTONS
 	MM_Settings_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
@@ -115,11 +112,6 @@ bool MainMenu::Start()
 	Credits_UI->texture = App->tex->Load(settings_main_menu_name.data());
 	Credits_UI->rect = { 0, 0, App->win->width, App->win->height };
 
-	goto_mainmenu_button1 = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::GO_BACK_TO_MM, { 1273, 894 }, { 371, 87 }, Credits_UI, true);
-	goto_mainmenu_text1 = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 30 }, { 0, 0 }, goto_mainmenu_button1, true, { false, false });
-	goto_mainmenu_text1->label = goto_mainmenu_label;
-	goto_mainmenu_text1->color = { 255, 255, 9, 255 };
-
 	website_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::WEBSITE, { 1273, 617 }, { 371, 87 }, Credits_UI, true);
 	website_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, website_button, true, { false, false });
 	website_text->label = website_label;
@@ -141,14 +133,11 @@ bool MainMenu::Start()
 	Credits_Title->label = Credits_Title_label;
 	Credits_Title->color = { 255,255,9,255 };
 
-	license_texture = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 50, 50 }, { 0, 0 }, nullptr, false);
+	license_texture = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 1000, 50 }, { 0, 0 }, nullptr, false);
 	license_texture->texture = App->tex->Load(license_name.data());
 
 	authors_texture = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 50, 50 }, { 0, 0 }, nullptr, false);
 	authors_texture->texture = App->tex->Load(credits_name.data());
-
-
-
 
 	//ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 800 ,00 }, { 0,0 }, nullptr, true, { false, false }, "Timer: 0s");
 
@@ -186,10 +175,6 @@ bool MainMenu::Update(float dt)
 		menu_background->visible = false;
 	}
 
-	//if (App->player1->currentUI = CURRENT_MM_UI::CURR_MM_SETTINGS || CURRENT_MM_UI::CURR_MM_SETTINGS && App->player1->gamepad.Controller[BUTTON_B])
-	//{
-	//	App->player1->UpdateFocus(App->player1->currentUI);
-	//}
 	App->gui->Draw();
 	
 	return true;
@@ -279,14 +264,6 @@ void MainMenu::DoLogic(UI_Element* data)
 		App->player1->currentUI = Player::CURRENT_UI::CURR_MM_SETTINGS;
 		App->player1->UpdateVisibility();
 		App->player1->UpdateFocus(App->player1->currentUI);
-		break;
-
-	case::UI_Element::Action::GO_BACK_TO_MM: //for both settings/credits
-		App->player1->currentUI = App->player1->Player::CURRENT_UI::CURR_MAIN_MENU;
-		App->player1->UpdateVisibility();
-		App->player1->UpdateFocus(App->player1->currentUI);
-		license_texture->visible = false;
-		authors_texture->visible = false;
 		break;
 
 	case::UI_Element::Action::CREDITS:

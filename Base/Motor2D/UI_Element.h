@@ -55,7 +55,6 @@ public:
 		//MainMenu Buttons
 		NEW_GAME,
 		SETTINGS,
-		GO_BACK_TO_MM,
 		CREDITS,
 		LICENSE,
 		AUTHORS,
@@ -70,8 +69,6 @@ public:
 		FX_VOLUME,
 		SURRENDER,
 		RESTART
-
-		
 	};
 
 	enum State

@@ -112,14 +112,6 @@ public:
 	UI_Element* website_text = nullptr;
 	char website_label[8] = "Website";
 
-	//For both windows
-	UI_Element* goto_mainmenu_button = nullptr;
-	UI_Element* goto_mainmenu_text = nullptr;
-	char goto_mainmenu_label[18] = "Back to main menu";
-
-	UI_Element* goto_mainmenu_button1 = nullptr;
-	UI_Element* goto_mainmenu_text1 = nullptr;
-
 	string current_track;
 	string current_fx;
 private:
