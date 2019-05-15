@@ -11,13 +11,7 @@ struct SDL_Texture;
 class MainMenu : public Module
 {
 public:
-	enum CURRENT_MM_UI
-	{
-		NONE,
-		//MM = MAINMENU
-		CURR_MM_SETTINGS = 16,
-		CURR_MM_CREDITS,
-	};
+	
 	MainMenu();
 
 	// Destructor
