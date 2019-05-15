@@ -1042,7 +1042,11 @@ bool Scene::Update(float dt)
 	App->map->DrawWalkability(dt);
 	App->entitymanager->Draw(dt);
 	App->map->DrawDecorations(dt);
+	App->player1->Blit_Info();
+	App->player2->Blit_Info();
 	App->gui->Draw();
+
+	
 
 	//DRAW LIVE BARS 
 	if (!pause)

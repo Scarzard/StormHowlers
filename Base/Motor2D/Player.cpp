@@ -165,7 +165,6 @@ bool Player::Update(float dt)
 		inmune = false;
 	}
 
-
 	if (!App->scene->endgame)
 	{
 		RectangleSelection();
@@ -1836,5 +1835,92 @@ void Player::DrawBuildingCollider(int type, bool isPlayer1)
 		App->render->DrawQuad(selected_texture, 255, 0, 0, 100, true);
 	else
 		App->render->DrawQuad(selected_texture, 0, 0, 255, 100, true);
+}
+
+void Player::Blit_Info()
+{
+	SDL_Rect section;
+
+	if ((*focus) == Def_AOE_icon)
+	{
+		section = { 0, 1234, 351, 87 };
+
+		if(isPlayer1)
+			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+		else
+			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+	}
+	else if ((*focus) == Def_Target_icon)
+	{
+		section = { 359, 1234, 351, 87 };
+
+		if (isPlayer1)
+			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+		else
+			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+	}
+	else if ((*focus) == Mines_icon)
+	{
+		section = { 716, 1234, 351, 87 };
+
+		if (isPlayer1)
+			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+		else
+			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+	}
+	else if ((*focus) == Barracks_icon)
+	{
+		section = { 1074, 1234, 351, 87 };
+
+		if (isPlayer1)
+			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+		else
+			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+	}
+	else if ((*focus) == Soldier_icon)
+	{
+		section = { 0, 1331, 351, 87 };
+
+		if (isPlayer1)
+			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+		else
+			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+	}
+	else if ((*focus) == Tankman_icon)
+	{
+		section = { 359, 1331, 351, 87 };
+
+		if (isPlayer1)
+			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+		else
+			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+	}
+	else if ((*focus) == Engineer_icon)
+	{
+		section = { 716, 1331, 351, 87 };
+
+		if (isPlayer1)
+			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+		else
+			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+	}
+	else if ((*focus) == Infiltrator_icon)
+	{
+		section = { 1074, 1331, 351, 87 };
+
+		if (isPlayer1)
+			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+		else
+			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+	}
+	else if ((*focus) == War_hound_icon)
+	{
+		section = { 0, 1426, 351, 87 };
+
+		if (isPlayer1)
+			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+		else
+			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+	}
 }
 

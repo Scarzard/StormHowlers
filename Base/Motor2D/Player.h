@@ -91,6 +91,7 @@ public:
 	UI_Element* GetUI_Element(uint data); //returns the window we are currently on
 	void Update_troop_image(int type);
 	void UpdateGeneralUI(Entity* building);
+	void Blit_Info();
 
 	// -----------------------------------------------------------------------------
 
