@@ -84,7 +84,7 @@ void Player::RectangleSelection()
 
 	}
 
-	else if (std::abs(mouse_pos.first - rectangle_origin.x) >= 5 && std::abs(mouse_pos.second - rectangle_origin.y) >= 5 && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
+	else if (abs(mouse_pos.first - rectangle_origin.x) >= 5 && abs(mouse_pos.second - rectangle_origin.y) >= 5 && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 		// --- Rectangle size ---
 		rectangle_origin.w = mouse_pos.first - rectangle_origin.x;
 		rectangle_origin.h = mouse_pos.second - rectangle_origin.y;
@@ -729,11 +729,13 @@ bool Player::Update(float dt)
 		if (gamepad.Controller[JOY_UP] == KEY_REPEAT || gamepad.Controller[UP] == KEY_DOWN ||
 			App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT)
 		{
+			currentTile.first--;
 			currentTile.second--;
 		}
 		else if (gamepad.Controller[JOY_DOWN] == KEY_REPEAT || gamepad.Controller[DOWN] == KEY_DOWN ||
 			App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
 		{
+			currentTile.first++;
 			currentTile.second++;
 		}
 
@@ -741,11 +743,13 @@ bool Player::Update(float dt)
 			App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
 		{
 			currentTile.first++;
+			currentTile.second--;
 		}
 		else if (gamepad.Controller[JOY_LEFT] == KEY_REPEAT || gamepad.Controller[LEFT] == KEY_DOWN ||
 			App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT)
 		{
 			currentTile.first--;
+			currentTile.second++;
 		}
 
 		//--- Limits
