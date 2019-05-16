@@ -24,6 +24,9 @@ public:
 	Entity * FindEntityInAttackRange(pair<int, int> pos, bool fromplayer1, int attackrange, entityType type);
 	Entity * FindNearestEntity(pair<int, int> pos, bool fromplayer1, entityType type);
 
+	bool IsInAllyZone(pair <int, int > map_pos);
+	bool IsInEnemyZone(pair <int, int > map_pos);
+	bool IsInWarZone(pair <int, int > map_pos);
 
 	void LoadAnimations(bool isPlayer1, string path);
 

@@ -35,8 +35,14 @@ Hound::~Hound()
 bool Hound::Update(float dt)
 {
 	// change bol from offensive and defensive
-	
-	
+	if (fromPlayer1)
+	{
+		offensive = App->player1->offensive;
+	}
+	else
+	{
+		offensive = App->player2->offensive;
+	}
 
 	if (alive) {
 
@@ -48,6 +54,11 @@ bool Hound::Update(float dt)
 			switch (state)
 			{
 			case TROOP_IDLE:
+				if (timer.ReadSec() > 1 && info.closest == nullptr)
+				{
+					state = SEARCH;
+					timer.Start();
+				}
 				break;
 
 			case MOVING:
@@ -71,6 +82,20 @@ bool Hound::Update(float dt)
 				{
 					
 					SimpleMovement();
+					
+					if (!offensive)
+					{
+						if (fromPlayer1 && IsInAllyZone(map_pos))
+						{
+							state = TROOP_IDLE;
+							timer.Start();
+						}
+						else if (!fromPlayer1 && IsInEnemyZone(map_pos))
+						{
+							state = TROOP_IDLE;
+							timer.Start();
+						}
+					}
 					
 				}
 				break;
@@ -101,7 +126,7 @@ bool Hound::Update(float dt)
 				timer.Start();
 
 				//ally zone
-				if (map_pos.second > App->map->allyzone.up_limit.second && map_pos.second < App->map->allyzone.down_limit.second)
+				if (IsInAllyZone(map_pos))
 				{
 					if (fromPlayer1)
 					{
@@ -155,7 +180,7 @@ bool Hound::Update(float dt)
 					
 				}
 				// enemy zone
-				else if (map_pos.second > App->map->sovietzone.up_limit.second && map_pos.second < App->map->sovietzone.down_limit.second)
+				else if (IsInEnemyZone(map_pos))
 				{
 					if (fromPlayer1)
 					{
@@ -213,7 +238,7 @@ bool Hound::Update(float dt)
 					}
 				} 
 				// war zone
-				else if (map_pos.first > App->map->warzone.up_limit.first && map_pos.first < App->map->warzone.down_limit.first)
+				else if (IsInWarZone(map_pos))
 				{
 					
 					info.closest = FindEntityInAttackRange(map_pos, fromPlayer1, original_range, entityType::SOLDIER);
@@ -910,4 +935,23 @@ Entity* Hound::FindNearestEntity(pair <int, int> pos, bool fromplayer1, entityTy
 
 	return found;
 
+}
+
+
+bool  Hound::IsInAllyZone(pair <int, int > map_pos)
+{
+	//must be in map coordinates
+	return (map_pos.second > App->map->allyzone.up_limit.second && map_pos.second < App->map->allyzone.down_limit.second);
+}
+
+bool  Hound::IsInEnemyZone(pair <int, int > map_pos)
+{
+	//must be in map coordinates
+	return (map_pos.second > App->map->sovietzone.up_limit.second && map_pos.second < App->map->sovietzone.down_limit.second);
+}
+
+bool  Hound::IsInWarZone(pair <int, int > map_pos)
+{
+	//must be in map coordinates
+	return (map_pos.first > App->map->warzone.up_limit.first && map_pos.first < App->map->warzone.down_limit.first);
 }

@@ -34,7 +34,7 @@ bool Soldier::Update(float dt)
 
 	if (alive) 
 	{
-
+		
 		pair<int, int> map_pos = App->map->WorldToMap(position.first, position.second);
 		pair<int, int> map_init_pos = App->map->WorldToMap(init_position.first, init_position.second);
 		int time_to_act = 2;
