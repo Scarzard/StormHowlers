@@ -140,7 +140,7 @@ bool Hound::Update(float dt)
 						else if (info.closest == nullptr && offensive==false)
 						{
 							// capar a entidades en la misma zona
-							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER);
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER,1);
 							/*SetDestination();
 							destination = App->map->MapToWorld(destination.first, destination.second);*/
 							state = MOVING;
@@ -164,7 +164,7 @@ bool Hound::Update(float dt)
 						}
 						else if (info.closest == nullptr && offensive == true)
 						{
-							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER);
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER,2);
 							/*SetDestination();
 							destination = App->map->MapToWorld(destination.first, destination.second);*/
 							state = MOVING;
@@ -193,7 +193,7 @@ bool Hound::Update(float dt)
 						}
 						else if (info.closest == nullptr && offensive == true)
 						{
-							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER);
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER,3);
 							/*SetDestination();
 							destination = App->map->MapToWorld(destination.first, destination.second);*/
 							state = MOVING;
@@ -221,7 +221,7 @@ bool Hound::Update(float dt)
 						}
 						else if (info.closest == nullptr && offensive == false)
 						{
-							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER);
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER,1);
 							/*SetDestination();
 							destination = App->map->MapToWorld(destination.first, destination.second);*/
 							state = MOVING;
@@ -843,14 +843,21 @@ void Hound::LoadAnimations(bool isPlayer1, string path)
 	Current_Animation = moving[NORTH];
 }
 
-Entity* Hound::FindEntityInAttackRange(pair <int, int> pos, bool fromplayer1, int attackrange, entityType desiredtype )
+Entity* Hound::FindEntityInAttackRange(pair <int, int> pos, bool fromplayer1, int attackrange, entityType desiredtype, int zone )
 {
+	// zone 0 is no zone
+	// zone 1 ally zone
+	// zone 2 enemy zone
+	// zone 3 war zone
+
+
 	Player* enemy = (!fromplayer1) ? App->player1 : App->player2;
 
 	Entity* found = *enemy->entities.begin();
 	int distance = 0;
 	pair<int, int> map_pos;
 	int min_dist;
+	//bool once = false;
 
 	if (found != nullptr)
 	{
@@ -867,20 +874,69 @@ Entity* Hound::FindEntityInAttackRange(pair <int, int> pos, bool fromplayer1, in
 			if ((*tmp)->type >= desiredtype)
 			{
 				map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
-
-				if (Is_inRange(pos, distance, map_pos, attackrange))
+				
+				if (zone == 0)
 				{
-
-					if (min_dist >= distance)
+					/*if (!once)
 					{
-						found = (*tmp);
-						min_dist = distance;
+
+						once = false;
+					}*/
+					if (Is_inRange(pos, distance, map_pos, attackrange))
+					{
+
+						if (min_dist >= distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
 					}
+
+				}
+				if (zone == 1)
+				{
+					if (Is_inRange(pos, distance, map_pos, attackrange) && IsInAllyZone(map_pos))
+					{
+
+						if (min_dist >= distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
+					}
+
+				}
+				if (zone == 2)
+				{
+					if (Is_inRange(pos, distance, map_pos, attackrange) && IsInEnemyZone(map_pos))
+					{
+
+						if (min_dist >= distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
+					}
+
+				}
+				if (zone == 3)
+				{
+					if (Is_inRange(pos, distance, map_pos, attackrange) && IsInWarZone(map_pos))
+					{
+
+						if (min_dist >= distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
+					}
+
 				}
 
 			}
 
 		}
+
 		if (min_dist <= attackrange)
 		{
 			return found;
@@ -892,14 +948,21 @@ Entity* Hound::FindEntityInAttackRange(pair <int, int> pos, bool fromplayer1, in
 
 }
 
-Entity* Hound::FindNearestEntity(pair <int, int> pos, bool fromplayer1, entityType desiredtype)
+Entity* Hound::FindNearestEntity(pair <int, int> pos, bool fromplayer1, entityType desiredtype, int zones)
 {
+
+	// zone 0 is no zone
+	// zone 1 ally zone
+	// zone 2 enemy zone
+	// zone 3 war zone
+
 	Player* enemy = (!fromplayer1) ? App->player1 : App->player2;
 
 	Entity* found = *enemy->entities.begin();
 	int distance = 0;
 	pair<int, int> map_pos;
 	int min_dist;
+	bool once = false;
 
 	if (found != nullptr)
 	{
@@ -910,13 +973,10 @@ Entity* Hound::FindNearestEntity(pair <int, int> pos, bool fromplayer1, entityTy
 
 		for (list<Entity*>::iterator tmp = enemy->entities.begin(); tmp != enemy->entities.end(); tmp++) // traverse entity list (unordered)
 		{
-			//if ((*tmp)->type >= desiredtype)
+			if (zones==0)
 			{
 				map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
-				if ((*tmp)->type == entityType::WALLS)
-				{
-					int a = 0;
-				}
+				
 
 				Is_inRange(pos, distance, map_pos, 0);
 				
@@ -927,6 +987,74 @@ Entity* Hound::FindNearestEntity(pair <int, int> pos, bool fromplayer1, entityTy
 						min_dist = distance;
 					}
 				
+			}
+			else if (zones == 1)
+			{
+				map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+				
+				Is_inRange(pos, distance, map_pos, 0);
+
+				if (IsInAllyZone(map_pos))
+				{
+					if (once == false)
+					{
+						found = (*tmp);
+						once = true;
+					}
+
+					if (min_dist > distance )
+					{
+						found = (*tmp);
+						min_dist = distance;
+					}
+
+				}
+			}
+			else if (zones == 2)
+			{
+				map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+				Is_inRange(pos, distance, map_pos, 0);
+
+				if (IsInEnemyZone(map_pos))
+				{
+					if (once == false)
+					{
+						found = (*tmp);
+						once = true;
+					}
+
+					if (min_dist > distance)
+					{
+						found = (*tmp);
+						min_dist = distance;
+					}
+
+				}
+
+			}
+			else if (zones == 3)
+			{
+				map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+				Is_inRange(pos, distance, map_pos, 0);
+
+				if (IsInWarZone(map_pos))
+				{
+					if (once == false)
+					{
+						found = (*tmp);
+						once = true;
+					}
+
+					if (min_dist > distance )
+					{
+						found = (*tmp);
+						min_dist = distance;
+					}
+
+				}
+
 			}
 
 		}

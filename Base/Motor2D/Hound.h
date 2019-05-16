@@ -21,8 +21,8 @@ public:
 	void SimpleMovement();
 	void ChangeAnimation(TroopDir facing, bool fromplayer1);
 
-	Entity * FindEntityInAttackRange(pair<int, int> pos, bool fromplayer1, int attackrange, entityType type);
-	Entity * FindNearestEntity(pair<int, int> pos, bool fromplayer1, entityType type);
+	Entity * FindEntityInAttackRange(pair<int, int> pos, bool fromplayer1, int attackrange, entityType type, int zone=0);
+	Entity * FindNearestEntity		(pair<int, int> pos, bool fromplayer1, entityType type, int zone=0);
 
 	bool IsInAllyZone(pair <int, int > map_pos);
 	bool IsInEnemyZone(pair <int, int > map_pos);
