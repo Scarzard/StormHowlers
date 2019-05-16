@@ -539,6 +539,8 @@ void Hound::SimpleMovement(bool fromplayer1, TroopDir move)
 	bool moved = false;
 	
 	pair <int, int> aux = position;
+	aux.first -= Current_Animation->frames->w / 2;
+	aux.second -= Current_Animation->frames->h / 2;
 
 	//north
 	pair <int, int > map_pos_aux = App->map->WorldToMap(aux.first + 2, aux.second - 1);
@@ -548,9 +550,9 @@ void Hound::SimpleMovement(bool fromplayer1, TroopDir move)
 	if (north)
 	{
 		//move front
-		aux.first += 2;
-		aux.second += -1;
-		position = aux;
+		position.first += 2;
+		position.second += -1;
+		
 		moved = true;
 	}
 	//else
@@ -563,10 +565,10 @@ void Hound::SimpleMovement(bool fromplayer1, TroopDir move)
 	if (!north && east)
 	{
 		//move rigth
-		aux.first += 2;
-		aux.second += 1;
+		position.first += 2;
+		position.second += 1;
 
-		position = aux;
+		
 	}
 
 
