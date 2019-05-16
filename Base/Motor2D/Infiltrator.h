@@ -1,16 +1,16 @@
-#ifndef __Enginner_H__
-#define __Enginner_H__
+#ifndef __Infiltrator_H__
+#define __Infiltrator_H__
 
 #include "Troop.h"
 #include "EntityManager.h"
 
 
-class Engineer : public Troop
+class Infiltrator : public Troop
 {
 public:
-	Engineer();
-	Engineer(bool isPlayer1, pair<int, int> pos, Collider collider);
-	~Engineer();
+	Infiltrator();
+	Infiltrator(bool isPlayer1, pair<int, int> pos, Collider collider);
+	~Infiltrator();
 
 	bool Update(float dt);
 	void SetDestination();

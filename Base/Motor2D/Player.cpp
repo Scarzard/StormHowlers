@@ -52,16 +52,20 @@ bool Player::Awake(pugi::xml_node& config) {
 bool Player::Start()
 {
 
-	gold = gold_persecond = actual_capacity = total_capacity = time_iterator = number_of_troops = BuildingCost = TroopCost = 0;
+	time_iterator = number_of_troops = BuildingCost = BarracksCreated = TroopCost = 0;
+
+	gold = 3500;
+	gold_persecond = 0;
+
 	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = 0;
 
 	selected_texture = { 0,0, 100, 100 };
 
-	live = 2000;
-
 	UI_troop_type = Entity::entityType::SOLDIER;
 
 	isBuilding = isDeploying = gold_added = isCasting = Y_pressed = isPaused = false;
+
+	Y_pressed = true;
   
 	currentTile = { 13,0 };
 	
@@ -156,7 +160,11 @@ bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("Player Update", Profiler::Color::Black);
 
-	
+	if (inmune && App->scene->worldseconds == desired_second && App->scene->worldminutes == desired_min)
+	{
+		inmune = false;
+	}
+
 
 	if (!App->scene->endgame)
 	{
@@ -190,9 +198,13 @@ bool Player::Update(float dt)
 		DeployTroops(Entity::entityType::SOLDIER, 9, { 0,0 });
 
 		//--- Press X (Square) To SELECT BUILDINGS
-		if (gamepad.Controller[BUTTON_X] == KEY_UP && currentUI == CURRENT_UI::NONE)
+		if (gamepad.Controller[BUTTON_X] == KEY_UP && currentUI == CURRENT_UI::CURR_MAIN)
 		{
 			building_selected = buildings.begin();
+
+			while ((*building_selected)->type == Entity::entityType::WALLS)
+				building_selected++;
+
 			last_building = buildings.end();
 			last_building--;
 			currentUI = CURRENT_UI::CURR_SELECTING_BUILDING;
@@ -200,7 +212,7 @@ bool Player::Update(float dt)
 		else if (gamepad.Controller[BUTTON_B] == KEY_UP && currentUI == CURRENT_UI::CURR_SELECTING_BUILDING)
 		{
 			building_selected._Ptr = nullptr;
-			currentUI = CURRENT_UI::NONE;
+			currentUI = CURRENT_UI::CURR_MAIN;
 		}
 
 		// DRAW QUAD on SELECTED BUILDING 
@@ -221,8 +233,7 @@ bool Player::Update(float dt)
 
 		
 		// Button with focus changes state to HOVER 
-		if (currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::ENDGAME && currentUI != CURRENT_UI::CURR_WIN_SCREEN && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
-
+		if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::ENDGAME && currentUI != CURRENT_UI::CURR_WIN_SCREEN && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
 		{
 			(*focus)->state = UI_Element::State::HOVER;
 		}
@@ -321,9 +332,9 @@ bool Player::Update(float dt)
 			if (gamepad.Controller[RB] == KEY_DOWN)
 			{
 				number_of_troops++;
-				if (number_of_troops + actual_capacity > total_capacity)
+				if (number_of_troops + (*building_selected)->TroopsCreated.size() > 10)
 				{
-					number_of_troops = total_capacity - actual_capacity;
+					number_of_troops = 10 - (*building_selected)->TroopsCreated.size();
 				}
 				
 			}
@@ -349,7 +360,7 @@ bool Player::Update(float dt)
 				TroopCost = 1250 * number_of_troops;
 			}
 
-			if (gamepad.Controller[BUTTON_A] == KEY_UP)
+			if (gamepad.Controller[BUTTON_A] == KEY_UP && gold >= TroopCost)
 			{
 				CreateTroop(UI_troop_type, number_of_troops);
 				Update_troop_image(UI_troop_type);
@@ -383,10 +394,11 @@ bool Player::Update(float dt)
 
 			TroopCost = 2000 * number_of_troops; //2000 RANDOM INVULNERABILITY PRICE 
 
-			if (gamepad.Controller[BUTTON_A] == KEY_UP)
+			if (gamepad.Controller[BUTTON_A] == KEY_UP && gold >= TroopCost)
 			{
 				CreateAbility(ABILITIES::INVULNERABLE, number_of_troops);
 				GotoPrevWindows(currentUI);
+				gold -= TroopCost;
 			}
 
 		}
@@ -457,7 +469,7 @@ bool Player::Update(float dt)
 		}
 
 		// Go back
-		if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
+		if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::CURR_MAIN)
 		{
 			if(focus._Ptr != nullptr)
 				(*focus)->state = UI_Element::State::IDLE;
@@ -504,17 +516,6 @@ bool Player::Update(float dt)
 			}
 		}
 
-		// Enter to UI ingame Menus
-		if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
-		{
-			if (App->scene->active)
-				currentUI = CURRENT_UI::CURR_MAIN;
-
-			Y_pressed = true;
-
-			UpdateFocus(currentUI);
-		}
-
 
 		//Change the side images from the menus
 		if (App->scene->active)
@@ -540,7 +541,7 @@ bool Player::Update(float dt)
 			if (currentUI != CURRENT_UI::CURR_GENERAL && Create_abilities != nullptr)
 				Create_abilities->visible = false;
 
-			if(currentUI == NONE)
+			if(currentUI == CURR_MAIN)
 				SelectBuilding->visible = true;
 			else
 				SelectBuilding->visible = false;
@@ -835,37 +836,25 @@ bool Player::Update(float dt)
 			}
 
 
-			//App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &(preview_rects->at(type)));
-
-
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 			{
-				//play fx (build);
-				App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ },collider);
-
-				if (type > Entity::entityType::BARRACKS)//if troops
+				
+				if (gold >= CheckCost(type))
 				{
-					switch (type)
+					App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ }, collider);
+					if (type == Entity::entityType::BARRACKS)
 					{
-					case Entity::entityType::SOLDIER:
-						SoldiersCreated--;
-						actual_capacity--;
-						break;
+						BarracksCreated++;
 					}
 
 				}
+				else
+					App->audio->PlayFx(WRONG);
 
 				isBuilding = false;
 							
 			}
 
-			if (gamepad.Controller[BUTTON_X] == KEY_DOWN && type > Entity::entityType::BARRACKS)
-			{
-				SpawnMultipleTroops(type);
-				actual_capacity -= SoldiersCreated;
-				SoldiersCreated = 0;
-				isBuilding = false;
-			}
 		}
 		else
 		{
@@ -1066,19 +1055,22 @@ void Player::UpdateWalkabilityMap(char cell_type, Collider collider) //update wa
 	}
 }
 
-int Player::CheckCost(Entity* entity)
+int Player::CheckCost(Entity::entityType type)
 {
-	if (entity->type == Entity::entityType::BARRACKS)
+	if (type == Entity::entityType::BARRACKS)
 		return 3000;
 
-	else if (entity->type == Entity::entityType::DEFENSE_AOE)
+	else if (type == Entity::entityType::DEFENSE_AOE)
 		return 2000;
 
-	else if (entity->type == Entity::entityType::DEFENSE_TARGET)
+	else if (type == Entity::entityType::DEFENSE_TARGET) // TESLA (esta al reves?)
 		return 3500;
 
-	else if (entity->type == Entity::entityType::MINES)
+	else if (type == Entity::entityType::MINES)
 		return 2000;
+
+	else if (type == Entity::entityType::MAIN_DEFENSE) // Torreta single target (esta al reves?)
+		return 3500;
 
 	else
 		return 0;
@@ -1187,13 +1179,11 @@ void Player::GotoPrevWindows(uint data)
 		break;
 
 	case Player::CURRENT_UI::CURR_MAIN:
-		currentUI = CURRENT_UI::NONE;
-		Y_pressed = false;
-		UpdateVisibility();
+		
 		break;
 
 	case Player::CURRENT_UI::CURR_GENERAL:
-		currentUI = CURRENT_UI::NONE;
+		currentUI = CURRENT_UI::CURR_MAIN;
 		UpdateVisibility();
 		break;
 
@@ -1587,44 +1577,48 @@ void Player::DoLogic(UI_Element* data)
 			type = Entity::entityType::BARRACKS;
 			collider.dimensions = { 3,4 };
 			offset = { 40 , 50 };
-			BarracksCreated += 1;
 		}
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
-		if (SoldiersCreated > 0)
-		{
-			App->audio->PlayFx(INGAME_CLICK);
-			isBuilding = true;
-			type = Entity::entityType::SOLDIER;
-			collider.dimensions = { 1,1 };
-		}
-		else
-		{
-			App->audio->PlayFx(WRONG);
-		}
 		
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_TANKMAN:
-		//
-		App->audio->PlayFx(WRONG);
+
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_INFILTRATOR:
-		//
-		App->audio->PlayFx(WRONG);
+		
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_ENGINEER:
-		//
-		App->audio->PlayFx(WRONG);
+		
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_WARHOUND:
-		//
-		App->audio->PlayFx(WRONG);
+		
 		break;
+
+	case::UI_Element::Action::ACT_CAST_INVULNERABILITY:
+		if (inmune == false)
+		{
+			timer_ref_sec = App->scene->worldseconds;
+			timer_ref_min = App->scene->worldminutes;
+			desired_second = timer_ref_sec + 10;
+			desired_min = timer_ref_min;
+
+			if (desired_second >= 60)
+			{
+				int extra = 60 - desired_second;
+				desired_second = extra;
+				desired_min++;
+			}
+			inmune = true;
+			Invulnerable_abilities--;
+		}
+		break;
+
 
 	case::UI_Element::Action::ACT_CAST_MISSILES:
 		//
@@ -1787,31 +1781,31 @@ void Player::Update_troop_image(int type) // Changes sprite depending on the ent
 
 void Player::CreateTroop(int type, int number)
 {
+	Entity::entityType entity_type;
 	switch (type)
 	{
-	case Entity::entityType::SOLDIER:
-		SoldiersCreated += number;
+	case 8:
+		entity_type = Entity::entityType::SOLDIER;
 		break;
-
-	case Entity::entityType::TANKMAN:
-		TankmansCreated += number;
+	case 9:
+		entity_type = Entity::entityType::TANKMAN;
 		break;
-
-	case Entity::entityType::INFILTRATOR:
-		InfiltratorsCreated += number;
+	case 10:
+		entity_type = Entity::entityType::INFILTRATOR;
 		break;
-
-	case Entity::entityType::ENGINEER:
-		EngineersCreated += number;
+	case 11:
+		entity_type = Entity::entityType::ENGINEER;
 		break;
-
-	case Entity::entityType::WAR_HOUND:
-		WarHoundsCreated += number;
+	case 12:
+		entity_type = Entity::entityType::WAR_HOUND;
 		break;
 	}
+
+	for (int i = 0; i < number; i++)
+	{
+		(*building_selected)->TroopsCreated.push_back(entity_type);
+	}
 	
-	//Update actual capacity
-	actual_capacity += number;
 }
 
 void Player::CreateAbility(int type, int number)
@@ -1894,30 +1888,5 @@ void Player::DrawBuildingCollider(int type, bool isPlayer1)
 		App->render->DrawQuad(selected_texture, 255, 0, 0, 100, true);
 	else
 		App->render->DrawQuad(selected_texture, 0, 0, 255, 100, true);
-}
-
-void Player::SpawnMultipleTroops(uint type)
-{
-	switch (type)
-	{
-	case Entity::entityType::SOLDIER:
-		pair<int, int> offset;
-		int row;
-			for(int i=0; i< SoldiersCreated; i++)
-			{
-				if(i%5 == 0)
-					row = i / 5;
-
-				offset.first = (i - 4 * row);
-				offset.second = (i - 6 * row);
-			
-				if(isPlayer1)
-					App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, { collider.tiles[0].first + offset.first * 30 , collider.tiles[0].second + offset.second * 15}, collider);
-				else
-					App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, { collider.tiles[0].first + (offset.second * 30) , collider.tiles[0].second + offset.first * 15}, collider);
-			}
-
-
-	}
 }
 

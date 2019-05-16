@@ -1,20 +1,20 @@
-#include "Engineer.h"
+#include "Hound.h"
 #include "Pathfinding.h"
 #include "Player.h"
 #include "Audio.h"
 
 
-Engineer::Engineer()
+Hound::Hound()
 {
 
 }
 
-Engineer::Engineer(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop(Entity::entityType::ENGINEER, isPlayer1, pos, collider)
+Hound::Hound(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop(Entity::entityType::WAR_HOUND, isPlayer1, pos, collider)
 {
-	BROFILER_CATEGORY("Engineer constructor", Profiler::Color::Red);
+	BROFILER_CATEGORY("Hound constructor", Profiler::Color::Red);
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
-
+	
 	destination = pos;
 	original_range = range;
 	//Managed in entity.h constructor
@@ -25,11 +25,11 @@ Engineer::Engineer(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop
 }
 
 
-Engineer::~Engineer()
+Hound::~Hound()
 {
 }
 
-bool Engineer::Update(float dt)
+bool Hound::Update(float dt)
 {
 
 	if (alive) {
@@ -42,7 +42,7 @@ bool Engineer::Update(float dt)
 		if (info.closest != nullptr)
 		{
 			//Entity to attack is found
-			if (info.closest->health > 0) {
+			if (info.closest->health > 0 ) {
 				//LOG("Closest FOUND");
 				int d = 0;
 
@@ -117,7 +117,7 @@ bool Engineer::Update(float dt)
 	Troop::Update(dt);
 	return true;
 }
-void Engineer::SetDestination()
+void Hound::SetDestination()
 {
 	destination = App->map->WorldToMap(info.closest->position.first, info.closest->position.second);
 
@@ -139,7 +139,7 @@ void Engineer::SetDestination()
 
 	}
 }
-bool Engineer::Is_inRange(pair<int, int> pos, int &distance, pair <int, int> position, int range) {
+bool Hound::Is_inRange(pair<int, int> pos, int &distance, pair <int, int> position, int range) {
 
 	//posicion entre dos entidades cualquiera
 	//determina si esta en el rango
@@ -149,7 +149,7 @@ bool Engineer::Is_inRange(pair<int, int> pos, int &distance, pair <int, int> pos
 
 	return distance <= range;
 }
-void Engineer::PrintState() {
+void Hound::PrintState() {
 	switch (state)
 	{
 	case NOT_DEPLOYED:
@@ -176,7 +176,7 @@ void Engineer::PrintState() {
 	}
 }
 
-void Engineer::ForceAnimations() {
+void Hound::ForceAnimations() {
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
 		Current_Animation = moving[(curr++) % SOUTHWEST];
@@ -191,7 +191,7 @@ void Engineer::ForceAnimations() {
 		idle->SetCurrentFrame((curr++) % SOUTHWEST);
 	}
 }
-void Engineer::ActOnDestroyed() {
+void Hound::ActOnDestroyed() {
 
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
@@ -218,12 +218,12 @@ void Engineer::ActOnDestroyed() {
 	}
 }
 
-void Engineer::CleanUp() {
+void Hound::CleanUp() {
 	Troop::CleanUp();
 
 }
 
-void Engineer::ChangeAnimation() {
+void Hound::ChangeAnimation() {
 	Current_Animation = idle;
 	if (state == MOVING)
 	{
@@ -360,9 +360,9 @@ void Engineer::ChangeAnimation() {
 }
 
 
-void Engineer::LoadAnimations(bool isPlayer1, string path)
+void Hound::LoadAnimations(bool isPlayer1, string path)
 {
-	BROFILER_CATEGORY("engineer Load Animations", Profiler::Color::Blue);
+	BROFILER_CATEGORY("Hound Load Animations", Profiler::Color::Blue);
 	moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
@@ -404,36 +404,41 @@ void Engineer::LoadAnimations(bool isPlayer1, string path)
 	Current_Animation = moving[NORTH];
 }
 
-Building* Engineer::FindBuilding(pair <int, int> pos, bool fromplayer1, int attackrange)
+Troop* Hound::FindBuilding(pair <int, int> pos, bool fromplayer1, int attackrange)
 {
 	Player* enemy = (!fromplayer1) ? App->player1 : App->player2;
 
-	Building* found = *enemy->buildings.begin();
+	Troop* found = *enemy->troops.begin();
 	int distance = 0;
-	pair<int, int> map_pos = App->map->WorldToMap(found->position.first, found->position.second);
-	Is_inRange(pos, distance, map_pos, attackrange);
-	int min_dist = distance;
 
-	for (list<Building*>::iterator tmp = enemy->buildings.begin(); tmp != enemy->buildings.end(); tmp++) // traverse entity list (unordered)
+	if (found != nullptr)
 	{
-		map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
 
-		if (Is_inRange(pos, distance, map_pos, attackrange))
+		pair<int, int> map_pos = App->map->WorldToMap(found->position.first, found->position.second);
+		Is_inRange(pos, distance, map_pos, attackrange);
+		int min_dist = distance;
+
+		for (list<Troop*>::iterator tmp = enemy->troops.begin(); tmp != enemy->troops.end(); tmp++) // traverse entity list (unordered)
 		{
+			map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
 
-			if (min_dist >= distance)
+			if (Is_inRange(pos, distance, map_pos, attackrange))
 			{
-				found = (*tmp);
-				min_dist = distance;
+
+				if (min_dist >= distance)
+				{
+					found = (*tmp);
+					min_dist = distance;
+				}
 			}
+
+		}
+		if (min_dist <= attackrange)
+		{
+			return found;
 		}
 
 	}
-	if (min_dist <= attackrange)
-	{
-		return found;
-	}
-
 	return nullptr;
 
 }

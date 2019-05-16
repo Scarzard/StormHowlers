@@ -111,15 +111,6 @@ bool Townhall::Update(float dt)
 
 		}
 
-		// Just to test the LiveBar
-		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-		{
-			health -= 100;
-
-			if (health < 0)
-				health = 0;
-		}
-
 	}
 
 	if (App->scene->worldminutes == 10 && App->player2->health < App->player1->health)

@@ -1,17 +1,17 @@
-#include "Engineer.h"
+#include "Tankman.h"
 #include "Pathfinding.h"
 #include "Player.h"
 #include "Audio.h"
 
 
-Engineer::Engineer()
+Tankman::Tankman()
 {
 
 }
 
-Engineer::Engineer(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop(Entity::entityType::ENGINEER, isPlayer1, pos, collider)
+Tankman::Tankman(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop(Entity::entityType::TANKMAN, isPlayer1, pos, collider)
 {
-	BROFILER_CATEGORY("Engineer constructor", Profiler::Color::Red);
+	BROFILER_CATEGORY("Tankman constructor", Profiler::Color::Red);
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
 
@@ -25,11 +25,11 @@ Engineer::Engineer(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop
 }
 
 
-Engineer::~Engineer()
+Tankman::~Tankman()
 {
 }
 
-bool Engineer::Update(float dt)
+bool Tankman::Update(float dt)
 {
 
 	if (alive) {
@@ -117,7 +117,7 @@ bool Engineer::Update(float dt)
 	Troop::Update(dt);
 	return true;
 }
-void Engineer::SetDestination()
+void Tankman::SetDestination()
 {
 	destination = App->map->WorldToMap(info.closest->position.first, info.closest->position.second);
 
@@ -139,7 +139,7 @@ void Engineer::SetDestination()
 
 	}
 }
-bool Engineer::Is_inRange(pair<int, int> pos, int &distance, pair <int, int> position, int range) {
+bool Tankman::Is_inRange(pair<int, int> pos, int &distance, pair <int, int> position, int range) {
 
 	//posicion entre dos entidades cualquiera
 	//determina si esta en el rango
@@ -149,7 +149,7 @@ bool Engineer::Is_inRange(pair<int, int> pos, int &distance, pair <int, int> pos
 
 	return distance <= range;
 }
-void Engineer::PrintState() {
+void Tankman::PrintState() {
 	switch (state)
 	{
 	case NOT_DEPLOYED:
@@ -176,7 +176,7 @@ void Engineer::PrintState() {
 	}
 }
 
-void Engineer::ForceAnimations() {
+void Tankman::ForceAnimations() {
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
 		Current_Animation = moving[(curr++) % SOUTHWEST];
@@ -191,7 +191,7 @@ void Engineer::ForceAnimations() {
 		idle->SetCurrentFrame((curr++) % SOUTHWEST);
 	}
 }
-void Engineer::ActOnDestroyed() {
+void Tankman::ActOnDestroyed() {
 
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
@@ -218,12 +218,12 @@ void Engineer::ActOnDestroyed() {
 	}
 }
 
-void Engineer::CleanUp() {
+void Tankman::CleanUp() {
 	Troop::CleanUp();
 
 }
 
-void Engineer::ChangeAnimation() {
+void Tankman::ChangeAnimation() {
 	Current_Animation = idle;
 	if (state == MOVING)
 	{
@@ -360,9 +360,9 @@ void Engineer::ChangeAnimation() {
 }
 
 
-void Engineer::LoadAnimations(bool isPlayer1, string path)
+void Tankman::LoadAnimations(bool isPlayer1, string path)
 {
-	BROFILER_CATEGORY("engineer Load Animations", Profiler::Color::Blue);
+	BROFILER_CATEGORY("tankman Load Animations", Profiler::Color::Blue);
 	moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
@@ -404,7 +404,7 @@ void Engineer::LoadAnimations(bool isPlayer1, string path)
 	Current_Animation = moving[NORTH];
 }
 
-Building* Engineer::FindBuilding(pair <int, int> pos, bool fromplayer1, int attackrange)
+Building* Tankman::FindBuilding(pair <int, int> pos, bool fromplayer1, int attackrange)
 {
 	Player* enemy = (!fromplayer1) ? App->player1 : App->player2;
 
@@ -429,7 +429,7 @@ Building* Engineer::FindBuilding(pair <int, int> pos, bool fromplayer1, int atta
 		}
 
 	}
-	if (min_dist <= attackrange)
+	if (min_dist <= attackrange && found->type == entityType::WALLS)
 	{
 		return found;
 	}

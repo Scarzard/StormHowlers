@@ -61,7 +61,23 @@ bool MainDefense::Update(float dt)
 		if (timer.ReadSec() >= rate_of_fire && Is_inRange(closest->position, d))
 		{
 			 isShooting = true;
-			closest->TakeDamage(damage_lv[level]);
+			 if (fromPlayer1)
+			 {
+				 if (!App->player2->inmune)
+				 {
+					 closest->TakeDamage(damage_lv[level]);
+
+				 }
+			 }
+			 else if (!fromPlayer1)
+			 {
+
+				 if (!App->player1->inmune)
+				 {
+					 closest->TakeDamage(damage_lv[level]);
+
+				 }
+			 }
 			timer.Start();
 			App->audio->PlayFx(SENTRYGUN_ATTACK);
 			//LOG("Distance: %d", d);

@@ -31,18 +31,20 @@ Soldier::~Soldier()
 
 bool Soldier::Update(float dt)
 {
-	
-	if (alive) {
-		
+
+	if (alive) 
+	{
+
 		pair<int, int> map_pos = App->map->WorldToMap(position.first, position.second);
 		pair<int, int> map_init_pos = App->map->WorldToMap(init_position.first, init_position.second);
 		int time_to_act = 2;
 
 		// Checks for group defined closest entity
+		//info.closest = nullptr;
 		if (info.closest != nullptr)
 		{
 			//Entity to attack is found
-			if(info.closest->health > 0){
+			if (info.closest->health > 0) {
 				//LOG("Closest FOUND");
 				int d = 0;
 
@@ -86,10 +88,13 @@ bool Soldier::Update(float dt)
 				info.closest = nullptr;
 			}
 		}
-		//ENTITY TO ATTACK IS NOT FOUND OR JUST DIED
-		if (state != SHOOTING ){
 
-			if (state == TROOP_IDLE) {
+		//ENTITY TO ATTACK IS NOT FOUND OR JUST DIED
+		if (state != SHOOTING) 
+		{
+
+			if (state == TROOP_IDLE) 
+			{
 				//LOG("Closest NOT FOUND - SEARCHING");
 
 				info.closest = App->entitymanager->findEntity(map_pos, fromPlayer1, range);
@@ -106,7 +111,7 @@ bool Soldier::Update(float dt)
 		//Current_Animation = Die;
 
 	}
-	
+
 	ActOnDestroyed();
 	ChangeAnimation();
 
@@ -115,6 +120,7 @@ bool Soldier::Update(float dt)
 	//            _|
 
 	Troop::Update(dt);
+
 	return true;
 }
 void Soldier::SetDestination()

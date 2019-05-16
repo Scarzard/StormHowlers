@@ -99,8 +99,6 @@ public:
 	void CreateTroop(int type, int number);
 	void CreateAbility(int type, int number);
 
-	void SpawnMultipleTroops(uint type);
-
 	void DrawBuildingCollider(int type, bool isPlayer1);
 
 	bool CheckBuildingPos();
@@ -108,7 +106,7 @@ public:
 	//void UpdateWalkabilityMap(bool isWalkable, Collider collider);
 	bool DeleteEntity(Entity* entity);
 
-	int CheckCost(Entity* entity);
+	int CheckCost(Entity::entityType type);
 	int GoldKill(Entity* entity);
 	
 public:
@@ -116,7 +114,15 @@ public:
 	bool isDeploying = false;
 	bool isCasting = false;
 	bool isPaused = false;
+	bool inmune = false;
+
+	int timer_ref_sec = 0;
+	int timer_ref_min = 0;
+	int desired_second = 0;
+	int desired_min = 0;
+
 	bool pathfinding = true;
+
 
 
 	Collider collider;
@@ -128,10 +134,11 @@ public:
 	bool isPlayer1 = false;
 	string team;
 
+	int gold = 0;
+	int gold_persecond = 0;
+
 	SDL_Rect rectangle_origin = { 0,0,0,0 };
 
-	uint gold = 0;
-	uint gold_persecond = 0;
 	bool gold_added = false;
 
 	uint time_iterator = 0;
@@ -139,21 +146,13 @@ public:
 	uint last_currentUI = 0;
 	uint currentUI = 0;
 
-	int total_capacity = 0; //sum of all barracks capacities
-	int actual_capacity = 0; //sum of all created troops
-	
 	DeployState deploy_state = DeployState::END;
-	//bool entityAdded;
-	//Entity* previewEntity;
 
 	vector<SDL_Rect>* preview_rects;
 
 	SDL_Rect LiveBar;
 	int health, max_health = 0;
 
-	// Live of TOWN HALL
-	int live = 0;
-	
 	//index for testing previews
 	int curr = 1;
 	int deploying_counter = 0;
@@ -227,20 +226,11 @@ public:
 
 	UI_Element* Deploy_UI = nullptr;
 	UI_Element* Soldier_icon = nullptr;
-	UI_Element* Soldier_text = nullptr;
-	char soldier_label[4] = "0";
 	UI_Element* Tankman_icon = nullptr;
-	UI_Element* Tankman_text = nullptr;
-	char tankman_label[4] = "0";
 	UI_Element* Infiltrator_icon = nullptr;
-	UI_Element* Infiltrator_text = nullptr;
-	char infiltrator_label[4] = "0";
 	UI_Element* Engineer_icon = nullptr;
-	UI_Element* Engineer_text = nullptr;
-	char engineer_label[4] = "0";
 	UI_Element* War_hound_icon = nullptr;
-	UI_Element* War_hound_text = nullptr;
-	char war_hound_label[4] = "0";
+	
 
 	UI_Element* Troop_cost_text = nullptr;
 	char Troop_cost_label[10] = "0000 $";
@@ -289,7 +279,7 @@ public:
 	UI_Element* accept_button = nullptr;
 	UI_Element* cancel_button = nullptr;
 
-	int UI_troop_type = 9; //select type of troop (9 is soldier) 
+	int UI_troop_type = 8; //select type of troop (9 is soldier) 
 	int UI_ability_type = 0;
 	int number_of_troops = 0;
 

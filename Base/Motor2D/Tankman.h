@@ -1,16 +1,16 @@
-#ifndef __Enginner_H__
-#define __Enginner_H__
+#ifndef __Tankman_H__
+#define __Tankman_H__
 
 #include "Troop.h"
 #include "EntityManager.h"
 
 
-class Engineer : public Troop
+class Tankman : public Troop
 {
 public:
-	Engineer();
-	Engineer(bool isPlayer1, pair<int, int> pos, Collider collider);
-	~Engineer();
+	Tankman();
+	Tankman(bool isPlayer1, pair<int, int> pos, Collider collider);
+	~Tankman();
 
 	bool Update(float dt);
 	void SetDestination();

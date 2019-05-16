@@ -53,8 +53,12 @@ public:
 	char * GetName(Entity::entityType type);
 	void DeleteAllEntities();
 
+
+	list<Building*> OrderBuildings(list<Building*> List, bool isPlayer1);
+
 	void OrderEntities();
 	int GetDepth(Entity* entity);
+
 
 
 	Entity * findEntity(pair<int, int> pos, bool fromplayer1, int attackrange);
@@ -68,6 +72,7 @@ public:
 	//void Erase_fromList(list<Entity*>::iterator tmp);
 
 	bool FindInList(list<Entity*> List, pair<int, int> pos, bool fromplayer1, Entity::entityType type);
+	bool FindInList2(list<Building*> List, pair<int, int> pos, bool fromplayer1, Entity::entityType type);
 
 
 

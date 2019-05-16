@@ -86,6 +86,8 @@
     <ClCompile Include="DefenseTarget.cpp" />
     <ClCompile Include="Engineer.cpp" />
     <ClCompile Include="Group.cpp" />
+    <ClCompile Include="Hound.cpp" />
+    <ClCompile Include="Infiltrator.cpp" />
     <ClCompile Include="MovementManager.cpp" />
     <ClCompile Include="MainDefense.cpp" />
     <ClCompile Include="Mines.cpp" />
@@ -105,6 +107,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SimpleUI.cpp" />
     <ClCompile Include="Soldier.cpp" />
+    <ClCompile Include="Tankman.cpp" />
     <ClCompile Include="Townhall.cpp" />
     <ClCompile Include="Transitions.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -123,6 +126,8 @@
     <ClInclude Include="DefenseTarget.h" />
     <ClInclude Include="Engineer.h" />
     <ClInclude Include="Group.h" />
+    <ClInclude Include="Hound.h" />
+    <ClInclude Include="Infiltrator.h" />
     <ClInclude Include="MovementManager.h" />
     <ClInclude Include="MainDefense.h" />
     <ClInclude Include="Mines.h" />
@@ -139,6 +144,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SimpleUI.h" />
     <ClInclude Include="Soldier.h" />
+    <ClInclude Include="Tankman.h" />
     <ClInclude Include="Townhall.h" />
     <ClInclude Include="Transitions.h" />
     <ClInclude Include="Timer.h" />
