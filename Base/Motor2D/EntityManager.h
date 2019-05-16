@@ -91,6 +91,8 @@ public:
 	bool godmode = false;
 	bool pathfinding = false;
 	bool pathfinding2 = false;
+	bool offensive = true;
+
 };
 
 #endif //

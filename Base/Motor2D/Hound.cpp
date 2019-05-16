@@ -35,7 +35,8 @@ Hound::~Hound()
 bool Hound::Update(float dt)
 {
 	// change bol from offensive and defensive
-	//offensive = App.scene.offensive ui
+	
+	
 
 	if (alive) {
 
@@ -43,7 +44,7 @@ bool Hound::Update(float dt)
 		{
 			
 			pair <int, int > map_pos = App->map->WorldToMap(position.first, position.second);	
-			//state = TROOP_IDLE;
+			
 			switch (state)
 			{
 			case TROOP_IDLE:
@@ -61,71 +62,15 @@ bool Hound::Update(float dt)
 						pathfind = false;
 					}
 				}
-				/*else if (timer.ReadSec() > 1 && info.closest == nullptr)
+				else if (timer.ReadSec() > 1 && info.closest == nullptr)
 				{
 					state = SEARCH;
 					timer.Start();
-				}*/
+				}
 				else
 				{
 					
-					if (fromPlayer1)
-					{
-						if (offensive)
-						{
-							position.first += -2;
-							position.second += 1;
-
-						}
-						else
-						{
-							position.first += 2;
-							position.second += -1;
-
-						}
-
-					}
-					else
-					{
-						if (offensive)
-						{
-							//pair <int, int> aux = position;
-
-							//
-							//pair <int, int > map_pos_aux = App->map->WorldToMap(position.first+2, position.second-1);
-							//if (App->pathfinding->IsWalkable(map_pos_aux))
-							//{
-							//	aux.first += 2;
-							//	aux.second += -1;
-							//	position = aux;
-							//}
-							//else
-							//{
-							//	//move right
-							//	aux.first += -2;
-							//	aux.second += -1;
-
-							//	position = aux;
-							//}
-							SimpleMovement(fromPlayer1, facing);
-
-							
-						}
-						else
-						{
-							pair <int, int> aux = position;
-
-							aux.first += -2;
-							aux.second += 1;
-							pair <int, int > map_pos_aux = App->map->WorldToMap(aux.first, aux.second);
-							if (App->pathfinding->IsWalkable(map_pos_aux))
-							{
-								position = aux;
-							}
-
-						}
-					}
-
+					SimpleMovement();
 					
 				}
 				break;
@@ -315,7 +260,7 @@ bool Hound::Update(float dt)
 	}
 
 	ActOnDestroyed();
-	ChangeAnimation();
+	ChangeAnimation( facing,  pathfind);
 
 	//DOES NOT CHANGE ANYTHING BY ITSELF - ONLY INPUT INSIDE -¬
 	//ForceAnimations();
@@ -323,7 +268,7 @@ bool Hound::Update(float dt)
 	
 	Troop::Update(dt);
 
-	App->render->DrawQuad({position.first,position.second,20,20}, 255, 255, 255, 255, false);
+	App->render->DrawQuad({position.first,position.second,5,5}, 255, 255, 255, 255, false);
 
 	return true;
 }
@@ -361,48 +306,6 @@ bool Hound::Is_inRange(pair<int, int> pos, int &distance, pair <int, int> positi
 	return distance <= range;
 }
 
-void Hound::PrintState() {
-	/*switch (state)
-	{
-	case NOT_DEPLOYED:
-		LOG("STATE = NOT_DEPLOYED");
-
-		break;
-	case TROOP_IDLE:
-		LOG("STATE = IDLE");
-		break;
-	case MOVING:
-		LOG("STATE = MOVING");
-		break;
-	case SHOOTING:
-		LOG("STATE = SHOOTING");
-		break;
-	case REST:
-		LOG("STATE = REST");
-		break;
-	case MAX_STATE:
-		LOG("MOVING");
-		break;
-	default:
-		break;
-	}*/
-}
-
-void Hound::ForceAnimations() {
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
-		Current_Animation = moving[(curr++) % SOUTHWEST];
-
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
-		Current_Animation = shooting[(curr++) % SOUTHWEST];
-
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
-		Current_Animation = idle;
-		idle->SetCurrentFrame((curr++) % SOUTHWEST);
-	}
-}
 
 void Hound::ActOnDestroyed() {
 
@@ -528,139 +431,260 @@ void Hound::MovementPathfind(Entity* target, pair <int,int> map_pos)
 	}
 }
 
-void Hound::SimpleMovement(bool fromplayer1, TroopDir move)
+void Hound::SimpleMovement()
 {
 	//NOTE: pathfind is wakable is giving prolem, returning the info moved one to the left
-	// for now all fro player 1
+	
 	bool north = true;
 	bool south = true;
 	bool west = true;
 	bool east = true;
-	bool moved = false;
 	
+	bool fromPlayer = fromPlayer1;
+	
+	if (offensive == false)
+	{
+		fromPlayer = !fromPlayer;
+	}
+
 	pair <int, int> aux = position;
-	aux.first -= Current_Animation->frames->w / 2;
-	aux.second -= Current_Animation->frames->h / 2;
 
-	//north
-	pair <int, int > map_pos_aux = App->map->WorldToMap(aux.first + 2, aux.second - 1);
-	north = App->pathfinding->IsWalkable(map_pos_aux);
-
-	// if can go north, go north
-	if (north)
+	if (fromPlayer)
 	{
-		//move front
-		position.first += 2;
-		position.second += -1;
-		
-		moved = true;
-	}
-	//else
+		//north
+		pair <int, int > map_pos_aux = App->map->WorldToMap(aux.first - 2, aux.second + 1);
+		south = App->pathfinding->IsWalkable(map_pos_aux);
 
-	//east
-	map_pos_aux = App->map->WorldToMap(aux.first +2, aux.second + 1);
-	east = App->pathfinding->IsWalkable(map_pos_aux);
-
-	//if it cant go north, but can go east, go east
-	if (!north && east)
-	{
-		//move rigth
-		position.first += 2;
-		position.second += 1;
-
+		// if can go north, go north
+		if (south)
+		{
+			//move front
+			position.first += -2;
+			position.second += 1;
+			facing = SOUTH;
+		}
+		else
+		{
+			//move rigth
+			position.first += 2;
+			position.second += 1;
+			facing = EAST;
+		}
 		
 	}
+	else if (!fromPlayer)
+	{
+		
+			//north
+			pair <int, int > map_pos_aux = App->map->WorldToMap(aux.first + 2, aux.second - 1);
+			north = App->pathfinding->IsWalkable(map_pos_aux);
 
-
-
-	////if it cant go north and cant go east, go between them
-	//if (!north && !east)
-	//{
-	//	//move rigth
-	//	aux.first += 2;
-	//	position = aux;
-	//}
-
-	////west
-	//map_pos_aux = App->map->WorldToMap(position.first - 2, position.second - 1);
-	//west = App->pathfinding->IsWalkable(map_pos_aux);
-
-	////if it cant go north, but can go west, go west
-	//if (!north && west)
-	//{
-	//	//move left
-	//	aux.first += -2;
-	//	aux.second += -1;
-
-	//	position = aux;
-	//}
-
-
-
+			// if can go north, go north
+			if (north)
+			{
+				//move front
+				position.first += 2;
+				position.second += -1;
+				facing = NORTH;
+			}
+			else
+			{
+				//move rigth
+				position.first += 2;
+				position.second += 1;
+				facing = EAST;
+			}
+	}
 
 
 }
 
-void Hound::ChangeAnimation() {
+void Hound::ChangeAnimation(TroopDir facing, bool pathfind) {
 	Current_Animation = idle;
-	if (state == MOVING)
+	if (pathfind)
 	{
-		//isShooting = false;
-		if (Speed.first == 0 && Speed.second < 0)
+		if (state == MOVING)
 		{
-			//north
-			Current_Animation = moving[NORTH];
+			//isShooting = false;
+			if (Speed.first == 0 && Speed.second < 0)
+			{
+				//north
+				Current_Animation = moving[NORTH];
+			}
+			else if (Speed.first == 0 && Speed.second > 0)
+			{
+				//south
+				Current_Animation = moving[SOUTH];
+			}
+			else if (Speed.first < 0 && Speed.second == 0)
+			{
+				//west
+				Current_Animation = moving[WEST];
+			}
+			else if (Speed.first > 0 && Speed.second == 0)
+			{
+				//east
+				Current_Animation = moving[EAST];
+			}
+			else if (Speed.first > 0 && Speed.second < 0)
+			{
+				//north east
+				Current_Animation = moving[NORTHEAST];
+			}
+			else if (Speed.first > 0 && Speed.second > 0)
+			{
+				//south east
+				Current_Animation = moving[SOUTHEAST];
+			}
+			else if (Speed.first < 0 && Speed.second < 0)
+			{
+				//north west
+				Current_Animation = moving[NORTHWEST];
+			}
+			else if (Speed.first < 0 && Speed.second > 0)
+			{
+				//south wst
+				Current_Animation = moving[SOUTHWEST];
+			}
 		}
-		else if (Speed.first == 0 && Speed.second > 0)
+		else if (state == SHOOTING)
 		{
-			//south
-			Current_Animation = moving[SOUTH];
+
+			if (fromPlayer1)
+			{
+				Current_Animation = shooting[SOUTH];
+			}
+			else
+			{
+				Current_Animation = shooting[NORTH];
+			}
+
+			if (info.closest->position == position)
+			{
+				if (fromPlayer1)
+				{
+					Current_Animation = shooting[SOUTH];
+				}
+				else
+				{
+					Current_Animation = shooting[NORTH];
+				}
+			}
+			else if (info.closest->position.second <= position.second && info.closest->position.first >= position.first)
+			{
+				//noth
+				Current_Animation = shooting[NORTH];
+				if (info.closest->position.second == position.second)
+				{
+					//northwest
+					Current_Animation = shooting[NORTHWEST];
+				}
+				//else if (info.closest->position.second > position.second)
+				//{
+				//	//north
+				//	Current_Animation = shooting[NORTH];
+				//}
+				else if (info.closest->position.first == position.first)
+				{
+					//northeast
+					Current_Animation = shooting[NORTHEAST];
+				}
+			}
+			else if (info.closest->position.first >= position.first && info.closest->position.second >= position.second)
+			{
+				//south
+				Current_Animation = shooting[SOUTH];
+				if (info.closest->position.second == position.second)
+				{
+					//southwest
+					Current_Animation = shooting[SOUTHWEST];
+				}
+				//else if (info.closest->position.second > position.second)
+				//{
+				//	//north
+				//	Current_Animation = shooting[NORTH];
+				//}
+				else if (info.closest->position.first == position.first)
+				{
+					//southeast
+					Current_Animation = shooting[SOUTHEAST];
+				}
+			}
+			else if (info.closest->position.second > position.second && info.closest->position.first > position.first)
+			{
+				//east
+				Current_Animation = shooting[EAST];
+			}
+			else if (info.closest->position.second < position.second && info.closest->position.first < position.first)
+			{
+				//west
+				Current_Animation = shooting[WEST];
+
+			}
+			else
+			{
+				if (fromPlayer1)
+				{
+					Current_Animation = shooting[SOUTH];
+				}
+				else
+				{
+					Current_Animation = shooting[NORTH];
+				}
+			}
+
 		}
-		else if (Speed.first < 0 && Speed.second == 0)
-		{
-			//west
-			Current_Animation = moving[WEST];
-		}
-		else if (Speed.first > 0 && Speed.second == 0)
-		{
-			//east
-			Current_Animation = moving[EAST];
-		}
-		else if (Speed.first > 0 && Speed.second < 0)
-		{
-			//north east
-			Current_Animation = moving[NORTHEAST];
-		}
-		else if (Speed.first > 0 && Speed.second > 0)
-		{
-			//south east
-			Current_Animation = moving[SOUTHEAST];
-		}
-		else if (Speed.first < 0 && Speed.second < 0)
-		{
-			//north west
-			Current_Animation = moving[NORTHWEST];
-		}
-		else if (Speed.first < 0 && Speed.second > 0)
-		{
-			//south wst
-			Current_Animation = moving[SOUTHWEST];
-		}
+
 	}
-	else if (state == SHOOTING)
+	else
 	{
-
-		if (fromPlayer1)
+		if (state == MOVING)
 		{
-			Current_Animation = shooting[SOUTH];
+			//isShooting = false;
+			if (facing==NORTH)
+			{
+				//north
+				Current_Animation = moving[NORTHEAST];
+			}
+			else if (facing == SOUTH)
+			{
+				//south
+				Current_Animation = moving[SOUTHWEST];
+			}
+			else if (facing == WEST)
+			{
+				//west
+				Current_Animation = moving[NORTHWEST];
+			}
+			else if (facing == EAST)
+			{
+				//east
+				Current_Animation = moving[SOUTHEAST];
+			}
+			//else if (Speed.first > 0 && Speed.second < 0)
+			//{
+			//	//north east
+			//	Current_Animation = moving[NORTHEAST];
+			//}
+			//else if (Speed.first > 0 && Speed.second > 0)
+			//{
+			//	//south east
+			//	Current_Animation = moving[SOUTHEAST];
+			//}
+			//else if (Speed.first < 0 && Speed.second < 0)
+			//{
+			//	//north west
+			//	Current_Animation = moving[NORTHWEST];
+			//}
+			//else if (Speed.first < 0 && Speed.second > 0)
+			//{
+			//	//south wst
+			//	Current_Animation = moving[SOUTHWEST];
+			//}
 		}
-		else
+		else if (state == SHOOTING)
 		{
-			Current_Animation = shooting[NORTH];
-		}
 
-		if (info.closest->position == position)
-		{
 			if (fromPlayer1)
 			{
 				Current_Animation = shooting[SOUTH];
@@ -669,70 +693,82 @@ void Hound::ChangeAnimation() {
 			{
 				Current_Animation = shooting[NORTH];
 			}
-		}
-		else if (info.closest->position.second <= position.second && info.closest->position.first >= position.first)
-		{
-			//noth
-			Current_Animation = shooting[NORTH];
-			if (info.closest->position.second == position.second)
-			{
-				//northwest
-				Current_Animation = shooting[NORTHWEST];
-			}
-			//else if (info.closest->position.second > position.second)
-			//{
-			//	//north
-			//	Current_Animation = shooting[NORTH];
-			//}
-			else if (info.closest->position.first == position.first)
-			{
-				//northeast
-				Current_Animation = shooting[NORTHEAST];
-			}
-		}
-		else if (info.closest->position.first >= position.first && info.closest->position.second >= position.second)
-		{
-			//south
-			Current_Animation = shooting[SOUTH];
-			if (info.closest->position.second == position.second)
-			{
-				//southwest
-				Current_Animation = shooting[SOUTHWEST];
-			}
-			//else if (info.closest->position.second > position.second)
-			//{
-			//	//north
-			//	Current_Animation = shooting[NORTH];
-			//}
-			else if (info.closest->position.first == position.first)
-			{
-				//southeast
-				Current_Animation = shooting[SOUTHEAST];
-			}
-		}
-		else if (info.closest->position.second > position.second && info.closest->position.first > position.first)
-		{
-			//east
-			Current_Animation = shooting[EAST];
-		}
-		else if (info.closest->position.second < position.second && info.closest->position.first < position.first)
-		{
-			//west
-			Current_Animation = shooting[WEST];
 
-		}
-		else
-		{
-			if (fromPlayer1)
+			if (info.closest->position == position)
 			{
+				if (fromPlayer1)
+				{
+					Current_Animation = shooting[SOUTH];
+				}
+				else
+				{
+					Current_Animation = shooting[NORTH];
+				}
+			}
+			else if (info.closest->position.second <= position.second && info.closest->position.first >= position.first)
+			{
+				//noth
+				Current_Animation = shooting[NORTH];
+				if (info.closest->position.second == position.second)
+				{
+					//northwest
+					Current_Animation = shooting[NORTHWEST];
+				}
+				//else if (info.closest->position.second > position.second)
+				//{
+				//	//north
+				//	Current_Animation = shooting[NORTH];
+				//}
+				else if (info.closest->position.first == position.first)
+				{
+					//northeast
+					Current_Animation = shooting[NORTHEAST];
+				}
+			}
+			else if (info.closest->position.first >= position.first && info.closest->position.second >= position.second)
+			{
+				//south
 				Current_Animation = shooting[SOUTH];
+				if (info.closest->position.second == position.second)
+				{
+					//southwest
+					Current_Animation = shooting[SOUTHWEST];
+				}
+				//else if (info.closest->position.second > position.second)
+				//{
+				//	//north
+				//	Current_Animation = shooting[NORTH];
+				//}
+				else if (info.closest->position.first == position.first)
+				{
+					//southeast
+					Current_Animation = shooting[SOUTHEAST];
+				}
+			}
+			else if (info.closest->position.second > position.second && info.closest->position.first > position.first)
+			{
+				//east
+				Current_Animation = shooting[EAST];
+			}
+			else if (info.closest->position.second < position.second && info.closest->position.first < position.first)
+			{
+				//west
+				Current_Animation = shooting[WEST];
+
 			}
 			else
 			{
-				Current_Animation = shooting[NORTH];
+				if (fromPlayer1)
+				{
+					Current_Animation = shooting[SOUTH];
+				}
+				else
+				{
+					Current_Animation = shooting[NORTH];
+				}
 			}
-		}
 
+		}
 	}
 
 }

@@ -107,6 +107,7 @@ bool EntityManager::PreUpdate()
 
 	bool ret = true;
 
+	
 	if (App->scene->pause == false)
 	{
 		// Player 1 Buildings

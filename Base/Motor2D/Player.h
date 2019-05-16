@@ -113,6 +113,7 @@ public:
 	bool isCasting = false;
 	bool isPaused = false;
 	bool inmune = false;
+	bool offensive = true;
 
 	int timer_ref_sec = 0;
 	int timer_ref_min = 0;

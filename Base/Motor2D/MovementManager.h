@@ -41,6 +41,9 @@ public:
 
 	int DistanceTo(pair<int, int> pos, pair<float, float> destination);
 
+
+
+
 private:
 
 	std::list <Group*>	Groups;

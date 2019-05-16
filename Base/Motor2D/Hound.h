@@ -15,13 +15,11 @@ public:
 	bool Update(float dt);
 	void SetDestination();
 	bool Is_inRange(pair<int, int> pos, int & distance, pair<int, int> position, int range);
-	void PrintState();
-	void ForceAnimations();
 	void ActOnDestroyed();
 	void CleanUp();
 	void MovementPathfind(Entity* target, pair <int, int> map_pos);
-	void SimpleMovement(bool fromplayer1, TroopDir move);
-	void ChangeAnimation();
+	void SimpleMovement();
+	void ChangeAnimation(TroopDir facing, bool fromplayer1);
 
 	Entity * FindEntityInAttackRange(pair<int, int> pos, bool fromplayer1, int attackrange, entityType type);
 	Entity * FindNearestEntity(pair<int, int> pos, bool fromplayer1, entityType type);

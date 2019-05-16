@@ -165,8 +165,8 @@ pair<int,int> Map::WorldToMap(int x, int y) const
 	else if(data.type == MAPTYPE_ISOMETRIC)
 	{
 		
-		int half_width = data.tile_width /2;
-		int half_height = data.tile_height /2;
+		int half_width = int(data.tile_width /2);
+		int half_height = int(data.tile_height /2);
 		ret.first = int( (x / half_width + y / half_height) / 2);
 		ret.second = int( (y / half_height - (x / half_width)) / 2);
 	}
