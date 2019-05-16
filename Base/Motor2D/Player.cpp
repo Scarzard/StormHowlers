@@ -1922,5 +1922,59 @@ void Player::Blit_Info()
 		else
 			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 	}
+	else if ((*focus) == Build_icon)
+	{
+		section = { 1425, 1234, 351, 87 };
+
+		if (isPlayer1)
+			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+		else
+			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+	}
+	else if ((*focus) == Deploy_icon)
+	{
+		section = { 1425, 1331, 351, 87 };
+
+		if (isPlayer1)
+			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+		else
+			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+	}
+	else if ((*focus) == Cast_icon)
+	{
+		section = { 1425, 1426, 351, 87 };
+
+		if (isPlayer1)
+			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+		else
+			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+	}
+	else if ((*focus) == Missiles_icon)
+	{
+		section = { 1075, 1426, 351, 87 };
+
+		if (isPlayer1)
+			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+		else
+			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+	}
+	else if ((*focus) == Cast2_icon)
+	{
+		section = { 360, 1426, 351, 87 };
+
+		if (isPlayer1)
+			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+		else
+			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+	}
+	else if ((*focus) == Cast3_icon)
+	{
+		section = { 716, 1426, 351, 87 };
+
+		if (isPlayer1)
+			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+		else
+			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+	}
 }
 
