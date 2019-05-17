@@ -58,11 +58,19 @@ bool Hound::Update(float dt)
 				{
 					state = SEARCH;
 					timer.Start();
+					//facing direction for 
+				}
+				if (offensive)
+				{
+					state = MOVING;
+					info.closest = nullptr;
+					pathfind = false;
+					timer.Start();
 				}
 				break;
 
 			case MOVING:
-				if (pathfind)
+				if (pathfind && offensive)
 				{
 					if (info.closest != nullptr)
 					{
@@ -73,7 +81,7 @@ bool Hound::Update(float dt)
 						pathfind = false;
 					}
 				}
-				else if (timer.ReadSec() > 1 && info.closest == nullptr)
+				else if (timer.ReadSec() > 1 && info.closest == nullptr && offensive)
 				{
 					state = SEARCH;
 					timer.Start();
@@ -117,6 +125,12 @@ bool Hound::Update(float dt)
 					state = MOVING;
 					timer.Start();
 					info.closest = nullptr;
+				}
+				if (!offensive)
+				{
+					state = MOVING;
+					info.closest = nullptr;
+
 				}
 				break;
 			
