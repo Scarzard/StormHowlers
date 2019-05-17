@@ -69,7 +69,23 @@ bool DefenseAoe::Update(float dt)
 		// Shoots the closest one if in range
 		if (timer.ReadSec() >= rate_of_fire && Is_inRange(closest->position, d))
 		{
-			closest->TakeDamage(damage_lv[level]);
+			if (fromPlayer1)
+			{
+				if (!App->player2->inmune)
+				{
+					closest->TakeDamage(damage_lv[level]);
+
+				}
+			}
+			else if (!fromPlayer1)
+			{
+
+				if (!App->player1->inmune)
+				{
+					closest->TakeDamage(damage_lv[level]);
+
+				}
+			}
 			timer.Start();
 			App->audio->PlayFx(TESLA_ATTACK);
 			//LOG("Distance: %d", d);
@@ -121,7 +137,6 @@ bool DefenseAoe::Update(float dt)
 
 		if (health <= 0) //destroyed
 		{
-			App->player1->UpdateWalkabilityMap(true, colider);
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
@@ -172,7 +187,6 @@ bool DefenseAoe::Update(float dt)
 
 		if (health <= 0) //destroyed
 		{
-			App->player2->UpdateWalkabilityMap(true, colider);
 			App->player2->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));

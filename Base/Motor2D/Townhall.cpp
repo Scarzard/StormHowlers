@@ -106,15 +106,6 @@ bool Townhall::Update(float dt)
 			}
 		}
 
-		// Just to test the LiveBar
-		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		{
-			health -= 100;
-
-			if (health < 0)
-				health = 0;
-		}
-
 	}
 	else
 	{
@@ -173,15 +164,6 @@ bool Townhall::Update(float dt)
 				upgrade = false;
 				//play fx (upgrade);
 			}
-		}
-
-		// Just to test the LiveBar
-		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-		{
-			health -= 100;
-
-			if (health < 0)
-				health = 0;
 		}
 
 	}

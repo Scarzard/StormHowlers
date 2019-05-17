@@ -17,10 +17,7 @@ Barracks::Barracks(bool isPlayer1, pair<int, int> pos, Collider collider) : Buil
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
 
-	if (fromPlayer1)
-		App->player1->total_capacity += 10;
-	else
-		App->player2->total_capacity += 10;
+	
 }
 
 bool Barracks::PreUpdate()
@@ -83,14 +80,29 @@ bool Barracks::Update(float dt)
 				upgrade = false;
 				//play fx (upgrade);
 			}
+
+			if (TroopsCreated.empty() == false)
+			{
+				if (timer.ReadSec() >= 1)
+				{
+					pair<int, int> pos;
+					pos.first = position.first - 100;
+					pos.second = position.second + 60;
+
+					list<Entity::entityType>::iterator first_troop = TroopsCreated.begin();
+					App->entitymanager->AddEntity(true, (*first_troop), pos, collider);
+					TroopsCreated.pop_front();
+					timer.Start();
+					
+				}
+			}
 		}
 		else //destroyed
 		{
-			App->player1->total_capacity -= 10;
-			App->player1->UpdateWalkabilityMap(true, collider);
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->player1->BarracksCreated -= 1;
 		}
 
 		if (repair == true) //repair
@@ -146,15 +158,31 @@ bool Barracks::Update(float dt)
 				upgrade = false;
 				//play fx (upgrade);
 			}
+
+			if (TroopsCreated.empty() == false)
+			{
+				if (timer.ReadSec() >= 1)
+				{
+					pair<int, int> pos;
+					pos.first = position.first - 100;
+					pos.second = position.second + 60;
+
+					list<Entity::entityType>::iterator first_troop = TroopsCreated.begin();
+					App->entitymanager->AddEntity(false, (*first_troop), pos, collider);
+					TroopsCreated.pop_front();
+					timer.Start();
+
+				}
+			}
 		}
 		else //destroyed
 		{
-
-			App->player2->UpdateWalkabilityMap(true, collider);
 			App->player2->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->map->explosion_anim->speed = 0.5f;
-			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
+
+			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->player2->BarracksCreated -= 1; 
 		}
 
 		if (repair == true) //repair

@@ -62,7 +62,23 @@ bool MainDefense::Update(float dt)
 		if (timer.ReadSec() >= rate_of_fire && Is_inRange(closest->position, d))
 		{
 			 isShooting = true;
-			closest->TakeDamage(damage_lv[level]);
+			 if (fromPlayer1)
+			 {
+				 if (!App->player2->inmune)
+				 {
+					 closest->TakeDamage(damage_lv[level]);
+
+				 }
+			 }
+			 else if (!fromPlayer1)
+			 {
+
+				 if (!App->player1->inmune)
+				 {
+					 closest->TakeDamage(damage_lv[level]);
+
+				 }
+			 }
 			timer.Start();
 			App->audio->PlayFx(SENTRYGUN_ATTACK);
 			//LOG("Distance: %d", d);
@@ -121,7 +137,6 @@ bool MainDefense::Update(float dt)
 
 		if (health <= 0) //destroyed
 		{
-			App->player1->UpdateWalkabilityMap(true, collider);
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
@@ -172,7 +187,6 @@ bool MainDefense::Update(float dt)
 
 		if (health <= 0) //destroyed
 		{
-			App->player2->UpdateWalkabilityMap(true, collider);
 			App->player2->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
@@ -197,7 +211,7 @@ void MainDefense::CleanUp()
 void MainDefense::LoadAnimations(bool isPlayer1, string path)
 {
 	//moving = vector<Animation*>(entityDir::MAX, nullptr);
-	shooting = vector<Animation*>(entityDir::MAX, nullptr);
+	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
 	//idle = idle->LoadAnimation(path.data(), (isPlayer1) ? "red_constructing" : "blue_constructing");
 

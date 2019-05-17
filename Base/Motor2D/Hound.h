@@ -1,14 +1,16 @@
-#ifndef __Soldier_H__
-#define __Soldier_H__
+#ifndef __Hound_H__
+#define __Hound_H__
+
 #include "Troop.h"
 #include "EntityManager.h"
 
-class Soldier :	public Troop
+
+class Hound : public Troop
 {
 public:
-	Soldier();
-	Soldier(bool isPlayer1, pair<int, int> pos, Collider collider);
-	~Soldier();
+	Hound();
+	Hound(bool isPlayer1, pair<int, int> pos, Collider collider);
+	~Hound();
 
 	bool Update(float dt);
 	void SetDestination();
@@ -20,7 +22,7 @@ public:
 
 	void ChangeAnimation();
 
-
+	Troop * FindBuilding(pair<int, int> pos, bool fromplayer1, int attackrange);
 
 	void LoadAnimations(bool isPlayer1, string path);
 
@@ -28,7 +30,7 @@ public:
 	bool defensive = true;
 	bool offensive = true;
 	pair<int, int> destination;
-	Entity* closest = nullptr;
+	Troop* closest = nullptr;
 
 	float resting_time = 2.0f;
 	Timer rest;

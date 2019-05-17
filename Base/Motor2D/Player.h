@@ -34,10 +34,17 @@ struct GeneralUI
 class Player : public Module
 {
 public:
+	enum DeployState {
+		START,
+		DEPLOYING,
+		END
+	};
 	enum CURRENT_UI
 	{
 		NONE,
 		CURR_MAIN_MENU,
+		CURR_MM_SETTINGS,
+		CURR_MM_CREDITS,
 		CURR_SELECTING_BUILDING,
 		CURR_MAIN,
 		CURR_BUILD,
@@ -66,6 +73,8 @@ public:
 	~Player();
 
 	bool Start();
+	void RectangleSelection();
+	bool DeployTroops(Entity::entityType type, int amount, pair<int, int> pos);
 	bool Awake(pugi::xml_node &config);
 	bool Update(float dt);
 	bool PostUpdate();
@@ -76,7 +85,9 @@ public:
 	// ---------------------- UI functions -----------------------------------------
 
 	void UpdateVisibility(); //update gui visibility
-	void DoLogic(UI_Element* data); //gui actions
+	void DoLogic(UI_Element* data);
+	void UpdateWalkabilityMap(char cell_type, Collider collider);
+	//gui actions
 	void UpdateFocus(uint data);	//updates where the focus is pointing
 	void GotoPrevWindows(uint data);
 	UI_Element* GetUI_Element(uint data); //returns the window we are currently on
@@ -88,16 +99,14 @@ public:
 	void CreateTroop(int type, int number);
 	void CreateAbility(int type, int number);
 
-	void SpawnMultipleTroops(uint type);
-
 	void DrawBuildingCollider(int type, bool isPlayer1);
 
 	bool CheckBuildingPos();
 	Collider GetCollider(pair<int, int> dimensions, pair<int,int> topTile_pos);
-	void UpdateWalkabilityMap(bool isWalkable, Collider collider);
+	//void UpdateWalkabilityMap(bool isWalkable, Collider collider);
 	bool DeleteEntity(Entity* entity);
 
-	int CheckCost(Entity* entity);
+	int CheckCost(Entity::entityType type);
 	int GoldKill(Entity* entity);
 	
 public:
@@ -105,6 +114,16 @@ public:
 	bool isDeploying = false;
 	bool isCasting = false;
 	bool isPaused = false;
+	bool inmune = false;
+
+	int timer_ref_sec = 0;
+	int timer_ref_min = 0;
+	int desired_second = 0;
+	int desired_min = 0;
+
+	bool pathfinding = true;
+
+
 
 	Collider collider;
 	pair<int, int> offset;
@@ -115,8 +134,11 @@ public:
 	bool isPlayer1 = false;
 	string team;
 
-	uint gold = 0;
-	uint gold_persecond = 0;
+	int gold = 0;
+	int gold_persecond = 0;
+
+	SDL_Rect rectangle_origin = { 0,0,0,0 };
+
 	bool gold_added = false;
 
 	uint time_iterator = 0;
@@ -124,23 +146,16 @@ public:
 	uint last_currentUI = 0;
 	uint currentUI = 0;
 
-	int total_capacity = 0; //sum of all barracks capacities
-	int actual_capacity = 0; //sum of all created troops
-	
-  
-	//bool entityAdded;
-	//Entity* previewEntity;
+	DeployState deploy_state = DeployState::END;
 
 	vector<SDL_Rect>* preview_rects;
 
 	SDL_Rect LiveBar;
 	int health, max_health = 0;
 
-	// Live of TOWN HALL
-	int live = 0;
-	
 	//index for testing previews
 	int curr = 1;
+	int deploying_counter = 0;
 
 	GamePad gamepad;
 
@@ -152,14 +167,18 @@ public:
 	SDL_Rect selected_texture = { 0,0,0,0 };
 	list<Building*>::iterator building_selected;
 	list<Building*>::iterator last_building;
+	vector<Group*> groups = vector<Group*>();
+	int group = 0;
 
 	list<Troop*> troops;
+	list<Entity*> entities;
 
 	int SoldiersCreated = 0;
 	int TankmansCreated = 0;
 	int InfiltratorsCreated = 0;
 	int EngineersCreated = 0;
 	int WarHoundsCreated = 0;
+	int BarracksCreated = 0;
 
 	int Invulnerable_abilities = 0;
 
@@ -207,20 +226,11 @@ public:
 
 	UI_Element* Deploy_UI = nullptr;
 	UI_Element* Soldier_icon = nullptr;
-	UI_Element* Soldier_text = nullptr;
-	char soldier_label[4] = "0";
 	UI_Element* Tankman_icon = nullptr;
-	UI_Element* Tankman_text = nullptr;
-	char tankman_label[4] = "0";
 	UI_Element* Infiltrator_icon = nullptr;
-	UI_Element* Infiltrator_text = nullptr;
-	char infiltrator_label[4] = "0";
 	UI_Element* Engineer_icon = nullptr;
-	UI_Element* Engineer_text = nullptr;
-	char engineer_label[4] = "0";
 	UI_Element* War_hound_icon = nullptr;
-	UI_Element* War_hound_text = nullptr;
-	char war_hound_label[4] = "0";
+	
 
 	UI_Element* Troop_cost_text = nullptr;
 	char Troop_cost_label[10] = "0000 $";
@@ -269,7 +279,7 @@ public:
 	UI_Element* accept_button = nullptr;
 	UI_Element* cancel_button = nullptr;
 
-	int UI_troop_type = 9; //select type of troop (9 is soldier) 
+	int UI_troop_type = 8; //select type of troop (9 is soldier) 
 	int UI_ability_type = 0;
 	int number_of_troops = 0;
 

@@ -57,6 +57,8 @@ public:
 	vector<uint>	production_lv;
 	vector<uint>	capacity_lv;
 
+	list<Entity::entityType> TroopsCreated; //for barracks
+
 	int production = 0;
 	int capacity = 0;
 

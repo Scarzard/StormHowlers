@@ -13,7 +13,7 @@
  <imagelayer name="Capa de Imagen 1">
   <image source="Flags_tiled.png" width="888" height="780"/>
  </imagelayer>
- <objectgroup name="flag_soviet">
+ <objectgroup name="flag_allied">
   <object id="1" x="0" y="0" width="148" height="130"/>
   <object id="2" x="148" y="0" width="148" height="130"/>
   <object id="3" x="296" y="0" width="148" height="130"/>
@@ -31,7 +31,7 @@
   <object id="16" x="296" y="260" width="148" height="130"/>
   <object id="17" x="444" y="260" width="148" height="130"/>
  </objectgroup>
- <objectgroup name="flag_allied">
+ <objectgroup name="flag_soviet">
   <object id="18" x="0" y="390" width="148" height="130"/>
   <object id="19" x="148" y="390" width="148" height="130"/>
   <object id="20" x="296" y="390" width="148" height="130"/>

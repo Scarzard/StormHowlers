@@ -3,8 +3,9 @@
 
 #include "Entity.h"
 #include "Group.h"
+#include "Render.h"
 
-enum entityDir {
+enum TroopDir {
 	NORTH,
 	SOUTH,
 	EAST,
@@ -14,7 +15,7 @@ enum entityDir {
 	SOUTHEAST,
 	SOUTHWEST,
 
-	MAX
+	MAX_DIR
 };
 
 
@@ -24,19 +25,17 @@ public:
 
 	Troop() {};
 	Troop(entityType type, bool isPlayer1, pair<int, int> pos, Collider Collider) : Entity(type, isPlayer1, pos, Collider) {
-
+		BROFILER_CATEGORY("Troop constructor", Profiler::Color::LimeGreen);
 		pugi::xml_document	config_file;
 		pugi::xml_node config;
 		config = App->LoadConfig(config_file);
-		config = config.child("entitymanager").child("troops").child(&name[0]);
+		config = config.child("entitymanager").child("troops").child(name.data());
 
 		speed = config.child("speed").attribute("value").as_int();
-
 		collider = Collider;
-
-		//collider = { 180,0,59,28 };
-		//if (!isPlayer1)
-		//	collider = { 120,0,59,28 };
+		state = TROOP_IDLE;
+		init_position = pos;
+		
 
 	}
 	~Troop() {};
@@ -46,14 +45,21 @@ public:
 	}
 	bool Update(float dt) {
 
-		
+		//if (isSelected) 
+		//{
+		//	SDL_Rect r = Current_Animation->GetCurrentFrame(dt);
+		//	r.x = position.first;
+		//	r.y = position.second;
+		//	App->render->DrawQuad(r, 255, 0, 0, 255,false);
+		//	//LOG("SELECTED");
+		//}
 		return true;
 	}
 
 public:
 
 	
-	pair<int, int> Speed = { 1,1 };
+	
 
 	Animation* idle = nullptr;
 	vector<Animation*> moving;
@@ -63,16 +69,24 @@ public:
 
 	vector<pair<int, int>> path;
 	int path_count = 1;
-	
 
-	bool isMoving = false;
-	bool isShooting = false;
 
-	// Group Movement
-	int speed = 0;
-	Group_Unit info;
-	bool isSelected = true;
 	
+	bool isInvulnerable = false;
+	bool offensive_mode = false;
+	float time_to_awake = 2.0f;
+
+
+	
+	
+	pair<int, int> init_position;
+
+
+
+
+	// CHANGED TO TROOP STATE
+	/*bool isMoving = false;
+	bool isShooting = false;*/
 };
 
 #endif

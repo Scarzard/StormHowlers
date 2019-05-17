@@ -11,7 +11,7 @@
  <imagelayer name="Capa de Imagen 1">
   <image source="sentrygun_tiled.png" width="372" height="312"/>
  </imagelayer>
- <objectgroup name="red_constructing">
+ <objectgroup name="blue_constructing">
   <object id="9" x="0" y="78" width="62" height="39"/>
   <object id="12" x="62" y="78" width="62" height="39"/>
   <object id="13" x="124" y="78" width="62" height="39"/>
@@ -30,7 +30,7 @@
   <object id="91" x="124" y="39" width="62" height="39"/>
   <object id="92" x="62" y="39" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_constructing" visible="0">
+ <objectgroup name="red_constructing" visible="0">
   <object id="55" x="0" y="234" width="62" height="39"/>
   <object id="56" x="62" y="234" width="62" height="39"/>
   <object id="57" x="124" y="234" width="62" height="39"/>
@@ -44,52 +44,52 @@
   <object id="65" x="248" y="273" width="62" height="39"/>
   <object id="66" x="310" y="273" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="red_NW" visible="0">
+ <objectgroup name="blue_NW" visible="0">
   <object id="67" x="0" y="0" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="red_SE" visible="0">
+ <objectgroup name="blue_SE" visible="0">
   <object id="68" x="62" y="0" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="red_N" visible="0">
+ <objectgroup name="blue_N" visible="0">
   <object id="69" x="124" y="0" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="red_NE" visible="0">
+ <objectgroup name="blue_NE" visible="0">
   <object id="70" x="186" y="0" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="red_W" visible="0">
+ <objectgroup name="blue_W" visible="0">
   <object id="71" x="0" y="39" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="red_SW" visible="0">
+ <objectgroup name="blue_SW" visible="0">
   <object id="72" x="62" y="39" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="red_S" visible="0">
+ <objectgroup name="blue_S" visible="0">
   <object id="73" x="124" y="39" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="red_E" visible="0">
+ <objectgroup name="blue_E" visible="0">
   <object id="74" x="186" y="39" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_NW" visible="0">
+ <objectgroup name="red_NW" visible="0">
   <object id="75" x="0" y="156" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_SE" visible="0">
+ <objectgroup name="red_SE" visible="0">
   <object id="76" x="62" y="156" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_N" visible="0">
+ <objectgroup name="red_N" visible="0">
   <object id="77" x="124" y="156" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_NE" visible="0">
+ <objectgroup name="red_NE" visible="0">
   <object id="78" x="186" y="156" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_W" visible="0">
+ <objectgroup name="red_W" visible="0">
   <object id="79" x="0" y="195" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_SW" visible="0">
+ <objectgroup name="red_SW" visible="0">
   <object id="80" x="62" y="195" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_S" visible="0">
+ <objectgroup name="red_S" visible="0">
   <object id="81" x="124" y="195" width="62" height="39"/>
  </objectgroup>
- <objectgroup name="blue_E" visible="0">
+ <objectgroup name="red_E" visible="0">
   <object id="82" x="186" y="195" width="62" height="39"/>
  </objectgroup>
 </map>

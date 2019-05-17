@@ -83,8 +83,8 @@ bool Scene::Start()
 	/*App->player1->isPlayer1 = true;
 	App->player2->isPlayer1 = false;
 */
-	App->player1->currentUI = Player::CURRENT_UI::NONE;
-	App->player2->currentUI = Player::CURRENT_UI::NONE;
+	App->player1->currentUI = Player::CURRENT_UI::CURR_MAIN;
+	App->player2->currentUI = Player::CURRENT_UI::CURR_MAIN;
 
 	App->map->debug_tex = App->tex->Load("maps/meta.png");
 
@@ -108,8 +108,8 @@ bool Scene::Start()
 	App->map->explosion_anim = App->map->explosion_anim->LoadAnimation("animation/explosion.tmx", "animation");
 
 
-	App->player1->LiveBar = { 51, 18 , 348, 19 }; //LiveBar for player1
-	App->player2->LiveBar = { 1232, 921 , 348, 19 }; //LiveBar for player2
+	App->player1->LiveBar = { 1232, 921 , 348, 19 };  //LiveBar for player1
+	App->player2->LiveBar = { 51, 18, 348, 19 };      //LiveBar for player2
 
 
 	//walkability map
@@ -149,25 +149,25 @@ bool Scene::Start()
 	//--- PLAYER 1
 	//App->player1->Health_UI = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
 	//App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
-	App->player1->Main_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, true);
-	App->player1->Main_UI->rect = { 0,245,566,163 };
-	App->player1->Build_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_BUILD, { 275,55 }, { 80, 81 }, App->player1->Main_UI, true);
-	App->player1->Deploy_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 378,55 }, { 80, 81 }, App->player1->Main_UI, true);
-	App->player1->Cast_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 482,55 }, { 80,81 }, App->player1->Main_UI, true);
 
-	App->player1->Y_to_Main = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 5 , 70 }, { 39, 39 }, nullptr, true);
+	App->player1->Main_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 122 }, { 566,163 }, nullptr, true);
+	App->player1->Main_UI->rect = { 0, 408, 566, 163 };
+	App->player1->Build_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_BUILD, { 275,55 }, { 79, 81 }, App->player1->Main_UI, true);
+	App->player1->Deploy_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 374,55 }, { 79, 81 }, App->player1->Main_UI, true);
+	App->player1->Cast_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 478,55 }, { 79,81 }, App->player1->Main_UI, true);
+
+	App->player1->Y_to_Main = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 140 , App->win->height + 192 }, { 39, 39 }, nullptr, false);
 	App->player1->Y_to_Main->rect = { 1289, 373, 39, 39 };
-
-	App->player1->Y_to_Main2 = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 590 , 70 }, { 39, 39 }, nullptr, true);
+	App->player1->Y_to_Main2 = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 445 , App->win->height + 192 }, { 39, 39 }, nullptr, false);
 	App->player1->Y_to_Main2->rect = { 1289, 373, 39, 39 };
 
-	App->player1->SelectBuilding = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 630 , 30 }, { 39, 39 }, nullptr, true);
-	App->player1->SelectBuilding->rect = { 1226, 488, 45, 107 };
-	App->player1->In_SelectBuilding = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 630 , 30 }, { 39, 39 }, nullptr, false);
-	App->player1->In_SelectBuilding->rect = { 1326, 488, 45, 107 };
 
+	App->player1->SelectBuilding = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 190 ,App->win->height + 152 }, { 39, 39 }, nullptr, true);
+	App->player1->SelectBuilding->rect = { 1177, 488, 45, 107 };
+	App->player1->In_SelectBuilding = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 191 ,App->win->height + 152 }, { 39, 39 }, nullptr, false);
+	App->player1->In_SelectBuilding->rect = { 1276, 488, 45, 107 };
 
-	App->player1->Build_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
+	App->player1->Build_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
 	App->player1->Build_UI->rect = { 569, 246, 566, 163 };
 	App->player1->Def_AOE_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { 68, 55 }, { 85, 81 }, App->player1->Build_UI, false);
 	App->player1->Def_Target_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { 171, 55 }, { 85, 81 }, App->player1->Build_UI, false);
@@ -176,35 +176,26 @@ bool Scene::Start()
 
 	App->player1->Building_cost_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 110 , 27 }, { 0, 0 }, App->player1->Barracks_icon, false, { false, false });
 	App->player1->Building_cost_text->label = App->player1->Building_cost_label;
-	App->player1->Building_cost_text->color = {255, 0, 0, 255};
+	App->player1->Building_cost_text->color = { 255, 0, 0, 255 };
 
 	// DEPLOY TROOPS UI ------------------
 
-	App->player1->Deploy_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
+	App->player1->Deploy_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
 	App->player1->Deploy_UI->rect = { 569, 411, 566, 163 };
 
 	App->player1->Soldier_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_SOLDIER, { 68, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
-	App->player1->Soldier_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player1->Soldier_icon, false, { false, false });
-	App->player1->Soldier_text->label = App->player1->soldier_label;
 	
 	App->player1->Tankman_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_TANKMAN, { 171, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
-	App->player1->Tankman_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player1->Tankman_icon, false, { false, false });
-	App->player1->Tankman_text->label = App->player1->tankman_label;
-
+	
 	App->player1->Engineer_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_ENGINEER, { 274, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
-	App->player1->Engineer_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player1->Engineer_icon, false, { false, false });
-	App->player1->Engineer_text->label = App->player1->engineer_label;
-
+	
 	App->player1->Infiltrator_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { 377, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
-	App->player1->Infiltrator_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player1->Infiltrator_icon, false, { false, false });
-	App->player1->Infiltrator_text->label = App->player1->infiltrator_label;
-
+	
 	App->player1->War_hound_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { 480, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
-	App->player1->War_hound_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 2 , 2 }, { 0, 0 }, App->player1->War_hound_icon, false, { false, false }); 
-	App->player1->War_hound_text->label = App->player1->war_hound_label;
+	
 
 	App->player1->X_spawn = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 0 , 0 }, { 33,32 }, nullptr, false);
-	App->player1->X_spawn->rect = {1443,357,33,32};
+	App->player1->X_spawn->rect = { 1443,357,33,32 };
 	App->player1->X_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 40 , 0 }, { 0, 0 }, App->player1->X_spawn, false, { false, false });
 	App->player1->X_text->label = App->player1->X_label;
 	App->player1->X_text->color = { 0,0,0,255 };
@@ -215,18 +206,14 @@ bool Scene::Start()
 	App->player1->A_text->label = App->player1->A_label;
 	App->player1->A_text->color = { 0,0,0,255 };
 
-	
-	//----- CAST -------------------------
+	//-----------------------------------------
 
-	App->player1->Cast_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
+	App->player1->Cast_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
 	App->player1->Cast_UI->rect = { 0, 573, 566, 163 };
-
-	App->player1->Cast2_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_TANKS, { 171 ,55 }, { 85, 81 }, App->player1->Cast_UI, false); 
-
+	App->player1->Cast2_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_TANKS, { 171 ,55 }, { 85, 81 }, App->player1->Cast_UI, false);
 	App->player1->Cast3_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_INVULNERABILITY, { 273, 55 }, { 85, 81 }, App->player1->Cast_UI, false);
 	App->player1->invulnerable_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 35 , 0 }, { 0, 0 }, App->player1->Cast3_icon, false, { false, false });
 	App->player1->invulnerable_text->label = App->player1->invulnerable_label;
-
 	App->player1->Missiles_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_MISSILES, { 375, 55 }, { 85, 81 }, App->player1->Cast_UI, false);
 
 	//App->player1->General_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
@@ -236,23 +223,16 @@ bool Scene::Start()
 	//App->player1->Name_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 	//App->player1->Level_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 	//App->player1->Health_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
-	//App->player1->Damage_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
+	//App->player1->Damage_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, player.General_UI, false, { false, false }, "data");
 	//App->player1->Prod_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 	//App->player1->Capacity_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player1->General_UI, false, { false, false }, "data");
 
-	
-
-	App->player1->LB_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { -5 , 70 }, { 55, 27 }, nullptr, false);
-	App->player1->LB_img->rect = { 1269, 437, 55, 27 };
-	App->player1->RB_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 585 , 70 }, { 55, 27 }, nullptr, false);
-	App->player1->RB_img->rect = { 1334, 437, 55, 27 };
-
 	//------ GENERAL BUILDINGS MENU --------
 
-	App->player1->General_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
+	App->player1->General_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
 	App->player1->General_UI->rect = { 569, 575, 566, 163 };
 
-	App->player1->Repair_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_REPAIR, { 70 , 55 }, { 62, 36 }, App->player1->General_UI, false);
+	App->player1->Repair_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_REPAIR, { 70 ,55 }, { 62, 36 }, App->player1->General_UI, false);
 	App->player1->Upgrade_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_UPGRADE, { 70 ,105 }, { 62, 36 }, App->player1->General_UI, false);
 
 	App->player1->RepairCost_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 90 , 0 }, { 0, 0 }, App->player1->Repair_icon, false, { false, false });
@@ -275,22 +255,18 @@ bool Scene::Start()
 	App->player1->Level_text->label = App->player1->level_label;
 	App->player1->Level_text->color = { 255, 255, 255, 255 };
 
-	App->player1->Create_troops = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 480 , 50 }, { 83, 35 }, nullptr, false);
+	App->player1->Create_troops = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 330 , App->win->height + 175 }, { 83, 35 }, nullptr, false);
 	App->player1->Create_troops->rect = { 1194, 285, 83, 35 };
 
-	App->player1->Create_abilities = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 480 , 110 }, { 83, 35 }, nullptr, false);
+	App->player1->Create_abilities = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 330 , App->win->height + 233 }, { 83, 35 }, nullptr, false);
 	App->player1->Create_abilities->rect = { 1194, 329, 84, 35 };
-
-	//App->player1->Upgrade_troops = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 515 , -12 }, { 83, 35 }, nullptr, false);
-	//App->player1->Upgrade_troops->rect = { 1280, 285, 83, 35 };
-
 
 	//-------- CREATE TROOPS MENU ------------
 
-	App->player1->Create_Troops_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
+	App->player1->Create_Troops_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
 	App->player1->Create_Troops_UI->rect = { 0, 739, 566, 163 };
 
-	App->player1->accept_button= App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 470 , 60 }, { 80, 31 }, App->player1->Create_Troops_UI, false);
+	App->player1->accept_button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 470 , 60 }, { 80, 31 }, App->player1->Create_Troops_UI, false);
 	App->player1->accept_button->rect = { 1277, 248, 80, 31 };
 
 	App->player1->cancel_button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 470 , 100 }, { 80, 31 }, App->player1->Create_Troops_UI, false);
@@ -319,14 +295,15 @@ bool Scene::Start()
 	App->player1->Troop_cost_text->label = App->player1->Troop_cost_label;
 	App->player1->Troop_cost_text->color = { 255, 0, 0, 255 };
 
+	// ------- GOLD
 
-	//---- GOLD ----- 
-	App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 470, 19 }, { 0, 0 }, nullptr, true, { false,false }, "$ 0000");
+	App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 2000, 1191 }, { 0, 0 }, nullptr, true, { false,false }, "$ 0000");
 	App->player1->Gold_UI->color = { 255,255,0,255 };
 
-	// ------ PAUSE MENU ------
+	//------- PAUSE MENU ------
+
 	App->player1->Pause_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, false);
-	App->player1->Pause_UI->texture = pause_soviet_texture;
+	App->player1->Pause_UI->texture = pause_alied_texture;
 	App->player1->Pause_UI->rect = { 0, 0, App->win->width, App->win->height };
 
 	App->player1->Abort_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ABORT_PAUSE, { 1291 ,868 }, { 301,59 }, App->player1->Pause_UI, false);
@@ -334,20 +311,29 @@ bool Scene::Start()
 	App->player1->Abort_text->label = App->player1->abort_label;
 	App->player1->Abort_text->color = { 255,255,9,255 };
 
-
 	App->player1->Settings_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player1->Pause_UI, false);
 	App->player1->Settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player1->Settings_Button, false, { false, false });
 	App->player1->Settings_text->label = App->player1->settings_label;
 	App->player1->Settings_text->color = { 255,255,9,255 };
+
+	/*App->player1->Settings_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player1->Pause_UI, false);
+	App->player1->Settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player1->Settings_Button, false, { false, false });
+	App->player1->Settings_text->label = App->player1->settings_label;
+	App->player1->Settings_text->color = { 255,255,9,255 };*/
 
 	App->player1->Resume_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESUME_PAUSE, { 1291 ,498 }, { 301,59 }, App->player1->Pause_UI, false);
 	App->player1->Resume_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Resume_Button, false, { false, false });
 	App->player1->Resume_text->label = App->player1->resume_label;
 	App->player1->Resume_text->color = { 255,255,9,255 };
 
+	App->player1->LB_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 150 , App->win->height + 192 }, { 55, 27 }, nullptr, false);
+	App->player1->LB_img->rect = { 1269, 437, 55, 27 };
+	App->player1->RB_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 440 , App->win->height + 192 }, { 55, 27 }, nullptr, false);
+	App->player1->RB_img->rect = { 1334, 437, 55, 27 };
+
 	//------ Settings Pause MENU ------
-	App->player1->Settings_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
-	App->player1->Settings_UI->texture = pause_soviet_texture;
+	App->player1->Settings_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
+	App->player1->Settings_UI->texture = pause_alied_texture;
 	App->player1->Settings_UI->rect = { 0, 0, 0, App->win->height };
 
 	App->player1->Music_Settings = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::MUSIC_VOLUME, { 100 ,100 }, { 301,59 }, App->player1->Settings_UI, false);
@@ -356,13 +342,12 @@ bool Scene::Start()
 	App->player1->Music_text->color = { 255,255,9,255 };
 
 	App->player1->Music_Slider = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 50 , 100 }, { 651, 59 }, App->player1->Music_Settings, false);
-	App->player1->Music_Slider->rect = {1483, 770, 651, 59 };
+	App->player1->Music_Slider->rect = { 1483, 709, 651, 59 };
 	App->player1->Music_Slider_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 640, 18 }, { 0, 0 }, App->player1->Music_Slider, false, { false, false });
 	App->player1->Music_Slider_text->label = App->player1->Music_Slider_label;
 	App->player1->Music_Slider_text->color = { 255,255,9,255 };
 	App->player1->Music_Slider_Button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 }, App->player1->Music_Slider, false);
-	App->player1->Music_Slider_Button->rect = { 2135, 773, 29, 55 };
-
+	App->player1->Music_Slider_Button->rect = { 2135, 712, 29, 55 };
 
 	App->player1->FX_Settings = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::FX_VOLUME, { 100 ,400 }, { 301,59 }, App->player1->Settings_UI, false);
 	App->player1->FX_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 100, 18 }, { 0, 0 }, App->player1->FX_Settings, false, { false, false });
@@ -370,16 +355,16 @@ bool Scene::Start()
 	App->player1->FX_text->color = { 255,255,9,255 };
 
 	App->player1->FX_Slider = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 50 , 100 }, { 651, 59 }, App->player1->FX_Settings, false);
-	App->player1->FX_Slider->rect = { 1483, 770, 651, 59 };
+	App->player1->FX_Slider->rect = { 1483, 709, 651, 59 };
 	App->player1->FX_Slider_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 640, 18 }, { 0, 0 }, App->player1->FX_Slider, false, { false, false });
 	App->player1->FX_Slider_text->label = App->player1->FX_Slider_label;
 	App->player1->FX_Slider_text->color = { 255,255,9,255 };
 	App->player1->FX_Slider_Button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 }, App->player1->FX_Slider, false);
-	App->player1->FX_Slider_Button->rect = { 2135, 773, 29, 55 };
+	App->player1->FX_Slider_Button->rect = { 2135, 712, 29, 55 };
 
 	// ABORT MISSION MENU
 	App->player1->Abort_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
-	App->player1->Abort_UI->texture = pause_soviet_texture;
+	App->player1->Abort_UI->texture = pause_alied_texture;
 	App->player1->Abort_UI->rect = { 0, 0, 0, App->win->height };
 
 	App->player1->Restart = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESTART, { 1291 ,565 }, { 301,59 }, App->player1->Abort_UI, false);
@@ -397,7 +382,7 @@ bool Scene::Start()
 	App->player1->Quit_text->color = { 255,255,9,255 };
 
 	App->player1->win_screen = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
-	App->player1->win_screen->texture = allied_win_tex;
+	App->player1->win_screen->texture = soviet_win_tex;
 	App->player1->win_screen->rect = { 0, 0, 0, App->win->height };
 
 	App->player1->draw_screen = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
@@ -407,27 +392,25 @@ bool Scene::Start()
 	//--- PLAYER 2
 	//App->player2->Health_UI = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
 	//App->player2->Gold_UI = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
-
-	
-
-	App->player2->Main_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 122 }, { 566,163 }, nullptr, true);
-	App->player2->Main_UI->rect = { 0, 408, 566, 163 };
+	App->player2->Main_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, true);
+	App->player2->Main_UI->rect = { 0,245,566,163 };
 	App->player2->Build_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_BUILD, { 275,55 }, { 80, 81 }, App->player2->Main_UI, true);
-	App->player2->Deploy_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 374,55 }, { 80, 81 }, App->player2->Main_UI, true);
-	App->player2->Cast_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 483,55 }, { 80,81 }, App->player2->Main_UI, true);
+	App->player2->Deploy_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 378,55 }, { 80, 81 }, App->player2->Main_UI, true);
+	App->player2->Cast_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 482,55 }, { 80,81 }, App->player2->Main_UI, true);
 
-	App->player2->Y_to_Main = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 140 , App->win->height + 192 }, { 39, 39 }, nullptr, false);
-	App->player2->Y_to_Main->rect = { 1289, 373, 39, 39 }; 
-	App->player2->Y_to_Main2 = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 445 , App->win->height + 192 }, { 39, 39 }, nullptr, false);
+	App->player2->Y_to_Main = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 5 , 70 }, { 39, 39 }, nullptr, true);
+	App->player2->Y_to_Main->rect = { 1289, 373, 39, 39 };
+
+	App->player2->Y_to_Main2 = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 590 , 70 }, { 39, 39 }, nullptr, true);
 	App->player2->Y_to_Main2->rect = { 1289, 373, 39, 39 };
 
+	App->player2->SelectBuilding = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 630 , 30 }, { 39, 39 }, nullptr, true);
+	App->player2->SelectBuilding->rect = { 1226, 488, 45, 107 };
+	App->player2->In_SelectBuilding = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 630 , 30 }, { 39, 39 }, nullptr, false);
+	App->player2->In_SelectBuilding->rect = { 1326, 488, 45, 107 };
 
-	App->player2->SelectBuilding = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 190 ,App->win->height + 152 }, { 39, 39 }, nullptr, true);
-	App->player2->SelectBuilding->rect = { 1177, 488, 45, 107 };
-	App->player2->In_SelectBuilding = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 191 ,App->win->height + 152 }, { 39, 39 }, nullptr, false);
-	App->player2->In_SelectBuilding->rect = { 1276, 488, 45, 107 };
 
-	App->player2->Build_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
+	App->player2->Build_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player2->Build_UI->rect = { 569, 246, 566, 163 };
 	App->player2->Def_AOE_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_AOE, { 68, 55 }, { 85, 81 }, App->player2->Build_UI, false);
 	App->player2->Def_Target_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_BUILD_TARGET, { 171, 55 }, { 85, 81 }, App->player2->Build_UI, false);
@@ -440,28 +423,19 @@ bool Scene::Start()
 
 	// DEPLOY TROOPS UI ------------------
 
-	App->player2->Deploy_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
+	App->player2->Deploy_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player2->Deploy_UI->rect = { 569, 411, 566, 163 };
 
 	App->player2->Soldier_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_SOLDIER, { 68, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
-	App->player2->Soldier_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player2->Soldier_icon, false, { false, false });
-	App->player2->Soldier_text->label = App->player2->soldier_label;
-
+	
 	App->player2->Tankman_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_TANKMAN, { 171, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
-	App->player2->Tankman_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player2->Tankman_icon, false, { false, false });
-	App->player2->Tankman_text->label = App->player2->tankman_label;
-
+	
 	App->player2->Engineer_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_ENGINEER, { 274, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
-	App->player2->Engineer_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player2->Engineer_icon, false, { false, false });
-	App->player2->Engineer_text->label = App->player2->engineer_label;
-
+	
 	App->player2->Infiltrator_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { 377, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
-	App->player2->Infiltrator_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 5 , 2 }, { 0, 0 }, App->player2->Infiltrator_icon, false, { false, false });
-	App->player2->Infiltrator_text->label = App->player2->infiltrator_label;
-
+	
 	App->player2->War_hound_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { 480, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
-	App->player2->War_hound_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 2 , 2 }, { 0, 0 }, App->player2->War_hound_icon, false, { false, false });
-	App->player2->War_hound_text->label = App->player2->war_hound_label;
+	
 
 	App->player2->X_spawn = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 0 , 0 }, { 33,32 }, nullptr, false);
 	App->player2->X_spawn->rect = { 1443,357,33,32 };
@@ -475,33 +449,31 @@ bool Scene::Start()
 	App->player2->A_text->label = App->player2->A_label;
 	App->player2->A_text->color = { 0,0,0,255 };
 
-	//-----------------------------------------
 
-	App->player2->Cast_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
+	//----- CAST -------------------------
+
+	App->player2->Cast_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player2->Cast_UI->rect = { 0, 573, 566, 163 };
+
 	App->player2->Cast2_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_TANKS, { 171 ,55 }, { 85, 81 }, App->player2->Cast_UI, false);
+
 	App->player2->Cast3_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_INVULNERABILITY, { 273, 55 }, { 85, 81 }, App->player2->Cast_UI, false);
 	App->player2->invulnerable_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 35 , 0 }, { 0, 0 }, App->player2->Cast3_icon, false, { false, false });
 	App->player2->invulnerable_text->label = App->player2->invulnerable_label;
+
 	App->player2->Missiles_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_MISSILES, { 375, 55 }, { 85, 81 }, App->player2->Cast_UI, false);
 
-	//App->player2->General_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
-	//App->player2->Upgrade_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_UPGRADE, { x,y }, { w,h }, App->player2->General_UI, false);
-	//App->player2->Repair_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_REPAIR, { x,y }, { w,h }, App->player2->General_UI, false);
-	////falta poner los pointer a los datos del edificio seleccionado (ahora esta como "data") 
-	//App->player2->Name_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
-	//App->player2->Level_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
-	//App->player2->Health_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
-	//App->player2->Damage_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, player.General_UI, false, { false, false }, "data");
-	//App->player2->Prod_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
-	//App->player2->Capacity_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, App->player2->General_UI, false, { false, false }, "data");
+	App->player2->LB_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { -5 , 70 }, { 55, 27 }, nullptr, false);
+	App->player2->LB_img->rect = { 1269, 437, 55, 27 };
+	App->player2->RB_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 585 , 70 }, { 55, 27 }, nullptr, false);
+	App->player2->RB_img->rect = { 1334, 437, 55, 27 };
 
 	//------ GENERAL BUILDINGS MENU --------
 
-	App->player2->General_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
+	App->player2->General_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player2->General_UI->rect = { 569, 575, 566, 163 };
 
-	App->player2->Repair_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_REPAIR, { 70 ,55 }, { 62, 36 }, App->player2->General_UI, false);
+	App->player2->Repair_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_REPAIR, { 70 , 55 }, { 62, 36 }, App->player2->General_UI, false);
 	App->player2->Upgrade_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_UPGRADE, { 70 ,105 }, { 62, 36 }, App->player2->General_UI, false);
 
 	App->player2->RepairCost_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 90 , 0 }, { 0, 0 }, App->player2->Repair_icon, false, { false, false });
@@ -524,15 +496,15 @@ bool Scene::Start()
 	App->player2->Level_text->label = App->player2->level_label;
 	App->player2->Level_text->color = { 255, 255, 255, 255 };
 
-	App->player2->Create_troops = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 330 , App->win->height + 175 }, { 83, 35 }, nullptr, false);
+	App->player2->Create_troops = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 480 , 50 }, { 83, 35 }, nullptr, false);
 	App->player2->Create_troops->rect = { 1194, 285, 83, 35 };
 
-	App->player2->Create_abilities = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 330 , App->win->height + 233 }, { 83, 35 }, nullptr, false);
+	App->player2->Create_abilities = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 480 , 110 }, { 83, 35 }, nullptr, false);
 	App->player2->Create_abilities->rect = { 1194, 329, 84, 35 };
 
 	//-------- CREATE TROOPS MENU ------------
 
-	App->player2->Create_Troops_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
+	App->player2->Create_Troops_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player2->Create_Troops_UI->rect = { 0, 739, 566, 163 };
 
 	App->player2->accept_button = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 470 , 60 }, { 80, 31 }, App->player2->Create_Troops_UI, false);
@@ -564,15 +536,14 @@ bool Scene::Start()
 	App->player2->Troop_cost_text->label = App->player2->Troop_cost_label;
 	App->player2->Troop_cost_text->color = { 255, 0, 0, 255 };
 
-	// ------- GOLD
 
-	App->player2->Gold_UI = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 2000, 1191 }, { 0, 0 }, nullptr, true, { false,false }, "$ 0000");
+	//---- GOLD ----- 
+	App->player2->Gold_UI = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 470, 19 }, { 0, 0 }, nullptr, true, { false,false }, "$ 0000");
 	App->player2->Gold_UI->color = { 255,255,0,255 };
 
-	//------- PAUSE MENU ------
-
+	// ------ PAUSE MENU ------
 	App->player2->Pause_UI = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, false);
-	App->player2->Pause_UI->texture = pause_alied_texture;
+	App->player2->Pause_UI->texture = pause_soviet_texture;
 	App->player2->Pause_UI->rect = { 0, 0, App->win->width, App->win->height };
 
 	App->player2->Abort_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ABORT_PAUSE, { 1291 ,868 }, { 301,59 }, App->player2->Pause_UI, false);
@@ -580,33 +551,20 @@ bool Scene::Start()
 	App->player2->Abort_text->label = App->player2->abort_label;
 	App->player2->Abort_text->color = { 255,255,9,255 };
 
+
 	App->player2->Settings_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player2->Pause_UI, false);
 	App->player2->Settings_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player2->Settings_Button, false, { false, false });
 	App->player2->Settings_text->label = App->player2->settings_label;
 	App->player2->Settings_text->color = { 255,255,9,255 };
-
-	/*App->player1->Settings_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player1->Pause_UI, false);
-	App->player1->Settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player1->Settings_Button, false, { false, false });
-	App->player1->Settings_text->label = App->player1->settings_label;
-	App->player1->Settings_text->color = { 255,255,9,255 };*/
 
 	App->player2->Resume_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESUME_PAUSE, { 1291 ,498 }, { 301,59 }, App->player2->Pause_UI, false);
 	App->player2->Resume_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Resume_Button, false, { false, false });
 	App->player2->Resume_text->label = App->player2->resume_label;
 	App->player2->Resume_text->color = { 255,255,9,255 };
 
-	App->player2->LB_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 150 , App->win->height + 192 }, { 55, 27 }, nullptr, false);
-	App->player2->LB_img->rect = { 1269, 437, 55, 27 };
-	App->player2->RB_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 440 , App->win->height + 192 }, { 55, 27 }, nullptr, false);
-	App->player2->RB_img->rect = { 1334, 437, 55, 27 };
-
-	
-
-	
-
 	//------ Settings Pause MENU ------
-	App->player2->Settings_UI = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
-	App->player2->Settings_UI->texture = pause_alied_texture;
+	App->player2->Settings_UI = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
+	App->player2->Settings_UI->texture = pause_soviet_texture;
 	App->player2->Settings_UI->rect = { 0, 0, 0, App->win->height };
 
 	App->player2->Music_Settings = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::MUSIC_VOLUME, { 100 ,100 }, { 301,59 }, App->player2->Settings_UI, false);
@@ -615,12 +573,13 @@ bool Scene::Start()
 	App->player2->Music_text->color = { 255,255,9,255 };
 
 	App->player2->Music_Slider = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 50 , 100 }, { 651, 59 }, App->player2->Music_Settings, false);
-	App->player2->Music_Slider->rect = { 1483, 709, 651, 59 };
+	App->player2->Music_Slider->rect = { 1483, 770, 651, 59 };
 	App->player2->Music_Slider_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 640, 18 }, { 0, 0 }, App->player2->Music_Slider, false, { false, false });
 	App->player2->Music_Slider_text->label = App->player2->Music_Slider_label;
 	App->player2->Music_Slider_text->color = { 255,255,9,255 };
 	App->player2->Music_Slider_Button = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 }, App->player2->Music_Slider, false);
-	App->player2->Music_Slider_Button->rect = { 2135, 712, 29, 55 };
+	App->player2->Music_Slider_Button->rect = { 2135, 773, 29, 55 };
+
 
 	App->player2->FX_Settings = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::FX_VOLUME, { 100 ,400 }, { 301,59 }, App->player2->Settings_UI, false);
 	App->player2->FX_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 100, 18 }, { 0, 0 }, App->player2->FX_Settings, false, { false, false });
@@ -628,16 +587,16 @@ bool Scene::Start()
 	App->player2->FX_text->color = { 255,255,9,255 };
 
 	App->player2->FX_Slider = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 50 , 100 }, { 651, 59 }, App->player2->FX_Settings, false);
-	App->player2->FX_Slider->rect = { 1483, 709, 651, 59 };
+	App->player2->FX_Slider->rect = { 1483, 770, 651, 59 };
 	App->player2->FX_Slider_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 640, 18 }, { 0, 0 }, App->player2->FX_Slider, false, { false, false });
 	App->player2->FX_Slider_text->label = App->player2->FX_Slider_label;
 	App->player2->FX_Slider_text->color = { 255,255,9,255 };
 	App->player2->FX_Slider_Button = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 }, App->player2->FX_Slider, false);
-	App->player2->FX_Slider_Button->rect = { 2135, 712, 29, 55 };
+	App->player2->FX_Slider_Button->rect = { 2135, 773, 29, 55 };
 
 	// ABORT MISSION MENU
 	App->player2->Abort_UI = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
-	App->player2->Abort_UI->texture = pause_alied_texture;
+	App->player2->Abort_UI->texture = pause_soviet_texture;
 	App->player2->Abort_UI->rect = { 0, 0, 0, App->win->height };
 
 	App->player2->Restart = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESTART, { 1291 ,565 }, { 301,59 }, App->player2->Abort_UI, false);
@@ -654,15 +613,15 @@ bool Scene::Start()
 	App->player2->Quit_text->label = App->player2->Quit_label;
 	App->player2->Quit_text->color = { 255,255,9,255 };
 
-	App->player2->win_screen  = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
-	App->player2->win_screen->texture = soviet_win_tex;
+	App->player2->win_screen = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
+	App->player2->win_screen->texture = allied_win_tex;
 	App->player2->win_screen->rect = { 0, 0, 0, App->win->height };
 
 	App->player2->draw_screen = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
 	App->player2->draw_screen->texture = draw_tex;
 	App->player2->draw_screen->rect = { 0, 0, 0, App->win->height };
 
-
+	
 	// --- CURSORS
 	App->player1->currentTile.first = 13;
 	App->player1->currentTile.second = 0;
@@ -703,6 +662,10 @@ bool Scene::Start()
 	world_clock.Start();
 	world_seconds.Start();
 	size_timer.Start();
+
+
+	App->player1->UpdateFocus(App->player1->currentUI);
+	App->player2->UpdateFocus(App->player2->currentUI);
 	
 
 	return true;
@@ -776,6 +739,8 @@ bool Scene::Update(float dt)
 	App->input->GetMousePosition(pos.first, pos.second);
 	pos = App->render->ScreenToWorld(pos.first, pos.second);
 	pos.first--;
+
+	LOG("GOLD: %i", App->player1->gold);
 
 	//Enter GodMode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) //Godmode
@@ -861,7 +826,7 @@ bool Scene::Update(float dt)
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(true, Entity::entityType::MINES, {pos.first,pos.second},App->player1->collider);
+			//App->entitymanager->AddEntity(true, Entity::entityType::ENGINEER, {pos.first,pos.second},App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 		{
@@ -877,7 +842,8 @@ bool Scene::Update(float dt)
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
 		{
-			App->entitymanager->AddEntity(true, Entity::entityType::WALLS, {pos.first,pos.second},App->player1->collider);
+			//App->entitymanager->AddEntity(true, Entity::entityType::INFILTRATOR, { pos.first,pos.second }, App->player1->collider);
+			//	App->entitymanager->AddEntity(true, Entity::entityType::WALLS, {pos.first,pos.second},App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 		{
@@ -910,6 +876,14 @@ bool Scene::Update(float dt)
 		else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT) //View colliders
 		{
 			worldminutes = 10;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
+		{
+			//App->entitymanager->AddEntity(true, Entity::entityType::WAR_HOUND, { pos.first,pos.second }, App->player1->collider);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
+		{
+			//App->entitymanager->AddEntity(true, Entity::entityType::TANKMAN, { pos.first,pos.second }, App->player1->collider);
 		}
     
 		//Timer debug
@@ -1049,7 +1023,7 @@ bool Scene::Update(float dt)
 			
 
 			 if (increase_decresease>=2 )
-			{
+			 {
 				change_font_size = false;
 				reference_active = false;
 				increase_size = true;
@@ -1057,7 +1031,7 @@ bool Scene::Update(float dt)
 				ui_timer->visible = false;
 			
 				
-			}
+			 }
 		}
 
 	}
@@ -1143,76 +1117,6 @@ bool Scene::PostUpdate()
 			sprintf_s(App->player1->num_troops_label, "%i", App->player1->number_of_troops);
 			(*item)->label = App->player1->num_troops_label;
 		}
-		else if ((*item) == App->player1->Soldier_text) //NUMBER OF SOLDIERS
-		{
-			sprintf_s(App->player1->soldier_label, "%i", App->player1->SoldiersCreated);
-			
-
-			if (App->player1->SoldiersCreated > 0)
-			{
-				(*item)->color = {0, 0, 0 , 255}; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
-		else if ((*item) == App->player1->Tankman_text) //NUMBER OF TANKMANS
-		{
-			sprintf_s(App->player1->tankman_label, "%i", App->player1->TankmansCreated);
-			
-
-			if (App->player1->TankmansCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
-		else if ((*item) == App->player1->Infiltrator_text) //NUMBER OF INFILTRATORS
-		{
-			sprintf_s(App->player1->infiltrator_label, "%i", App->player1->InfiltratorsCreated);
-
-
-			if (App->player1->InfiltratorsCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
-		else if ((*item) == App->player1->Engineer_text) //NUMBER OF ENGINEERS
-		{
-			sprintf_s(App->player1->engineer_label, "%i", App->player1->EngineersCreated);
-
-
-			if (App->player1->EngineersCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
-		else if ((*item) == App->player1->War_hound_text) //NUMBER OF WAR_HOUNDS
-		{
-			sprintf_s(App->player1->war_hound_label, "%i", App->player1->WarHoundsCreated);
-
-
-			if (App->player1->WarHoundsCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
 		else if ((*item) == App->player1->invulnerable_text) //NUMBER OF INVULNERABLE ABILITIES
 		{
 			sprintf_s(App->player1->invulnerable_label, "%i", App->player1->Invulnerable_abilities);
@@ -1293,76 +1197,6 @@ bool Scene::PostUpdate()
 		{
 			sprintf_s(App->player2->num_troops_label, "%i", App->player2->number_of_troops);
 			(*item)->label = App->player2->num_troops_label;
-		}
-		else if ((*item) == App->player2->Soldier_text) //NUMBER OF SOLDIERS
-		{
-			sprintf_s(App->player2->soldier_label, "%i", App->player2->SoldiersCreated);
-
-
-			if (App->player2->SoldiersCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
-		else if ((*item) == App->player2->Tankman_text) //NUMBER OF TANKMANS
-		{
-			sprintf_s(App->player2->tankman_label, "%i", App->player2->TankmansCreated);
-
-
-			if (App->player2->TankmansCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
-		else if ((*item) == App->player2->Infiltrator_text) //NUMBER OF INFILTRATORS
-		{
-			sprintf_s(App->player2->infiltrator_label, "%i", App->player2->InfiltratorsCreated);
-
-
-			if (App->player2->InfiltratorsCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
-		else if ((*item) == App->player2->Engineer_text) //NUMBER OF ENGINEERS
-		{
-			sprintf_s(App->player2->engineer_label, "%i", App->player2->EngineersCreated);
-
-
-			if (App->player2->EngineersCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
-		}
-		else if ((*item) == App->player2->War_hound_text) //NUMBER OF WAR_HOUNDS
-		{
-			sprintf_s(App->player2->war_hound_label, "%i", App->player2->WarHoundsCreated);
-
-
-			if (App->player2->WarHoundsCreated > 0)
-			{
-				(*item)->color = { 0, 0, 0 , 255 }; //BLACK
-			}
-			else
-			{
-				(*item)->color = { 255 , 0, 0 , 255 }; //RED
-			}
 		}
 		else if ((*item) == App->player2->invulnerable_text) //NUMBER OF INVULNERABLE ABILITIES
 		{
@@ -1492,19 +1326,17 @@ bool Scene::Load_level(int map)
 
 void Scene::SpawnEntities()
 {
-
-
-	//--- PLAYER 1
-	pair<int, int> map_pos = App->map->WorldToMap(App->map->data.main_building2.first , App->map->data.main_building2.second);
-	App->player1->Townhall = App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, App->map->data.main_building2, App->player1->GetCollider({ 4,4 }, { map_pos.first, map_pos.second  }));
+	//--- PLAYER 2
+	pair<int, int> map_pos = App->map->WorldToMap(App->map->data.main_building.first , App->map->data.main_building.second);
+	App->player2->Townhall = App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, App->map->data.main_building, App->player2->GetCollider( { 4, 4 }, { map_pos.first, map_pos.second  }));
 
 	
-	map_pos = App->map->WorldToMap(App->map->data.special_skill.first, App->map->data.special_skill.second);
-	App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill, App->player1->GetCollider({ 4,3 }, { map_pos.first , map_pos.second }));
+	map_pos = App->map->WorldToMap(App->map->data.special_skill2.first, App->map->data.special_skill2.second);
+	App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill2, App->player2->GetCollider({ 4,3 }, { map_pos.first , map_pos.second }));
 
-	map_pos = App->map->WorldToMap(App->map->data.main_tower.first, App->map->data.main_tower.second);
+	map_pos = App->map->WorldToMap(App->map->data.main_tower2.first, App->map->data.main_tower2.second);
 
-	App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower, App->player1->GetCollider({ 2,2 }, { map_pos.first , map_pos.second }));
+	App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower2, App->player2->GetCollider({ 2,2 }, { map_pos.first , map_pos.second }));
 
 	/*map_pos = App->map->WorldToMap(App->map->data.barrack.first, App->map->data.barrack.second);
 	App->entitymanager->AddEntity(true, Entity::entityType::BARRACKS, App->map->data.barrack, App->player1->GetCollider({ 3,4 }, { map_pos.first , map_pos.second }));
@@ -1517,18 +1349,18 @@ void Scene::SpawnEntities()
 */
 
 
-	//--- PLAYER 2
-	map_pos = App->map->WorldToMap(App->map->data.main_building.first, App->map->data.main_building.second);
-	App->player2->Townhall = App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, App->map->data.main_building, App->player2->GetCollider({ 7,3 }, { map_pos.first , map_pos.second }));
+	//--- PLAYER 1
+	map_pos = App->map->WorldToMap(App->map->data.main_building2.first, App->map->data.main_building2.second);
+	App->player1->Townhall = App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, App->map->data.main_building2, App->player1->GetCollider({ 7,3 }, { map_pos.first , map_pos.second }));
 	
 	//--- WALLS
 	LoadWalls();
 
-	map_pos = App->map->WorldToMap(App->map->data.special_skill2.first, App->map->data.special_skill2.second);
-	App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill2, App->player2->GetCollider({ 4,3 }, { map_pos.first, map_pos.second}));
+	map_pos = App->map->WorldToMap(App->map->data.special_skill.first, App->map->data.special_skill.second);
+	App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill, App->player1->GetCollider({ 4,3 }, { map_pos.first, map_pos.second}));
 
-	map_pos = App->map->WorldToMap(App->map->data.main_tower2.first, App->map->data.main_tower2.second);
-	App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower2, App->player2->GetCollider({ 2,2 }, { map_pos.first , map_pos.second}));
+	map_pos = App->map->WorldToMap(App->map->data.main_tower.first, App->map->data.main_tower.second);
+	App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower, App->player1->GetCollider({ 2,2 }, { map_pos.first , map_pos.second}));
 
 
 	//App->entitymanager->AddEntity(false, Entity::entityType::MAIN_DEFENSE, { 50,50 });
@@ -1719,7 +1551,7 @@ void Scene::LoadWalls()
 		entity = new Walls(true, *item, collider, current_anim); //add entity
 		App->player1->buildings.push_back((Building*)entity);
 		App->entitymanager->entity_list.push_back(entity);
-		App->player2->UpdateWalkabilityMap(false, collider);
+		App->player2->UpdateWalkabilityMap(P2_BUILDING, collider);
 
 		item++;
 	}
@@ -1749,21 +1581,21 @@ void Scene::Victorious(Player* player, float dt)
 	{
 		App->audio->PlayFx(FINAL_EXPLOSION);
 		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first, tmp_pos1.second, &App->map->explosion_anim->GetCurrentFrame(dt));
-		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first + 58, tmp_pos1.second + 42, &App->map->explosion_anim->GetCurrentFrame(dt));
-		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first - 73, tmp_pos1.second + 86, &App->map->explosion_anim->GetCurrentFrame(dt));
-		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first + 37, tmp_pos1.second - 76, &App->map->explosion_anim->GetCurrentFrame(dt));
-		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first - 42, tmp_pos1.second - 19, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first + 8, tmp_pos1.second + 22, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first - 3, tmp_pos1.second + 16, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first + 17, tmp_pos1.second - 6, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first - 12, tmp_pos1.second - 9, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first + 120, tmp_pos1.second + 18, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos1.first - 120, tmp_pos1.second - 18, &App->map->explosion_anim->GetCurrentFrame(dt));
 	}
 	else if (player == App->player2 && !App->map->explosion_anim->Finished())
 	{
 		App->audio->PlayFx(FINAL_EXPLOSION);
 		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first, tmp_pos2.second, &App->map->explosion_anim->GetCurrentFrame(dt));
-		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first + 8, tmp_pos2.second + 22, &App->map->explosion_anim->GetCurrentFrame(dt));
-		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first - 3, tmp_pos2.second + 16, &App->map->explosion_anim->GetCurrentFrame(dt));
-		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first + 17, tmp_pos2.second - 6, &App->map->explosion_anim->GetCurrentFrame(dt));
-		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first - 12, tmp_pos2.second - 9, &App->map->explosion_anim->GetCurrentFrame(dt));
-		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first + 120, tmp_pos2.second + 18, &App->map->explosion_anim->GetCurrentFrame(dt));
-		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first - 120, tmp_pos2.second - 18, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first + 58, tmp_pos2.second + 42, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first - 73, tmp_pos2.second + 86, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first + 37, tmp_pos2.second - 76, &App->map->explosion_anim->GetCurrentFrame(dt));
+		App->render->Blit(App->scene->explosion_tex, tmp_pos2.first - 42, tmp_pos2.second - 19, &App->map->explosion_anim->GetCurrentFrame(dt));
 	}
 
 	if (player == App->player1 && App->map->explosion_anim->Finished())

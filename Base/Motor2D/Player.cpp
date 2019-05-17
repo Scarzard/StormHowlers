@@ -40,8 +40,8 @@ bool Player::Awake(pugi::xml_node& config) {
 	config = config.child("rect_previews").first_child();
 
 	for (int i = Entity::entityType::TOWNHALL; i < Entity::entityType::WAR_HOUND; i++) {
-		preview_rects->at(i).x = config.attribute((isPlayer1) ? "rx" : "x").as_int(0);
-		preview_rects->at(i).y = config.attribute((isPlayer1) ? "ry" : "y").as_int(0);
+		preview_rects->at(i).x = config.attribute((!isPlayer1) ? "rx" : "x").as_int(0);
+		preview_rects->at(i).y = config.attribute((!isPlayer1) ? "ry" : "y").as_int(0);
 		preview_rects->at(i).w = config.attribute("w").as_int(0);
 		preview_rects->at(i).h = config.attribute("h").as_int(0);
 		config = config.next_sibling();
@@ -52,31 +52,134 @@ bool Player::Awake(pugi::xml_node& config) {
 bool Player::Start()
 {
 
-	gold = gold_persecond = actual_capacity = total_capacity = time_iterator = number_of_troops = BuildingCost = TroopCost = 0;
+	time_iterator = number_of_troops = BuildingCost = BarracksCreated = TroopCost = 0;
+
+	gold = 3500;
+	gold_persecond = 0;
+
 	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = 0;
 
 	selected_texture = { 0,0, 100, 100 };
 
-	live = 2000;
-
 	UI_troop_type = Entity::entityType::SOLDIER;
 
 	isBuilding = isDeploying = gold_added = isCasting = Y_pressed = isPaused = false;
+
+	Y_pressed = true;
   
 	currentTile = { 13,0 };
-
 	
 	return true;
+}
+void Player::RectangleSelection()
+{
+	pair<int, int> mouse_pos;
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	mouse_pos = App->render->ScreenToWorld(x, y);
+
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+		rectangle_origin.x = mouse_pos.first;
+		rectangle_origin.y = mouse_pos.second;
+
+	}
+
+	else if (std::abs(mouse_pos.first - rectangle_origin.x) >= 5 && std::abs(mouse_pos.second - rectangle_origin.y) >= 5 && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
+		// --- Rectangle size ---
+		rectangle_origin.w = mouse_pos.first - rectangle_origin.x;
+		rectangle_origin.h = mouse_pos.second - rectangle_origin.y;
+
+		// --- Draw Rectangle ---
+		//SDL_Rect SRect = { rectangle_origin.x, rectangle_origin.y, rectangle_origin.w, rectangle_origin.h };
+		App->render->DrawQuad(rectangle_origin, 255, 255, 255, 255, false);
+
+		// --- Once we get to the negative side of SRect numbers must be adjusted ---
+		if (rectangle_origin.w < 0) {
+			//SRect.x = mouse_pos.first;
+			rectangle_origin.w *= -1;
+		}
+		if (rectangle_origin.h < 0) {
+			//SRect.y = mouse_pos.second;
+			rectangle_origin.h *= -1;
+		}
+
+		// --- Check for Units in the rectangle, select them ---
+
+		App->move_manager->SelectEntities_inRect(rectangle_origin);
+
+		//LOG("rect is x%i y%i w%i h%i", SRect.x, SRect.y, SRect.w, SRect.h);
+	}
+
+	//else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+	//	App->Mmanager->CreateGroup();
+
+}
+
+bool Player::DeployTroops(Entity::entityType type, int amount, pair<int,int> pos) {
+
+	if (deploy_state == DeployState::START) {
+		deploying_counter = 0;
+
+		std::list<Troop*>::iterator entity = troops.begin();
+		while (entity != troops.end())
+		{
+			(*entity)->isSelected = false;
+			entity++;
+		}
+		deploy_state = DeployState::DEPLOYING;
+	}
+	else if (deploy_state == DeployState::DEPLOYING){
+		if (deploying_counter >= amount) {
+			deploy_state = DeployState::END;
+		}
+		else {
+			App->input->GetMousePosition(pos.first, pos.second);
+			pos = App->render->ScreenToWorld(pos.first, pos.second);
+			collider.dimensions = { 1,1 };
+
+			Troop* e;
+			pos.first += deploying_counter * 9;
+			e = (Troop*)App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, pos, collider);
+			e->state = NOT_DEPLOYED;
+			e->isSelected = true;
+
+			deploying_counter++;
+		}
+	}
+	else if (deploy_state == DeployState::END) {
+		deploying_counter = 0;
+		isDeploying = false;
+		groups.push_back(App->move_manager->CreateGroup(this));
+		group++;
+		return isDeploying;
+	}
+
 }
 
 bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("Player Update", Profiler::Color::Black);
 
-	
+	if (inmune && App->scene->worldseconds == desired_second && App->scene->worldminutes == desired_min)
+	{
+		inmune = false;
+	}
+
 
 	if (!App->scene->endgame)
 	{
+		RectangleSelection();
+
+		if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) {
+			std::list <Troop*>::const_iterator unit = troops.begin();
+			while (unit != troops.end()) {
+				if ((*unit)->isSelected) {
+					(*unit)->health = -1;
+				}
+				unit++;
+			}
+		}
+
 		//Preview all player1 entities with M
 		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 			isBuilding = !isBuilding;
@@ -87,11 +190,21 @@ bool Player::Update(float dt)
 			type = (Entity::entityType)((curr++) % (int)Entity::entityType::TANKMAN);
 
 		}
+		if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && (deploy_state == DeployState::END)) {
+
+			deploy_state = DeployState::START;
+		}
+
+		DeployTroops(Entity::entityType::SOLDIER, 9, { 0,0 });
 
 		//--- Press X (Square) To SELECT BUILDINGS
-		if (gamepad.Controller[BUTTON_X] == KEY_UP && currentUI == CURRENT_UI::NONE)
+		if (gamepad.Controller[BUTTON_X] == KEY_UP && currentUI == CURRENT_UI::CURR_MAIN)
 		{
 			building_selected = buildings.begin();
+
+			while ((*building_selected)->type == Entity::entityType::WALLS)
+				building_selected++;
+
 			last_building = buildings.end();
 			last_building--;
 			currentUI = CURRENT_UI::CURR_SELECTING_BUILDING;
@@ -99,7 +212,7 @@ bool Player::Update(float dt)
 		else if (gamepad.Controller[BUTTON_B] == KEY_UP && currentUI == CURRENT_UI::CURR_SELECTING_BUILDING)
 		{
 			building_selected._Ptr = nullptr;
-			currentUI = CURRENT_UI::NONE;
+			currentUI = CURRENT_UI::CURR_MAIN;
 		}
 
 		// DRAW QUAD on SELECTED BUILDING 
@@ -120,14 +233,13 @@ bool Player::Update(float dt)
 
 		
 		// Button with focus changes state to HOVER 
-		if (currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::ENDGAME && currentUI != CURRENT_UI::CURR_WIN_SCREEN && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
-
+		if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::ENDGAME && currentUI != CURRENT_UI::CURR_WIN_SCREEN && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
 		{
 			(*focus)->state = UI_Element::State::HOVER;
 		}
 
 		// PAUSE
-		if (gamepad.Controller[START] == KEY_DOWN && App->scene->active)
+		if (gamepad.Controller[CONTROLLER_BUTTONS::START] == KEY_DOWN && App->scene->active)
 		{
 			if (!App->scene->pause)
 			{
@@ -220,9 +332,9 @@ bool Player::Update(float dt)
 			if (gamepad.Controller[RB] == KEY_DOWN)
 			{
 				number_of_troops++;
-				if (number_of_troops + actual_capacity > total_capacity)
+				if (number_of_troops + (*building_selected)->TroopsCreated.size() > 10)
 				{
-					number_of_troops = total_capacity - actual_capacity;
+					number_of_troops = 10 - (*building_selected)->TroopsCreated.size();
 				}
 				
 			}
@@ -248,7 +360,7 @@ bool Player::Update(float dt)
 				TroopCost = 1250 * number_of_troops;
 			}
 
-			if (gamepad.Controller[BUTTON_A] == KEY_UP)
+			if (gamepad.Controller[BUTTON_A] == KEY_UP && gold >= TroopCost)
 			{
 				CreateTroop(UI_troop_type, number_of_troops);
 				Update_troop_image(UI_troop_type);
@@ -282,10 +394,11 @@ bool Player::Update(float dt)
 
 			TroopCost = 2000 * number_of_troops; //2000 RANDOM INVULNERABILITY PRICE 
 
-			if (gamepad.Controller[BUTTON_A] == KEY_UP)
+			if (gamepad.Controller[BUTTON_A] == KEY_UP && gold >= TroopCost)
 			{
 				CreateAbility(ABILITIES::INVULNERABLE, number_of_troops);
 				GotoPrevWindows(currentUI);
+				gold -= TroopCost;
 			}
 
 		}
@@ -356,7 +469,7 @@ bool Player::Update(float dt)
 		}
 
 		// Go back
-		if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::NONE)
+		if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::CURR_MAIN)
 		{
 			if(focus._Ptr != nullptr)
 				(*focus)->state = UI_Element::State::IDLE;
@@ -403,17 +516,6 @@ bool Player::Update(float dt)
 			}
 		}
 
-		// Enter to UI ingame Menus
-		if (gamepad.Controller[BUTTON_Y] == KEY_DOWN && currentUI == CURRENT_UI::NONE)
-		{
-			if (App->scene->active)
-				currentUI = CURRENT_UI::CURR_MAIN;
-
-			Y_pressed = true;
-
-			UpdateFocus(currentUI);
-		}
-
 
 		//Change the side images from the menus
 		if (App->scene->active)
@@ -439,7 +541,7 @@ bool Player::Update(float dt)
 			if (currentUI != CURRENT_UI::CURR_GENERAL && Create_abilities != nullptr)
 				Create_abilities->visible = false;
 
-			if(currentUI == NONE)
+			if(currentUI == CURR_MAIN)
 				SelectBuilding->visible = true;
 			else
 				SelectBuilding->visible = false;
@@ -569,33 +671,33 @@ bool Player::Update(float dt)
 		}
 
 		// Increase or decrease volume
-		if (gamepad.Controller[RIGHT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
+		if (gamepad.Controller[RIGHT] == KEY_DOWN && ( currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS || currentUI == CURRENT_UI::CURR_MM_SETTINGS))
 		{
 			App->audio->PlayFx(SLIDER_UP);
-			if ((*focus) == Music_Settings && App->audio->musicVolume < 100)
+			if (((*focus) == Music_Settings || (*focus) == App->main_menu->Music_Settings) && App->audio->musicVolume < 100)
 			{
 				App->audio->musicVolume += 10;
 				App->audio->SetMusicVolume();
 
 
 			}
-			else if ((*focus) == FX_Settings && App->audio->sfxVolume < 100)
+			else if (((*focus) == FX_Settings || (*focus) == App->main_menu->FX_Settings) && App->audio->sfxVolume < 100)
 			{
 				App->audio->sfxVolume += 10;
 
 				App->audio->SetSfxVolume();
 			}
 		}
-		else if (gamepad.Controller[LEFT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
+		else if (gamepad.Controller[LEFT] == KEY_DOWN && (currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS || currentUI == CURRENT_UI::CURR_MM_SETTINGS))
 		{
 			App->audio->PlayFx(SLIDER_DOWN);
-			if ((*focus) == Music_Settings && App->audio->musicVolume > 0)
+			if (((*focus) == Music_Settings || (*focus) == App->main_menu->Music_Settings) && App->audio->musicVolume > 0)
 			{
 				App->audio->musicVolume -= 10;
 
 				App->audio->SetMusicVolume();
 			}
-			else if ((*focus) == FX_Settings && App->audio->sfxVolume > 0)
+			else if (((*focus) == FX_Settings || (*focus) == App->main_menu->FX_Settings) && App->audio->sfxVolume > 0)
 			{
 				App->audio->sfxVolume -= 10;
 
@@ -701,8 +803,6 @@ bool Player::Update(float dt)
 			pos = App->render->ScreenToWorld(pos.first, pos.second);
 			//pos.first--;
 
-			// Swap once commit to work with controller
-
 			if (type == Entity::entityType::TOWNHALL)
 			{
 				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
@@ -736,37 +836,25 @@ bool Player::Update(float dt)
 			}
 
 
-			//App->render->Blit(App->entitymanager->entitiesTextures[type], pos.first, pos.second, &(preview_rects->at(type)));
-
-
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 			{
-				//play fx (build);
-				App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ },collider);
-
-				if (type > Entity::entityType::BARRACKS)//if troops
+				
+				if (gold >= CheckCost(type))
 				{
-					switch (type)
+					App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ }, collider);
+					if (type == Entity::entityType::BARRACKS)
 					{
-					case Entity::entityType::SOLDIER:
-						SoldiersCreated--;
-						actual_capacity--;
-						break;
+						BarracksCreated++;
 					}
 
 				}
+				else
+					App->audio->PlayFx(WRONG);
 
 				isBuilding = false;
 							
 			}
 
-			if (gamepad.Controller[BUTTON_X] == KEY_DOWN && type > Entity::entityType::BARRACKS)
-			{
-				SpawnMultipleTroops(type);
-				actual_capacity -= SoldiersCreated;
-				SoldiersCreated = 0;
-				isBuilding = false;
-			}
 		}
 		else
 		{
@@ -953,32 +1041,36 @@ Collider Player::GetCollider(pair<int, int> dimensions, pair<int, int> topTile_p
 }
 
 
-void Player::UpdateWalkabilityMap(bool isWalkable, Collider collider) //update walkable tiles
+void Player::UpdateWalkabilityMap(char cell_type, Collider collider) //update walkable tiles
 {
 	for (int i = 0; i < collider.tiles.size(); ++i)
 	{
 		pair <int, int> pos = App->map->WorldToMap(collider.tiles[i].first, collider.tiles[i].second);
-		if (App->pathfinding->GetTileAt(pos) != isWalkable)
+		if (App->pathfinding->GetTileAt(pos) != cell_type)
 		{
-			App->pathfinding->ChangeWalkability(pos, isWalkable);
+			App->pathfinding->ChangeWalkability(pos, cell_type);
+			// Debug drawing
 			App->map->walkability_layer->Set(pos.first, pos.second, 1);
 		}
 	}
 }
 
-int Player::CheckCost(Entity* entity)
+int Player::CheckCost(Entity::entityType type)
 {
-	if (entity->type == Entity::entityType::BARRACKS)
+	if (type == Entity::entityType::BARRACKS)
 		return 3000;
 
-	else if (entity->type == Entity::entityType::DEFENSE_AOE)
+	else if (type == Entity::entityType::DEFENSE_AOE)
 		return 2000;
 
-	else if (entity->type == Entity::entityType::DEFENSE_TARGET)
+	else if (type == Entity::entityType::DEFENSE_TARGET) // TESLA (esta al reves?)
 		return 3500;
 
-	else if (entity->type == Entity::entityType::MINES)
+	else if (type == Entity::entityType::MINES)
 		return 2000;
+
+	else if (type == Entity::entityType::MAIN_DEFENSE) // Torreta single target (esta al reves?)
+		return 3500;
 
 	else
 		return 0;
@@ -1003,6 +1095,21 @@ void Player::UpdateFocus(uint data)
 		last_element = App->main_menu->menu_background->children.end();
 		last_element--;
 		break;
+
+	case::Player::CURRENT_UI::CURR_MM_SETTINGS:
+		focus = App->main_menu->MM_Settings_UI->children.begin();
+		last_element = App->main_menu->MM_Settings_UI->children.end();
+		last_element--;
+		break;
+
+	case::Player::CURRENT_UI::CURR_MM_CREDITS:
+		focus = App->main_menu->Credits_UI->children.begin();
+		last_element = App->main_menu->Credits_UI->children.end();
+		last_element--;
+
+		focus = last_element;
+		break;
+
 	case::Player::CURRENT_UI::CURR_MAIN:
 		focus = Main_UI->children.begin();
 		last_element = Main_UI->children.end();
@@ -1059,14 +1166,24 @@ void Player::GotoPrevWindows(uint data)
 {
 	switch (data)
 	{
-	case Player::CURRENT_UI::CURR_MAIN:
-		currentUI = CURRENT_UI::NONE;
-		Y_pressed = false;
+	case Player::CURRENT_UI::CURR_MM_SETTINGS:
+		currentUI = CURRENT_UI::CURR_MAIN_MENU;
 		UpdateVisibility();
 		break;
 
+	case Player::CURRENT_UI::CURR_MM_CREDITS:
+		currentUI = CURRENT_UI::CURR_MAIN_MENU;
+		App->main_menu->license_texture->visible = false;
+		App->main_menu->authors_texture->visible = false;
+		UpdateVisibility();
+		break;
+
+	case Player::CURRENT_UI::CURR_MAIN:
+		
+		break;
+
 	case Player::CURRENT_UI::CURR_GENERAL:
-		currentUI = CURRENT_UI::NONE;
+		currentUI = CURRENT_UI::CURR_MAIN;
 		UpdateVisibility();
 		break;
 
@@ -1121,6 +1238,13 @@ UI_Element* Player::GetUI_Element(uint data)
 	{
 	case::Player::CURRENT_UI::CURR_MAIN_MENU:
 		return App->main_menu->menu_background;
+
+	case::Player::CURRENT_UI::CURR_MM_SETTINGS:
+		return App->main_menu->MM_Settings_UI;
+
+	case::Player::CURRENT_UI::CURR_MM_CREDITS:
+		return App->main_menu->Credits_UI;
+
 	case::Player::CURRENT_UI::CURR_MAIN:
 		return Main_UI;
 
@@ -1342,6 +1466,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		SelectBuilding->visible = false;
 		In_SelectBuilding->visible = false;
 		draw_screen->visible = false;
+
 	case::Player::CURRENT_UI::DRAW: //Dont show the other player win screen
 		Main_UI->visible = false;
 		Build_UI->visible = false;
@@ -1366,6 +1491,23 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		draw_screen->visible = true;
 		break;
 
+	case::Player::CURRENT_UI::CURR_MAIN_MENU:
+		App->main_menu->menu_background->visible = true;
+		App->main_menu->MM_Settings_UI->visible = false;
+		App->main_menu->Credits_UI->visible = false;
+		break;
+
+	case::Player::CURRENT_UI::CURR_MM_SETTINGS:
+		App->main_menu->menu_background->visible = false;
+		App->main_menu->MM_Settings_UI->visible = true;
+		App->main_menu->Credits_UI->visible = false;
+		break;
+
+	case::Player::CURRENT_UI::CURR_MM_CREDITS:
+		App->main_menu->menu_background->visible = false;
+		App->main_menu->MM_Settings_UI->visible = false;
+		App->main_menu->Credits_UI->visible = true;
+		break;
 
 	}
 	App->gui->UpdateChildren();
@@ -1429,46 +1571,54 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_BARRACKS:
-		isBuilding = true;
-		type = Entity::entityType::BARRACKS;
-		collider.dimensions = { 3,4 };
-		offset = { 40 , 50 };
+		if (BarracksCreated < 3)
+		{
+			isBuilding = true;
+			type = Entity::entityType::BARRACKS;
+			collider.dimensions = { 3,4 };
+			offset = { 40 , 50 };
+		}
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
-		if (SoldiersCreated > 0)
-		{
-			App->audio->PlayFx(INGAME_CLICK);
-			isBuilding = true;
-			type = Entity::entityType::SOLDIER;
-			collider.dimensions = { 1,1 };
-		}
-		else
-		{
-			App->audio->PlayFx(WRONG);
-		}
 		
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_TANKMAN:
-		//
-		App->audio->PlayFx(WRONG);
+
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_INFILTRATOR:
-		//
-		App->audio->PlayFx(WRONG);
+		
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_ENGINEER:
-		//
-		App->audio->PlayFx(WRONG);
+		
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_WARHOUND:
-		//
-		App->audio->PlayFx(WRONG);
+		
 		break;
+
+	case::UI_Element::Action::ACT_CAST_INVULNERABILITY:
+		if (inmune == false)
+		{
+			timer_ref_sec = App->scene->worldseconds;
+			timer_ref_min = App->scene->worldminutes;
+			desired_second = timer_ref_sec + 10;
+			desired_min = timer_ref_min;
+
+			if (desired_second >= 60)
+			{
+				int extra = 60 - desired_second;
+				desired_second = extra;
+				desired_min++;
+			}
+			inmune = true;
+			Invulnerable_abilities--;
+		}
+		break;
+
 
 	case::UI_Element::Action::ACT_CAST_MISSILES:
 		//
@@ -1538,6 +1688,8 @@ void Player::DoLogic(UI_Element* data)
 
 bool Player::DeleteEntity(Entity* entity)
 {
+	UpdateWalkabilityMap(WALKABLE, entity->collider);
+
 	entity->CleanUp();
 
 	if (entity->type >= Entity::entityType::TOWNHALL && entity->type <= Entity::entityType::BARRACKS) //if entity = building
@@ -1548,21 +1700,10 @@ bool Player::DeleteEntity(Entity* entity)
 			if ((*item) == entity)
 			{
 				buildings.erase(item);
-				
+				break;
 			}
 				
 			item++;
-		}
-		list<Entity*>::iterator item2 = App->entitymanager->entity_list.begin();
-		while (item2 != App->entitymanager->entity_list.end())
-		{
-			if ((*item2) == entity)
-			{
-				App->entitymanager->entity_list.erase(item2);
-				
-			}
-
-			item2++;
 		}
 	}
 	else if (entity->type > Entity::entityType::BARRACKS) //if entity = troop
@@ -1578,21 +1719,36 @@ bool Player::DeleteEntity(Entity* entity)
 		list<Troop*>::iterator item = troops.begin();
 		while (item != troops.end())
 		{
-			if ((*item) == entity)
+			if ((*item) == entity) {
 				troops.erase(item);
+				break;
+			}
 			item++;
 		}
-		list<Entity*>::iterator item2 = App->entitymanager->entity_list.begin();
-		while (item2 != App->entitymanager->entity_list.end())
+		
+	}
+	list<Entity*>::iterator item2 = App->entitymanager->entity_list.begin();
+	while (item2 != App->entitymanager->entity_list.end())
+	{
+		if ((*item2) == entity)
 		{
-			if ((*item2) == entity)
-			{
-				App->entitymanager->entity_list.erase(item2);
-
-			}
-
-			item2++;
+			App->entitymanager->entity_list.erase(item2);
+			break;
 		}
+
+		item2++;
+	}
+
+	item2 = entities.begin();
+	while (item2 != entities.end())
+	{
+		if ((*item2) == entity)
+		{
+			entities.erase(item2);
+			break;
+		}
+
+		item2++;
 	}
 	return true;
 }
@@ -1625,31 +1781,31 @@ void Player::Update_troop_image(int type) // Changes sprite depending on the ent
 
 void Player::CreateTroop(int type, int number)
 {
+	Entity::entityType entity_type;
 	switch (type)
 	{
-	case Entity::entityType::SOLDIER:
-		SoldiersCreated += number;
+	case 8:
+		entity_type = Entity::entityType::SOLDIER;
 		break;
-
-	case Entity::entityType::TANKMAN:
-		TankmansCreated += number;
+	case 9:
+		entity_type = Entity::entityType::TANKMAN;
 		break;
-
-	case Entity::entityType::INFILTRATOR:
-		InfiltratorsCreated += number;
+	case 10:
+		entity_type = Entity::entityType::INFILTRATOR;
 		break;
-
-	case Entity::entityType::ENGINEER:
-		EngineersCreated += number;
+	case 11:
+		entity_type = Entity::entityType::ENGINEER;
 		break;
-
-	case Entity::entityType::WAR_HOUND:
-		WarHoundsCreated += number;
+	case 12:
+		entity_type = Entity::entityType::WAR_HOUND;
 		break;
 	}
+
+	for (int i = 0; i < number; i++)
+	{
+		(*building_selected)->TroopsCreated.push_back(entity_type);
+	}
 	
-	//Update actual capacity
-	actual_capacity += number;
 }
 
 void Player::CreateAbility(int type, int number)
@@ -1732,30 +1888,5 @@ void Player::DrawBuildingCollider(int type, bool isPlayer1)
 		App->render->DrawQuad(selected_texture, 255, 0, 0, 100, true);
 	else
 		App->render->DrawQuad(selected_texture, 0, 0, 255, 100, true);
-}
-
-void Player::SpawnMultipleTroops(uint type)
-{
-	switch (type)
-	{
-	case Entity::entityType::SOLDIER:
-		pair<int, int> offset;
-		int row;
-			for(int i=0; i< SoldiersCreated; i++)
-			{
-				if(i%5 == 0)
-					row = i / 5;
-
-				offset.first = (i - 4 * row);
-				offset.second = (i - 6 * row);
-			
-				if(isPlayer1)
-					App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, { collider.tiles[0].first + offset.first * 30 , collider.tiles[0].second + offset.second * 15}, collider);
-				else
-					App->entitymanager->AddEntity(isPlayer1, Entity::entityType::SOLDIER, { collider.tiles[0].first + (offset.second * 30) , collider.tiles[0].second + offset.first * 15}, collider);
-			}
-
-
-	}
 }
 
