@@ -191,9 +191,8 @@ bool Hound::Update(float dt)
 						}
 						else if (info.closest == nullptr && offensive == true)
 						{
-							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER,2);
-							/*SetDestination();
-							destination = App->map->MapToWorld(destination.first, destination.second);*/
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER,1);
+							
 							state = MOVING;
 							pathfind = true;
 						}
@@ -220,9 +219,7 @@ bool Hound::Update(float dt)
 						}
 						else if (info.closest == nullptr && offensive == true)
 						{
-							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER,3);
-							/*SetDestination();
-							destination = App->map->MapToWorld(destination.first, destination.second);*/
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER,2);
 							state = MOVING;
 							pathfind = true;
 						}
@@ -248,11 +245,21 @@ bool Hound::Update(float dt)
 						}
 						else if (info.closest == nullptr && offensive == false)
 						{
-							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER,1);
-							/*SetDestination();
-							destination = App->map->MapToWorld(destination.first, destination.second);*/
-							state = MOVING;
-							pathfind = true;
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER,2);
+							if (info.closest->type < entityType::SOLDIER)
+							{
+								info.closest = nullptr;
+								state = TROOP_IDLE;
+								timer.Start();
+
+							}
+							else
+							{
+
+								state = MOVING;
+								pathfind = true;
+							}
+							
 						}
 						else
 						{
@@ -265,20 +272,22 @@ bool Hound::Update(float dt)
 					}
 				} 
 				// war zone
-				else if (IsInWarZone(map_pos))
+				else if (IsInWarZone(map_pos) && offensive)
 				{
 					
 					info.closest = FindEntityInAttackRange(map_pos, fromPlayer1, original_range, entityType::SOLDIER);
-
-					if (info.closest != nullptr)
-					{
-						state = SHOOTING;
-						timer.Start();
-					}
-					else
-					{
-						state == MOVING;
-					}
+					
+						if (info.closest != nullptr)
+						{
+							state = SHOOTING;
+							timer.Start();
+						}
+						else
+						{
+							state == MOVING;
+						}
+					
+					
 					//find entity en shoot range,
 					//if closes exits, state=shoot
 					//else state move
@@ -292,6 +301,7 @@ bool Hound::Update(float dt)
 			default:
 
 				state = MOVING;
+				pathfind=false;
 
 				break;
 			}
