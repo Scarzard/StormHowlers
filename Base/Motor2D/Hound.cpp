@@ -54,7 +54,7 @@ bool Hound::Update(float dt)
 			switch (state)
 			{
 			case TROOP_IDLE:
-				if (timer.ReadSec() > 1 && info.closest == nullptr)
+				if (timer.ReadSec() >= 1 && info.closest == nullptr)
 				{
 					state = SEARCH;
 					timer.Start();
@@ -70,7 +70,7 @@ bool Hound::Update(float dt)
 				break;
 
 			case MOVING:
-				if (pathfind && offensive)
+				if (pathfind)
 				{
 					if (info.closest != nullptr)
 					{
@@ -79,6 +79,7 @@ bool Hound::Update(float dt)
 					else
 					{
 						pathfind = false;
+						state = MOVING;
 					}
 				}
 				else if (timer.ReadSec() > 1 && info.closest == nullptr && offensive)
@@ -112,7 +113,10 @@ bool Hound::Update(float dt)
 
 				// Shoots the closest one if in range
 				if (info.closest == nullptr)
-					state = SEARCH;
+				{
+					state = MOVING;
+
+				}
 				if (timer.ReadSec() >= rate_of_fire)
 				{
 					info.closest->TakeDamage(damage_lv[level]);
@@ -126,12 +130,12 @@ bool Hound::Update(float dt)
 					timer.Start();
 					info.closest = nullptr;
 				}
-				if (!offensive)
+				/*if (!offensive)
 				{
 					state = MOVING;
 					info.closest = nullptr;
 
-				}
+				}*/
 				break;
 			
 			case SEARCH:
@@ -155,10 +159,19 @@ bool Hound::Update(float dt)
 						{
 							// capar a entidades en la misma zona
 							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER,1);
-							/*SetDestination();
-							destination = App->map->MapToWorld(destination.first, destination.second);*/
-							state = MOVING;
-							pathfind = true;
+							if (info.closest->type < entityType::SOLDIER)
+							{
+								info.closest = nullptr;
+								state = TROOP_IDLE;
+								timer.Start();
+
+							}
+							else
+							{
+
+								state = MOVING;
+								pathfind = true;
+							}
 						}
 						else
 						{
