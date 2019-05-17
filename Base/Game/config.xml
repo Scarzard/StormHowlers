@@ -30,6 +30,16 @@
       <sound>3 min.wav</sound>
       <sound>5 min.wav</sound>
       <sound>10 min.wav</sound>
+      <sound>Allied_Barracks_B.wav</sound>
+      <sound>Allied_Barracks_D.wav</sound>
+      <sound>Allied_CC_D.wav</sound>
+      <sound>Allied_Laser_B.wav</sound>
+      <sound>Allied_Laser_D.wav</sound>
+      <sound>Allied_Mine_B.wav</sound>
+      <sound>Allied_Mine_D.wav</sound>
+      <sound>Allied_Sentry_B.wav</sound>
+      <sound>Allied_Sentry_D.wav</sound>
+      <sound>Allied_Tesla_D.wav</sound>
       <sound>barracks_build_fx.wav</sound>
       <sound>building_explosion_fx.wav</sound>
       <sound>building_repair_fx.wav</sound>
@@ -47,6 +57,16 @@
       <sound>slider_down_fx.wav</sound>
       <sound>slider_up_fx.wav</sound>
       <sound>soldier_attack_fx.wav</sound>
+      <sound>Soviet_Barracks_B.wav</sound>
+      <sound>Soviet_Barracks_D.wav</sound>
+      <sound>Soviet_CC_D.wav</sound>
+      <sound>Soviet_Laser_B.wav</sound>
+      <sound>Soviet_Laser_D.wav</sound>
+      <sound>Soviet_Mine_B.wav</sound>
+      <sound>Soviet_Mine_D.wav</sound>
+      <sound>Soviet_Sentry_B.wav</sound>
+      <sound>Soviet_Sentry_D.wav</sound>
+      <sound>Soviet_Tesla_D.wav</sound>
       <sound>tesla_attack_fx.wav</sound>
       <sound>tesla_build_fx.wav</sound>
       <sound>tesla_repair_fx.wav</sound>
