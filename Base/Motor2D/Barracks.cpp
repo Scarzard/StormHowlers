@@ -42,7 +42,7 @@ bool Barracks::Update(float dt)
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
 
-		if (level == 0 && App->scenechange->IsChanging() == false)
+		if (level == 0 && App->scenechange->IsChanging() == false) //Poner abajo a la derecha
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 0;
