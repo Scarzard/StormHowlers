@@ -5,6 +5,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Audio.h"
+#include "Transitions.h"
 #include "Brofiler\Brofiler.h"
 
 
@@ -93,20 +94,102 @@ bool MainDefense::Update(float dt)
 
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
+
+		if (level == 0 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 0;
+			upgrade.y = 34;
+			upgrade.w = 32;
+			upgrade.h = 20;
+			App->render->Blit(App->scene->upgrade_lvl, position.first - 30, position.second - 60, &upgrade);
+		}
+
+		if (level == 1 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 36;
+			upgrade.y = 17;
+			upgrade.w = 32;
+			upgrade.h = 37;
+			App->render->Blit(App->scene->upgrade_lvl, position.first - 30, position.second - 60, &upgrade);
+		}
+
+		if (level == 2 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 72;
+			upgrade.y = 0;
+			upgrade.w = 32;
+			upgrade.h = 54;
+			App->render->Blit(App->scene->upgrade_lvl, position.first - 30, position.second - 60, &upgrade);
+		}
+
+		if (upgrade == true && level <= 1) //upgrade
+		{
+			App->player1->gold -= upgrade_cost[level]; //pay costs
+			level++;
+			damage = damage_lv[level];
+			health = health_lv[level];
+			upgrade = false;
+			//play fx (upgrade);
+		}
+
 		if (health <= 0) //destroyed
 		{
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
-			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
 	{
+
+		if (level == 0 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 0;
+			upgrade.y = 34;
+			upgrade.w = 32;
+			upgrade.h = 20;
+			App->render->Blit(App->scene->upgrade_lvl, position.first -30, position.second - 60, &upgrade);
+		}
+
+		if (level == 1 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 36;
+			upgrade.y = 17;
+			upgrade.w = 32;
+			upgrade.h = 37;
+			App->render->Blit(App->scene->upgrade_lvl, position.first - 30, position.second - 60, &upgrade);
+		}
+
+		if (level == 2 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 72;
+			upgrade.y = 0;
+			upgrade.w = 32;
+			upgrade.h = 54;
+			App->render->Blit(App->scene->upgrade_lvl, position.first -30, position.second - 60, &upgrade);
+		}
+
+		if (upgrade == true && level <= 1) //upgrade
+		{
+			App->player2->gold -= upgrade_cost[level]; //pay costs
+			level++;
+			damage = damage_lv[level];
+			health = health_lv[level];
+			upgrade = false;
+			//play fx (upgrade);
+		}
+
 		if (health <= 0) //destroyed
 		{
 			App->player2->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
-			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 		}
 	}
 

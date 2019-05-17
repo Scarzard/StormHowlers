@@ -149,10 +149,28 @@ bool Gui::Draw()
 			else if ((*UI_elem)->type == UI_Element::UI_type::TEXTURE) //text
 			{
 				SDL_Rect r = { 0,0,App->win->width,App->win->height };
+				//Main Menu textures
 				if ((*UI_elem) == App->main_menu->menu_background)
 				{
 					SDL_RenderCopy(App->render->renderer, App->main_menu->menu_background->texture, NULL, &r);
 				}
+				else if ((*UI_elem) == App->main_menu->MM_Settings_UI)
+				{
+					SDL_RenderCopy(App->render->renderer, App->main_menu->MM_Settings_UI->texture, NULL, &r);
+				}
+				else if ((*UI_elem) == App->main_menu->Credits_UI)
+				{
+					SDL_RenderCopy(App->render->renderer, App->main_menu->Credits_UI->texture, NULL, &r);
+				}
+				else if ((*UI_elem) == App->main_menu->license_texture)
+				{
+					SDL_RenderCopy(App->render->renderer, App->main_menu->license_texture->texture, NULL, &r);
+				}
+				else if ((*UI_elem) == App->main_menu->authors_texture)
+				{
+					SDL_RenderCopy(App->render->renderer, App->main_menu->authors_texture->texture, NULL, &r);
+				}
+				//Scene textures
 				else if ((*UI_elem) == App->player1->Pause_UI || (*UI_elem) == App->player1->Abort_UI)
 				{
 					SDL_RenderCopy(App->render->renderer, App->player1->Pause_UI->texture, NULL, &r);
@@ -167,6 +185,7 @@ bool Gui::Draw()
 					App->render->DrawQuad({ 0, 0, (int)App->win->width + 520, (int)App->win->height + 300 }, 0, 0, 0, 150, true, false);
 					SDL_RenderCopy(App->render->renderer, App->scene->draw_tex, NULL, &r);
 				}
+				
 			}
 			else //rest of ui
 			{
@@ -418,6 +437,21 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::NEW_GAME:
 			data->rect = { 744, 954, 371, 87 };
 			break;
+		case UI_Element::Action::SETTINGS:
+			data->rect = { 744, 954, 371, 87 };
+			break;
+		case UI_Element::Action::CREDITS:
+			data->rect = { 744, 954, 371, 87 };
+			break;
+		case UI_Element::Action::LICENSE:
+			data->rect = { 744, 954, 371, 87 };
+			break;
+		case UI_Element::Action::AUTHORS:
+			data->rect = { 744, 954, 371, 87 };
+			break;
+		case UI_Element::Action::WEBSITE:
+			data->rect = { 744, 954, 371, 87 };
+			break;
 		case UI_Element::Action::EXIT:
 			data->rect = { 744, 954, 371, 87 };
 			break;
@@ -459,14 +493,18 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::MUSIC_VOLUME:
 			if (App->player1->Music_Settings == data)
 				data->rect = { 1816, 830, 291, 54 };
-			else
+			else if (App->player2->Music_Settings == data)
 				data->rect = { 1517, 830, 291, 54 };
+			else
+				data->rect = { 1517, 830, 291, 54 };//change to new button
 			break;
 		case UI_Element::Action::FX_VOLUME:
 			if (App->player1->FX_Settings == data)
 				data->rect = { 1816, 830, 291, 54 };
-			else
+			else if (App->player2->FX_Settings == data)
 				data->rect = { 1517, 830, 291, 54 };
+			else
+				data->rect = { 1517, 830, 291, 54 };//change to new button
 			break;
 
 		}
@@ -570,11 +608,25 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			data->rect = { 1587, 161, 85, 81 };
 			break;
 
-			//-----Needs to be changed
+			//MainMenu
 		case UI_Element::Action::NEW_GAME:
 			data->rect = { 1116, 954, 371, 86 };
 			break;
-			//change values
+		case UI_Element::Action::SETTINGS:
+			data->rect = { 1116, 954, 371, 86 };
+			break;
+		case UI_Element::Action::CREDITS:
+			data->rect = { 1116, 954, 371, 86 };
+			break;
+		case UI_Element::Action::LICENSE:
+			data->rect = { 1116, 954, 371, 86 };
+			break;
+		case UI_Element::Action::AUTHORS:
+			data->rect = { 1116, 954, 371, 86 };
+			break;
+		case UI_Element::Action::WEBSITE:
+			data->rect = { 1116, 954, 371, 86 };
+			break;
 		case UI_Element::Action::EXIT:
 			data->rect = { 1116, 954, 371, 86 };
 			break;
@@ -612,17 +664,34 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 				data->rect = { 881, 769, 301, 59 };
 			break;
 
-		case UI_Element::Action::MUSIC_VOLUME:
+		//case UI_Element::Action::MUSIC_VOLUME:
+		//	if (App->player1->Music_Settings == data)
+		//		data->rect = { 1816, 884, 291, 54 };
+		//	else
+		//		data->rect = { 1517, 884, 291, 54 };
+		//	break;
+		//case UI_Element::Action::FX_VOLUME:
+		//	if (App->player1->FX_Settings == data)
+		//		data->rect = { 1816, 884, 291, 54 };
+		//	else
+		//		data->rect = { 1517, 884, 291, 54 };
+		//	break;
+
+			case UI_Element::Action::MUSIC_VOLUME:
 			if (App->player1->Music_Settings == data)
 				data->rect = { 1816, 884, 291, 54 };
-			else
+			else if (App->player2->Music_Settings == data)
 				data->rect = { 1517, 884, 291, 54 };
+			else
+				data->rect = { 1517, 884, 291, 54 };//change to new button
 			break;
 		case UI_Element::Action::FX_VOLUME:
 			if (App->player1->FX_Settings == data)
 				data->rect = { 1816, 884, 291, 54 };
-			else
+			else if (App->player2->FX_Settings == data)
 				data->rect = { 1517, 884, 291, 54 };
+			else
+				data->rect = { 1517, 884, 291, 54 };//change to new button
 			break;
 		}
 		break;
@@ -693,8 +762,23 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			data->rect = { 662, 161, 85, 81 };
 			break;
 
-			//-----Needs to be changed
+			//MainMenu
 		case UI_Element::Action::NEW_GAME:
+			data->rect = { 1488, 954, 371, 86 };
+			break;
+		case UI_Element::Action::SETTINGS:
+			data->rect = { 1488, 954, 371, 86 };
+			break;
+		case UI_Element::Action::CREDITS:
+			data->rect = { 1488, 954, 371, 86 };
+			break;
+		case UI_Element::Action::LICENSE:
+			data->rect = { 1488, 954, 371, 86 };
+			break;
+		case UI_Element::Action::AUTHORS:
+			data->rect = { 1488, 954, 371, 86 };
+			break;
+		case UI_Element::Action::WEBSITE:
 			data->rect = { 1488, 954, 371, 86 };
 			break;
 		case UI_Element::Action::EXIT:
@@ -784,8 +868,23 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 		case UI_Element::Action::NEW_GAME:
 			data->rect = { 410,80,39,40 };
 			break;
+		case UI_Element::Action::SETTINGS:
+			data->rect = { 410,80,39,40 };
+			break;
+		case UI_Element::Action::CREDITS:
+			data->rect = { 410,80,39,40 };
+			break;
+		case UI_Element::Action::LICENSE:
+			data->rect = { 410,80,39,40 };
+			break;
+		case UI_Element::Action::AUTHORS:
+			data->rect = { 410,80,39,40 };
+			break;
+		case UI_Element::Action::WEBSITE:
+			data->rect = { 410,80,39,40 };
+			break;
 		case UI_Element::Action::EXIT:
-			data->rect = { 332,80,39,40 };
+			data->rect = { 410,80,39,40 };
 			break;
 
 		case UI_Element::Action::ACT_BUILD_MINE: //ORE REFINERY
