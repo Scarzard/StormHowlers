@@ -468,6 +468,7 @@ bool Player::Update(float dt)
 			{
 				BuildingCost = 3000;
 			}
+
 		}
 
 		// Go back
@@ -551,7 +552,9 @@ bool Player::Update(float dt)
 
 
 		// Travel through the different buttons
-		if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
+		if ((gamepad.Controller[RB] == KEY_DOWN || gamepad.Controller[RIGHT] == KEY_DOWN || gamepad.Controller[JOY_RIGHT] == KEY_DOWN) &&
+			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && 
+			gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			App->audio->PlayFx(CHANGE_FOCUS);
 			if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING)
@@ -598,7 +601,9 @@ bool Player::Update(float dt)
 
 		}
 		// Travel through the different buttons
-		if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
+		if ((gamepad.Controller[LB] == KEY_DOWN || gamepad.Controller[LEFT] == KEY_DOWN || gamepad.Controller[JOY_LEFT] == KEY_DOWN) &&
+			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && 
+			gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			App->audio->PlayFx(CHANGE_FOCUS);
 			if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING)
