@@ -57,7 +57,7 @@ bool Player::Start()
 	gold = 3500;
 	gold_persecond = 0;
 
-	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = 0;
+	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = Rocket_abilities = Tank_abilities = 0;
 
 	selected_texture = { 0,0, 100, 100 };
 
@@ -289,6 +289,7 @@ bool Player::Update(float dt)
 			currentUI = CURRENT_UI::CURR_CREATE_ABILITIES;
 			UpdateVisibility();
 			troop_icon->rect = { 576, 161, 85, 81 };
+			UI_troop_type = 0;
 			
 		}
 
@@ -372,6 +373,29 @@ bool Player::Update(float dt)
 		//Creating ABILITIES
 		if (currentUI == CURRENT_UI::CURR_CREATE_ABILITIES)
 		{
+			if (gamepad.Controller[LEFT] == KEY_DOWN)
+			{
+				if (UI_troop_type == ABILITIES::INVULNERABLE) //soldier
+				{
+					UI_troop_type = ABILITIES::ROCKET; // war_hound
+				}
+				else
+					UI_troop_type--;
+
+				Update_troop_image(UI_troop_type);
+
+			}
+
+			if (gamepad.Controller[RIGHT] == KEY_DOWN)
+			{
+				UI_troop_type++;
+				if (UI_troop_type > ABILITIES::ROCKET) // war_hound
+				{
+					UI_troop_type = ABILITIES::INVULNERABLE;//soldier
+				}
+				Update_troop_image(UI_troop_type);
+			}
+
 			if (gamepad.Controller[LB] == KEY_DOWN)
 			{
 				number_of_troops--;
@@ -391,11 +415,22 @@ bool Player::Update(float dt)
 				}
 			}
 
-			TroopCost = 2000 * number_of_troops; //2000 RANDOM INVULNERABILITY PRICE 
+			if (UI_troop_type == ABILITIES::INVULNERABLE)
+			{
+				TroopCost = 2000 * number_of_troops;
+			}
+			else if (UI_troop_type == ABILITIES::ROCKET)
+			{
+				TroopCost = 3000 * number_of_troops;
+			}
+			else if (UI_troop_type == ABILITIES::TANK)
+			{
+				TroopCost = 3000 * number_of_troops;
+			}
 
 			if (gamepad.Controller[BUTTON_A] == KEY_UP && gold >= TroopCost)
 			{
-				CreateAbility(ABILITIES::INVULNERABLE, number_of_troops);
+				CreateAbility(UI_troop_type, number_of_troops);
 				GotoPrevWindows(currentUI);
 				gold -= TroopCost;
 			}
@@ -619,13 +654,12 @@ bool Player::Update(float dt)
 				else
 				{
 					building_selected--;
-				}
-
-				if ((*building_selected)->type == Entity::entityType::WALLS)
-				{
-					while ((*building_selected)->type == Entity::entityType::WALLS)
+					if ((*building_selected)->type == Entity::entityType::WALLS)
 					{
-						building_selected--;
+						while ((*building_selected)->type == Entity::entityType::WALLS)
+						{
+							building_selected--;
+						}
 					}
 				}
 			}
@@ -1548,7 +1582,7 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_CAST_INVULNERABILITY:
-		if (inmune == false)
+		if (inmune == false && Invulnerable_abilities>0)
 		{
 			timer_ref_sec = App->scene->worldseconds;
 			timer_ref_min = App->scene->worldminutes;
@@ -1723,6 +1757,19 @@ void Player::Update_troop_image(int type) // Changes sprite depending on the ent
 	case Entity::entityType::WAR_HOUND:
 		troop_icon->rect = { 746, 0, 85, 81 };
 		break;
+
+	case ABILITIES::INVULNERABLE:
+		troop_icon->rect = { 576, 161, 85, 81 };
+		break;
+
+	case ABILITIES::ROCKET:
+		troop_icon->rect = { 662, 161, 85, 81 };
+		break;
+
+	case ABILITIES::TANK:
+		troop_icon->rect = { 492, 161, 85, 81 };
+		break;
+
 	}
 }
 
@@ -1761,6 +1808,14 @@ void Player::CreateAbility(int type, int number)
 	{
 	case ABILITIES::INVULNERABLE:
 		Invulnerable_abilities += number;
+		break;
+
+	case ABILITIES::ROCKET:
+		Rocket_abilities += number;
+		break;
+
+	case ABILITIES::TANK:
+		Tank_abilities += number;
 		break;
 	}
 }
@@ -1840,141 +1895,106 @@ void Player::DrawBuildingCollider(int type, bool isPlayer1)
 void Player::Blit_Info()
 {
 	SDL_Rect section;
+	SDL_Rect sec2 = { -1090, 668, 351, 20 };
 
 	if ((*focus) == Def_AOE_icon)
 	{
 		section = { 0, 1234, 351, 87 };
-
-		if(isPlayer1)
-			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
-		else
-			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 	}
 	else if ((*focus) == Def_Target_icon)
 	{
 		section = { 359, 1234, 351, 87 };
-
-		if (isPlayer1)
-			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
-		else
-			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 	}
 	else if ((*focus) == Mines_icon)
 	{
 		section = { 716, 1234, 351, 87 };
-
-		if (isPlayer1)
-			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
-		else
-			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 	}
 	else if ((*focus) == Barracks_icon)
 	{
 		section = { 1074, 1234, 351, 87 };
-
-		if (isPlayer1)
-			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
-		else
-			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 	}
-	else if ((*focus) == Soldier_icon)
+	else if ((*focus) == Soldier_icon || (currentUI==CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::SOLDIER))
 	{
 		section = { 0, 1331, 351, 87 };
-
-		if (isPlayer1)
-			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
-		else
-			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 	}
-	else if ((*focus) == Tankman_icon)
+	else if ((*focus) == Tankman_icon || (currentUI == CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::TANKMAN))
 	{
 		section = { 359, 1331, 351, 87 };
-
-		if (isPlayer1)
-			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
-		else
-			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 	}
-	else if ((*focus) == Engineer_icon)
+	else if ((*focus) == Engineer_icon || (currentUI == CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::ENGINEER))
 	{
 		section = { 716, 1331, 351, 87 };
-
-		if (isPlayer1)
-			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
-		else
-			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 	}
-	else if ((*focus) == Infiltrator_icon)
+	else if ((*focus) == Infiltrator_icon || (currentUI == CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::INFILTRATOR))
 	{
 		section = { 1074, 1331, 351, 87 };
-
-		if (isPlayer1)
-			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
-		else
-			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 	}
-	else if ((*focus) == War_hound_icon)
+	else if ((*focus) == War_hound_icon || (currentUI == CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::WAR_HOUND))
 	{
 		section = { 0, 1426, 351, 87 };
-
-		if (isPlayer1)
-			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
-		else
-			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 	}
 	else if ((*focus) == Build_icon)
 	{
 		section = { 1425, 1234, 351, 87 };
-
-		if (isPlayer1)
-			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
-		else
-			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 	}
 	else if ((*focus) == Deploy_icon)
 	{
 		section = { 1425, 1331, 351, 87 };
-
-		if (isPlayer1)
-			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
-		else
-			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 	}
 	else if ((*focus) == Cast_icon)
 	{
 		section = { 1425, 1426, 351, 87 };
-
-		if (isPlayer1)
-			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
-		else
-			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 	}
-	else if ((*focus) == Missiles_icon)
+	else if ((*focus) == Missiles_icon || (currentUI == CURRENT_UI::CURR_CREATE_ABILITIES && UI_troop_type == ABILITIES::ROCKET))
 	{
 		section = { 1075, 1426, 351, 87 };
-
-		if (isPlayer1)
-			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
-		else
-			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 	}
-	else if ((*focus) == Cast2_icon)
+	else if ((*focus) == Cast2_icon || (currentUI == CURRENT_UI::CURR_CREATE_ABILITIES && UI_troop_type == ABILITIES::TANK))
 	{
 		section = { 360, 1426, 351, 87 };
-
-		if (isPlayer1)
-			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
-		else
-			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 	}
-	else if ((*focus) == Cast3_icon)
+	else if ((*focus) == Cast3_icon || (currentUI == CURRENT_UI::CURR_CREATE_ABILITIES && UI_troop_type == ABILITIES::INVULNERABLE))
 	{
 		section = { 716, 1426, 351, 87 };
-
-		if (isPlayer1)
-			App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
-		else
-			App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 	}
+	else if (currentUI == CURRENT_UI::CURR_GENERAL)
+	{
+		if ((*building_selected)->type == Entity::entityType::DEFENSE_AOE)
+		{
+			section = { 0, 1234, 351, 87 };
+		}
+		else if ((*building_selected)->type == Entity::entityType::BARRACKS)
+		{
+			section = { 1074, 1234, 351, 87 };
+		}
+		else if ((*building_selected)->type == Entity::entityType::MAIN_DEFENSE)
+		{
+			section = { 359, 1234, 351, 87 };
+		}
+		else if ((*building_selected)->type == Entity::entityType::MINES)
+		{
+			section = { 716, 1234, 351, 87 };
+		}
+		else if ((*building_selected)->type == Entity::entityType::TOWNHALL)
+		{
+			section = { 1796, 1234, 351, 87 };
+		}
+		else if ((*building_selected)->type == Entity::entityType::COMMAND_CENTER)
+		{
+			section = { 1796, 1331, 351, 87 };
+		}
+		else if ((*building_selected)->type == Entity::entityType::DEFENSE_TARGET)
+		{
+			section = { 1796, 1426, 351, 87 };
+		}
+		
+	}
+
+	if (isPlayer1)
+		App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+	else
+		App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+
+	App->render->DrawQuad(sec2, 0, 0, 0, 150);
 }
 

@@ -180,6 +180,8 @@ public:
 	int BarracksCreated = 0;
 
 	int Invulnerable_abilities = 0;
+	int Rocket_abilities = 0;
+	int Tank_abilities = 0;
 
 	//---
 	list<UI_Element*> UI_elements;
@@ -237,11 +239,13 @@ public:
 
 	UI_Element* Cast_UI = nullptr;
 	UI_Element* Missiles_icon = nullptr;
+	UI_Element* Missiles_text = nullptr;
 	char missiles_label[4] = "0";
 	UI_Element* Cast2_icon = nullptr;
 	UI_Element* invulnerable_text = nullptr;
 	char invulnerable_label[4] = "0";
 	UI_Element* Cast3_icon = nullptr;
+	UI_Element* tank_text = nullptr;
 	char tank_label[4] = "0";
 
 	// Selected Building UI
