@@ -85,14 +85,7 @@ bool Barracks::Update(float dt)
 			{
 				if (timer.ReadSec() >= 1)
 				{
-					pair<int, int> pos;
-					pos.first = position.first - 100;
-					pos.second = position.second + 60;
-
-					list<Entity::entityType>::iterator first_troop = TroopsCreated.begin();
-					App->entitymanager->AddEntity(true, (*first_troop), pos, collider);
-					TroopsCreated.pop_front();
-					timer.Start();
+					DeployTroops();
 					
 				}
 			}
@@ -161,18 +154,7 @@ bool Barracks::Update(float dt)
 
 			if (TroopsCreated.empty() == false)
 			{
-				if (timer.ReadSec() >= 1)
-				{
-					pair<int, int> pos;
-					pos.first = position.first - 100;
-					pos.second = position.second + 60;
-
-					list<Entity::entityType>::iterator first_troop = TroopsCreated.begin();
-					App->entitymanager->AddEntity(false, (*first_troop), pos, collider);
-					TroopsCreated.pop_front();
-					timer.Start();
-
-				}
+				DeployTroops();
 			}
 		}
 		else //destroyed
@@ -200,9 +182,26 @@ bool Barracks::Update(float dt)
 	if (Current_Animation->Finished() == true)
 		Current_Animation = level1;
 
+
 	Building::Update(dt);
 
 	return true;
+}
+
+void Barracks::DeployTroops()
+{
+	if (timer.ReadSec() >= 1)
+	{
+		pair<int, int> pos;
+		pos.first = position.first - 100;
+		pos.second = position.second + 60;
+
+		list<Entity::entityType>::iterator first_troop = TroopsCreated.begin();
+		App->entitymanager->AddEntity(false, (*first_troop), pos, collider);
+		TroopsCreated.pop_front();
+		timer.Start();
+
+	}
 }
 
 void Barracks::LoadAnimations(bool isPlayer1, string path) {
