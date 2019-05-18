@@ -193,7 +193,7 @@ bool DefenseAoe::Update(float dt)
 		}
 	}
 
-	if (Current_Animation->Finished() == true)
+	if (Current_Animation->Finished() == true && Current_Animation != glow)
 		Current_Animation = level1;
 
 	Building::Update(dt);
@@ -221,10 +221,15 @@ void DefenseAoe::LoadAnimations(bool isPlayer1, string path)
 {
 	building = building->LoadAnimation(path.data(), (isPlayer1) ? "allied_aoe_build" : "soviet_aoe_build");
 	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ?  "allied_aoe_idle" : "soviet_aoe_idle");
+	glow = glow->LoadAnimation(path.data(), (isPlayer1) ? "allied_glow" : "soviet_glow"); 
+
 	level1->speed = 7;
 	building->speed = 5;
+
 	building->loop = false;
 	level1->loop = true;
+	glow->loop = true; 
+
 	Current_Animation = building;
 }
 

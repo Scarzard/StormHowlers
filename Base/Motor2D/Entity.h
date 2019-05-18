@@ -175,6 +175,7 @@ public:
 	Animation*	level3 = nullptr;
 	Animation*	damaged = nullptr;
 	Animation*	destroyed = nullptr;
+	Animation*  glow = nullptr; 
 
 	entityType	type;
 	string		name;

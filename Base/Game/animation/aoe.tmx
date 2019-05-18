@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="5" height="8" tilewidth="111" tileheight="102" nextobjectid="45">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="5" height="8" tilewidth="111" tileheight="102" nextobjectid="52">
  <layer name="allied_aoe_build" width="5" height="8">
   <data encoding="csv">
 0,0,0,0,0,
@@ -13,7 +13,7 @@
 </data>
  </layer>
  <imagelayer name="soviet_aoe_build">
-  <image source="../../../../../../Desktop/animations/aoe_tiled.png" width="555" height="816"/>
+  <image source="AoE_tiled.png" width="666" height="816"/>
  </imagelayer>
  <objectgroup name="soviet_aoe_build">
   <object id="1" x="0" y="0" width="111" height="102"/>
@@ -56,5 +56,11 @@
   <object id="41" x="111" y="714" width="111" height="102"/>
   <object id="42" x="222" y="714" width="111" height="102"/>
   <object id="43" x="333" y="714" width="111" height="102"/>
+ </objectgroup>
+ <objectgroup name="soviet_glow">
+  <object id="47" x="555" y="0" width="111" height="112"/>
+ </objectgroup>
+ <objectgroup name="allied_glow">
+  <object id="51" x="555" y="396" width="111" height="126.333"/>
  </objectgroup>
 </map>
