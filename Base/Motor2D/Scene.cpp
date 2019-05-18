@@ -121,7 +121,7 @@ bool Scene::Start()
 		LOG("Create walkability map");
 	}
 
-	debug_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 0, 200 }, { 0, 0 }, nullptr, true, { false, false });
+	debug_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 0, 285 }, { 0, 0 }, nullptr, true, { false, false });
 	debug_text->label = debug_label;
 	debug_text->color = { 255, 255, 255, 255};
 	debug_text->visible = false;
