@@ -61,6 +61,8 @@ public:
 
 	int production = 0;
 	int capacity = 0;
+
+	
 };
 
 #endif

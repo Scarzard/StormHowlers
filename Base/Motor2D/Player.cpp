@@ -57,13 +57,14 @@ bool Player::Start()
 	gold = 3500;
 	gold_persecond = 0;
 
-	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = 0;
+	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = Rocket_abilities = Tank_abilities = 0;
 
 	selected_texture = { 0,0, 100, 100 };
 
 	UI_troop_type = Entity::entityType::SOLDIER;
 
 	isBuilding = isDeploying = gold_added = isCasting = Y_pressed = isPaused = false;
+	Soldier_Offensive = Tankman_Offensive = Engineer_Offensive = Infiltrator_Offensive = WarHound_Offensive = true;
 
 	Y_pressed = true;
   
@@ -164,7 +165,6 @@ bool Player::Update(float dt)
 	{
 		inmune = false;
 	}
-
 
 	if (!App->scene->endgame)
 	{
@@ -278,6 +278,14 @@ bool Player::Update(float dt)
 
 		}
 
+		if (currentUI == CURRENT_UI::CURR_DEPLOY)
+		{
+			if (gamepad.Controller[BUTTON_X] == KEY_DOWN)
+			{
+				ChangeTroopsState();
+			}
+		}
+
 		// From GENERAL UI to CREATE TROOPS UI (only for barracks)
 		if (gamepad.Controller[BUTTON_X] == KEY_DOWN && currentUI == CURRENT_UI::CURR_GENERAL && (*building_selected)->type == Entity::entityType::BARRACKS )
 		{
@@ -292,6 +300,7 @@ bool Player::Update(float dt)
 			currentUI = CURRENT_UI::CURR_CREATE_ABILITIES;
 			UpdateVisibility();
 			troop_icon->rect = { 576, 161, 85, 81 };
+			UI_troop_type = 0;
 			
 		}
 
@@ -375,6 +384,29 @@ bool Player::Update(float dt)
 		//Creating ABILITIES
 		if (currentUI == CURRENT_UI::CURR_CREATE_ABILITIES)
 		{
+			if (gamepad.Controller[LEFT] == KEY_DOWN)
+			{
+				if (UI_troop_type == ABILITIES::INVULNERABLE) //soldier
+				{
+					UI_troop_type = ABILITIES::ROCKET; // war_hound
+				}
+				else
+					UI_troop_type--;
+
+				Update_troop_image(UI_troop_type);
+
+			}
+
+			if (gamepad.Controller[RIGHT] == KEY_DOWN)
+			{
+				UI_troop_type++;
+				if (UI_troop_type > ABILITIES::ROCKET) // war_hound
+				{
+					UI_troop_type = ABILITIES::INVULNERABLE;//soldier
+				}
+				Update_troop_image(UI_troop_type);
+			}
+
 			if (gamepad.Controller[LB] == KEY_DOWN)
 			{
 				number_of_troops--;
@@ -394,11 +426,22 @@ bool Player::Update(float dt)
 				}
 			}
 
-			TroopCost = 2000 * number_of_troops; //2000 RANDOM INVULNERABILITY PRICE 
+			if (UI_troop_type == ABILITIES::INVULNERABLE)
+			{
+				TroopCost = 2000 * number_of_troops;
+			}
+			else if (UI_troop_type == ABILITIES::ROCKET)
+			{
+				TroopCost = 3000 * number_of_troops;
+			}
+			else if (UI_troop_type == ABILITIES::TANK)
+			{
+				TroopCost = 3000 * number_of_troops;
+			}
 
 			if (gamepad.Controller[BUTTON_A] == KEY_UP && gold >= TroopCost)
 			{
-				CreateAbility(ABILITIES::INVULNERABLE, number_of_troops);
+				CreateAbility(UI_troop_type, number_of_troops);
 				GotoPrevWindows(currentUI);
 				gold -= TroopCost;
 			}
@@ -627,13 +670,12 @@ bool Player::Update(float dt)
 				else
 				{
 					building_selected--;
-				}
-
-				if ((*building_selected)->type == Entity::entityType::WALLS)
-				{
-					while ((*building_selected)->type == Entity::entityType::WALLS)
+					if ((*building_selected)->type == Entity::entityType::WALLS)
 					{
-						building_selected--;
+						while ((*building_selected)->type == Entity::entityType::WALLS)
+						{
+							building_selected--;
+						}
 					}
 				}
 			}
@@ -821,7 +863,7 @@ bool Player::Update(float dt)
 			else if (type == Entity::entityType::BARRACKS)
 			{
 				//157 x 136
-				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first-75, collider.tiles[0].second-65, &(preview_rects->at(type)));
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first-30, collider.tiles[0].second-110, &(preview_rects->at(type)));
 			}
 			else if (type == Entity::entityType::MINES)
 			{
@@ -831,7 +873,7 @@ bool Player::Update(float dt)
 			else if (type == Entity::entityType::DEFENSE_AOE)
 			{
 				//92 x 92
-				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first-10, collider.tiles[0].second-50, &(preview_rects->at(type)));
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second-70, &(preview_rects->at(type)));
 			}
 			else if (type == Entity::entityType::DEFENSE_TARGET)
 			{
@@ -841,10 +883,10 @@ bool Player::Update(float dt)
 			{
 				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
 			}
-			else 
+			/*else 
 			{
 				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
-			}
+			}*/
 
 			if (gamepad.Controller[LB] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) //previous building
 			{
@@ -1652,31 +1694,139 @@ void Player::DoLogic(UI_Element* data)
 			collider.dimensions = { 3,4 };
 			offset = { 40 , 50 };
 			number = 4;
+			/*collider.dimensions = { 3,3 };
+			offset = { 0, 0 }; */
+
 		}
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
-		
+
+		{
+			App->audio->PlayFx(INGAME_CLICK);
+			isBuilding = true;
+			type = Entity::entityType::SOLDIER;
+			collider.dimensions = { 1,1 };
+		}
+		Soldier_Offensive = !Soldier_Offensive;
+
+		if (Soldier_Offensive)
+		{
+			Soldier_Deff->rect = { 1219,98,20,21 };
+			Soldier_Off->rect = { 1195,123,18,17 };
+		}
+		else
+		{
+			Soldier_Deff->rect = { 1195,98,20,21 };
+			Soldier_Off->rect = { 1220,123,18,17 };
+		}
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_TANKMAN:
+		{
+			App->audio->PlayFx(INGAME_CLICK);
+			isBuilding = true;
+			type = Entity::entityType::TANKMAN;
+			collider.dimensions = { 1,1 };
+		}
+		Tankman_Offensive = !Tankman_Offensive;
+		if (Tankman_Offensive)
+		{
+			Tankman_Deff->rect = { 1219,98,20,21 };
+			Tankman_Off->rect = { 1195,123,18,17 };
+		}
+		else
+		{
+			Tankman_Deff->rect = { 1195,98,20,21 };
+			Tankman_Off->rect = { 1220,123,18,17 };
 
+		}
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_INFILTRATOR:
+
+		//
+		//if (WarHoundsCreated > 0)
+		{
+			App->audio->PlayFx(INGAME_CLICK);
+			isBuilding = true;
+			type = Entity::entityType::INFILTRATOR;
+			collider.dimensions = { 1,1 };
+		}
+
+		Infiltrator_Offensive = !Infiltrator_Offensive;
+		if (Infiltrator_Offensive)
+		{
+			Infiltrator_Deff->rect = { 1219,98,20,21 };
+			Infiltrator_Off->rect = { 1195,123,18,17 };
+		}
+		else
+		{
+			Infiltrator_Deff->rect = { 1195,98,20,21 };
+			Infiltrator_Off->rect = { 1220,123,18,17 };
+		}
 		
+		//App->audio->PlayFx(WRONG);
+
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_ENGINEER:
-		
+		//
+		//if (WarHoundsCreated > 0)
+		Engineer_Offensive = !Engineer_Offensive;
+		if (Engineer_Offensive)
+		{
+			Engineer_Deff->rect = { 1219,98,20,21 };
+			Engineer_Off->rect = { 1195,123,18,17 };
+		}
+		else
+		{
+			Engineer_Deff->rect = { 1195,98,20,21 };
+			Engineer_Off->rect = { 1220,123,18,17 };
+		}
+	
+		{
+			App->audio->PlayFx(INGAME_CLICK);
+			isBuilding = true;
+			type = Entity::entityType::ENGINEER;
+			collider.dimensions = { 1,1 };
+		}
+
+	//App->audio->PlayFx(WRONG);
+
+	
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_WARHOUND:
+
+		//
+		//if (WarHoundsCreated > 0)
+		WarHound_Offensive = !WarHound_Offensive;
+		if (WarHound_Offensive)
+		{
+			WarHound_Deff->rect = { 1219,98,20,21 };
+			WarHound_Off->rect = { 1195,123,18,17 };
+		}
+		else
+		{
+			WarHound_Deff->rect = { 1195,98,20,21 };
+			WarHound_Off->rect = { 1220,123,18,17 };
+		}
+
+		{
+			App->audio->PlayFx(INGAME_CLICK);
+			isBuilding = true;
+			type = Entity::entityType::WAR_HOUND;
+			collider.dimensions = { 1,1 };
+		}
 		
+		//App->audio->PlayFx(WRONG);
+
 		break;
 
+
 	case::UI_Element::Action::ACT_CAST_INVULNERABILITY:
-		if (inmune == false)
+		if (inmune == false && Invulnerable_abilities>0)
 		{
 			timer_ref_sec = App->scene->worldseconds;
 			timer_ref_min = App->scene->worldminutes;
@@ -1701,7 +1851,7 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_UPGRADE:
-		//(*building_selected)->upgrade = true;
+		(*building_selected)->upgrade = true;
 		break;
 
 	case::UI_Element::Action::ACT_REPAIR:
@@ -1851,6 +2001,19 @@ void Player::Update_troop_image(int type) // Changes sprite depending on the ent
 	case Entity::entityType::WAR_HOUND:
 		troop_icon->rect = { 746, 0, 85, 81 };
 		break;
+
+	case ABILITIES::INVULNERABLE:
+		troop_icon->rect = { 576, 161, 85, 81 };
+		break;
+
+	case ABILITIES::ROCKET:
+		troop_icon->rect = { 662, 161, 85, 81 };
+		break;
+
+	case ABILITIES::TANK:
+		troop_icon->rect = { 492, 161, 85, 81 };
+		break;
+
 	}
 }
 
@@ -1890,6 +2053,14 @@ void Player::CreateAbility(int type, int number)
 	case ABILITIES::INVULNERABLE:
 		Invulnerable_abilities += number;
 		break;
+
+	case ABILITIES::ROCKET:
+		Rocket_abilities += number;
+		break;
+
+	case ABILITIES::TANK:
+		Tank_abilities += number;
+		break;
 	}
 }
 
@@ -1899,7 +2070,7 @@ void Player::UpdateGeneralUI(Entity* building)
 
 	sprintf_s(health_label, "HP: %i", building->health);
 
-	sprintf_s(level_label, "Lvl: %i", building->level);
+	sprintf_s(level_label, "Lvl: %i", building->level + 1);
 
 	sprintf_s(repair_cost_label, " - %i $", building->repair_cost);
 
@@ -1930,6 +2101,7 @@ void Player::DrawBuildingCollider(int type, bool isPlayer1)
 	{
 
 		selected_texture.x = (*building_selected)->position.first - ((*building_selected)->collider.dimensions.first * 20);
+
 		selected_texture.y = (*building_selected)->position.second - (*building_selected)->Current_Animation->frames->h + ((*building_selected)->collider.dimensions.second * 20);
 		selected_texture.w = (*building_selected)->Current_Animation->frames->w;
 		selected_texture.h = (*building_selected)->Current_Animation->frames->h;
@@ -1964,4 +2136,192 @@ void Player::DrawBuildingCollider(int type, bool isPlayer1)
 	else
 		App->render->DrawQuad(selected_texture, 0, 0, 255, 100, true);
 }
+
+
+void Player::Blit_Info()
+{
+	SDL_Rect section;
+	SDL_Rect sec2 = { -1090, 668, 351, 20 };
+
+	if ((*focus) == Def_AOE_icon)
+	{
+		section = { 0, 1234, 351, 87 };
+	}
+	else if ((*focus) == Def_Target_icon)
+	{
+		section = { 359, 1234, 351, 87 };
+	}
+	else if ((*focus) == Mines_icon)
+	{
+		section = { 716, 1234, 351, 87 };
+	}
+	else if ((*focus) == Barracks_icon)
+	{
+		section = { 1074, 1234, 351, 87 };
+	}
+	else if (currentUI == CURRENT_UI::CURR_DEPLOY)
+	{
+		section = { 0, 1520, 351, 87 };
+	}
+	else if (currentUI==CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::SOLDIER)
+	{
+		section = { 0, 1331, 351, 87 };
+	}
+	else if (currentUI == CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::TANKMAN)
+	{
+		section = { 359, 1331, 351, 87 };
+	}
+	else if (currentUI == CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::ENGINEER)
+	{
+		section = { 716, 1331, 351, 87 };
+	}
+	else if (currentUI == CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::INFILTRATOR)
+	{
+		section = { 1074, 1331, 351, 87 };
+	}
+	else if (currentUI == CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::WAR_HOUND)
+	{
+		section = { 0, 1426, 351, 87 };
+	}
+	else if ((*focus) == Build_icon)
+	{
+		section = { 1425, 1234, 351, 87 };
+	}
+	else if ((*focus) == Deploy_icon)
+	{
+		section = { 1425, 1331, 351, 87 };
+	}
+	else if ((*focus) == Cast_icon)
+	{
+		section = { 1425, 1426, 351, 87 };
+	}
+	else if ((*focus) == Missiles_icon || (currentUI == CURRENT_UI::CURR_CREATE_ABILITIES && UI_troop_type == ABILITIES::ROCKET))
+	{
+		section = { 1075, 1426, 351, 87 };
+	}
+	else if ((*focus) == Cast2_icon || (currentUI == CURRENT_UI::CURR_CREATE_ABILITIES && UI_troop_type == ABILITIES::TANK))
+	{
+		section = { 360, 1426, 351, 87 };
+	}
+	else if ((*focus) == Cast3_icon || (currentUI == CURRENT_UI::CURR_CREATE_ABILITIES && UI_troop_type == ABILITIES::INVULNERABLE))
+	{
+		section = { 716, 1426, 351, 87 };
+	}
+	else if (currentUI == CURRENT_UI::CURR_GENERAL)
+	{
+		if ((*building_selected)->type == Entity::entityType::DEFENSE_AOE)
+		{
+			section = { 0, 1234, 351, 87 };
+		}
+		else if ((*building_selected)->type == Entity::entityType::BARRACKS)
+		{
+			section = { 1074, 1234, 351, 87 };
+		}
+		else if ((*building_selected)->type == Entity::entityType::MAIN_DEFENSE)
+		{
+			section = { 359, 1234, 351, 87 };
+		}
+		else if ((*building_selected)->type == Entity::entityType::MINES)
+		{
+			section = { 716, 1234, 351, 87 };
+		}
+		else if ((*building_selected)->type == Entity::entityType::TOWNHALL)
+		{
+			section = { 1796, 1234, 351, 87 };
+		}
+		else if ((*building_selected)->type == Entity::entityType::COMMAND_CENTER)
+		{
+			section = { 1796, 1331, 351, 87 };
+		}
+		else if ((*building_selected)->type == Entity::entityType::DEFENSE_TARGET)
+		{
+			section = { 1796, 1426, 351, 87 };
+		}
+		
+	}
+
+	if (isPlayer1)
+		App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+	else
+		App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+
+	App->render->DrawQuad(sec2, 0, 0, 0, 150);
+}
+
+void Player::ChangeTroopsState()
+{
+	
+	if (Soldier_Offensive && Tankman_Offensive && Infiltrator_Offensive && Engineer_Offensive && WarHound_Offensive)
+	{
+		Soldier_Offensive = false;
+		Tankman_Offensive = false;
+		Infiltrator_Offensive = false;
+		Engineer_Offensive = false;
+		WarHound_Offensive = false;
+	}
+	else
+	{
+		Soldier_Offensive = true;
+		Tankman_Offensive = true;
+		Infiltrator_Offensive = true;
+		Engineer_Offensive = true;
+		WarHound_Offensive = true;
+	}
+
+	if (Soldier_Offensive)
+	{
+		Soldier_Deff->rect = { 1219,98,20,21 };
+		Soldier_Off->rect = { 1195,123,18,17 };
+	}
+	else
+	{
+		Soldier_Deff->rect = { 1195,98,20,21 };
+		Soldier_Off->rect = { 1220,123,18,17 };
+	}
+
+	if (Tankman_Offensive)
+	{
+		Tankman_Deff->rect = { 1219,98,20,21 };
+		Tankman_Off->rect = { 1195,123,18,17 };
+	}
+	else
+	{
+		Tankman_Deff->rect = { 1195,98,20,21 };
+		Tankman_Off->rect = { 1220,123,18,17 };
+	}
+
+	if (Infiltrator_Offensive)
+	{
+		Infiltrator_Deff->rect = { 1219,98,20,21 };
+		Infiltrator_Off->rect = { 1195,123,18,17 };
+	}
+	else
+	{
+		Infiltrator_Deff->rect = { 1195,98,20,21 };
+		Infiltrator_Off->rect = { 1220,123,18,17 };
+	}
+
+	if (Engineer_Offensive)
+	{
+		Engineer_Deff->rect = { 1219,98,20,21 };
+		Engineer_Off->rect = { 1195,123,18,17 };
+	}
+	else
+	{
+		Engineer_Deff->rect = { 1195,98,20,21 };
+		Engineer_Off->rect = { 1220,123,18,17 };
+	}
+
+	if (WarHound_Offensive)
+	{
+		WarHound_Deff->rect = { 1219,98,20,21 };
+		WarHound_Off->rect = { 1195,123,18,17 };
+	}
+	else
+	{
+		WarHound_Deff->rect = { 1195,98,20,21 };
+		WarHound_Off->rect = { 1220,123,18,17 };
+	}
+}
+
 

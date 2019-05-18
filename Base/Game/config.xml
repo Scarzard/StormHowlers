@@ -68,6 +68,9 @@
 
   <map>
     <folder>maps/</folder>
+    <allyzone up_x="20" up_y="10" down_x="59" down_y="29" />
+    <sovietzone up_x="20" up_y="56" down_x="59" down_y="75" />
+    <warzone up_x="20" up_y="30" down_x="59" down_y="55" />
   </map>
 
   <entitymanager>
@@ -122,7 +125,7 @@
         <health lvl1="100" lvl2="120" lvl3="150"/>
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <size width="3" height="3"/>
-        <damage lvl1="10" lvl2="150" lvl3="200"/>
+        <damage lvl1="100" lvl2="150" lvl3="200"/>
         <attack rate="2" targets="5" range="150"/>
       </aoe>
       
@@ -196,10 +199,10 @@
       <sentrygun      x="62" y="195" w="62" h="39" rx="186" ry="0" />  <!--<main_defense x>      -->
       <cmd_center     x="424" y="2556" w="212" h="213" rx="0" ry="2556" />    <!--<cmd_center x="       -->
       <walls          x="" y="" w="" h="" rx="" ry="" />         <!--<walls x="" y="       -->
-      <defense_aoe    x="0" y="1012" w="108" h="92" rx="0" ry="460" />   <!--<defense_aoe x=       -->
+      <defense_aoe    x="222" y="510" w="111" h="102" rx="222" ry="102" />   <!--<defense_aoe x=       -->
       <defense_target x="0" y="756" w="82" h="84" rx="0" ry="336"/> <!--<defense_target />    -->
       <gold_mine      x="1218" y="1278" w="174" h="142" rx="522" ry="1278" />     <!--<gold_mine x=""       -->
-      <barracks       x="620" y="938" w="155" h="134" rx="0" ry="938" />      <!--<barracks x=""        -->
+      <barracks       x="668" y="978" w="167" h="163" rx="0" ry="978" />      <!--<barracks x=""        -->
       <soldier        x="352" y="0" w="44" h="33" rx="0" ry="0"  />       <!--<soldier x="" y       -->
       <tankman        x="" y="" w="" h="" rx="" ry="" />       <!--<tankman x="" y       -->
       <infiltrator    x="" y="" w="" h="" rx="" ry="" />   <!--<infiltrator x=       -->

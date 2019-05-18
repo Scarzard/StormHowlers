@@ -1,9 +1,11 @@
 #include "EntityManager.h"
+#include "Audio.h"
 #include "Townhall.h"
 #include "Scene.h"
 #include "Render.h"
 #include "Map.h"
 #include "Player.h"
+#include "Transitions.h"
 #include "Brofiler\Brofiler.h"
 
 
@@ -42,47 +44,66 @@ Townhall::Townhall(bool isPlayer1, pair<int,int> pos, Collider collider): Buildi
 bool Townhall::Update(float dt)
 {
 	BROFILER_CATEGORY("Townhall Update", Profiler::Color::SandyBrown);
-	
-
-	// ------ This is awful ------ but works ;D
-
-	//if (fromPlayer1 == true)
-	//{
-	//	position = App->map->data.main_building2;
-	//}
-	//else 
-	//{
-	//	position = App->map->data.main_building;
-	//}
-	//////---------------------------------------
-
 			
 	
 	if (fromPlayer1)
 	{
-  // MERGE DEVELOPMENT
-		//if (App->player1->live > 0) //if not destroyed
+  
 
 		App->player1->health = health; //update health bar ui
 		App->player1->max_health = health_lv[level];
 		
-		if (health > 0) //if not destroyed
+		if (level == 0 && App->scenechange->IsChanging() == false)
 		{
-			if (upgrade == true) //upgrade
+			SDL_Rect upgrade;
+			upgrade.x = 0;
+			upgrade.y = 34;
+			upgrade.w = 32;
+			upgrade.h = 20;
+			App->render->Blit(App->scene->upgrade_lvl, position.first - 20, position.second - 70, &upgrade);
+		}
+
+		if (level == 1 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 36;
+			upgrade.y = 17;
+			upgrade.w = 32;
+			upgrade.h = 37;
+			App->render->Blit(App->scene->upgrade_lvl, position.first - 20, position.second - 70, &upgrade);
+		}
+
+		if (level == 2 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 72;
+			upgrade.y = 0;
+			upgrade.w = 32;
+			upgrade.h = 54;
+			App->render->Blit(App->scene->upgrade_lvl, position.first - 20, position.second - 70, &upgrade);
+		}
+
+		if (health == 0) //if destroyed
+		{
+
+			App->player1->UpdateWalkabilityMap(true, collider);
+			App->player1->DeleteEntity(this);
+			App->audio->PlayFx(BUILDING_EXPLOSION);
+			App->map->explosion_anim->speed = 0.5f;
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->scene->Victorious(App->player1, dt);
+		}
+		else
+		{
+			if (upgrade == true && level <= 1) //upgrade
 			{
 				App->player1->gold -= upgrade_cost[level]; //pay costs
 				level++;
 				production = production_lv[level]; //update production
+				health = health_lv[level];
 				upgrade = false;
 				//play fx (upgrade);
 			}
-		}
-		else
-		{
-/*
-			App->player1->UpdateWalkabilityMap(true, collider);
-			App->player1->DeleteEntity(this);*/
-			App->scene->Victorious(App->player1, dt);
 		}
 
 	}
@@ -91,24 +112,58 @@ bool Townhall::Update(float dt)
 		App->player2->health = health; //update health bar ui
 		App->player2->max_health = health_lv[level];
 
-		if (health > 0) //if not destroyed
+		if (level == 0 && App->scenechange->IsChanging() == false)
 		{
-			if (upgrade == true) //upgrade
-			{
-				App->player2->gold -= upgrade_cost[level]; //pay costs
-				level++;
-				production = production_lv[level]; //update production
-				upgrade = false;
-				//play fx (upgrade);
-			}
+			SDL_Rect upgrade;
+			upgrade.x = 0;
+			upgrade.y = 34;
+			upgrade.w = 32;
+			upgrade.h = 20;
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 180, position.second - 10, &upgrade);
+		}
+
+		if (level == 1 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 36;
+			upgrade.y = 17;
+			upgrade.w = 32;
+			upgrade.h = 37;
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 180, position.second - 10, &upgrade);
+		}
+
+		if (level == 2 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 72;
+			upgrade.y = 0;
+			upgrade.w = 32;
+			upgrade.h = 54;
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 180, position.second - 10, &upgrade);
+		}
+
+		if (health == 0) //if destroyed
+		{
+
+			App->player2->UpdateWalkabilityMap(true, collider);
+			App->player2->DeleteEntity(this);
+			App->audio->PlayFx(BUILDING_EXPLOSION);
+			App->map->explosion_anim->speed = 0.5f;
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->scene->Victorious(App->player2, dt);
+
 		}
 		else
 		{
-
-			/*App->player2->UpdateWalkabilityMap(true, collider);
-			App->player2->DeleteEntity(this);*/
-			App->scene->Victorious(App->player2, dt);
-
+			if (upgrade == true && level <= 1) //upgrade
+			{
+				App->player1->gold -= upgrade_cost[level]; //pay costs
+				level++;
+				production = production_lv[level]; //update production
+				health = health_lv[level];
+				upgrade = false;
+				//play fx (upgrade);
+			}
 		}
 
 	}

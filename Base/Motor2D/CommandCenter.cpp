@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Map.h"
 #include "Player.h"
+#include "Transitions.h"
 #include "Brofiler\Brofiler.h"
 
 CmdCenter::CmdCenter()
@@ -51,12 +52,43 @@ bool CmdCenter::Update(float dt)
 
 	if (fromPlayer1)
 	{
+		if (level == 0 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 0;
+			upgrade.y = 34;
+			upgrade.w = 32;
+			upgrade.h = 20;
+			App->render->Blit(App->scene->upgrade_lvl, position.first - 30, position.second - 80, &upgrade);
+		}
+
+		if (level == 1 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 36;
+			upgrade.y = 17;
+			upgrade.w = 32;
+			upgrade.h = 37;
+			App->render->Blit(App->scene->upgrade_lvl, position.first - 30, position.second - 80, &upgrade);
+		}
+
+		if (level == 2 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 72;
+			upgrade.y = 0;
+			upgrade.w = 32;
+			upgrade.h = 54;
+			App->render->Blit(App->scene->upgrade_lvl, position.first - 30, position.second - 80, &upgrade);
+		}
+
 		if (health > 0) //if not destroyed
 		{
-			if (upgrade == true) //upgrade
+			if (upgrade == true && level <= 1) //upgrade
 			{
 				App->player1->gold -= upgrade_cost[level]; //pay costs
 				level++;
+				health = health_lv[level];
 				upgrade = false;
 			}
 			if (App->player1->isCasting == true) //player casting
@@ -83,13 +115,45 @@ bool CmdCenter::Update(float dt)
 	{
 		if (health > 0) //if not destroyed
 		{
-			if (upgrade == true) //upgrade
+
+			if (level == 0 && App->scenechange->IsChanging() == false)
 			{
-				App->player1->gold -= upgrade_cost[level]; //pay costs
+				SDL_Rect upgrade;
+				upgrade.x = 0;
+				upgrade.y = 34;
+				upgrade.w = 32;
+				upgrade.h = 20;
+				App->render->Blit(App->scene->upgrade_lvl, position.first - 30, position.second - 80, &upgrade);
+			}
+
+			if (level == 1 && App->scenechange->IsChanging() == false)
+			{
+				SDL_Rect upgrade;
+				upgrade.x = 36;
+				upgrade.y = 17;
+				upgrade.w = 32;
+				upgrade.h = 37;
+				App->render->Blit(App->scene->upgrade_lvl, position.first - 30, position.second - 80, &upgrade);
+			}
+
+			if (level == 2 && App->scenechange->IsChanging() == false)
+			{
+				SDL_Rect upgrade;
+				upgrade.x = 72;
+				upgrade.y = 0;
+				upgrade.w = 32;
+				upgrade.h = 54;
+				App->render->Blit(App->scene->upgrade_lvl, position.first - 30, position.second - 80, &upgrade);
+			}
+			
+			if (upgrade == true && level <= 1) //upgrade
+			{
+				App->player2->gold -= upgrade_cost[level]; //pay costs
 				level++;
+				health = health_lv[level];
 				upgrade = false;
 			}
-			if (App->player1->isCasting == true) //player casting
+			if (App->player2->isCasting == true) //player casting
 			{
 				//if (missiles)
 				damage = damage_lv[level];
@@ -105,7 +169,10 @@ bool CmdCenter::Update(float dt)
 		{
 			App->player2->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
-			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
+
+			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->player2->UpdateWalkabilityMap(true, collider); //destroyed
+
 		}
 	}
 	
