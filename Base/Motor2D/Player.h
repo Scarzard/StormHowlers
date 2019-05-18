@@ -43,6 +43,8 @@ public:
 	{
 		NONE,
 		CURR_MAIN_MENU,
+		CURR_MM_SETTINGS,
+		CURR_MM_CREDITS,
 		CURR_SELECTING_BUILDING,
 		CURR_MAIN,
 		CURR_BUILD,
@@ -91,6 +93,8 @@ public:
 	UI_Element* GetUI_Element(uint data); //returns the window we are currently on
 	void Update_troop_image(int type);
 	void UpdateGeneralUI(Entity* building);
+	void Blit_Info();
+	void ChangeTroopsState();
 
 	// -----------------------------------------------------------------------------
 
@@ -180,6 +184,8 @@ public:
 	int BarracksCreated = 0;
 
 	int Invulnerable_abilities = 0;
+	int Rocket_abilities = 0;
+	int Tank_abilities = 0;
 
 	//---
 	list<UI_Element*> UI_elements;
@@ -225,10 +231,30 @@ public:
 
 	UI_Element* Deploy_UI = nullptr;
 	UI_Element* Soldier_icon = nullptr;
+	UI_Element* Soldier_Off = nullptr;
+	UI_Element* Soldier_Deff = nullptr;
+
 	UI_Element* Tankman_icon = nullptr;
+	UI_Element* Tankman_Off = nullptr;
+	UI_Element* Tankman_Deff = nullptr;
+
 	UI_Element* Infiltrator_icon = nullptr;
+	UI_Element* Infiltrator_Off = nullptr;
+	UI_Element* Infiltrator_Deff = nullptr;
+
 	UI_Element* Engineer_icon = nullptr;
+	UI_Element* Engineer_Off = nullptr;
+	UI_Element* Engineer_Deff = nullptr;
+
 	UI_Element* War_hound_icon = nullptr;
+	UI_Element* WarHound_Off = nullptr;
+	UI_Element* WarHound_Deff = nullptr;
+
+	bool Soldier_Offensive = true;
+	bool Tankman_Offensive = true;
+	bool Engineer_Offensive = true;
+	bool Infiltrator_Offensive = true;
+	bool WarHound_Offensive = true;
 	
 
 	UI_Element* Troop_cost_text = nullptr;
@@ -237,11 +263,13 @@ public:
 
 	UI_Element* Cast_UI = nullptr;
 	UI_Element* Missiles_icon = nullptr;
+	UI_Element* Missiles_text = nullptr;
 	char missiles_label[4] = "0";
 	UI_Element* Cast2_icon = nullptr;
 	UI_Element* invulnerable_text = nullptr;
 	char invulnerable_label[4] = "0";
 	UI_Element* Cast3_icon = nullptr;
+	UI_Element* tank_text = nullptr;
 	char tank_label[4] = "0";
 
 	// Selected Building UI
