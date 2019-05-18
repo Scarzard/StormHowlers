@@ -22,6 +22,8 @@ struct GamePad
 	int LeftAxisX = 0;
 	int LeftAxisY = 0;
 
+	bool JoystickState[4] = { false, false, false ,false };
+
 };
 
 struct GeneralUI
