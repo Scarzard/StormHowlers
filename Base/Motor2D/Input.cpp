@@ -321,7 +321,7 @@ bool Input::PreUpdate()
 				App->player1->gamepad.Controller[i] = KEY_IDLE;
 		}
 
-		if (App->player1->gamepad.JoystickState[i] == true) {
+		if (App->player2->gamepad.JoystickState[i] == true) {
 			if (App->player2->gamepad.Controller[i] == KEY_IDLE)
 				App->player2->gamepad.Controller[i] = KEY_DOWN;
 			else
