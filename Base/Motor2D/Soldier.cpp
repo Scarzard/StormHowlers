@@ -13,7 +13,7 @@ Soldier::Soldier(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop(E
 {
 	BROFILER_CATEGORY("Soldier constructor", Profiler::Color::Red);
 	string path = "animation/" + name + ".tmx";
-	LoadAnimations(isPlayer1, path.data());
+	//LoadAnimations(isPlayer1, path.data());
 	offset = range + 10;
 	destination = pos;
 	original_range = range;
@@ -830,7 +830,7 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 
 void Soldier::LoadAnimations(bool isPlayer1, string path)
 {
-	BROFILER_CATEGORY("Soldier Load Animations", Profiler::Color::Blue);
+	/*BROFILER_CATEGORY("Soldier Load Animations", Profiler::Color::Blue);
 	moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
@@ -869,7 +869,7 @@ void Soldier::LoadAnimations(bool isPlayer1, string path)
 	{
 		idle->SetCurrentFrame(6);
 	}
-	Current_Animation = moving[NORTH];
+	Current_Animation = moving[NORTH];*/
 }
 
 Entity* Soldier::FindEntityInAttackRange(pair <int, int> pos, bool fromplayer1, int attackrange, entityType desiredtype, int zone)

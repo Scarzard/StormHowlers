@@ -14,7 +14,7 @@ Tankman::Tankman(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop(E
 {
 	BROFILER_CATEGORY("Tankman constructor", Profiler::Color::Red);
 	string path = "animation/" + name + ".tmx";
-	LoadAnimations(isPlayer1, path.data());
+	//LoadAnimations(isPlayer1, path.data());
 	offset = range + 10;
 	destination = pos;
 	original_range = range;

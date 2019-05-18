@@ -13,7 +13,7 @@ Engineer::Engineer(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop
 {
 	BROFILER_CATEGORY("Engineer constructor", Profiler::Color::Red);
 	string path = "animation/" + name + ".tmx";
-	LoadAnimations(isPlayer1, path.data());
+	//LoadAnimations(isPlayer1, path.data());
 	offset = range + 10;
 	destination = pos;
 	original_range = range;

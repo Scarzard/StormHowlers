@@ -19,7 +19,6 @@
 #include "Mines.h"
 #include "Townhall.h"
 #include "Walls.h"
-#include "Soldier.h"
 #include "Engineer.h"
 #include "Tankman.h"
 #include "Infiltrator.h"
@@ -51,40 +50,74 @@ bool EntityManager::Awake(pugi::xml_node &config)
 	return true;
 }
 bool EntityManager::LoadSamples() {
-	//for(int i=Entity::entityType::TOWNHALL;i<Entity::EntityType::WARHOUND;i++){
-	//}
-	//char *s_type = (type > BARRACKS) ? "troops" : "buildings";
-	//name = "ERROR";
-	//name = GetName(type);
-	//collider = Collider;
+	string path = "animation/BasicSoldier.tmx";
 
-	//LOG("Player %d: Loading %s", (isPlayer1) ? 1 : 2, name.data());
+	soldier_p1_sample.moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+	soldier_p1_sample.shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
-	//pugi::xml_document	config_file;
-	//pugi::xml_node config;
-	//config = App->LoadConfig(config_file);
-	//config = config.child("entitymanager").child(s_type).child(name.data());
+	soldier_p1_sample.idle = soldier_p1_sample.idle->LoadAnimation(path.data(), (true) ? "red_idle" : "blue_idle");
 
-	//// Parsing data
+	soldier_p1_sample.moving[NORTH] = soldier_p1_sample.moving[NORTH]->LoadAnimation(path.data(), (true) ? "red_north" : "blue_north");
+	soldier_p1_sample.moving[SOUTH] = soldier_p1_sample.moving[SOUTH]->LoadAnimation(path.data(), (true) ? "red_south" : "blue_south");
+	soldier_p1_sample.moving[EAST] = soldier_p1_sample.moving[EAST]->LoadAnimation(path.data(), (true) ? "red_east" : "blue_east");
+	soldier_p1_sample.moving[WEST] = soldier_p1_sample.moving[WEST]->LoadAnimation(path.data(), (true) ? "red_west" : "blue_west");
+	soldier_p1_sample.moving[NORTHEAST] = soldier_p1_sample.moving[NORTHEAST]->LoadAnimation(path.data(), (true) ? "red_northeast" : "blue_northeast");
+	soldier_p1_sample.moving[NORTHWEST] = soldier_p1_sample.moving[NORTHWEST]->LoadAnimation(path.data(), (true) ? "red_northwest" : "blue_northwest");
+	soldier_p1_sample.moving[SOUTHEAST] = soldier_p1_sample.moving[SOUTHEAST]->LoadAnimation(path.data(), (true) ? "red_southeast" : "blue_southeast");
+	soldier_p1_sample.moving[SOUTHWEST] = soldier_p1_sample.moving[SOUTHWEST]->LoadAnimation(path.data(), (true) ? "red_southwest" : "blue_southwest");
 
-	//health_lv.push_back(config.child("health").attribute("lvl1").as_uint(0));
-	//health_lv.push_back(config.child("health").attribute("lvl2").as_uint(0));
-	//health_lv.push_back(config.child("health").attribute("lvl3").as_uint(0));
+	soldier_p1_sample.shooting[NORTH] = soldier_p1_sample.shooting[NORTH]->LoadAnimation(path.data(), (true) ? "red_shoot_N" : "blue_shoot_N");
+	soldier_p1_sample.shooting[SOUTH] = soldier_p1_sample.shooting[SOUTH]->LoadAnimation(path.data(), (true) ? "red_shoot_S" : "blue_shoot_S");
+	soldier_p1_sample.shooting[EAST] = soldier_p1_sample.shooting[EAST]->LoadAnimation(path.data(), (true) ? "red_shoot_E" : "blue_shoot_E");
+	soldier_p1_sample.shooting[WEST] = soldier_p1_sample.shooting[WEST]->LoadAnimation(path.data(), (true) ? "red_shoot_W" : "blue_shoot_W");
+	soldier_p1_sample.shooting[NORTHEAST] = soldier_p1_sample.shooting[NORTHEAST]->LoadAnimation(path.data(), (true) ? "red_shoot_NE" : "blue_shoot_NE");
+	soldier_p1_sample.shooting[NORTHWEST] = soldier_p1_sample.shooting[NORTHWEST]->LoadAnimation(path.data(), (true) ? "red_shoot_NW" : "blue_shoot_NW");
+	soldier_p1_sample.shooting[SOUTHEAST] = soldier_p1_sample.shooting[SOUTHEAST]->LoadAnimation(path.data(), (true) ? "red_shoot_SE" : "blue_shoot_SE");
+	soldier_p1_sample.shooting[SOUTHWEST] = soldier_p1_sample.shooting[SOUTHWEST]->LoadAnimation(path.data(), (true) ? "red_shoot_SW" : "blue_shoot_SW");
 
-	//upgrade_cost.push_back(0);
-	//upgrade_cost.push_back(config.child("upgrade_cost").attribute("ToLvl2").as_int(0));
-	//upgrade_cost.push_back(config.child("upgrade_cost").attribute("ToLvl3").as_int(0));
+	for (int i = NORTH; i <= SOUTHWEST; i++) {
+		soldier_p1_sample.moving[i]->speed = 10;
+		soldier_p1_sample.shooting[i]->speed = 6;
+	}
 
-	//damage_lv.push_back(config.child("damage").attribute("lvl1").as_uint(0));
-	//damage_lv.push_back(config.child("damage").attribute("lvl2").as_uint(0));
-	//damage_lv.push_back(config.child("damage").attribute("lvl3").as_uint(0));
+	soldier_p1_sample.idle->speed = 0;
+	soldier_p1_sample.idle->SetCurrentFrame(2);
+	soldier_p1_sample.Current_Animation = soldier_p1_sample.moving[NORTH];
 
-	//size.first = config.child("size").attribute("width").as_int(6);
-	//size.second = config.child("size").attribute("height").as_int(6);
 
-	//rate_of_fire = config.child("attack").attribute("rate").as_float(0);
-	//max_targets = config.child("attack").attribute("targets").as_int(0);
-	//range = config.child("attack").attribute("range").as_int(0);
+	//Player 2
+	soldier_p2_sample.moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+	soldier_p2_sample.shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+
+	soldier_p2_sample.idle = soldier_p2_sample.idle->LoadAnimation(path.data(), (false) ? "red_idle" : "blue_idle");
+
+	soldier_p2_sample.moving[NORTH] = soldier_p2_sample.moving[NORTH]->LoadAnimation(path.data(), (false) ? "red_north" : "blue_north");
+	soldier_p2_sample.moving[SOUTH] = soldier_p2_sample.moving[SOUTH]->LoadAnimation(path.data(), (false) ? "red_south" : "blue_south");
+	soldier_p2_sample.moving[EAST] = soldier_p2_sample.moving[EAST]->LoadAnimation(path.data(), (false) ? "red_east" : "blue_east");
+	soldier_p2_sample.moving[WEST] = soldier_p2_sample.moving[WEST]->LoadAnimation(path.data(), (false) ? "red_west" : "blue_west");
+	soldier_p2_sample.moving[NORTHEAST] = soldier_p2_sample.moving[NORTHEAST]->LoadAnimation(path.data(), (false) ? "red_northeast" : "blue_northeast");
+	soldier_p2_sample.moving[NORTHWEST] = soldier_p2_sample.moving[NORTHWEST]->LoadAnimation(path.data(), (false) ? "red_northwest" : "blue_northwest");
+	soldier_p2_sample.moving[SOUTHEAST] = soldier_p2_sample.moving[SOUTHEAST]->LoadAnimation(path.data(), (false) ? "red_southeast" : "blue_southeast");
+	soldier_p2_sample.moving[SOUTHWEST] = soldier_p2_sample.moving[SOUTHWEST]->LoadAnimation(path.data(), (false) ? "red_southwest" : "blue_southwest");
+
+	soldier_p2_sample.shooting[NORTH] = soldier_p2_sample.shooting[NORTH]->LoadAnimation(path.data(), (false) ? "red_shoot_N" : "blue_shoot_N");
+	soldier_p2_sample.shooting[SOUTH] = soldier_p2_sample.shooting[SOUTH]->LoadAnimation(path.data(), (false) ? "red_shoot_S" : "blue_shoot_S");
+	soldier_p2_sample.shooting[EAST] = soldier_p2_sample.shooting[EAST]->LoadAnimation(path.data(), (false) ? "red_shoot_E" : "blue_shoot_E");
+	soldier_p2_sample.shooting[WEST] = soldier_p2_sample.shooting[WEST]->LoadAnimation(path.data(), (false) ? "red_shoot_W" : "blue_shoot_W");
+	soldier_p2_sample.shooting[NORTHEAST] = soldier_p2_sample.shooting[NORTHEAST]->LoadAnimation(path.data(), (false) ? "red_shoot_NE" : "blue_shoot_NE");
+	soldier_p2_sample.shooting[NORTHWEST] = soldier_p2_sample.shooting[NORTHWEST]->LoadAnimation(path.data(), (false) ? "red_shoot_NW" : "blue_shoot_NW");
+	soldier_p2_sample.shooting[SOUTHEAST] = soldier_p2_sample.shooting[SOUTHEAST]->LoadAnimation(path.data(), (false) ? "red_shoot_SE" : "blue_shoot_SE");
+	soldier_p2_sample.shooting[SOUTHWEST] = soldier_p2_sample.shooting[SOUTHWEST]->LoadAnimation(path.data(), (false) ? "red_shoot_SW" : "blue_shoot_SW");
+
+	for (int i = NORTH; i <= SOUTHWEST; i++) {
+		soldier_p2_sample.moving[i]->speed = 10;
+		soldier_p2_sample.shooting[i]->speed = 6;
+	}
+
+	soldier_p2_sample.idle->speed = 0;
+	soldier_p2_sample.idle->SetCurrentFrame(2);
+	soldier_p2_sample.Current_Animation = soldier_p2_sample.moving[NORTH];
+
 	return true;
 }
 bool EntityManager::Start()
@@ -555,6 +588,8 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		}
 		if (tmp)
 		{
+			LoadAnimations((Troop*)tmp);
+
 			if (isPlayer1 == true)
 			{
 				App->player1->troops.push_back((Troop*)tmp);
@@ -764,6 +799,53 @@ int EntityManager::GetDepth(Entity* entity)
 	pair<int,int> postemp = App->map->WorldToMap(entity->position.first, entity->position.second); // get map coords
 
 	return (postemp.first + postemp.second); // return depth
+}
+
+void EntityManager::LoadAnimationsSoldier(Troop* troop) {
+
+	troop->moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+	troop->shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+
+	Soldier* sample = (troop->fromPlayer1) ? &soldier_p1_sample : &soldier_p2_sample;
+
+	if (troop->fromPlayer1) {
+		troop->idle = sample->idle;
+		troop->idle->speed = 0;
+		troop->idle->SetCurrentFrame(2);
+
+		for (int i = NORTH; i < MAX_DIR; i++) {
+			troop->moving[i] = sample->moving[i];
+			troop->shooting[i] = sample->shooting[i];
+			troop->moving[i]->speed = sample->moving[i]->speed;
+			troop->shooting[i]->speed = sample->shooting[i]->speed;
+		}
+	}
+	troop->Current_Animation = troop->moving[NORTH];
+}
+void EntityManager::LoadAnimations(Troop* troop) {
+	switch (troop->type)
+	{
+	case Entity::entityType::SOLDIER:
+		LoadAnimationsSoldier(troop);
+		break;
+	case Entity::entityType::TANKMAN:
+		LoadAnimationsSoldier(troop);
+		break;
+	case Entity::entityType::INFILTRATOR:
+		LoadAnimationsSoldier(troop);
+
+		break;
+	case Entity::entityType::ENGINEER:
+		LoadAnimationsSoldier(troop);
+
+		break;
+	case Entity::entityType::WAR_HOUND:
+		LoadAnimationsSoldier(troop);
+
+		break;
+	default:
+		break;
+	}
 }
 
 
