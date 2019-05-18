@@ -143,6 +143,7 @@ bool DefenseTarget::Update(float dt)
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->audio->PlayFx(ALLIED_TESLA_D);
 		}
 	}
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
@@ -193,6 +194,7 @@ bool DefenseTarget::Update(float dt)
 			App->player2->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->audio->PlayFx(SOVIET_TESLA_D);
 		}
 	}
 	Building::Update(dt);

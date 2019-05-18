@@ -108,7 +108,7 @@ bool CmdCenter::Update(float dt)
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
-
+			App->audio->PlayFx(ALLIED_CC_D);
 		}
 	}
 	else if (!fromPlayer1)
@@ -172,7 +172,7 @@ bool CmdCenter::Update(float dt)
 
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 			App->player2->UpdateWalkabilityMap(true, collider); //destroyed
-
+			App->audio->PlayFx(SOVIET_CC_D);
 		}
 	}
 	

@@ -559,6 +559,12 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		case Entity::entityType::MAIN_DEFENSE: // this is the actual sentrygun
 			tmp = new MainDefense(isPlayer1, position, collider);
 			App->audio->PlayFx(SENTRYGUN_BUILD);
+
+			if(isPlayer1)
+				App->audio->PlayFx(ALLIED_SENTRY_B);
+			else
+				App->audio->PlayFx(SOVIET_SENTRY_B);
+
 			break;
 
 		case Entity::entityType::COMMAND_CENTER:
@@ -569,6 +575,12 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			//tesla
 			App->audio->PlayFx(TESLA_BUILD);
 			tmp = new DefenseAoe(isPlayer1, position, collider);
+
+			if (isPlayer1)
+				App->audio->PlayFx(ALLIED_LASER_B);
+			else
+				App->audio->PlayFx(SOVIET_LASER_B);
+
 			break;
 
 		case Entity::entityType::DEFENSE_TARGET:
@@ -579,11 +591,23 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 		case Entity::entityType::MINES:
 			App->audio->PlayFx(MINE_BUILD);
 			tmp = new Mines(isPlayer1, position, collider);
+
+			if (isPlayer1)
+				App->audio->PlayFx(ALLIED_MINE_B);
+			else
+				App->audio->PlayFx(SOVIET_MINE_B);
+
 			break;
 
 		case Entity::entityType::BARRACKS:
 			App->audio->PlayFx(BARRACKS_BUILD);
 			tmp = new Barracks(isPlayer1, position, collider);
+
+			if (isPlayer1)
+				App->audio->PlayFx(ALLIED_BARRACKS_B);
+			else
+				App->audio->PlayFx(SOVIET_BARRACKS_B);
+
 			break;
 
 		case Entity::entityType::WALLS:
