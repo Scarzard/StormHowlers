@@ -184,14 +184,34 @@ bool Scene::Start()
 	App->player1->Deploy_UI->rect = { 569, 411, 566, 163 };
 
 	App->player1->Soldier_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_SOLDIER, { 68, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
+	App->player1->Soldier_Deff = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 67, 2 }, { 85, 81 }, App->player1->Soldier_icon, false);
+	App->player1->Soldier_Deff->rect = { 1219,98,20,21 };
+	App->player1->Soldier_Off = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 4, 2 }, { 85, 81 }, App->player1->Soldier_icon, false);
+	App->player1->Soldier_Off->rect = { 1195,123,18,17 };
 	
 	App->player1->Tankman_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_TANKMAN, { 171, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
+	App->player1->Tankman_Deff = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 67, 2 }, { 85, 81 }, App->player1->Tankman_icon, false);
+	App->player1->Tankman_Deff->rect = { 1219,98,20,21 };
+	App->player1->Tankman_Off = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 4, 2 }, { 85, 81 }, App->player1->Tankman_icon, false);
+	App->player1->Tankman_Off->rect = { 1195,123,18,17 };
 	
 	App->player1->Engineer_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_ENGINEER, { 274, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
+	App->player1->Engineer_Deff = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 67, 2 }, { 85, 81 }, App->player1->Engineer_icon, false);
+	App->player1->Engineer_Deff->rect = { 1219,98,20,21 };
+	App->player1->Engineer_Off = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 4, 2 }, { 85, 81 }, App->player1->Engineer_icon, false);
+	App->player1->Engineer_Off->rect = { 1195,123,18,17 };
 	
 	App->player1->Infiltrator_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { 377, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
+	App->player1->Infiltrator_Deff = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 67, 2 }, { 85, 81 }, App->player1->Infiltrator_icon, false);
+	App->player1->Infiltrator_Deff->rect = { 1219,98,20,21 };
+	App->player1->Infiltrator_Off = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 4, 2 }, { 85, 81 }, App->player1->Infiltrator_icon, false);
+	App->player1->Infiltrator_Off->rect = { 1195,123,18,17 };
 	
 	App->player1->War_hound_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { 480, 55 }, { 85, 81 }, App->player1->Deploy_UI, false);
+	App->player1->WarHound_Deff = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 67, 2 }, { 85, 81 }, App->player1->War_hound_icon, false);
+	App->player1->WarHound_Deff->rect = { 1219,98,20,21 };
+	App->player1->WarHound_Off = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 4, 2 }, { 85, 81 }, App->player1->War_hound_icon, false);
+	App->player1->WarHound_Off->rect = { 1195,123,18,17 };
 	
 
 	App->player1->X_spawn = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 0 , 0 }, { 33,32 }, nullptr, false);
@@ -433,15 +453,36 @@ bool Scene::Start()
 	App->player2->Deploy_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player2->Deploy_UI->rect = { 569, 411, 566, 163 };
 
+
 	App->player2->Soldier_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_SOLDIER, { 68, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
-	
+	App->player2->Soldier_Deff = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 67, 2 }, { 85, 81 }, App->player2->Soldier_icon, false);
+	App->player2->Soldier_Deff->rect = { 1219,98,20,21 };
+	App->player2->Soldier_Off = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 4, 2 }, { 85, 81 }, App->player2->Soldier_icon, false);
+	App->player2->Soldier_Off->rect = { 1195,123,18,17 };
+
 	App->player2->Tankman_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_TANKMAN, { 171, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
-	
+	App->player2->Tankman_Deff = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 67, 2 }, { 85, 81 }, App->player2->Tankman_icon, false);
+	App->player2->Tankman_Deff->rect = { 1219,98,20,21 };
+	App->player2->Tankman_Off = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 4, 2 }, { 85, 81 }, App->player2->Tankman_icon, false);
+	App->player2->Tankman_Off->rect = { 1195,123,18,17 };
+
 	App->player2->Engineer_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_ENGINEER, { 274, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
-	
+	App->player2->Engineer_Deff = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 67, 2 }, { 85, 81 }, App->player2->Engineer_icon, false);
+	App->player2->Engineer_Deff->rect = { 1219,98,20,21 };
+	App->player2->Engineer_Off = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 4, 2 }, { 85, 81 }, App->player2->Engineer_icon, false);
+	App->player2->Engineer_Off->rect = { 1195,123,18,17 };
+
 	App->player2->Infiltrator_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_INFILTRATOR, { 377, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
-	
+	App->player2->Infiltrator_Deff = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 67, 2 }, { 85, 81 }, App->player2->Infiltrator_icon, false);
+	App->player2->Infiltrator_Deff->rect = { 1219,98,20,21 };
+	App->player2->Infiltrator_Off = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 4, 2 }, { 85, 81 }, App->player2->Infiltrator_icon, false);
+	App->player2->Infiltrator_Off->rect = { 1195,123,18,17 };
+
 	App->player2->War_hound_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_DEPLOY_WARHOUND, { 480, 55 }, { 85, 81 }, App->player2->Deploy_UI, false);
+	App->player2->WarHound_Deff = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 67, 2 }, { 85, 81 }, App->player2->War_hound_icon, false);
+	App->player2->WarHound_Deff->rect = { 1219,98,20,21 };
+	App->player2->WarHound_Off = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 4, 2 }, { 85, 81 }, App->player2->War_hound_icon, false);
+	App->player2->WarHound_Off->rect = { 1195,123,18,17 };
 	
 
 	App->player2->X_spawn = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 0 , 0 }, { 33,32 }, nullptr, false);

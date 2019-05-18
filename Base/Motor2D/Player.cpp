@@ -64,6 +64,7 @@ bool Player::Start()
 	UI_troop_type = Entity::entityType::SOLDIER;
 
 	isBuilding = isDeploying = gold_added = isCasting = Y_pressed = isPaused = false;
+	Soldier_Offensive = Tankman_Offensive = Engineer_Offensive = Infiltrator_Offensive = WarHound_Offensive = true;
 
 	Y_pressed = true;
   
@@ -273,6 +274,14 @@ bool Player::Update(float dt)
 			}
 
 
+		}
+
+		if (currentUI == CURRENT_UI::CURR_DEPLOY)
+		{
+			if (gamepad.Controller[BUTTON_X] == KEY_DOWN)
+			{
+				ChangeTroopsState();
+			}
 		}
 
 		// From GENERAL UI to CREATE TROOPS UI (only for barracks)
@@ -1614,23 +1623,73 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
-		
+		Soldier_Offensive = !Soldier_Offensive;
+		if (Soldier_Offensive)
+		{
+			Soldier_Deff->rect = { 1219,98,20,21 };
+			Soldier_Off->rect = { 1195,123,18,17 };
+		}
+		else
+		{
+			Soldier_Deff->rect = { 1195,98,20,21 };
+			Soldier_Off->rect = { 1220,123,18,17 };
+		}
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_TANKMAN:
-
+		Tankman_Offensive = !Tankman_Offensive;
+		if (Tankman_Offensive)
+		{
+			Tankman_Deff->rect = { 1219,98,20,21 };
+			Tankman_Off->rect = { 1195,123,18,17 };
+		}
+		else
+		{
+			Tankman_Deff->rect = { 1195,98,20,21 };
+			Tankman_Off->rect = { 1220,123,18,17 };
+		}
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_INFILTRATOR:
-		
+		Infiltrator_Offensive = !Infiltrator_Offensive;
+		if (Infiltrator_Offensive)
+		{
+			Infiltrator_Deff->rect = { 1219,98,20,21 };
+			Infiltrator_Off->rect = { 1195,123,18,17 };
+		}
+		else
+		{
+			Infiltrator_Deff->rect = { 1195,98,20,21 };
+			Infiltrator_Off->rect = { 1220,123,18,17 };
+		}
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_ENGINEER:
-		
+		Engineer_Offensive = !Engineer_Offensive;
+		if (Engineer_Offensive)
+		{
+			Engineer_Deff->rect = { 1219,98,20,21 };
+			Engineer_Off->rect = { 1195,123,18,17 };
+		}
+		else
+		{
+			Engineer_Deff->rect = { 1195,98,20,21 };
+			Engineer_Off->rect = { 1220,123,18,17 };
+		}
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_WARHOUND:
-		
+		WarHound_Offensive = !WarHound_Offensive;
+		if (WarHound_Offensive)
+		{
+			WarHound_Deff->rect = { 1219,98,20,21 };
+			WarHound_Off->rect = { 1195,123,18,17 };
+		}
+		else
+		{
+			WarHound_Deff->rect = { 1195,98,20,21 };
+			WarHound_Off->rect = { 1220,123,18,17 };
+		}
 		break;
 
 	case::UI_Element::Action::ACT_CAST_INVULNERABILITY:
@@ -1965,23 +2024,27 @@ void Player::Blit_Info()
 	{
 		section = { 1074, 1234, 351, 87 };
 	}
-	else if ((*focus) == Soldier_icon || (currentUI==CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::SOLDIER))
+	else if (currentUI == CURRENT_UI::CURR_DEPLOY)
+	{
+		section = { 0, 1520, 351, 87 };
+	}
+	else if (currentUI==CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::SOLDIER)
 	{
 		section = { 0, 1331, 351, 87 };
 	}
-	else if ((*focus) == Tankman_icon || (currentUI == CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::TANKMAN))
+	else if (currentUI == CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::TANKMAN)
 	{
 		section = { 359, 1331, 351, 87 };
 	}
-	else if ((*focus) == Engineer_icon || (currentUI == CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::ENGINEER))
+	else if (currentUI == CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::ENGINEER)
 	{
 		section = { 716, 1331, 351, 87 };
 	}
-	else if ((*focus) == Infiltrator_icon || (currentUI == CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::INFILTRATOR))
+	else if (currentUI == CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::INFILTRATOR)
 	{
 		section = { 1074, 1331, 351, 87 };
 	}
-	else if ((*focus) == War_hound_icon || (currentUI == CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::WAR_HOUND))
+	else if (currentUI == CURRENT_UI::CURR_CREATE_TROOPS && UI_troop_type == Entity::entityType::WAR_HOUND)
 	{
 		section = { 0, 1426, 351, 87 };
 	}
@@ -2048,5 +2111,81 @@ void Player::Blit_Info()
 		App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
 
 	App->render->DrawQuad(sec2, 0, 0, 0, 150);
+}
+
+void Player::ChangeTroopsState()
+{
+	
+	if (Soldier_Offensive && Tankman_Offensive && Infiltrator_Offensive && Engineer_Offensive && WarHound_Offensive)
+	{
+		Soldier_Offensive = false;
+		Tankman_Offensive = false;
+		Infiltrator_Offensive = false;
+		Engineer_Offensive = false;
+		WarHound_Offensive = false;
+	}
+	else
+	{
+		Soldier_Offensive = true;
+		Tankman_Offensive = true;
+		Infiltrator_Offensive = true;
+		Engineer_Offensive = true;
+		WarHound_Offensive = true;
+	}
+
+	if (Soldier_Offensive)
+	{
+		Soldier_Deff->rect = { 1219,98,20,21 };
+		Soldier_Off->rect = { 1195,123,18,17 };
+	}
+	else
+	{
+		Soldier_Deff->rect = { 1195,98,20,21 };
+		Soldier_Off->rect = { 1220,123,18,17 };
+	}
+
+	if (Tankman_Offensive)
+	{
+		Tankman_Deff->rect = { 1219,98,20,21 };
+		Tankman_Off->rect = { 1195,123,18,17 };
+	}
+	else
+	{
+		Tankman_Deff->rect = { 1195,98,20,21 };
+		Tankman_Off->rect = { 1220,123,18,17 };
+	}
+
+	if (Infiltrator_Offensive)
+	{
+		Infiltrator_Deff->rect = { 1219,98,20,21 };
+		Infiltrator_Off->rect = { 1195,123,18,17 };
+	}
+	else
+	{
+		Infiltrator_Deff->rect = { 1195,98,20,21 };
+		Infiltrator_Off->rect = { 1220,123,18,17 };
+	}
+
+	if (Engineer_Offensive)
+	{
+		Engineer_Deff->rect = { 1219,98,20,21 };
+		Engineer_Off->rect = { 1195,123,18,17 };
+	}
+	else
+	{
+		Engineer_Deff->rect = { 1195,98,20,21 };
+		Engineer_Off->rect = { 1220,123,18,17 };
+	}
+
+	if (WarHound_Offensive)
+	{
+		WarHound_Deff->rect = { 1219,98,20,21 };
+		WarHound_Off->rect = { 1195,123,18,17 };
+	}
+	else
+	{
+		WarHound_Deff->rect = { 1195,98,20,21 };
+		WarHound_Off->rect = { 1220,123,18,17 };
+	}
 }
 
