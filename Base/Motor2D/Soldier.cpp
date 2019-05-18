@@ -375,7 +375,7 @@ void Soldier::LoadAnimations(bool isPlayer1, string path)
 
 	idle = idle->LoadAnimation(path.data(), (!isPlayer1) ? "red_idle" : "blue_idle");
 
-	moving[NORTH] = moving[NORTH]->LoadAnimation(path.data(), (!isPlayer1) ? "red_north" : "blue_north");
+	moving[NORTH] = moving[NORTH]->LoadAnimation(path.data(), (!isPlayer1) ? "run_N" : "run_N");
 	moving[SOUTH] = moving[SOUTH]->LoadAnimation(path.data(), (!isPlayer1) ? "red_south" : "blue_south");
 	moving[EAST] = moving[EAST]->LoadAnimation(path.data(), (!isPlayer1) ? "red_east" : "blue_east");
 	moving[WEST] = moving[WEST]->LoadAnimation(path.data(), (!isPlayer1) ? "red_west" : "blue_west");

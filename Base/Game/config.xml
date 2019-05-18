@@ -204,7 +204,7 @@
       <tankman        x="" y="" w="" h="" rx="" ry="" />       <!--<tankman x="" y       -->
       <infiltrator    x="" y="" w="" h="" rx="" ry="" />   <!--<infiltrator x=       -->
       <engineer       x="" y="" w="" h="" rx="" ry="" />      <!--<engineer x=""        -->
-      <war_hound      x="" y="" w="" h="" rx="" ry="" />     <!--<war_hound x=""       -->
+      <war_hound      x="0" y="0" w="77" h="69" rx="0" ry="0" />     <!--<war_hound x=""       -->
     </rect_previews>
   </player>
 
