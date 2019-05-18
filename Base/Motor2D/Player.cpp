@@ -1534,7 +1534,7 @@ void Player::DoLogic(UI_Element* data)
 		{
 			App->audio->PlayFx(INGAME_CLICK);
 			isBuilding = true;
-			type = Entity::entityType::WAR_HOUND;
+			type = Entity::entityType::SOLDIER;
 			collider.dimensions = { 1,1 };
 		}
 
@@ -1544,10 +1544,27 @@ void Player::DoLogic(UI_Element* data)
 
 	case::UI_Element::Action::ACT_DEPLOY_TANKMAN:
 
+		{
+			App->audio->PlayFx(INGAME_CLICK);
+			isBuilding = true;
+			type = Entity::entityType::TANKMAN;
+			collider.dimensions = { 1,1 };
+		}
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_INFILTRATOR:
-		
+			//
+			//if (WarHoundsCreated > 0)
+		{
+			App->audio->PlayFx(INGAME_CLICK);
+			isBuilding = true;
+			type = Entity::entityType::INFILTRATOR;
+			collider.dimensions = { 1,1 };
+		}
+
+		//App->audio->PlayFx(WRONG);
+
+
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_ENGINEER:

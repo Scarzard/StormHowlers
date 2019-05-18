@@ -146,10 +146,7 @@ bool Engineer::Update(float dt)
 						{
 							state = SHOOTING;
 							timer.Start();
-							if (info.closest->type == entityType::ENGINEER)
-							{
-								int a = 0;
-							}
+							
 						}
 						else if (info.closest == nullptr && offensive == false)
 						{
