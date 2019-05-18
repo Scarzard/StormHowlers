@@ -31,6 +31,7 @@ public:
 	int				deploy_counter = 0;
 	pair<int, int>	deploy_pos = { 0,0 };
 	bool			is_deploying = false;
+	std::list<Troop*>::iterator tmp_entity;
 
 	Player* myPlayer;
 };

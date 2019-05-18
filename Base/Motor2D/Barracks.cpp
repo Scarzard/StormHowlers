@@ -204,14 +204,14 @@ bool Barracks::DeployTroops(int amount_per_frame)
 		case DeployState::START:
 
 			//deploy_counter = 0;
-			/* GROUP MANAGEMENT
-			std::list<Troop*>::iterator entity = myPlayer->troops.begin();
-			while (entity != myPlayer->troops.end())
+			//GROUP MANAGEMENT
+			tmp_entity = myPlayer->troops.begin();
+			while (tmp_entity != myPlayer->troops.end())
 			{
-				(*entity)->isSelected = false;
-				entity++;
+				(*tmp_entity)->isSelected = false;
+				tmp_entity++;
 			}
-			*/
+			
 			deploy_pos = position;
 			deploy_state = DeployState::DEPLOYING;
 
@@ -222,11 +222,9 @@ bool Barracks::DeployTroops(int amount_per_frame)
 				deploy_state = DeployState::END;
 			}
 			else {
-				//App->input->GetMousePosition(pos.first, pos.second);
-				//pos = App->render->ScreenToWorld(pos.first, pos.second);
 				//collider.dimensions = { 1,1 };
 				
-				for (int i = 0; i < amount_per_frame; i++) {
+				for (int i = 0; i < amount_per_frame && !TroopsCreated.empty(); i++) {
 
 					Troop* e;
 					deploy_pos.first += 20;
@@ -234,7 +232,7 @@ bool Barracks::DeployTroops(int amount_per_frame)
 					e = (Troop*)App->entitymanager->AddEntity(fromPlayer1, *TroopsCreated.begin(), deploy_pos, collider);
 					TroopsCreated.pop_front();
 					e->state = TROOP_IDLE;
-					//e->isSelected = true;
+					e->isSelected = true;
 					//deploying_counter++;
 				}
 				deploy_pos.first = position.first;
@@ -247,9 +245,8 @@ bool Barracks::DeployTroops(int amount_per_frame)
 			ret = false;
 			//deploy_counter = 0;
 			//isDeploying = false;
-			//myPlayer->groups.push_back(App->move_manager->CreateGroup(myPlayer));
-			//myPlayer->group++;
-			//return isDeploying;
+			myPlayer->groups.push_back(App->move_manager->CreateGroup(myPlayer));
+			myPlayer->group++;
 			break;
 
 		case DeployState::NONE:
