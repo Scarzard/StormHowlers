@@ -121,7 +121,7 @@ public:
 
 	unsigned short masterVolume = 100;
 	unsigned short musicVolume = 30;
-	unsigned short sfxVolume = 30;
+	unsigned short sfxVolume = 10;
 
 public:
 	string			folder_music;

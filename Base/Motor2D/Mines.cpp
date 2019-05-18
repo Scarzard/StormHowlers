@@ -71,6 +71,12 @@ bool Mines::Update(float dt)
 				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 140, &upgrade);
 			}
 
+			if (building->Finished() && built == false)
+			{
+				App->audio->PlayFx(ALLIED_MINE_B);
+				built = true;
+			}
+
 			if (health > 0) //if not destroyed
 			{
 				if (upgrade == true && level <= 1) //upgrade
@@ -131,6 +137,12 @@ bool Mines::Update(float dt)
 				upgrade.w = 32;
 				upgrade.h = 54;
 				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 140, &upgrade);
+			}
+
+			if (building->Finished() && built == false)
+			{
+				App->audio->PlayFx(SOVIET_MINE_B);
+				built = true;
 			}
 
 			if (health > 0) //if not destroyed

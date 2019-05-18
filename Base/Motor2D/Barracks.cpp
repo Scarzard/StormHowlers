@@ -69,6 +69,14 @@ bool Barracks::Update(float dt)
 			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 140, &upgrade);
 		}
 
+		
+		if (building->Finished() && built == false)
+		{
+			App->audio->PlayFx(ALLIED_BARRACKS_B);
+			built = true;
+		}
+		
+
 		if (health > 0) //if not destroyed
 		{
 			if (upgrade == true && level <= 1) //upgrade
@@ -158,6 +166,12 @@ bool Barracks::Update(float dt)
 				health = health_lv[level];
 				upgrade = false;
 				//play fx (upgrade);
+			}
+
+			if (building->Finished() && built == false)
+			{
+				App->audio->PlayFx(SOVIET_BARRACKS_B);
+				built = true;
 			}
 
 			if (TroopsCreated.empty() == false)

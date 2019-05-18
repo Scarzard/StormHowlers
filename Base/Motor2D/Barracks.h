@@ -14,7 +14,6 @@ public:
 
 	void LoadAnimations(bool isPlayer1, string path);
 
-	
 };
 
 #endif

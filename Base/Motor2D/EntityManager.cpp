@@ -560,11 +560,6 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			tmp = new MainDefense(isPlayer1, position, collider);
 			App->audio->PlayFx(SENTRYGUN_BUILD);
 
-			if(isPlayer1)
-				App->audio->PlayFx(ALLIED_SENTRY_B);
-			else
-				App->audio->PlayFx(SOVIET_SENTRY_B);
-
 			break;
 
 		case Entity::entityType::COMMAND_CENTER:
@@ -576,9 +571,9 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			App->audio->PlayFx(TESLA_BUILD);
 			tmp = new DefenseAoe(isPlayer1, position, collider);
 
-			if (isPlayer1)
+			if(tmp->fromPlayer1 && tmp->building->Finished())
 				App->audio->PlayFx(ALLIED_LASER_B);
-			else
+			else if (tmp->building->Finished())
 				App->audio->PlayFx(SOVIET_LASER_B);
 
 			break;
@@ -592,9 +587,9 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			App->audio->PlayFx(MINE_BUILD);
 			tmp = new Mines(isPlayer1, position, collider);
 
-			if (isPlayer1)
+			if (tmp->fromPlayer1 && tmp->building->Finished())
 				App->audio->PlayFx(ALLIED_MINE_B);
-			else
+			else if (tmp->building->Finished())
 				App->audio->PlayFx(SOVIET_MINE_B);
 
 			break;
@@ -603,9 +598,9 @@ Entity* EntityManager::AddEntity(bool isPlayer1, Entity::entityType type, pair<i
 			App->audio->PlayFx(BARRACKS_BUILD);
 			tmp = new Barracks(isPlayer1, position, collider);
 
-			if (isPlayer1)
+			if (tmp->fromPlayer1 && tmp->building->Finished())
 				App->audio->PlayFx(ALLIED_BARRACKS_B);
-			else
+			else if (tmp->building->Finished())
 				App->audio->PlayFx(SOVIET_BARRACKS_B);
 
 			break;

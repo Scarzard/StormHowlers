@@ -193,6 +193,7 @@ public:
 	bool repair = false;
 	bool flip	= false;
 	bool alive	= true;
+	bool built = false;
 	
 	int health = 0;
 	int damage = 0;

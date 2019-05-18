@@ -135,6 +135,12 @@ bool MainDefense::Update(float dt)
 			//play fx (upgrade);
 		}
 
+		if (building->Finished() && built == false)
+		{
+			App->audio->PlayFx(ALLIED_SENTRY_B);
+			built = true;
+		}
+
 		if (health <= 0) //destroyed
 		{
 			App->player1->DeleteEntity(this);
@@ -184,6 +190,12 @@ bool MainDefense::Update(float dt)
 			health = health_lv[level];
 			upgrade = false;
 			//play fx (upgrade);
+		}
+
+		if (building->Finished() && built == false)
+		{
+			App->audio->PlayFx(SOVIET_SENTRY_B);
+			built = true;
 		}
 
 		if (health <= 0) //destroyed
