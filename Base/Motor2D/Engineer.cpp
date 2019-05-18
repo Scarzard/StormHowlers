@@ -146,11 +146,15 @@ bool Engineer::Update(float dt)
 						{
 							state = SHOOTING;
 							timer.Start();
+							if (info.closest->type == entityType::ENGINEER)
+							{
+								int a = 0;
+							}
 						}
 						else if (info.closest == nullptr && offensive == false)
 						{
 							// capar a entidades en la misma zona
-							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::BARRACKS, 1);
+							info.closest = FindNearestSoldierforDefense(map_pos, fromPlayer1, entityType::SOLDIER, 1);
 							if (info.closest->type < entityType::SOLDIER)
 							{
 								info.closest = nullptr;
@@ -237,7 +241,7 @@ bool Engineer::Update(float dt)
 						}
 						else if (info.closest == nullptr && offensive == false)
 						{
-							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::BARRACKS, 2);
+							info.closest = FindNearestSoldierforDefense(map_pos, fromPlayer1, entityType::SOLDIER, 2);
 							if (info.closest->type < entityType::SOLDIER)
 							{
 								info.closest = nullptr;
@@ -1109,4 +1113,123 @@ bool  Engineer::IsInWarZone(pair <int, int > map_pos)
 {
 	//must be in map coordinates
 	return (map_pos.first > App->map->warzone.up_limit.first && map_pos.first < App->map->warzone.down_limit.first);
+}
+
+Entity* Engineer::FindNearestSoldierforDefense(pair <int, int> pos, bool fromplayer1, entityType desiredtype, int zones)
+{
+
+	// zone 0 is no zone
+	// zone 1 ally zone
+	// zone 2 enemy zone
+	// zone 3 war zone
+
+	Player* enemy = (!fromplayer1) ? App->player1 : App->player2;
+
+	Entity* found = *enemy->entities.begin();
+	int distance = 0;
+	pair<int, int> map_pos;
+	int min_dist;
+	bool once = false;
+
+	if (found != nullptr)
+	{
+		//take the first of de desired group
+		map_pos = App->map->WorldToMap(found->position.first, found->position.second);
+		Is_inRange(pos, distance, map_pos, 0);
+		min_dist = distance;
+
+		for (list<Entity*>::iterator tmp = enemy->entities.begin(); tmp != enemy->entities.end(); tmp++) // traverse entity list (unordered)
+		{
+			if ((*tmp)->type >= desiredtype)
+			{
+				if (zones == 0)
+				{
+					map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+
+					Is_inRange(pos, distance, map_pos, 0);
+
+
+					if (min_dist > distance)
+					{
+						found = (*tmp);
+						min_dist = distance;
+					}
+
+				}
+				else if (zones == 1)
+				{
+					map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+					Is_inRange(pos, distance, map_pos, 0);
+
+					if (IsInAllyZone(map_pos))
+					{
+						if (once == false)
+						{
+							found = (*tmp);
+							once = true;
+						}
+
+						if (min_dist > distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
+
+					}
+				}
+				else if (zones == 2)
+				{
+					map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+					Is_inRange(pos, distance, map_pos, 0);
+
+					if (IsInEnemyZone(map_pos))
+					{
+						if (once == false)
+						{
+							found = (*tmp);
+							once = true;
+						}
+
+						if (min_dist > distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
+
+					}
+
+				}
+				else if (zones == 3)
+				{
+					map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+					Is_inRange(pos, distance, map_pos, 0);
+
+					if (IsInWarZone(map_pos))
+					{
+						if (once == false)
+						{
+							found = (*tmp);
+							once = true;
+						}
+
+						if (min_dist > distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
+
+					}
+
+				}
+			}
+		}
+
+	}
+
+	return found;
+
 }

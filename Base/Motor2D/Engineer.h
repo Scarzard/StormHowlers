@@ -28,6 +28,8 @@ public:
 	bool IsInEnemyZone(pair <int, int > map_pos);
 	bool IsInWarZone(pair <int, int > map_pos);
 
+	Entity * FindNearestSoldierforDefense(pair<int, int> pos, bool fromplayer1, entityType desiredtype, int zones);
+
 	void LoadAnimations(bool isPlayer1, string path);
 
 	//bool Is_inRange(pair<int, int> pos, int & distance);
