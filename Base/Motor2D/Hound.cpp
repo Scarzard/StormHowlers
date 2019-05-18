@@ -115,6 +115,7 @@ bool Hound::Update(float dt)
 				if (info.closest == nullptr)
 				{
 					state = MOVING;
+					timer.Start();
 
 				}
 				if (timer.ReadSec() >= rate_of_fire)

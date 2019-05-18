@@ -1529,7 +1529,17 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
-		
+			//
+			//if (WarHoundsCreated > 0)
+		{
+			App->audio->PlayFx(INGAME_CLICK);
+			isBuilding = true;
+			type = Entity::entityType::WAR_HOUND;
+			collider.dimensions = { 1,1 };
+		}
+
+		//App->audio->PlayFx(WRONG);
+
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_TANKMAN:
@@ -1541,7 +1551,18 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_ENGINEER:
-		
+		//
+		//if (WarHoundsCreated > 0)
+		{
+			App->audio->PlayFx(INGAME_CLICK);
+			isBuilding = true;
+			type = Entity::entityType::ENGINEER;
+			collider.dimensions = { 1,1 };
+		}
+
+	//App->audio->PlayFx(WRONG);
+
+	
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_WARHOUND:
