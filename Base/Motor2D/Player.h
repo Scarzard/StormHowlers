@@ -110,6 +110,11 @@ public:
 
 	int CheckCost(Entity::entityType type);
 	int GoldKill(Entity* entity);
+
+	void ChangeBuilding(int num);
+
+private:
+	int number = 0;
 	
 public:
 	bool isBuilding = false;

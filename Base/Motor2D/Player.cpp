@@ -85,7 +85,7 @@ void Player::RectangleSelection()
 
 	}
 
-	else if (std::abs(mouse_pos.first - rectangle_origin.x) >= 5 && std::abs(mouse_pos.second - rectangle_origin.y) >= 5 && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
+	else if (abs(mouse_pos.first - rectangle_origin.x) >= 5 && abs(mouse_pos.second - rectangle_origin.y) >= 5 && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 		// --- Rectangle size ---
 		rectangle_origin.w = mouse_pos.first - rectangle_origin.x;
 		rectangle_origin.h = mouse_pos.second - rectangle_origin.y;
@@ -181,8 +181,10 @@ bool Player::Update(float dt)
 		}
 
 		//Preview all player1 entities with M
-		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) 
+		{
 			isBuilding = !isBuilding;
+			DoLogic(App->player1->Def_AOE_icon); //AOE
 		}
 
 		if (isBuilding && App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
@@ -509,6 +511,7 @@ bool Player::Update(float dt)
 			{
 				BuildingCost = 3000;
 			}
+
 		}
 
 		// Go back
@@ -592,7 +595,9 @@ bool Player::Update(float dt)
 
 
 		// Travel through the different buttons
-		if (gamepad.Controller[RB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
+		if ((gamepad.Controller[RB] == KEY_DOWN || gamepad.Controller[RIGHT] == KEY_DOWN || gamepad.Controller[JOY_RIGHT] == KEY_DOWN) &&
+			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && 
+			gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			App->audio->PlayFx(CHANGE_FOCUS);
 			if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING)
@@ -639,7 +644,9 @@ bool Player::Update(float dt)
 
 		}
 		// Travel through the different buttons
-		if (gamepad.Controller[LB] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
+		if ((gamepad.Controller[LB] == KEY_DOWN || gamepad.Controller[LEFT] == KEY_DOWN || gamepad.Controller[JOY_LEFT] == KEY_DOWN) &&
+			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && 
+			gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			App->audio->PlayFx(CHANGE_FOCUS);
 			if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING)
@@ -771,11 +778,13 @@ bool Player::Update(float dt)
 		if (gamepad.Controller[JOY_UP] == KEY_REPEAT || gamepad.Controller[UP] == KEY_DOWN ||
 			App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT)
 		{
+			currentTile.first--;
 			currentTile.second--;
 		}
 		else if (gamepad.Controller[JOY_DOWN] == KEY_REPEAT || gamepad.Controller[DOWN] == KEY_DOWN ||
 			App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
 		{
+			currentTile.first++;
 			currentTile.second++;
 		}
 
@@ -783,11 +792,13 @@ bool Player::Update(float dt)
 			App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
 		{
 			currentTile.first++;
+			currentTile.second--;
 		}
 		else if (gamepad.Controller[JOY_LEFT] == KEY_REPEAT || gamepad.Controller[LEFT] == KEY_DOWN ||
 			App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT)
 		{
 			currentTile.first--;
+			currentTile.second++;
 		}
 
 		//--- Limits
@@ -877,6 +888,24 @@ bool Player::Update(float dt)
 				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
 			}*/
 
+			if (gamepad.Controller[LB] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) //previous building
+			{
+				if (number <= 1)
+					number = 4;
+				else
+					number--;
+
+				ChangeBuilding(number);
+			}
+			else if (gamepad.Controller[RB] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) //next building
+			{
+				if (number >= 4)
+					number = 1;
+				else
+					number++;
+
+				ChangeBuilding(number);
+			}
 
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 			{
@@ -1126,6 +1155,48 @@ int Player::GoldKill(Entity* entity)
 
 	else
 		return 0;
+}
+
+void Player::ChangeBuilding(int num)
+{
+	if (isPlayer1 == true)
+	{
+		if (num == 1)
+		{
+			DoLogic(App->player1->Def_AOE_icon); //AOE
+		}
+		else if (num == 2)
+		{
+			DoLogic(App->player1->Def_Target_icon); //Target
+		}
+		else if (num == 3)
+		{
+			DoLogic(App->player1->Mines_icon); //Mine
+		}
+		else if (num == 4)
+		{
+			DoLogic(App->player1->Barracks_icon); //Barracks
+		}
+	}
+	else if (isPlayer1 == false)
+	{
+		if (num == 1)
+		{
+			DoLogic(App->player2->Def_AOE_icon); //AOE
+		}
+		else if (num == 2)
+		{
+			DoLogic(App->player2->Def_Target_icon); //Target
+		}
+		else if (num == 3)
+		{
+			DoLogic(App->player2->Mines_icon); //Mine
+		}
+		else if (num == 4)
+		{
+			DoLogic(App->player2->Barracks_icon); //Barracks
+		}
+	}
 }
 
 void Player::UpdateFocus(uint data)
@@ -1596,6 +1667,7 @@ void Player::DoLogic(UI_Element* data)
 		type = Entity::entityType::DEFENSE_AOE;
 		collider.dimensions = { 2,2 };
 		offset = { 20,30 };
+		number = 1;
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_TARGET:
@@ -1603,6 +1675,7 @@ void Player::DoLogic(UI_Element* data)
 		type = Entity::entityType::MAIN_DEFENSE;
 		collider.dimensions = { 2,2 };
 		offset = { 10 , 0 };
+		number = 2;
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_MINE:
@@ -1610,6 +1683,7 @@ void Player::DoLogic(UI_Element* data)
 		type = Entity::entityType::MINES;
 		collider.dimensions = { 4,4 };
 		offset = { 60, 30 };
+		number = 3;
 		break;
 
 	case::UI_Element::Action::ACT_BUILD_BARRACKS:
@@ -1617,8 +1691,12 @@ void Player::DoLogic(UI_Element* data)
 		{
 			isBuilding = true;
 			type = Entity::entityType::BARRACKS;
-			collider.dimensions = { 3,3 };
-			offset = { 0, 0 }; 
+			collider.dimensions = { 3,4 };
+			offset = { 40 , 50 };
+			number = 4;
+			/*collider.dimensions = { 3,3 };
+			offset = { 0, 0 }; */
+
 		}
 		break;
 
