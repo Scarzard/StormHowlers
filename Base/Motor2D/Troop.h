@@ -75,12 +75,14 @@ public:
 	bool isInvulnerable = false;
 	bool offensive_mode = false;
 	float time_to_awake = 2.0f;
-
+	bool lead = false;
+	bool pathfind = false;
 
 	
 	
 	pair<int, int> init_position;
 
+	TroopDir facing;
 
 
 

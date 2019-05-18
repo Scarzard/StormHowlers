@@ -1,7 +1,7 @@
 #include "Engineer.h"
-#include "Pathfinding.h"
 #include "Player.h"
 #include "Audio.h"
+#include "Pathfinding.h"
 
 
 Engineer::Engineer()
@@ -14,14 +14,13 @@ Engineer::Engineer(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop
 	BROFILER_CATEGORY("Engineer constructor", Profiler::Color::Red);
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
-
+	offset = range + 10;
 	destination = pos;
 	original_range = range;
-	//Managed in entity.h constructor
-	//rate_of_fire = 1;
-	//fromPlayer1 = isPlayer1;
-	//type = Entity::entityType::SOLDIER;
 
+	state = MOVING;
+	timer.Start();
+	lead = true;
 }
 
 
@@ -31,74 +30,282 @@ Engineer::~Engineer()
 
 bool Engineer::Update(float dt)
 {
+	// change bool from offensive and defensive
+	if (fromPlayer1)
+	{
+		offensive = App->player1->Engineer_Offensive;
+	}
+	else
+	{
+		offensive = App->player2->Engineer_Offensive;
+	}
 
 	if (alive) {
 
-		pair<int, int> map_pos = App->map->WorldToMap(position.first, position.second);
-		pair<int, int> map_init_pos = App->map->WorldToMap(init_position.first, init_position.second);
-		int time_to_act = 2;
-
-		// Checks for group defined closest entity
-		if (info.closest != nullptr)
+		if (lead)
 		{
-			//Entity to attack is found
-			if (info.closest->health > 0) {
-				//LOG("Closest FOUND");
-				int d = 0;
 
-				// Modify the goal tile to make it walkable
-				SetDestination();
+			pair <int, int > map_pos = App->map->WorldToMap(position.first, position.second);
 
-				if (!Is_inRange(map_pos, d, destination, original_range)) {
+			switch (state)
+			{
+			case TROOP_IDLE:
+				if (timer.ReadSec() >= 1 && info.closest == nullptr)
+				{
+					state = SEARCH;
+					timer.Start();
+					//facing direction for 
+				}
+				if (offensive)
+				{
 					state = MOVING;
-					destination = App->map->MapToWorld(destination.first, destination.second);
-					if (info.current_group->IsGroupLead(this)) {
-
-						info.current_group->CheckForMovementRequest(dt, destination);
-
-					}
-					else if (info.current_group->GetLead()->state != MOVING) {
-						//Lead has reached the destination but the target is still out of range, need to move individually
-
-						info.current_group->CheckForMovementIndividual(this, dt, destination);
-					}
-					else {
-					}
-					//LOG("Closest FOUND - NOT in range => MOVING");
+					info.closest = nullptr;
+					pathfind = false;
+					timer.Start();
 				}
-				else {
-					info.UnitMovementState = MovementState::MovementState_NoState;
-					state = SHOOTING;
+				break;
 
-					// Shoots the closest one if in range
-					if (timer.ReadSec() >= rate_of_fire)
+			case MOVING:
+				if (pathfind)
+				{
+					if (info.closest != nullptr)
 					{
-						info.closest->TakeDamage(damage_lv[level]);
-						timer.Start();
-						App->audio->PlayFx(SOLDIER_ATTACK);
+						MovementPathfind(info.closest, map_pos);
 					}
-					//LOG("Closest FOUND - IN range => SHOOTING");
+					else
+					{
+						pathfind = false;
+						state = MOVING;
+					}
+				}
+				else if (timer.ReadSec() > 1 && info.closest == nullptr && offensive)
+				{
+					state = SEARCH;
+					timer.Start();
+				}
+				else
+				{
+
+					SimpleMovement();
+
+					if (!offensive)
+					{
+						if (fromPlayer1 && IsInAllyZone(map_pos))
+						{
+							state = TROOP_IDLE;
+							timer.Start();
+						}
+						else if (!fromPlayer1 && IsInEnemyZone(map_pos))
+						{
+							state = TROOP_IDLE;
+							timer.Start();
+						}
+					}
 
 				}
+				break;
+
+			case SHOOTING:
+
+				// Shoots the closest one if in range
+				if (info.closest == nullptr)
+				{
+					state = MOVING;
+					timer.Start();
+
+				}
+				if (timer.ReadSec() >= rate_of_fire)
+				{
+					info.closest->TakeDamage(damage_lv[level]);
+					timer.Start();
+					App->audio->PlayFx(SOLDIER_ATTACK);
+				}
+				if (info.closest->health <= 0)
+				{
+					info.closest->alive = false;
+					state = MOVING;
+					timer.Start();
+					info.closest = nullptr;
+				}
+			
+				break;
+
+			case SEARCH:
+
+				state = MOVING;
+				timer.Start();
+
+				//ally zone
+				if (IsInAllyZone(map_pos))
+				{
+					if (fromPlayer1)
+					{
+						info.closest = FindEntityInAttackRange(map_pos, fromPlayer1, original_range, entityType::BARRACKS);
+
+						if (info.closest != nullptr)
+						{
+							state = SHOOTING;
+							timer.Start();
+							
+						}
+						else if (info.closest == nullptr && offensive == false)
+						{
+							// capar a entidades en la misma zona
+							info.closest = FindNearestSoldierforDefense(map_pos, fromPlayer1, entityType::SOLDIER, 1);
+							if (info.closest->type < entityType::SOLDIER)
+							{
+								info.closest = nullptr;
+								state = TROOP_IDLE;
+								timer.Start();
+
+							}
+							else
+							{
+
+								state = MOVING;
+								pathfind = true;
+							}
+						}
+						else
+						{
+							state = MOVING;
+							//pathfind = true;
+						}
+
+					}
+					else
+					{
+						info.closest = FindEntityInAttackRange(map_pos, fromPlayer1, original_range, entityType::BARRACKS);
+
+						if (info.closest != nullptr)
+						{
+							state = SHOOTING;
+							timer.Start();
+						}
+						else if (info.closest == nullptr && offensive == true)
+						{
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::BARRACKS, 1);
+
+							state = MOVING;
+							pathfind = true;
+						}
+						else
+						{
+							state = MOVING;
+							//pathfind = true;
+						}
+					}
+
+
+				}
+				// enemy zone
+				else if (IsInEnemyZone(map_pos))
+				{
+					if (fromPlayer1)
+					{
+						info.closest = FindEntityInAttackRange(map_pos, fromPlayer1, original_range, entityType::BARRACKS);
+
+						if (info.closest != nullptr)
+						{
+							state = SHOOTING;
+							timer.Start();
+						}
+						else if (info.closest == nullptr && offensive == true)
+						{
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::BARRACKS, 2);
+							state = MOVING;
+							pathfind = true;
+						}
+						else
+						{
+							state = MOVING;
+							//pathfind = true;
+						}
+						//find entity in range
+						//if exist, state= shoot;
+						//else, state= move
+
+
+					}
+					else
+					{
+						info.closest = FindEntityInAttackRange(map_pos, fromPlayer1, original_range, entityType::BARRACKS);
+
+						if (info.closest != nullptr)
+						{
+							state = SHOOTING;
+							timer.Start();
+						}
+						else if (info.closest == nullptr && offensive == false)
+						{
+							info.closest = FindNearestSoldierforDefense(map_pos, fromPlayer1, entityType::SOLDIER, 2);
+							if (info.closest->type < entityType::SOLDIER)
+							{
+								info.closest = nullptr;
+								state = TROOP_IDLE;
+								timer.Start();
+
+							}
+							else
+							{
+
+								state = MOVING;
+								pathfind = true;
+							}
+
+						}
+						else
+						{
+							state = MOVING;
+							//pathfind = true;
+						}
+						//find entity in range
+						//if exist, state= shoot;
+						//else, state= move
+					}
+				}
+				// war zone
+				else if (IsInWarZone(map_pos) && offensive)
+				{
+
+					info.closest = FindEntityInAttackRange(map_pos, fromPlayer1, original_range, entityType::SOLDIER);
+
+					if (info.closest != nullptr)
+					{
+						state = SHOOTING;
+						timer.Start();
+					}
+					else
+					{
+						state == MOVING;
+					}
+
+
+					//find entity en shoot range,
+					//if closes exits, state=shoot
+					//else state move
+				}
+
+
+
+
+				break;
+
+			default:
+
+				state = MOVING;
+				pathfind = false;
+
+				break;
 			}
-			else {
-				state = TROOP_IDLE;
-				info.closest = nullptr;
-			}
+
 		}
-		//ENTITY TO ATTACK IS NOT FOUND OR JUST DIED
-		if (state != SHOOTING) {
 
-			if (state == TROOP_IDLE) {
-				//LOG("Closest NOT FOUND - SEARCHING");
+		else
+		{
+			// get info from lead
+			// lead gives out an information of state and enemy, and speed of moving, the troops haves 2 stages. move and shoot, when leader shoot, they shoot, when leader does other the move
 
-				info.closest = FindBuilding(map_pos, fromPlayer1, range);
-				range = (info.closest == nullptr) ? range + 20 : original_range;
-
-			}
-		}
-		else if (info.closest == nullptr) {
-			state = TROOP_IDLE;
 		}
 
 	}
@@ -108,20 +315,24 @@ bool Engineer::Update(float dt)
 	}
 
 	ActOnDestroyed();
-	ChangeAnimation();
+	ChangeAnimation(facing, pathfind);
 
 	//DOES NOT CHANGE ANYTHING BY ITSELF - ONLY INPUT INSIDE -¬
-	ForceAnimations();
+	//ForceAnimations();
 	//            _|
 
 	Troop::Update(dt);
+
+	App->render->DrawQuad({ position.first,position.second,5,5 }, 255, 255, 255, 255, false);
+
 	return true;
 }
+
 void Engineer::SetDestination()
 {
 	destination = App->map->WorldToMap(info.closest->position.first, info.closest->position.second);
 
-	if (!App->pathfinding->IsWalkable(destination)) {
+	/*if (!App->pathfinding->IsWalkable(destination)) {
 		destination.second -= 1;
 		if (!App->pathfinding->IsWalkable(destination)) {
 			destination.second += 2;
@@ -137,7 +348,7 @@ void Engineer::SetDestination()
 
 		}
 
-	}
+	}*/
 }
 bool Engineer::Is_inRange(pair<int, int> pos, int &distance, pair <int, int> position, int range) {
 
@@ -149,61 +360,15 @@ bool Engineer::Is_inRange(pair<int, int> pos, int &distance, pair <int, int> pos
 
 	return distance <= range;
 }
-void Engineer::PrintState() {
-	switch (state)
-	{
-	case NOT_DEPLOYED:
-		LOG("STATE = NOT_DEPLOYED");
 
-		break;
-	case TROOP_IDLE:
-		LOG("STATE = IDLE");
-		break;
-	case MOVING:
-		LOG("STATE = MOVING");
-		break;
-	case SHOOTING:
-		LOG("STATE = SHOOTING");
-		break;
-	case REST:
-		LOG("STATE = REST");
-		break;
-	case MAX_STATE:
-		LOG("MOVING");
-		break;
-	default:
-		break;
-	}
-}
 
-void Engineer::ForceAnimations() {
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
-		Current_Animation = moving[(curr++) % SOUTHWEST];
-
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
-		Current_Animation = shooting[(curr++) % SOUTHWEST];
-
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
-		Current_Animation = idle;
-		idle->SetCurrentFrame((curr++) % SOUTHWEST);
-	}
-}
 void Engineer::ActOnDestroyed() {
 
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
 		if (health <= 0) //destroyed
 		{
-			/*std::list <Entity*>::const_iterator unit = info.current_group->Units.begin();
-			while (unit != info.current_group->Units.end()) {
-			(*unit)->isSelected = true;
-			unit++;
-			}
-			isSelected = false;
-			App->move_manager->CreateGroup(App->player1);*/
+
 			info.current_group->removeUnit(this);
 			App->player1->DeleteEntity(this);
 		}
@@ -223,66 +388,223 @@ void Engineer::CleanUp() {
 
 }
 
-void Engineer::ChangeAnimation() {
-	Current_Animation = idle;
-	if (state == MOVING)
+void Engineer::MovementPathfind(Entity* target, pair <int, int> map_pos)
+{
+	bool north = true;
+	bool south = true;
+	bool west = true;
+	bool east = true;
+	bool move = false;
+
+	// search tiles around
+	pair <int, int> cell = { map_pos.first, map_pos.second + 1 };
+
+	if (!App->pathfinding->IsWalkable(cell))
 	{
-		//isShooting = false;
-		if (Speed.first == 0 && Speed.second < 0)
+		east = false;
+	}
+
+	else if (!App->pathfinding->IsWalkable({ map_pos.first, map_pos.second - 1 }))
+	{
+		west = false;
+	}
+
+	if (!App->pathfinding->IsWalkable({ map_pos.first + 1, map_pos.second }))
+	{
+		north = false;
+	}
+
+
+	else if (!App->pathfinding->IsWalkable({ map_pos.first - 1, map_pos.second }))
+	{
+		south = false;
+	}
+
+	if (position.first <= target->position.first - offset && east == true)
+	{
+		position.first += 2;
+		move = true;
+	}
+	else if (position.first >= target->position.first + offset && west == true)
+	{
+		position.first -= 2;
+		move = true;
+	}
+	if (position.second <= target->position.second - offset * 2 && south == true)
+	{
+		position.second += 1;
+		move = true;
+	}
+	else if (position.second >= target->position.second + offset * 2 && north == true)
+	{
+		position.second -= 1;
+		move = true;
+	}
+
+
+	/*if (move==false )
+	{
+		pathfind = false;
+	}*/
+
+	/*if (move==false && west==false)
+	{
+		position.first += 2;
+	}
+	if (move==false && east==false)
+	{
+		position.first -= 2;
+	}
+	if (move==false && south==false)
+	{
+		position.second += 1;
+	}
+	if (move==false && north==false)
+	{
+		position.second -= 1;
+	}*/
+
+	if (position.first >= target->position.first - offset * 2 &&
+		position.first <= target->position.first + offset * 2 &&
+		position.second >= target->position.second - offset * 4 &&
+		position.second <= target->position.second + offset * 4
+		)
+	{
+		state = SHOOTING;
+
+	}
+	/*else
+	{
+		state = SEARCH;
+		info.closest = nullptr;
+	}*/
+
+	if (north == false || south == false && east == false || west == false)
+	{
+		state = SEARCH;
+		info.closest = nullptr;
+	}
+}
+
+void Engineer::SimpleMovement()
+{
+	//NOTE: pathfind is wakable is giving prolem, returning the info moved one to the left
+
+	bool north = true;
+	bool south = true;
+	bool west = true;
+	bool east = true;
+
+	bool fromPlayer = fromPlayer1;
+
+	if (offensive == false)
+	{
+		fromPlayer = !fromPlayer;
+	}
+
+	pair <int, int> aux = position;
+
+	if (fromPlayer)
+	{
+		//north
+		pair <int, int > map_pos_aux = App->map->WorldToMap(aux.first - 2, aux.second + 1);
+		south = App->pathfinding->IsWalkable(map_pos_aux);
+
+		// if can go north, go north
+		if (south)
 		{
-			//north
-			Current_Animation = moving[NORTH];
+			//move front
+			position.first += -2;
+			position.second += 1;
+			facing = SOUTH;
 		}
-		else if (Speed.first == 0 && Speed.second > 0)
+		else
 		{
-			//south
-			Current_Animation = moving[SOUTH];
+			//move rigth
+			position.first += 2;
+			position.second += 1;
+			facing = EAST;
 		}
-		else if (Speed.first < 0 && Speed.second == 0)
+
+	}
+	else if (!fromPlayer)
+	{
+
+		//north
+		pair <int, int > map_pos_aux = App->map->WorldToMap(aux.first + 2, aux.second - 1);
+		north = App->pathfinding->IsWalkable(map_pos_aux);
+
+		// if can go north, go north
+		if (north)
 		{
-			//west
-			Current_Animation = moving[WEST];
+			//move front
+			position.first += 2;
+			position.second += -1;
+			facing = NORTH;
 		}
-		else if (Speed.first > 0 && Speed.second == 0)
+		else
 		{
-			//east
-			Current_Animation = moving[EAST];
-		}
-		else if (Speed.first > 0 && Speed.second < 0)
-		{
-			//north east
-			Current_Animation = moving[NORTHEAST];
-		}
-		else if (Speed.first > 0 && Speed.second > 0)
-		{
-			//south east
-			Current_Animation = moving[SOUTHEAST];
-		}
-		else if (Speed.first < 0 && Speed.second < 0)
-		{
-			//north west
-			Current_Animation = moving[NORTHWEST];
-		}
-		else if (Speed.first < 0 && Speed.second > 0)
-		{
-			//south wst
-			Current_Animation = moving[SOUTHWEST];
+			//move rigth
+			position.first += 2;
+			position.second += 1;
+			facing = EAST;
 		}
 	}
-	else if (state == SHOOTING)
+
+
+}
+
+void Engineer::ChangeAnimation(TroopDir facing, bool pathfind) {
+	Current_Animation = idle;
+	if (pathfind)
 	{
-
-		if (fromPlayer1)
+		if (state == MOVING)
 		{
-			Current_Animation = shooting[SOUTH];
+			//isShooting = false;
+			if (Speed.first == 0 && Speed.second < 0)
+			{
+				//north
+				Current_Animation = moving[NORTH];
+			}
+			else if (Speed.first == 0 && Speed.second > 0)
+			{
+				//south
+				Current_Animation = moving[SOUTH];
+			}
+			else if (Speed.first < 0 && Speed.second == 0)
+			{
+				//west
+				Current_Animation = moving[WEST];
+			}
+			else if (Speed.first > 0 && Speed.second == 0)
+			{
+				//east
+				Current_Animation = moving[EAST];
+			}
+			else if (Speed.first > 0 && Speed.second < 0)
+			{
+				//north east
+				Current_Animation = moving[NORTHEAST];
+			}
+			else if (Speed.first > 0 && Speed.second > 0)
+			{
+				//south east
+				Current_Animation = moving[SOUTHEAST];
+			}
+			else if (Speed.first < 0 && Speed.second < 0)
+			{
+				//north west
+				Current_Animation = moving[NORTHWEST];
+			}
+			else if (Speed.first < 0 && Speed.second > 0)
+			{
+				//south wst
+				Current_Animation = moving[SOUTHWEST];
+			}
 		}
-		else
+		else if (state == SHOOTING)
 		{
-			Current_Animation = shooting[NORTH];
-		}
 
-		if (info.closest->position == position)
-		{
 			if (fromPlayer1)
 			{
 				Current_Animation = shooting[SOUTH];
@@ -291,60 +613,133 @@ void Engineer::ChangeAnimation() {
 			{
 				Current_Animation = shooting[NORTH];
 			}
-		}
-		else if (info.closest->position.second <= position.second && info.closest->position.first >= position.first)
-		{
-			//noth
-			Current_Animation = shooting[NORTH];
-			if (info.closest->position.second == position.second)
+
+			if (info.closest->position == position)
 			{
-				//northwest
-				Current_Animation = shooting[NORTHWEST];
+				if (fromPlayer1)
+				{
+					Current_Animation = shooting[SOUTH];
+				}
+				else
+				{
+					Current_Animation = shooting[NORTH];
+				}
 			}
-			//else if (info.closest->position.second > position.second)
-			//{
-			//	//north
-			//	Current_Animation = shooting[NORTH];
-			//}
-			else if (info.closest->position.first == position.first)
+			else if (info.closest->position.second <= position.second && info.closest->position.first >= position.first)
 			{
-				//northeast
-				Current_Animation = shooting[NORTHEAST];
+				//noth
+				Current_Animation = shooting[NORTH];
+				if (info.closest->position.second == position.second)
+				{
+					//northwest
+					Current_Animation = shooting[NORTHWEST];
+				}
+				//else if (info.closest->position.second > position.second)
+				//{
+				//	//north
+				//	Current_Animation = shooting[NORTH];
+				//}
+				else if (info.closest->position.first == position.first)
+				{
+					//northeast
+					Current_Animation = shooting[NORTHEAST];
+				}
 			}
-		}
-		else if (info.closest->position.first >= position.first && info.closest->position.second >= position.second)
-		{
-			//south
-			Current_Animation = shooting[SOUTH];
-			if (info.closest->position.second == position.second)
+			else if (info.closest->position.first >= position.first && info.closest->position.second >= position.second)
 			{
-				//southwest
-				Current_Animation = shooting[SOUTHWEST];
+				//south
+				Current_Animation = shooting[SOUTH];
+				if (info.closest->position.second == position.second)
+				{
+					//southwest
+					Current_Animation = shooting[SOUTHWEST];
+				}
+				//else if (info.closest->position.second > position.second)
+				//{
+				//	//north
+				//	Current_Animation = shooting[NORTH];
+				//}
+				else if (info.closest->position.first == position.first)
+				{
+					//southeast
+					Current_Animation = shooting[SOUTHEAST];
+				}
 			}
-			//else if (info.closest->position.second > position.second)
-			//{
-			//	//north
-			//	Current_Animation = shooting[NORTH];
-			//}
-			else if (info.closest->position.first == position.first)
+			else if (info.closest->position.second > position.second && info.closest->position.first > position.first)
 			{
-				//southeast
-				Current_Animation = shooting[SOUTHEAST];
+				//east
+				Current_Animation = shooting[EAST];
 			}
-		}
-		else if (info.closest->position.second > position.second && info.closest->position.first > position.first)
-		{
-			//east
-			Current_Animation = shooting[EAST];
-		}
-		else if (info.closest->position.second < position.second && info.closest->position.first < position.first)
-		{
-			//west
-			Current_Animation = shooting[WEST];
+			else if (info.closest->position.second < position.second && info.closest->position.first < position.first)
+			{
+				//west
+				Current_Animation = shooting[WEST];
+
+			}
+			else
+			{
+				if (fromPlayer1)
+				{
+					Current_Animation = shooting[SOUTH];
+				}
+				else
+				{
+					Current_Animation = shooting[NORTH];
+				}
+			}
 
 		}
-		else
+
+	}
+	else
+	{
+		if (state == MOVING)
 		{
+			//isShooting = false;
+			if (facing == NORTH)
+			{
+				//north
+				Current_Animation = moving[NORTHEAST];
+			}
+			else if (facing == SOUTH)
+			{
+				//south
+				Current_Animation = moving[SOUTHWEST];
+			}
+			else if (facing == WEST)
+			{
+				//west
+				Current_Animation = moving[NORTHWEST];
+			}
+			else if (facing == EAST)
+			{
+				//east
+				Current_Animation = moving[SOUTHEAST];
+			}
+			//else if (Speed.first > 0 && Speed.second < 0)
+			//{
+			//	//north east
+			//	Current_Animation = moving[NORTHEAST];
+			//}
+			//else if (Speed.first > 0 && Speed.second > 0)
+			//{
+			//	//south east
+			//	Current_Animation = moving[SOUTHEAST];
+			//}
+			//else if (Speed.first < 0 && Speed.second < 0)
+			//{
+			//	//north west
+			//	Current_Animation = moving[NORTHWEST];
+			//}
+			//else if (Speed.first < 0 && Speed.second > 0)
+			//{
+			//	//south wst
+			//	Current_Animation = moving[SOUTHWEST];
+			//}
+		}
+		else if (state == SHOOTING)
+		{
+
 			if (fromPlayer1)
 			{
 				Current_Animation = shooting[SOUTH];
@@ -353,8 +748,82 @@ void Engineer::ChangeAnimation() {
 			{
 				Current_Animation = shooting[NORTH];
 			}
-		}
 
+			if (info.closest->position == position)
+			{
+				if (fromPlayer1)
+				{
+					Current_Animation = shooting[SOUTH];
+				}
+				else
+				{
+					Current_Animation = shooting[NORTH];
+				}
+			}
+			else if (info.closest->position.second <= position.second && info.closest->position.first >= position.first)
+			{
+				//noth
+				Current_Animation = shooting[NORTH];
+				if (info.closest->position.second == position.second)
+				{
+					//northwest
+					Current_Animation = shooting[NORTHWEST];
+				}
+				//else if (info.closest->position.second > position.second)
+				//{
+				//	//north
+				//	Current_Animation = shooting[NORTH];
+				//}
+				else if (info.closest->position.first == position.first)
+				{
+					//northeast
+					Current_Animation = shooting[NORTHEAST];
+				}
+			}
+			else if (info.closest->position.first >= position.first && info.closest->position.second >= position.second)
+			{
+				//south
+				Current_Animation = shooting[SOUTH];
+				if (info.closest->position.second == position.second)
+				{
+					//southwest
+					Current_Animation = shooting[SOUTHWEST];
+				}
+				//else if (info.closest->position.second > position.second)
+				//{
+				//	//north
+				//	Current_Animation = shooting[NORTH];
+				//}
+				else if (info.closest->position.first == position.first)
+				{
+					//southeast
+					Current_Animation = shooting[SOUTHEAST];
+				}
+			}
+			else if (info.closest->position.second > position.second && info.closest->position.first > position.first)
+			{
+				//east
+				Current_Animation = shooting[EAST];
+			}
+			else if (info.closest->position.second < position.second && info.closest->position.first < position.first)
+			{
+				//west
+				Current_Animation = shooting[WEST];
+
+			}
+			else
+			{
+				if (fromPlayer1)
+				{
+					Current_Animation = shooting[SOUTH];
+				}
+				else
+				{
+					Current_Animation = shooting[NORTH];
+				}
+			}
+
+		}
 	}
 
 }
@@ -362,7 +831,7 @@ void Engineer::ChangeAnimation() {
 
 void Engineer::LoadAnimations(bool isPlayer1, string path)
 {
-	BROFILER_CATEGORY("engineer Load Animations", Profiler::Color::Blue);
+	BROFILER_CATEGORY("Engineer Load Animations", Profiler::Color::Blue);
 	moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
@@ -404,36 +873,360 @@ void Engineer::LoadAnimations(bool isPlayer1, string path)
 	Current_Animation = moving[NORTH];
 }
 
-Building* Engineer::FindBuilding(pair <int, int> pos, bool fromplayer1, int attackrange)
+Entity* Engineer::FindEntityInAttackRange(pair <int, int> pos, bool fromplayer1, int attackrange, entityType desiredtype, int zone)
 {
+	// zone 0 is no zone
+	// zone 1 ally zone
+	// zone 2 enemy zone
+	// zone 3 war zone
+
+
 	Player* enemy = (!fromplayer1) ? App->player1 : App->player2;
 
-	Building* found = *enemy->buildings.begin();
+	Entity* found = *enemy->entities.begin();
 	int distance = 0;
-	pair<int, int> map_pos = App->map->WorldToMap(found->position.first, found->position.second);
-	Is_inRange(pos, distance, map_pos, attackrange);
-	int min_dist = distance;
+	pair<int, int> map_pos;
+	int min_dist;
+	//bool once = false;
 
-	for (list<Building*>::iterator tmp = enemy->buildings.begin(); tmp != enemy->buildings.end(); tmp++) // traverse entity list (unordered)
+	if (found != nullptr)
 	{
-		map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+		//take the first of de desired group
 
-		if (Is_inRange(pos, distance, map_pos, attackrange))
+		map_pos = App->map->WorldToMap(found->position.first, found->position.second);
+		Is_inRange(pos, distance, map_pos, attackrange);
+		min_dist = distance;
+
+
+
+		for (list<Entity*>::iterator tmp = enemy->entities.begin(); tmp != enemy->entities.end(); tmp++) // traverse entity list (unordered)
 		{
-
-			if (min_dist >= distance)
+			if ((*tmp)->type <= desiredtype)
 			{
-				found = (*tmp);
-				min_dist = distance;
+				map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+				if (zone == 0)
+				{
+					
+					if (Is_inRange(pos, distance, map_pos, attackrange))
+					{
+
+						if (min_dist >= distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
+					}
+
+				}
+				if (zone == 1)
+				{
+					if (Is_inRange(pos, distance, map_pos, attackrange) && IsInAllyZone(map_pos))
+					{
+
+						if (min_dist >= distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
+					}
+
+				}
+				if (zone == 2)
+				{
+					if (Is_inRange(pos, distance, map_pos, attackrange) && IsInEnemyZone(map_pos))
+					{
+
+						if (min_dist >= distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
+					}
+
+				}
+				if (zone == 3)
+				{
+					if (Is_inRange(pos, distance, map_pos, attackrange) && IsInWarZone(map_pos))
+					{
+
+						if (min_dist >= distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
+					}
+
+				}
+
+			}
+
+		}
+
+		if (min_dist <= attackrange)
+		{
+			return found;
+		}
+
+	}
+
+	return nullptr;
+
+}
+
+Entity* Engineer::FindNearestEntity(pair <int, int> pos, bool fromplayer1, entityType desiredtype, int zones)
+{
+
+	// zone 0 is no zone
+	// zone 1 ally zone
+	// zone 2 enemy zone
+	// zone 3 war zone
+
+	Player* enemy = (!fromplayer1) ? App->player1 : App->player2;
+
+	Entity* found = *enemy->entities.begin();
+	int distance = 0;
+	pair<int, int> map_pos;
+	int min_dist;
+	bool once = false;
+
+	if (found != nullptr)
+	{
+		//take the first of de desired group
+		map_pos = App->map->WorldToMap(found->position.first, found->position.second);
+		Is_inRange(pos, distance, map_pos, 0);
+		min_dist = distance;
+
+		for (list<Entity*>::iterator tmp = enemy->entities.begin(); tmp != enemy->entities.end(); tmp++) // traverse entity list (unordered)
+		{
+			if ((*tmp)->type <= desiredtype)
+			{
+				if (zones == 0)
+				{
+					map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+
+					Is_inRange(pos, distance, map_pos, 0);
+
+
+					if (min_dist > distance)
+					{
+						found = (*tmp);
+						min_dist = distance;
+					}
+
+				}
+				else if (zones == 1)
+				{
+					map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+					Is_inRange(pos, distance, map_pos, 0);
+
+					if (IsInAllyZone(map_pos))
+					{
+						if (once == false)
+						{
+							found = (*tmp);
+							once = true;
+						}
+
+						if (min_dist > distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
+
+					}
+				}
+				else if (zones == 2)
+				{
+					map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+					Is_inRange(pos, distance, map_pos, 0);
+
+					if (IsInEnemyZone(map_pos))
+					{
+						if (once == false)
+						{
+							found = (*tmp);
+							once = true;
+						}
+
+						if (min_dist > distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
+
+					}
+
+				}
+				else if (zones == 3)
+				{
+					map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+					Is_inRange(pos, distance, map_pos, 0);
+
+					if (IsInWarZone(map_pos))
+					{
+						if (once == false)
+						{
+							found = (*tmp);
+							once = true;
+						}
+
+						if (min_dist > distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
+
+					}
+
+				}
 			}
 		}
 
 	}
-	if (min_dist <= attackrange)
+
+	return found;
+
+}
+
+
+bool  Engineer::IsInAllyZone(pair <int, int > map_pos)
+{
+	//must be in map coordinates
+	return (map_pos.second > App->map->allyzone.up_limit.second && map_pos.second < App->map->allyzone.down_limit.second);
+}
+
+bool  Engineer::IsInEnemyZone(pair <int, int > map_pos)
+{
+	//must be in map coordinates
+	return (map_pos.second > App->map->sovietzone.up_limit.second && map_pos.second < App->map->sovietzone.down_limit.second);
+}
+
+bool  Engineer::IsInWarZone(pair <int, int > map_pos)
+{
+	//must be in map coordinates
+	return (map_pos.first > App->map->warzone.up_limit.first && map_pos.first < App->map->warzone.down_limit.first);
+}
+
+Entity* Engineer::FindNearestSoldierforDefense(pair <int, int> pos, bool fromplayer1, entityType desiredtype, int zones)
+{
+
+	// zone 0 is no zone
+	// zone 1 ally zone
+	// zone 2 enemy zone
+	// zone 3 war zone
+
+	Player* enemy = (!fromplayer1) ? App->player1 : App->player2;
+
+	Entity* found = *enemy->entities.begin();
+	int distance = 0;
+	pair<int, int> map_pos;
+	int min_dist;
+	bool once = false;
+
+	if (found != nullptr)
 	{
-		return found;
+		//take the first of de desired group
+		map_pos = App->map->WorldToMap(found->position.first, found->position.second);
+		Is_inRange(pos, distance, map_pos, 0);
+		min_dist = distance;
+
+		for (list<Entity*>::iterator tmp = enemy->entities.begin(); tmp != enemy->entities.end(); tmp++) // traverse entity list (unordered)
+		{
+			if ((*tmp)->type >= desiredtype)
+			{
+				if (zones == 0)
+				{
+					map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+
+					Is_inRange(pos, distance, map_pos, 0);
+
+
+					if (min_dist > distance)
+					{
+						found = (*tmp);
+						min_dist = distance;
+					}
+
+				}
+				else if (zones == 1)
+				{
+					map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+					Is_inRange(pos, distance, map_pos, 0);
+
+					if (IsInAllyZone(map_pos))
+					{
+						if (once == false)
+						{
+							found = (*tmp);
+							once = true;
+						}
+
+						if (min_dist > distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
+
+					}
+				}
+				else if (zones == 2)
+				{
+					map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+					Is_inRange(pos, distance, map_pos, 0);
+
+					if (IsInEnemyZone(map_pos))
+					{
+						if (once == false)
+						{
+							found = (*tmp);
+							once = true;
+						}
+
+						if (min_dist > distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
+
+					}
+
+				}
+				else if (zones == 3)
+				{
+					map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
+
+					Is_inRange(pos, distance, map_pos, 0);
+
+					if (IsInWarZone(map_pos))
+					{
+						if (once == false)
+						{
+							found = (*tmp);
+							once = true;
+						}
+
+						if (min_dist > distance)
+						{
+							found = (*tmp);
+							min_dist = distance;
+						}
+
+					}
+
+				}
+			}
+		}
+
 	}
 
-	return nullptr;
+	return found;
 
 }

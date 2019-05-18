@@ -107,6 +107,7 @@ bool EntityManager::PreUpdate()
 
 	bool ret = true;
 
+	
 	if (App->scene->pause == false)
 	{
 		// Player 1 Buildings
@@ -446,6 +447,7 @@ bool EntityManager::Draw(float dt) //sprite ordering
 		{
 			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first - ((*tmp)->collider.dimensions.first * 20) + 40, (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second * 20) - 10, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 
+
 			//--- Draw Life Bar
 			if ((*tmp)->health < (*tmp)->health_lv[(*tmp)->level] && (*tmp)->health > 0)
 			{
@@ -462,13 +464,33 @@ bool EntityManager::Draw(float dt) //sprite ordering
 				App->render->DrawQuad(rect, 0, 255, 0, 255); //life (green)
 			}
 		}
+		else if ((*tmp)->type >= Entity::entityType::SOLDIER)
+		{
+		App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first - (*tmp)->Current_Animation->frames->w*0.5, (*tmp)->position.second - (*tmp)->Current_Animation->frames->h*0.5, &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
+
+		//--- Draw Life Bar
+		if ((*tmp)->health < (*tmp)->health_lv[(*tmp)->level] && (*tmp)->health > 0)
+		{
+			SDL_Rect rect, rect_bg;
+
+			rect_bg.w = 30;
+			rect.w = rect_bg.w * (*tmp)->health / (*tmp)->health_lv[(*tmp)->level];
+
+			rect_bg.h = rect.h = 5;
+			rect_bg.x = rect.x = (*tmp)->position.first - ((*tmp)->collider.dimensions.first * 20) + ((*tmp)->Current_Animation->GetCurrentFrame(dt).w / 2) - (rect_bg.w / 1.5);
+			rect_bg.y = rect.y = (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second * 20) - 10;
+
+			App->render->DrawQuad(rect_bg, 255, 0, 0, 255); //background (red)
+			App->render->DrawQuad(rect, 0, 255, 0, 255); //life (green)
+		}
+}
 		else
 		{
 			// Soldier testing with per frame deploying
 			if ((*tmp)->type == Entity::entityType::SOLDIER && (*tmp)->info.current_group == nullptr) {
 				//App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first/*-((*tmp)->collider.dimensions.first*29)*/, (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second * 20), &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 
-			}
+			}//change print for soldier cases
 			else 
  				App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first/*-((*tmp)->collider.dimensions.first*29)*/, (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second*20), &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 		

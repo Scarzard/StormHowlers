@@ -94,6 +94,7 @@ public:
 	void Update_troop_image(int type);
 	void UpdateGeneralUI(Entity* building);
 	void Blit_Info();
+	void ChangeTroopsState();
 
 	// -----------------------------------------------------------------------------
 
@@ -116,6 +117,7 @@ public:
 	bool isCasting = false;
 	bool isPaused = false;
 	bool inmune = false;
+	bool offensive = true;
 
 	int timer_ref_sec = 0;
 	int timer_ref_min = 0;
@@ -229,10 +231,30 @@ public:
 
 	UI_Element* Deploy_UI = nullptr;
 	UI_Element* Soldier_icon = nullptr;
+	UI_Element* Soldier_Off = nullptr;
+	UI_Element* Soldier_Deff = nullptr;
+
 	UI_Element* Tankman_icon = nullptr;
+	UI_Element* Tankman_Off = nullptr;
+	UI_Element* Tankman_Deff = nullptr;
+
 	UI_Element* Infiltrator_icon = nullptr;
+	UI_Element* Infiltrator_Off = nullptr;
+	UI_Element* Infiltrator_Deff = nullptr;
+
 	UI_Element* Engineer_icon = nullptr;
+	UI_Element* Engineer_Off = nullptr;
+	UI_Element* Engineer_Deff = nullptr;
+
 	UI_Element* War_hound_icon = nullptr;
+	UI_Element* WarHound_Off = nullptr;
+	UI_Element* WarHound_Deff = nullptr;
+
+	bool Soldier_Offensive = true;
+	bool Tankman_Offensive = true;
+	bool Engineer_Offensive = true;
+	bool Infiltrator_Offensive = true;
+	bool WarHound_Offensive = true;
 	
 
 	UI_Element* Troop_cost_text = nullptr;

@@ -22,6 +22,7 @@ enum TroopState {
 	MOVING,
 	SHOOTING,
 	REST,
+	SEARCH,
 
 	MAX_STATE
 };

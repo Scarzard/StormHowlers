@@ -97,7 +97,7 @@ Group* MovementManager::CreateGroup(Player* player)
 			(*entity)->info.current_group = group;
 		}
 		(*entity)->isSelected = false;
-		(*entity)->state = TROOP_IDLE;
+		//(*entity)->state = TROOP_IDLE;
 		entity++;
 	}
 
@@ -242,10 +242,10 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 
 				else
 				{
-					(*unit)->position.first += distanceToNextTile.first;
-					(*unit)->position.second += distanceToNextTile.second;
+					(*unit)->position.first += ceil(distanceToNextTile.first);
+					(*unit)->position.second += ceil(distanceToNextTile.second);
 
-					(*unit)->Speed.first = distanceToNextTile.first;
+  					(*unit)->Speed.first = distanceToNextTile.first;
 					(*unit)->Speed.second = distanceToNextTile.second;
 				}
 			
@@ -285,7 +285,7 @@ bool MovementManager::Move(Group * group, float dt, pair<int,int> destination)
 
 				// --- The unit reaches the end of the path, thus stopping and returning to NoState ---
 				(*unit)->info.UnitMovementState = MovementState::MovementState_NoState;
-				(*unit)->state = TROOP_IDLE;
+				(*unit)->state = MOVING;
 				//(*unit)->isMoving = false;
 
 				break;
