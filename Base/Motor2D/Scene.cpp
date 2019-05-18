@@ -874,7 +874,7 @@ bool Scene::Update(float dt)
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT) //View colliders
 		{
-			worldminutes = 10;
+			App->entitymanager->AddEntity(true, Entity::entityType::WAR_HOUND, { pos.first,pos.second }, App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
 		{
