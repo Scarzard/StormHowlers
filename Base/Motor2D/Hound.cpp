@@ -37,11 +37,11 @@ bool Hound::Update(float dt)
 	// change bol from offensive and defensive
 	if (fromPlayer1)
 	{
-		offensive = App->player1->offensive;
+		offensive = App->player1->WarHound_Offensive;
 	}
 	else
 	{
-		offensive = App->player2->offensive;
+		offensive = App->player2->WarHound_Offensive;
 	}
 
 	if (alive) {

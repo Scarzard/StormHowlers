@@ -33,11 +33,11 @@ bool Soldier::Update(float dt)
 	// change bool from offensive and defensive
 	if (fromPlayer1)
 	{
-		offensive = App->player1->offensive;
+		offensive = App->player1->Soldier_Offensive;
 	}
 	else
 	{
-		offensive = App->player2->offensive;
+		offensive = App->player2->Soldier_Offensive;
 	}
 
 	if (alive) {

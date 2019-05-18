@@ -33,11 +33,11 @@ bool Infiltrator::Update(float dt)
 	// change bool from offensive and defensive
 	if (fromPlayer1)
 	{
-		offensive = App->player1->offensive;
+		offensive = App->player1->Infiltrator_Offensive;
 	}
 	else
 	{
-		offensive = App->player2->offensive;
+		offensive = App->player2->Infiltrator_Offensive;
 	}
 
 	if (alive) {
