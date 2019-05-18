@@ -88,6 +88,9 @@
 
   <map>
     <folder>maps/</folder>
+    <allyzone up_x="20" up_y="10" down_x="59" down_y="29" />
+    <sovietzone up_x="20" up_y="56" down_x="59" down_y="75" />
+    <warzone up_x="20" up_y="30" down_x="59" down_y="55" />
   </map>
 
   <entitymanager>

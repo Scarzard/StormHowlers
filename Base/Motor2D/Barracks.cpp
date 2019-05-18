@@ -17,6 +17,7 @@ Barracks::Barracks(bool isPlayer1, pair<int, int> pos, Collider collider) : Buil
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
 
+	myPlayer = (isPlayer1)?App->player1:App->player2;
 	
 }
 
@@ -89,20 +90,11 @@ bool Barracks::Update(float dt)
 				//play fx (upgrade);
 			}
 
-			if (TroopsCreated.empty() == false)
+			if (TroopsCreated.empty() == false && is_deploying == false)
 			{
-				if (timer.ReadSec() >= 1)
-				{
-					pair<int, int> pos;
-					pos.first = position.first - 100;
-					pos.second = position.second + 60;
+				is_deploying = true;
+				deploy_state = DeployState::START;
 
-					list<Entity::entityType>::iterator first_troop = TroopsCreated.begin();
-					App->entitymanager->AddEntity(true, (*first_troop), pos, collider);
-					TroopsCreated.pop_front();
-					timer.Start();
-					
-				}
 			}
 		}
 		else //destroyed
@@ -168,26 +160,17 @@ bool Barracks::Update(float dt)
 				//play fx (upgrade);
 			}
 
+
 			if (building->Finished() && built == false)
 			{
 				App->audio->PlayFx(SOVIET_BARRACKS_B);
 				built = true;
 			}
 
-			if (TroopsCreated.empty() == false)
+			if (TroopsCreated.empty() == false && is_deploying == false)
 			{
-				if (timer.ReadSec() >= 1)
-				{
-					pair<int, int> pos;
-					pos.first = position.first - 100;
-					pos.second = position.second + 60;
-
-					list<Entity::entityType>::iterator first_troop = TroopsCreated.begin();
-					App->entitymanager->AddEntity(false, (*first_troop), pos, collider);
-					TroopsCreated.pop_front();
-					timer.Start();
-
-				}
+				is_deploying = true;
+				deploy_state = DeployState::START;
 			}
 		}
 		else //destroyed
@@ -216,9 +199,81 @@ bool Barracks::Update(float dt)
 	if (Current_Animation->Finished() == true)
 		Current_Animation = level1;
 
+	if (is_deploying) {
+
+		is_deploying = DeployTroops();
+	}
+
 	Building::Update(dt);
 
 	return true;
+}
+
+bool Barracks::DeployTroops(int amount_per_frame)
+{
+	bool ret = true;
+	if (amount_per_frame <= 0) {
+		amount_per_frame = MAX_DEPLOY_SIZE;
+	}
+
+	switch (deploy_state)
+	{
+		case DeployState::START:
+
+			//deploy_counter = 0;
+			//GROUP MANAGEMENT
+			tmp_entity = myPlayer->troops.begin();
+			while (tmp_entity != myPlayer->troops.end())
+			{
+				(*tmp_entity)->isSelected = false;
+				tmp_entity++;
+			}
+			
+			deploy_pos = position;
+			deploy_state = DeployState::DEPLOYING;
+
+			break;
+
+		case DeployState::DEPLOYING:
+			if (TroopsCreated.empty()) {
+				deploy_state = DeployState::END;
+			}
+			else {
+				//collider.dimensions = { 1,1 };
+				
+				for (int i = 0; i < amount_per_frame && !TroopsCreated.empty(); i++) {
+
+					Troop* e;
+					deploy_pos.first += 20;
+					deploy_pos.second += 10;
+					e = (Troop*)App->entitymanager->AddEntity(fromPlayer1, *TroopsCreated.begin(), deploy_pos, collider);
+					TroopsCreated.pop_front();
+					e->state = TROOP_IDLE;
+					e->isSelected = true;
+					//deploying_counter++;
+				}
+				deploy_pos.first = position.first;
+				//deploy_pos.first -= 10;
+				//deploy_pos.second += 20;
+			}
+			break;
+		case DeployState::END:
+			deploy_state = DeployState::NONE;
+			ret = false;
+			//deploy_counter = 0;
+			//isDeploying = false;
+			myPlayer->groups.push_back(App->move_manager->CreateGroup(myPlayer));
+			myPlayer->group++;
+			break;
+
+		case DeployState::NONE:
+			break;
+		default:
+			LOG("REACHED WRONG DEPLOY STATE");
+			break;
+	}
+	return ret;
+	
 }
 
 void Barracks::LoadAnimations(bool isPlayer1, string path) {

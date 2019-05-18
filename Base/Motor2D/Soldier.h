@@ -1,9 +1,9 @@
 #ifndef __Soldier_H__
 #define __Soldier_H__
 #include "Troop.h"
-#include "EntityManager.h"
 
-class Soldier :	public Troop
+
+class Soldier : public Troop
 {
 public:
 	Soldier();
@@ -13,19 +13,23 @@ public:
 	bool Update(float dt);
 	void SetDestination();
 	bool Is_inRange(pair<int, int> pos, int & distance, pair<int, int> position, int range);
-	void PrintState();
-	void ForceAnimations();
 	void ActOnDestroyed();
 	void CleanUp();
+	void MovementPathfind(Entity* target, pair <int, int> map_pos);
+	void SimpleMovement();
+	void ChangeAnimation(TroopDir facing, bool fromplayer1);
 
-	void ChangeAnimation();
+	Entity* FindEntityInAttackRange(pair<int, int> pos, bool fromplayer1, int attackrange, entityType type, int zone = 0);
+	Entity* FindNearestEntity(pair<int, int> pos, bool fromplayer1, entityType type, int zone = 0);
 
-
+	bool IsInAllyZone(pair <int, int > map_pos);
+	bool IsInEnemyZone(pair <int, int > map_pos);
+	bool IsInWarZone(pair <int, int > map_pos);
 
 	void LoadAnimations(bool isPlayer1, string path);
 
-	bool Is_inRange(pair<int, int> pos, int & distance);
-	bool defensive = true;
+	//bool Is_inRange(pair<int, int> pos, int & distance);
+	//bool defensive = false;
 	bool offensive = true;
 	pair<int, int> destination;
 	Entity* closest = nullptr;
