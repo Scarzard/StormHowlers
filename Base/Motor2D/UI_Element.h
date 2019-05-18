@@ -54,9 +54,11 @@ public:
 
 		//MainMenu Buttons
 		NEW_GAME,
-		CONTINUE,
 		SETTINGS,
-		WEBPAGE,
+		CREDITS,
+		LICENSE,
+		AUTHORS,
+		WEBSITE,
 		EXIT,
 
 		//Pause 
@@ -67,8 +69,6 @@ public:
 		FX_VOLUME,
 		SURRENDER,
 		RESTART
-
-		
 	};
 
 	enum State

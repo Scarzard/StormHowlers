@@ -704,33 +704,33 @@ bool Player::Update(float dt)
 		}
 
 		// Increase or decrease volume
-		if (gamepad.Controller[RIGHT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
+		if (gamepad.Controller[RIGHT] == KEY_DOWN && ( currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS || currentUI == CURRENT_UI::CURR_MM_SETTINGS))
 		{
 			App->audio->PlayFx(SLIDER_UP);
-			if ((*focus) == Music_Settings && App->audio->musicVolume < 100)
+			if (((*focus) == Music_Settings || (*focus) == App->main_menu->Music_Settings) && App->audio->musicVolume < 100)
 			{
 				App->audio->musicVolume += 10;
 				App->audio->SetMusicVolume();
 
 
 			}
-			else if ((*focus) == FX_Settings && App->audio->sfxVolume < 100)
+			else if (((*focus) == FX_Settings || (*focus) == App->main_menu->FX_Settings) && App->audio->sfxVolume < 100)
 			{
 				App->audio->sfxVolume += 10;
 
 				App->audio->SetSfxVolume();
 			}
 		}
-		else if (gamepad.Controller[LEFT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS)
+		else if (gamepad.Controller[LEFT] == KEY_DOWN && (currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS || currentUI == CURRENT_UI::CURR_MM_SETTINGS))
 		{
 			App->audio->PlayFx(SLIDER_DOWN);
-			if ((*focus) == Music_Settings && App->audio->musicVolume > 0)
+			if (((*focus) == Music_Settings || (*focus) == App->main_menu->Music_Settings) && App->audio->musicVolume > 0)
 			{
 				App->audio->musicVolume -= 10;
 
 				App->audio->SetMusicVolume();
 			}
-			else if ((*focus) == FX_Settings && App->audio->sfxVolume > 0)
+			else if (((*focus) == FX_Settings || (*focus) == App->main_menu->FX_Settings) && App->audio->sfxVolume > 0)
 			{
 				App->audio->sfxVolume -= 10;
 
@@ -843,7 +843,7 @@ bool Player::Update(float dt)
 			else if (type == Entity::entityType::BARRACKS)
 			{
 				//157 x 136
-				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first-75, collider.tiles[0].second-65, &(preview_rects->at(type)));
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first-30, collider.tiles[0].second-110, &(preview_rects->at(type)));
 			}
 			else if (type == Entity::entityType::MINES)
 			{
@@ -853,7 +853,7 @@ bool Player::Update(float dt)
 			else if (type == Entity::entityType::DEFENSE_AOE)
 			{
 				//92 x 92
-				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first-10, collider.tiles[0].second-50, &(preview_rects->at(type)));
+				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second-70, &(preview_rects->at(type)));
 			}
 			else if (type == Entity::entityType::DEFENSE_TARGET)
 			{
@@ -1128,6 +1128,21 @@ void Player::UpdateFocus(uint data)
 		last_element = App->main_menu->menu_background->children.end();
 		last_element--;
 		break;
+
+	case::Player::CURRENT_UI::CURR_MM_SETTINGS:
+		focus = App->main_menu->MM_Settings_UI->children.begin();
+		last_element = App->main_menu->MM_Settings_UI->children.end();
+		last_element--;
+		break;
+
+	case::Player::CURRENT_UI::CURR_MM_CREDITS:
+		focus = App->main_menu->Credits_UI->children.begin();
+		last_element = App->main_menu->Credits_UI->children.end();
+		last_element--;
+
+		focus = last_element;
+		break;
+
 	case::Player::CURRENT_UI::CURR_MAIN:
 		focus = Main_UI->children.begin();
 		last_element = Main_UI->children.end();
@@ -1184,6 +1199,18 @@ void Player::GotoPrevWindows(uint data)
 {
 	switch (data)
 	{
+	case Player::CURRENT_UI::CURR_MM_SETTINGS:
+		currentUI = CURRENT_UI::CURR_MAIN_MENU;
+		UpdateVisibility();
+		break;
+
+	case Player::CURRENT_UI::CURR_MM_CREDITS:
+		currentUI = CURRENT_UI::CURR_MAIN_MENU;
+		App->main_menu->license_texture->visible = false;
+		App->main_menu->authors_texture->visible = false;
+		UpdateVisibility();
+		break;
+
 	case Player::CURRENT_UI::CURR_MAIN:
 		
 		break;
@@ -1244,6 +1271,13 @@ UI_Element* Player::GetUI_Element(uint data)
 	{
 	case::Player::CURRENT_UI::CURR_MAIN_MENU:
 		return App->main_menu->menu_background;
+
+	case::Player::CURRENT_UI::CURR_MM_SETTINGS:
+		return App->main_menu->MM_Settings_UI;
+
+	case::Player::CURRENT_UI::CURR_MM_CREDITS:
+		return App->main_menu->Credits_UI;
+
 	case::Player::CURRENT_UI::CURR_MAIN:
 		return Main_UI;
 
@@ -1465,6 +1499,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		SelectBuilding->visible = false;
 		In_SelectBuilding->visible = false;
 		draw_screen->visible = false;
+
 	case::Player::CURRENT_UI::DRAW: //Dont show the other player win screen
 		Main_UI->visible = false;
 		Build_UI->visible = false;
@@ -1489,6 +1524,23 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		draw_screen->visible = true;
 		break;
 
+	case::Player::CURRENT_UI::CURR_MAIN_MENU:
+		App->main_menu->menu_background->visible = true;
+		App->main_menu->MM_Settings_UI->visible = false;
+		App->main_menu->Credits_UI->visible = false;
+		break;
+
+	case::Player::CURRENT_UI::CURR_MM_SETTINGS:
+		App->main_menu->menu_background->visible = false;
+		App->main_menu->MM_Settings_UI->visible = true;
+		App->main_menu->Credits_UI->visible = false;
+		break;
+
+	case::Player::CURRENT_UI::CURR_MM_CREDITS:
+		App->main_menu->menu_background->visible = false;
+		App->main_menu->MM_Settings_UI->visible = false;
+		App->main_menu->Credits_UI->visible = true;
+		break;
 
 	}
 	App->gui->UpdateChildren();
@@ -1556,8 +1608,8 @@ void Player::DoLogic(UI_Element* data)
 		{
 			isBuilding = true;
 			type = Entity::entityType::BARRACKS;
-			collider.dimensions = { 3,4 };
-			offset = { 40 , 50 };
+			collider.dimensions = { 3,3 };
+			offset = { 0, 0 }; 
 		}
 		break;
 
@@ -1607,7 +1659,7 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_UPGRADE:
-		//(*building_selected)->upgrade = true;
+		(*building_selected)->upgrade = true;
 		break;
 
 	case::UI_Element::Action::ACT_REPAIR:
@@ -1826,7 +1878,7 @@ void Player::UpdateGeneralUI(Entity* building)
 
 	sprintf_s(health_label, "HP: %i", building->health);
 
-	sprintf_s(level_label, "Lvl: %i", building->level);
+	sprintf_s(level_label, "Lvl: %i", building->level + 1);
 
 	sprintf_s(repair_cost_label, " - %i $", building->repair_cost);
 
