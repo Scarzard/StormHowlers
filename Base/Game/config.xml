@@ -146,7 +146,7 @@
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <size width="3" height="3"/>
         <damage lvl1="100" lvl2="150" lvl3="200"/>
-        <attack rate="2" targets="5" range="150"/>
+        <attack rate="2" targets="3" range="150"/>
       </aoe>
       
       <Barracks>
