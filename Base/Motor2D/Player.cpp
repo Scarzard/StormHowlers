@@ -686,7 +686,7 @@ bool Player::Update(float dt)
 		//Travel through buttons with DPAD in pause and mainmenu
 		if (App->main_menu->active || App->scene->pause)
 		{
-			if (gamepad.Controller[UP] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
+			if ((gamepad.Controller[UP] == KEY_DOWN || gamepad.Controller[JOY_UP] == KEY_DOWN) && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
 			{
 				App->audio->PlayFx(CHANGE_FOCUS);
 				(*focus)->state = UI_Element::State::IDLE;
@@ -703,7 +703,7 @@ bool Player::Update(float dt)
 
 			}
 
-			if (gamepad.Controller[DOWN] == KEY_DOWN && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
+			if ((gamepad.Controller[DOWN] == KEY_DOWN || gamepad.Controller[JOY_DOWN] == KEY_DOWN) && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
 			{
 				App->audio->PlayFx(CHANGE_FOCUS);
 				(*focus)->state = UI_Element::State::IDLE;
@@ -720,7 +720,7 @@ bool Player::Update(float dt)
 		}
 
 		// Increase or decrease volume
-		if (gamepad.Controller[RIGHT] == KEY_DOWN && ( currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS || currentUI == CURRENT_UI::CURR_MM_SETTINGS))
+		if ((gamepad.Controller[RIGHT] == KEY_DOWN || gamepad.Controller[JOY_RIGHT] == KEY_DOWN) && ( currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS || currentUI == CURRENT_UI::CURR_MM_SETTINGS))
 		{
 			App->audio->PlayFx(SLIDER_UP);
 			if (((*focus) == Music_Settings || (*focus) == App->main_menu->Music_Settings) && App->audio->musicVolume < 100)
@@ -737,7 +737,7 @@ bool Player::Update(float dt)
 				App->audio->SetSfxVolume();
 			}
 		}
-		else if (gamepad.Controller[LEFT] == KEY_DOWN && (currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS || currentUI == CURRENT_UI::CURR_MM_SETTINGS))
+		else if ((gamepad.Controller[LEFT] == KEY_DOWN || gamepad.Controller[JOY_LEFT] == KEY_DOWN) && (currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS || currentUI == CURRENT_UI::CURR_MM_SETTINGS))
 		{
 			App->audio->PlayFx(SLIDER_DOWN);
 			if (((*focus) == Music_Settings || (*focus) == App->main_menu->Music_Settings) && App->audio->musicVolume > 0)
