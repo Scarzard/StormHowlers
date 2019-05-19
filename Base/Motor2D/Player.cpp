@@ -1130,6 +1130,7 @@ void Player::UpdateWalkabilityMap(char cell_type, Collider collider) //update wa
 
 int Player::CheckCost(Entity::entityType type)
 {
+	
 	if (type == Entity::entityType::BARRACKS)
 		return 3000;
 
@@ -1704,12 +1705,12 @@ void Player::DoLogic(UI_Element* data)
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
 
-		{
+		/*{
 			App->audio->PlayFx(INGAME_CLICK);
 			isBuilding = true;
 			type = Entity::entityType::SOLDIER;
 			collider.dimensions = { 1,1 };
-		}
+		}*/
 		Soldier_Offensive = !Soldier_Offensive;
 
 		if (Soldier_Offensive)
@@ -1725,12 +1726,12 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_TANKMAN:
-		{
+		/*{
 			App->audio->PlayFx(INGAME_CLICK);
 			isBuilding = true;
 			type = Entity::entityType::TANKMAN;
 			collider.dimensions = { 1,1 };
-		}
+		}*/
 		Tankman_Offensive = !Tankman_Offensive;
 		if (Tankman_Offensive)
 		{
@@ -1749,12 +1750,12 @@ void Player::DoLogic(UI_Element* data)
 
 		//
 		//if (WarHoundsCreated > 0)
-		{
+	/*	{
 			App->audio->PlayFx(INGAME_CLICK);
 			isBuilding = true;
 			type = Entity::entityType::INFILTRATOR;
 			collider.dimensions = { 1,1 };
-		}
+		}*/
 
 		Infiltrator_Offensive = !Infiltrator_Offensive;
 		if (Infiltrator_Offensive)
@@ -1787,12 +1788,12 @@ void Player::DoLogic(UI_Element* data)
 			Engineer_Off->rect = { 1220,123,18,17 };
 		}
 	
-		{
+		/*{
 			App->audio->PlayFx(INGAME_CLICK);
 			isBuilding = true;
 			type = Entity::entityType::ENGINEER;
 			collider.dimensions = { 1,1 };
-		}
+		}*/
 
 	//App->audio->PlayFx(WRONG);
 
@@ -1815,13 +1816,13 @@ void Player::DoLogic(UI_Element* data)
 			WarHound_Off->rect = { 1220,123,18,17 };
 		}
 
-		{
+		/*{
 			App->audio->PlayFx(INGAME_CLICK);
 			isBuilding = true;
 			type = Entity::entityType::WAR_HOUND;
 			collider.dimensions = { 1,1 };
 		}
-		
+		*/
 		//App->audio->PlayFx(WRONG);
 
 		break;
