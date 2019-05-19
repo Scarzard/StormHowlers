@@ -144,13 +144,13 @@ public:
 	vector<string>	tracks_path;
 	vector<string>	fx_path;
 
+	string track;
 
 private:
 
 	_Mix_Music*			music = nullptr;
 	list<Mix_Chunk*>	fx;
 
-	string track;
 };
 
 #endif // __Audio_H__

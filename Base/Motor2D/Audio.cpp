@@ -94,7 +94,7 @@ bool Audio::Update(float dt)
 	{
 		song1played = true;
 		fading_out = true;
-		track = App->audio->folder_music + "/MiddleSong.ogg";
+		track = folder_music + "/MiddleSong.ogg";
 		volume_before = Mix_VolumeMusic(-1); 
 	}
 
@@ -102,7 +102,7 @@ bool Audio::Update(float dt)
 	{
 		song2played = true;
 		fading_out = true;
-		track = App->audio->folder_music + "/FinalSong.ogg";
+		track = folder_music + "/FinalSong.ogg";
 		volume_before = Mix_VolumeMusic(-1);
 	}
 
@@ -110,7 +110,7 @@ bool Audio::Update(float dt)
 	{
 		winscreensong = true;
 		fading_out = true;
-		track = App->audio->folder_music + "/WinScreenSong.ogg";
+		track = folder_music + "/WinScreenSong.ogg";
 		volume_before = Mix_VolumeMusic(-1);
 	}
 

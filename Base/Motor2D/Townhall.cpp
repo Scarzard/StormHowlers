@@ -73,6 +73,26 @@ bool Townhall::Update(float dt)
 			App->render->Blit(App->scene->upgrade_lvl, position.first + 200, position.second + 100, &upgrade);
 		}
 
+		if (health <= 3000 && App->audio->song1played == false)
+		{
+			App->audio->song1played = true;
+			App->audio->fading_out = true;
+			App->audio->track = App->audio->folder_music + "/MiddleSong.ogg";
+			App->audio->volume_before = Mix_VolumeMusic(-1);
+		}
+
+		else if (health <= 2000 && App->audio->song2played == false)
+		{
+			App->audio->song2played = true;
+			App->audio->fading_out = true;
+			App->audio->track = App->audio->folder_music + "/FinalSong.ogg";
+			App->audio->volume_before = Mix_VolumeMusic(-1);
+		}
+		if (App->audio->fading_out)
+			App->audio->FadeOut(App->audio->track.c_str());
+		if (App->audio->fading_in)
+			App->audio->FadeIn();
+
 		if (health <= 0) //if destroyed
 		{
 
@@ -119,6 +139,25 @@ bool Townhall::Update(float dt)
 			upgrade.h = 37;
 			App->render->Blit(App->scene->upgrade_lvl, position.first + 50, position.second + 60, &upgrade);
 		}
+		if (health < 2000 && App->audio->song1played == false)
+		{
+			App->audio->song1played = true;
+			App->audio->fading_out = true;
+			App->audio->track = App->audio->folder_music + "/MiddleSong.ogg";
+			App->audio->volume_before = Mix_VolumeMusic(-1);
+		}
+
+		else if (health < 1000 && App->audio->song2played == false)
+		{
+			App->audio->song2played = true;
+			App->audio->fading_out = true;
+			App->audio->track = App->audio->folder_music + "/FinalSong.ogg";
+			App->audio->volume_before = Mix_VolumeMusic(-1);
+		}
+		if (App->audio->fading_out)
+			App->audio->FadeOut(App->audio->track.c_str());
+		if (App->audio->fading_in)
+			App->audio->FadeIn();
 		
 		if (health <= 0) //if destroyed
 		{
