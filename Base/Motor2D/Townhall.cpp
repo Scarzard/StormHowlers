@@ -146,11 +146,11 @@ bool Townhall::Update(float dt)
 
 	if (App->scene->worldminutes == 10 && App->player2->health < App->player1->health)
 	{
-		App->scene->Victorious(App->player1, dt);
+		App->scene->Victorious(App->player2, dt);
 	}
 	else if (App->scene->worldminutes == 10 && App->player2->health > App->player1->health)
 	{
-		App->scene->Victorious(App->player2, dt);
+		App->scene->Victorious(App->player1, dt);
 	}
 	else if (App->scene->worldminutes == 10 && App->player2->health == App->player1->health)
 	{

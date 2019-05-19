@@ -115,6 +115,7 @@ public:
 
 	bool song1played = false;
 	bool song2played = false;
+	bool winscreensong = false;
 	bool fading_in = false;
 	bool fading_out = false;
 	bool reading_time = true;

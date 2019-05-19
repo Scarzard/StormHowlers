@@ -256,8 +256,6 @@
     <settings file="gui/mainmenu_settings_credits.png"/>
     <license file="gui/license_texture.png"/>
     <credits file="gui/credits_texture.png"/>
-    
-    <music vol="40" sfx="100"/>
   </main_menu>
 
 </config>
