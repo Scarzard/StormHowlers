@@ -49,7 +49,7 @@ Soldier, WarHound, Engineer
 ## Game controls
 ### Controller
 #### Main menu/ingame menu
-- Dpad: Cycle through options
+- Dpad/Left Joystick: Cycle through options
 - A: Use current button
 - B: Go back to previous window
 - Dpad right(on a slider): Increase value
