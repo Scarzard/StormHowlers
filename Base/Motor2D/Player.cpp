@@ -54,7 +54,7 @@ bool Player::Start()
 
 	time_iterator = number_of_troops = BuildingCost = BarracksCreated = TroopCost = 0;
 
-	gold = 3500;
+	gold = 0;
 	gold_persecond = 0;
 
 	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = Rocket_abilities = Tank_abilities = 0;
@@ -1135,9 +1135,6 @@ int Player::CheckCost(Entity::entityType type)
 
 	else if (type == Entity::entityType::DEFENSE_AOE)
 		return 2000;
-
-	else if (type == Entity::entityType::DEFENSE_TARGET) // TESLA (esta al reves?)
-		return 3500;
 
 	else if (type == Entity::entityType::MINES)
 		return 2000;
