@@ -2,7 +2,7 @@
 
 ## Objectives
 
-We are an indie game development team formed by 7 students taking the bachelor's degree in Game design and development in the UPC.
+We are an indie game development team formed by 7 students taking the bachelor's degree in Videogame design and development in the UPC.
 The game will be developed for the subject Project II. We will be making a tribute to the well-known RTS game: Command&Conquer: Red Alert 2.
 
 ## Game info
@@ -11,9 +11,40 @@ The game we're developing is a mix between the classic RTS games and the tower d
 It has one very clear objective for both players: "Crush your opposition without showing any mercy!"
 
 Command and Conquer: WarZone, features a streamlined resource system that allows the player to focus on more important tasks such as fighting and defending your precious base.
-We have also implemented an automatic troop AI, this means that once deployed, they will go to their main objective. It can be everything, defensive structures or the Town Hall itself.
+We have also implemented an automatic troop AI, as well as an auto-deploy from the barracks they have been created. 
+This means that once bought, they will automatically be deployed and they will go to their main objective. 
+It can be everything, enemy troops, defensive structures or the Town Hall itself.
+
+The game also features a polished UI so any new players can quickly grasp how to navigate through the UI and allows seasoned players to execute more efficiently.
+The game also communicates with the players to notify them about the game state via voicelines.
 
 The game is intended to be player with controllers for 2 people at a time. 
+
+## How to play
+
+As stated in the game info, each player will have one controller where they can control the UI from his faction.
+The controls of the controllers as well as debugging functions with keyboard/mouse can be found in the next section below.
+
+- Allies(Player1): Blue. Base located in the left side of the screen. UI located on the bottom-right corner
+
+- Soviets(Player2): Red. Base located in the left side of the screen. UI located on the top-left corner
+
+The main objective of the game is **to destroy the opponents' TownHall.**
+
+In order to achieve this, the player must manage resources via gold mines, create troops via barracks and use the defensive buildings(AoE and single-target) 
+to defend all the other buildings. And more importantly, the main base which can't be built once destroyed nor repaired under any circumstance.
+
+Every button or window in the main UI has a decription about what it does and the stats for the troop/building to be build or deployed.
+
+### Buildings and troops implemented
+#### Buildings
+
+- Non-buildable: TownHall, CommandCenter, Tesla
+- Buildable: AoE Tower, Single-target tower, mines, barracks.
+
+#### Troops 
+
+Soldier, WarHound, Engineer
 
 ## Game controls
 ### Controller
@@ -25,12 +56,12 @@ The game is intended to be player with controllers for 2 people at a time.
 - Dpad left(on a slider): Decrease value
 
 #### In-game
-- Y: Go to go to main UI window
 - X: Select buildings
-- RB: Go to button/building in the right side
-- LB: Go to button/building in the left side
+- RB/Right/Joystick->: Go to button/building in the right side
+- LB/Left/<-Joystick: Go to button/building in the left side
+- **Note**: To cycle between buildings, only with RB/LB
 - A: Use current button
-- A(with troop/building selected): Place it in the current location
+- A(with building selected): Place it in the current location
 - A(with a building selected with X): Show building options
 - B: Go back to previous window/options
 - Dpad(with troop/building selected): Slow movement through the map
@@ -49,6 +80,8 @@ This functionalities can be used anytime
 - F10: Toggle Godmode. 
 
 **Godmode must be on to access debug functionalities below**
+
+- F1: Set timer to 10min
 
 - 1: Spawn soldier from player 1 in the location of the mouse
 - Q: Spawn soldier from player 2 in the location of the mouse
@@ -74,6 +107,8 @@ This functionalities can be used anytime
 - 0: Add walls from player 1 in the location of the mouse
 - P: Add walls from player 2 in the location of the mouse
 
+- X: Spawn warhound from player 1 in the location of the mouse
+
 - Arrow keys: Move camera
 
 - I: Increase zoom
@@ -84,7 +119,6 @@ This functionalities can be used anytime
 ### Mouse
 - Middle click(wheel, while clicked): Drag map
 - Left click: Set goal for soldiers, begin pathfinding.
-
 
 ## The team
    
@@ -127,7 +161,9 @@ It can be found here: https://github.com/stormhowlers/Command_and_Conquer_WarZon
 ```
 We do not own any of the art such as animations, tilesets or music/SFX.
 
-Everything belong to the creators of the original game: Westwood Studios
+Everything belongs to the creators of the original game: Westwood Studios
+
+However, there are some art pieces that have been made or edited by the team. 
 ```
 
 ## License
