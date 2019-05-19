@@ -17,6 +17,7 @@ Barracks::Barracks(bool isPlayer1, pair<int, int> pos, Collider collider) : Buil
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
 
+	myPlayer = (isPlayer1)?App->player1:App->player2;
 	
 }
 
@@ -39,62 +40,51 @@ bool Barracks::Update(float dt)
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
 
-		if (level == 0 && App->scenechange->IsChanging() == false) //Poner abajo a la derecha
+		if (level == 1 && App->scenechange->IsChanging() == false) //Poner abajo a la derecha
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 0;
 			upgrade.y = 34;
 			upgrade.w = 32;
 			upgrade.h = 20;
-			App->render->Blit(App->scene->upgrade_lvl, position.first, position.second - 140, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 25, position.second + 50, &upgrade);
 		}
 
-		if (level == 1 && App->scenechange->IsChanging() == false)
+		if (level == 2 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 36;
 			upgrade.y = 17;
 			upgrade.w = 32;
 			upgrade.h = 37;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 140, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 25 , position.second + 50, &upgrade);
 		}
-
-		if (level == 2 && App->scenechange->IsChanging() == false)
+		
+		if (building->Finished() && built == false)
 		{
-			SDL_Rect upgrade;
-			upgrade.x = 72;
-			upgrade.y = 0;
-			upgrade.w = 32;
-			upgrade.h = 54;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 140, &upgrade);
+			App->audio->PlayFx(ALLIED_BARRACKS_B);
+			built = true;
 		}
+		
 
 		if (health > 0) //if not destroyed
 		{
 			if (upgrade == true && level <= 1) //upgrade
 			{
-				App->player1->gold -= upgrade_cost[level]; //pay costs
+				App->player1->gold -= Upgrade_Cost; //pay costs
 				level++;
 				capacity = capacity_lv[level]; //update capacity
+				Upgrade_Cost = cost_upgrade_lv[level];
 				health = health_lv[level];
 				upgrade = false;
 				//play fx (upgrade);
 			}
 
-			if (TroopsCreated.empty() == false)
+			if (TroopsCreated.empty() == false && is_deploying == false)
 			{
-				if (timer.ReadSec() >= 1)
-				{
-					pair<int, int> pos;
-					pos.first = position.first - 100;
-					pos.second = position.second + 60;
+				is_deploying = true;
+				deploy_state = DeployState::START;
 
-					list<Entity::entityType>::iterator first_troop = TroopsCreated.begin();
-					App->entitymanager->AddEntity(true, (*first_troop), pos, collider);
-					TroopsCreated.pop_front();
-					timer.Start();
-					
-				}
 			}
 		}
 		else //destroyed
@@ -103,6 +93,7 @@ bool Barracks::Update(float dt)
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 			App->player1->BarracksCreated -= 1;
+			App->audio->PlayFx(ALLIED_BARRACKS_D);
 		}
 
 		if (repair == true) //repair
@@ -119,60 +110,49 @@ bool Barracks::Update(float dt)
 		if (health > 0) //if not destroyed
 		{
 
-			if (level == 0 && App->scenechange->IsChanging() == false)
+			if (level == 1 && App->scenechange->IsChanging() == false)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 0;
 				upgrade.y = 34;
 				upgrade.w = 32;
 				upgrade.h = 20;
-				App->render->Blit(App->scene->upgrade_lvl, position.first, position.second - 140, &upgrade);
+				App->render->Blit(App->scene->upgrade_lvl, position.first + 25, position.second + 50, &upgrade);
 			}
 
-			if (level == 1 && App->scenechange->IsChanging() == false)
+			if (level == 2 && App->scenechange->IsChanging() == false)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 36;
 				upgrade.y = 17;
 				upgrade.w = 32;
 				upgrade.h = 37;
-				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 140, &upgrade);
+				App->render->Blit(App->scene->upgrade_lvl, position.first + 25, position.second + 50, &upgrade);
 			}
 
-			if (level == 2 && App->scenechange->IsChanging() == false)
-			{
-				SDL_Rect upgrade;
-				upgrade.x = 72;
-				upgrade.y = 0;
-				upgrade.w = 32;
-				upgrade.h = 54;
-				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 140, &upgrade);
-			}
 
 			if (upgrade == true && level <= 1) //upgrade
 			{
-				App->player2->gold -= upgrade_cost[level]; //pay costs
+				App->player2->gold -= Upgrade_Cost; //pay costs
 				level++;
 				capacity = capacity_lv[level]; //update capacity
+				Upgrade_Cost = cost_upgrade_lv[level];
 				health = health_lv[level];
 				upgrade = false;
 				//play fx (upgrade);
 			}
 
-			if (TroopsCreated.empty() == false)
+
+			if (building->Finished() && built == false)
 			{
-				if (timer.ReadSec() >= 1)
-				{
-					pair<int, int> pos;
-					pos.first = position.first - 100;
-					pos.second = position.second + 60;
+				App->audio->PlayFx(SOVIET_BARRACKS_B);
+				built = true;
+			}
 
-					list<Entity::entityType>::iterator first_troop = TroopsCreated.begin();
-					App->entitymanager->AddEntity(false, (*first_troop), pos, collider);
-					TroopsCreated.pop_front();
-					timer.Start();
-
-				}
+			if (TroopsCreated.empty() == false && is_deploying == false)
+			{
+				is_deploying = true;
+				deploy_state = DeployState::START;
 			}
 		}
 		else //destroyed
@@ -183,6 +163,7 @@ bool Barracks::Update(float dt)
 
 			App->render->Blit(App->scene->explosion_tex, position.first, position.second, &App->map->explosion_anim->GetCurrentFrame(dt));
 			App->player2->BarracksCreated -= 1; 
+			App->audio->PlayFx(SOVIET_BARRACKS_D);
 		}
 
 		if (repair == true) //repair
@@ -223,9 +204,97 @@ bool Barracks::Update(float dt)
 		}
 	}
 
+	if (is_deploying) {
+
+		is_deploying = DeployTroops();
+	}
+
 	Building::Update(dt);
 
 	return true;
+}
+
+bool Barracks::DeployTroops(int amount_per_frame)
+{
+	bool ret = true;
+	if (amount_per_frame <= 0) {
+		amount_per_frame = MAX_DEPLOY_SIZE;
+	}
+
+	switch (deploy_state)
+	{
+		case DeployState::START:
+
+			//deploy_counter = 0;
+			//GROUP MANAGEMENT
+			tmp_entity = myPlayer->troops.begin();
+			while (tmp_entity != myPlayer->troops.end())
+			{
+				(*tmp_entity)->isSelected = false;
+				tmp_entity++;
+			}
+			
+			deploy_pos = position;
+			deploy_state = DeployState::DEPLOYING;
+
+			break;
+
+		case DeployState::DEPLOYING:
+			if (TroopsCreated.empty()) {
+				deploy_state = DeployState::END;
+			}
+			else {
+				//collider.dimensions = { 1,1 };
+				
+				for (int i = 0; i < amount_per_frame && !TroopsCreated.empty(); i++) {
+
+					Troop* e;
+					deploy_pos.first += 20;
+					deploy_pos.second += 10;
+					e = (Troop*)App->entitymanager->AddEntity(fromPlayer1, *TroopsCreated.begin(), deploy_pos, collider);
+					if (*TroopsCreated.begin() == e->SOLDIER && fromPlayer1)
+					{
+						App->audio->PlayFx(ALLIED_SOLDIER_SPAWN);
+					}
+					else if (*TroopsCreated.begin() == e->SOLDIER && !fromPlayer1)
+					{
+						App->audio->PlayFx(SOVIET_SOLDIER_SPAWN);
+					}
+					if (*TroopsCreated.begin() == e->ENGINEER)
+					{
+						App->audio->PlayFx(ENG_SPAWN);
+					}
+					if (*TroopsCreated.begin() == e->WAR_HOUND)
+					{
+						App->audio->PlayFx(WARHOUND_ATTACK);
+					}
+					TroopsCreated.pop_front();
+					e->state = TROOP_IDLE;
+					e->isSelected = true;
+					//deploying_counter++;
+				}
+				deploy_pos.first = position.first;
+				//deploy_pos.first -= 10;
+				//deploy_pos.second += 20;
+			}
+			break;
+		case DeployState::END:
+			deploy_state = DeployState::NONE;
+			ret = false;
+			//deploy_counter = 0;
+			//isDeploying = false;
+			myPlayer->groups.push_back(App->move_manager->CreateGroup(myPlayer));
+			myPlayer->group++;
+			break;
+
+		case DeployState::NONE:
+			break;
+		default:
+			LOG("REACHED WRONG DEPLOY STATE");
+			break;
+	}
+	return ret;
+	
 }
 
 void Barracks::LoadAnimations(bool isPlayer1, string path) {

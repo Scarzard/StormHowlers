@@ -52,13 +52,35 @@ bool CmdCenter::Update(float dt)
 
 	if (fromPlayer1)
 	{
+
+		if (level == 1 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 0;
+			upgrade.y = 34;
+			upgrade.w = 32;
+			upgrade.h = 20;
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 100, position.second + 50, &upgrade);
+		}
+
+		if (level == 2 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 36;
+			upgrade.y = 17;
+			upgrade.w = 32;
+			upgrade.h = 37;
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 100, position.second + 50, &upgrade);
+		}
+
 		if (health > 0) //if not destroyed
 		{
 			if (upgrade == true && level <= 1) //upgrade
 			{
-				App->player1->gold -= upgrade_cost[level]; //pay costs
+				App->player1->gold -= Upgrade_Cost; //pay costs
 				level++;
 				health = health_lv[level];
+				Upgrade_Cost = cost_upgrade_lv[level];
 				upgrade = false;
 			}
 			if (App->player1->isCasting == true) //player casting
@@ -78,18 +100,39 @@ bool CmdCenter::Update(float dt)
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
-
+			App->audio->PlayFx(ALLIED_CC_D);
 		}
 	}
 	else if (!fromPlayer1)
 	{
 		if (health > 0) //if not destroyed
 		{			
+			if (level == 1 && App->scenechange->IsChanging() == false)
+			{
+				SDL_Rect upgrade;
+				upgrade.x = 0;
+				upgrade.y = 34;
+				upgrade.w = 32;
+				upgrade.h = 20;
+				App->render->Blit(App->scene->upgrade_lvl, position.first + 100, position.second + 50, &upgrade);
+			}
+
+			if (level == 2 && App->scenechange->IsChanging() == false)
+			{
+				SDL_Rect upgrade;
+				upgrade.x = 36;
+				upgrade.y = 17;
+				upgrade.w = 32;
+				upgrade.h = 37;
+				App->render->Blit(App->scene->upgrade_lvl, position.first + 100, position.second + 50, &upgrade);
+			}
+
 			if (upgrade == true && level <= 1) //upgrade
 			{
-				App->player2->gold -= upgrade_cost[level]; //pay costs
+				App->player2->gold -= Upgrade_Cost; //pay costs
 				level++;
 				health = health_lv[level];
+				Upgrade_Cost = cost_upgrade_lv[level];
 				upgrade = false;
 			}
 			if (App->player2->isCasting == true) //player casting
@@ -111,7 +154,7 @@ bool CmdCenter::Update(float dt)
 
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 			App->player2->UpdateWalkabilityMap(true, collider); //destroyed
-
+			App->audio->PlayFx(SOVIET_CC_D);
 		}
 	}
 	

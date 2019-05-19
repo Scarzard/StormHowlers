@@ -16,11 +16,32 @@ enum FX
 	MIN3,
 	MIN5,
 	MIN10,
+
+	//Allied FX
+	ALLIED_BARRACKS_B,
+	ALLIED_BARRACKS_D,
+	ALLIED_CC_D,
+	ALLIED_LASER_B,
+	ALLIED_LASER_D,
+	ALLIED_MINE_B,
+	ALLIED_MINE_D,
+	ALLIED_SENTRY_B,
+	ALLIED_SENTRY_D,
+	ALLIED_TESLA_D,
+
 	BARRACKS_BUILD,
 	BUILDING_EXPLOSION,
 	BUILDING_REPAIR,
 	BUTTON_SLIDE,
 	CHANGE_FOCUS,
+	//WarHound(WH)/Engineer(ENG) SFX
+	WARHOUND_ATTACK,
+	WARHOUND_DIE,
+	WARHOUND_SPAWN,
+	ENG_ATTACK,
+	ENG_DIE,
+	ENG_SPAWN,
+
 	EXIT,
 	FINAL_EXPLOSION,
 	INGAME_CLICK,
@@ -32,7 +53,25 @@ enum FX
 	SENTRYGUN_BUILD,
 	SLIDER_DOWN,
 	SLIDER_UP,
+
+	//SoliderSFX
+	ALLIED_SOLDIER_SPAWN,
 	SOLDIER_ATTACK,
+	SOLDIER_DIE,
+	SOVIET_SOLDIER_SPAWN,
+
+	//Soviet FX
+	SOVIET_BARRACKS_B,
+	SOVIET_BARRACKS_D,
+	SOVIET_CC_D,
+	SOVIET_LASER_B,
+	SOVIET_LASER_D,
+	SOVIET_MINE_B,
+	SOVIET_MINE_D,
+	SOVIET_SENTRY_B,
+	SOVIET_SENTRY_D,
+	SOVIET_TESLA_D,
+
 	TESLA_ATTACK,
 	TESLA_BUILD,
 	TESLA_REPAIR,
@@ -76,6 +115,7 @@ public:
 
 	bool song1played = false;
 	bool song2played = false;
+	bool winscreensong = false;
 	bool fading_in = false;
 	bool fading_out = false;
 	bool reading_time = true;
@@ -94,8 +134,8 @@ public:
 public:
 
 	unsigned short masterVolume = 100;
-	unsigned short musicVolume = 30;
-	unsigned short sfxVolume = 30;
+	unsigned short musicVolume = 10;
+	unsigned short sfxVolume = 20;
 
 public:
 	string			folder_music;

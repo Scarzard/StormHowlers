@@ -47,6 +47,7 @@ bool MainMenu::Start()
 	menu_background->texture = App->tex->Load(menu_bg_file_name.data());
 	menu_background->rect = { 0, 0, App->win->width, App->win->height };
 	App->render->zoom = 1;
+
 	//PLAY
 	new_game_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 1273, 432 }, { 371, 87 }, menu_background, true);
 	new_game_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, new_game_button, true, { false, false });
@@ -55,21 +56,21 @@ bool MainMenu::Start()
 
 	//EXIT
 	exit_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::EXIT, { 1273, 710 }, { 371, 87 }, menu_background, true);
-	exit_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0,0 }, exit_button, true, { false, false });
+	exit_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 168, 25 }, { 0,0 }, exit_button, true, { false, false });
 	exit_text->label = exit_label;
 	exit_text->color = { 255, 255, 9, 255 };
+
 	//CREDITS
 	credits_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::CREDITS, { 1273, 617 }, { 371, 87 }, menu_background, true);
-	credits_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, credits_button, true, { false, false });
+	credits_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 137, 25 }, { 0, 0 }, credits_button, true, { false, false });
 	credits_text->label = credits_label;
 	credits_text->color = { 255, 255, 9, 255 };
 	
 	//SETTINGS
 	settings_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS, { 1273, 524 }, { 371, 87 }, menu_background, true);
-	settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 155, 25 }, { 0, 0 }, settings_button, true, { false, false });
+	settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 125, 25 }, { 0, 0 }, settings_button, true, { false, false });
 	settings_text->label = settings_label;
 	settings_text->color = { 255, 255, 9, 255 };
-	
 	
 	//SETTINGS WINDOW/BUTTONS
 	MM_Settings_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
@@ -176,6 +177,49 @@ bool MainMenu::Update(float dt)
 	}
 
 	App->gui->Draw();
+
+	//Trying voicelines SFX
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		App->audio->PlayFx(SOVIET_BARRACKS_B);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	{
+		App->audio->PlayFx(SOVIET_BARRACKS_D);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	{
+		App->audio->PlayFx(SOVIET_CC_D);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	{
+		App->audio->PlayFx(SOVIET_LASER_B);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	{
+		App->audio->PlayFx(SOVIET_LASER_D);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
+	{
+		App->audio->PlayFx(SOVIET_MINE_B);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
+	{
+		App->audio->PlayFx(SOVIET_MINE_D);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
+	{
+		App->audio->PlayFx(SOVIET_SENTRY_B);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
+	{
+		App->audio->PlayFx(SOVIET_SENTRY_D);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
+	{
+		App->audio->PlayFx(SOVIET_TESLA_D);
+	}
+
 	
 	return true;
 }
@@ -259,19 +303,16 @@ void MainMenu::DoLogic(UI_Element* data)
 		App->scenechange->SwitchScene(App->scene, App->main_menu,2); //Here fadetoblack
 		App->audio->PlayFx(PLAY);
 		break;
-
 	case::UI_Element::Action::SETTINGS:
 		App->player1->currentUI = Player::CURRENT_UI::CURR_MM_SETTINGS;
 		App->player1->UpdateVisibility();
 		App->player1->UpdateFocus(App->player1->currentUI);
 		break;
-
 	case::UI_Element::Action::CREDITS:
 		App->player1->currentUI = Player::CURRENT_UI::CURR_MM_CREDITS;
 		App->player1->UpdateVisibility();
 		App->player1->UpdateFocus(App->player1->currentUI);
 		break;
-
 	case::UI_Element::Action::LICENSE:
 		license_texture->visible = true;
 		authors_texture->visible = false;
@@ -281,14 +322,12 @@ void MainMenu::DoLogic(UI_Element* data)
 		authors_texture->visible = true;
 		break;
 	case::UI_Element::Action::WEBSITE:
+		//Needs to be updated with game's website link, when it's done
 		ShellExecuteA(NULL, "open", "https://github.com/stormhowlers/Command_and_Conquer_WarZone", NULL, NULL, SW_SHOWNORMAL);
 		break;
-
 	case::UI_Element::Action::EXIT:
 		App->audio->PlayFx(EXIT);
 		close_app = false;
 		break;
-
-
 	}
 }

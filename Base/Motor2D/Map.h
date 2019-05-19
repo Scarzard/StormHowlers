@@ -10,6 +10,12 @@
 
 struct SDL_Texture;
 
+struct Zone 
+{
+	pair<int, int> up_limit;
+	pair<int, int> down_limit;
+
+};
 struct Tiles
 {
 	SDL_Texture* texture = nullptr;
@@ -236,6 +242,9 @@ public:
 
 	SDL_Texture* imagemap;
 	SDL_Rect rect_for_back_image = { 0,0,0,0 };
+	Zone sovietzone;
+	Zone allyzone;
+	Zone warzone;   
 
 private:
 	pugi::xml_document	map_file;

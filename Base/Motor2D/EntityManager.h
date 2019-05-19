@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Entity.h"
+#include "Soldier.h"
 #include "Walls.h"
 
 class Entity;
@@ -59,6 +60,10 @@ public:
 	void OrderEntities();
 	int GetDepth(Entity* entity);
 
+	void LoadAnimationsSoldier(Troop * troop);
+
+	void LoadAnimations(Troop * troop);
+
 
 
 	Entity * findEntity(pair<int, int> pos, bool fromplayer1, int attackrange);
@@ -78,7 +83,8 @@ public:
 
 
 public:
-	//Soldier			soldierSample;
+	Soldier			soldier_p1_sample;
+	Soldier			soldier_p2_sample;
 
 	string			folder;
 	string			texture_path;
@@ -91,6 +97,8 @@ public:
 	bool godmode = false;
 	bool pathfinding = false;
 	bool pathfinding2 = false;
+	bool offensive = true;
+
 };
 
 #endif //

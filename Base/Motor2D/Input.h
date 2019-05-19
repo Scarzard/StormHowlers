@@ -27,7 +27,11 @@ enum j1KeyState
 };
 
 enum CONTROLLER_BUTTONS {
-	UP = 0,
+	JOY_UP = 0,
+	JOY_DOWN,
+	JOY_LEFT,
+	JOY_RIGHT,
+	UP,
 	DOWN,
 	LEFT,
 	RIGHT,
@@ -37,10 +41,6 @@ enum CONTROLLER_BUTTONS {
 	BUTTON_B,
 	BUTTON_X,
 	BUTTON_Y,
-	JOY_UP,
-	JOY_DOWN,
-	JOY_LEFT,
-	JOY_RIGHT,
 	LB,
 	RB,
 	LT,

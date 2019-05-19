@@ -95,44 +95,41 @@ bool DefenseAoe::Update(float dt)
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
 
-		if (level == 0 && App->scenechange->IsChanging() == false)
+		if (level == 1 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 0;
 			upgrade.y = 34;
 			upgrade.w = 32;
 			upgrade.h = 20;
-			App->render->Blit(App->scene->upgrade_lvl, position.first, position.second - 100, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 20, position.second + 10, &upgrade);
 		}
 
-		if (level == 1 && App->scenechange->IsChanging() == false)
+		if (level == 2 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 36;
 			upgrade.y = 17;
 			upgrade.w = 32;
 			upgrade.h = 37;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 100, &upgrade);
-		}
-
-		if (level == 2 && App->scenechange->IsChanging() == false)
-		{
-			SDL_Rect upgrade;
-			upgrade.x = 72;
-			upgrade.y = 0;
-			upgrade.w = 32;
-			upgrade.h = 54;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 100, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 20, position.second + 10, &upgrade);
 		}
 
 		if (upgrade == true && level <= 1) //upgrade
 		{
-			App->player1->gold -= upgrade_cost[level]; //pay costs
+			App->player1->gold -= Upgrade_Cost; //pay costs
 			level++;
 			damage = damage_lv[level];
+			Upgrade_Cost = cost_upgrade_lv[level];
 			health = health_lv[level];
 			upgrade = false;
 			//play fx (upgrade);
+		}
+
+		if (building->Finished() && built == false)
+		{
+			App->audio->PlayFx(ALLIED_LASER_B);
+			built = true;
 		}
 
 		if (health <= 0) //destroyed
@@ -140,49 +137,47 @@ bool DefenseAoe::Update(float dt)
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->audio->PlayFx(ALLIED_LASER_D);
 		}
 	}
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
 	{
 
-		if (level == 0 && App->scenechange->IsChanging() == false)
+		if (level == 1 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 0;
 			upgrade.y = 34;
 			upgrade.w = 32;
 			upgrade.h = 20;
-			App->render->Blit(App->scene->upgrade_lvl, position.first, position.second - 100, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 20, position.second + 10, &upgrade);
 		}
 
-		if (level == 1 && App->scenechange->IsChanging() == false)
+		if (level == 2 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 36;
 			upgrade.y = 17;
 			upgrade.w = 32;
 			upgrade.h = 37;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 100, &upgrade);
-		}
-
-		if (level == 2 && App->scenechange->IsChanging() == false)
-		{
-			SDL_Rect upgrade;
-			upgrade.x = 72;
-			upgrade.y = 0;
-			upgrade.w = 32;
-			upgrade.h = 54;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 100, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 20, position.second + 10, &upgrade);
 		}
 
 		if (upgrade == true && level <= 1) //upgrade
 		{
-			App->player2->gold -= upgrade_cost[level]; //pay costs
+			App->player2->gold -= Upgrade_Cost; //pay costs
 			level++;
 			damage = damage_lv[level];
+			Upgrade_Cost = cost_upgrade_lv[level];
 			health = health_lv[level];
 			upgrade = false;
 			//play fx (upgrade);
+		}
+
+		if (building->Finished() && built == false)
+		{
+			App->audio->PlayFx(SOVIET_LASER_B);
+			built = true;
 		}
 
 		if (health <= 0) //destroyed
@@ -190,6 +185,7 @@ bool DefenseAoe::Update(float dt)
 			App->player2->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->audio->PlayFx(SOVIET_LASER_D);
 		}
 	}
 

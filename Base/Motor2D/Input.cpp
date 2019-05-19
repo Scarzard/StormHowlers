@@ -9,6 +9,7 @@
 
 #define MAX_KEYS 300
 #define DEATH_ZONE 6400
+#define DEATHZONE_TWO 12800
 
 Input::Input() : Module()
 {
@@ -233,39 +234,106 @@ bool Input::PreUpdate()
 	//CHECK Left Axis X & Y
 	if (App->player1->gamepad.LeftAxisX > DEATH_ZONE)
 	{
-		App->player1->gamepad.Controller[JOY_RIGHT] = KEY_REPEAT;
+		App->player1->gamepad.JoystickState[3] = true;
 	}
-	else if (App->player1->gamepad.LeftAxisX < -DEATH_ZONE)
+	else
 	{
-		App->player1->gamepad.Controller[JOY_LEFT] = KEY_REPEAT;
+		App->player1->gamepad.JoystickState[3] = false;
+	}
+
+	if (App->player1->gamepad.LeftAxisX < -DEATH_ZONE)
+	{
+		App->player1->gamepad.JoystickState[2] = true;
+	}
+	else
+	{
+		App->player1->gamepad.JoystickState[2] = false;
 	}
 
 	if (App->player1->gamepad.LeftAxisY < -DEATH_ZONE)
 	{
-		App->player1->gamepad.Controller[JOY_UP] = KEY_REPEAT;
+		App->player1->gamepad.JoystickState[0] = true;
 	}
-	else if (App->player1->gamepad.LeftAxisY > DEATH_ZONE)
+	else
 	{
-		App->player1->gamepad.Controller[JOY_DOWN] = KEY_REPEAT;
+		App->player1->gamepad.JoystickState[0] = false;
+	}
+	
+	if (App->player1->gamepad.LeftAxisY > DEATH_ZONE)
+	{
+		App->player1->gamepad.JoystickState[1] = true;
+	}
+	else
+	{
+		App->player1->gamepad.JoystickState[1] = false;
 	}
 
 	//CHECK P2 Left Axis X & Y
 	if (App->player2->gamepad.LeftAxisX > DEATH_ZONE)
 	{
-		App->player2->gamepad.Controller[JOY_RIGHT] = KEY_REPEAT;
+		App->player2->gamepad.JoystickState[3] = true;
 	}
-	else if (App->player2->gamepad.LeftAxisX < -DEATH_ZONE)
+	else
 	{
-		App->player2->gamepad.Controller[JOY_LEFT] = KEY_REPEAT;
+		App->player2->gamepad.JoystickState[3] = false;
+	}
+
+	if (App->player2->gamepad.LeftAxisX < -DEATH_ZONE)
+	{
+		App->player2->gamepad.JoystickState[2] = true;
+	}
+	else
+	{
+		App->player2->gamepad.JoystickState[2] = false;
 	}
 
 	if (App->player2->gamepad.LeftAxisY < -DEATH_ZONE)
 	{
-		App->player2->gamepad.Controller[JOY_UP] = KEY_REPEAT;
+		App->player2->gamepad.JoystickState[0] = true;
 	}
-	else if (App->player2->gamepad.LeftAxisY > DEATH_ZONE)
+	else
 	{
-		App->player2->gamepad.Controller[JOY_DOWN] = KEY_REPEAT;
+		App->player2->gamepad.JoystickState[0] = false;
+	}
+
+	if (App->player2->gamepad.LeftAxisY > DEATH_ZONE)
+	{
+		App->player2->gamepad.JoystickState[1] = true;
+	}
+	else
+	{
+		App->player2->gamepad.JoystickState[1] = false;
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (App->player1->gamepad.JoystickState[i] == true) {
+			if (App->player1->gamepad.Controller[i] == KEY_IDLE)
+				App->player1->gamepad.Controller[i] = KEY_DOWN;
+			else
+				App->player1->gamepad.Controller[i] = KEY_REPEAT;
+		}
+		else
+		{
+			if (App->player1->gamepad.Controller[i] == KEY_REPEAT || App->player1->gamepad.Controller[i] == KEY_DOWN)
+				App->player1->gamepad.Controller[i] = KEY_UP;
+			else
+				App->player1->gamepad.Controller[i] = KEY_IDLE;
+		}
+
+		if (App->player2->gamepad.JoystickState[i] == true) {
+			if (App->player2->gamepad.Controller[i] == KEY_IDLE)
+				App->player2->gamepad.Controller[i] = KEY_DOWN;
+			else
+				App->player2->gamepad.Controller[i] = KEY_REPEAT;
+		}
+		else
+		{
+			if (App->player2->gamepad.Controller[i] == KEY_REPEAT || App->player2->gamepad.Controller[i] == KEY_DOWN)
+				App->player2->gamepad.Controller[i] = KEY_UP;
+			else
+				App->player2->gamepad.Controller[i] = KEY_IDLE;
+		}
 	}
 
 

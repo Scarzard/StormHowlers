@@ -97,11 +97,32 @@ bool DefenseTarget::Update(float dt)
 	}
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
+		if (level == 1 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 0;
+			upgrade.y = 34;
+			upgrade.w = 32;
+			upgrade.h = 20;
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 40, position.second + 30, &upgrade);
+		}
+
+		if (level == 2 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 36;
+			upgrade.y = 17;
+			upgrade.w = 32;
+			upgrade.h = 37;
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 40, position.second + 30, &upgrade);
+		}
+
 		if (upgrade == true && level <= 1) //upgrade
 		{
-			App->player1->gold -= upgrade_cost[level]; //pay costs
+			App->player1->gold -= Upgrade_Cost; //pay costs
 			level++;
 			damage = damage_lv[level];
+			Upgrade_Cost = cost_upgrade_lv[level];
 			health = health_lv[level];
 			upgrade = false;
 			//play fx (upgrade);
@@ -112,15 +133,37 @@ bool DefenseTarget::Update(float dt)
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->audio->PlayFx(ALLIED_TESLA_D);
 		}
 	}
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
 	{
+		if (level == 1 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 0;
+			upgrade.y = 34;
+			upgrade.w = 32;
+			upgrade.h = 20;
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 40, position.second + 30, &upgrade);
+		}
+
+		if (level == 2 && App->scenechange->IsChanging() == false)
+		{
+			SDL_Rect upgrade;
+			upgrade.x = 36;
+			upgrade.y = 17;
+			upgrade.w = 32;
+			upgrade.h = 37;
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 40, position.second + 30, &upgrade);
+		}
+
 		if (upgrade == true && level <= 1) //upgrade
 		{
-			App->player2->gold -= upgrade_cost[level]; //pay costs
+			App->player2->gold -= Upgrade_Cost; //pay costs
 			level++;
 			damage = damage_lv[level];
+			Upgrade_Cost = cost_upgrade_lv[level];
 			health = health_lv[level];
 			upgrade = false;
 			//play fx (upgrade);
@@ -131,6 +174,7 @@ bool DefenseTarget::Update(float dt)
 			App->player2->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
+			App->audio->PlayFx(SOVIET_TESLA_D);
 		}
 	}
 

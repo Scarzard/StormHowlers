@@ -105,7 +105,9 @@ bool Group::CheckForMovementIndividual(Troop* troop, float dt, pair<int, int> de
 }
 bool Group::IsGroupLead(Troop * entity)
 {
-	return (*Units.begin()) == entity;
+	if (!Units.empty()) {
+		return (*Units.begin()) == entity;
+	}
 }
 
 Troop* Group::GetLead() {
