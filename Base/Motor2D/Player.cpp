@@ -298,6 +298,8 @@ bool Player::Update(float dt)
 			troop_icon->rect = { 662, 0, 85, 81 };
 			UpdateVisibility();
 			UI_troop_type = Entity::entityType::SOLDIER;
+			
+			
 		}
 		// From GENERAL UI to CREATE ABILITIES UI (only for command center)
 		if (gamepad.Controller[BUTTON_X] == KEY_DOWN && currentUI == CURRENT_UI::CURR_GENERAL && (*building_selected)->type == Entity::entityType::COMMAND_CENTER)
@@ -310,6 +312,40 @@ bool Player::Update(float dt)
 		}
 
 		
+
+		
+
+
+		// Button A to clcik a button
+		if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
+		{
+			if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
+				(*focus)->state = UI_Element::State::LOGIC;
+		}
+
+		// Do button action
+		if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
+		{
+			if (App->scene->pause && isPaused == true)
+			{
+				(*focus)->state = UI_Element::State::IDLE;
+				DoLogic((*focus));
+				UpdateFocus(currentUI);
+			}
+			else if (!App->scene->pause)
+			{
+				if (!isBuilding)
+					(*focus)->state = UI_Element::State::IDLE;
+				if (App->scene->active)
+					DoLogic((*focus));
+				else
+					App->main_menu->DoLogic((*focus));
+
+				if ((*focus) == Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
+					UpdateFocus(currentUI);
+			}
+
+		}
 
 		//Creating TROOPS
 		if (currentUI == CURRENT_UI::CURR_CREATE_TROOPS)
@@ -352,7 +388,7 @@ bool Player::Update(float dt)
 				{
 					number_of_troops = 10 - (*building_selected)->TroopsCreated.size();
 				}
-				
+
 			}
 
 			if (UI_troop_type == Entity::entityType::SOLDIER)
@@ -449,38 +485,6 @@ bool Player::Update(float dt)
 				CreateAbility(UI_troop_type, number_of_troops);
 				GotoPrevWindows(currentUI);
 				gold -= TroopCost;
-			}
-
-		}
-
-
-		// Button A to clcik a button
-		if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
-		{
-			if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
-				(*focus)->state = UI_Element::State::LOGIC;
-		}
-
-		// Do button action
-		if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
-		{
-			if (App->scene->pause && isPaused == true)
-			{
-				(*focus)->state = UI_Element::State::IDLE;
-				DoLogic((*focus));
-				UpdateFocus(currentUI);
-			}
-			else if (!App->scene->pause)
-			{
-				if (!isBuilding)
-					(*focus)->state = UI_Element::State::IDLE;
-				if (App->scene->active)
-					DoLogic((*focus));
-				else
-					App->main_menu->DoLogic((*focus));
-
-				if ((*focus) == Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
-					UpdateFocus(currentUI);
 			}
 
 		}
@@ -1886,8 +1890,10 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACT_REPAIR:
+		
 		(*building_selected)->repair = true;
 		sprintf_s(repair_cost_label, " - %i $", (*building_selected)->repair_cost); //Update label
+
 		break;
 	case::UI_Element::Action::RESUME_PAUSE:
 		
@@ -2132,7 +2138,7 @@ void Player::UpdateGeneralUI(Entity* building)
 void Player::Blit_Info()
 {
 	SDL_Rect section;
-	SDL_Rect sec2 = { -1090, 668, 351, 20 };
+	SDL_Rect sec2 = { -1079, 668, 341, 20 };
 
 	if ((*focus) == Def_AOE_icon)
 	{
@@ -2231,12 +2237,18 @@ void Player::Blit_Info()
 		
 	}
 
+	
 	if (isPlayer1)
+	{
 		App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+	}
 	else
+	{
 		App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+		App->render->DrawQuad(sec2, 0, 0, 0, 220);
+	}
 
-	App->render->DrawQuad(sec2, 0, 0, 0, 150);
+	
 }
 
 void Player::ChangeTroopsState()

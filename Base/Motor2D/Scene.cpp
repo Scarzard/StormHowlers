@@ -76,7 +76,7 @@ bool Scene::Start()
 	// Variables init
 	currentMap = 0;
 	pause = false;
-	godmode = true;
+	godmode = false;
 	to_end = false;
 	change = false;
 	endgame = false;
@@ -1100,8 +1100,13 @@ bool Scene::Update(float dt)
 	App->map->DrawWalkability(dt);
 	App->entitymanager->Draw(dt);
 	App->map->DrawDecorations(dt);
-	App->player1->Blit_Info();
-	App->player2->Blit_Info();
+
+	if (App->player1->Townhall->health > 0 && App->player2->Townhall->health > 0 && worldminutes<10)
+	{
+		App->player1->Blit_Info();
+		App->player2->Blit_Info();
+	}
+	
 	App->gui->Draw();
 
 	

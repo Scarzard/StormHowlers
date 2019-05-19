@@ -205,7 +205,8 @@ bool DefenseAoe::Update(float dt)
 	{
 		if (App->player1->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player1->GetSelectedBuilding() == this)
 		{
-			Current_Animation = glow;
+			if (building->Finished())
+				Current_Animation = glow;
 		}
 		else
 		{
@@ -217,7 +218,8 @@ bool DefenseAoe::Update(float dt)
 	{
 		if (App->player2->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player2->GetSelectedBuilding() == this)
 		{
-			Current_Animation = glow;
+			if (building->Finished())
+				Current_Animation = glow;
 		}
 		else
 		{

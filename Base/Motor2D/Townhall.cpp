@@ -73,7 +73,7 @@ bool Townhall::Update(float dt)
 			App->render->Blit(App->scene->upgrade_lvl, position.first + 200, position.second + 100, &upgrade);
 		}
 
-		if (health <= 3000 && App->audio->song1played == false)
+		if (health <= 6000 && App->audio->song1played == false)
 		{
 			App->audio->song1played = true;
 			App->audio->fading_out = true;
@@ -81,7 +81,7 @@ bool Townhall::Update(float dt)
 			App->audio->volume_before = Mix_VolumeMusic(-1);
 		}
 
-		else if (health <= 2000 && App->audio->song2played == false)
+		else if (health <= 3000 && App->audio->song2played == false)
 		{
 			App->audio->song2played = true;
 			App->audio->fading_out = true;
@@ -139,7 +139,7 @@ bool Townhall::Update(float dt)
 			upgrade.h = 37;
 			App->render->Blit(App->scene->upgrade_lvl, position.first + 50, position.second + 60, &upgrade);
 		}
-		if (health < 2000 && App->audio->song1played == false)
+		if (health < 6000 && App->audio->song1played == false)
 		{
 			App->audio->song1played = true;
 			App->audio->fading_out = true;
@@ -147,7 +147,7 @@ bool Townhall::Update(float dt)
 			App->audio->volume_before = Mix_VolumeMusic(-1);
 		}
 
-		else if (health < 1000 && App->audio->song2played == false)
+		else if (health < 3000 && App->audio->song2played == false)
 		{
 			App->audio->song2played = true;
 			App->audio->fading_out = true;
