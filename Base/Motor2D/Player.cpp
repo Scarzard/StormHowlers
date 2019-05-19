@@ -352,23 +352,23 @@ bool Player::Update(float dt)
 
 			if (UI_troop_type == Entity::entityType::SOLDIER)
 			{
-				TroopCost = 250 * number_of_troops;
+				TroopCost = 20 * number_of_troops;
 			}
 			else if (UI_troop_type == Entity::entityType::TANKMAN)
 			{
-				TroopCost = 500 * number_of_troops;
+				TroopCost = 80 * number_of_troops;
 			}
 			else if (UI_troop_type == Entity::entityType::INFILTRATOR)
 			{
-				TroopCost = 1000 * number_of_troops;
+				TroopCost = 100 * number_of_troops;
 			}
 			else if (UI_troop_type == Entity::entityType::ENGINEER)
 			{
-				TroopCost = 2000 * number_of_troops;
+				TroopCost = 25 * number_of_troops;
 			}
 			else if (UI_troop_type == Entity::entityType::WAR_HOUND)
 			{
-				TroopCost = 1250 * number_of_troops;
+				TroopCost = 50 * number_of_troops;
 			}
 
 			if (gamepad.Controller[BUTTON_A] == KEY_UP && gold >= TroopCost)
