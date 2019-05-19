@@ -106,6 +106,14 @@ bool Audio::Update(float dt)
 		volume_before = Mix_VolumeMusic(-1);
 	}
 
+	else if (App->scene->worldminutes == 10 && winscreensong == false)
+	{
+		winscreensong = true;
+		fading_out = true;
+		track = App->audio->folder_music + "/WinScreenSong.ogg";
+		volume_before = Mix_VolumeMusic(-1);
+	}
+
 
 	if (reading_time)
 	{

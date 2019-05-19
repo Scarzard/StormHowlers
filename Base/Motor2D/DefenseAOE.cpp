@@ -23,6 +23,7 @@ DefenseAoe::DefenseAoe(bool isPlayer1, pair<int, int> pos, Collider collider) : 
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
 	colider = collider;
+	first_shot = false;
 }
 
 bool DefenseAoe::Start()
@@ -46,90 +47,92 @@ bool DefenseAoe::Update(float dt)
 
 	//Checks where to look for enemies
 	Player* tmpMod = (fromPlayer1) ? App->player2 : App->player1;
-	list<Troop*>::iterator tmp = tmpMod->troops.begin();
+
+	priority_queue<pair<Troop*,int>, vector<pair<Troop*,int>>, Closest> ListOrder;
 
 	// Finds the closest one
-	Troop* closest = *tmpMod->troops.begin();
-	if (tmp != tmpMod->troops.end()) {
-		int min_distance;
-		int d = 0;
+	int min_distance = 0;
+	int d = 0;
 
-		// Gets first distance
-		Is_inRange(closest->position, min_distance);
+	for (list<Troop*>::iterator tmp = tmpMod->troops.begin(); tmp != tmpMod->troops.end(); tmp++)
+	{
+		if (Is_inRange((*tmp)->position, min_distance) == true)
+			ListOrder.push({ *tmp, min_distance });
+	}
 
-		while (tmp != tmpMod->troops.end())
-		{
-			if ((*tmp)->alive && Is_inRange((*tmp)->position, d) && min_distance >= d) {
-				closest = *tmp;
-				min_distance = d;
-			}
-			tmp++;
-		}
-
-		// Shoots the closest one if in range
-		if (timer.ReadSec() >= rate_of_fire && Is_inRange(closest->position, d))
+	// Shoots the closest one if in range
+	if (ListOrder.empty() == false)
+	{
+		if (timer.ReadSec() >= rate_of_fire || first_shot == false)
 		{
 			if (fromPlayer1)
 			{
 				if (!App->player2->inmune)
 				{
-					closest->TakeDamage(damage_lv[level]);
+					for (int i = 0; i < max_targets; i++)
+					{
+						if (ListOrder.empty())
+							break;
 
+						ListOrder.top().first->TakeDamage(damage_lv[level]);
+						ListOrder.pop();
+					}
 				}
 			}
 			else if (!fromPlayer1)
 			{
-
 				if (!App->player1->inmune)
 				{
-					closest->TakeDamage(damage_lv[level]);
+					for (int i = 0; i < max_targets; i++)
+					{
+						if (ListOrder.empty())
+							break;
 
+						ListOrder.top().first->TakeDamage(damage_lv[level]);
+						ListOrder.pop();
+					}
 				}
 			}
+			first_shot = true;
 			timer.Start();
 			App->audio->PlayFx(TESLA_ATTACK);
 			//LOG("Distance: %d", d);
 		}
 	}
+	else
+	{
+		first_shot = false;
+	}
 
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
 
-		if (level == 0 && App->scenechange->IsChanging() == false)
+		if (level == 1 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 0;
 			upgrade.y = 34;
 			upgrade.w = 32;
 			upgrade.h = 20;
-			App->render->Blit(App->scene->upgrade_lvl, position.first, position.second - 100, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 20, position.second + 10, &upgrade);
 		}
 
-		if (level == 1 && App->scenechange->IsChanging() == false)
+		if (level == 2 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 36;
 			upgrade.y = 17;
 			upgrade.w = 32;
 			upgrade.h = 37;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 100, &upgrade);
-		}
-
-		if (level == 2 && App->scenechange->IsChanging() == false)
-		{
-			SDL_Rect upgrade;
-			upgrade.x = 72;
-			upgrade.y = 0;
-			upgrade.w = 32;
-			upgrade.h = 54;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 100, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 20, position.second + 10, &upgrade);
 		}
 
 		if (upgrade == true && level <= 1) //upgrade
 		{
-			App->player1->gold -= upgrade_cost[level]; //pay costs
+			App->player1->gold -= Upgrade_Cost; //pay costs
 			level++;
 			damage = damage_lv[level];
+			Upgrade_Cost = cost_upgrade_lv[level];
 			health = health_lv[level];
 			upgrade = false;
 			//play fx (upgrade);
@@ -152,41 +155,32 @@ bool DefenseAoe::Update(float dt)
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
 	{
 
-		if (level == 0 && App->scenechange->IsChanging() == false)
+		if (level == 1 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 0;
 			upgrade.y = 34;
 			upgrade.w = 32;
 			upgrade.h = 20;
-			App->render->Blit(App->scene->upgrade_lvl, position.first, position.second - 100, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 20, position.second + 10, &upgrade);
 		}
 
-		if (level == 1 && App->scenechange->IsChanging() == false)
+		if (level == 2 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 36;
 			upgrade.y = 17;
 			upgrade.w = 32;
 			upgrade.h = 37;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 100, &upgrade);
-		}
-
-		if (level == 2 && App->scenechange->IsChanging() == false)
-		{
-			SDL_Rect upgrade;
-			upgrade.x = 72;
-			upgrade.y = 0;
-			upgrade.w = 32;
-			upgrade.h = 54;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 100, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 20, position.second + 10, &upgrade);
 		}
 
 		if (upgrade == true && level <= 1) //upgrade
 		{
-			App->player2->gold -= upgrade_cost[level]; //pay costs
+			App->player2->gold -= Upgrade_Cost; //pay costs
 			level++;
 			damage = damage_lv[level];
+			Upgrade_Cost = cost_upgrade_lv[level];
 			health = health_lv[level];
 			upgrade = false;
 			//play fx (upgrade);
@@ -207,8 +201,31 @@ bool DefenseAoe::Update(float dt)
 		}
 	}
 
-	if (Current_Animation->Finished() == true)
-		Current_Animation = level1;
+	if (fromPlayer1)
+	{
+		if (App->player1->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player1->GetSelectedBuilding() == this)
+		{
+			Current_Animation = glow;
+		}
+		else
+		{
+			if (building->Finished())
+				Current_Animation = level1;
+		}
+	}
+	else
+	{
+		if (App->player2->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player2->GetSelectedBuilding() == this)
+		{
+			Current_Animation = glow;
+		}
+		else
+		{
+			if (building->Finished())
+				Current_Animation = level1;
+		}
+	}
+
 
 	Building::Update(dt);
 	
@@ -235,10 +252,16 @@ void DefenseAoe::LoadAnimations(bool isPlayer1, string path)
 {
 	building = building->LoadAnimation(path.data(), (isPlayer1) ? "allied_aoe_build" : "soviet_aoe_build");
 	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ?  "allied_aoe_idle" : "soviet_aoe_idle");
+	glow = glow->LoadAnimation(path.data(), (isPlayer1) ? "allied_glow" : "soviet_glow"); 
+
 	level1->speed = 7;
 	building->speed = 5;
+	glow->speed = 0; 
+
 	building->loop = false;
 	level1->loop = true;
+	glow->loop = true; 
+
 	Current_Animation = building;
 }
 

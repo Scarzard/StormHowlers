@@ -53,34 +53,24 @@ bool Townhall::Update(float dt)
 		App->player1->health = health; //update health bar ui
 		App->player1->max_health = health_lv[level];
 		
-		if (level == 0 && App->scenechange->IsChanging() == false)
+		if (level == 1 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 0;
 			upgrade.y = 34;
 			upgrade.w = 32;
 			upgrade.h = 20;
-			App->render->Blit(App->scene->upgrade_lvl, position.first - 20, position.second - 70, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 200, position.second + 100, &upgrade);
 		}
 
-		if (level == 1 && App->scenechange->IsChanging() == false)
+		if (level == 2 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 36;
 			upgrade.y = 17;
 			upgrade.w = 32;
 			upgrade.h = 37;
-			App->render->Blit(App->scene->upgrade_lvl, position.first - 20, position.second - 70, &upgrade);
-		}
-
-		if (level == 2 && App->scenechange->IsChanging() == false)
-		{
-			SDL_Rect upgrade;
-			upgrade.x = 72;
-			upgrade.y = 0;
-			upgrade.w = 32;
-			upgrade.h = 54;
-			App->render->Blit(App->scene->upgrade_lvl, position.first - 20, position.second - 70, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 200, position.second + 100, &upgrade);
 		}
 
 		if (health <= 0) //if destroyed
@@ -94,9 +84,10 @@ bool Townhall::Update(float dt)
 		{
 			if (upgrade == true && level <= 1) //upgrade
 			{
-				App->player1->gold -= upgrade_cost[level]; //pay costs
+				App->player1->gold -= Upgrade_Cost; //pay costs
 				level++;
 				production = production_lv[level]; //update production
+				Upgrade_Cost = cost_upgrade_lv[level];
 				health = health_lv[level];
 				upgrade = false;
 				//play fx (upgrade);
@@ -109,36 +100,26 @@ bool Townhall::Update(float dt)
 		App->player2->health = health; //update health bar ui
 		App->player2->max_health = health_lv[level];
 
-		if (level == 0 && App->scenechange->IsChanging() == false)
+		if (level == 1 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 0;
 			upgrade.y = 34;
 			upgrade.w = 32;
 			upgrade.h = 20;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 180, position.second - 10, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 50, position.second +60, &upgrade);
 		}
 
-		if (level == 1 && App->scenechange->IsChanging() == false)
+		if (level == 2 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 36;
 			upgrade.y = 17;
 			upgrade.w = 32;
 			upgrade.h = 37;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 180, position.second - 10, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 50, position.second + 60, &upgrade);
 		}
-
-		if (level == 2 && App->scenechange->IsChanging() == false)
-		{
-			SDL_Rect upgrade;
-			upgrade.x = 72;
-			upgrade.y = 0;
-			upgrade.w = 32;
-			upgrade.h = 54;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 180, position.second - 10, &upgrade);
-		}
-
+		
 		if (health <= 0) //if destroyed
 		{
 
@@ -151,9 +132,10 @@ bool Townhall::Update(float dt)
 		{
 			if (upgrade == true && level <= 1) //upgrade
 			{
-				App->player1->gold -= upgrade_cost[level]; //pay costs
+				App->player1->gold -= Upgrade_Cost; //pay costs
 				level++;
 				production = production_lv[level]; //update production
+				Upgrade_Cost = cost_upgrade_lv[level];
 				health = health_lv[level];
 				upgrade = false;
 				//play fx (upgrade);
@@ -164,16 +146,39 @@ bool Townhall::Update(float dt)
 
 	if (App->scene->worldminutes == 10 && App->player2->health < App->player1->health)
 	{
-		App->scene->Victorious(App->player1, dt);
+		App->scene->Victorious(App->player2, dt);
 	}
 	else if (App->scene->worldminutes == 10 && App->player2->health > App->player1->health)
 	{
-		App->scene->Victorious(App->player2, dt);
+		App->scene->Victorious(App->player1, dt);
 	}
 	else if (App->scene->worldminutes == 10 && App->player2->health == App->player1->health)
 	{
 		//Draw (empate)
 		App->scene->MatchDraw();
+	}
+
+	if (fromPlayer1)
+	{
+		if (App->player1->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player1->GetSelectedBuilding() == this)
+		{
+			Current_Animation = glow;
+		}
+		else
+		{
+			Current_Animation = building;
+		}
+	}
+	else
+	{
+		if (App->player2->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player2->GetSelectedBuilding() == this)
+		{
+			Current_Animation = glow;
+		}
+		else
+		{
+			Current_Animation = building;
+		}
 	}
 
 	Building::Update(dt);
@@ -195,10 +200,12 @@ void Townhall::LoadAnimations(bool isPlayer1, string path)
 	if (isPlayer1)
 	{
 		building = building->LoadAnimation(path.data(), "soviet");
+		glow = glow->LoadAnimation(path.data(), "allied_glow"); 
 	}
 	else
 	{
 		building = building->LoadAnimation(path.data(), "allied");
+		glow = glow->LoadAnimation(path.data(), "soviet_glow");
 	}
 
 	building->speed = 10;

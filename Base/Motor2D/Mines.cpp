@@ -41,34 +41,24 @@ bool Mines::Update(float dt)
 		if (fromPlayer1)  // --- Player 1 --------------------------------
 		{
 
-			if (level == 0 && App->scenechange->IsChanging() == false)
+			if (level == 1 && App->scenechange->IsChanging() == false)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 0;
 				upgrade.y = 34;
 				upgrade.w = 32;
 				upgrade.h = 20;
-				App->render->Blit(App->scene->upgrade_lvl, position.first, position.second - 140, &upgrade);
+				App->render->Blit(App->scene->upgrade_lvl, position.first, position.second + 50, &upgrade);
 			}
 
-			if (level == 1 && App->scenechange->IsChanging() == false)
+			if (level == 2 && App->scenechange->IsChanging() == false)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 36;
 				upgrade.y = 17;
 				upgrade.w = 32;
 				upgrade.h = 37;
-				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 140, &upgrade);
-			}
-
-			if (level == 2 && App->scenechange->IsChanging() == false)
-			{
-				SDL_Rect upgrade;
-				upgrade.x = 72;
-				upgrade.y = 0;
-				upgrade.w = 32;
-				upgrade.h = 54;
-				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 140, &upgrade);
+				App->render->Blit(App->scene->upgrade_lvl, position.first, position.second + 50, &upgrade);
 			}
 
 			if (building->Finished() && built == false)
@@ -81,9 +71,10 @@ bool Mines::Update(float dt)
 			{
 				if (upgrade == true && level <= 1) //upgrade
 				{
-					App->player1->gold -= upgrade_cost[level]; //pay costs
+					App->player1->gold -= Upgrade_Cost; //pay costs
 					level++;
 					production = production_lv[level]; //update production
+					Upgrade_Cost = cost_upgrade_lv[level];
 					health = health_lv[level];
 					upgrade = false;
 					//play fx (upgrade);
@@ -109,34 +100,24 @@ bool Mines::Update(float dt)
 		else if (!fromPlayer1) // --- Player 2 ---------------------------
 		{
 
-			if (level == 0 && App->scenechange->IsChanging() == false)
+			if (level == 1 && App->scenechange->IsChanging() == false)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 0;
 				upgrade.y = 34;
 				upgrade.w = 32;
 				upgrade.h = 20;
-				App->render->Blit(App->scene->upgrade_lvl, position.first, position.second - 140, &upgrade);
+				App->render->Blit(App->scene->upgrade_lvl, position.first, position.second + 50, &upgrade);
 			}
 
-			if (level == 1 && App->scenechange->IsChanging() == false)
+			if (level == 2 && App->scenechange->IsChanging() == false)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 36;
 				upgrade.y = 17;
 				upgrade.w = 32;
 				upgrade.h = 37;
-				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 140, &upgrade);
-			}
-
-			if (level == 2 && App->scenechange->IsChanging() == false)
-			{
-				SDL_Rect upgrade;
-				upgrade.x = 72;
-				upgrade.y = 0;
-				upgrade.w = 32;
-				upgrade.h = 54;
-				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 140, &upgrade);
+				App->render->Blit(App->scene->upgrade_lvl, position.first, position.second + 50, &upgrade);
 			}
 
 			if (building->Finished() && built == false)
@@ -149,9 +130,10 @@ bool Mines::Update(float dt)
 			{
 				if (upgrade == true && level<=1) //upgrade
 				{
-					App->player2->gold -= upgrade_cost[level]; //pay costs
+					App->player2->gold -= Upgrade_Cost; //pay costs
 					level++;
 					production = production_lv[level]; //update production
+					Upgrade_Cost = cost_upgrade_lv[level];
 					health = health_lv[level];
 					upgrade = false;
 					//play fx (upgrade);
@@ -177,8 +159,32 @@ bool Mines::Update(float dt)
 
 	ChangeAnimation();
 
-	if(Current_Animation->Finished() == true)
-		Current_Animation = level1;
+	if (fromPlayer1)
+	{
+		if (App->player1->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player1->GetSelectedBuilding() == this)
+		{
+			if (building->Finished())
+				Current_Animation = glow;
+		}
+		else
+		{
+			if (building->Finished())
+				Current_Animation = level1;
+		}
+	}
+	else
+	{
+		if (App->player2->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player2->GetSelectedBuilding() == this)
+		{
+			if (building->Finished())
+				Current_Animation = glow;
+		}
+		else
+		{
+			if (building->Finished())
+				Current_Animation = level1;
+		}
+	}
 
 	Building::Update(dt);
 
@@ -196,11 +202,16 @@ void Mines::LoadAnimations(bool isPlayer1, string path)
 {
 	building = building->LoadAnimation(path.data(), (isPlayer1) ? "red_constructing" : "blue_constructing");
 	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "red_idle" : "blue_idle");
-	//level1->PushBack(building->GetLastAnimationFrame());// level1->LoadAnimation(&path[0], (!isPlayer1) ? "red" : "blue");
+	glow = glow->LoadAnimation(path.data(), (isPlayer1) ? "blue_glow" : "red_glow");
+
 	level1->speed = 3;
 	building->speed = 10;
+	glow->speed = 0; 
+
 	building->loop = false;
 	level1->loop = true;
+	glow->loop = true; 
+
 	Current_Animation = building;
 }
 

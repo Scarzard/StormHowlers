@@ -95,41 +95,32 @@ bool MainDefense::Update(float dt)
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
 
-		if (level == 0 && App->scenechange->IsChanging() == false)
+		if (level == 1 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 0;
 			upgrade.y = 34;
 			upgrade.w = 32;
 			upgrade.h = 20;
-			App->render->Blit(App->scene->upgrade_lvl, position.first - 30, position.second - 60, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 20, position.second + 20, &upgrade);
 		}
 
-		if (level == 1 && App->scenechange->IsChanging() == false)
+		if (level == 2 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 36;
 			upgrade.y = 17;
 			upgrade.w = 32;
 			upgrade.h = 37;
-			App->render->Blit(App->scene->upgrade_lvl, position.first - 30, position.second - 60, &upgrade);
-		}
-
-		if (level == 2 && App->scenechange->IsChanging() == false)
-		{
-			SDL_Rect upgrade;
-			upgrade.x = 72;
-			upgrade.y = 0;
-			upgrade.w = 32;
-			upgrade.h = 54;
-			App->render->Blit(App->scene->upgrade_lvl, position.first - 30, position.second - 60, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 20, position.second + 20, &upgrade);
 		}
 
 		if (upgrade == true && level <= 1) //upgrade
 		{
-			App->player1->gold -= upgrade_cost[level]; //pay costs
+			App->player1->gold -= Upgrade_Cost; //pay costs
 			level++;
 			damage = damage_lv[level];
+			Upgrade_Cost = cost_upgrade_lv[level];
 			health = health_lv[level];
 			upgrade = false;
 			//play fx (upgrade);
@@ -152,41 +143,32 @@ bool MainDefense::Update(float dt)
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
 	{
 
-		if (level == 0 && App->scenechange->IsChanging() == false)
+		if (level == 1 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 0;
 			upgrade.y = 34;
 			upgrade.w = 32;
 			upgrade.h = 20;
-			App->render->Blit(App->scene->upgrade_lvl, position.first -30, position.second - 60, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 20, position.second + 20, &upgrade);
 		}
 
-		if (level == 1 && App->scenechange->IsChanging() == false)
+		if (level == 2 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 36;
 			upgrade.y = 17;
 			upgrade.w = 32;
 			upgrade.h = 37;
-			App->render->Blit(App->scene->upgrade_lvl, position.first - 30, position.second - 60, &upgrade);
-		}
-
-		if (level == 2 && App->scenechange->IsChanging() == false)
-		{
-			SDL_Rect upgrade;
-			upgrade.x = 72;
-			upgrade.y = 0;
-			upgrade.w = 32;
-			upgrade.h = 54;
-			App->render->Blit(App->scene->upgrade_lvl, position.first -30, position.second - 60, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 20, position.second + 20, &upgrade);
 		}
 
 		if (upgrade == true && level <= 1) //upgrade
 		{
-			App->player2->gold -= upgrade_cost[level]; //pay costs
+			App->player2->gold -= Upgrade_Cost; //pay costs
 			level++;
 			damage = damage_lv[level];
+			Upgrade_Cost = cost_upgrade_lv[level];
 			health = health_lv[level];
 			upgrade = false;
 			//play fx (upgrade);
@@ -209,6 +191,34 @@ bool MainDefense::Update(float dt)
 
 	ChangeAnimation(closest);
 
+	if (fromPlayer1)
+	{
+		if (App->player1->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player1->GetSelectedBuilding() == this)
+		{
+			if (building->Finished())
+				Current_Animation = glow;
+		}
+		else
+		{
+			if (building->Finished())
+				Current_Animation = idle;
+		}
+	}
+	else
+	{
+		if (App->player2->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player2->GetSelectedBuilding() == this)
+		{
+			if (building->Finished())
+				Current_Animation = glow;
+		}
+		else
+		{
+			if (building->Finished())
+				Current_Animation = idle;
+		}
+	}
+
+
 	Building::Update(dt);
 
 
@@ -224,19 +234,7 @@ void MainDefense::CleanUp()
 
 void MainDefense::LoadAnimations(bool isPlayer1, string path)
 {
-	//moving = vector<Animation*>(entityDir::MAX, nullptr);
 	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
-
-	//idle = idle->LoadAnimation(path.data(), (isPlayer1) ? "red_constructing" : "blue_constructing");
-
-	/*moving[NORTH] = moving[NORTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_north" : "blue_north");
-	moving[SOUTH] = moving[SOUTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_south" : "blue_south");
-	moving[EAST] = moving[EAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_east" : "blue_east");
-	moving[WEST] = moving[WEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_west" : "blue_west");
-	moving[NORTHEAST] = moving[NORTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_northeast" : "blue_northeast");
-	moving[NORTHWEST] = moving[NORTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_northwest" : "blue_northwest");
-	moving[SOUTHEAST] = moving[SOUTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_southeast" : "blue_southeast");
-	moving[SOUTHWEST] = moving[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_southwest" : "blue_southwest");*/
 
 	shooting[NORTH] = shooting[NORTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_N" : "blue_N");
 	shooting[SOUTH] = shooting[SOUTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_S" : "blue_S");
@@ -264,15 +262,18 @@ void MainDefense::LoadAnimations(bool isPlayer1, string path)
 
 	building = building->LoadAnimation(path.data(), (isPlayer1) ? "red_constructing" : "blue_constructing");
 	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "red_NE" : "blue_SW");
-	
+	glow = glow->LoadAnimation(path.data(), (isPlayer1) ? "red_glow" : "blue_glow");
+
+
 	idle->speed = 0;
 	level1->speed = 10;
 	building->speed = 10;
-
+	glow->speed = 0; 
 
 	idle->loop = false;
 	building->loop = false;
 	level1->loop = false;
+	glow->loop = false;
 	Current_Animation = building;
 }
 

@@ -103,7 +103,7 @@ public:
 	void CreateTroop(int type, int number);
 	void CreateAbility(int type, int number);
 
-	void DrawBuildingCollider(int type, bool isPlayer1);
+	Building* GetSelectedBuilding() { return (*building_selected); };
 
 	bool CheckBuildingPos();
 	Collider GetCollider(pair<int, int> dimensions, pair<int,int> topTile_pos);
@@ -114,6 +114,7 @@ public:
 	int GoldKill(Entity* entity);
 
 	void ChangeBuilding(int num);
+	void ShowRange(Entity::entityType type, Collider collider);
 
 private:
 	int number = 0;
@@ -159,6 +160,7 @@ public:
 	DeployState deploy_state = DeployState::END;
 
 	vector<SDL_Rect>* preview_rects;
+	SDL_Texture* range_tex = nullptr;
 
 	SDL_Rect LiveBar;
 	int health, max_health = 0;
@@ -176,7 +178,6 @@ public:
 	list<Building*> buildings;
 	SDL_Rect selected_texture = { 0,0,0,0 };
 	list<Building*>::iterator building_selected;
-	list<Building*>::iterator last_building;
 	vector<Group*> groups = vector<Group*>();
 	int group = 0;
 

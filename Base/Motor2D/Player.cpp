@@ -14,7 +14,7 @@
 #include "Audio.h"
 #include "Scene.h"
 #include "Transitions.h"
-
+#include "Map.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -54,7 +54,7 @@ bool Player::Start()
 
 	time_iterator = number_of_troops = BuildingCost = BarracksCreated = TroopCost = 0;
 
-	gold = 3500;
+	gold = 0;
 	gold_persecond = 0;
 
 	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = Rocket_abilities = Tank_abilities = 0;
@@ -69,6 +69,8 @@ bool Player::Start()
 	Y_pressed = true;
   
 	currentTile = { 13,0 };
+
+	range_tex = App->tex->Load("textures/Tower_Range.png");
 	
 	return true;
 }
@@ -207,8 +209,6 @@ bool Player::Update(float dt)
 			while ((*building_selected)->type == Entity::entityType::WALLS)
 				building_selected++;
 
-			last_building = buildings.end();
-			last_building--;
 			currentUI = CURRENT_UI::CURR_SELECTING_BUILDING;
 		}
 		else if (gamepad.Controller[BUTTON_B] == KEY_UP && currentUI == CURRENT_UI::CURR_SELECTING_BUILDING)
@@ -220,17 +220,22 @@ bool Player::Update(float dt)
 		// DRAW QUAD on SELECTED BUILDING 
 		if (currentUI == CURRENT_UI::CURR_SELECTING_BUILDING)
 		{
-
 			if (In_SelectBuilding->visible == false)
-				In_SelectBuilding->visible = true;
+
+				In_SelectBuilding->visible = true;			
 			
-			DrawBuildingCollider((*building_selected)->type, isPlayer1);
-			
+			// Draw Range
+			if ((*building_selected)->type == Entity::entityType::DEFENSE_AOE ||
+				(*building_selected)->type == Entity::entityType::DEFENSE_TARGET ||
+				(*building_selected)->type == Entity::entityType::MAIN_DEFENSE)
+			{
+				ShowRange((*building_selected)->type, (*building_selected)->collider);
+			}
 		}
 		else
 		{
 			if(In_SelectBuilding!=nullptr && In_SelectBuilding->visible == true )
-				In_SelectBuilding->visible = false;
+				In_SelectBuilding->visible = false;	
 		}
 
 		
@@ -547,12 +552,8 @@ bool Player::Update(float dt)
 						isBuilding = false;
 						App->map->debug = false;
 					}
-					else if (isBuilding == false)
-					{
-
-						GotoPrevWindows(currentUI);
-						UpdateFocus(currentUI);
-					}
+					GotoPrevWindows(currentUI);
+					UpdateFocus(currentUI);
 				}
 				else
 				{
@@ -593,7 +594,6 @@ bool Player::Update(float dt)
 				SelectBuilding->visible = false;
 		}
 
-
 		// Travel through the different buttons
 		if ((gamepad.Controller[RB] == KEY_DOWN || gamepad.Controller[RIGHT] == KEY_DOWN || gamepad.Controller[JOY_RIGHT] == KEY_DOWN) &&
 			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && 
@@ -616,10 +616,9 @@ bool Player::Update(float dt)
 			}
 			else
 			{
-				if (building_selected == last_building)
+				if (building_selected == buildings.end())
 				{
 					building_selected = buildings.begin();
-
 				}
 				else
 				{
@@ -632,7 +631,7 @@ bool Player::Update(float dt)
 					while ((*building_selected)->type == Entity::entityType::WALLS)
 					{
 						building_selected++;
-						if (building_selected == last_building)
+						if (building_selected == buildings.end())
 						{
 							building_selected = buildings.begin();
 
@@ -640,9 +639,8 @@ bool Player::Update(float dt)
 					}
 				}
 			}
-			
-
 		}
+
 		// Travel through the different buttons
 		if ((gamepad.Controller[LB] == KEY_DOWN || gamepad.Controller[LEFT] == KEY_DOWN || gamepad.Controller[JOY_LEFT] == KEY_DOWN) &&
 			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && 
@@ -665,7 +663,7 @@ bool Player::Update(float dt)
 			{
 				if (building_selected == buildings.begin())
 				{
-					building_selected = last_building;
+					building_selected = buildings.end();
 				}
 				else
 				{
@@ -679,8 +677,6 @@ bool Player::Update(float dt)
 					}
 				}
 			}
-			
-
 		}
 
 		//Travel through buttons with DPAD in pause and mainmenu
@@ -854,13 +850,8 @@ bool Player::Update(float dt)
 			pair<int, int> pos;
 			App->input->GetMousePosition(pos.first, pos.second);
 			pos = App->render->ScreenToWorld(pos.first, pos.second);
-			//pos.first--;
 
-			if (type == Entity::entityType::TOWNHALL)
-			{
-				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
-			}
-			else if (type == Entity::entityType::BARRACKS)
+			if (type == Entity::entityType::BARRACKS)
 			{
 				//157 x 136
 				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first-30, collider.tiles[0].second-110, &(preview_rects->at(type)));
@@ -873,20 +864,14 @@ bool Player::Update(float dt)
 			else if (type == Entity::entityType::DEFENSE_AOE)
 			{
 				//92 x 92
+				ShowRange(type, collider);
 				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second-70, &(preview_rects->at(type)));
-			}
-			else if (type == Entity::entityType::DEFENSE_TARGET)
-			{
-				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
 			}
 			else if (type == Entity::entityType::MAIN_DEFENSE)
 			{
+				ShowRange(type, collider);
 				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
 			}
-			/*else 
-			{
-				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
-			}*/
 
 			if (gamepad.Controller[LB] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) //previous building
 			{
@@ -896,6 +881,17 @@ bool Player::Update(float dt)
 					number--;
 
 				ChangeBuilding(number);
+
+				// update ui focus
+				(*focus)->state = UI_Element::State::IDLE;
+				if (focus == GetUI_Element(currentUI)->children.begin())
+				{
+					focus = last_element;
+				}
+				else
+				{
+					focus--;
+				}
 			}
 			else if (gamepad.Controller[RB] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) //next building
 			{
@@ -905,11 +901,22 @@ bool Player::Update(float dt)
 					number++;
 
 				ChangeBuilding(number);
+
+				// update ui focus
+				(*focus)->state = UI_Element::State::IDLE;
+
+				if (focus == last_element)
+				{
+					focus = GetUI_Element(currentUI)->children.begin();
+				}
+				else
+				{
+					focus++;
+				}
 			}
 
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 			{
-				
 				if (gold >= CheckCost(type))
 				{
 					App->entitymanager->AddEntity(isPlayer1, type, { collider.tiles[0].first /*- offset.first*/, collider.tiles[0].second /*- offset.second*/ }, collider);
@@ -917,15 +924,12 @@ bool Player::Update(float dt)
 					{
 						BarracksCreated++;
 					}
-
 				}
 				else
 					App->audio->PlayFx(WRONG);
 
 				isBuilding = false;
-							
 			}
-
 		}
 		else
 		{
@@ -958,9 +962,6 @@ bool Player::Update(float dt)
 				A_spawn->visible = true;
 			}
 		}
-		
-			
-
 	}
 	else
 	{
@@ -970,8 +971,6 @@ bool Player::Update(float dt)
 		if (A_spawn != nullptr && A_spawn->visible == true)
 			A_spawn->visible = false;
 	}
-
-
 
 	return true;
 }
@@ -1197,6 +1196,25 @@ void Player::ChangeBuilding(int num)
 			DoLogic(App->player2->Barracks_icon); //Barracks
 		}
 	}
+}
+
+void Player::ShowRange(Entity::entityType Type, Collider collider)
+{
+	SDL_Rect range_rect;
+	if (Type == Entity::entityType::DEFENSE_TARGET)
+	{
+		range_rect = { 0,0,400,400 };
+	}
+	else if (Type == Entity::entityType::DEFENSE_AOE)
+	{
+		range_rect = { 400,0,300,300 };
+	}
+	else if (Type == Entity::entityType::MAIN_DEFENSE)
+	{
+		range_rect = { 700,0,200,200 };
+	}
+	
+	App->render->Blit(range_tex, (collider.tiles[0].first) - (range_rect.w * 0.5f), (collider.tiles[0].second) - (range_rect.h * 0.5f), &range_rect); //Draw Range
 }
 
 void Player::UpdateFocus(uint data)
@@ -1648,6 +1666,13 @@ void Player::DoLogic(UI_Element* data)
 		currentUI = CURR_BUILD;
 		UpdateVisibility();
 		App->audio->PlayFx(INGAME_CLICK);
+
+		if (isPlayer1 == true && App->player1->gold >= CheckCost(Entity::entityType::DEFENSE_AOE))
+			DoLogic(App->player1->Def_AOE_icon);
+
+		else if (isPlayer1 == false && App->player1->gold >= CheckCost(Entity::entityType::DEFENSE_AOE))
+			DoLogic(App->player2->Def_AOE_icon);
+
 		break;
 
 	case::UI_Element::Action::ACT_GOTO_DEPLOY:
@@ -2074,6 +2099,10 @@ void Player::UpdateGeneralUI(Entity* building)
 
 	sprintf_s(repair_cost_label, " - %i $", building->repair_cost);
 
+	sprintf_s(upgrade_cost_label, " - %i $", building->Upgrade_Cost);
+
+	
+
 	if (building->type == Entity::entityType::BARRACKS)
 	{
 		Create_troops->visible = true;
@@ -2093,50 +2122,6 @@ void Player::UpdateGeneralUI(Entity* building)
 	}
 
 }
-
-void Player::DrawBuildingCollider(int type, bool isPlayer1)
-{
-	
-	if(type == Entity::entityType::TOWNHALL && isPlayer1 == true)
-	{
-
-		selected_texture.x = (*building_selected)->position.first - ((*building_selected)->collider.dimensions.first * 20);
-
-		selected_texture.y = (*building_selected)->position.second - (*building_selected)->Current_Animation->frames->h + ((*building_selected)->collider.dimensions.second * 20);
-		selected_texture.w = (*building_selected)->Current_Animation->frames->w;
-		selected_texture.h = (*building_selected)->Current_Animation->frames->h;
-	}
-	else if (type == Entity::entityType::TOWNHALL && isPlayer1 == false)
-	{
-		selected_texture.x = (*building_selected)->position.first - ((*building_selected)->collider.dimensions.first * 8);
-		selected_texture.y = (*building_selected)->position.second - (*building_selected)->Current_Animation->frames->h + ((*building_selected)->collider.dimensions.second * 40);
-		selected_texture.w = (*building_selected)->Current_Animation->frames->w;
-		selected_texture.h = (*building_selected)->Current_Animation->frames->h;
-	}
-	else if (type == Entity::entityType::MINES || type == Entity::entityType::BARRACKS)
-	{
-		selected_texture.x = (*building_selected)->position.first - ((*building_selected)->collider.dimensions.first * 20);
-		selected_texture.y = (*building_selected)->position.second - (*building_selected)->Current_Animation->frames->h + ((*building_selected)->collider.dimensions.second * 20);
-		selected_texture.w = (*building_selected)->Current_Animation->frames->w;
-		selected_texture.h = (*building_selected)->Current_Animation->frames->h;
-	}
-	else
-	{
-		selected_texture.x = (*building_selected)->position.first;
-		selected_texture.y = (*building_selected)->position.second - (*building_selected)->Current_Animation->frames->h + ((*building_selected)->collider.dimensions.second * 20);
-		selected_texture.w = (*building_selected)->Current_Animation->frames->w;
-		selected_texture.h = (*building_selected)->Current_Animation->frames->h;
-	}
-
-
-
-
-	if (isPlayer1)
-		App->render->DrawQuad(selected_texture, 255, 0, 0, 100, true);
-	else
-		App->render->DrawQuad(selected_texture, 0, 0, 255, 100, true);
-}
-
 
 void Player::Blit_Info()
 {
