@@ -72,9 +72,9 @@ public:
 		health_lv.push_back(config.child("health").attribute("lvl2").as_uint(0));
 		health_lv.push_back(config.child("health").attribute("lvl3").as_uint(0));
 
-		upgrade_cost.push_back(0);
+		/*upgrade_cost.push_back(0);
 		upgrade_cost.push_back(config.child("upgrade_cost").attribute("ToLvl2").as_int(0));
-		upgrade_cost.push_back(config.child("upgrade_cost").attribute("ToLvl3").as_int(0));
+		upgrade_cost.push_back(config.child("upgrade_cost").attribute("ToLvl3").as_int(0));*/
 
 		damage_lv.push_back(config.child("damage").attribute("lvl1").as_uint(0));
 		damage_lv.push_back(config.child("damage").attribute("lvl2").as_uint(0));
@@ -119,8 +119,8 @@ public:
 		health_lv.clear();
 		health_lv.resize(0);
 
-		upgrade_cost.clear();
-		upgrade_cost.resize(0);
+		//upgrade_cost.clear();
+		//upgrade_cost.resize(0);
 
 		damage_lv.clear();
 		damage_lv.resize(0);
@@ -182,7 +182,8 @@ public:
 
 	vector<uint> health_lv;
 	vector<uint> damage_lv;
-	vector<uint> upgrade_cost;
+	//vector<uint> upgrade_cost;
+	int Upgrade_Cost = 0;
 
 	pair<int, int> position;
 	pair<int,int> size;

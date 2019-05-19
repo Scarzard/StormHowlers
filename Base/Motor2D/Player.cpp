@@ -2077,6 +2077,10 @@ void Player::UpdateGeneralUI(Entity* building)
 
 	sprintf_s(repair_cost_label, " - %i $", building->repair_cost);
 
+	sprintf_s(upgrade_cost_label, " - %i $", building->Upgrade_Cost);
+
+	
+
 	if (building->type == Entity::entityType::BARRACKS)
 	{
 		Create_troops->visible = true;
