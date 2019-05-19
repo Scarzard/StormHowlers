@@ -1130,21 +1130,18 @@ void Player::UpdateWalkabilityMap(char cell_type, Collider collider) //update wa
 
 int Player::CheckCost(Entity::entityType type)
 {
-	
+	//
 	if (type == Entity::entityType::BARRACKS)
-		return 3000;
+		return 1000;
 
 	else if (type == Entity::entityType::DEFENSE_AOE)
-		return 2000;
-
-	else if (type == Entity::entityType::DEFENSE_TARGET) // TESLA (esta al reves?)
-		return 3500;
+		return 500;
 
 	else if (type == Entity::entityType::MINES)
 		return 2000;
 
 	else if (type == Entity::entityType::MAIN_DEFENSE) // Torreta single target (esta al reves?)
-		return 3500;
+		return 800;
 
 	else
 		return 0;
