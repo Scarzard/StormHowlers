@@ -178,6 +178,7 @@ public:
 	list<Building*> buildings;
 	SDL_Rect selected_texture = { 0,0,0,0 };
 	list<Building*>::iterator building_selected;
+	list<Building*>::iterator last_building;
 	vector<Group*> groups = vector<Group*>();
 	int group = 0;
 

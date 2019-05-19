@@ -616,7 +616,10 @@ bool Player::Update(float dt)
 			}
 			else
 			{
-				if (building_selected == buildings.end())
+				last_building = buildings.end();
+				last_building--;
+
+				if (building_selected == last_building)
 				{
 					building_selected = buildings.begin();
 				}
@@ -663,7 +666,9 @@ bool Player::Update(float dt)
 			{
 				if (building_selected == buildings.begin())
 				{
-					building_selected = buildings.end();
+					last_building = buildings.end();
+					last_building--;
+					building_selected = last_building;
 				}
 				else
 				{
