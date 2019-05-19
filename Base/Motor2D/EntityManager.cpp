@@ -130,25 +130,25 @@ bool EntityManager::LoadSamples() {
 	engineer_p1_sample.moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	engineer_p1_sample.shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
-	engineer_p1_sample.idle = engineer_p1_sample.idle->LoadAnimation(path.data(), (true) ? "red_idle" : "blue_idle");
+	engineer_p1_sample.idle = engineer_p1_sample.idle->LoadAnimation(path.data(), "red_idle");
 
-	engineer_p1_sample.moving[NORTH] = engineer_p1_sample.moving[NORTH]->LoadAnimation(path.data(), (true) ? "red_run_N" : "blue_run_N");
-	engineer_p1_sample.moving[SOUTH] = engineer_p1_sample.moving[SOUTH]->LoadAnimation(path.data(), (true) ? "red_run_S" : "blue_run_S");
-	engineer_p1_sample.moving[EAST] = engineer_p1_sample.moving[EAST]->LoadAnimation(path.data(), (true) ?   "red_run_E" : "blue_run_E");
-	engineer_p1_sample.moving[WEST] = engineer_p1_sample.moving[WEST]->LoadAnimation(path.data(), (true) ?   "red_run_W" : "blue_run_W");
-	engineer_p1_sample.moving[NORTHEAST] = engineer_p1_sample.moving[NORTHEAST]->LoadAnimation(path.data(), (true) ? "red_run_NE" : "blue_run_NE");
-	engineer_p1_sample.moving[NORTHWEST] = engineer_p1_sample.moving[NORTHWEST]->LoadAnimation(path.data(), (true) ? "red_run_NW" : "blue_run_NW");
-	engineer_p1_sample.moving[SOUTHEAST] = engineer_p1_sample.moving[SOUTHEAST]->LoadAnimation(path.data(), (true) ? "red_run_SE" : "blue_run_SE");
-	engineer_p1_sample.moving[SOUTHWEST] = engineer_p1_sample.moving[SOUTHWEST]->LoadAnimation(path.data(), (true) ? "red_run_SW" : "blue_run_SW");
+	engineer_p1_sample.moving[NORTH] = engineer_p1_sample.moving[NORTH]->LoadAnimation(path.data(),			"red_run_N" );
+	engineer_p1_sample.moving[SOUTH] = engineer_p1_sample.moving[SOUTH]->LoadAnimation(path.data(),			"red_run_S" );
+	engineer_p1_sample.moving[EAST] = engineer_p1_sample.moving[EAST]->LoadAnimation(path.data(),			"red_run_E" );
+	engineer_p1_sample.moving[WEST] = engineer_p1_sample.moving[WEST]->LoadAnimation(path.data(),			"red_run_W" );
+	engineer_p1_sample.moving[NORTHEAST] = engineer_p1_sample.moving[NORTHEAST]->LoadAnimation(path.data(), "red_run_NE");
+	engineer_p1_sample.moving[NORTHWEST] = engineer_p1_sample.moving[NORTHWEST]->LoadAnimation(path.data(), "red_run_NW");
+	engineer_p1_sample.moving[SOUTHEAST] = engineer_p1_sample.moving[SOUTHEAST]->LoadAnimation(path.data(), "red_run_SE");
+	engineer_p1_sample.moving[SOUTHWEST] = engineer_p1_sample.moving[SOUTHWEST]->LoadAnimation(path.data(), "red_run_SW");
 
-	engineer_p1_sample.shooting[NORTH] = engineer_p1_sample.shooting[NORTH]->LoadAnimation(path.data(), (true) ? "red_search_N" : "blue_search_N");
-	engineer_p1_sample.shooting[SOUTH] = engineer_p1_sample.shooting[SOUTH]->LoadAnimation(path.data(), (true) ? "red_search_S" : "blue_search_S");
-	engineer_p1_sample.shooting[EAST] = engineer_p1_sample.shooting[EAST]->LoadAnimation(path.data(), (true) ?   "red_search_E" : "blue_search_E");
-	engineer_p1_sample.shooting[WEST] = engineer_p1_sample.shooting[WEST]->LoadAnimation(path.data(), (true) ?   "red_search_W" : "blue_search_W");
-	engineer_p1_sample.shooting[NORTHEAST] = engineer_p1_sample.shooting[NORTHEAST]->LoadAnimation(path.data(), (true) ? "red_search_NE" : "blue_search_NE");
-	engineer_p1_sample.shooting[NORTHWEST] = engineer_p1_sample.shooting[NORTHWEST]->LoadAnimation(path.data(), (true) ? "red_search_NW" : "blue_search_NW");
-	engineer_p1_sample.shooting[SOUTHEAST] = engineer_p1_sample.shooting[SOUTHEAST]->LoadAnimation(path.data(), (true) ? "red_search_SE" : "blue_search_SE");
-	engineer_p1_sample.shooting[SOUTHWEST] = engineer_p1_sample.shooting[SOUTHWEST]->LoadAnimation(path.data(), (true) ? "red_search_SW" : "blue_search_SW");
+	engineer_p1_sample.shooting[NORTH] = engineer_p1_sample.shooting[NORTH]->LoadAnimation(path.data(),			"red_search_N" );
+	engineer_p1_sample.shooting[SOUTH] = engineer_p1_sample.shooting[SOUTH]->LoadAnimation(path.data(),			"red_search_S" );
+	engineer_p1_sample.shooting[EAST] = engineer_p1_sample.shooting[EAST]->LoadAnimation(path.data(),			"red_search_E" );
+	engineer_p1_sample.shooting[WEST] = engineer_p1_sample.shooting[WEST]->LoadAnimation(path.data(),			"red_search_W" );
+	engineer_p1_sample.shooting[NORTHEAST] = engineer_p1_sample.shooting[NORTHEAST]->LoadAnimation(path.data(), "red_search_NE");
+	engineer_p1_sample.shooting[NORTHWEST] = engineer_p1_sample.shooting[NORTHWEST]->LoadAnimation(path.data(), "red_search_NW");
+	engineer_p1_sample.shooting[SOUTHEAST] = engineer_p1_sample.shooting[SOUTHEAST]->LoadAnimation(path.data(), "red_search_SE");
+	engineer_p1_sample.shooting[SOUTHWEST] = engineer_p1_sample.shooting[SOUTHWEST]->LoadAnimation(path.data(), "red_search_SW");
 
 	for (int i = NORTH; i <= SOUTHWEST; i++) {
 		engineer_p1_sample.moving[i]->speed = 2;
@@ -164,25 +164,25 @@ bool EntityManager::LoadSamples() {
 	engineer_p2_sample.moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	engineer_p2_sample.shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
-	engineer_p2_sample.idle = engineer_p2_sample.idle->LoadAnimation(path.data(), (false) ? "red_idle" : "blue_idle");
+	engineer_p2_sample.idle = engineer_p2_sample.idle->LoadAnimation(path.data(), "blue_idle");
 
-	engineer_p2_sample.moving[NORTH] = engineer_p2_sample.moving[NORTH]->LoadAnimation(path.data(), (false) ? "red_run_N" : "blue_run_N");
-	engineer_p2_sample.moving[SOUTH] = engineer_p2_sample.moving[SOUTH]->LoadAnimation(path.data(), (false) ? "red_run_S" : "blue_run_S");
-	engineer_p2_sample.moving[EAST] = engineer_p2_sample.moving[EAST]->LoadAnimation(path.data(), (false) ? "red_run_E" : "blue_run_E");
-	engineer_p2_sample.moving[WEST] = engineer_p2_sample.moving[WEST]->LoadAnimation(path.data(), (false) ? "red_run_W" : "blue_run_W");
-	engineer_p2_sample.moving[NORTHEAST] = engineer_p2_sample.moving[NORTHEAST]->LoadAnimation(path.data(), (false) ? "red_run_NE" : "blue_run_NE");
-	engineer_p2_sample.moving[NORTHWEST] = engineer_p2_sample.moving[NORTHWEST]->LoadAnimation(path.data(), (false) ? "red_run_NW" : "blue_run_NW");
-	engineer_p2_sample.moving[SOUTHEAST] = engineer_p2_sample.moving[SOUTHEAST]->LoadAnimation(path.data(), (false) ? "red_run_SE" : "blue_run_SE");
-	engineer_p2_sample.moving[SOUTHWEST] = engineer_p2_sample.moving[SOUTHWEST]->LoadAnimation(path.data(), (false) ? "red_run_SW" : "blue_run_SW");
+	engineer_p2_sample.moving[NORTH] = engineer_p2_sample.moving[NORTH]->LoadAnimation(path.data(),		"blue_run_N");
+	engineer_p2_sample.moving[SOUTH] = engineer_p2_sample.moving[SOUTH]->LoadAnimation(path.data(),		"blue_run_S");
+	engineer_p2_sample.moving[EAST] = engineer_p2_sample.moving[EAST]->LoadAnimation(path.data(),		"blue_run_E");
+	engineer_p2_sample.moving[WEST] = engineer_p2_sample.moving[WEST]->LoadAnimation(path.data(),		"blue_run_W");
+	engineer_p2_sample.moving[NORTHEAST] = engineer_p2_sample.moving[NORTHEAST]->LoadAnimation(path.data(), "blue_run_NE");
+	engineer_p2_sample.moving[NORTHWEST] = engineer_p2_sample.moving[NORTHWEST]->LoadAnimation(path.data(), "blue_run_NW");
+	engineer_p2_sample.moving[SOUTHEAST] = engineer_p2_sample.moving[SOUTHEAST]->LoadAnimation(path.data(), "blue_run_SE");
+	engineer_p2_sample.moving[SOUTHWEST] = engineer_p2_sample.moving[SOUTHWEST]->LoadAnimation(path.data(), "blue_run_SW");
 
-	engineer_p2_sample.shooting[NORTH] = engineer_p2_sample.shooting[NORTH]->LoadAnimation(path.data(), (false) ? "red_search_N" : "blue_search_N");
-	engineer_p2_sample.shooting[SOUTH] = engineer_p2_sample.shooting[SOUTH]->LoadAnimation(path.data(), (false) ? "red_search_S" : "blue_search_S");
-	engineer_p2_sample.shooting[EAST] = engineer_p2_sample.shooting[EAST]->LoadAnimation(path.data(), (false) ? "red_search_E" : "blue_search_E");
-	engineer_p2_sample.shooting[WEST] = engineer_p2_sample.shooting[WEST]->LoadAnimation(path.data(), (false) ? "red_search_W" : "blue_search_W");
-	engineer_p2_sample.shooting[NORTHEAST] = engineer_p2_sample.shooting[NORTHEAST]->LoadAnimation(path.data(), (false) ? "red_search_NE" : "blue_search_NE");
-	engineer_p2_sample.shooting[NORTHWEST] = engineer_p2_sample.shooting[NORTHWEST]->LoadAnimation(path.data(), (false) ? "red_search_NW" : "blue_search_NW");
-	engineer_p2_sample.shooting[SOUTHEAST] = engineer_p2_sample.shooting[SOUTHEAST]->LoadAnimation(path.data(), (false) ? "red_search_SE" : "blue_search_SE");
-	engineer_p2_sample.shooting[SOUTHWEST] = engineer_p2_sample.shooting[SOUTHWEST]->LoadAnimation(path.data(), (false) ? "red_search_SW" : "blue_search_SW");
+	engineer_p2_sample.shooting[NORTH] = engineer_p2_sample.shooting[NORTH]->LoadAnimation(path.data(),		"blue_search_N");
+	engineer_p2_sample.shooting[SOUTH] = engineer_p2_sample.shooting[SOUTH]->LoadAnimation(path.data(),		"blue_search_S");
+	engineer_p2_sample.shooting[EAST] = engineer_p2_sample.shooting[EAST]->LoadAnimation(path.data(),		"blue_search_E");
+	engineer_p2_sample.shooting[WEST] = engineer_p2_sample.shooting[WEST]->LoadAnimation(path.data(),		"blue_search_W");
+	engineer_p2_sample.shooting[NORTHEAST] = engineer_p2_sample.shooting[NORTHEAST]->LoadAnimation(path.data(), "blue_search_NE");
+	engineer_p2_sample.shooting[NORTHWEST] = engineer_p2_sample.shooting[NORTHWEST]->LoadAnimation(path.data(), "blue_search_NW");
+	engineer_p2_sample.shooting[SOUTHEAST] = engineer_p2_sample.shooting[SOUTHEAST]->LoadAnimation(path.data(), "blue_search_SE");
+	engineer_p2_sample.shooting[SOUTHWEST] = engineer_p2_sample.shooting[SOUTHWEST]->LoadAnimation(path.data(), "blue_search_SW");
 
 	for (int i = NORTH; i <= SOUTHWEST; i++) {
 		engineer_p2_sample.moving[i]->speed = 2;
@@ -203,25 +203,25 @@ bool EntityManager::LoadSamples() {
 	hound_p1_sample.moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	hound_p1_sample.shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
-	hound_p1_sample.idle = hound_p1_sample.idle->LoadAnimation(path.data(), (true) ? "idle" : "idle_blue");
+	hound_p1_sample.idle = hound_p1_sample.idle->LoadAnimation(path.data(), "idle");
 
-	hound_p1_sample.moving[NORTH] = hound_p1_sample.moving[NORTH]->LoadAnimation(path.data(), (true) ? "run_N" : "blue_run_N");
-	hound_p1_sample.moving[SOUTH] = hound_p1_sample.moving[SOUTH]->LoadAnimation(path.data(), (true) ? "run_S" : "blue_run_S");
-	hound_p1_sample.moving[EAST] = hound_p1_sample.moving[EAST]->LoadAnimation(path.data(), (true) ? "run_E" : "blue_run_E");
-	hound_p1_sample.moving[WEST] = hound_p1_sample.moving[WEST]->LoadAnimation(path.data(), (true) ? "run_W" : "blue_run_W");
-	hound_p1_sample.moving[NORTHEAST] = hound_p1_sample.moving[NORTHEAST]->LoadAnimation(path.data(), (true) ? "run_NE" : "blue_run_NE");
-	hound_p1_sample.moving[NORTHWEST] = hound_p1_sample.moving[NORTHWEST]->LoadAnimation(path.data(), (true) ? "run_NW" : "blue_run_NW");
-	hound_p1_sample.moving[SOUTHEAST] = hound_p1_sample.moving[SOUTHEAST]->LoadAnimation(path.data(), (true) ? "run_SE" : "blue_run_SE");
-	hound_p1_sample.moving[SOUTHWEST] = hound_p1_sample.moving[SOUTHWEST]->LoadAnimation(path.data(), (true) ? "run_SW" : "blue_run_SW");
+	hound_p1_sample.moving[NORTH] = hound_p1_sample.moving[NORTH]->LoadAnimation(path.data(),		"run_N" );
+	hound_p1_sample.moving[SOUTH] = hound_p1_sample.moving[SOUTH]->LoadAnimation(path.data(),		"run_S" );
+	hound_p1_sample.moving[EAST] = hound_p1_sample.moving[EAST]->LoadAnimation(path.data(),			"run_E" );
+	hound_p1_sample.moving[WEST] = hound_p1_sample.moving[WEST]->LoadAnimation(path.data(),			"run_W" );
+	hound_p1_sample.moving[NORTHEAST] = hound_p1_sample.moving[NORTHEAST]->LoadAnimation(path.data(),"run_NE");
+	hound_p1_sample.moving[NORTHWEST] = hound_p1_sample.moving[NORTHWEST]->LoadAnimation(path.data(),"run_NW");
+	hound_p1_sample.moving[SOUTHEAST] = hound_p1_sample.moving[SOUTHEAST]->LoadAnimation(path.data(),"run_SE");
+	hound_p1_sample.moving[SOUTHWEST] = hound_p1_sample.moving[SOUTHWEST]->LoadAnimation(path.data(),"run_SW");
 
-	hound_p1_sample.shooting[NORTH] = hound_p1_sample.shooting[NORTH]->LoadAnimation(path.data(), (true) ? "attack_N" : "blue_attack_N");
-	hound_p1_sample.shooting[SOUTH] = hound_p1_sample.shooting[SOUTH]->LoadAnimation(path.data(), (true) ? "attack_S" : "blue_attack_S");
-	hound_p1_sample.shooting[EAST] = hound_p1_sample.shooting[EAST]->LoadAnimation(path.data(), (true) ? "attack_E" : "blue_attack_E");
-	hound_p1_sample.shooting[WEST] = hound_p1_sample.shooting[WEST]->LoadAnimation(path.data(), (true) ? "attack_W" : "blue_attack_W");
-	hound_p1_sample.shooting[NORTHEAST] = hound_p1_sample.shooting[NORTHEAST]->LoadAnimation(path.data(), (true) ? "attack_NE" : "blue_attack_NE");
-	hound_p1_sample.shooting[NORTHWEST] = hound_p1_sample.shooting[NORTHWEST]->LoadAnimation(path.data(), (true) ? "attack_NW" : "blue_attack_NW");
-	hound_p1_sample.shooting[SOUTHEAST] = hound_p1_sample.shooting[SOUTHEAST]->LoadAnimation(path.data(), (true) ? "attack_SE" : "blue_attack_SE");
-	hound_p1_sample.shooting[SOUTHWEST] = hound_p1_sample.shooting[SOUTHWEST]->LoadAnimation(path.data(), (true) ? "attack_SW" : "blue_attack_SW");
+	hound_p1_sample.shooting[NORTH] = hound_p1_sample.shooting[NORTH]->LoadAnimation(path.data(),			"attack_N" );
+	hound_p1_sample.shooting[SOUTH] = hound_p1_sample.shooting[SOUTH]->LoadAnimation(path.data(),			"attack_S" );
+	hound_p1_sample.shooting[EAST] = hound_p1_sample.shooting[EAST]->LoadAnimation(path.data(),				"attack_E" );
+	hound_p1_sample.shooting[WEST] = hound_p1_sample.shooting[WEST]->LoadAnimation(path.data(),				"attack_W" );
+	hound_p1_sample.shooting[NORTHEAST] = hound_p1_sample.shooting[NORTHEAST]->LoadAnimation(path.data(),	"attack_NE");
+	hound_p1_sample.shooting[NORTHWEST] = hound_p1_sample.shooting[NORTHWEST]->LoadAnimation(path.data(),	"attack_NW");
+	hound_p1_sample.shooting[SOUTHEAST] = hound_p1_sample.shooting[SOUTHEAST]->LoadAnimation(path.data(),	"attack_SE");
+	hound_p1_sample.shooting[SOUTHWEST] = hound_p1_sample.shooting[SOUTHWEST]->LoadAnimation(path.data(),	"attack_SW");
 
 	for (int i = NORTH; i <= SOUTHWEST; i++) {
 		hound_p1_sample.moving[i]->speed = 2;
@@ -237,25 +237,25 @@ bool EntityManager::LoadSamples() {
 	hound_p2_sample.moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	hound_p2_sample.shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
-	hound_p2_sample.idle = hound_p2_sample.idle->LoadAnimation(path.data(), (false) ? "idle" : "idle_blue");
+	hound_p2_sample.idle = hound_p2_sample.idle->LoadAnimation(path.data(), "idle_blue");
 
-	hound_p2_sample.moving[NORTH] = hound_p2_sample.moving[NORTH]->LoadAnimation(path.data(), (false) ? "run_N" : "blue_run_N");
-	hound_p2_sample.moving[SOUTH] = hound_p2_sample.moving[SOUTH]->LoadAnimation(path.data(), (false) ? "run_S" : "blue_run_S");
-	hound_p2_sample.moving[EAST] = hound_p2_sample.moving[EAST]->LoadAnimation(path.data(), (false) ? "run_E" : "blue_run_E");
-	hound_p2_sample.moving[WEST] = hound_p2_sample.moving[WEST]->LoadAnimation(path.data(), (false) ? "run_W" : "blue_run_W");
-	hound_p2_sample.moving[NORTHEAST] = hound_p2_sample.moving[NORTHEAST]->LoadAnimation(path.data(), (false) ? "run_NE" : "blue_run_NE");
-	hound_p2_sample.moving[NORTHWEST] = hound_p2_sample.moving[NORTHWEST]->LoadAnimation(path.data(), (false) ? "run_NW" : "blue_run_NW");
-	hound_p2_sample.moving[SOUTHEAST] = hound_p2_sample.moving[SOUTHEAST]->LoadAnimation(path.data(), (false) ? "run_SE" : "blue_run_SE");
-	hound_p2_sample.moving[SOUTHWEST] = hound_p2_sample.moving[SOUTHWEST]->LoadAnimation(path.data(), (false) ? "run_SW" : "blue_run_SW");
+	hound_p2_sample.moving[NORTH] = hound_p2_sample.moving[NORTH]->LoadAnimation(path.data(),		  "blue_run_N");
+	hound_p2_sample.moving[SOUTH] = hound_p2_sample.moving[SOUTH]->LoadAnimation(path.data(),		  "blue_run_S");
+	hound_p2_sample.moving[EAST] = hound_p2_sample.moving[EAST]->LoadAnimation(path.data(),			  "blue_run_E");
+	hound_p2_sample.moving[WEST] = hound_p2_sample.moving[WEST]->LoadAnimation(path.data(),			  "blue_run_W");
+	hound_p2_sample.moving[NORTHEAST] = hound_p2_sample.moving[NORTHEAST]->LoadAnimation(path.data(),  "blue_run_NE");
+	hound_p2_sample.moving[NORTHWEST] = hound_p2_sample.moving[NORTHWEST]->LoadAnimation(path.data(),  "blue_run_NW");
+	hound_p2_sample.moving[SOUTHEAST] = hound_p2_sample.moving[SOUTHEAST]->LoadAnimation(path.data(),  "blue_run_SE");
+	hound_p2_sample.moving[SOUTHWEST] = hound_p2_sample.moving[SOUTHWEST]->LoadAnimation(path.data(),  "blue_run_SW");
 
-	hound_p2_sample.shooting[NORTH] = hound_p2_sample.shooting[NORTH]->LoadAnimation(path.data(), (false) ? "attack_N" : "blue_attack_N");
-	hound_p2_sample.shooting[SOUTH] = hound_p2_sample.shooting[SOUTH]->LoadAnimation(path.data(), (false) ? "attack_S" : "blue_attack_S");
-	hound_p2_sample.shooting[EAST] = hound_p2_sample.shooting[EAST]->LoadAnimation(path.data(), (false) ? "attack_E" : "blue_attack_E");
-	hound_p2_sample.shooting[WEST] = hound_p2_sample.shooting[WEST]->LoadAnimation(path.data(), (false) ? "attack_W" : "blue_attack_W");
-	hound_p2_sample.shooting[NORTHEAST] = hound_p2_sample.shooting[NORTHEAST]->LoadAnimation(path.data(), (false) ? "attack_NE" : "blue_attack_NE");
-	hound_p2_sample.shooting[NORTHWEST] = hound_p2_sample.shooting[NORTHWEST]->LoadAnimation(path.data(), (false) ? "attack_NW" : "blue_attack_NW");
-	hound_p2_sample.shooting[SOUTHEAST] = hound_p2_sample.shooting[SOUTHEAST]->LoadAnimation(path.data(), (false) ? "attack_SE" : "blue_attack_SE");
-	hound_p2_sample.shooting[SOUTHWEST] = hound_p2_sample.shooting[SOUTHWEST]->LoadAnimation(path.data(), (false) ? "attack_SW" : "blue_attack_SW");
+	hound_p2_sample.shooting[NORTH] = hound_p2_sample.shooting[NORTH]->LoadAnimation(path.data(),		"blue_attack_N");
+	hound_p2_sample.shooting[SOUTH] = hound_p2_sample.shooting[SOUTH]->LoadAnimation(path.data(),		"blue_attack_S");
+	hound_p2_sample.shooting[EAST] = hound_p2_sample.shooting[EAST]->LoadAnimation(path.data(),			"blue_attack_E");
+	hound_p2_sample.shooting[WEST] = hound_p2_sample.shooting[WEST]->LoadAnimation(path.data(),			"blue_attack_W");
+	hound_p2_sample.shooting[NORTHEAST] = hound_p2_sample.shooting[NORTHEAST]->LoadAnimation(path.data(), "blue_attack_NE");
+	hound_p2_sample.shooting[NORTHWEST] = hound_p2_sample.shooting[NORTHWEST]->LoadAnimation(path.data(), "blue_attack_NW");
+	hound_p2_sample.shooting[SOUTHEAST] = hound_p2_sample.shooting[SOUTHEAST]->LoadAnimation(path.data(), "blue_attack_SE");
+	hound_p2_sample.shooting[SOUTHWEST] = hound_p2_sample.shooting[SOUTHWEST]->LoadAnimation(path.data(), "blue_attack_SW");
 
 	for (int i = NORTH; i <= SOUTHWEST; i++) {
 		hound_p2_sample.moving[i]->speed = 2;
@@ -972,18 +972,18 @@ void EntityManager::LoadAnimations(Troop* troop) {
 	switch (troop->type)
 	{
 	case Entity::entityType::SOLDIER:
-		sample = (troop->fromPlayer1) ? (Soldier*)&soldier_p1_sample : (Soldier*)&soldier_p2_sample;
+		sample = (troop->fromPlayer1) ? (Soldier*)&soldier_p2_sample : (Soldier*)&soldier_p1_sample;
 		break;
 	case Entity::entityType::TANKMAN:
-		sample = (troop->fromPlayer1) ? (Soldier*)&soldier_p1_sample : (Soldier*)&soldier_p2_sample;
+		sample = (troop->fromPlayer1) ? (Soldier*)&soldier_p2_sample : (Soldier*)&soldier_p1_sample;
 		//sample = (troop->fromPlayer1) ? (Tankman*)&soldier_p1_sample : (Tankman*)&soldier_p2_sample;
 		break;
 	case Entity::entityType::INFILTRATOR:
 		//sample = (troop->fromPlayer1) ? (Infiltrator*)&infiltrator_p1_sample : (Infiltrator*)&infiltrator_p2_sample;
-		sample = (troop->fromPlayer1) ? (Soldier*)&soldier_p1_sample : (Soldier*)&soldier_p2_sample;
+		sample = (troop->fromPlayer1) ? (Soldier*)&soldier_p2_sample : (Soldier*)&soldier_p1_sample;
 		break;
 	case Entity::entityType::ENGINEER:
-		sample = (troop->fromPlayer1) ? (Engineer*)&engineer_p1_sample : (Engineer*)&engineer_p2_sample;
+		sample = (troop->fromPlayer1) ? (Engineer*)&engineer_p2_sample : (Engineer*)&engineer_p1_sample;
 		break;
 	case Entity::entityType::WAR_HOUND:
 		sample = (troop->fromPlayer1) ? (Hound*)&hound_p2_sample : (Hound*)&hound_p1_sample;

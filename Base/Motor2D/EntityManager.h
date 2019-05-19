@@ -89,9 +89,11 @@ public:
 	Soldier			soldier_p1_sample;
 	Soldier			soldier_p2_sample;
 
+	//To LoadSample
 	Tankman			tankman_p1_sample;
 	Tankman			tankman_p2_sample;
 
+	//To LoadSample
 	Infiltrator		infiltrator_p1_sample;
 	Infiltrator		infiltrator_p2_sample;
 
