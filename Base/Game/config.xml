@@ -121,9 +121,9 @@
       <sentrygun>
         <health lvl1="500" lvl2="600" lvl3="750"/>
         <upgrade_cost ToLvl2="150" ToLvl3="300"/>
-        <damage lvl1="30" lvl2="40" lvl3="50" ToLv4="0"/>
+        <damage lvl1="120" lvl2="180" lvl3="240" ToLv4="0"/>
         <size width="1" height="1"/>
-        <attack rate="3" targets="5" range="50"/>
+        <attack rate="5" targets="1" range="200"/>
       </sentrygun>
 
       <CommandCenter>
@@ -145,19 +145,19 @@
       </Walls>
 
       <Tesla>
-        <health lvl1="1000" lvl2="12000" lvl3="1500"/>
+        <health lvl1="1000" lvl2="1200" lvl3="1500"/>
         <size width="2" height="2"/>
         <upgrade_cost ToLvl2="500" ToLvl3="1000"/>
-        <damage lvl1="50" lvl2="60" lvl3="70" ToLv4="0"/>
+        <damage lvl1="200" lvl2="300" lvl3="400" ToLv4="0"/>
         <attack rate="2" targets="5" range="200"/>
       </Tesla>
 
       <aoe>
-        <health lvl1="100" lvl2="120" lvl3="150"/>
-        <upgrade_cost ToLvl2="50" ToLvl3="70" ToLv4="0"/>
+        <health lvl1="400" lvl2="450" lvl3="600"/>
+        <upgrade_cost ToLvl2="50" ToLvl3="150" ToLv4="0"/>
         <size width="3" height="3"/>
-        <damage lvl1="50" lvl2="60" lvl3="70"/>
-        <attack rate="2" targets="5" range="150"/>
+        <damage lvl1="60" lvl2="120" lvl3="180"/>
+        <attack rate="1" targets="5" range="150"/>
       </aoe>
       
       <Barracks>
@@ -185,7 +185,7 @@
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <size width="1" height="1"/>
         <damage lvl1="10" lvl2="15" lvl3="20"/>
-        <attack rate="1" targets="1" range="3"/>
+        <attack rate="1" targets="1" range="2"/>
         <speed value="1"/>
       </BasicSoldier>
       <engineer>
@@ -194,7 +194,7 @@
         <size width="1" height="1"/>
         <damage lvl1="35" lvl2="40" lvl3="45"/>
         <attack rate="2" targets="1" range="1"/>
-        <speed value="0.5"/>
+        <speed value="1"/>
       </engineer>
       <tankman>
         <health lvl1="250" lvl2="280" lvl3="320"/>
@@ -202,7 +202,7 @@
         <size width="1" height="1"/>
         <damage lvl1="40" lvl2="50" lvl3="60"/>
         <attack rate="4" targets="1" range="1"/>
-        <speed value="0.5"/>
+        <speed value="1"/>
       </tankman>
       <infiltrator>
         <health lvl1="120" lvl2="150" lvl3="160"/>

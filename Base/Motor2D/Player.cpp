@@ -506,7 +506,7 @@ bool Player::Update(float dt)
 			}
 			else if ((*focus) == Def_Target_icon)
 			{
-				BuildingCost = 800;
+				BuildingCost = 1200;
 			}
 			else if ((*focus) == Mines_icon)
 			{
@@ -1140,7 +1140,7 @@ int Player::CheckCost(Entity::entityType type)
 		return 2000;
 
 	else if (type == Entity::entityType::MAIN_DEFENSE) // Torreta single target (esta al reves?)
-		return 800;
+		return 1200;
 
 	else
 		return 0;
@@ -1211,7 +1211,8 @@ void Player::ShowRange(Entity::entityType Type, Collider collider)
 	}
 	else if (Type == Entity::entityType::MAIN_DEFENSE)
 	{
-		range_rect = { 700,0,200,200 };
+		range_rect = { 400,0,300,300 };
+		//range_rect = { 700,0,200,200 };
 	}
 	
 	App->render->Blit(range_tex, (collider.tiles[0].first) - (range_rect.w * 0.5f), (collider.tiles[0].second) - (range_rect.h * 0.5f), &range_rect); //Draw Range
