@@ -410,9 +410,9 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			//--------- Troop buttons
 		case UI_Element::Action::ACT_DEPLOY_SOLDIER: //GI
 			if (App->player1->Soldier_icon == data)
-				data->rect = { 1843, 162, 85, 81 };
-			else
 				data->rect = { 662, 0, 85, 81 };
+			else
+				data->rect = { 1843, 162, 85, 81 };
 			break;
 		case UI_Element::Action::ACT_DEPLOY_TANKMAN: //TESLA TROOPER
 			data->rect = { 576, 0, 85, 81 };
@@ -584,9 +584,9 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			//--------- Troop buttons
 		case UI_Element::Action::ACT_DEPLOY_SOLDIER: //GI
 			if(App->player1->Soldier_icon == data)
-				data->rect = { 1928, 162, 85, 81 };
-			else
 				data->rect = { 1587, 0, 85, 81 };
+			else
+				data->rect = { 1928, 162, 85, 81 };	
 			break;
 		case UI_Element::Action::ACT_DEPLOY_TANKMAN: //TESLA TROOPER
 			data->rect = { 1501, 0, 85, 81 };

@@ -31,7 +31,7 @@ public:
 		config = App->LoadConfig(config_file);
 		config = config.child("entitymanager").child("troops").child(name.data());
 
-		speed = config.child("speed").attribute("value").as_int();
+		speed = config.child("speed").attribute("value").as_float();
 		collider = Collider;
 		state = TROOP_IDLE;
 		init_position = pos;

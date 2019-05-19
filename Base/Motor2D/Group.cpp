@@ -26,7 +26,7 @@ void Group::removeUnit(Troop * unit_toremove)
 {
 	std::list <Troop*>::const_iterator unit = Units.begin();
 	std::list <Troop*>::const_iterator unitEnd = Units.end();
-
+	
 	//Player* player = App->player1;
 	//if (unit != unitEnd && !(*unit)->fromPlayer1) {
 	//	player = App->player2;

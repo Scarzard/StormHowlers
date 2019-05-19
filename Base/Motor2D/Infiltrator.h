@@ -2,7 +2,6 @@
 #define __Infiltrator_H__
 
 #include "Troop.h"
-#include "EntityManager.h"
 
 
 

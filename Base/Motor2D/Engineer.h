@@ -2,7 +2,6 @@
 #define __Enginner_H__
 
 #include "Troop.h"
-#include "EntityManager.h"
 
 
 class Engineer : public Troop

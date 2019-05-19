@@ -22,7 +22,7 @@
 </data>
  </layer>
  <imagelayer name="Capa de Imagen 1">
-  <image source="../textures/BasicSoldier_tiled.png" width="704" height="561"/>
+  <image source="infiltrator_anim.png" width="704" height="561"/>
  </imagelayer>
  <objectgroup name="red_idle">
   <object id="2" x="0" y="0" width="44" height="33"/>

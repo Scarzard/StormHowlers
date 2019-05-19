@@ -54,7 +54,7 @@ bool Player::Start()
 
 	time_iterator = number_of_troops = BuildingCost = BarracksCreated = TroopCost = 0;
 
-	gold = 3500;
+	gold = 0;
 	gold_persecond = 0;
 
 	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = Rocket_abilities = Tank_abilities = 0;
@@ -220,11 +220,9 @@ bool Player::Update(float dt)
 		// DRAW QUAD on SELECTED BUILDING 
 		if (currentUI == CURRENT_UI::CURR_SELECTING_BUILDING)
 		{
-
 			if (In_SelectBuilding->visible == false)
-				In_SelectBuilding->visible = true;
-			
-			DrawBuildingCollider((*building_selected)->type, isPlayer1);
+
+				In_SelectBuilding->visible = true;			
 			
 			// Draw Range
 			if ((*building_selected)->type == Entity::entityType::DEFENSE_AOE ||
@@ -237,7 +235,7 @@ bool Player::Update(float dt)
 		else
 		{
 			if(In_SelectBuilding!=nullptr && In_SelectBuilding->visible == true )
-				In_SelectBuilding->visible = false;
+				In_SelectBuilding->visible = false;	
 		}
 
 		
@@ -359,23 +357,23 @@ bool Player::Update(float dt)
 
 			if (UI_troop_type == Entity::entityType::SOLDIER)
 			{
-				TroopCost = 250 * number_of_troops;
+				TroopCost = 20 * number_of_troops;
 			}
 			else if (UI_troop_type == Entity::entityType::TANKMAN)
 			{
-				TroopCost = 500 * number_of_troops;
+				TroopCost = 80 * number_of_troops;
 			}
 			else if (UI_troop_type == Entity::entityType::INFILTRATOR)
 			{
-				TroopCost = 1000 * number_of_troops;
+				TroopCost = 100 * number_of_troops;
 			}
 			else if (UI_troop_type == Entity::entityType::ENGINEER)
 			{
-				TroopCost = 2000 * number_of_troops;
+				TroopCost = 25 * number_of_troops;
 			}
 			else if (UI_troop_type == Entity::entityType::WAR_HOUND)
 			{
-				TroopCost = 1250 * number_of_troops;
+				TroopCost = 50 * number_of_troops;
 			}
 
 			if (gamepad.Controller[BUTTON_A] == KEY_UP && gold >= TroopCost)
@@ -504,11 +502,11 @@ bool Player::Update(float dt)
 		{
 			if ((*focus) == Def_AOE_icon)
 			{
-				BuildingCost = 2000;
+				BuildingCost = 500;
 			}
 			else if ((*focus) == Def_Target_icon)
 			{
-				BuildingCost = 3500;
+				BuildingCost = 1200;
 			}
 			else if ((*focus) == Mines_icon)
 			{
@@ -516,7 +514,7 @@ bool Player::Update(float dt)
 			}
 			else if ((*focus) == Barracks_icon)
 			{
-				BuildingCost = 3000;
+				BuildingCost = 1000;
 			}
 
 		}
@@ -618,7 +616,10 @@ bool Player::Update(float dt)
 			}
 			else
 			{
-				if (building_selected == buildings.end())
+				last_building = buildings.end();
+				last_building--;
+
+				if (building_selected == last_building)
 				{
 					building_selected = buildings.begin();
 				}
@@ -665,7 +666,9 @@ bool Player::Update(float dt)
 			{
 				if (building_selected == buildings.begin())
 				{
-					building_selected = buildings.end();
+					last_building = buildings.end();
+					last_building--;
+					building_selected = last_building;
 				}
 				else
 				{
@@ -1131,21 +1134,18 @@ void Player::UpdateWalkabilityMap(char cell_type, Collider collider) //update wa
 
 int Player::CheckCost(Entity::entityType type)
 {
-	
+	//
 	if (type == Entity::entityType::BARRACKS)
-		return 3000;
+		return 1000;
 
 	else if (type == Entity::entityType::DEFENSE_AOE)
-		return 2000;
-
-	else if (type == Entity::entityType::DEFENSE_TARGET) // TESLA (esta al reves?)
-		return 3500;
+		return 500;
 
 	else if (type == Entity::entityType::MINES)
 		return 2000;
 
 	else if (type == Entity::entityType::MAIN_DEFENSE) // Torreta single target (esta al reves?)
-		return 3500;
+		return 1200;
 
 	else
 		return 0;
@@ -1216,7 +1216,8 @@ void Player::ShowRange(Entity::entityType Type, Collider collider)
 	}
 	else if (Type == Entity::entityType::MAIN_DEFENSE)
 	{
-		range_rect = { 700,0,200,200 };
+		range_rect = { 400,0,300,300 };
+		//range_rect = { 700,0,200,200 };
 	}
 	
 	App->render->Blit(range_tex, (collider.tiles[0].first) - (range_rect.w * 0.5f), (collider.tiles[0].second) - (range_rect.h * 0.5f), &range_rect); //Draw Range
@@ -2127,50 +2128,6 @@ void Player::UpdateGeneralUI(Entity* building)
 	}
 
 }
-
-void Player::DrawBuildingCollider(int type, bool isPlayer1)
-{
-	
-	if(type == Entity::entityType::TOWNHALL && isPlayer1 == true)
-	{
-
-		selected_texture.x = (*building_selected)->position.first - ((*building_selected)->collider.dimensions.first * 20);
-
-		selected_texture.y = (*building_selected)->position.second - (*building_selected)->Current_Animation->frames->h + ((*building_selected)->collider.dimensions.second * 20);
-		selected_texture.w = (*building_selected)->Current_Animation->frames->w;
-		selected_texture.h = (*building_selected)->Current_Animation->frames->h;
-	}
-	else if (type == Entity::entityType::TOWNHALL && isPlayer1 == false)
-	{
-		selected_texture.x = (*building_selected)->position.first - ((*building_selected)->collider.dimensions.first * 8);
-		selected_texture.y = (*building_selected)->position.second - (*building_selected)->Current_Animation->frames->h + ((*building_selected)->collider.dimensions.second * 40);
-		selected_texture.w = (*building_selected)->Current_Animation->frames->w;
-		selected_texture.h = (*building_selected)->Current_Animation->frames->h;
-	}
-	else if (type == Entity::entityType::MINES || type == Entity::entityType::BARRACKS)
-	{
-		selected_texture.x = (*building_selected)->position.first - ((*building_selected)->collider.dimensions.first * 20);
-		selected_texture.y = (*building_selected)->position.second - (*building_selected)->Current_Animation->frames->h + ((*building_selected)->collider.dimensions.second * 20);
-		selected_texture.w = (*building_selected)->Current_Animation->frames->w;
-		selected_texture.h = (*building_selected)->Current_Animation->frames->h;
-	}
-	else
-	{
-		selected_texture.x = (*building_selected)->position.first;
-		selected_texture.y = (*building_selected)->position.second - (*building_selected)->Current_Animation->frames->h + ((*building_selected)->collider.dimensions.second * 20);
-		selected_texture.w = (*building_selected)->Current_Animation->frames->w;
-		selected_texture.h = (*building_selected)->Current_Animation->frames->h;
-	}
-
-
-
-
-	if (isPlayer1)
-		App->render->DrawQuad(selected_texture, 255, 0, 0, 100, true);
-	else
-		App->render->DrawQuad(selected_texture, 0, 0, 255, 100, true);
-}
-
 
 void Player::Blit_Info()
 {

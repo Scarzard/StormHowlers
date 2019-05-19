@@ -191,6 +191,34 @@ bool MainDefense::Update(float dt)
 
 	ChangeAnimation(closest);
 
+	if (fromPlayer1)
+	{
+		if (App->player1->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player1->GetSelectedBuilding() == this)
+		{
+			if (building->Finished())
+				Current_Animation = glow;
+		}
+		else
+		{
+			if (building->Finished())
+				Current_Animation = idle;
+		}
+	}
+	else
+	{
+		if (App->player2->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player2->GetSelectedBuilding() == this)
+		{
+			if (building->Finished())
+				Current_Animation = glow;
+		}
+		else
+		{
+			if (building->Finished())
+				Current_Animation = idle;
+		}
+	}
+
+
 	Building::Update(dt);
 
 
@@ -206,19 +234,7 @@ void MainDefense::CleanUp()
 
 void MainDefense::LoadAnimations(bool isPlayer1, string path)
 {
-	//moving = vector<Animation*>(entityDir::MAX, nullptr);
 	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
-
-	//idle = idle->LoadAnimation(path.data(), (isPlayer1) ? "red_constructing" : "blue_constructing");
-
-	/*moving[NORTH] = moving[NORTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_north" : "blue_north");
-	moving[SOUTH] = moving[SOUTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_south" : "blue_south");
-	moving[EAST] = moving[EAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_east" : "blue_east");
-	moving[WEST] = moving[WEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_west" : "blue_west");
-	moving[NORTHEAST] = moving[NORTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_northeast" : "blue_northeast");
-	moving[NORTHWEST] = moving[NORTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_northwest" : "blue_northwest");
-	moving[SOUTHEAST] = moving[SOUTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_southeast" : "blue_southeast");
-	moving[SOUTHWEST] = moving[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_southwest" : "blue_southwest");*/
 
 	shooting[NORTH] = shooting[NORTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_N" : "blue_N");
 	shooting[SOUTH] = shooting[SOUTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_S" : "blue_S");
@@ -246,15 +262,18 @@ void MainDefense::LoadAnimations(bool isPlayer1, string path)
 
 	building = building->LoadAnimation(path.data(), (isPlayer1) ? "red_constructing" : "blue_constructing");
 	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "red_NE" : "blue_SW");
-	
+	glow = glow->LoadAnimation(path.data(), (isPlayer1) ? "red_glow" : "blue_glow");
+
+
 	idle->speed = 0;
 	level1->speed = 10;
 	building->speed = 10;
-
+	glow->speed = 0; 
 
 	idle->loop = false;
 	building->loop = false;
 	level1->loop = false;
+	glow->loop = false;
 	Current_Animation = building;
 }
 

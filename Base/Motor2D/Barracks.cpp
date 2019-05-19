@@ -178,8 +178,32 @@ bool Barracks::Update(float dt)
 
 	ChangeAnimation();
 
-	if (Current_Animation->Finished() == true)
-		Current_Animation = level1;
+	if (fromPlayer1)
+	{
+		if (App->player1->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player1->GetSelectedBuilding() == this)
+		{
+			if (building->Finished())
+				Current_Animation = glow;
+		}
+		else
+		{
+			if (building->Finished())
+				Current_Animation = level1; 
+		}
+	}
+	else
+	{
+		if (App->player2->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player2->GetSelectedBuilding() == this)
+		{
+			if (building->Finished())
+				Current_Animation = glow;
+		}
+		else
+		{
+			if (building->Finished())
+				Current_Animation = level1;
+		}
+	}
 
 	if (is_deploying) {
 
@@ -277,11 +301,16 @@ bool Barracks::DeployTroops(int amount_per_frame)
 void Barracks::LoadAnimations(bool isPlayer1, string path) {
 	level1 = level1->LoadAnimation(&path[0], (isPlayer1) ? "blue_idle" : "red_idle");
 	building = building->LoadAnimation(&path[0], (isPlayer1) ? "blue_constructing" : "red_constructing");
+	glow = glow->LoadAnimation(&path[0], (isPlayer1) ? "blue_glow" : "red_glow");
 
 	level1->speed = 5;
 	building->speed = 8;
+	glow->speed = 0; 
 
 	building->loop = false;
+	level1->loop = true;
+	glow->loop = true;
+
 	Current_Animation = building;
 };
 

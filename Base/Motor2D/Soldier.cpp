@@ -422,22 +422,22 @@ void Soldier::MovementPathfind(Entity* target, pair <int, int> map_pos)
 
 	if (position.first <= target->position.first - offset && east == true)
 	{
-		position.first += 2;
+		position.first += 2 * speed;
 		move = true;
 	}
 	else if (position.first >= target->position.first + offset && west == true)
 	{
-		position.first -= 2;
+		position.first -= 2 * speed;
 		move = true;
 	}
 	if (position.second <= target->position.second - offset * 2 && south == true)
 	{
-		position.second += 1;
+		position.second += 1 * speed;
 		move = true;
 	}
 	else if (position.second >= target->position.second + offset * 2 && north == true)
 	{
-		position.second -= 1;
+		position.second -= 1 * speed;
 		move = true;
 	}
 
@@ -514,15 +514,15 @@ void Soldier::SimpleMovement()
 		if (south)
 		{
 			//move front
-			position.first += -2;
-			position.second += 1;
+			position.first += -2 * speed;
+			position.second += 1 * speed;
 			facing = SOUTH;
 		}
 		else
 		{
 			//move rigth
-			position.first += 2;
-			position.second += 1;
+			position.first += 2 * speed;
+			position.second += 1 * speed;
 			facing = EAST;
 		}
 
@@ -538,15 +538,15 @@ void Soldier::SimpleMovement()
 		if (north)
 		{
 			//move front
-			position.first += 2;
-			position.second += -1;
+			position.first += 2 * speed;
+			position.second += -1 * speed;
 			facing = NORTH;
 		}
 		else
 		{
 			//move rigth
-			position.first += 2;
-			position.second += 1;
+			position.first += 2 * speed;
+			position.second += 1 * speed;
 			facing = EAST;
 		}
 	}
@@ -564,42 +564,42 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			if (Speed.first == 0 && Speed.second < 0)
 			{
 				//north
-				Current_Animation = moving[NORTH];
+				Current_Animation = moving[SOUTH];
 			}
 			else if (Speed.first == 0 && Speed.second > 0)
 			{
 				//south
-				Current_Animation = moving[SOUTH];
+				Current_Animation = moving[NORTH];
 			}
 			else if (Speed.first < 0 && Speed.second == 0)
 			{
 				//west
-				Current_Animation = moving[WEST];
+				Current_Animation = moving[EAST];
 			}
 			else if (Speed.first > 0 && Speed.second == 0)
 			{
 				//east
-				Current_Animation = moving[EAST];
+				Current_Animation = moving[WEST];
 			}
 			else if (Speed.first > 0 && Speed.second < 0)
 			{
 				//north east
-				Current_Animation = moving[NORTHEAST];
+				Current_Animation = moving[SOUTHWEST];
 			}
 			else if (Speed.first > 0 && Speed.second > 0)
 			{
 				//south east
-				Current_Animation = moving[SOUTHEAST];
+				Current_Animation = moving[NORTHWEST];
 			}
 			else if (Speed.first < 0 && Speed.second < 0)
 			{
 				//north west
-				Current_Animation = moving[NORTHWEST];
+				Current_Animation = moving[SOUTHEAST];
 			}
 			else if (Speed.first < 0 && Speed.second > 0)
 			{
 				//south wst
-				Current_Animation = moving[SOUTHWEST];
+				Current_Animation = moving[NORTHEAST];
 			}
 		}
 		else if (state == SHOOTING)
@@ -834,7 +834,6 @@ void Soldier::LoadAnimations(bool isPlayer1, string path)
 	/*BROFILER_CATEGORY("Soldier Load Animations", Profiler::Color::Blue);
 	moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
-
 
 	idle = idle->LoadAnimation(path.data(), (isPlayer1) ? "red_idle" : "blue_idle");
 

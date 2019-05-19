@@ -14,7 +14,7 @@ Hound::Hound(bool isPlayer1, pair<int, int> pos, Collider collider) :Troop(Entit
 	BROFILER_CATEGORY("Hound constructor", Profiler::Color::Red);
 	string path = "animation/" + name + ".tmx";
 	LoadAnimations(isPlayer1, path.data());
-	offset = range+10;
+	offset = range + 10;
 	destination = pos;
 	original_range = range;
 	//Managed in entity.h constructor
@@ -48,9 +48,9 @@ bool Hound::Update(float dt)
 
 		if (lead)
 		{
-			
-			pair <int, int > map_pos = App->map->WorldToMap(position.first, position.second);	
-			
+
+			pair <int, int > map_pos = App->map->WorldToMap(position.first, position.second);
+
 			switch (state)
 			{
 			case TROOP_IDLE:
@@ -74,7 +74,7 @@ bool Hound::Update(float dt)
 				{
 					if (info.closest != nullptr)
 					{
-						MovementPathfind(info.closest,map_pos);
+						MovementPathfind(info.closest, map_pos);
 					}
 					else
 					{
@@ -89,9 +89,9 @@ bool Hound::Update(float dt)
 				}
 				else
 				{
-					
+
 					SimpleMovement();
-					
+
 					if (!offensive)
 					{
 						if (fromPlayer1 && IsInAllyZone(map_pos))
@@ -105,7 +105,7 @@ bool Hound::Update(float dt)
 							timer.Start();
 						}
 					}
-					
+
 				}
 				break;
 
@@ -135,12 +135,11 @@ bool Hound::Update(float dt)
 				{
 					state = MOVING;
 					info.closest = nullptr;
-
 				}*/
 				break;
-			
+
 			case SEARCH:
-				
+
 				state = MOVING;
 				timer.Start();
 
@@ -149,17 +148,17 @@ bool Hound::Update(float dt)
 				{
 					if (fromPlayer1)
 					{
-						info.closest = FindEntityInAttackRange(map_pos,fromPlayer1,original_range,entityType::SOLDIER);
-					
+						info.closest = FindEntityInAttackRange(map_pos, fromPlayer1, original_range, entityType::SOLDIER);
+
 						if (info.closest != nullptr)
 						{
 							state = SHOOTING;
 							timer.Start();
 						}
-						else if (info.closest == nullptr && offensive==false)
+						else if (info.closest == nullptr && offensive == false)
 						{
 							// capar a entidades en la misma zona
-							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER,1);
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER, 1);
 							if (info.closest->type < entityType::SOLDIER)
 							{
 								info.closest = nullptr;
@@ -192,8 +191,8 @@ bool Hound::Update(float dt)
 						}
 						else if (info.closest == nullptr && offensive == true)
 						{
-							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER,1);
-							
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER, 1);
+
 							state = MOVING;
 							pathfind = true;
 						}
@@ -203,8 +202,8 @@ bool Hound::Update(float dt)
 							//pathfind = true;
 						}
 					}
-					
-					
+
+
 				}
 				// enemy zone
 				else if (IsInEnemyZone(map_pos))
@@ -220,7 +219,7 @@ bool Hound::Update(float dt)
 						}
 						else if (info.closest == nullptr && offensive == true)
 						{
-							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER,2);
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER, 2);
 							state = MOVING;
 							pathfind = true;
 						}
@@ -246,7 +245,7 @@ bool Hound::Update(float dt)
 						}
 						else if (info.closest == nullptr && offensive == false)
 						{
-							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER,2);
+							info.closest = FindNearestEntity(map_pos, fromPlayer1, entityType::SOLDIER, 2);
 							if (info.closest->type < entityType::SOLDIER)
 							{
 								info.closest = nullptr;
@@ -260,7 +259,7 @@ bool Hound::Update(float dt)
 								state = MOVING;
 								pathfind = true;
 							}
-							
+
 						}
 						else
 						{
@@ -271,51 +270,51 @@ bool Hound::Update(float dt)
 						//if exist, state= shoot;
 						//else, state= move
 					}
-				} 
+				}
 				// war zone
 				else if (IsInWarZone(map_pos) && offensive)
 				{
-					
+
 					info.closest = FindEntityInAttackRange(map_pos, fromPlayer1, original_range, entityType::SOLDIER);
-					
-						if (info.closest != nullptr)
-						{
-							state = SHOOTING;
-							timer.Start();
-						}
-						else
-						{
-							state == MOVING;
-						}
-					
-					
+
+					if (info.closest != nullptr)
+					{
+						state = SHOOTING;
+						timer.Start();
+					}
+					else
+					{
+						state == MOVING;
+					}
+
+
 					//find entity en shoot range,
 					//if closes exits, state=shoot
 					//else state move
 				}
 
-				
-					
-				
+
+
+
 				break;
-		
+
 			default:
 
 				state = MOVING;
-				pathfind=false;
+				pathfind = false;
 
 				break;
 			}
 
 		}
-		
+
 		else
 		{
 			// get info from lead
 			// lead gives out an information of state and enemy, and speed of moving, the troops haves 2 stages. move and shoot, when leader shoot, they shoot, when leader does other the move
 
 		}
-		
+
 	}
 	else {
 		//Current_Animation = Die;
@@ -323,15 +322,15 @@ bool Hound::Update(float dt)
 	}
 
 	ActOnDestroyed();
-	ChangeAnimation( facing,  pathfind);
+	ChangeAnimation(facing, pathfind);
 
 	//DOES NOT CHANGE ANYTHING BY ITSELF - ONLY INPUT INSIDE -¬
 	//ForceAnimations();
 	//            _|
-	
+
 	Troop::Update(dt);
 
-	App->render->DrawQuad({position.first,position.second,5,5}, 255, 255, 255, 255, false);
+	App->render->DrawQuad({ position.first,position.second,5,5 }, 255, 255, 255, 255, false);
 
 	return true;
 }
@@ -397,7 +396,7 @@ void Hound::CleanUp() {
 
 }
 
-void Hound::MovementPathfind(Entity* target, pair <int,int> map_pos)
+void Hound::MovementPathfind(Entity* target, pair <int, int> map_pos)
 {
 	bool north = true;
 	bool south = true;
@@ -406,7 +405,7 @@ void Hound::MovementPathfind(Entity* target, pair <int,int> map_pos)
 	bool move = false;
 
 	// search tiles around
-	pair <int,int> cell = { map_pos.first, map_pos.second+1};
+	pair <int, int> cell = { map_pos.first, map_pos.second + 1 };
 
 	if (!App->pathfinding->IsWalkable(cell))
 	{
@@ -422,34 +421,34 @@ void Hound::MovementPathfind(Entity* target, pair <int,int> map_pos)
 	{
 		north = false;
 	}
-	
+
 
 	else if (!App->pathfinding->IsWalkable({ map_pos.first - 1, map_pos.second }))
 	{
 		south = false;
 	}
 
-	if (position.first <= target->position.first - offset  && east == true)
+	if (position.first <= target->position.first - offset && east == true)
 	{
-		position.first += 2;
+		position.first += 2 * speed;
 		move = true;
 	}
 	else if (position.first >= target->position.first + offset && west == true)
 	{
-		position.first -= 2;
+		position.first -= 2 * speed;
 		move = true;
 	}
-	if (position.second <= target->position.second - offset*2 && south == true )
+	if (position.second <= target->position.second - offset * 2 && south == true)
 	{
-		position.second += 1;
+		position.second += 1 * speed;
 		move = true;
 	}
-	else if (position.second >= target->position.second + offset*2 && north == true)
+	else if (position.second >= target->position.second + offset * 2 && north == true)
 	{
-		position.second -= 1;
+		position.second -= 1 * speed;
 		move = true;
 	}
-	
+
 
 	/*if (move==false )
 	{
@@ -473,16 +472,16 @@ void Hound::MovementPathfind(Entity* target, pair <int,int> map_pos)
 		position.second -= 1;
 	}*/
 
-	if (position.first >= target->position.first - offset*2 && 
-		position.first <= target->position.first + offset*2 && 
-		position.second >= target->position.second - offset*4 &&
-		position.second <= target->position.second + offset*4 
+	if (position.first >= target->position.first - offset * 2 &&
+		position.first <= target->position.first + offset * 2 &&
+		position.second >= target->position.second - offset * 4 &&
+		position.second <= target->position.second + offset * 4
 		)
 	{
 		state = SHOOTING;
-	
+
 	}
-	/*else 
+	/*else
 	{
 		state = SEARCH;
 		info.closest = nullptr;
@@ -498,14 +497,14 @@ void Hound::MovementPathfind(Entity* target, pair <int,int> map_pos)
 void Hound::SimpleMovement()
 {
 	//NOTE: pathfind is wakable is giving prolem, returning the info moved one to the left
-	
+
 	bool north = true;
 	bool south = true;
 	bool west = true;
 	bool east = true;
-	
+
 	bool fromPlayer = fromPlayer1;
-	
+
 	if (offensive == false)
 	{
 		fromPlayer = !fromPlayer;
@@ -523,41 +522,39 @@ void Hound::SimpleMovement()
 		if (south)
 		{
 			//move front
-			position.first += -2;
-			position.second += 1;
+			position.first += -2 * speed;
+			position.second += 1 * speed;
 			facing = SOUTH;
 		}
 		else
 		{
 			//move rigth
-			position.first += 2;
-			position.second += 1;
+			position.first += 2 * speed;
+			position.second += 1 * speed;
 			facing = EAST;
 		}
-		
+
 	}
 	else if (!fromPlayer)
 	{
-		
-			//north
-			pair <int, int > map_pos_aux = App->map->WorldToMap(aux.first + 2, aux.second - 1);
-			north = App->pathfinding->IsWalkable(map_pos_aux);
+
 
 			// if can go north, go north
 			if (north)
 			{
 				//move front
-				position.first += 2;
-				position.second += -1;
+				position.first += 2 * speed;
+				position.second += -1 * speed;
 				facing = NORTH;
 			}
 			else
 			{
 				//move rigth
-				position.first += 2;
-				position.second += 1;
+				position.first += 2 * speed;
+				position.second += 1 * speed;
 				facing = EAST;
 			}
+
 	}
 
 
@@ -705,7 +702,7 @@ void Hound::ChangeAnimation(TroopDir facing, bool pathfind) {
 		if (state == MOVING)
 		{
 			//isShooting = false;
-			if (facing==NORTH)
+			if (facing == NORTH)
 			{
 				//north
 				Current_Animation = moving[NORTHEAST];
@@ -882,7 +879,7 @@ void Hound::LoadAnimations(bool isPlayer1, string path)
 	Current_Animation = moving[NORTH];
 }
 
-Entity* Hound::FindEntityInAttackRange(pair <int, int> pos, bool fromplayer1, int attackrange, entityType desiredtype, int zone )
+Entity* Hound::FindEntityInAttackRange(pair <int, int> pos, bool fromplayer1, int attackrange, entityType desiredtype, int zone)
 {
 	// zone 0 is no zone
 	// zone 1 ally zone
@@ -901,24 +898,23 @@ Entity* Hound::FindEntityInAttackRange(pair <int, int> pos, bool fromplayer1, in
 	if (found != nullptr)
 	{
 		//take the first of de desired group
-		
-			map_pos = App->map->WorldToMap(found->position.first, found->position.second);
-			Is_inRange(pos, distance, map_pos, attackrange);
-			min_dist = distance;
-		
-		
+
+		map_pos = App->map->WorldToMap(found->position.first, found->position.second);
+		Is_inRange(pos, distance, map_pos, attackrange);
+		min_dist = distance;
+
+
 
 		for (list<Entity*>::iterator tmp = enemy->entities.begin(); tmp != enemy->entities.end(); tmp++) // traverse entity list (unordered)
 		{
 			if ((*tmp)->type >= desiredtype)
 			{
 				map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
-				
+
 				if (zone == 0)
 				{
 					/*if (!once)
 					{
-
 						once = false;
 					}*/
 					if (Is_inRange(pos, distance, map_pos, attackrange))
@@ -1012,25 +1008,25 @@ Entity* Hound::FindNearestEntity(pair <int, int> pos, bool fromplayer1, entityTy
 
 		for (list<Entity*>::iterator tmp = enemy->entities.begin(); tmp != enemy->entities.end(); tmp++) // traverse entity list (unordered)
 		{
-			if (zones==0)
+			if (zones == 0)
 			{
 				map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
-				
+
 
 				Is_inRange(pos, distance, map_pos, 0);
-				
 
-					if (min_dist > distance)
-					{
-						found = (*tmp);
-						min_dist = distance;
-					}
-				
+
+				if (min_dist > distance)
+				{
+					found = (*tmp);
+					min_dist = distance;
+				}
+
 			}
 			else if (zones == 1)
 			{
 				map_pos = App->map->WorldToMap((*tmp)->position.first, (*tmp)->position.second);
-				
+
 				Is_inRange(pos, distance, map_pos, 0);
 
 				if (IsInAllyZone(map_pos))
@@ -1041,7 +1037,7 @@ Entity* Hound::FindNearestEntity(pair <int, int> pos, bool fromplayer1, entityTy
 						once = true;
 					}
 
-					if (min_dist > distance )
+					if (min_dist > distance)
 					{
 						found = (*tmp);
 						min_dist = distance;
@@ -1086,7 +1082,7 @@ Entity* Hound::FindNearestEntity(pair <int, int> pos, bool fromplayer1, entityTy
 						once = true;
 					}
 
-					if (min_dist > distance )
+					if (min_dist > distance)
 					{
 						found = (*tmp);
 						min_dist = distance;
@@ -1097,7 +1093,7 @@ Entity* Hound::FindNearestEntity(pair <int, int> pos, bool fromplayer1, entityTy
 			}
 
 		}
-		
+
 	}
 
 	return found;

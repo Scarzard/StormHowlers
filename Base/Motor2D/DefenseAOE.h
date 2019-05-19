@@ -4,6 +4,17 @@
 #include "Building.h"
 #include "Timer.h"
 
+struct Closest
+{
+	bool operator()(pair<Troop*,int> const & troop1, pair<Troop*, int> const & troop2) //true if distance is smaller
+	{
+		if (troop1.second <= troop2.second)
+			return true;
+		else
+			return false;
+	}
+};
+
 class DefenseAoe : public Building
 {
 public:
@@ -20,9 +31,11 @@ public:
 	void LoadAnimations(bool isPlayer1, string path);
 
 public:
-
 	Collider	colider;
 	SDL_Texture* tex = nullptr;
+
+private:
+	bool first_shot;
 };
 
 #endif

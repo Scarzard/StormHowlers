@@ -176,6 +176,7 @@ public:
 	Animation*	level3 = nullptr;
 	Animation*	damaged = nullptr;
 	Animation*	destroyed = nullptr;
+	Animation*  glow = nullptr; 
 
 	entityType	type;
 	string		name;
@@ -216,7 +217,7 @@ public:
 	Collider collider;
 
 	// Group Movement
-	int speed = 0;
+	float speed = 0;
 	Group_Unit info;
 	bool isSelected = true;
 	TroopState state;

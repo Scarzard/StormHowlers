@@ -97,7 +97,6 @@ bool DefenseTarget::Update(float dt)
 	}
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
-
 		if (level == 1 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
@@ -139,7 +138,6 @@ bool DefenseTarget::Update(float dt)
 	}
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
 	{
-
 		if (level == 1 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
@@ -179,7 +177,36 @@ bool DefenseTarget::Update(float dt)
 			App->audio->PlayFx(SOVIET_TESLA_D);
 		}
 	}
+
+	if (fromPlayer1)
+	{
+		if (App->player1->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player1->GetSelectedBuilding() == this)
+		{
+			if (building->Finished())
+				Current_Animation = glow;
+		}
+		else
+		{
+			if (building->Finished())
+				Current_Animation = level1;
+		}
+	}
+	else
+	{
+		if (App->player2->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player2->GetSelectedBuilding() == this)
+		{
+			if (building->Finished())
+				Current_Animation = glow;
+		}
+		else
+		{
+			if (building->Finished())
+				Current_Animation = level1;
+		}
+	}
+
 	Building::Update(dt);
+
 	return true;
 }
 
@@ -201,11 +228,10 @@ bool DefenseTarget::Is_inRange(pair<int, int> pos, int &distance) {
 void DefenseTarget::LoadAnimations(bool isPlayer1, string path)
 {
 	building = building->LoadAnimation(path.data(), (isPlayer1) ? "red" : "blue");
-	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "red" : "blue");
-	level1->speed = 10;
+	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "blue_idle" : "red_idle");
+	glow = glow->LoadAnimation(path.data(), (isPlayer1) ? "blue_glow" : "red_glow"); 
 	building->speed = 10;
 	building->loop = false;
-	level1->loop = false;
 	Current_Animation = building;
 }
 

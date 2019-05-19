@@ -197,6 +197,29 @@ bool Townhall::Update(float dt)
 		App->scene->MatchDraw();
 	}
 
+	if (fromPlayer1)
+	{
+		if (App->player1->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player1->GetSelectedBuilding() == this)
+		{
+			Current_Animation = glow;
+		}
+		else
+		{
+			Current_Animation = building;
+		}
+	}
+	else
+	{
+		if (App->player2->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player2->GetSelectedBuilding() == this)
+		{
+			Current_Animation = glow;
+		}
+		else
+		{
+			Current_Animation = building;
+		}
+	}
+
 	Building::Update(dt);
 
 	return true;
@@ -216,10 +239,12 @@ void Townhall::LoadAnimations(bool isPlayer1, string path)
 	if (isPlayer1)
 	{
 		building = building->LoadAnimation(path.data(), "soviet");
+		glow = glow->LoadAnimation(path.data(), "allied_glow"); 
 	}
 	else
 	{
 		building = building->LoadAnimation(path.data(), "allied");
+		glow = glow->LoadAnimation(path.data(), "soviet_glow");
 	}
 
 	building->speed = 10;
