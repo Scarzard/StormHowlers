@@ -136,9 +136,6 @@ bool Scene::Start()
 		//spritesheet123 = App->tex->Load("textures/Buildings.png");
 	App->map->imagemap = App->tex->Load("textures/map3.png");
 	
-
-	
-
 	string track = App->audio->folder_music + "/StartSong.ogg"; 
 	App->audio->PlayMusic(track.c_str()); 
 
@@ -939,7 +936,12 @@ bool Scene::Update(float dt)
 		else if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 		{
 			App->player2->offensive = !App->player2->offensive;
+			
 			//App->entitymanager->AddEntity(true, Entity::entityType::TANKMAN, { pos.first,pos.second }, App->player1->collider);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT) //View colliders
+		{
+			worldminutes = 10;
 		}
     
 		//Timer debug
@@ -959,7 +961,6 @@ bool Scene::Update(float dt)
 			}
 		}
 
-		
 		//Mouse debug
 		if (true) {
 

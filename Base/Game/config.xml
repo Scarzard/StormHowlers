@@ -45,6 +45,12 @@
       <sound>building_repair_fx.wav</sound>
       <sound>button_slide_fx.wav</sound>
       <sound>change_focus_fx.wav</sound>
+      <sound>Dog_Att.wav</sound>
+      <sound>Dog_Die.wav</sound>
+      <sound>Dog_Spawn.wav</sound>
+      <sound>Eng_Att.wav</sound>
+      <sound>Eng_Die.wav</sound>
+      <sound>Eng_Spawn.wav</sound>
       <sound>exit_fx.wav</sound>
       <sound>final_explosion_fx.wav</sound>
       <sound>in_game_click_fx.wav</sound>
@@ -56,7 +62,10 @@
       <sound>sentrygun_build_fx.wav</sound>
       <sound>slider_down_fx.wav</sound>
       <sound>slider_up_fx.wav</sound>
-      <sound>soldier_attack_fx.wav</sound>
+      <sound>Soldier_Allied_Spawn.wav</sound>
+      <sound>Soldier_Att.wav</sound>
+      <sound>Soldier_Die.wav</sound>
+      <sound>Soldier_Soviet_Spawn.wav</sound>
       <sound>Soviet_Barracks_B.wav</sound>
       <sound>Soviet_Barracks_D.wav</sound>
       <sound>Soviet_CC_D.wav</sound>
@@ -100,7 +109,7 @@
    <buildings>
       <Townhall>
         <health lvl1="5000" lvl2="6000" lvl3="7500"/>
-        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <upgrade_cost ToLvl2="5000" ToLvl3="8000" ToLv4="0"/>
         <damage lvl1="-1" lvl2="-3" lvl3="-5"/>      <!-- HEALS -->
         <size width="4" height="3"/>
         <capacity lvl1="1000" lvl2="1500" lvl3="2000"/>
@@ -110,7 +119,7 @@
     
       <sentrygun>
         <health lvl1="500" lvl2="600" lvl3="750"/>
-        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <upgrade_cost ToLvl2="1000" ToLvl3="2000" ToLv4="0"/>
         <damage lvl1="30" lvl2="400" lvl3="550"/>
         <size width="1" height="1"/>
         <attack rate="3" targets="5" range="100"/>
@@ -118,7 +127,7 @@
 
       <CommandCenter>
         <health lvl1="1000" lvl2="1500" lvl3="2000"/>
-        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <upgrade_cost ToLvl2="2000" ToLvl3="3000" ToLv4="0"/>
         <damage lvl1="1000" lvl2="1200" lvl3="1500"/>
         <damage_cast2 lvl1="1000" lvl2="1200" lvl3="1500"/>
         <damage_cast3 lvl1="1000" lvl2="1200" lvl3="1500"/>
@@ -129,21 +138,21 @@
 
       <Walls>
         <health lvl1="500" lvl2="100" lvl3="100"/>
-        <upgrade_cost ToLvl2="50" ToLvl3="30"/>
+        <upgrade_cost ToLvl2="50" ToLvl3="30" ToLv4="0"/>
         <size width="1" height="1"/>
       </Walls>
 
       <Tesla>
         <health lvl1="100" lvl2="120" lvl3="150"/>
         <size width="2" height="2"/>
-        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <upgrade_cost ToLvl2="3000" ToLvl3="5000" ToLv4="0"/>
         <damage lvl1="50" lvl2="150" lvl3="200"/>
         <attack rate="2" targets="5" range="200"/>
       </Tesla>
 
       <aoe>
         <health lvl1="100" lvl2="120" lvl3="150"/>
-        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <upgrade_cost ToLvl2="1000" ToLvl3="2000" ToLv4="0"/>
         <size width="3" height="3"/>
         <damage lvl1="100" lvl2="150" lvl3="200"/>
         <attack rate="2" targets="3" range="150"/>
@@ -151,7 +160,7 @@
       
       <Barracks>
         <health lvl1="500" lvl2="600" lvl3="750"/>
-        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <upgrade_cost ToLvl2="2000" ToLvl3="3500" ToLv4="0"/>
         <size width="3" height="2"/>
         <capacity lvl1="100" lvl2="150" lvl3="200"/>
         <production lvl1="1000" lvl2="1500" lvl3="2000"/>
@@ -160,7 +169,7 @@
       <GoldMine>
         <name string="mine"/>
         <health lvl1="500" lvl2="600" lvl3="750"/>
-        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <upgrade_cost ToLvl2="1000" ToLvl3="2500" ToLv4="0"/>
         <size width="2" height="4"/>
         <capacity lvl1="100" lvl2="150" lvl3="200"/>
         <production lvl1="1000" lvl2="1500" lvl3="2000"/>
@@ -247,8 +256,6 @@
     <settings file="gui/mainmenu_settings_credits.png"/>
     <license file="gui/license_texture.png"/>
     <credits file="gui/credits_texture.png"/>
-    
-    <music vol="40" sfx="100"/>
   </main_menu>
 
 </config>

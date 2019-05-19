@@ -34,6 +34,14 @@ enum FX
 	BUILDING_REPAIR,
 	BUTTON_SLIDE,
 	CHANGE_FOCUS,
+	//WarHound(WH)/Engineer(ENG) SFX
+	WARHOUND_ATTACK,
+	WARHOUND_DIE,
+	WARHOUND_SPAWN,
+	ENG_ATTACK,
+	ENG_DIE,
+	ENG_SPAWN,
+
 	EXIT,
 	FINAL_EXPLOSION,
 	INGAME_CLICK,
@@ -45,7 +53,12 @@ enum FX
 	SENTRYGUN_BUILD,
 	SLIDER_DOWN,
 	SLIDER_UP,
+
+	//SoliderSFX
+	ALLIED_SOLDIER_SPAWN,
 	SOLDIER_ATTACK,
+	SOLDIER_DIE,
+	SOVIET_SOLDIER_SPAWN,
 
 	//Soviet FX
 	SOVIET_BARRACKS_B,
@@ -102,6 +115,7 @@ public:
 
 	bool song1played = false;
 	bool song2played = false;
+	bool winscreensong = false;
 	bool fading_in = false;
 	bool fading_out = false;
 	bool reading_time = true;

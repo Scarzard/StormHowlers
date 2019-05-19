@@ -22,8 +22,13 @@ public:
 		production_lv.push_back(config.child("production").attribute("lvl2").as_uint(0));
 		production_lv.push_back(config.child("production").attribute("lvl3").as_uint(0));
 
+		cost_upgrade_lv.push_back(config.child("upgrade_cost").attribute("ToLvl2").as_uint(0));
+		cost_upgrade_lv.push_back(config.child("upgrade_cost").attribute("ToLvl3").as_uint(0));
+		cost_upgrade_lv.push_back(config.child("upgrade_cost").attribute("ToLvl4").as_uint(0));
+
 		capacity = capacity_lv[level];
 		production = production_lv[level];
+		Upgrade_Cost = cost_upgrade_lv[level];
 
 		////DEBUG PURPOSES
 		//collider = { 0,0,59,28 };
@@ -56,12 +61,12 @@ public:
 
 	vector<uint>	production_lv;
 	vector<uint>	capacity_lv;
+	vector<uint>	cost_upgrade_lv;
 
 	list<Entity::entityType> TroopsCreated; //for barracks
 
 	int production = 0;
 	int capacity = 0;
-
 	
 };
 

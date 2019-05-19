@@ -40,36 +40,25 @@ bool Barracks::Update(float dt)
 	if (fromPlayer1)  // --- Player 1 --------------------------------
 	{
 
-		if (level == 0 && App->scenechange->IsChanging() == false) //Poner abajo a la derecha
+		if (level == 1 && App->scenechange->IsChanging() == false) //Poner abajo a la derecha
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 0;
 			upgrade.y = 34;
 			upgrade.w = 32;
 			upgrade.h = 20;
-			App->render->Blit(App->scene->upgrade_lvl, position.first, position.second - 140, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 25, position.second + 50, &upgrade);
 		}
 
-		if (level == 1 && App->scenechange->IsChanging() == false)
+		if (level == 2 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
 			upgrade.x = 36;
 			upgrade.y = 17;
 			upgrade.w = 32;
 			upgrade.h = 37;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 140, &upgrade);
+			App->render->Blit(App->scene->upgrade_lvl, position.first + 25 , position.second + 50, &upgrade);
 		}
-
-		if (level == 2 && App->scenechange->IsChanging() == false)
-		{
-			SDL_Rect upgrade;
-			upgrade.x = 72;
-			upgrade.y = 0;
-			upgrade.w = 32;
-			upgrade.h = 54;
-			App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 140, &upgrade);
-		}
-
 		
 		if (building->Finished() && built == false)
 		{
@@ -82,9 +71,10 @@ bool Barracks::Update(float dt)
 		{
 			if (upgrade == true && level <= 1) //upgrade
 			{
-				App->player1->gold -= upgrade_cost[level]; //pay costs
+				App->player1->gold -= Upgrade_Cost; //pay costs
 				level++;
 				capacity = capacity_lv[level]; //update capacity
+				Upgrade_Cost = cost_upgrade_lv[level];
 				health = health_lv[level];
 				upgrade = false;
 				//play fx (upgrade);
@@ -120,41 +110,33 @@ bool Barracks::Update(float dt)
 		if (health > 0) //if not destroyed
 		{
 
-			if (level == 0 && App->scenechange->IsChanging() == false)
+			if (level == 1 && App->scenechange->IsChanging() == false)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 0;
 				upgrade.y = 34;
 				upgrade.w = 32;
 				upgrade.h = 20;
-				App->render->Blit(App->scene->upgrade_lvl, position.first, position.second - 140, &upgrade);
+				App->render->Blit(App->scene->upgrade_lvl, position.first + 25, position.second + 50, &upgrade);
 			}
 
-			if (level == 1 && App->scenechange->IsChanging() == false)
+			if (level == 2 && App->scenechange->IsChanging() == false)
 			{
 				SDL_Rect upgrade;
 				upgrade.x = 36;
 				upgrade.y = 17;
 				upgrade.w = 32;
 				upgrade.h = 37;
-				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 140, &upgrade);
+				App->render->Blit(App->scene->upgrade_lvl, position.first + 25, position.second + 50, &upgrade);
 			}
 
-			if (level == 2 && App->scenechange->IsChanging() == false)
-			{
-				SDL_Rect upgrade;
-				upgrade.x = 72;
-				upgrade.y = 0;
-				upgrade.w = 32;
-				upgrade.h = 54;
-				App->render->Blit(App->scene->upgrade_lvl, position.first + 10, position.second - 140, &upgrade);
-			}
 
 			if (upgrade == true && level <= 1) //upgrade
 			{
-				App->player2->gold -= upgrade_cost[level]; //pay costs
+				App->player2->gold -= Upgrade_Cost; //pay costs
 				level++;
 				capacity = capacity_lv[level]; //update capacity
+				Upgrade_Cost = cost_upgrade_lv[level];
 				health = health_lv[level];
 				upgrade = false;
 				//play fx (upgrade);
@@ -247,6 +229,22 @@ bool Barracks::DeployTroops(int amount_per_frame)
 					deploy_pos.first += 20;
 					deploy_pos.second += 10;
 					e = (Troop*)App->entitymanager->AddEntity(fromPlayer1, *TroopsCreated.begin(), deploy_pos, collider);
+					if (*TroopsCreated.begin() == e->SOLDIER && fromPlayer1)
+					{
+						App->audio->PlayFx(ALLIED_SOLDIER_SPAWN);
+					}
+					else if (*TroopsCreated.begin() == e->SOLDIER && !fromPlayer1)
+					{
+						App->audio->PlayFx(SOVIET_SOLDIER_SPAWN);
+					}
+					if (*TroopsCreated.begin() == e->ENGINEER)
+					{
+						App->audio->PlayFx(ENG_SPAWN);
+					}
+					if (*TroopsCreated.begin() == e->WAR_HOUND)
+					{
+						App->audio->PlayFx(WARHOUND_ATTACK);
+					}
 					TroopsCreated.pop_front();
 					e->state = TROOP_IDLE;
 					e->isSelected = true;

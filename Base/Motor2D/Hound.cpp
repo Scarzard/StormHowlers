@@ -122,7 +122,7 @@ bool Hound::Update(float dt)
 				{
 					info.closest->TakeDamage(damage_lv[level]);
 					timer.Start();
-					App->audio->PlayFx(SOLDIER_ATTACK);
+					App->audio->PlayFx(WARHOUND_ATTACK);
 				}
 				if (info.closest->health <= 0)
 				{
@@ -376,7 +376,7 @@ void Hound::ActOnDestroyed() {
 	{
 		if (health <= 0) //destroyed
 		{
-			
+			App->audio->PlayFx(WARHOUND_DIE);
 			info.current_group->removeUnit(this);
 			App->player1->DeleteEntity(this);
 		}
@@ -385,6 +385,7 @@ void Hound::ActOnDestroyed() {
 	{
 		if (health <= 0) //destroyed
 		{
+			App->audio->PlayFx(WARHOUND_DIE);
 			info.current_group->removeUnit(this);
 			App->player2->DeleteEntity(this);
 		}
