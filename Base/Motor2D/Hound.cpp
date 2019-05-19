@@ -843,25 +843,26 @@ void Hound::LoadAnimations(bool isPlayer1, string path)
 	moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
-	idle = idle->LoadAnimation(path.data(), (isPlayer1) ? "idle" : "idle_blue");
 
-	moving[NORTH] = moving[NORTH]->LoadAnimation(path.data(), (isPlayer1) ? "run_N" : "blue_run_N");
-	moving[SOUTH] = moving[SOUTH]->LoadAnimation(path.data(), (isPlayer1) ? "run_S" : "blue_run_S");
-	moving[EAST] = moving[EAST]->LoadAnimation(path.data(), (isPlayer1) ? "run_E" : "blue_run_E");
-	moving[WEST] = moving[WEST]->LoadAnimation(path.data(), (isPlayer1) ? "run_W" : "blue_run_W");
-	moving[NORTHEAST] = moving[NORTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "run_NE" : "blue_run_NE");
-	moving[NORTHWEST] = moving[NORTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "run_NW" : "blue_run_NW");
-	moving[SOUTHEAST] = moving[SOUTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "run_SE" : "blue_run_SE");
-	moving[SOUTHWEST] = moving[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "run_SW" : "blue_run_SW");
+	idle = idle->LoadAnimation(path.data(), (isPlayer1) ? "red_idle" : "blue_idle");
 
-	shooting[NORTH] = shooting[NORTH]->LoadAnimation(path.data(), (isPlayer1) ? "attack_N" : "blue_attack_N");
-	shooting[SOUTH] = shooting[SOUTH]->LoadAnimation(path.data(), (isPlayer1) ? "attack_S" : "blue_attack_S");
-	shooting[EAST] = shooting[EAST]->LoadAnimation(path.data(), (isPlayer1) ? "attack_E" : "blue_attack_E");
-	shooting[WEST] = shooting[WEST]->LoadAnimation(path.data(), (isPlayer1) ? "attack_W" : "blue_attack_W");
-	shooting[NORTHEAST] = shooting[NORTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "attack_NE" : "blue_attack_NE");
-	shooting[NORTHWEST] = shooting[NORTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "attack_NW" : "blue_attack_NW");
-	shooting[SOUTHEAST] = shooting[SOUTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "attack_SE" : "blue_attack_SE");
-	shooting[SOUTHWEST] = shooting[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "attack_SW" : "blue_attack_SW");
+	moving[NORTH] = moving[NORTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_north" : "blue_north");
+	moving[SOUTH] = moving[SOUTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_south" : "blue_south");
+	moving[EAST] = moving[EAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_east" : "blue_east");
+	moving[WEST] = moving[WEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_west" : "blue_west");
+	moving[NORTHEAST] = moving[NORTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_northeast" : "blue_northeast");
+	moving[NORTHWEST] = moving[NORTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_northwest" : "blue_northwest");
+	moving[SOUTHEAST] = moving[SOUTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_southeast" : "blue_southeast");
+	moving[SOUTHWEST] = moving[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_southwest" : "blue_southwest");
+
+	shooting[NORTH] = shooting[NORTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_N" : "blue_shoot_N");
+	shooting[SOUTH] = shooting[SOUTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_S" : "blue_shoot_S");
+	shooting[EAST] = shooting[EAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_E" : "blue_shoot_E");
+	shooting[WEST] = shooting[WEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_W" : "blue_shoot_W");
+	shooting[NORTHEAST] = shooting[NORTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_NE" : "blue_shoot_NE");
+	shooting[NORTHWEST] = shooting[NORTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_NW" : "blue_shoot_NW");
+	shooting[SOUTHEAST] = shooting[SOUTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_SE" : "blue_shoot_SE");
+	shooting[SOUTHWEST] = shooting[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_SW" : "blue_shoot_SW");
 
 	for (int i = NORTH; i <= SOUTHWEST; i++) {
 		moving[i]->speed = 10;
@@ -871,11 +872,11 @@ void Hound::LoadAnimations(bool isPlayer1, string path)
 	idle->speed = 0;
 	if (fromPlayer1)
 	{
-		idle->SetCurrentFrame(7);
+		idle->SetCurrentFrame(2);
 	}
 	else
 	{
-		idle->SetCurrentFrame(3);
+		idle->SetCurrentFrame(6);
 	}
 	Current_Animation = moving[NORTH];
 }
