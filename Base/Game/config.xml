@@ -118,7 +118,7 @@
 
       <CommandCenter>
         <health lvl1="5000" lvl2="6000" lvl3="7000"/>
-        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <upgrade_cost ToLvl2="250" ToLvl3="350"/>
         <damage lvl1="1000" lvl2="1200" lvl3="1500"/>
         <damage_cast2 lvl1="1000" lvl2="1200" lvl3="1500"/>
         <damage_cast3 lvl1="1000" lvl2="1200" lvl3="1500"/>
@@ -128,30 +128,30 @@
       </CommandCenter>
 
       <Walls>
-        <health lvl1="500" lvl2="100" lvl3="100"/>
-        <upgrade_cost ToLvl2="50" ToLvl3="30"/>
+        <health lvl1="500" lvl2="600" lvl3="700"/>
+        <upgrade_cost ToLvl2="500" ToLvl3="700"/>
         <size width="1" height="1"/>
       </Walls>
 
       <Tesla>
-        <health lvl1="100" lvl2="120" lvl3="150"/>
+        <health lvl1="1000" lvl2="12000" lvl3="1500"/>
         <size width="2" height="2"/>
-        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
-        <damage lvl1="50" lvl2="150" lvl3="200"/>
+        <upgrade_cost ToLvl2="500" ToLvl3="1000"/>
+        <damage lvl1="50" lvl2="60" lvl3="70"/>
         <attack rate="2" targets="5" range="200"/>
       </Tesla>
 
       <aoe>
         <health lvl1="100" lvl2="120" lvl3="150"/>
-        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <upgrade_cost ToLvl2="50" ToLvl3="70"/>
         <size width="3" height="3"/>
-        <damage lvl1="100" lvl2="150" lvl3="200"/>
+        <damage lvl1="50" lvl2="60" lvl3="70"/>
         <attack rate="2" targets="5" range="150"/>
       </aoe>
       
       <Barracks>
-        <health lvl1="500" lvl2="600" lvl3="750"/>
-        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <health lvl1="500" lvl2="600" lvl3="700"/>
+        <upgrade_cost ToLvl2="150" ToLvl3="300"/>
         <size width="3" height="2"/>
         <capacity lvl1="100" lvl2="150" lvl3="200"/>
         <production lvl1="1000" lvl2="1500" lvl3="2000"/>
@@ -160,54 +160,54 @@
       <GoldMine>
         <name string="mine"/>
         <health lvl1="500" lvl2="600" lvl3="750"/>
-        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <upgrade_cost ToLvl2="1000" ToLvl3="2500"/>
         <size width="2" height="4"/>
         <capacity lvl1="100" lvl2="150" lvl3="200"/>
-        <production lvl1="1000" lvl2="1500" lvl3="2000"/>
+        <production lvl1="100" lvl2="150" lvl3="250"/>
       </GoldMine>
       
     </buildings>
 
     <troops>
       <BasicSoldier>
-        <health lvl1="120" lvl2="130" lvl3="150"/>
+        <health lvl1="120" lvl2="150" lvl3="160"/>
         <upgrade_cost ToLvl2="15" ToLvl3="30"/>
         <size width="1" height="1"/>
-        <damage lvl1="10" lvl2="150" lvl3="200"/>
+        <damage lvl1="10" lvl2="15" lvl3="20"/>
         <attack rate="1" targets="1" range="3"/>
         <speed value="200"/>
       </BasicSoldier>
       <engineer>
         <health lvl1="100" lvl2="120" lvl3="150"/>
-        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <upgrade_cost ToLvl2="20" ToLvl3="30"/>
         <size width="1" height="1"/>
-        <damage lvl1="35" lvl2="150" lvl3="200"/>
+        <damage lvl1="35" lvl2="40" lvl3="45"/>
         <attack rate="2" targets="1" range="1"/>
-        <speed value="100"/>
+        <speed value="150"/>
       </engineer>
       <tankman>
         <health lvl1="250" lvl2="280" lvl3="320"/>
-        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <upgrade_cost ToLvl2="30" ToLvl3="50"/>
         <size width="1" height="1"/>
-        <damage lvl1="100" lvl2="150" lvl3="200"/>
-        <attack rate="1" targets="1" range="1"/>
+        <damage lvl1="40" lvl2="50" lvl3="60"/>
+        <attack rate="4" targets="1" range="1"/>
         <speed value="50"/>
       </tankman>
       <infiltrator>
-        <health lvl1="100" lvl2="120" lvl3="150"/>
-        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <health lvl1="120" lvl2="150" lvl3="160"/>
+        <upgrade_cost ToLvl2="50" ToLvl3="100"/>
         <size width="1" height="1"/>
-        <damage lvl1="100" lvl2="150" lvl3="200"/>
-        <attack rate="1" targets="1" range="3"/>
-        <speed value="10"/>
+        <damage lvl1="80" lvl2="90" lvl3="100"/>
+        <attack rate="8" targets="1" range="1"/>
+        <speed value="100"/>
       </infiltrator>
       <war_hound>
         <health lvl1="100" lvl2="120" lvl3="150"/>
-        <upgrade_cost ToLvl2="15" ToLvl3="30"/>
+        <upgrade_cost ToLvl2="80" ToLvl3="120"/>
         <size width="1" height="1"/>
-        <damage lvl1="20" lvl2="150" lvl3="200"/>
+        <damage lvl1="40" lvl2="45" lvl3="50"/>
         <attack rate="1" targets="1" range="1"/>
-        <speed value="10"/>
+        <speed value="250"/>
       </war_hound>
     </troops>
   </entitymanager>
