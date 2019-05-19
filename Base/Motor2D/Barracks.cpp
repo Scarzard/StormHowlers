@@ -182,7 +182,8 @@ bool Barracks::Update(float dt)
 	{
 		if (App->player1->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player1->GetSelectedBuilding() == this)
 		{
-			Current_Animation = glow;
+			if (building->Finished())
+				Current_Animation = glow;
 		}
 		else
 		{
