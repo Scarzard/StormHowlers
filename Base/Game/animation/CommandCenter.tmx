@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="4" height="13" tilewidth="212" tileheight="213" nextobjectid="54">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="4" height="13" tilewidth="212" tileheight="213" nextobjectid="56">
  <layer name="Capa de Patrones 1" width="4" height="13">
   <data encoding="csv">
 0,0,0,0,
@@ -78,5 +78,11 @@
  </objectgroup>
  <objectgroup name="blue_glow">
   <object id="53" x="471" y="2819" width="212" height="228"/>
+ </objectgroup>
+ <objectgroup name="red_idle">
+  <object id="54" x="0" y="2556" width="212" height="213"/>
+ </objectgroup>
+ <objectgroup name="blue_idle">
+  <object id="55" x="424" y="2556" width="212" height="213"/>
  </objectgroup>
 </map>
