@@ -986,7 +986,7 @@ bool Player::PostUpdate()
 bool Player::CleanUp()
 {
 	LOG("---Player Deleted");
-
+	//Clear buildings
 	//Clear buildings
 	list<Building*>::iterator item = buildings.begin();
 	while (item != buildings.end())
@@ -1006,6 +1006,8 @@ bool Player::CleanUp()
 		titem++;
 	}
 	troops.clear();
+
+	entities.clear();
 
 	//Clear UI elements
 	list<UI_Element*>::iterator item2 = UI_elements.begin();

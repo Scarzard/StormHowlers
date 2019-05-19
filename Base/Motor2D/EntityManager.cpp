@@ -519,13 +519,7 @@ bool EntityManager::Draw(float dt) //sprite ordering
 }
 		else
 		{
-			// Soldier testing with per frame deploying
-			if ((*tmp)->type == Entity::entityType::SOLDIER && (*tmp)->info.current_group == nullptr) {
-				//App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first/*-((*tmp)->collider.dimensions.first*29)*/, (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second * 20), &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
-
-			}//change print for soldier cases
-			else 
- 				App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first/*-((*tmp)->collider.dimensions.first*29)*/, (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second*20), &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
+ 			App->render->Blit(entitiesTextures[(*tmp)->type], (*tmp)->position.first/*-((*tmp)->collider.dimensions.first*29)*/, (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second*20), &((*tmp)->Current_Animation->GetCurrentFrame(dt)));
 		
 			//--- Draw Life Bar
 			if ((*tmp)->health < (*tmp)->health_lv[(*tmp)->level] && (*tmp)->health > 0)
@@ -825,19 +819,17 @@ void EntityManager::LoadAnimationsSoldier(Troop* troop) {
 	troop->moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	troop->shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
-	Soldier* sample = (troop->fromPlayer1) ? &soldier_p1_sample : &soldier_p2_sample;
+	Soldier* sample = (troop->fromPlayer1) ? &soldier_p2_sample : &soldier_p1_sample;
 
-	if (troop->fromPlayer1) {
-		troop->idle = sample->idle;
-		troop->idle->speed = 0;
-		troop->idle->SetCurrentFrame(2);
+	troop->idle = sample->idle;
+	troop->idle->speed = 0;
+	troop->idle->SetCurrentFrame(2);
 
-		for (int i = NORTH; i < MAX_DIR; i++) {
-			troop->moving[i] = sample->moving[i];
-			troop->shooting[i] = sample->shooting[i];
-			troop->moving[i]->speed = sample->moving[i]->speed;
-			troop->shooting[i]->speed = sample->shooting[i]->speed;
-		}
+	for (int i = NORTH; i < MAX_DIR; i++) {
+		troop->moving[i] = sample->moving[i];
+		troop->shooting[i] = sample->shooting[i];
+		troop->moving[i]->speed = sample->moving[i]->speed;
+		troop->shooting[i]->speed = sample->shooting[i]->speed;
 	}
 	troop->Current_Animation = troop->moving[NORTH];
 }

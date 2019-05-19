@@ -83,7 +83,7 @@ bool Townhall::Update(float dt)
 			App->render->Blit(App->scene->upgrade_lvl, position.first - 20, position.second - 70, &upgrade);
 		}
 
-		if (health == 0) //if destroyed
+		if (health <= 0) //if destroyed
 		{
 
 			//App->player1->UpdateWalkabilityMap(true, collider);
@@ -139,7 +139,7 @@ bool Townhall::Update(float dt)
 			App->render->Blit(App->scene->upgrade_lvl, position.first + 180, position.second - 10, &upgrade);
 		}
 
-		if (health == 0) //if destroyed
+		if (health <= 0) //if destroyed
 		{
 
 			//App->player2->UpdateWalkabilityMap(true, collider);
