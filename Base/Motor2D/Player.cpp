@@ -497,11 +497,11 @@ bool Player::Update(float dt)
 		{
 			if ((*focus) == Def_AOE_icon)
 			{
-				BuildingCost = 2000;
+				BuildingCost = 500;
 			}
 			else if ((*focus) == Def_Target_icon)
 			{
-				BuildingCost = 3500;
+				BuildingCost = 800;
 			}
 			else if ((*focus) == Mines_icon)
 			{
@@ -509,7 +509,7 @@ bool Player::Update(float dt)
 			}
 			else if ((*focus) == Barracks_icon)
 			{
-				BuildingCost = 3000;
+				BuildingCost = 1000;
 			}
 
 		}

@@ -421,22 +421,22 @@ void Soldier::MovementPathfind(Entity* target, pair <int, int> map_pos)
 
 	if (position.first <= target->position.first - offset && east == true)
 	{
-		position.first += 2;
+		position.first += 2 * speed;
 		move = true;
 	}
 	else if (position.first >= target->position.first + offset && west == true)
 	{
-		position.first -= 2;
+		position.first -= 2 * speed;
 		move = true;
 	}
 	if (position.second <= target->position.second - offset * 2 && south == true)
 	{
-		position.second += 1;
+		position.second += 1 * speed;
 		move = true;
 	}
 	else if (position.second >= target->position.second + offset * 2 && north == true)
 	{
-		position.second -= 1;
+		position.second -= 1 * speed;
 		move = true;
 	}
 
@@ -513,15 +513,15 @@ void Soldier::SimpleMovement()
 		if (south)
 		{
 			//move front
-			position.first += -2;
-			position.second += 1;
+			position.first += -2 * speed;
+			position.second += 1 * speed;
 			facing = SOUTH;
 		}
 		else
 		{
 			//move rigth
-			position.first += 2;
-			position.second += 1;
+			position.first += 2 * speed;
+			position.second += 1 * speed;
 			facing = EAST;
 		}
 
@@ -537,15 +537,15 @@ void Soldier::SimpleMovement()
 		if (north)
 		{
 			//move front
-			position.first += 2;
-			position.second += -1;
+			position.first += 2 * speed;
+			position.second += -1 * speed;
 			facing = NORTH;
 		}
 		else
 		{
 			//move rigth
-			position.first += 2;
-			position.second += 1;
+			position.first += 2 * speed;
+			position.second += 1 * speed;
 			facing = EAST;
 		}
 	}

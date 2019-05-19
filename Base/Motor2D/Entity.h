@@ -215,7 +215,7 @@ public:
 	Collider collider;
 
 	// Group Movement
-	int speed = 0;
+	float speed = 0;
 	Group_Unit info;
 	bool isSelected = true;
 	TroopState state;

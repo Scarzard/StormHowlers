@@ -175,7 +175,7 @@
         <size width="1" height="1"/>
         <damage lvl1="10" lvl2="15" lvl3="20"/>
         <attack rate="1" targets="1" range="3"/>
-        <speed value="200"/>
+        <speed value="1"/>
       </BasicSoldier>
       <engineer>
         <health lvl1="100" lvl2="120" lvl3="150"/>
@@ -183,7 +183,7 @@
         <size width="1" height="1"/>
         <damage lvl1="35" lvl2="40" lvl3="45"/>
         <attack rate="2" targets="1" range="1"/>
-        <speed value="150"/>
+        <speed value="0.5"/>
       </engineer>
       <tankman>
         <health lvl1="250" lvl2="280" lvl3="320"/>
@@ -191,7 +191,7 @@
         <size width="1" height="1"/>
         <damage lvl1="40" lvl2="50" lvl3="60"/>
         <attack rate="4" targets="1" range="1"/>
-        <speed value="50"/>
+        <speed value="0.5"/>
       </tankman>
       <infiltrator>
         <health lvl1="120" lvl2="150" lvl3="160"/>
@@ -199,7 +199,7 @@
         <size width="1" height="1"/>
         <damage lvl1="80" lvl2="90" lvl3="100"/>
         <attack rate="8" targets="1" range="1"/>
-        <speed value="100"/>
+        <speed value="1"/>
       </infiltrator>
       <war_hound>
         <health lvl1="100" lvl2="120" lvl3="150"/>
@@ -207,7 +207,7 @@
         <size width="1" height="1"/>
         <damage lvl1="40" lvl2="45" lvl3="50"/>
         <attack rate="1" targets="1" range="1"/>
-        <speed value="250"/>
+        <speed value="1.5"/>
       </war_hound>
     </troops>
   </entitymanager>
