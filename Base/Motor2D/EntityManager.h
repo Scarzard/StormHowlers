@@ -4,6 +4,10 @@
 #include "Module.h"
 #include "Entity.h"
 #include "Soldier.h"
+#include "Hound.h"
+#include "Tankman.h"
+#include "Engineer.h"
+#include "Infiltrator.h"
 #include "Walls.h"
 
 class Entity;
@@ -58,9 +62,8 @@ public:
 	list<Building*> OrderBuildings(list<Building*> List, bool isPlayer1);
 
 	void OrderEntities();
-	int GetDepth(Entity* entity);
 
-	void LoadAnimationsSoldier(Troop * troop);
+	int GetDepth(Entity* entity);
 
 	void LoadAnimations(Troop * troop);
 
@@ -85,6 +88,18 @@ public:
 public:
 	Soldier			soldier_p1_sample;
 	Soldier			soldier_p2_sample;
+
+	Tankman			tankman_p1_sample;
+	Tankman			tankman_p2_sample;
+
+	Infiltrator		infiltrator_p1_sample;
+	Infiltrator		infiltrator_p2_sample;
+
+	Engineer		engineer_p1_sample;
+	Engineer		engineer_p2_sample;
+
+	Hound			hound_p1_sample;
+	Hound			hound_p2_sample;
 
 	string			folder;
 	string			texture_path;

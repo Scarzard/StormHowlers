@@ -2,7 +2,6 @@
 #define __Hound_H__
 
 #include "Troop.h"
-#include "EntityManager.h"
 
 
 class Hound : public Troop

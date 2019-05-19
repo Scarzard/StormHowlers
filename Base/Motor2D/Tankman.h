@@ -2,7 +2,6 @@
 #define __Tankman_H__
 
 #include "Troop.h"
-#include "EntityManager.h"
 
 
 class Tankman : public Troop
