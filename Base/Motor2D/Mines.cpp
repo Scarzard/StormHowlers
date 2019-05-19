@@ -163,8 +163,32 @@ bool Mines::Update(float dt)
 
 	ChangeAnimation();
 
-	if(Current_Animation->Finished() == true)
-		Current_Animation = level1;
+	if (fromPlayer1)
+	{
+		if (App->player1->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player1->GetSelectedBuilding() == this)
+		{
+			if (building->Finished())
+				Current_Animation = glow;
+		}
+		else
+		{
+			if (building->Finished())
+				Current_Animation = level1;
+		}
+	}
+	else
+	{
+		if (App->player2->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player2->GetSelectedBuilding() == this)
+		{
+			if (building->Finished())
+				Current_Animation = glow;
+		}
+		else
+		{
+			if (building->Finished())
+				Current_Animation = level1;
+		}
+	}
 
 	Building::Update(dt);
 
@@ -182,11 +206,16 @@ void Mines::LoadAnimations(bool isPlayer1, string path)
 {
 	building = building->LoadAnimation(path.data(), (isPlayer1) ? "red_constructing" : "blue_constructing");
 	level1 = level1->LoadAnimation(path.data(), (isPlayer1) ? "red_idle" : "blue_idle");
-	//level1->PushBack(building->GetLastAnimationFrame());// level1->LoadAnimation(&path[0], (!isPlayer1) ? "red" : "blue");
+	glow = glow->LoadAnimation(path.data(), (isPlayer1) ? "blue_glow" : "red_glow");
+
 	level1->speed = 3;
 	building->speed = 10;
+	glow->speed = 0; 
+
 	building->loop = false;
 	level1->loop = true;
+	glow->loop = true; 
+
 	Current_Animation = building;
 }
 

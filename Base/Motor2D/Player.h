@@ -99,7 +99,7 @@ public:
 	void CreateTroop(int type, int number);
 	void CreateAbility(int type, int number);
 
-	void DrawBuildingCollider(int type, bool isPlayer1);
+	Building* GetSelectedBuilding() { return (*building_selected); };
 
 	bool CheckBuildingPos();
 	Collider GetCollider(pair<int, int> dimensions, pair<int,int> topTile_pos);

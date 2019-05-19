@@ -193,8 +193,30 @@ bool DefenseAoe::Update(float dt)
 		}
 	}
 
-	if (Current_Animation->Finished() == true && Current_Animation != glow)
-		Current_Animation = level1;
+	if (fromPlayer1)
+	{
+		if (App->player1->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player1->GetSelectedBuilding() == this)
+		{
+			Current_Animation = glow;
+		}
+		else
+		{
+			if (building->Finished())
+				Current_Animation = level1;
+		}
+	}
+	else
+	{
+		if (App->player2->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player2->GetSelectedBuilding() == this)
+		{
+			Current_Animation = glow;
+		}
+		else
+		{
+			if (building->Finished())
+				Current_Animation = level1;
+		}
+	}
 
 	Building::Update(dt);
 	
@@ -225,6 +247,7 @@ void DefenseAoe::LoadAnimations(bool isPlayer1, string path)
 
 	level1->speed = 7;
 	building->speed = 5;
+	glow->speed = 0; 
 
 	building->loop = false;
 	level1->loop = true;
