@@ -52,7 +52,6 @@ bool CmdCenter::Update(float dt)
 
 	if (fromPlayer1)
 	{
-
 		if (level == 1 && App->scenechange->IsChanging() == false)
 		{
 			SDL_Rect upgrade;
