@@ -1205,28 +1205,21 @@ void Player::ChangeBuilding(int num)
 
 void Player::ShowRange(Entity::entityType Type, Collider collider)
 {
-	pair<int, int> center;
+	SDL_Rect range_rect;
 	if (Type == Entity::entityType::DEFENSE_TARGET)
 	{
-		SDL_Rect range_rect = { 0,0,400,400 };
-		center.first = (collider.tiles[0].first - 15) - (range_rect.w * 0.5f) + (collider.dimensions.first * 0.5f * App->map->data.tile_width * 0.5f);
-		center.second = (collider.tiles[0].second - 15) - (range_rect.h * 0.5f) + (collider.dimensions.second * 0.5f * App->map->data.tile_height * 0.5f);
-		App->render->Blit(range_tex, center.first, center.second, &range_rect); //Draw Range
+		range_rect = { 0,0,400,400 };
 	}
 	else if (Type == Entity::entityType::DEFENSE_AOE)
 	{
-		SDL_Rect range_rect = { 400,0,300,300 };
-		center.first = (collider.tiles[0].first - 22) - (range_rect.w * 0.5f) + (collider.dimensions.first * 0.5f * App->map->data.tile_width * 0.5f);
-		center.second = (collider.tiles[0].second - 35) - (range_rect.h * 0.5f) + (collider.dimensions.second * 0.5f * App->map->data.tile_height * 0.5f);
-		App->render->Blit(range_tex, center.first, center.second, &range_rect); //Draw Range
+		range_rect = { 400,0,300,300 };
 	}
 	else if (Type == Entity::entityType::MAIN_DEFENSE)
 	{
-		SDL_Rect range_rect = { 700,0,200,200 };
-		center.first = (collider.tiles[0].first - 15) - (range_rect.w * 0.5f) + (collider.dimensions.first * 0.5f * App->map->data.tile_width * 0.5f);
-		center.second = (collider.tiles[0].second) - (range_rect.h * 0.5f) + (collider.dimensions.second * 0.5f * App->map->data.tile_height * 0.5f);
-		App->render->Blit(range_tex, center.first, center.second, &range_rect); //Draw Range
+		range_rect = { 700,0,200,200 };
 	}
+	
+	App->render->Blit(range_tex, (collider.tiles[0].first) - (range_rect.w * 0.5f), (collider.tiles[0].second) - (range_rect.h * 0.5f), &range_rect); //Draw Range
 }
 
 void Player::UpdateFocus(uint data)
