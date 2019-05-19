@@ -936,6 +936,7 @@ bool Scene::Update(float dt)
 		else if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 		{
 			App->player2->offensive = !App->player2->offensive;
+			
 			//App->entitymanager->AddEntity(true, Entity::entityType::TANKMAN, { pos.first,pos.second }, App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT) //View colliders
