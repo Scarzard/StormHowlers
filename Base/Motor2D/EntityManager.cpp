@@ -660,8 +660,9 @@ bool EntityManager::Draw(float dt) //sprite ordering
 			rect.w = rect_bg.w * (*tmp)->health / (*tmp)->health_lv[(*tmp)->level];
 
 			rect_bg.h = rect.h = 5;
-			rect_bg.x = rect.x = (*tmp)->position.first - ((*tmp)->collider.dimensions.first * 20) + ((*tmp)->Current_Animation->GetCurrentFrame(dt).w / 2) - (rect_bg.w / 1.5);
-			rect_bg.y = rect.y = (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + ((*tmp)->collider.dimensions.second * 20) - 10;
+			//rect_bg.x = rect.x = (*tmp)->position.first - ((*tmp)->collider.dimensions.first * 20) +((*tmp)->Current_Animation->GetCurrentFrame(dt).w / 2) - (rect_bg.w / 1.5);
+			rect_bg.x = rect.x = (*tmp)->position.first - rect_bg.w/2;
+			rect_bg.y = rect.y = (*tmp)->position.second - (*tmp)->Current_Animation->frames->h + /*((*tmp)->collider.dimensions.second * 20)*/ - 10;
 
 			App->render->DrawQuad(rect_bg, 255, 0, 0, 255); //background (red)
 			App->render->DrawQuad(rect, 0, 255, 0, 255); //life (green)
