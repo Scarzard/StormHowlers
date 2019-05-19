@@ -247,6 +247,22 @@ bool Barracks::DeployTroops(int amount_per_frame)
 					deploy_pos.first += 20;
 					deploy_pos.second += 10;
 					e = (Troop*)App->entitymanager->AddEntity(fromPlayer1, *TroopsCreated.begin(), deploy_pos, collider);
+					if (*TroopsCreated.begin() == e->SOLDIER && fromPlayer1)
+					{
+						App->audio->PlayFx(ALLIED_SOLDIER_SPAWN);
+					}
+					else if (*TroopsCreated.begin() == e->SOLDIER && !fromPlayer1)
+					{
+						App->audio->PlayFx(SOVIET_SOLDIER_SPAWN);
+					}
+					if (*TroopsCreated.begin() == e->ENGINEER)
+					{
+						App->audio->PlayFx(ENG_SPAWN);
+					}
+					if (*TroopsCreated.begin() == e->WAR_HOUND)
+					{
+						App->audio->PlayFx(WARHOUND_ATTACK);
+					}
 					TroopsCreated.pop_front();
 					e->state = TROOP_IDLE;
 					e->isSelected = true;

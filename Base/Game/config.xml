@@ -45,6 +45,12 @@
       <sound>building_repair_fx.wav</sound>
       <sound>button_slide_fx.wav</sound>
       <sound>change_focus_fx.wav</sound>
+      <sound>Dog_Att.wav</sound>
+      <sound>Dog_Die.wav</sound>
+      <sound>Dog_Spawn.wav</sound>
+      <sound>Eng_Att.wav</sound>
+      <sound>Eng_Die.wav</sound>
+      <sound>Eng_Spawn.wav</sound>
       <sound>exit_fx.wav</sound>
       <sound>final_explosion_fx.wav</sound>
       <sound>in_game_click_fx.wav</sound>
@@ -56,7 +62,10 @@
       <sound>sentrygun_build_fx.wav</sound>
       <sound>slider_down_fx.wav</sound>
       <sound>slider_up_fx.wav</sound>
-      <sound>soldier_attack_fx.wav</sound>
+      <sound>Soldier_Allied_Spawn.wav</sound>
+      <sound>Soldier_Att.wav</sound>
+      <sound>Soldier_Die.wav</sound>
+      <sound>Soldier_Soviet_Spawn.wav</sound>
       <sound>Soviet_Barracks_B.wav</sound>
       <sound>Soviet_Barracks_D.wav</sound>
       <sound>Soviet_CC_D.wav</sound>

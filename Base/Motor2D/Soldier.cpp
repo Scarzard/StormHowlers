@@ -367,7 +367,7 @@ void Soldier::ActOnDestroyed() {
 	{
 		if (health <= 0) //destroyed
 		{
-
+			App->audio->PlayFx(SOLDIER_DIE);
 			info.current_group->removeUnit(this);
 			App->player1->DeleteEntity(this);
 		}
@@ -376,6 +376,7 @@ void Soldier::ActOnDestroyed() {
 	{
 		if (health <= 0) //destroyed
 		{
+			App->audio->PlayFx(SOLDIER_DIE);
 			info.current_group->removeUnit(this);
 			App->player2->DeleteEntity(this);
 		}
