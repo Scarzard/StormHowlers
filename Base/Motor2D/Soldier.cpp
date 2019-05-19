@@ -564,42 +564,42 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			if (Speed.first == 0 && Speed.second < 0)
 			{
 				//north
-				Current_Animation = moving[NORTH];
+				Current_Animation = moving[SOUTH];
 			}
 			else if (Speed.first == 0 && Speed.second > 0)
 			{
 				//south
-				Current_Animation = moving[SOUTH];
+				Current_Animation = moving[NORTH];
 			}
 			else if (Speed.first < 0 && Speed.second == 0)
 			{
 				//west
-				Current_Animation = moving[WEST];
+				Current_Animation = moving[EAST];
 			}
 			else if (Speed.first > 0 && Speed.second == 0)
 			{
 				//east
-				Current_Animation = moving[EAST];
+				Current_Animation = moving[WEST];
 			}
 			else if (Speed.first > 0 && Speed.second < 0)
 			{
 				//north east
-				Current_Animation = moving[NORTHEAST];
+				Current_Animation = moving[SOUTHWEST];
 			}
 			else if (Speed.first > 0 && Speed.second > 0)
 			{
 				//south east
-				Current_Animation = moving[SOUTHEAST];
+				Current_Animation = moving[NORTHWEST];
 			}
 			else if (Speed.first < 0 && Speed.second < 0)
 			{
 				//north west
-				Current_Animation = moving[NORTHWEST];
+				Current_Animation = moving[SOUTHEAST];
 			}
 			else if (Speed.first < 0 && Speed.second > 0)
 			{
 				//south wst
-				Current_Animation = moving[SOUTHWEST];
+				Current_Animation = moving[NORTHEAST];
 			}
 		}
 		else if (state == SHOOTING)
