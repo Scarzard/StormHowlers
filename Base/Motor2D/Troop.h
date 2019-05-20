@@ -5,7 +5,7 @@
 #include "Group.h"
 #include "Render.h"
 
-enum class TroopDir {
+enum TroopDir {
 	NORTH,
 	SOUTH,
 	EAST,

@@ -44,9 +44,20 @@ void Pathfinding::SetDirMap(uint width, uint height) {
 
 	RELEASE_ARRAY(dirMap);
 	dirMap = new CellInfo[width*height]();
-	debug_tex = App->tex->Load("maps/directions");
-	debug_rects[(int)TroopDir::NORTH] = {0,0};
+	debug_tex = App->tex->Load("maps/directions.png");
+	debug_rects[TroopDir::NORTH]	 = { 120,29, 60,29};
+	debug_rects[TroopDir::SOUTH]	 = { 180,29, 60,29};
+	debug_rects[TroopDir::EAST]		 = { 60,29	,60,29};
+	debug_rects[TroopDir::WEST]		 = { 0,29	,60,29};
+	debug_rects[TroopDir::NORTHEAST] = { 0,0	,60,29};
+	debug_rects[TroopDir::NORTHWEST] = { 60,0	,60,29};
+	debug_rects[TroopDir::SOUTHEAST] = { 180,0	,60,29};
+	debug_rects[TroopDir::SOUTHWEST] = { 120,0	,60,29};
+	 
 
+}
+TroopDir Pathfinding::GetDir(int x, int y) {
+	return dirMap[y*width + x].dir;
 }
 
 void Pathfinding::DrawDirMap() {
@@ -55,7 +66,7 @@ void Pathfinding::DrawDirMap() {
 		for (int j = 0; j < App->map->data.height; j++) {
 
 			pair<int,int> pos = App->map->MapToWorld(i, j);
-			App->render->Blit(debug_tex, pos.first, pos.second, &r, SDL_FLIP_NONE);
+			App->render->Blit(debug_tex, pos.first, pos.second, &debug_rects[GetDir(i,j)], SDL_FLIP_NONE);
 		}
 	}
 }

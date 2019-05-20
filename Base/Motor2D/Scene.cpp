@@ -76,7 +76,7 @@ bool Scene::Start()
 	// Variables init
 	currentMap = 0;
 	pause = false;
-	godmode = false;
+	godmode = true;
 	to_end = false;
 	change = false;
 	endgame = false;
@@ -726,6 +726,8 @@ bool Scene::Start()
 bool Scene::PreUpdate()
 {
 	BROFILER_CATEGORY("Scene PreUpdate", Profiler::Color::DarkOrange);
+
+	
 
 	if (!pause)
 	{
@@ -1394,6 +1396,8 @@ bool Scene::PostUpdate()
 		}
 		to_end = false;
 	}
+
+	App->pathfinding->DrawDirMap();
 
 	return ret;
 }

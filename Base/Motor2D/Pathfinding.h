@@ -21,6 +21,15 @@
 
 struct PathNode;
 
+class CellInfo {
+
+public:
+	TroopDir dir;
+	pair<int, int> value;
+
+	CellInfo() : dir(TroopDir::EAST), value({ 0,0 }) {}
+};
+
 class Pathfinding : public Module
 {
 public:
@@ -37,6 +46,8 @@ public:
 	void SetMap(uint width, uint height, uchar* data);
 
 	void SetDirMap(uint width, uint height);
+
+	TroopDir GetDir(int x, int y);
 
 	void DrawDirMap();
 
@@ -87,6 +98,8 @@ private:
 	CellInfo* dirMap = nullptr;
 
 	SDL_Texture* debug_tex;
+
+	SDL_Rect debug_rects[TroopDir::MAX_DIR];
 };
 
 
@@ -133,13 +146,6 @@ struct PathList
 	std::list<PathNode> list;
 };
 
-class CellInfo {
 
-public:
-	TroopDir dir;
-	pair<int, int> value;
-
-	CellInfo() : dir(TroopDir::NORTH), value({ 0,0 }) {}
-};
 
 #endif // __j1Pathfinding_H__
