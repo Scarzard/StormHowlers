@@ -59,6 +59,8 @@ public:
 
 	pair<int, int> GetSpeed(pair<int, int> pos);
 
+	bool GetHasPath(pair<int, int> pos);
+
 	void SetDirection(TroopDir direction, pair<int, int> pos);
 
 	void DrawDirMap();
@@ -72,6 +74,8 @@ public:
 	std::vector<pair<int, int>>* GetLastPathNotConst();
 
 	void ResetPath(vector<pair<int, int>>& path_to_reset);
+
+	TroopDir SpeedToDir(pair<int, int> speed);
 
 	void CalculatePathsTo( pair<int, int> dest) ;
 

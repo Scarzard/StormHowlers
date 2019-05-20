@@ -55,8 +55,8 @@ void Pathfinding::SetDirMap(uint width, uint height) {
 
 	debug_rects[TroopDir::NORTH] = { 0,0	,60,29};
 	debug_rects[TroopDir::SOUTH] = { 120,0	,60,29};
-	debug_rects[TroopDir::EAST] = { 60,0	,60,29};
-	debug_rects[TroopDir::WEST] = { 180,0	,60,29};
+	debug_rects[TroopDir::WEST] = { 60,0	,60,29};
+	debug_rects[TroopDir::EAST] = { 180,0	,60,29};
 	debug_rects[TroopDir::NORTHEAST]		 = { 60,29	,60,29};
 	debug_rects[TroopDir::NORTHWEST]	 = { 120,29, 60,29};
 	debug_rects[TroopDir::SOUTHEAST]	 = { 180,29, 60,29};
@@ -79,13 +79,29 @@ void Pathfinding::SetDirMap(uint width, uint height) {
 	speeds[TroopDir::NORTHWEST] = { -1,-1 };
 	speeds[TroopDir::SOUTHEAST] = { 1,1 };
 	speeds[TroopDir::SOUTHWEST] = { -1,1 };
+
+	for (int i = 16; i < 20; i++) {
+		for (int j = 0; j < App->map->data.height; j++) {
+
+			SetDirection(TroopDir::EAST, { i, j });
+		}
+	}
+	for (int i = 60; i < 64; i++) {
+		for (int j = 0; j < App->map->data.height; j++) {
+
+			SetDirection(TroopDir::WEST, { i, j });
+		}
+	}
+
 	
 
 }
 
 void Pathfinding::SetDirection(TroopDir direction, pair<int,int> pos) {
-	dirMap[(pos.second*width) + pos.first].dir = direction;
-	dirMap[(pos.second*width) + pos.first].speed = speeds[direction];
+	CellInfo* cell = &dirMap[(pos.second*width) + pos.first];
+	cell->dir = direction;
+	cell->speed = speeds[direction];
+	cell->has_path = true;
 
 }
 
@@ -111,12 +127,15 @@ pair<int, int> Pathfinding::GetSpeed(pair<int, int> pos) {
 	return dirMap[(pos.second*width) + pos.first].speed;
 }
 
+bool Pathfinding::GetHasPath(pair<int, int>pos) {
+	return dirMap[(pos.second*width) + pos.first].has_path;
+}
 
 
 
 void Pathfinding::DrawDirMap() {
 
-	for (int i = 0; i < App->map->data.width; i++) {
+	for (int i = 16; i < 64; i++) {
 		for (int j = 0; j < App->map->data.height; j++) {
 
 			pair<int,int> pos = App->map->MapToWorld(i, j);
@@ -163,6 +182,32 @@ void Pathfinding::ResetPath(vector<pair<int, int>>& path_to_reset)
 	last_path.clear();
 }
 
+TroopDir Pathfinding::SpeedToDir(pair<int, int> speed) {
+	/*for (int i = NORTH; i < SOUTHWEST; i++) {
+		if (speed.first == speeds[i].first && speed.second == speeds[i].second) {
+			return (TroopDir)i;
+		}
+	}*/
+
+	if (speed.first == 0) {
+		if (speed.second > 0) {
+			return SOUTH;
+		}
+		else return NORTH;
+	}
+	else if (speed.first > 0) {
+		if (speed.second == 0) return WEST;
+		else if (speed.second > 0) return SOUTHEAST;
+		else return NORTHEAST;
+	}
+	else if (speed.first < 0) {
+		if (speed.second == 0) return EAST;
+		else if (speed.second > 0) return SOUTHWEST;
+		else return NORTHWEST;
+	}
+
+	return NORTH;
+}
 
 void Pathfinding::CalculatePathsTo(pair<int, int> dest)
 {
@@ -178,18 +223,47 @@ void Pathfinding::CalculatePathsTo(pair<int, int> dest)
 	
 	//SetDirection(TroopDir::WEST,dest);
 
+	int range = 15;
 	
 
 	// Molt guarro pero funca per ara
 	if (App->entitymanager->entity_list.size() > 102) {
 
-		for (int i = NORTH; i < MAX_DIR; i++) {
+		for (int i = 0; i < range; i++) {
+			for (int j = 0; j < range; j++) {
+				pair<int, int> next = { dest.first + i - range / 2,dest.second + j - range / 2 };
+				pair<int, int> speed = { -(next.first - dest.first), -(next.second - dest.second )};
+
+				if (!GetHasPath(next))
+					SetDirection(SpeedToDir(speed), next);
+				//dest.second += speeds[NORTH].second;
+			}
+			//dest.first += speeds[NORTH].first;
+		}
+
+
+
+
+		/*for (int i = NORTH; i < MAX_DIR; i++) {
+			range = 9;
 			dest = original;
-			dest.first += speeds[i].first * 7;
-			dest.second += speeds[i].second * 7;
+			dest.first += speeds[i].first * range;
+			dest.second += speeds[i].second * range;
+
+			pair<int, int> closest_tile = dest;
+			while (range > 0) {
+				closest_tile.first -= speeds[i].first;
+				closest_tile.second -= speeds[i].second;
+				if (IsWalkable(closest_tile)) {
+
+					SetDirection((TroopDir)i, { closest_tile.first,closest_tile.second });
+				}
+				range--;
+
+			}
 
 			SetDirection((TroopDir)i, { dest.first,dest.second });
-		}
+		}*/
 	}
 
 }

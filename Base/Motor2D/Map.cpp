@@ -847,7 +847,7 @@ void Map::DrawWalkability(float dt)
 
 					for (y; y < yEnd; y++)
 					{
-						for (int x = 0; x < data.width; x++)
+						for (int x = 16; x < 64; x++)
 						{
 							int tile_id = layer->Get(x, y);
 							if (tile_id > 0)
