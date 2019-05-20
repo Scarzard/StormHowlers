@@ -28,8 +28,9 @@ public:
 	Entity* entity;
 	pair<int, int> speed;
 	bool has_path = false;
+	bool is_axis = false;
 
-	CellInfo() : dir(TroopDir::NORTHEAST), speed({ 0,0 }), entity(nullptr),has_path(false) {}
+	CellInfo() : dir(TroopDir::MAX_DIR), speed({ 0,0 }), entity(nullptr),has_path(false) {}
 };
 
 class Pathfinding : public Module
@@ -60,6 +61,8 @@ public:
 	pair<int, int> GetSpeed(pair<int, int> pos);
 
 	bool GetHasPath(pair<int, int> pos);
+
+	CellInfo * GetCell(pair<int, int> pos);
 
 	void SetDirection(TroopDir direction, pair<int, int> pos);
 

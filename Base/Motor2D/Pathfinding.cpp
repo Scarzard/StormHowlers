@@ -55,8 +55,8 @@ void Pathfinding::SetDirMap(uint width, uint height) {
 
 	debug_rects[TroopDir::NORTH] = { 0,0	,60,29};
 	debug_rects[TroopDir::SOUTH] = { 120,0	,60,29};
-	debug_rects[TroopDir::WEST] = { 60,0	,60,29};
-	debug_rects[TroopDir::EAST] = { 180,0	,60,29};
+	debug_rects[TroopDir::EAST] = { 60,0	,60,29};
+	debug_rects[TroopDir::WEST] = { 180,0	,60,29};
 	debug_rects[TroopDir::NORTHEAST]		 = { 60,29	,60,29};
 	debug_rects[TroopDir::NORTHWEST]	 = { 120,29, 60,29};
 	debug_rects[TroopDir::SOUTHEAST]	 = { 180,29, 60,29};
@@ -73,8 +73,8 @@ void Pathfinding::SetDirMap(uint width, uint height) {
 
 	speeds[TroopDir::NORTH] = { 0,-1 };
 	speeds[TroopDir::SOUTH] = { 0,1 };
-	speeds[TroopDir::WEST] = { 1,0 };
-	speeds[TroopDir::EAST] = { -1,0 };
+	speeds[TroopDir::EAST] = { 1,0 };
+	speeds[TroopDir::WEST] = { -1,0 };
 	speeds[TroopDir::NORTHEAST] = { 1,-1 };
 	speeds[TroopDir::NORTHWEST] = { -1,-1 };
 	speeds[TroopDir::SOUTHEAST] = { 1,1 };
@@ -83,13 +83,13 @@ void Pathfinding::SetDirMap(uint width, uint height) {
 	for (int i = 16; i < 20; i++) {
 		for (int j = 0; j < App->map->data.height; j++) {
 
-			SetDirection(TroopDir::EAST, { i, j });
+			SetDirection(TroopDir::WEST, { i, j });
 		}
 	}
 	for (int i = 60; i < 64; i++) {
 		for (int j = 0; j < App->map->data.height; j++) {
 
-			SetDirection(TroopDir::WEST, { i, j });
+			SetDirection(TroopDir::EAST, { i, j });
 		}
 	}
 
@@ -131,13 +131,15 @@ bool Pathfinding::GetHasPath(pair<int, int>pos) {
 	return dirMap[(pos.second*width) + pos.first].has_path;
 }
 
-
+CellInfo* Pathfinding::GetCell(pair<int, int> pos) {
+	return &dirMap[(pos.second*width) + pos.first];
+}
 
 void Pathfinding::DrawDirMap() {
 
 	for (int i = 16; i < 64; i++) {
 		for (int j = 0; j < App->map->data.height; j++) {
-
+			if (GetDir(i, j) == MAX_DIR) continue;
 			pair<int,int> pos = App->map->MapToWorld(i, j);
 			App->render->Blit(debug_tex, pos.first, pos.second, &debug_rects[GetDir(i,j)], SDL_FLIP_NONE);
 		}
@@ -224,18 +226,33 @@ void Pathfinding::CalculatePathsTo(pair<int, int> dest)
 	//SetDirection(TroopDir::WEST,dest);
 
 	int range = 15;
-	
+	 k = range;
+	int q = range;
 
 	// Molt guarro pero funca per ara
 	if (App->entitymanager->entity_list.size() > 102) {
 
-		for (int i = 0; i < range; i++) {
-			for (int j = 0; j < range; j++) {
+		for (int i = 0; i < k; i++) {
+			for (int j = 0; j < q; j++) {
 				pair<int, int> next = { dest.first + i - range / 2,dest.second + j - range / 2 };
 				pair<int, int> speed = { -(next.first - dest.first), -(next.second - dest.second )};
 
-				if (!GetHasPath(next))
+				/*if (!GetHasPath(next)) {
 					SetDirection(SpeedToDir(speed), next);
+
+				}*/
+				if ((i>= dest.first-range/2 && i <= dest.first+range/2 ) && (j>=dest.second-range/2 && j <= dest.second+range/2)) {
+
+					SetDirection(SpeedToDir(speed), next);
+					/*TroopDir td = GetDir(next);
+					while (!GetCell(next)->is_axis) {
+						next.first--;
+					}*/
+					/*q = range / 2;*/
+				}
+				else {
+					continue;
+				}
 				//dest.second += speeds[NORTH].second;
 			}
 			//dest.first += speeds[NORTH].first;
