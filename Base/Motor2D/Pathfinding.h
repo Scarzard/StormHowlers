@@ -2,6 +2,7 @@
 #define __j1Pathfinding_H__
 
 #include "Module.h"
+#include "Troop.h"
 #include <vector>
 
 #define DEFAULT_PATH_LENGTH 50
@@ -34,6 +35,10 @@ public:
 
 	// Sets up the walkability map
 	void SetMap(uint width, uint height, uchar* data);
+
+	void SetDirMap(uint width, uint height);
+
+	void DrawDirMap();
 
 	// Main function to request a path from A to B - Decides (with the bool) if expands A* or JPS
 	int CreatePath(const pair<int,int>& origin, const pair<int,int>& destination, bool JPS_active);
@@ -78,6 +83,10 @@ private:
 	uchar* map = nullptr;
 	// we store the created path here
 	std::vector<pair<int,int>> last_path;
+
+	CellInfo* dirMap = nullptr;
+
+	SDL_Texture* debug_tex;
 };
 
 
@@ -124,6 +133,13 @@ struct PathList
 	std::list<PathNode> list;
 };
 
+class CellInfo {
 
+public:
+	TroopDir dir;
+	pair<int, int> value;
+
+	CellInfo() : dir(TroopDir::NORTH), value({ 0,0 }) {}
+};
 
 #endif // __j1Pathfinding_H__

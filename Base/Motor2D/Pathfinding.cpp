@@ -13,6 +13,7 @@ Pathfinding::Pathfinding() : Module(), map(NULL), width(0), height(0)
 Pathfinding::~Pathfinding()
 {
 	RELEASE_ARRAY(map);
+	RELEASE_ARRAY(dirMap);
 }
 
 // Called before quitting
@@ -22,6 +23,7 @@ bool Pathfinding::CleanUp()
 
 	last_path.clear();
 	RELEASE_ARRAY(map);
+	RELEASE_ARRAY(dirMap);
 	return true;
 }
 
@@ -34,6 +36,28 @@ void Pathfinding::SetMap(uint width, uint height, uchar* data)
 	RELEASE_ARRAY(map);
 	map = new uchar[width*height];
 	memcpy(map, data, width*height);
+
+	SetDirMap(width,height);
+}
+
+void Pathfinding::SetDirMap(uint width, uint height) {
+
+	RELEASE_ARRAY(dirMap);
+	dirMap = new CellInfo[width*height]();
+	debug_tex = App->tex->Load("maps/directions");
+	debug_rects[(int)TroopDir::NORTH] = {0,0};
+
+}
+
+void Pathfinding::DrawDirMap() {
+
+	for (int i = 0; i < App->map->data.width; i++) {
+		for (int j = 0; j < App->map->data.height; j++) {
+
+			pair<int,int> pos = App->map->MapToWorld(i, j);
+			App->render->Blit(debug_tex, pos.first, pos.second, &r, SDL_FLIP_NONE);
+		}
+	}
 }
 
 // Utility: return true if pos is inside the map boundaries
