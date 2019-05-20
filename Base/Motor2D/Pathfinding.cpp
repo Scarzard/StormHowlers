@@ -7,6 +7,7 @@
 Pathfinding::Pathfinding() : Module(), map(NULL), width(0), height(0)
 {
 	name.assign("Pathfinding");
+
 }
 
 // Destructor
@@ -39,12 +40,18 @@ void Pathfinding::SetMap(uint width, uint height, uchar* data)
 
 	SetDirMap(width,height);
 }
+bool Pathfinding::Start() {
 
+	debug_tex = App->tex->Load("maps/directions.png");
+
+	return true;
+}
+// Setters MapDir
 void Pathfinding::SetDirMap(uint width, uint height) {
 
 	RELEASE_ARRAY(dirMap);
 	dirMap = new CellInfo[width*height]();
-	debug_tex = App->tex->Load("maps/directions.png");
+
 	debug_rects[TroopDir::NORTH]	 = { 120,29, 60,29};
 	debug_rects[TroopDir::SOUTH]	 = { 180,29, 60,29};
 	debug_rects[TroopDir::EAST]		 = { 60,29	,60,29};
@@ -53,12 +60,49 @@ void Pathfinding::SetDirMap(uint width, uint height) {
 	debug_rects[TroopDir::NORTHWEST] = { 60,0	,60,29};
 	debug_rects[TroopDir::SOUTHEAST] = { 180,0	,60,29};
 	debug_rects[TroopDir::SOUTHWEST] = { 120,0	,60,29};
-	 
+
+	speeds[TroopDir::NORTH]		= { 2,1};
+	speeds[TroopDir::SOUTH]		= { -2,-1};
+	speeds[TroopDir::EAST]		= { 2,-1};
+	speeds[TroopDir::WEST]		= { -2,1} ;
+	speeds[TroopDir::NORTHEAST] = { 2,0	};
+	speeds[TroopDir::NORTHWEST] = { 0,-1} ;
+	speeds[TroopDir::SOUTHEAST] = { 0,1};
+	speeds[TroopDir::SOUTHWEST] = { -2,0};
+	
 
 }
+
+void Pathfinding::SetDirection(TroopDir direction, pair<int,int> pos) {
+	dirMap[(pos.second*width) + pos.first].dir = direction;
+	dirMap[(pos.second*width) + pos.first].speed = speeds[direction];
+
+}
+
+//Getters MapDir
+
 TroopDir Pathfinding::GetDir(int x, int y) {
 	return dirMap[y*width + x].dir;
 }
+TroopDir Pathfinding::GetDir(pair<int,int> pos) {
+	return dirMap[pos.second*width + pos.first].dir;
+}
+
+/** Returns the direction of the tile pos (pos must be in map coords)
+speed gets altered with the respectively speed
+
+*/
+TroopDir Pathfinding::GetDir(pair<int, int> pos, pair<int,int> &speed) {
+	speed = dirMap[(pos.second*width) + pos.first].speed;
+	return dirMap[pos.second*width + pos.first].dir;
+}
+
+pair<int, int> Pathfinding::GetSpeed(pair<int, int> pos) {
+	return dirMap[(pos.second*width) + pos.first].speed;
+}
+
+
+
 
 void Pathfinding::DrawDirMap() {
 
@@ -109,10 +153,28 @@ void Pathfinding::ResetPath(vector<pair<int, int>>& path_to_reset)
 	last_path.clear();
 }
 
-void Pathfinding::ChangeWalkability(const pair<int, int>& pos, char cell_type) const
+
+void Pathfinding::CalculatePathsTo(pair<int, int> dest)
 {
-	if (cell_type != NULL) 
+	/*int n = 10;
+	int k = n / 2;
+	int j = 0;
+
+	for (int i = n / 2 - 1; i < k; i++) {
+		SetDirection(WEST, { i,j });
+	}*/
+	SetDirection(TroopDir::WEST,dest);
+
+}
+void Pathfinding::ChangeWalkability(pair<int, int> pos, char cell_type) 
+{
+	if (cell_type != NULL) {
 		map[(pos.second*width) + pos.first] = cell_type;
+		if (cell_type == P2_BUILDING) {
+			CalculatePathsTo(pos);
+		}
+	}
+
 
 }
 // PathList ------------------------------------------------------------------------

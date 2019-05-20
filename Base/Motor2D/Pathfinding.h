@@ -25,9 +25,11 @@ class CellInfo {
 
 public:
 	TroopDir dir;
-	pair<int, int> value;
+	Entity* entity;
+	pair<int, int> speed;
+	bool has_path = false;
 
-	CellInfo() : dir(TroopDir::EAST), value({ 0,0 }) {}
+	CellInfo() : dir(TroopDir::NORTHEAST), speed({ 0,0 }), entity(nullptr),has_path(false) {}
 };
 
 class Pathfinding : public Module
@@ -45,9 +47,19 @@ public:
 	// Sets up the walkability map
 	void SetMap(uint width, uint height, uchar* data);
 
+	bool Start();
+
 	void SetDirMap(uint width, uint height);
 
 	TroopDir GetDir(int x, int y);
+
+	TroopDir GetDir(pair<int, int> pos);
+
+	TroopDir GetDir(pair<int, int> pos, pair<int, int>& speed);
+
+	pair<int, int> GetSpeed(pair<int, int> pos);
+
+	void SetDirection(TroopDir direction, pair<int, int> pos);
 
 	void DrawDirMap();
 
@@ -61,7 +73,9 @@ public:
 
 	void ResetPath(vector<pair<int, int>>& path_to_reset);
 
-	void ChangeWalkability(const pair<int, int>& pos, char isWalkable) const;
+	void CalculatePathsTo( pair<int, int> dest) ;
+
+	void ChangeWalkability( pair<int, int> pos, char isWalkable) ;
 
 	//void ChangeWalkability(const pair<int, int>& pos, bool isWalkable) const;
 
@@ -100,6 +114,7 @@ private:
 	SDL_Texture* debug_tex;
 
 	SDL_Rect debug_rects[TroopDir::MAX_DIR];
+	pair<int, int> speeds[TroopDir::MAX_DIR];
 };
 
 
