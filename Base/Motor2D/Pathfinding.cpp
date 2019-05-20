@@ -1,6 +1,7 @@
 #include "Defs.h"
 #include "Log.h"
 #include "App.h"
+#include "EntityManager.h"
 #include "Pathfinding.h"
 
 
@@ -52,23 +53,32 @@ void Pathfinding::SetDirMap(uint width, uint height) {
 	RELEASE_ARRAY(dirMap);
 	dirMap = new CellInfo[width*height]();
 
-	debug_rects[TroopDir::NORTH]	 = { 120,29, 60,29};
-	debug_rects[TroopDir::SOUTH]	 = { 180,29, 60,29};
-	debug_rects[TroopDir::EAST]		 = { 60,29	,60,29};
-	debug_rects[TroopDir::WEST]		 = { 0,29	,60,29};
-	debug_rects[TroopDir::NORTHEAST] = { 0,0	,60,29};
-	debug_rects[TroopDir::NORTHWEST] = { 60,0	,60,29};
-	debug_rects[TroopDir::SOUTHEAST] = { 180,0	,60,29};
-	debug_rects[TroopDir::SOUTHWEST] = { 120,0	,60,29};
+	debug_rects[TroopDir::NORTH] = { 0,0	,60,29};
+	debug_rects[TroopDir::SOUTH] = { 120,0	,60,29};
+	debug_rects[TroopDir::EAST] = { 60,0	,60,29};
+	debug_rects[TroopDir::WEST] = { 180,0	,60,29};
+	debug_rects[TroopDir::NORTHEAST]		 = { 60,29	,60,29};
+	debug_rects[TroopDir::NORTHWEST]	 = { 120,29, 60,29};
+	debug_rects[TroopDir::SOUTHEAST]	 = { 180,29, 60,29};
+	debug_rects[TroopDir::SOUTHWEST]		 = { 0,29	,60,29};
 
-	speeds[TroopDir::NORTH]		= { 2,1};
-	speeds[TroopDir::SOUTH]		= { -2,-1};
-	speeds[TroopDir::EAST]		= { 2,-1};
-	speeds[TroopDir::WEST]		= { -2,1} ;
-	speeds[TroopDir::NORTHEAST] = { 2,0	};
+	/*speeds[TroopDir::NORTH]		= { 1,-1};
+	speeds[TroopDir::SOUTH]		= { 1,1};
+	speeds[TroopDir::EAST]		= { -1,1} ;
+	speeds[TroopDir::WEAST]		= { 1,-1};
+	speeds[TroopDir::NORTHEAST] = { 1,0	};
 	speeds[TroopDir::NORTHWEST] = { 0,-1} ;
 	speeds[TroopDir::SOUTHEAST] = { 0,1};
-	speeds[TroopDir::SOUTHWEST] = { -2,0};
+	speeds[TroopDir::SOUTHWEST] = { -1,0};*/
+
+	speeds[TroopDir::NORTH] = { 0,-1 };
+	speeds[TroopDir::SOUTH] = { 0,1 };
+	speeds[TroopDir::WEST] = { 1,0 };
+	speeds[TroopDir::EAST] = { -1,0 };
+	speeds[TroopDir::NORTHEAST] = { 1,-1 };
+	speeds[TroopDir::NORTHWEST] = { -1,-1 };
+	speeds[TroopDir::SOUTHEAST] = { 1,1 };
+	speeds[TroopDir::SOUTHWEST] = { -1,1 };
 	
 
 }
@@ -156,23 +166,40 @@ void Pathfinding::ResetPath(vector<pair<int, int>>& path_to_reset)
 
 void Pathfinding::CalculatePathsTo(pair<int, int> dest)
 {
-	/*int n = 10;
+	pair<int, int> original = dest;
+	int n = 10;
 	int k = n / 2;
-	int j = 0;
+	int j = dest.second;
 
-	for (int i = n / 2 - 1; i < k; i++) {
-		SetDirection(WEST, { i,j });
+	/*for (int i = n / 2 - 1; i < k; i++) {
+		SetDirection(SOUTHEAST, { i,j });
 	}*/
-	SetDirection(TroopDir::WEST,dest);
+
+	
+	//SetDirection(TroopDir::WEST,dest);
+
+	
+
+	// Molt guarro pero funca per ara
+	if (App->entitymanager->entity_list.size() > 102) {
+
+		for (int i = NORTH; i < MAX_DIR; i++) {
+			dest = original;
+			dest.first += speeds[i].first * 7;
+			dest.second += speeds[i].second * 7;
+
+			SetDirection((TroopDir)i, { dest.first,dest.second });
+		}
+	}
 
 }
-void Pathfinding::ChangeWalkability(pair<int, int> pos, char cell_type) 
+void Pathfinding::ChangeWalkability(const pair<int, int>& pos, char cell_type) const 
 {
 	if (cell_type != NULL) {
 		map[(pos.second*width) + pos.first] = cell_type;
-		if (cell_type == P2_BUILDING) {
+		/*if (cell_type == P2_BUILDING) {
 			CalculatePathsTo(pos);
-		}
+		}*/
 	}
 
 

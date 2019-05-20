@@ -75,7 +75,7 @@ public:
 
 	void CalculatePathsTo( pair<int, int> dest) ;
 
-	void ChangeWalkability( pair<int, int> pos, char isWalkable) ;
+	void ChangeWalkability( const pair<int, int>& pos, char isWalkable) const;
 
 	//void ChangeWalkability(const pair<int, int>& pos, bool isWalkable) const;
 
