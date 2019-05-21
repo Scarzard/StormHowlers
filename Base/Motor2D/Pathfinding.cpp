@@ -71,14 +71,14 @@ void Pathfinding::SetDirMap(uint width, uint height) {
 	speeds[TroopDir::SOUTHEAST] = { 0,1};
 	speeds[TroopDir::SOUTHWEST] = { -1,0};*/
 
-	speeds[TroopDir::NORTH] = { 0,-1 };
-	speeds[TroopDir::SOUTH] = { 0,1 };
-	speeds[TroopDir::EAST] = { 1,0 };
-	speeds[TroopDir::WEST] = { -1,0 };
-	speeds[TroopDir::NORTHEAST] = { 1,-1 };
-	speeds[TroopDir::NORTHWEST] = { -1,-1 };
-	speeds[TroopDir::SOUTHEAST] = { 1,1 };
-	speeds[TroopDir::SOUTHWEST] = { -1,1 };
+	speeds[TroopDir::NORTH] = { 1,-1 };
+	speeds[TroopDir::SOUTH] = { -1,1 };
+	speeds[TroopDir::EAST] = { -1,-1 };
+	speeds[TroopDir::WEST] = { 1,1 };
+	speeds[TroopDir::NORTHEAST] = { 1,0 };
+	speeds[TroopDir::NORTHWEST] = { 0,-1 };
+	speeds[TroopDir::SOUTHEAST] = { 0,1 };
+	speeds[TroopDir::SOUTHWEST] = { -1,0 };
 
 	for (int i = 16; i < 20; i++) {
 		for (int j = 0; j < App->map->data.height; j++) {
