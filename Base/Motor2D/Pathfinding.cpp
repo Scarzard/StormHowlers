@@ -237,12 +237,13 @@ void Pathfinding::CalculatePathsTo(pair<int, int> dest)
 				pair<int, int> next = { dest.first + i - range / 2,dest.second + j - range / 2 };
 				pair<int, int> speed = { -(next.first - dest.first), -(next.second - dest.second )};
 
-				/*if (!GetHasPath(next)) {
+				if (!GetHasPath(next)) {
 					SetDirection(SpeedToDir(speed), next);
 
-				}*/
-				if ((i>= dest.first-range/2 && i <= dest.first+range/2 ) && (j>=dest.second-range/2 && j <= dest.second+range/2)) {
-
+				}
+				//if ((dest.first + i >= dest.first - range / 4 && dest.first - i <= dest.first + range / 2) && (dest.second + j >= dest.second - range / 2 && dest.second + j <= dest.second + range / 2)) {
+				//if ((dest.first + i >= dest.first+range/4 && dest.first - i <= dest.first-range/2 ) && (dest.second - j <= dest.second-range/4 && dest.second + j <= dest.second+range/4)) {
+				else if(next.first >= dest.first - range/4 && next.first <= dest.first + range/4 && next.second >= dest.second - range/4 && next.second <= dest.second + range/4){
 					SetDirection(SpeedToDir(speed), next);
 					/*TroopDir td = GetDir(next);
 					while (!GetCell(next)->is_axis) {
