@@ -6,6 +6,7 @@
 #include "Map.h"
 #include "EntityManager.h"
 #include "Brofiler\Brofiler.h"
+#include "MainMenu.h"
 
 #define VSYNC true
 
@@ -52,7 +53,8 @@ bool Render::Awake(pugi::xml_node& config)
 		camera.y = -387;
 		/*camera.x =0;
 		camera.y = 0;*/
-		zoom =0.77;
+		//To define
+		zoom = (float)camera.w / 1680.0f;
 		App->win->zoom_scale = zoom*App->win->scale;
 	}
 
@@ -64,12 +66,40 @@ bool Render::Start()
 {
 	LOG("render start");
 	SDL_RenderGetViewport(renderer, &viewport);
+	App->render->zoom =(float) viewport.w/1680.0f;
 
 	//SDL_RenderSetLogicalSize(renderer, App->win->width, App->win->height);
 
 	return true;
 }
+void Render::WindowResized() {
+	SDL_RenderGetViewport(renderer, &viewport);
+	App->win->width = viewport.w;
+	App->win->height = viewport.h;
+	camera.w = viewport.w;
+	camera.h = viewport.h;
 
+	if (App->main_menu->active) {
+		zoom = (float)viewport.w / 1680.0f;
+		/*float vw = (float)viewport.w / 1680.0f;
+		float vh = (float)viewport.h / 1050.0f;
+
+		App->render->zoom = (float)(vw + vh) / 2.0f;*/
+
+	}
+	else {
+		zoom = 0.77f *(float)viewport.w / 1680.0f;
+		camera.x = 913*zoom/0.77f;    // camera.w * 1680.0f / 913.0f;
+		camera.y = -387*zoom/0.77f;   // camera.h * 1050.0f / -387.0f;
+		/*float vw = 0.77f * (float)viewport.w / 1680.0f;
+		float vh = 0.77f * (float)viewport.h / 1050.0f;
+		App->render->zoom = (float)(vw + vh) / 2.0f;*/
+
+		
+	}
+	
+	//Readjust all the necessary things
+}
 // Called each loop iteration
 bool Render::PreUpdate()
 {

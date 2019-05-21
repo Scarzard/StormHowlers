@@ -251,7 +251,7 @@ bool Player::Update(float dt)
 			if (!App->scene->pause)
 			{
 				App->scene->world_seconds.Stop();
-				App->render->zoom = 1;
+				//App->render->zoom = 1;
 				Pause_UI->visible = true;
 				isPaused = true;
 
@@ -267,7 +267,7 @@ bool Player::Update(float dt)
 			else if (App->scene->pause && isPaused && currentUI == CURRENT_UI::CURR_PAUSE)
 			{
 				App->scene->world_seconds.Start();
-				App->render->zoom = 0.77;
+				//App->render->zoom = 0.77;
 				Pause_UI->visible = false;
 				isPaused = false;
 
@@ -532,7 +532,7 @@ bool Player::Update(float dt)
 			if (App->scene->pause && isPaused && currentUI == CURRENT_UI::CURR_PAUSE)
 			{
 				App->scene->world_seconds.Start();
-				App->render->zoom = 0.77;
+				//App->render->zoom = 0.77;
 				Pause_UI->visible = false;
 				isPaused = false;
 
@@ -1902,7 +1902,7 @@ void Player::DoLogic(UI_Element* data)
 	case::UI_Element::Action::RESUME_PAUSE:
 		
 		App->scene->world_seconds.Start();
-		App->render->zoom = 0.77;
+		//App->render->zoom = 0.77;
 		Pause_UI->visible = false;
 		isPaused = false;
 		App->audio->PlayFx(INGAME_CLICK);

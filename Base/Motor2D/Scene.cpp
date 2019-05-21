@@ -61,10 +61,12 @@ bool Scene::Start()
 {
 	bool ret = false;
 
+
 	App->map->Load(map_names.front()->data());
 	//current_track = App->audio->tracks_path.front();
 	//App->audio->PlayMusic(PATH(App->audio->folder_music.data(), current_track.data()));
-	App->render->zoom = 0.77;
+	//App->render->zoom = 0.77;
+	App->render->WindowResized();
 
 	allied_win_tex = App->tex->Load(allied_win_name.data());
 	soviet_win_tex = App->tex->Load(soviet_win_name.data());

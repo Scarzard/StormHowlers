@@ -20,6 +20,8 @@ public:
 	// Called before the first frame
 	bool Start();
 
+	void WindowResized();
+
 	// Called each loop iteration
 	bool PreUpdate();
 	bool Update(float dt);

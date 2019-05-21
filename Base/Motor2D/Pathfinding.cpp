@@ -230,7 +230,7 @@ void Pathfinding::CalculatePathsTo(pair<int, int> dest)
 	int q = range;
 
 	// Molt guarro pero funca per ara
-	if (App->entitymanager->entity_list.size() > 102) {
+	if (App->entitymanager->entity_list.size() > 0) {
 
 		for (int i = 0; i < k; i++) {
 			for (int j = 0; j < q; j++) {

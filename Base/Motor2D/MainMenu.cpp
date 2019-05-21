@@ -46,7 +46,8 @@ bool MainMenu::Start()
 	menu_background = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, true);
 	menu_background->texture = App->tex->Load(menu_bg_file_name.data());
 	menu_background->rect = { 0, 0, App->win->width, App->win->height };
-	App->render->zoom = 1;
+	//App->render->zoom = 1680 / (App->render->viewport.w);
+	//App->render->zoom = 0.7f;
 
 	//PLAY
 	new_game_button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEW_GAME, { 1273, 432 }, { 371, 87 }, menu_background, true);

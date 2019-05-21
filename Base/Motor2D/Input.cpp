@@ -348,6 +348,9 @@ bool Input::PreUpdate()
 			case SDL_WINDOWEVENT:
 				switch(event.window.event)
 				{
+				case SDL_WINDOWEVENT_SIZE_CHANGED:
+					App->render->WindowResized();
+					break;
 					//case SDL_WINDOWEVENT_LEAVE:
 					case SDL_WINDOWEVENT_HIDDEN:
 					case SDL_WINDOWEVENT_MINIMIZED:

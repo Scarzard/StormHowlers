@@ -846,7 +846,7 @@ void Map::DrawWalkability(float dt)
 					int yEnd = (App->player2->isBuilding) ? data.height : data.height / 2;
 
 					for (y; y < yEnd; y++)
-					{
+					{//16 and 64 because the map actually starts and ends there
 						for (int x = 16; x < 64; x++)
 						{
 							int tile_id = layer->Get(x, y);
