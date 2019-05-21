@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Troop.h"
+#include "Entity.h"
 #include <vector>
 
 #define DEFAULT_PATH_LENGTH 50
@@ -27,10 +28,9 @@ public:
 	TroopDir dir;
 	Entity* entity;
 	pair<int, int> speed;
-	bool has_path = false;
 	bool is_axis = false;
 
-	CellInfo() : dir(TroopDir::MAX_DIR), speed({ 0,0 }), entity(nullptr),has_path(false) {}
+	CellInfo() : dir(TroopDir::MAX_DIR), speed({ 0,0 }), entity(nullptr) {}
 };
 
 class Pathfinding : public Module
@@ -49,22 +49,44 @@ public:
 	void SetMap(uint width, uint height, uchar* data);
 
 	bool Start();
-
+	bool Update(float dt);
 	void SetDirMap(uint width, uint height);
 
-	TroopDir GetDir(int x, int y);
+	void SetDirectionAttack(TroopDir direction, Entity::entityType type, bool fromPlayer1, pair<int, int> pos);
 
-	TroopDir GetDir(pair<int, int> pos);
+	void SetDirectionDefense(TroopDir direction, Entity::entityType type, bool fromPlayer1, pair<int, int> pos);
 
-	TroopDir GetDir(pair<int, int> pos, pair<int, int>& speed);
+	TroopDir GetDir(int x, int y, Entity::entityType type, bool fromPlayer1);
 
-	pair<int, int> GetSpeed(pair<int, int> pos);
+	TroopDir GetDirDefense(int x, int y, Entity::entityType type, bool fromPlayer1);
 
-	bool GetHasPath(pair<int, int> pos);
+	TroopDir GetDirAttack(int x, int y, Entity::entityType type, bool fromPlayer1);
 
-	CellInfo * GetCell(pair<int, int> pos);
+	TroopDir GetDirDefense(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
 
-	void SetDirection(TroopDir direction, pair<int, int> pos);
+	TroopDir GetDirAttack(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
+
+	TroopDir GetDir(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
+
+	TroopDir GetDir(int x, int y, bool fromPlayer1);
+
+	TroopDir GetDir(pair<int, int> pos, bool fromPlayer1);
+
+	//TroopDir GetDir(pair<int, int> pos, pair<int, int>& speed);
+
+	pair<int, int> GetSpeed(pair<int, int> pos, bool fromPlayer1);
+
+	CellInfo * GetCell(pair<int, int> pos, bool fromPlayer1);
+
+	pair<int, int> GetSpeedAttack(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
+
+	pair<int, int> GetSpeedDefense(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
+
+	CellInfo * GetCellAttack(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
+
+	CellInfo * GetCellDefense(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
+
+	CellInfo * GetCell(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
 
 	void DrawDirMap();
 
@@ -116,12 +138,19 @@ private:
 	// we store the created path here
 	std::vector<pair<int,int>> last_path;
 
-	CellInfo* dirMap = nullptr;
+	//CellInfo* dirMap = nullptr;
 
 	SDL_Texture* debug_tex;
 
 	SDL_Rect debug_rects[TroopDir::MAX_DIR];
 	pair<int, int> speeds[TroopDir::MAX_DIR];
+
+	vector<CellInfo*> dirMap_p1;
+	vector<CellInfo*> dirMap_p2;
+
+	bool draw_p1_map = true;
+	//Entity::entityType draw_type = Entity::entityType::SOLDIER;
+	int draw_type = 0;
 };
 
 
