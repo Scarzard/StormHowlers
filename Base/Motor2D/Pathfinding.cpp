@@ -24,14 +24,16 @@ bool Pathfinding::CleanUp()
 
 	last_path.clear();
 
-	for (int i = 0; i < dirMap_p1.size(); i++) {
+	// TODO
+
+	/*for (int i = 0; i < dirMap_p1.size(); i++) {
 		RELEASE_ARRAY(dirMap_p1[i]);
-	}
+	}*/
 	dirMap_p1.clear();
 
-	for (int i = 0; i < dirMap_p2.size(); i++) {
+	/*for (int i = 0; i < dirMap_p2.size(); i++) {
 		RELEASE_ARRAY(dirMap_p2[i]);
-	}
+	}*/
 	dirMap_p2.clear();
 	return true;
 }
@@ -53,8 +55,7 @@ bool Pathfinding::Start() {
 	debug_tex = App->tex->Load("maps/directions.png");
 
 	//0-5 p1 attack / 5-10 p1 deffense / 10-15 p2 attack / 15-20 p2 deffense
-	dirMap_p1 = vector<CellInfo*>(10, new CellInfo[width*height]());
-	dirMap_p2 = vector<CellInfo*>(10, new CellInfo[width*height]());
+	
 
 
 	return true;
@@ -62,12 +63,24 @@ bool Pathfinding::Start() {
 bool Pathfinding::Update(float dt)
 {
 
-	if (App->input->GetKey[SDL_SCANCODE_RIGHT] == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		draw_p1_map = !draw_p1_map;
 	}
 
-	if (App->input->GetKey[SDL_SCANCODE_DOWN] == KEY_DOWN) {
-		draw_type = (draw_type + 1) % 5;
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+		draw_type = (draw_type % 5) + 8;
+
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		draw_attack = !draw_attack;
+
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
+		for (int i = 16; i < 64; i++) {
+			for (int j = 0; j < App->map->data.height; j++) {
+				SetDirectionAttack(TroopDir::SOUTHWEST, (Entity::entityType::TANKMAN), true, { i, j });
+			}
+		}
 	}
 	return true;
 }
@@ -87,6 +100,15 @@ void Pathfinding::SetDirMap(uint width, uint height) {
 	}
 	dirMap_p2.clear();
 
+	dirMap_p1 = vector<CellInfo*>(10);
+	dirMap_p2 = vector<CellInfo*>(10);
+
+	for (int i = 0; i < 10; i++) {
+		dirMap_p1[i] = new CellInfo[width*height]();
+		dirMap_p2[i] = new CellInfo[width*height]();
+	}
+
+
 	debug_rects[TroopDir::NORTH] = { 0,0	,60,29};
 	debug_rects[TroopDir::SOUTH] = { 120,0	,60,29};
 	debug_rects[TroopDir::EAST] = { 60,0	,60,29};
@@ -105,18 +127,6 @@ void Pathfinding::SetDirMap(uint width, uint height) {
 	speeds[TroopDir::SOUTHEAST] = { 0,1 };
 	speeds[TroopDir::SOUTHWEST] = { -1,0 };
 
-	/*pair<Entity::entityType, TroopDir> p = { Entity::entityType::SOLDIER, TroopDir::SOUTH };
-	default_dirs_p1.push_back(p);
-
-	p = { Entity::entityType::SOLDIER, TroopDir::NORTH };
-	default_dirs_p2.push_back(p);
-
-	p = { Entity::entityType::TANKMAN, TroopDir::SOUTH };
-*/
-
-
-
-
 	// Setting the map up
 	for (int k = Entity::entityType::SOLDIER; k <= Entity::entityType::WAR_HOUND; k++) {
 		//Filling borders to keep troops inside
@@ -124,7 +134,7 @@ void Pathfinding::SetDirMap(uint width, uint height) {
 			for (int j = 0; j < App->map->data.height; j++) {
 
 				SetDirectionAttack(TroopDir::WEST,  (Entity::entityType)k, true, { i, j });
-				SetDirectionAttack(TroopDir::WEST,  (Entity::entityType)k,false,{ i, j });
+				SetDirectionAttack(TroopDir::WEST,  (Entity::entityType)k, false,{ i, j });
 				SetDirectionDefense(TroopDir::WEST, (Entity::entityType)k, true, { i, j });
 				SetDirectionDefense(TroopDir::WEST, (Entity::entityType)k, false, { i, j });
 			}
@@ -140,16 +150,16 @@ void Pathfinding::SetDirMap(uint width, uint height) {
 		}
 
 		// Filling the rest of the map
-		for (int j = 0; j < App->map->data.height; j++) {
-			for (int i = 20; i < 59; i++) {
+		for (int i = 20; i < 60; i++) {
+			for (int j = 0; j < App->map->data.height; j++) {
 			
 
 				SetDirectionAttack(TroopDir::SOUTH, (Entity::entityType)k, true, { i, j });
 				SetDirectionAttack(TroopDir::NORTH, (Entity::entityType)k, false, { i, j });
 			}
-
-			SetDirectionDefense(TroopDir::NORTH, (Entity::entityType)k, true, { App->map->allyzone.down_limit.first + 1, j });
-			SetDirectionDefense(TroopDir::SOUTH, (Entity::entityType)k, false, { App->map->sovietzone.up_limit.first - 1, j });
+			
+			SetDirectionDefense(TroopDir::NORTH, (Entity::entityType)k, true, { i,App->map->allyzone.up_limit.first});
+			SetDirectionDefense(TroopDir::SOUTH, (Entity::entityType)k, false, {i, App->map->warzone.down_limit.first});
 		}
 		
 	}
@@ -168,8 +178,9 @@ void Pathfinding::SetDirectionAttack(TroopDir direction, Entity::entityType type
 }
 void Pathfinding::SetDirectionDefense(TroopDir direction, Entity::entityType type, bool fromPlayer1, pair<int, int> pos) {
 
-	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER + 5);
-	CellInfo* cell = (fromPlayer1) ? &dirMap_p1[type][(pos.second*width) + pos.first] : &dirMap_p2[type][(pos.second*width) + pos.first];
+	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER);
+	int index = (int)(type)+5;
+	CellInfo* cell = (fromPlayer1) ? &dirMap_p1[index][(pos.second*width) + pos.first] : &dirMap_p2[index][(pos.second*width) + pos.first];
 	cell->dir = direction;
 	cell->speed = speeds[direction];
 
@@ -180,29 +191,16 @@ void Pathfinding::SetDirectionDefense(TroopDir direction, Entity::entityType typ
 TroopDir Pathfinding::GetDirAttack(int x, int y, Entity::entityType type, bool fromPlayer1) {
 	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER);
 	return (fromPlayer1) ? dirMap_p1[type][y*width + x].dir : dirMap_p2[type][y*width + x].dir;
-}TroopDir Pathfinding::GetDirDefense(int x, int y, Entity::entityType type, bool fromPlayer1) {
-	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER + 5); 
-	return (fromPlayer1) ? dirMap_p1[type][y*width + x].dir : dirMap_p2[type][y*width + x].dir;
 }
-TroopDir Pathfinding::GetDirAttack(pair<int, int> pos, Entity::entityType type, bool fromPlayer1) {
+TroopDir Pathfinding::GetDirDefense(int x, int y, Entity::entityType type, bool fromPlayer1) {
 	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER); 
-	return (fromPlayer1) ? dirMap_p1[type][pos.second*width + pos.first].dir : dirMap_p2[type][pos.second*width + pos.first].dir;
-}TroopDir Pathfinding::GetDirDefense(pair<int, int> pos, Entity::entityType type, bool fromPlayer1) {
-	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER + 5); 
-	return (fromPlayer1) ? dirMap_p1[type][pos.second*width + pos.first].dir : dirMap_p2[type][pos.second*width + pos.first].dir;
+	return (fromPlayer1) ? dirMap_p1[type+5][y*width + x].dir : dirMap_p2[type+5][y*width + x].dir;
 }
-//TroopDir Pathfinding::GetDir(pair<int,int> pos, Entity::entityType type, bool fromPlayer1) {
-//	return (fromPlayer1) ? dirMap_p1[pos.second*width + pos.first].dir : dirMap_p2[pos.second*width + pos.first].dir;
-//}
 
-/** Returns the direction of the tile pos (pos must be in map coords)
-speed gets altered with the respectively speed
-
-*/
-//TroopDir Pathfinding::GetDir(pair<int, int> pos, pair<int,int> &speed) {
-//	speed = dirMap[(pos.second*width) + pos.first].speed;
-//	return dirMap[pos.second*width + pos.first].dir;
-//}
+bool Pathfinding::GetHasPath(pair<int, int>pos, Entity::entityType type, bool fromPlayer1) {
+	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER);
+	return (fromPlayer1) ? dirMap_p1[type][pos.second*width + pos.first].has_path : dirMap_p2[type][pos.second*width + pos.first].has_path;
+}
 
 pair<int, int> Pathfinding::GetSpeedAttack(pair<int, int> pos, Entity::entityType type, bool fromPlayer1) {
 	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER);
@@ -216,22 +214,35 @@ pair<int, int> Pathfinding::GetSpeedDefense(pair<int, int> pos, Entity::entityTy
 
 CellInfo* Pathfinding::GetCellAttack(pair<int, int> pos, Entity::entityType type, bool fromPlayer1) {
 	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER);
-	return (fromPlayer1) ? &dirMap_p1[type][pos.second*width + pos.first] : dirMap_p2[type][pos.second*width + pos.first];
+	return (fromPlayer1) ? &dirMap_p1[type][pos.second*width + pos.first] : &dirMap_p2[type][pos.second*width + pos.first];
 }
 CellInfo* Pathfinding::GetCellDefense(pair<int, int> pos, Entity::entityType type, bool fromPlayer1) {
 	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER);
-	return (fromPlayer1) ? &dirMap_p1[type+5][pos.second*width + pos.first] : dirMap_p2[type+5][pos.second*width + pos.first];
+	return (fromPlayer1) ? &dirMap_p1[type+5][pos.second*width + pos.first] : &dirMap_p2[type+5][pos.second*width + pos.first];
 }
 void Pathfinding::DrawDirMap() {
+	if (draw_attack) {
 
-	for (int i = 16; i < 64; i++) {
-		for (int j = 0; j < App->map->data.height; j++) {
-			TroopDir t = GetDir(i, j, (Entity::entityType)draw_type, draw_p1_map);
-			if (t == MAX_DIR) continue;
-			pair<int,int> pos = App->map->MapToWorld(i, j);
-			App->render->Blit(debug_tex, pos.first, pos.second, &debug_rects[t], SDL_FLIP_NONE);
+		for (int i = 16; i < 64; i++) {
+			for (int j = 0; j < App->map->data.height; j++) {
+				TroopDir t = GetDirAttack(i, j, (Entity::entityType)draw_type, draw_p1_map);
+				if (t == MAX_DIR) continue;
+				pair<int,int> pos = App->map->MapToWorld(i, j);
+				App->render->Blit(debug_tex, pos.first, pos.second, &debug_rects[t], SDL_FLIP_NONE);
+			}
 		}
 	}
+	else {
+		for (int i = 16; i < 64; i++) {
+			for (int j = 0; j < App->map->data.height; j++) {
+				TroopDir t = GetDirDefense(i, j, (Entity::entityType)draw_type, draw_p1_map);
+				if (t == MAX_DIR) continue;
+				pair<int, int> pos = App->map->MapToWorld(i, j);
+				App->render->Blit(debug_tex, pos.first, pos.second, &debug_rects[t], SDL_FLIP_NONE);
+			}
+		}
+	}
+
 }
 
 // Utility: return true if pos is inside the map boundaries
@@ -299,6 +310,7 @@ TroopDir Pathfinding::SpeedToDir(pair<int, int> speed) {
 	return NORTH;
 }
 
+
 void Pathfinding::CalculatePathsTo(pair<int, int> dest)
 {
 	pair<int, int> original = dest;
@@ -318,30 +330,30 @@ void Pathfinding::CalculatePathsTo(pair<int, int> dest)
 	int q = range;
 
 	// Molt guarro pero funca per ara
-	if (App->entitymanager->entity_list.size() > 0) {
+	if (App->entitymanager->entity_list.size() > 102) {
 
 		for (int i = 0; i < k; i++) {
 			for (int j = 0; j < q; j++) {
 				pair<int, int> next = { dest.first + i - range / 2,dest.second + j - range / 2 };
 				pair<int, int> speed = { -(next.first - dest.first), -(next.second - dest.second )};
 
-				if (!GetHasPath(next)) {
-					SetDirection(SpeedToDir(speed), next);
+				//if (!GetHasPath(next)) {
+				//	SetDirection(SpeedToDir(speed), next);
 
-				}
-				//if ((dest.first + i >= dest.first - range / 4 && dest.first - i <= dest.first + range / 2) && (dest.second + j >= dest.second - range / 2 && dest.second + j <= dest.second + range / 2)) {
-				//if ((dest.first + i >= dest.first+range/4 && dest.first - i <= dest.first-range/2 ) && (dest.second - j <= dest.second-range/4 && dest.second + j <= dest.second+range/4)) {
-				else if(next.first >= dest.first - range/4 && next.first <= dest.first + range/4 && next.second >= dest.second - range/4 && next.second <= dest.second + range/4){
-					SetDirection(SpeedToDir(speed), next);
-					/*TroopDir td = GetDir(next);
-					while (!GetCell(next)->is_axis) {
-						next.first--;
-					}*/
-					/*q = range / 2;*/
-				}
-				else {
-					continue;
-				}
+				//}
+				////if ((dest.first + i >= dest.first - range / 4 && dest.first - i <= dest.first + range / 2) && (dest.second + j >= dest.second - range / 2 && dest.second + j <= dest.second + range / 2)) {
+				////if ((dest.first + i >= dest.first+range/4 && dest.first - i <= dest.first-range/2 ) && (dest.second - j <= dest.second-range/4 && dest.second + j <= dest.second+range/4)) {
+				//else if(next.first >= dest.first - range/4 && next.first <= dest.first + range/4 && next.second >= dest.second - range/4 && next.second <= dest.second + range/4){
+				//	SetDirection(SpeedToDir(speed), next);
+				//	/*TroopDir td = GetDir(next);
+				//	while (!GetCell(next)->is_axis) {
+				//		next.first--;
+				//	}*/
+				//	/*q = range / 2;*/
+				//}
+				//else {
+				//	continue;
+				//}
 				//dest.second += speeds[NORTH].second;
 			}
 			//dest.first += speeds[NORTH].first;

@@ -29,7 +29,7 @@ Soldier::~Soldier()
 }
 
 bool Soldier::Update(float dt) {
-	Speed = App->pathfinding->GetSpeed(App->map->WorldToMap(position.first, position.second));
+	Speed = App->pathfinding->GetSpeedAttack(App->map->WorldToMap(position.first, position.second),type,fromPlayer1);
 
 	position.first += Speed.first * 100 * dt;
 	position.second += Speed.second * 100 * dt;

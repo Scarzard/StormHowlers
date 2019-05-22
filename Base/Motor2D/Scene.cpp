@@ -78,7 +78,7 @@ bool Scene::Start()
 	// Variables init
 	currentMap = 0;
 	pause = false;
-	godmode = true;
+	godmode = false;
 	to_end = false;
 	change = false;
 	endgame = false;

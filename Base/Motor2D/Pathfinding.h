@@ -26,11 +26,12 @@ class CellInfo {
 
 public:
 	TroopDir dir;
-	Entity* entity;
+	//Entity* entity;
 	pair<int, int> speed;
 	bool is_axis = false;
+	bool has_path = false;
 
-	CellInfo() : dir(TroopDir::MAX_DIR), speed({ 0,0 }), entity(nullptr) {}
+	CellInfo() : dir(TroopDir::MAX_DIR), speed({ 0,0 }),has_path(false) {}
 };
 
 class Pathfinding : public Module
@@ -56,8 +57,9 @@ public:
 
 	void SetDirectionDefense(TroopDir direction, Entity::entityType type, bool fromPlayer1, pair<int, int> pos);
 
-	TroopDir GetDir(int x, int y, Entity::entityType type, bool fromPlayer1);
 
+	bool GetHasPath(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
+	
 	TroopDir GetDirDefense(int x, int y, Entity::entityType type, bool fromPlayer1);
 
 	TroopDir GetDirAttack(int x, int y, Entity::entityType type, bool fromPlayer1);
@@ -66,27 +68,16 @@ public:
 
 	TroopDir GetDirAttack(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
 
-	TroopDir GetDir(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
-
-	TroopDir GetDir(int x, int y, bool fromPlayer1);
-
-	TroopDir GetDir(pair<int, int> pos, bool fromPlayer1);
-
-	//TroopDir GetDir(pair<int, int> pos, pair<int, int>& speed);
-
-	pair<int, int> GetSpeed(pair<int, int> pos, bool fromPlayer1);
-
-	CellInfo * GetCell(pair<int, int> pos, bool fromPlayer1);
-
+	
 	pair<int, int> GetSpeedAttack(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
 
 	pair<int, int> GetSpeedDefense(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
 
+	
 	CellInfo * GetCellAttack(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
 
 	CellInfo * GetCellDefense(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
 
-	CellInfo * GetCell(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
 
 	void DrawDirMap();
 
@@ -101,6 +92,8 @@ public:
 	void ResetPath(vector<pair<int, int>>& path_to_reset);
 
 	TroopDir SpeedToDir(pair<int, int> speed);
+
+	bool GetHasPath(pair<int, int> pos);
 
 	void CalculatePathsTo( pair<int, int> dest) ;
 
@@ -149,8 +142,9 @@ private:
 	vector<CellInfo*> dirMap_p2;
 
 	bool draw_p1_map = true;
+	bool draw_attack = true;
 	//Entity::entityType draw_type = Entity::entityType::SOLDIER;
-	int draw_type = 0;
+	int draw_type = 8;
 };
 
 
