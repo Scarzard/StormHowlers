@@ -54,27 +54,47 @@ bool Pathfinding::Start() {
 
 	debug_tex = App->tex->Load("maps/directions.png");
 
+	map_info = App->gui->AddUIElement(true, UI_Element::LABEL, UI_Element::Action::NONE, { 700,50 }, { 5,5 },nullptr,true);
+	map_info->color = { 255,0,0,255 };
+	SetInfoLabel();
+
 	//0-5 p1 attack / 5-10 p1 deffense / 10-15 p2 attack / 15-20 p2 deffense
 	
 
 
 	return true;
 }
+
+void Pathfinding::SetInfoLabel() {
+	string s = (draw_p1_map) ? "P1" : "P2";
+
+	string q = (draw_attack) ? "Attack" : "Defense";
+
+	string t = App->entitymanager->GetName((Entity::entityType)draw_type);
+
+	sprintf_s(label_info, 32, "%s %s %s", s.c_str(), t.c_str(), q.c_str());
+
+	map_info->label = label_info;
+}
 bool Pathfinding::Update(float dt)
 {
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		draw_p1_map = !draw_p1_map;
+		SetInfoLabel();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
 		draw_type = (draw_type % 5) + 8;
+		SetInfoLabel();
 
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		draw_attack = !draw_attack;
+		SetInfoLabel();
 
 	}
+	//testing
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
 		for (int i = 16; i < 64; i++) {
 			for (int j = 0; j < App->map->data.height; j++) {
@@ -178,9 +198,8 @@ void Pathfinding::SetDirectionAttack(TroopDir direction, Entity::entityType type
 }
 void Pathfinding::SetDirectionDefense(TroopDir direction, Entity::entityType type, bool fromPlayer1, pair<int, int> pos) {
 
-	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER);
-	int index = (int)(type)+5;
-	CellInfo* cell = (fromPlayer1) ? &dirMap_p1[index][(pos.second*width) + pos.first] : &dirMap_p2[index][(pos.second*width) + pos.first];
+	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER +5);
+	CellInfo* cell = (fromPlayer1) ? &dirMap_p1[type][(pos.second*width) + pos.first] : &dirMap_p2[type][(pos.second*width) + pos.first];
 	cell->dir = direction;
 	cell->speed = speeds[direction];
 
@@ -221,6 +240,8 @@ CellInfo* Pathfinding::GetCellDefense(pair<int, int> pos, Entity::entityType typ
 	return (fromPlayer1) ? &dirMap_p1[type+5][pos.second*width + pos.first] : &dirMap_p2[type+5][pos.second*width + pos.first];
 }
 void Pathfinding::DrawDirMap() {
+
+
 	if (draw_attack) {
 
 		for (int i = 16; i < 64; i++) {

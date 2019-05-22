@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Troop.h"
+#include "Gui.h"
 #include "Entity.h"
 #include <vector>
 
@@ -50,6 +51,7 @@ public:
 	void SetMap(uint width, uint height, uchar* data);
 
 	bool Start();
+	void SetInfoLabel();
 	bool Update(float dt);
 	void SetDirMap(uint width, uint height);
 
@@ -64,15 +66,9 @@ public:
 
 	TroopDir GetDirAttack(int x, int y, Entity::entityType type, bool fromPlayer1);
 
-	TroopDir GetDirDefense(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
-
-	TroopDir GetDirAttack(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
-
-	
 	pair<int, int> GetSpeedAttack(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
 
 	pair<int, int> GetSpeedDefense(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
-
 	
 	CellInfo * GetCellAttack(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
 
@@ -92,8 +88,6 @@ public:
 	void ResetPath(vector<pair<int, int>>& path_to_reset);
 
 	TroopDir SpeedToDir(pair<int, int> speed);
-
-	bool GetHasPath(pair<int, int> pos);
 
 	void CalculatePathsTo( pair<int, int> dest) ;
 
@@ -144,7 +138,11 @@ private:
 	bool draw_p1_map = true;
 	bool draw_attack = true;
 	//Entity::entityType draw_type = Entity::entityType::SOLDIER;
+	
 	int draw_type = 8;
+
+	char label_info[32] = "";
+	UI_Element* map_info;
 };
 
 
