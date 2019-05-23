@@ -58,13 +58,14 @@ public:
 	void SetDirectionAttack(TroopDir direction, Entity::entityType type, bool fromPlayer1, pair<int, int> pos);
 
 	void SetDirectionDefense(TroopDir direction, Entity::entityType type, bool fromPlayer1, pair<int, int> pos);
-
-
-	bool GetHasPath(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
 	
 	TroopDir GetDirDefense(int x, int y, Entity::entityType type, bool fromPlayer1);
 
 	TroopDir GetDirAttack(int x, int y, Entity::entityType type, bool fromPlayer1);
+
+	bool GetHasPathAttack(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
+
+	bool GetHasPathDefense(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
 
 	pair<int, int> GetSpeedAttack(pair<int, int> pos, Entity::entityType type, bool fromPlayer1);
 
@@ -89,7 +90,9 @@ public:
 
 	TroopDir SpeedToDir(pair<int, int> speed);
 
-	void CalculatePathsTo( pair<int, int> dest) ;
+	TroopDir SpeedToDirInverse(pair<int, int> speed);
+
+	void CalculatePathsTo( pair<int, int> dest, char cell_type) ;
 
 	void ChangeWalkability( const pair<int, int>& pos, char isWalkable) const;
 

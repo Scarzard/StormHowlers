@@ -1137,7 +1137,7 @@ void Player::UpdateWalkabilityMap(char cell_type, Collider collider) //update wa
 	pair <int, int> pos = App->map->WorldToMap(collider.tiles[0].first, collider.tiles[0].second);
 	pos.first += collider.dimensions.first / 2;
 	pos.second += collider.dimensions.second / 2;
-	App->pathfinding->CalculatePathsTo(pos);
+	App->pathfinding->CalculatePathsTo(pos,cell_type);
 }
 
 int Player::CheckCost(Entity::entityType type)

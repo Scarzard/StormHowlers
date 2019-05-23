@@ -188,6 +188,9 @@ void Pathfinding::SetDirMap(uint width, uint height) {
 
 }
 
+//void Pathfinding::UpdateMaps() {
+//
+//}
 void Pathfinding::SetDirectionAttack(TroopDir direction, Entity::entityType type,bool fromPlayer1, pair<int,int> pos) {
 
 	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER);
@@ -216,9 +219,13 @@ TroopDir Pathfinding::GetDirDefense(int x, int y, Entity::entityType type, bool 
 	return (fromPlayer1) ? dirMap_p1[type+5][y*width + x].dir : dirMap_p2[type+5][y*width + x].dir;
 }
 
-bool Pathfinding::GetHasPath(pair<int, int>pos, Entity::entityType type, bool fromPlayer1) {
+bool Pathfinding::GetHasPathAttack(pair<int, int>pos, Entity::entityType type, bool fromPlayer1) {
 	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER);
 	return (fromPlayer1) ? dirMap_p1[type][pos.second*width + pos.first].has_path : dirMap_p2[type][pos.second*width + pos.first].has_path;
+}
+bool Pathfinding::GetHasPathDefense(pair<int, int>pos, Entity::entityType type, bool fromPlayer1) {
+	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER);
+	return (fromPlayer1) ? dirMap_p1[type+5][pos.second*width + pos.first].has_path : dirMap_p2[type+5][pos.second*width + pos.first].has_path;
 }
 
 pair<int, int> Pathfinding::GetSpeedAttack(pair<int, int> pos, Entity::entityType type, bool fromPlayer1) {
@@ -305,12 +312,6 @@ void Pathfinding::ResetPath(vector<pair<int, int>>& path_to_reset)
 }
 
 TroopDir Pathfinding::SpeedToDir(pair<int, int> speed) {
-	/*for (int i = NORTH; i < SOUTHWEST; i++) {
-		if (speed.first == speeds[i].first && speed.second == speeds[i].second) {
-			return (TroopDir)i;
-		}
-	}*/
-
 	if (speed.first == 0) {
 		if (speed.second > 0) {
 			return SOUTH;
@@ -331,33 +332,60 @@ TroopDir Pathfinding::SpeedToDir(pair<int, int> speed) {
 	return NORTH;
 }
 
+TroopDir Pathfinding::SpeedToDirInverse(pair<int, int> speed) {
+	if (speed.first == 0) {
+		if (speed.second > 0) {
+			return NORTH;
+		}
+		else return SOUTH;
+	}
+	else if (speed.first > 0) {
+		if (speed.second == 0) return EAST;
+		else if (speed.second > 0) return NORTHEAST;
+		else return SOUTHEAST;
+	}
+	else if (speed.first < 0) {
+		if (speed.second == 0) return WEST;
+		else if (speed.second > 0) return NORTHWEST;
+		else return SOUTHWEST;
+	}
 
-void Pathfinding::CalculatePathsTo(pair<int, int> dest)
+	return NORTH;
+}
+
+void Pathfinding::CalculatePathsTo(pair<int, int> dest, char cell_type)
 {
-	pair<int, int> original = dest;
-	int n = 10;
-	int k = n / 2;
-	int j = dest.second;
-
-	/*for (int i = n / 2 - 1; i < k; i++) {
-		SetDirection(SOUTHEAST, { i,j });
-	}*/
-
-	
-	//SetDirection(TroopDir::WEST,dest);
-
 	int range = 15;
-	 k = range;
-	int q = range;
 
 	// Molt guarro pero funca per ara
 	if (App->entitymanager->entity_list.size() > 102) {
 
-		for (int i = 0; i < k; i++) {
-			for (int j = 0; j < q; j++) {
+		for (int i = 0; i < range; i++) {
+			for (int j = 0; j < range; j++) {
 				pair<int, int> next = { dest.first + i - range / 2,dest.second + j - range / 2 };
 				pair<int, int> speed = { -(next.first - dest.first), -(next.second - dest.second )};
 
+
+				for (int k = Entity::entityType::SOLDIER; k <= Entity::entityType::WAR_HOUND; k++) {
+					
+					switch (cell_type)
+					{
+					case P1_BUILDING:
+						if (!GetHasPathAttack) {
+							SetDirectionAttack(SpeedToDir(speed), (Entity::entityType)k, false, next);
+							SetDirectionDefense(SpeedToDirInverse(speed), (Entity::entityType)k, true, next);
+							//SetDirectionAttack(SpeedToDir(speed), (Entity::entityType)k, true, next);
+							//SetDirectionDefense(SpeedToDirInverse(speed), (Entity::entityType)k, false, next);
+						}
+						break;
+					case P2_BUILDING:
+						break;
+					case WALKABLE:
+						break;
+					default:
+						break;
+					}
+				}
 				//if (!GetHasPath(next)) {
 				//	SetDirection(SpeedToDir(speed), next);
 
