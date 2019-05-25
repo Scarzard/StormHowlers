@@ -671,39 +671,20 @@ bool Player::Update(float dt)
 			gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			App->audio->PlayFx(CHANGE_FOCUS);
-			if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING)
+			
+			(*focus)->state = UI_Element::State::IDLE;
+
+			if (focus == last_element)
 			{
-				(*focus)->state = UI_Element::State::IDLE;
+				focus = GetUI_Element(currentUI)->children.begin();
 
-				if (focus == last_element)
-				{
-					focus = GetUI_Element(currentUI)->children.begin();
-
-				}
-				else
-				{
-					focus++;
-				}
 			}
 			else
 			{
-				last_building = buildings.end();
-				last_building--;
-
-				if (building_selected != last_building)
-				{
-					building_selected++;
-				}
-				else
-				{
-					building_selected = buildings.begin();
-				}
-
-				while ((*building_selected)->type != Entity::entityType::BARRACKS)
-				{
-					building_selected++;
-				}
+				focus++;
 			}
+			
+			
 		}
 
 		// Travel through the different buttons
@@ -712,35 +693,61 @@ bool Player::Update(float dt)
 			gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			App->audio->PlayFx(CHANGE_FOCUS);
-			if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING)
+			
+			(*focus)->state = UI_Element::State::IDLE;
+			if (focus == GetUI_Element(currentUI)->children.begin())
 			{
-				(*focus)->state = UI_Element::State::IDLE;
-				if (focus == GetUI_Element(currentUI)->children.begin())
-				{
-					focus = last_element;
-				}
-				else
-				{
-					focus--;
-				}
+				focus = last_element;
 			}
 			else
 			{
-				if (building_selected == buildings.begin())
-				{
-					last_building = buildings.end();
-					last_building--;
-					building_selected = last_building;
-				}
-				else
-				{
-					building_selected--;
-				}
+				focus--;
+			}
+			
+			
+		}
 
-				while ((*building_selected)->type != Entity::entityType::BARRACKS)
-				{
-					building_selected--;
-				}
+		//CHANGE SELECTED BARRACK
+		if (gamepad.Controller[R_JOY_RIGHT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_CREATE_TROOPS)
+		{
+			App->audio->PlayFx(CHANGE_FOCUS);
+
+			last_building = buildings.end();
+			last_building--;
+
+			if (building_selected != last_building)
+			{
+				building_selected++;
+			}
+			else
+			{
+				building_selected = buildings.begin();
+			}
+
+			while ((*building_selected)->type != Entity::entityType::BARRACKS)
+			{
+				building_selected++;
+			}
+		}
+		//CHANGE SELECTED BARRACK
+		if (gamepad.Controller[R_JOY_LEFT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_CREATE_TROOPS)
+		{
+			App->audio->PlayFx(CHANGE_FOCUS);
+
+			if (building_selected == buildings.begin())
+			{
+				last_building = buildings.end();
+				last_building--;
+				building_selected = last_building;
+			}
+			else
+			{
+				building_selected--;
+			}
+
+			while ((*building_selected)->type != Entity::entityType::BARRACKS)
+			{
+				building_selected--;
 			}
 		}
 
@@ -1800,9 +1807,12 @@ void Player::DoLogic(UI_Element* data)
 			while ((*building_selected)->type != Entity::entityType::BARRACKS)
 				building_selected++;
 
-			currentUI = CURRENT_UI::CURR_SELECTING_BUILDING;
-
+			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
 			UI_troop_type = Entity::entityType::SOLDIER;
+			Update_troop_image(UI_troop_type);
+			UpdateVisibility();
+			number_of_troops = 10;
+			
 		}
 		break;
 
@@ -1816,9 +1826,12 @@ void Player::DoLogic(UI_Element* data)
 			while ((*building_selected)->type != Entity::entityType::BARRACKS)
 				building_selected++;
 
-			currentUI = CURRENT_UI::CURR_SELECTING_BUILDING;
-
+			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
 			UI_troop_type = Entity::entityType::TANKMAN;
+			Update_troop_image(UI_troop_type);
+			UpdateVisibility();
+			number_of_troops = 10;
+			
 		}
 		break;
 
@@ -1831,9 +1844,12 @@ void Player::DoLogic(UI_Element* data)
 			while ((*building_selected)->type != Entity::entityType::BARRACKS)
 				building_selected++;
 
-			currentUI = CURRENT_UI::CURR_SELECTING_BUILDING;
-
+			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
 			UI_troop_type = Entity::entityType::INFILTRATOR;
+			Update_troop_image(UI_troop_type);
+			UpdateVisibility();
+			number_of_troops = 10;
+			
 		}
 
 		break;
@@ -1848,9 +1864,12 @@ void Player::DoLogic(UI_Element* data)
 			while ((*building_selected)->type != Entity::entityType::BARRACKS)
 				building_selected++;
 
-			currentUI = CURRENT_UI::CURR_SELECTING_BUILDING;
-
+			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
 			UI_troop_type = Entity::entityType::ENGINEER;
+			Update_troop_image(UI_troop_type);
+			UpdateVisibility();
+			number_of_troops = 10;
+			
 		}
 
 	
@@ -1866,9 +1885,12 @@ void Player::DoLogic(UI_Element* data)
 			while ((*building_selected)->type != Entity::entityType::BARRACKS)
 				building_selected++;
 
-			currentUI = CURRENT_UI::CURR_SELECTING_BUILDING;
-
+			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
 			UI_troop_type = Entity::entityType::WAR_HOUND;
+			Update_troop_image(UI_troop_type);
+			UpdateVisibility();
+			number_of_troops = 10;
+			
 		}
 
 		break;

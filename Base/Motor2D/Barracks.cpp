@@ -180,7 +180,7 @@ bool Barracks::Update(float dt)
 
 	if (fromPlayer1)
 	{
-		if (App->player1->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player1->GetSelectedBuilding() == this)
+		if (App->player1->currentUI == Player::CURRENT_UI::CURR_CREATE_TROOPS && App->player1->GetSelectedBuilding() == this)
 		{
 			if (building->Finished())
 				Current_Animation = glow;
@@ -193,7 +193,7 @@ bool Barracks::Update(float dt)
 	}
 	else
 	{
-		if (App->player2->currentUI == Player::CURRENT_UI::CURR_SELECTING_BUILDING && App->player2->GetSelectedBuilding() == this)
+		if (App->player2->currentUI == Player::CURRENT_UI::CURR_CREATE_TROOPS && App->player2->GetSelectedBuilding() == this)
 		{
 			if (building->Finished())
 				Current_Animation = glow;
