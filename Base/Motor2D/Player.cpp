@@ -779,6 +779,49 @@ bool Player::Update(float dt)
 	//--- Building ---------------------
 	if (isBuilding && !App->scene->pause)
 	{
+		//--- Change Building
+		if (gamepad.Controller[LB] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) //previous building
+		{
+			if (number <= 1)
+				number = 4;
+			else
+				number--;
+
+			ChangeBuilding(number);
+
+			// update ui focus
+			(*focus)->state = UI_Element::State::IDLE;
+			if (focus == GetUI_Element(currentUI)->children.begin())
+			{
+				focus = last_element;
+			}
+			else
+			{
+				focus--;
+			}
+		}
+		else if (gamepad.Controller[RB] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) //next building
+		{
+			if (number >= 4)
+				number = 1;
+			else
+				number++;
+
+			ChangeBuilding(number);
+
+			// update ui focus
+			(*focus)->state = UI_Element::State::IDLE;
+
+			if (focus == last_element)
+			{
+				focus = GetUI_Element(currentUI)->children.begin();
+			}
+			else
+			{
+				focus++;
+			}
+		}
+
 		//--- Movement
 		if (gamepad.Controller[JOY_UP] == KEY_REPEAT || gamepad.Controller[UP] == KEY_DOWN ||
 			App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT)
@@ -882,48 +925,6 @@ bool Player::Update(float dt)
 				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
 			}
 
-			if (gamepad.Controller[LB] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) //previous building
-			{
-				if (number <= 1)
-					number = 4;
-				else
-					number--;
-
-				ChangeBuilding(number);
-
-				// update ui focus
-				(*focus)->state = UI_Element::State::IDLE;
-				if (focus == GetUI_Element(currentUI)->children.begin())
-				{
-					focus = last_element;
-				}
-				else
-				{
-					focus--;
-				}
-			}
-			else if (gamepad.Controller[RB] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) //next building
-			{
-				if (number >= 4)
-					number = 1;
-				else
-					number++;
-
-				ChangeBuilding(number);
-
-				// update ui focus
-				(*focus)->state = UI_Element::State::IDLE;
-
-				if (focus == last_element)
-				{
-					focus = GetUI_Element(currentUI)->children.begin();
-				}
-				else
-				{
-					focus++;
-				}
-			}
-
 			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 			{
 				if (gold >= CheckCost(type))
@@ -940,36 +941,13 @@ bool Player::Update(float dt)
 				isBuilding = false;
 			}
 		}
-		else
-		{
-			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-			{
-				if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building
-				{
-					//buildings.pop_back();
-
-				}
-				else if (type > Entity::entityType::BARRACKS) //if troops
-				{
-					//troops.pop_back();
-				}
-				isBuilding = false;
-				
-				App->audio->PlayFx(WRONG);
-				//play fx (error);
-			}
-		}
 		if (type > Entity::entityType::BARRACKS) //if troops
 		{
 			if (X_spawn->visible == false)
-			{
 				X_spawn->visible = true;
-			}
 
 			if (A_spawn->visible == false)
-			{
 				A_spawn->visible = true;
-			}
 		}
 	}
 	else
