@@ -20,6 +20,7 @@
 #include "Gui.h"
 #include "Player.h"
 #include "MovementManager.h"
+#include "VideoManager.h"
 #include "App.h"
 #include "Brofiler\Brofiler.h"
 
@@ -46,6 +47,7 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	main_menu = new MainMenu();
 	scene = new Scene();
 	move_manager = new MovementManager();
+	video_manager = new Video();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp

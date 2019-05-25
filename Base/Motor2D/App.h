@@ -22,6 +22,7 @@ class Fonts;
 class Gui;
 class Player;
 class MovementManager;
+class Video;
 
 class MainApp
 {
@@ -101,6 +102,7 @@ public:
 	Player*			player1 = NULL;
 	Player*			player2 = NULL;
 	MovementManager* move_manager = NULL;
+	Video*			video_manager = NULL;
 
 	bool			fpsCapON = true;
 	bool			vsyncON = false;
