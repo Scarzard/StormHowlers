@@ -88,6 +88,7 @@
     <ClCompile Include="Group.cpp" />
     <ClCompile Include="Hound.cpp" />
     <ClCompile Include="Infiltrator.cpp" />
+    <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="MovementManager.cpp" />
     <ClCompile Include="MainDefense.cpp" />
     <ClCompile Include="Mines.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="Group.h" />
     <ClInclude Include="Hound.h" />
     <ClInclude Include="Infiltrator.h" />
+    <ClInclude Include="IntroScene.h" />
     <ClInclude Include="MovementManager.h" />
     <ClInclude Include="MainDefense.h" />
     <ClInclude Include="Mines.h" />

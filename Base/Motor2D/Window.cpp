@@ -115,12 +115,13 @@ uint Window::GetScale() const
 	return scale;
 }
 
-void Window::GetWindowSize()
+pair <int,int> Window::GetWindowSize()
 {
 	// if in fullscreen modify height and with to the virtual size of the monitor
 	if (fullscreen == true)
 	{
 		//SDL_GetRendererOutputSize(App->render->renderer, &width, &height);
+		return { width, height };
 	}
 
 }

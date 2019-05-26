@@ -48,7 +48,9 @@ bool Transitions::Update(float dt)
 	}
 	else if (current_step == fade_step::fade_from_black)
 	{
-		App->main_menu->menu_background->visible = false;
+		
+		if (App->main_menu->active)
+			App->main_menu->menu_background->visible = false;
 	}
 
 	uint now = SDL_GetTicks() - start_time;

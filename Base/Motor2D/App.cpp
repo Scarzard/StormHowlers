@@ -21,6 +21,7 @@
 #include "Player.h"
 #include "MovementManager.h"
 #include "VideoManager.h"
+#include "IntroScene.h"
 #include "App.h"
 #include "Brofiler\Brofiler.h"
 
@@ -48,6 +49,7 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene();
 	move_manager = new MovementManager();
 	video_manager = new Video();
+	intro = new IntroScene();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -59,13 +61,15 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding);
 	AddModule(font);
 	AddModule(gui);
-	AddModule(main_menu);
+	AddModule(main_menu, false);
 	AddModule(scene, false);
 	AddModule(player1);
 	AddModule(player2);
 	AddModule(scenechange);
 	AddModule(entitymanager);
 	AddModule(move_manager);
+	AddModule(video_manager);
+	AddModule(intro);
 	
 	
 	// render last to swap buffer
