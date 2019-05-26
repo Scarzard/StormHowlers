@@ -7,6 +7,7 @@
 #include "EntityManager.h"
 #include "Brofiler\Brofiler.h"
 #include "MainMenu.h"
+#include "Player.h"
 
 #define VSYNC true
 
@@ -58,6 +59,8 @@ bool Render::Awake(pugi::xml_node& config)
 		App->win->zoom_scale = zoom*App->win->scale;
 	}
 
+	original_camera = camera;
+
 	return ret;
 }
 
@@ -78,7 +81,9 @@ void Render::WindowResized() {
 	App->win->height = viewport.h;
 	camera.w = viewport.w;
 	camera.h = viewport.h;
-
+	int new_width = viewport.w - camera.w;
+	int new_height = viewport.h - camera.h;
+	
 	if (App->main_menu->active) {
 		zoom = (float)viewport.w / 1680.0f;
 		/*float vw = (float)viewport.w / 1680.0f;
@@ -90,15 +95,32 @@ void Render::WindowResized() {
 	else {
 		zoom = 0.77f *(float)viewport.w / 1680.0f;
 		camera.x = 913*zoom/0.77f;    // camera.w * 1680.0f / 913.0f;
-		camera.y = -387*zoom/0.77f;   // camera.h * 1050.0f / -387.0f;
 		/*float vw = 0.77f * (float)viewport.w / 1680.0f;
 		float vh = 0.77f * (float)viewport.h / 1050.0f;
 		App->render->zoom = (float)(vw + vh) / 2.0f;*/
+		//App->player1->LiveBar.x = camera.w - App->player1->LiveBar.w / 2;
+		//App->player1->LiveBar.x = camera.w - App->player1->LiveBar.w / 2;
+		//	App->player2->LiveBar
+
+		
 
 		
 	}
 	
 	//Readjust all the necessary things
+	if (App->player1->Main_UI != nullptr) {
+		//App->player1->Main_UI->globalpos.first = camera.x + camera.w - (App->player1->Main_UI->rect.w*zoom) - 20;
+		App->player1->Main_UI->globalpos.first += new_width;
+		//App->player1->Main_UI->globalpos.second = camera.y + camera.h;
+		//App->player1->Main_UI->globalpos.second = camera.y + camera.h - (App->player1->Main_UI->rect.h*zoom) - 20;
+		//App->player1->Main_UI->position.first   = camera.x + camera.w - (App->player1->Main_UI->rect.w*zoom) - 20;
+		//App->player1->Main_UI->position.second  = camera.y + camera.h - (App->player1->Main_UI->rect.h*zoom) - 20;
+		/*App->player1->Main_UI->collider.x		= camera.x + camera.w - (App->player1->Main_UI->rect.w*zoom) - 20;
+		App->player1->Main_UI->collider.y		= camera.y + camera.h - (App->player1->Main_UI->rect.h*zoom) - 20;
+		App->player1->Main_UI->collider.w = App->player1->Main_UI->rect.w*zoom -20;
+		App->player1->Main_UI->collider.h = App->player1->Main_UI->rect.h*zoom -20;*/
+
+	}
 }
 // Called each loop iteration
 bool Render::PreUpdate()
@@ -111,6 +133,9 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		WindowResized();
+	}
 	return true;
 }
 
@@ -214,8 +239,8 @@ bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, S
 		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 	}
 
-	rect.w *= (scale*zoom) + 0.1f;
-	rect.h *= (scale*zoom) + 0.1f;
+	rect.w *= (scale*zoom) ;
+	rect.h *= (scale*zoom) ;
 
 	SDL_Point* p = NULL;
 	SDL_Point pivot;

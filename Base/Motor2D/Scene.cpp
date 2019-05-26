@@ -151,9 +151,9 @@ bool Scene::Start()
 
 	App->player1->Main_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 122 }, { 566,163 }, nullptr, true);
 	App->player1->Main_UI->rect = { 0, 408, 566, 163 };
-	App->player1->Build_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_BUILD, { 275,55 }, { 79, 81 }, App->player1->Main_UI, true);
-	App->player1->Deploy_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 374,55 }, { 79, 81 }, App->player1->Main_UI, true);
-	App->player1->Cast_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 478,55 }, { 79,81 }, App->player1->Main_UI, true);
+	App->player1->Build_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_BUILD, { 241,50 }, { 79, 81 }, App->player1->Main_UI, true);
+	App->player1->Deploy_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 333,50 }, { 79, 81 }, App->player1->Main_UI, true);
+	App->player1->Cast_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 425,50 }, { 79,81 }, App->player1->Main_UI, true);
 
 	App->player1->Y_to_Main = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 140 , App->win->height + 192 }, { 39, 39 }, nullptr, false);
 	App->player1->Y_to_Main->rect = { 1289, 373, 39, 39 };
@@ -420,9 +420,9 @@ bool Scene::Start()
 	//App->player2->Gold_UI = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
 	App->player2->Main_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, true);
 	App->player2->Main_UI->rect = { 0,245,566,163 };
-	App->player2->Build_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_BUILD, { 275,55 }, { 80, 81 }, App->player2->Main_UI, true);
-	App->player2->Deploy_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 378,55 }, { 80, 81 }, App->player2->Main_UI, true);
-	App->player2->Cast_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 482,55 }, { 80,81 }, App->player2->Main_UI, true);
+	App->player2->Build_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_BUILD, { 241,50 }, { 80, 81 }, App->player2->Main_UI, true);
+	App->player2->Deploy_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_DEPLOY, { 333,50 }, { 80, 81 }, App->player2->Main_UI, true);
+	App->player2->Cast_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 425,50 }, { 80,81 }, App->player2->Main_UI, true);
 
 	App->player2->Y_to_Main = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 5 , 70 }, { 39, 39 }, nullptr, true);
 	App->player2->Y_to_Main->rect = { 1289, 373, 39, 39 };
@@ -969,13 +969,13 @@ bool Scene::Update(float dt)
 		if (true) {
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN) {
-				LOG("CLICK");
+				//LOG("CLICK");
 				App->input->GetMousePosition(camera_motion.first, camera_motion.second);
 				start_motion = true;
 			}
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_UP) {
-				LOG("CLICK UP");
+				//LOG("CLICK UP");
 				start_motion = false;
 				//App->input->GetMousePosition(camera_motion.x, camera_motion.y);
 			}
@@ -987,12 +987,12 @@ bool Scene::Update(float dt)
 				if (App->map->debug)SDL_RenderDrawLine(App->render->renderer, camera_motion.first, camera_motion.second, final.first, final.second);
 
 				App->input->GetMouseMotion(final.first, final.second);
-				LOG("final_motio: %d,%d", final.first, final.second);
-				LOG("last_motion: %d,%d", last_motion.first, last_motion.second);
+				//LOG("final_motio: %d,%d", final.first, final.second);
+				//LOG("last_motion: %d,%d", last_motion.first, last_motion.second);
 
 				last_motion.first -= final.first;
 				last_motion.second -= final.second;
-				LOG("minus_motio: %d,%d", last_motion.first, last_motion.second);
+				//LOG("minus_motio: %d,%d", last_motion.first, last_motion.second);
 
 				if (last_motion.first != 0 && last_motion.second != 0) {
 					App->render->camera.x += final.first;

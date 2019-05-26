@@ -924,7 +924,7 @@ bool Player::Update(float dt)
 				}
 			}
 
-			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 			{
 				if (gold >= CheckCost(type))
 				{
@@ -1137,7 +1137,7 @@ void Player::UpdateWalkabilityMap(char cell_type, Collider collider) //update wa
 	pair <int, int> pos = App->map->WorldToMap(collider.tiles[0].first, collider.tiles[0].second);
 	pos.first += collider.dimensions.first / 2;
 	pos.second += collider.dimensions.second / 2;
-	App->pathfinding->CalculatePathsTo(pos,cell_type);
+	App->pathfinding->CalculatePathsTo(pos,cell_type,collider);
 }
 
 int Player::CheckCost(Entity::entityType type)
@@ -1954,12 +1954,11 @@ void Player::DoLogic(UI_Element* data)
 
 bool Player::DeleteEntity(Entity* entity)
 {
-	UpdateWalkabilityMap(WALKABLE, entity->collider);
-
 	entity->CleanUp();
 
 	if (entity->type >= Entity::entityType::TOWNHALL && entity->type <= Entity::entityType::BARRACKS) //if entity = building
 	{
+		UpdateWalkabilityMap(WALKABLE, entity->collider);
 		list<Building*>::iterator item = buildings.begin();
 		while (item != buildings.end())
 		{

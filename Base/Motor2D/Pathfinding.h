@@ -92,7 +92,7 @@ public:
 
 	TroopDir SpeedToDirInverse(pair<int, int> speed);
 
-	void CalculatePathsTo( pair<int, int> dest, char cell_type) ;
+	void CalculatePathsTo(pair<int, int> dest, char cell_type, Collider collider);
 
 	void ChangeWalkability( const pair<int, int>& pos, char isWalkable) const;
 
