@@ -11,6 +11,7 @@ public:
 	~Soldier();
 
 	bool Update(float dt);
+	void Move(float dt);
 	void SetDestination();
 	bool Is_inRange(pair<int, int> pos, int & distance, pair<int, int> position, int range);
 	void ActOnDestroyed();
