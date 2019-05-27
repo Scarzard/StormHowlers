@@ -121,9 +121,6 @@
     <ClCompile Include="j1Transitions.cpp">
       <Filter>Desenvolupament  ========\Transitions</Filter>
     </ClCompile>
-    <ClCompile Include="FadeToColor.cpp">
-      <Filter>Desenvolupament  ========\Transitions</Filter>
-    </ClCompile>
     <ClCompile Include="Squares.cpp">
       <Filter>Desenvolupament  ========\Transitions</Filter>
     </ClCompile>
@@ -268,9 +265,6 @@
       <Filter>Desenvolupament  ========\Transitions</Filter>
     </ClInclude>
     <ClInclude Include="j1Transitions.h">
-      <Filter>Desenvolupament  ========\Transitions</Filter>
-    </ClInclude>
-    <ClInclude Include="FadeToColor.h">
       <Filter>Desenvolupament  ========\Transitions</Filter>
     </ClInclude>
     <ClInclude Include="Squares.h">

@@ -85,7 +85,6 @@
     <ClCompile Include="DefenseAOE.cpp" />
     <ClCompile Include="DefenseTarget.cpp" />
     <ClCompile Include="Engineer.cpp" />
-    <ClCompile Include="FadeToColor.cpp" />
     <ClCompile Include="Group.cpp" />
     <ClCompile Include="Hound.cpp" />
     <ClCompile Include="Infiltrator.cpp" />
@@ -130,7 +129,6 @@
     <ClInclude Include="DefenseAOE.h" />
     <ClInclude Include="DefenseTarget.h" />
     <ClInclude Include="Engineer.h" />
-    <ClInclude Include="FadeToColor.h" />
     <ClInclude Include="Group.h" />
     <ClInclude Include="Hound.h" />
     <ClInclude Include="Infiltrator.h" />

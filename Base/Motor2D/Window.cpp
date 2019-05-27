@@ -115,7 +115,7 @@ uint Window::GetScale() const
 	return scale;
 }
 
-void Window::GetWindowSize()
+void Window::ModifyWindow()
 {
 	// if in fullscreen modify height and with to the virtual size of the monitor
 	if (fullscreen == true)

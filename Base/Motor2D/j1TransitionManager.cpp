@@ -3,7 +3,6 @@
 #include "j1Transitions.h"
 #include "Render.h"
 #include "Window.h"
-#include "FadeToColor.h"
 #include "Squares.h"
 #include "Input.h"
 
@@ -40,10 +39,6 @@ void j1TransitionManager::CleanTransitions(j1Transitions* transition) {
 	// Removes the list and deletes the transition
 	transitions_list.remove(transition);
 	delete transition;
-}
-
-void j1TransitionManager::FadingToColor(j1Color color, float time) {
-	transitions_list.push_back(new FadeToColor(color, time));
 }
 
 void j1TransitionManager::SquaresAppearing(int transition, j1Color color, float time) {
