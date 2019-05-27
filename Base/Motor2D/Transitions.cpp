@@ -3,6 +3,7 @@
 #include "Transitions.h"
 #include "Render.h"
 #include "Scene.h"
+#include "Audio.h"
 #include "Window.h"
 #include "EntityManager.h"
 #include "Player.h"
@@ -10,6 +11,7 @@
 #include "Gui.h"
 #include "Brofiler\Brofiler.h"
 #include "MainMenu.h"
+#include "IntroScene.h"
 #include <math.h>
 #include "SDL\include\SDL_render.h"
 
@@ -61,7 +63,13 @@ bool Transitions::Update(float dt)
 	{
 	case fade_step::fade_to_black:
 	{
-	
+		if (intro == true)
+		{
+			/*App->audio->CleanUp();
+			App->audio->Start();*/
+			
+			intro = false;
+		}
 		if (map == true)
 		{
 			if (now >= total_time) //screen->black & map->loaded
@@ -70,6 +78,35 @@ bool Transitions::Update(float dt)
 				LOG("%i", App->scene->currentMap);
 
 				App->map->SwitchMaps(App->scene->map_names[nextMap]);
+
+				total_time += total_time;
+				start_time = SDL_GetTicks();
+				fading = false;
+				current_step = fade_step::fade_from_black;
+			}
+		}
+		else if (main_menu == true)
+		{
+			if (now >= total_time) //screen->black & map->loaded
+			{
+				//to_disable->Disable();
+				//App->gui->CleanUp();
+				
+				/*if (to_disable == App->scene)
+				{
+					App->entitymanager->Disable();
+					App->map->CleanUp();
+					App->entitymanager->DeleteAllEntities();
+				}*/
+
+				to_enable->Enable();
+				App->gui->Start();
+				to_enable->Enable();
+
+				
+				App->main_menu->menu_background->visible = true;
+				
+				//switchtimer.Start();
 
 				total_time += total_time;
 				start_time = SDL_GetTicks();
@@ -111,7 +148,7 @@ bool Transitions::Update(float dt)
 				total_time += total_time;
 				start_time = SDL_GetTicks();
 				current_step = fade_step::fade_from_black;
-				current_step = fade_step::fade_from_black;
+				
 			}
 		}
 		else
@@ -198,11 +235,20 @@ bool Transitions::IsChanging() const
 bool Transitions::SwitchScene(Module* SceneIn, Module* SceneOut, float time)
 {
 	bool ret = false;
+
+	if (SceneOut == App->intro)
+	{
+		intro = true;
+	}
+	if (SceneIn == App->intro)
+	{
+		scene = true;
+	}
 	if (SceneIn == App->scene)
 	{
-	scene = true;
+		scene = true;
 	}
-	if (SceneOut == App->main_menu)
+	if (SceneIn == App->main_menu)
 	{
 		main_menu = true;
 	}

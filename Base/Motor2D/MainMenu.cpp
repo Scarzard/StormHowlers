@@ -147,6 +147,7 @@ bool MainMenu::Start()
 
 	string track = App->audio->folder_music + "/MainMenuSong.ogg";
 	App->audio->PlayMusic(track.c_str());
+	menu_background->visible = true;
 
 	return true;
 }

@@ -23,7 +23,7 @@ bool IntroScene::Start()
 
 	//LOG("Start IntroScene");
 
-	pugi::xml_document doc;
+	//pugi::xml_document doc;
 
 	//App->xml->LoadXML("logo_scene.xml", doc);
 
@@ -44,7 +44,7 @@ bool IntroScene::Start()
 
 	/*int logo_size = logo_node.attribute("size").as_int();
 */
-	App->video_manager->PlayVideo("intro.ogv", { 0,0,win_size.first,win_size.second });
+	//App->video_manager->PlayVideo("intro.ogv", { 0,0,win_size.first,win_size.second });
 
 	return ret;
 }
@@ -69,8 +69,9 @@ bool IntroScene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		App->scenechange->ContinueGame = true;
+		//App->scenechange->ContinueGame = true;
 		App->scenechange->SwitchScene(App->main_menu, this, 2); //Here fadetoblack
+		//UI_window->visible = false;
 	}
 
 	return ret;
