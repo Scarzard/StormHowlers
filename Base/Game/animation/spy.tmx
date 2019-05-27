@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="11" height="19" tilewidth="86" tileheight="86" nextobjectid="89">
+ <layer name="Capa de Patrones 1" width="11" height="19">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <imagelayer name="Capa de Imagen 1">
+  <image source="spy.png" width="946" height="1634"/>
+ </imagelayer>
+ <objectgroup name="idle">
+  <object id="1" x="0" y="0" width="86" height="86"/>
+  <object id="2" x="86" y="0" width="86" height="86"/>
+  <object id="3" x="172" y="0" width="86" height="86"/>
+  <object id="4" x="258" y="0" width="86" height="86"/>
+  <object id="5" x="344" y="0" width="86" height="86"/>
+  <object id="6" x="430" y="0" width="86" height="86"/>
+  <object id="7" x="516" y="0" width="86" height="86"/>
+  <object id="8" x="602" y="0" width="86" height="86"/>
+ </objectgroup>
+ <objectgroup name="run_N">
+  <object id="9" x="688" y="0" width="86" height="86"/>
+  <object id="10" x="774" y="0" width="86" height="86"/>
+  <object id="11" x="860" y="0" width="86" height="86"/>
+  <object id="12" x="0" y="86" width="86" height="86"/>
+  <object id="13" x="86" y="86" width="86" height="86"/>
+  <object id="14" x="172" y="86" width="86" height="86"/>
+ </objectgroup>
+ <objectgroup name="run_NW">
+  <object id="16" x="258" y="86" width="86" height="86"/>
+  <object id="17" x="344" y="86" width="86" height="86"/>
+  <object id="18" x="430" y="86" width="86" height="86"/>
+  <object id="19" x="516" y="86" width="86" height="86"/>
+  <object id="20" x="602" y="86" width="86" height="86"/>
+  <object id="22" x="688" y="86" width="86" height="86"/>
+ </objectgroup>
+ <objectgroup name="run_W">
+  <object id="23" x="774" y="86" width="86" height="86"/>
+  <object id="24" x="860" y="86" width="86" height="86"/>
+  <object id="25" x="0" y="172" width="86" height="86"/>
+  <object id="26" x="86" y="172" width="86" height="86"/>
+  <object id="27" x="172" y="172" width="86" height="86"/>
+  <object id="28" x="258" y="172" width="86" height="86"/>
+ </objectgroup>
+ <objectgroup name="run_SW">
+  <object id="29" x="344" y="172" width="86" height="86"/>
+  <object id="30" x="430" y="172" width="86" height="86"/>
+  <object id="31" x="516" y="172" width="86" height="86"/>
+  <object id="32" x="602" y="172" width="86" height="86"/>
+  <object id="33" x="688" y="172" width="86" height="86"/>
+  <object id="34" x="774" y="172" width="86" height="86"/>
+ </objectgroup>
+ <objectgroup name="run_S">
+  <object id="35" x="860" y="172" width="86" height="86"/>
+  <object id="36" x="0" y="258" width="86" height="86"/>
+  <object id="37" x="86" y="258" width="86" height="86"/>
+  <object id="38" x="172" y="258" width="86" height="86"/>
+  <object id="39" x="258" y="258" width="86" height="86"/>
+  <object id="40" x="344" y="258" width="86" height="86"/>
+ </objectgroup>
+ <objectgroup name="run_SE">
+  <object id="41" x="430" y="258" width="86" height="86"/>
+  <object id="42" x="516" y="258" width="86" height="86"/>
+  <object id="43" x="602" y="258" width="86" height="86"/>
+  <object id="44" x="688" y="258" width="86" height="86"/>
+  <object id="45" x="774" y="258" width="86" height="86"/>
+  <object id="46" x="860" y="258" width="86" height="86"/>
+ </objectgroup>
+ <objectgroup name="run_E">
+  <object id="47" x="0" y="344" width="86" height="86"/>
+  <object id="48" x="86" y="344" width="86" height="86"/>
+  <object id="49" x="172" y="344" width="86" height="86"/>
+  <object id="50" x="258" y="344" width="86" height="86"/>
+  <object id="51" x="344" y="344" width="86" height="86"/>
+  <object id="52" x="430" y="344" width="86" height="86"/>
+ </objectgroup>
+ <objectgroup name="run_NE">
+  <object id="53" x="516" y="344" width="86" height="86"/>
+  <object id="54" x="602" y="344" width="86" height="86"/>
+  <object id="55" x="688" y="344" width="86" height="86"/>
+  <object id="56" x="774" y="344" width="86" height="86"/>
+  <object id="57" x="860" y="344" width="86" height="86"/>
+  <object id="58" x="0" y="430" width="86" height="86"/>
+ </objectgroup>
+ <objectgroup name="searching_N">
+  <object id="59" x="86" y="430" width="86" height="86"/>
+  <object id="60" x="172" y="430" width="86" height="86"/>
+  <object id="61" x="258" y="430" width="86" height="86"/>
+  <object id="62" x="344" y="430" width="86" height="86"/>
+  <object id="63" x="430" y="430" width="86" height="86"/>
+  <object id="64" x="516" y="430" width="86" height="86"/>
+  <object id="65" x="602" y="430" width="86" height="86"/>
+  <object id="66" x="688" y="430" width="86" height="86"/>
+ </objectgroup>
+ <objectgroup name="searching_S">
+  <object id="67" x="774" y="430" width="86" height="86"/>
+  <object id="68" x="860" y="430" width="86" height="86"/>
+  <object id="69" x="0" y="516" width="86" height="86"/>
+  <object id="70" x="86" y="516" width="86" height="86"/>
+  <object id="71" x="172" y="516" width="86" height="86"/>
+  <object id="72" x="258" y="516" width="86" height="86"/>
+  <object id="73" x="344" y="516" width="86" height="86"/>
+  <object id="74" x="430" y="516" width="86" height="86"/>
+ </objectgroup>
+ <objectgroup name="searching_W">
+  <object id="75" x="516" y="516" width="86" height="86"/>
+  <object id="76" x="602" y="516" width="86" height="86"/>
+  <object id="77" x="688" y="516" width="86" height="86"/>
+  <object id="78" x="774" y="516" width="86" height="86"/>
+  <object id="79" x="860" y="516" width="86" height="86"/>
+  <object id="80" x="0" y="602" width="86" height="86"/>
+  <object id="81" x="86" y="602" width="86" height="86"/>
+  <object id="82" x="172" y="602" width="86" height="86"/>
+ </objectgroup>
+ <objectgroup name="searching_E">
+  <object id="83" x="258" y="602" width="86" height="86"/>
+  <object id="84" x="344" y="602" width="86" height="86"/>
+  <object id="85" x="430" y="602" width="86" height="86"/>
+  <object id="86" x="516" y="602" width="86" height="86"/>
+  <object id="87" x="602" y="602" width="86" height="86"/>
+  <object id="88" x="688" y="602" width="86" height="86"/>
+ </objectgroup>
+</map>
