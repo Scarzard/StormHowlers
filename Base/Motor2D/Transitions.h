@@ -50,7 +50,7 @@ private:
 	} 
 	current_step = fade_step::none;
 	
-	int nextMap;
+//	int nextMap;
 	uint start_time = 0;
 	uint total_time = 0;
 	SDL_Rect screen;
