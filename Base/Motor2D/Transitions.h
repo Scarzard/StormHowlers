@@ -64,6 +64,7 @@ private:
 	bool scene = false;
 	bool intro = false;
 	bool main_menu = false;
+	bool main_menu_in = false;
 
 };
 

@@ -48,12 +48,12 @@ bool Transitions::Update(float dt)
 	{
 		return true;
 	}
-	/*else if (current_step == fade_step::fade_from_black)
+	else if (current_step == fade_step::fade_from_black && to_enable == App->scene)
 	{
 		
 		if (App->main_menu->active)
 			App->main_menu->menu_background->visible = false;
-	}*/
+	}
 
 	uint now = SDL_GetTicks() - start_time;
 	float normalized = (1.0f < ((float)now / (float)total_time) ? 1.0f : ((float)now / (float)total_time));
@@ -85,7 +85,7 @@ bool Transitions::Update(float dt)
 				current_step = fade_step::fade_from_black;
 			}
 		}
-		else if (main_menu == true)
+		else if (main_menu_in == true)
 		{
 			if (now >= total_time) //screen->black & map->loaded
 			{
@@ -126,6 +126,7 @@ bool Transitions::Update(float dt)
 				{
 					App->entitymanager->Disable();
 				}
+				
 
 				App->gui->Start();
 				to_enable->Enable();
@@ -184,6 +185,14 @@ bool Transitions::Update(float dt)
 				current_step = fade_step::none;
 				scene = false;
 				main_menu = false;
+			}
+		}
+		else if (main_menu_in == true)
+		{
+			if (now >= total_time)
+			{
+				current_step = fade_step::none;
+				main_menu_in = false;
 			}
 		}
 		else
@@ -248,9 +257,13 @@ bool Transitions::SwitchScene(Module* SceneIn, Module* SceneOut, float time)
 	{
 		scene = true;
 	}
-	if (SceneIn == App->main_menu)
+	if (SceneOut == App->main_menu)
 	{
 		main_menu = true;
+	}
+	if (SceneIn == App->main_menu)
+	{
+		main_menu_in = true;
 	}
 	if (current_step == fade_step::none)
 	{
