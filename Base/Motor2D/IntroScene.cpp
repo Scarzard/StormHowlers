@@ -32,9 +32,11 @@ bool IntroScene::Start()
 
 	//SDL_Rect skip_image = { skip_node.attribute("x").as_int(),skip_node.attribute("y").as_int(),skip_node.attribute("w").as_int(),skip_node.attribute("h").as_int() };
 
-	/*UI_window = App->win->GetWindowSize();
+	win_size.first = App->win->width;
+	win_size.second = App->win->height;
 
-	window = App->gui->UI_CreateWin({ 0,0 }, win_size.x, win_size.y, 1, false);
+
+	/*window = App->gui->UI_CreateWin({ 0,0 }, win_size.x, win_size.y, 1, false);
 
 	iPoint margin = { logo_node.attribute("x_margin").as_int(),logo_node.attribute("y_margin").as_int() };
 
@@ -42,9 +44,9 @@ bool IntroScene::Start()
 
 	App->render->background = { 255, 255, 255 };
 
-	/*int logo_size = logo_node.attribute("size").as_int();
-*/
-	//App->video_manager->PlayVideo("intro.ogv", { 0,0,win_size.first,win_size.second });
+	int logo_size = 612;
+
+	App->video_manager->PlayVideo("logo.ogv", { win_size.first / 2 - logo_size / 2,win_size.second / 2 - logo_size / 2,logo_size,logo_size });
 
 	return ret;
 }
