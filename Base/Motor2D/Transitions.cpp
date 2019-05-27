@@ -48,12 +48,12 @@ bool Transitions::Update(float dt)
 	{
 		return true;
 	}
-	else if (current_step == fade_step::fade_from_black)
+	/*else if (current_step == fade_step::fade_from_black)
 	{
 		
 		if (App->main_menu->active)
 			App->main_menu->menu_background->visible = false;
-	}
+	}*/
 
 	uint now = SDL_GetTicks() - start_time;
 	float normalized = (1.0f < ((float)now / (float)total_time) ? 1.0f : ((float)now / (float)total_time));
