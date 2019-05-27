@@ -474,6 +474,12 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			else
 				data->rect = { 581, 769, 301, 59 };
 			break;
+		case UI_Element::Action::KEYBINDS_PAUSE:
+			if (App->player1->KeyBinds_Button == data)
+				data->rect = { 581, 830, 300, 60 };
+			else
+				data->rect = { 581, 769, 301, 59 };
+			break;
 		case UI_Element::Action::ABORT_PAUSE:
 			if (App->player1->Abort_Button == data)
 				data->rect = { 581, 830, 300, 60 };
@@ -495,7 +501,7 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			break;
 
 
-		case UI_Element::Action::MUSIC_VOLUME:
+		case UI_Element::Action::MUSIC_VOLUME :
 			if (App->player1->Music_Settings == data)
 				data->rect = { 1816, 830, 291, 54 };
 			else if (App->player2->Music_Settings == data)
@@ -511,6 +517,71 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			else
 				data->rect = { 1517, 830, 291, 54 };//change to new button
 			break;
+
+		case UI_Element::Action::ACCEPT_BUTTON:
+			if (App->player1->Accept_Button == data)
+				data->rect = { 1816, 830, 200, 54 };
+			else if (App->player2->Accept_Button == data)
+				data->rect = { 1517, 830, 200, 54 };
+			else
+				data->rect = { 1517, 830, 200, 54 };//change to new button
+			break;
+
+		case UI_Element::Action::GOBACK_BUTTON:
+			if (App->player1->GoBack_Button == data)
+				data->rect = { 1816, 830, 200, 54 };
+			else if (App->player2->GoBack_Button == data)
+				data->rect = { 1517, 830, 200, 54 };
+			else
+				data->rect = { 1517, 830, 200, 54 };//change to new button
+			break;
+
+		case UI_Element::Action::NEXT_BUILDING_BUTTON:
+			if (App->player1->NextBuilding_Button == data)
+				data->rect = { 1816, 830, 200, 54 };
+			else if (App->player2->NextBuilding_Button == data)
+				data->rect = { 1517, 830, 200, 54 };
+			else
+				data->rect = { 1517, 830, 200, 54 };//change to new button
+			break;
+
+		case UI_Element::Action::PREV_BUILDING_BUTTON:
+			if (App->player1->PrevBuilding_Button == data)
+				data->rect = { 1816, 830, 200, 54 };
+			else if (App->player2->PrevBuilding_Button == data)
+				data->rect = { 1517, 830, 200, 54 };
+			else
+				data->rect = { 1517, 830, 200, 54 };//change to new button
+			break;
+
+		case UI_Element::Action::BUILD_BUTTON:
+			if (App->player1->Build_Button == data)
+				data->rect = { 1816, 830, 200, 54 };
+			else if (App->player2->Build_Button == data)
+				data->rect = { 1517, 830, 200, 54 };
+			else
+				data->rect = { 1517, 830, 200, 54 };//change to new button
+			break;
+
+		case UI_Element::Action::SINGLE_STATE_BUTTON:
+			if (App->player1->SingleState_Button == data)
+				data->rect = { 1816, 830, 200, 54 };
+			else if (App->player2->SingleState_Button == data)
+				data->rect = { 1517, 830, 200, 54 };
+			else
+				data->rect = { 1517, 830, 200, 54 };//change to new button
+			break;
+
+		case UI_Element::Action::ALL_STATE_BUTTON:
+			if (App->player1->AllState_Button == data)
+				data->rect = { 1816, 830, 200, 54 };
+			else if (App->player2->AllState_Button == data)
+				data->rect = { 1517, 830, 200, 54 };
+			else
+				data->rect = { 1517, 830, 200, 54 };//change to new button
+			break;
+
+			
 
 		}
 		break;
@@ -649,6 +720,12 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			else
 				data->rect = { 881, 769, 301, 59 };
 			break;
+		case UI_Element::Action::KEYBINDS_PAUSE:
+			if (App->player1->KeyBinds_Button == data)
+				data->rect = { 881, 830, 300, 60 };
+			else
+				data->rect = { 881, 769, 301, 59 };
+			break;
 		case UI_Element::Action::ABORT_PAUSE:
 			if (App->player1->Abort_Button == data)
 				data->rect = { 881, 830, 300, 60 };
@@ -698,8 +775,73 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			else
 				data->rect = { 1517, 884, 291, 54 };//change to new button
 			break;
+
+		case UI_Element::Action::ACCEPT_BUTTON:
+			if (App->player1->Accept_Button == data)
+				data->rect = { 1816, 884, 200, 54 };
+			else if (App->player2->Accept_Button == data)
+				data->rect = { 1517, 884, 200, 54 };
+			else
+				data->rect = { 1517, 884, 200, 54 };//change to new button
+			break;
+
+		case UI_Element::Action::GOBACK_BUTTON:
+			if (App->player1->GoBack_Button == data)
+				data->rect = { 1816, 884, 200, 54 };
+			else if (App->player2->GoBack_Button == data)
+				data->rect = { 1517, 884, 200, 54 };
+			else
+				data->rect = { 1517, 884, 200, 54 };//change to new button
+			break;
+
+		case UI_Element::Action::NEXT_BUILDING_BUTTON:
+			if (App->player1->NextBuilding_Button == data)
+				data->rect = { 1816, 884, 200, 54 };
+			else if (App->player2->NextBuilding_Button == data)
+				data->rect = { 1517, 884, 200, 54 };
+			else
+				data->rect = { 1517, 884, 200, 54 };//change to new button
+			break;
+
+		case UI_Element::Action::PREV_BUILDING_BUTTON:
+			if (App->player1->PrevBuilding_Button == data)
+				data->rect = { 1816, 884, 200, 54 };
+			else if (App->player2->PrevBuilding_Button == data)
+				data->rect = { 1517, 884, 200, 54 };
+			else
+				data->rect = { 1517, 884, 200, 54 };//change to new button
+			break;
+
+		case UI_Element::Action::BUILD_BUTTON:
+			if (App->player1->Build_Button == data)
+				data->rect = { 1816, 884, 200, 54 };
+			else if (App->player2->Build_Button == data)
+				data->rect = { 1517, 884, 200, 54 };
+			else
+				data->rect = { 1517, 884, 200, 54 };//change to new button
+			break;
+
+		case UI_Element::Action::SINGLE_STATE_BUTTON:
+			if (App->player1->SingleState_Button == data)
+				data->rect = { 1816, 884, 200, 54 };
+			else if (App->player2->SingleState_Button == data)
+				data->rect = { 1517, 884, 200, 54 };
+			else
+				data->rect = { 1517, 884, 200, 54 };//change to new button
+			break;
+
+		case UI_Element::Action::ALL_STATE_BUTTON:
+			if (App->player1->AllState_Button == data)
+				data->rect = { 1816, 884, 200, 54 };
+			else if (App->player2->AllState_Button == data)
+				data->rect = { 1517, 884, 200, 54 };
+			else
+				data->rect = { 1517, 884, 200, 54 };//change to new button
+			break;
 		}
 		break;
+
+		
 
 	case UI_Element::State::LOGIC:
 		switch (data->action)
@@ -799,6 +941,12 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			break;
 		case UI_Element::Action::SETTINGS_PAUSE:
 			if (App->player1->Settings_Button == data)
+				data->rect = { 1181, 830, 300, 60 };
+			else
+				data->rect = { 1181, 769, 301, 59 };
+			break;
+		case UI_Element::Action::KEYBINDS_PAUSE:
+			if (App->player1->KeyBinds_Button == data)
 				data->rect = { 1181, 830, 300, 60 };
 			else
 				data->rect = { 1181, 769, 301, 59 };

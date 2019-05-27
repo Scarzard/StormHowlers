@@ -62,6 +62,7 @@ public:
 		CURR_CREATE_ABILITIES,
 		CURR_PAUSE,
 		CURR_PAUSE_SETTINGS,
+		CURR_PAUSE_KEYBINDS,
 		CURR_PAUSE_ABORT,
 		CURR_WIN_SCREEN,
 		ENDGAME, 
@@ -336,6 +337,10 @@ public:
 	UI_Element* Resume_text = nullptr;
 	char resume_label[12] = "Resume Game";
 
+	UI_Element* KeyBinds_Button = nullptr;
+	UI_Element* KeyBinds_text = nullptr;
+	char keybinds_label[10] = "Key Binds";
+
 	UI_Element* Settings_Button = nullptr;
 	UI_Element* Settings_text = nullptr;
 	char settings_label[9] = "Settings";
@@ -362,6 +367,50 @@ public:
 	UI_Element* FX_Slider_text = nullptr;
 	char FX_Slider_label[5] = "0";
 	UI_Element* FX_Slider_Button = nullptr;
+
+	//Pause KeyBinds UI
+
+	UI_Element* Keybinds_UI = nullptr;
+
+	UI_Element* Controls_text = nullptr;
+	char Controls_label[9] = "CONTROLS";
+
+	UI_Element* General_text = nullptr;
+	char General_label[9] = "GENERAL:";
+
+	UI_Element* Accept_Button = nullptr;
+	UI_Element* Accept_Button_text = nullptr;
+	char Accept_Button_label[7] = "Accept";
+
+	UI_Element* GoBack_Button = nullptr;
+	UI_Element* GoBack_Button_text = nullptr;
+	char GoBack_Button_label[8] = "Go Back";
+
+	UI_Element* Building_text = nullptr;
+	char Building_label[16] = "WHILE BUILDING:";
+
+	UI_Element* NextBuilding_Button = nullptr;
+	UI_Element* NextBuilding_text = nullptr;
+	char NextBuilding_label[14] = "Next Building";
+
+	UI_Element* PrevBuilding_Button = nullptr;
+	UI_Element* PrevBuilding_text = nullptr;
+	char PrevBuilding_label[14] = "Prev Building";
+
+	UI_Element* Build_Button = nullptr;
+	UI_Element* Build_text = nullptr;
+	char Build_label[6] = "Build";
+
+	UI_Element* Troops_text = nullptr;
+	char Troops_label[15] = "MANAGE TROOPS:";
+
+	UI_Element* SingleState_Button = nullptr;
+	UI_Element* SingleState_text = nullptr;
+	char SingleState_label[26] = "Change Single Troop State";
+
+	UI_Element* AllState_Button = nullptr;
+	UI_Element* AllState_text = nullptr;
+	char AllState_label[24] = "Change All Troops State";
 
 	// Pause Abort Mission
 

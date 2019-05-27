@@ -481,7 +481,8 @@ bool Player::Update(float dt)
 			{
 				(*focus)->state = UI_Element::State::IDLE;
 				DoLogic((*focus));
-				UpdateFocus(currentUI);
+				if(currentUI != CURRENT_UI::CURR_PAUSE_KEYBINDS)
+					UpdateFocus(currentUI);
 			}
 			else if (!App->scene->pause)
 			{
@@ -1356,6 +1357,12 @@ void Player::UpdateFocus(uint data)
 		last_element--;
 		break;
 
+	case::Player::CURRENT_UI::CURR_PAUSE_KEYBINDS:
+		focus = Keybinds_UI->children.begin();
+		last_element = Keybinds_UI->children.end();
+		last_element--;
+		break;
+
 	case::Player::CURRENT_UI::CURR_PAUSE_ABORT:
 		focus = Abort_UI->children.begin();
 		last_element = Abort_UI->children.end();
@@ -1428,6 +1435,11 @@ void Player::GotoPrevWindows(uint data)
 		UpdateVisibility();
 		break;
 
+	case Player::CURRENT_UI::CURR_PAUSE_KEYBINDS:
+		currentUI = CURR_PAUSE;
+		UpdateVisibility();
+		break;
+
 	case Player::CURRENT_UI::CURR_PAUSE_ABORT:
 		currentUI = CURR_PAUSE;
 		UpdateVisibility();
@@ -1466,6 +1478,9 @@ UI_Element* Player::GetUI_Element(uint data)
 
 	case::Player::CURRENT_UI::CURR_PAUSE_SETTINGS:
 		return Settings_UI;
+
+	case::Player::CURRENT_UI::CURR_PAUSE_KEYBINDS:
+		return Keybinds_UI;
 
 	case::Player::CURRENT_UI::CURR_PAUSE_ABORT:
 		return Abort_UI;
@@ -1595,6 +1610,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Cast_UI->visible = false;
 		Pause_UI->visible = true;
 		Settings_UI->visible = false;
+		Keybinds_UI->visible = false;
 		Abort_UI->visible = false;
 		win_screen->visible = false;
 		General_UI->visible = false;
@@ -1948,6 +1964,13 @@ void Player::DoLogic(UI_Element* data)
 		// Open settings menu
 		Settings_UI->visible = true;
 		currentUI = CURR_PAUSE_SETTINGS;
+		UpdateFocus(currentUI);
+		App->audio->PlayFx(INGAME_CLICK);
+		break;
+	case::UI_Element::Action::KEYBINDS_PAUSE:
+		// Open keybinds menu
+		Keybinds_UI->visible = true;
+		currentUI = CURR_PAUSE_KEYBINDS;
 		UpdateFocus(currentUI);
 		App->audio->PlayFx(INGAME_CLICK);
 		break;
