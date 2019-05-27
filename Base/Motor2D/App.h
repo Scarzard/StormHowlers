@@ -22,6 +22,7 @@ class Fonts;
 class Gui;
 class Player;
 class MovementManager;
+class j1TransitionManager;
 
 class MainApp
 {
@@ -85,22 +86,23 @@ private:
 public:
 
 	// Module
-	Window*			win = NULL;
-	Input*			input = NULL;
-	Render*			render = NULL;
-	Textures*		tex = NULL;
-	Audio*			audio = NULL;
-	Pathfinding*	pathfinding = NULL;
-	Scene*			scene = NULL;
-	MainMenu*		main_menu = NULL;
-	Map*			map = NULL;
-	Transitions*	scenechange = NULL;
-	EntityManager*	entitymanager = NULL;
-	Fonts*			font = NULL;
-	Gui*			gui = NULL;
-	Player*			player1 = NULL;
-	Player*			player2 = NULL;
-	MovementManager* move_manager = NULL;
+	Window*					win = NULL;
+	Input*					input = NULL;
+	Render*					render = NULL;
+	Textures*				tex = NULL;
+	Audio*					audio = NULL;
+	Pathfinding*			pathfinding = NULL;
+	Scene*					scene = NULL;
+	MainMenu*				main_menu = NULL;
+	Map*					map = NULL;
+	Transitions*			scenechange = NULL;
+	EntityManager*			entitymanager = NULL;
+	Fonts*					font = NULL;
+	Gui*					gui = NULL;
+	Player*					player1 = NULL;
+	Player*					player2 = NULL;
+	MovementManager*		move_manager = NULL;
+	j1TransitionManager*	transitions = NULL;
 
 	bool			fpsCapON = true;
 	bool			vsyncON = false;

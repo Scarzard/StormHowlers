@@ -126,6 +126,12 @@ bool Audio::Update(float dt)
 	if (fading_in)
 		FadeIn();
 
+	//Fixes Sliders crash
+	if (musicVolume || sfxVolume < 0)
+		musicVolume = sfxVolume = 0;
+	if (musicVolume || sfxVolume > 100)
+		musicVolume = sfxVolume = 100;
+
 	return true;
 }
 
