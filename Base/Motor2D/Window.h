@@ -33,8 +33,7 @@ public:
 	uint GetScale() const;
 
 	//tkae windows sizes
-
-	pair <int,int> ModifyWindow();
+	void ModifyWindow();
 
 public:
 	//The window we'll be rendering to

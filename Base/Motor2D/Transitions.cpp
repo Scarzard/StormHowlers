@@ -3,7 +3,6 @@
 #include "Transitions.h"
 #include "Render.h"
 #include "Scene.h"
-#include "Audio.h"
 #include "Window.h"
 #include "EntityManager.h"
 #include "Player.h"
@@ -11,7 +10,6 @@
 #include "Gui.h"
 #include "Brofiler\Brofiler.h"
 #include "MainMenu.h"
-#include "IntroScene.h"
 #include <math.h>
 #include "SDL\include\SDL_render.h"
 
@@ -48,96 +46,62 @@ bool Transitions::Update(float dt)
 	{
 		return true;
 	}
-	else if (current_step == fade_step::fade_from_black && to_enable == App->scene)
+	else if (current_step == fade_step::fade_from_black)
 	{
-		
-		if (App->main_menu->active)
-			App->main_menu->menu_background->visible = false;
+		App->main_menu->menu_background->visible = false;
 	}
 	switch (current_step)
 	{
-	case fade_step::fade_to_black:
-	{
-		if (intro == true)
+		case fade_step::fade_to_black:
 		{
-			/*App->audio->CleanUp();
-			App->audio->Start();*/
-			
-			intro = false;
-		}
-		if (map == true)
-		{
-			
-			App->scene->currentMap = nextMap;
-			LOG("%i", App->scene->currentMap);
-
-			App->map->SwitchMaps(App->scene->map_names[nextMap]);
-
-			fading = false;
-			current_step = fade_step::fade_from_black;
-		}
-		else if (main_menu_in == true)
-		{
-			if (now >= total_time) //screen->black & map->loaded
+	
+			if (map == true)
 			{
-				//to_disable->Disable();
-				//App->gui->CleanUp();
-				
-				/*if (to_disable == App->scene)
-				{
-					App->entitymanager->Disable();
-					App->map->CleanUp();
-					App->entitymanager->DeleteAllEntities();
-				}*/
+			
+				App->scene->currentMap = nextMap;
+				LOG("%i", App->scene->currentMap);
 
-				to_enable->Enable();
-				App->gui->Start();
-				to_enable->Enable();
+				App->map->SwitchMaps(App->scene->map_names[nextMap]);
 
-				
-				App->main_menu->menu_background->visible = true;
-				
-				//switchtimer.Start();
-
-				total_time += total_time;
-				start_time = SDL_GetTicks();
 				fading = false;
 				current_step = fade_step::fade_from_black;
-			}
-		}
-		else if (scene == true)
-		{
-			to_disable->Disable();
-			App->gui->CleanUp();
-			App->map->CleanUp();
-			App->entitymanager->DeleteAllEntities();
-			if (to_disable == App->scene)
-			{
-				App->entitymanager->Disable();
-			}
-			App->gui->Start();
-			to_enable->Enable();
-			if (to_enable == App->scene)
-			{
-				App->entitymanager->Enable();
-			}
-
-			if (App->scenechange->ContinueGame)
-			{
-				App->LoadGame();
-			}
-			if (main_menu == true)
-			{
-				App->main_menu->menu_background->visible = false;
-			}
-
-			current_step = fade_step::fade_from_black;
-
 			
+			}
+			else if (scene == true)
+			{
+			
+				to_disable->Disable();
+				App->gui->CleanUp();
+				App->map->CleanUp();
+				App->entitymanager->DeleteAllEntities();
+				if (to_disable == App->scene)
+				{
+					App->entitymanager->Disable();
+				}
+				App->gui->Start();
+				to_enable->Enable();
+				if (to_enable == App->scene)
+				{
+					App->entitymanager->Enable();
+				}
+
+				if (App->scenechange->ContinueGame)
+				{
+					App->LoadGame();
+				}
+				if (main_menu == true)
+				{
+					App->main_menu->menu_background->visible = false;
+				}
+
+				current_step = fade_step::fade_from_black;
+				current_step = fade_step::fade_from_black;
+			
+			}
+			else
+				current_step = fade_step::fade_from_black;
 
 		}
-		else
-			current_step = fade_step::fade_from_black;
 	
 		break;
 
@@ -145,23 +109,28 @@ bool Transitions::Update(float dt)
 		{
 			if (map == true )
 			{
-				current_step = fade_step::none;
-				map = false;
+			
+			
+					current_step = fade_step::none;
+					map = false;
+			
+
 			}
 			else if (scene == true || main_menu == true)
 			{
-				current_step = fade_step::none;
-				scene = false;
-				main_menu = false;
+			
+					current_step = fade_step::none;
+					scene = false;
+					main_menu = false;
 		
 			}
-			else if (main_menu_in == true)
-			{
-				current_step = fade_step::none;
-				main_menu_in = false;
-			}
 			else
-				current_step = fade_step::none;
+			{
+
+			
+					current_step = fade_step::none;
+			
+			}
 		}
 		break;
 	}
@@ -198,15 +167,6 @@ bool Transitions::IsChanging() const
 bool Transitions::SwitchScene(Module* SceneIn, Module* SceneOut)
 {
 	bool ret = false;
-
-	if (SceneOut == App->intro)
-	{
-		intro = true;
-	}
-	if (SceneIn == App->intro)
-	{
-		scene = true;
-	}
 	if (SceneIn == App->scene)
 	{
 		scene = true;
@@ -214,10 +174,6 @@ bool Transitions::SwitchScene(Module* SceneIn, Module* SceneOut)
 	if (SceneOut == App->main_menu)
 	{
 		main_menu = true;
-	}
-	if (SceneIn == App->main_menu)
-	{
-		main_menu_in = true;
 	}
 	if (current_step == fade_step::none)
 	{
