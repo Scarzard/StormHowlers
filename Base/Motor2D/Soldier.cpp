@@ -194,8 +194,6 @@ bool Soldier::Update(float dt)
 							//pathfind = true;
 						}
 					}
-
-
 				}
 				// enemy zone
 				else if (IsInEnemyZone(map_pos))
