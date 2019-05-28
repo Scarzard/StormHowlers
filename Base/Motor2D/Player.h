@@ -26,8 +26,13 @@ struct GamePad
 	int RightAxisX = 0;
 	int RightAxisY = 0;
 
+	int Left_Trigger = 0;
+	int Right_Trigger = 0;
+
 	bool JoystickState[4] = { false, false, false ,false };
 	bool JoystickState2[4] = { false, false, false ,false };
+	bool RT_State = false;
+	bool LT_State = false;
 
 };
 
@@ -126,6 +131,19 @@ private:
 	int number = 0;
 	
 public:
+	// CONTROLS
+	int ACCEPT;
+	int CANCEL;
+	int CHANGEALL;
+	int MOVE_RIGHT;
+	int MOVE_LEFT;
+	int MOVE_UP;
+	int MOVE_DOWN;
+	int UI_RIGHT;
+	int UI_LEFT;
+	int UI_UP;
+	int UI_DOWN;
+
 	bool isBuilding = false;
 	bool isDeploying = false;
 	bool isCasting = false;
