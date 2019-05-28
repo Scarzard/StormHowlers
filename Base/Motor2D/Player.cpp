@@ -1221,6 +1221,40 @@ int Player::GetKey() //returns key pressed
 	return -1;
 }
 
+void Player::SaveKeys(bool isPlayer1)
+{
+	pugi::xml_document	config_file;
+	pugi::xml_node		config;
+
+	config = App->LoadConfig(config_file);
+	config = config.child("player");
+
+	if (isPlayer1)
+		config = config.child("controls_p1");
+
+	else if (!isPlayer1)
+		config = config.child("controls_p2");
+
+	if (config != nullptr)
+	{
+		config.child("accept").attribute("key").set_value(ACCEPT);
+		config.child("cancel").attribute("key").set_value(CANCEL);
+		config.child("change_all").attribute("key").set_value(CHANGEALL);
+		config.child("move").attribute("right").set_value(MOVE_RIGHT);
+		config.child("move").attribute("left").set_value(MOVE_LEFT);
+		config.child("move").attribute("up").set_value(MOVE_UP);
+		config.child("move").attribute("down").set_value(MOVE_DOWN);
+		config.child("ui").attribute("right").set_value(UI_RIGHT);
+		config.child("ui").attribute("left").set_value(UI_LEFT);
+		config.child("ui").attribute("up").set_value(UI_UP);
+		config.child("ui").attribute("down").set_value(UI_DOWN);
+	}
+	else
+	{
+		LOG("--- Error saving keys");
+	}
+}
+
 void Player::UpdateFocus(uint data)
 {
 	switch (data)

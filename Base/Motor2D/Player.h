@@ -119,6 +119,7 @@ public:
 	void ShowRange(Entity::entityType type, Collider collider);
 
 	int GetKey(); //returns key pressed (-1 if none)
+	void SaveKeys(bool isPlayer1);
 
 private:
 	int number = 0;
