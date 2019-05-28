@@ -52,24 +52,23 @@ bool Transitions::Update(float dt)
 	}
 	switch (current_step)
 	{
-	case fade_step::fade_to_black:
-	{
-	
-		if (map == true)
+		case fade_step::fade_to_black:
 		{
+	
+			if (map == true)
+			{
 			
 				App->scene->currentMap = nextMap;
 				LOG("%i", App->scene->currentMap);
 
 				App->map->SwitchMaps(App->scene->map_names[nextMap]);
 
-				
 				fading = false;
 				current_step = fade_step::fade_from_black;
 			
-		}
-		else if (scene == true)
-		{
+			}
+			else if (scene == true)
+			{
 			
 				to_disable->Disable();
 				App->gui->CleanUp();
@@ -79,15 +78,12 @@ bool Transitions::Update(float dt)
 				{
 					App->entitymanager->Disable();
 				}
-
 				App->gui->Start();
 				to_enable->Enable();
 				if (to_enable == App->scene)
 				{
 					App->entitymanager->Enable();
 				}
-
-				
 
 				if (App->scenechange->ContinueGame)
 				{
@@ -98,54 +94,46 @@ bool Transitions::Update(float dt)
 					App->main_menu->menu_background->visible = false;
 				}
 
-				
 				current_step = fade_step::fade_from_black;
 				current_step = fade_step::fade_from_black;
 			
-		}
-		else
-		{
-			
-				
+			}
+			else
 				current_step = fade_step::fade_from_black;
-			
-		}
-	}break;
 
-	case fade_step::fade_from_black:
-	{
+		}
+	
+		break;
+
+		case fade_step::fade_from_black:
+		{
+			if (map == true )
+			{
+			
+			
+					current_step = fade_step::none;
+					map = false;
+			
+
+			}
+			else if (scene == true || main_menu == true)
+			{
+			
+					current_step = fade_step::none;
+					scene = false;
+					main_menu = false;
 		
-		if (map == true )
-		{
-			
-			
-				current_step = fade_step::none;
-				map = false;
-			
+			}
+			else
+			{
 
+			
+					current_step = fade_step::none;
+			
+			}
 		}
-		else if (scene == true || main_menu == true)
-		{
-			
-				current_step = fade_step::none;
-				scene = false;
-				main_menu = false;
-		
-		}
-		else
-		{
-
-			
-				current_step = fade_step::none;
-			
-		}
-
-	}break;
-
+		break;
 	}
-
-	//SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, (Uint8)(normalized * 255.0f));
-	//SDL_RenderFillRect(App->render->renderer, &screen);
 
 	return true;
 }
@@ -192,7 +180,6 @@ bool Transitions::SwitchScene(Module* SceneIn, Module* SceneOut)
 		current_step = fade_step::fade_to_black;
 		to_enable = SceneIn;
 		to_disable = SceneOut;
-		//fadetime = time * 0.5f*10.0f / 2.0;
 		fading = true;
 
 		ret = true;

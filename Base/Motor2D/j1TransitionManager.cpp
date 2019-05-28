@@ -17,7 +17,8 @@ j1TransitionManager::j1TransitionManager()
 j1TransitionManager::~j1TransitionManager()
 {}
 
-bool j1TransitionManager::PostUpdate() {
+bool j1TransitionManager::PostUpdate()
+{
 
 	// Calls PostUpdate (switch of states) of every transition in the list
 	for (std::list<j1Transitions*>::iterator item = transitions_list.begin(); item != transitions_list.end(); ++item) {
@@ -26,7 +27,8 @@ bool j1TransitionManager::PostUpdate() {
 	return true;
 }
 
-bool j1TransitionManager::CleanUp() {
+bool j1TransitionManager::CleanUp()
+{
 
 	// Clears the list
 	transitions_list.clear();
@@ -34,13 +36,15 @@ bool j1TransitionManager::CleanUp() {
 	return true;
 }
 
-void j1TransitionManager::CleanTransitions(j1Transitions* transition) {
+void j1TransitionManager::CleanTransitions(j1Transitions* transition)
+{
 
 	// Removes the list and deletes the transition
 	transitions_list.remove(transition);
 	delete transition;
 }
 
-void j1TransitionManager::SquaresAppearing(int transition, j1Color color, float time) {
+void j1TransitionManager::SquaresAppearing(int transition, j1Color color, float time) 
+{
 	transitions_list.push_back(new Squares(transition, color, time));
 }

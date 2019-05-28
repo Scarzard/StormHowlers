@@ -10,7 +10,8 @@
 #include <random>
 #include <algorithm>
 
-Squares::Squares(int transition, j1Color color, float time) : j1Transitions(time) {
+Squares::Squares(int transition, j1Color color, float time) : j1Transitions(time)
+{
 	this->color = color;
 	this->transition = transition;
 
@@ -38,7 +39,8 @@ Squares::Squares(int transition, j1Color color, float time) : j1Transitions(time
 Squares::~Squares()
 {}
 
-void Squares::Start() {
+void Squares::Start()
+{
 
 	j1Transitions::Start();
 
@@ -58,12 +60,9 @@ void Squares::Start() {
 	}
 }
 
-void Squares::Change() {
-
-	j1Transitions::Change();
-
-	
-
+void Squares::Change() 
+{
+	screen.x = screen.y = 0;
 	SDL_SetRenderDrawColor(App->render->renderer, color.r, color.g, color.b, 255);
 	SDL_RenderFillRect(App->render->renderer, &screen);
 
@@ -71,9 +70,12 @@ void Squares::Change() {
 		App->scenechange->SwitchScene(App->main_menu, App->scene);
 	else
 		App->scenechange->SwitchScene(App->scene, App->main_menu);
+
+	j1Transitions::Change();
 }
 
-void Squares::Exit() {
+void Squares::Exit() 
+{
 
 	j1Transitions::Exit();
 
@@ -91,7 +93,8 @@ void Squares::Exit() {
 	}
 }
 
-void Squares::Draw(int appear, int width, int height) {
+void Squares::Draw(int appear, int width, int height)
+{
 
 	SDL_Rect* Square_r = new SDL_Rect[appear];
 
