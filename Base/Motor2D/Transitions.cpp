@@ -9,7 +9,6 @@
 #include "Map.h"
 #include "Gui.h"
 #include "Brofiler\Brofiler.h"
-#include "j1TransitionManager.h"
 #include "MainMenu.h"
 #include <math.h>
 #include "SDL\include\SDL_render.h"
@@ -65,10 +64,10 @@ bool Transitions::Update(float dt)
 		{
 			if (now >= total_time) //screen->black & map->loaded
 			{
-				//App->scene->currentMap = nextMap;
-				//LOG("%i", App->scene->currentMap);
+				App->scene->currentMap = nextMap;
+				LOG("%i", App->scene->currentMap);
 
-				//App->map->SwitchMaps(App->scene->map_names[nextMap]);
+				App->map->SwitchMaps(App->scene->map_names[nextMap]);
 
 				total_time += total_time;
 				start_time = SDL_GetTicks();
@@ -161,7 +160,8 @@ bool Transitions::Update(float dt)
 
 	}
 
-	App->transitions->SquaresAppearing(3, Black, 0.5f);
+	SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, (Uint8)(normalized * 255.0f));
+	SDL_RenderFillRect(App->render->renderer, &screen);
 
 	return true;
 }
@@ -171,7 +171,7 @@ bool Transitions::ChangeMap(int newMap, float time)
 	bool ret = false;
 	if (newMap != -1)
 	{
-	//nextMap = newMap;
+	nextMap = newMap;
 	}
 
 	//map = true;
@@ -198,7 +198,7 @@ bool Transitions::SwitchScene(Module* SceneIn, Module* SceneOut, float time)
 	bool ret = false;
 	if (SceneIn == App->scene)
 	{
-		scene = true;
+	scene = true;
 	}
 	if (SceneOut == App->main_menu)
 	{

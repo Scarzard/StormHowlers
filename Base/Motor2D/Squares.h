@@ -28,7 +28,6 @@ private:
 	int transition;
 	vector<pair<int, int>> squares_vec;
 
-	int nextMap;
 	uint w, h;
 	SDL_Rect screen;
 	int square_w, square_h;

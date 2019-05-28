@@ -6,7 +6,6 @@
 #include "Window.h"
 #include "Transitions.h"
 #include "Log.h"
-#include "Map.h"
 
 #include <random>
 #include <algorithm>
@@ -58,22 +57,21 @@ void Squares::Start() {
 	}
 }
 
-void Squares::Change() 
-{
+void Squares::Change() {
 
 	j1Transitions::Change();
 
 	SDL_SetRenderDrawColor(App->render->renderer, color.r, color.g, color.b, 255);
 	SDL_RenderFillRect(App->render->renderer, &screen);
 
-	App->scene->currentMap = nextMap;
-	LOG("%i", App->scene->currentMap);
+	if (App->scene->active)
+		App->scenechange->SwitchScene(App->scene, App->main_menu, 2);
 
-	App->map->SwitchMaps(App->scene->map_names[nextMap]);
+	else
+		App->scenechange->SwitchScene(App->main_menu, App->scene, 2);
 }
 
-void Squares::Exit()
-{
+void Squares::Exit() {
 
 	j1Transitions::Exit();
 
@@ -90,8 +88,7 @@ void Squares::Exit()
 	}
 }
 
-void Squares::Draw(int appear, int width, int height)
-{
+void Squares::Draw(int appear, int width, int height) {
 
 	SDL_Rect* Square_r = new SDL_Rect[appear];
 
