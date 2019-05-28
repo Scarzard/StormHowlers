@@ -108,7 +108,6 @@
 
    <buildings>
       <Townhall>
-
         <health lvl1="10000" lvl2="20000" lvl3="3000"/>
         <upgrade_cost ToLvl2="5000" ToLvl3="10000" ToLv4="0"/>
         <damage lvl1="-1" lvl2="-3" lvl3="-5"/>      <!-- HEALS -->
@@ -138,7 +137,6 @@
       </CommandCenter>
 
       <Walls>
-
         <health lvl1="500" lvl2="600" lvl3="700"/>
         <upgrade_cost ToLvl2="500" ToLvl3="700" ToLv4="0"/>
         <size width="1" height="1"/>
@@ -176,7 +174,6 @@
         <capacity lvl1="100" lvl2="150" lvl3="200"/>
         <production lvl1="100" lvl2="150" lvl3="250"/>
       </GoldMine>
-      
     </buildings>
 
     <troops>
@@ -224,8 +221,15 @@
   </entitymanager>
 
  <player>
-  <rect_previews>
-
+   <controls>
+     <accept key="10"/> <!-- BUTTON_A -->
+     <cancel key="BUTTON_B"/> <!-- BUTTON_B -->
+     <change_all key="0"/> <!-- LB -->
+     <move right="0" left="0" up="0" down="0"/> <!-- LEFT JOY -->
+     <ui right="0" left="0" up="0" down="0"/> <!-- RIGHT JOY -->
+   </controls>
+   
+   <rect_previews> 
       <townhall       x="" y="" w="" h="" rx="" ry=""/>      <!--<townhall x=""        -->
       <sentrygun      x="62" y="195" w="62" h="39" rx="186" ry="0" />  <!--<main_defense x>      -->
       <cmd_center     x="424" y="2556" w="212" h="213" rx="0" ry="2556" />    <!--<cmd_center x="       -->
@@ -242,11 +246,10 @@
     </rect_previews>
   </player>
 
-
   <scene>
     <map_name name="map3.tmx"></map_name>
-    <pause_menu_alied file="gui/Pause_Menu_Alied.png"></pause_menu_alied>
-    <pause_menu_soviet file="gui/Pause_Menu_Soviet.png"></pause_menu_soviet>
+    <pause_menu_alied file="gui/Pause_Menu_Alied.png"/>
+    <pause_menu_soviet file="gui/Pause_Menu_Soviet.png"/>
     <allied file="gui/Allied_Victorious.png"/>
     <soviet file="gui/Soviet_Victorious.png"/>
     <draw file="gui/Draw.png"/>

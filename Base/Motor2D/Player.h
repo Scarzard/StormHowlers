@@ -36,11 +36,13 @@ struct GeneralUI
 class Player : public Module
 {
 public:
-	enum DeployState {
+	enum DeployState
+	{
 		START,
 		DEPLOYING,
 		END
 	};
+
 	enum CURRENT_UI
 	{
 		NONE,
@@ -116,10 +118,26 @@ public:
 	void ChangeBuilding(int num);
 	void ShowRange(Entity::entityType type, Collider collider);
 
+	int GetKey(); //returns key pressed (-1 if none)
+
 private:
 	int number = 0;
 	
 public:
+	// CONTROLS
+	int ACCEPT;
+	int CANCEL;
+	int CHANGEALL;
+	int MOVE_RIGHT;
+	int MOVE_LEFT;
+	int MOVE_UP;
+	int MOVE_DOWN;
+	int UI_RIGHT;
+	int UI_LEFT;
+	int UI_UP;
+	int UI_DOWN;
+
+	// ---
 	bool isBuilding = false;
 	bool isDeploying = false;
 	bool isCasting = false;

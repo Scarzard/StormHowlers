@@ -32,19 +32,20 @@ enum CONTROLLER_BUTTONS {
 	JOY_LEFT,
 	JOY_RIGHT,
 	UP,
-	DOWN,
+	DOWN, //5
 	LEFT,
 	RIGHT,
 	START,
 	BACK,
-	BUTTON_A,
+	BUTTON_A, //10
 	BUTTON_B,
 	BUTTON_X,
 	BUTTON_Y,
 	LB,
-	RB,
+	RB, //15
 	LT,
-	RT
+	RT,
+	LAST_BUTTON //used for changing controls
 };
 
 class Input : public Module

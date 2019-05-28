@@ -175,7 +175,7 @@ bool MainApp::Update()
 	bool ret = true;
 	PrepareUpdate();
 
-	if(input->GetWindowEvent(WE_QUIT) == true || input->GetKey(SDL_SCANCODE_ESCAPE))
+	if(input->GetWindowEvent(WE_QUIT) == true/* || input->GetKey(SDL_SCANCODE_ESCAPE)*/)
 		ret = false;
 
 	if(ret == true)
