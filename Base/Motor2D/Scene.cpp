@@ -53,6 +53,7 @@ bool Scene::Awake(pugi::xml_node& config)
 	draw_name = config.child("draw").attribute("file").as_string("");
 
 	
+	
 	return ret;
 }
 
@@ -60,7 +61,7 @@ bool Scene::Awake(pugi::xml_node& config)
 bool Scene::Start()
 {
 	bool ret = false;
-
+	App->main_menu->menu_background->visible = false;
 	App->map->Load(map_names.front()->data());
 	//current_track = App->audio->tracks_path.front();
 	//App->audio->PlayMusic(PATH(App->audio->folder_music.data(), current_track.data()));

@@ -50,11 +50,6 @@ bool Transitions::Update(float dt)
 	{
 		App->main_menu->menu_background->visible = false;
 	}
-
-	uint now = SDL_GetTicks() - start_time;
-	float normalized = (1.0f < ((float)now / (float)total_time) ? 1.0f : ((float)now / (float)total_time));
-
-
 	switch (current_step)
 	{
 	case fade_step::fade_to_black:
@@ -62,23 +57,20 @@ bool Transitions::Update(float dt)
 	
 		if (map == true)
 		{
-			if (now >= total_time) //screen->black & map->loaded
-			{
+			
 				App->scene->currentMap = nextMap;
 				LOG("%i", App->scene->currentMap);
 
 				App->map->SwitchMaps(App->scene->map_names[nextMap]);
 
-				total_time += total_time;
-				start_time = SDL_GetTicks();
+				
 				fading = false;
 				current_step = fade_step::fade_from_black;
-			}
+			
 		}
 		else if (scene == true)
 		{
-			if (now >= total_time)
-			{
+			
 				to_disable->Disable();
 				App->gui->CleanUp();
 				App->map->CleanUp();
@@ -95,7 +87,7 @@ bool Transitions::Update(float dt)
 					App->entitymanager->Enable();
 				}
 
-				switchtimer.Start();
+				
 
 				if (App->scenechange->ContinueGame)
 				{
@@ -106,62 +98,54 @@ bool Transitions::Update(float dt)
 					App->main_menu->menu_background->visible = false;
 				}
 
-				total_time += total_time;
-				start_time = SDL_GetTicks();
+				
 				current_step = fade_step::fade_from_black;
 				current_step = fade_step::fade_from_black;
-			}
+			
 		}
 		else
 		{
-			if (now >= total_time)
-			{
-				total_time += total_time;
-				start_time = SDL_GetTicks();
+			
+				
 				current_step = fade_step::fade_from_black;
-			}
+			
 		}
 	}break;
 
 	case fade_step::fade_from_black:
 	{
-		normalized = 1.0f - normalized;
-
+		
 		if (map == true )
 		{
 			
-			if (now >= total_time )
-			{
+			
 				current_step = fade_step::none;
 				map = false;
-				
-			}
+			
 
 		}
 		else if (scene == true || main_menu == true)
 		{
-			if (now >= total_time)
-			{
+			
 				current_step = fade_step::none;
 				scene = false;
 				main_menu = false;
-			}
+		
 		}
 		else
 		{
 
-			if (now >= total_time)
-			{
+			
 				current_step = fade_step::none;
-			}
+			
 		}
 
 	}break;
 
 	}
 
-	SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, (Uint8)(normalized * 255.0f));
-	SDL_RenderFillRect(App->render->renderer, &screen);
+	//SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, (Uint8)(normalized * 255.0f));
+	//SDL_RenderFillRect(App->render->renderer, &screen);
 
 	return true;
 }
@@ -178,8 +162,7 @@ bool Transitions::ChangeMap(int newMap, float time)
 	if (current_step == fade_step::none)
 	{
 		current_step = fade_step::fade_to_black;
-		start_time = SDL_GetTicks();
-		total_time = (Uint32)(time*0.5f*1000.0f);
+		
 		//fadetime = time * 0.5f*10.0f / 2.0;
 		fading = true;
 		ret = true;
@@ -193,12 +176,12 @@ bool Transitions::IsChanging() const
 	return current_step != fade_step::none;
 }
 
-bool Transitions::SwitchScene(Module* SceneIn, Module* SceneOut, float time)
+bool Transitions::SwitchScene(Module* SceneIn, Module* SceneOut)
 {
 	bool ret = false;
 	if (SceneIn == App->scene)
 	{
-	scene = true;
+		scene = true;
 	}
 	if (SceneOut == App->main_menu)
 	{
@@ -207,11 +190,8 @@ bool Transitions::SwitchScene(Module* SceneIn, Module* SceneOut, float time)
 	if (current_step == fade_step::none)
 	{
 		current_step = fade_step::fade_to_black;
-		switchtimer.Start();
 		to_enable = SceneIn;
 		to_disable = SceneOut;
-		start_time = SDL_GetTicks();
-		total_time = (Uint32)(time*0.5f*1000.0f);
 		//fadetime = time * 0.5f*10.0f / 2.0;
 		fading = true;
 

@@ -46,6 +46,7 @@ void Squares::Start() {
 	if (transition == 1 || transition == 3) {
 		int appear = (int)Interpolation(0, number*number, percentage);
 		Draw(appear);
+		//App->main_menu->menu_background->visible = false;
 	}
 
 	// Squares appear gradually per columns, width and height
@@ -61,14 +62,15 @@ void Squares::Change() {
 
 	j1Transitions::Change();
 
+	
+
 	SDL_SetRenderDrawColor(App->render->renderer, color.r, color.g, color.b, 255);
 	SDL_RenderFillRect(App->render->renderer, &screen);
 
 	if (App->scene->active)
-		App->scenechange->SwitchScene(App->scene, App->main_menu, 2);
-
+		App->scenechange->SwitchScene(App->main_menu, App->scene);
 	else
-		App->scenechange->SwitchScene(App->main_menu, App->scene, 2);
+		App->scenechange->SwitchScene(App->scene, App->main_menu);
 }
 
 void Squares::Exit() {
@@ -78,6 +80,7 @@ void Squares::Exit() {
 	if (transition == 1 || transition == 3) {
 		int appear = (int)Interpolation(number*number, 0, percentage);
 		Draw(appear);
+		
 	}
 
 	else if (transition == 2 || transition == 4) {
