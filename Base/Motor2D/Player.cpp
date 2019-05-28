@@ -46,6 +46,8 @@ bool Player::Awake(pugi::xml_node& config) {
 		preview_rects->at(i).h = config.attribute("h").as_int(0);
 		config = config.next_sibling();
 	}
+
+	LoadKeys(isPlayer1);
 	return true;
 }
 
@@ -276,7 +278,7 @@ bool Player::Update(float dt)
 
 		if (currentUI == CURRENT_UI::CURR_DEPLOY)
 		{
-			if (gamepad.Controller[ACCEPT] == KEY_DOWN)
+			if (gamepad.Controller[CHANGE] == KEY_DOWN)
 			{
 				ChangeTroopsState();
 			}
@@ -304,14 +306,16 @@ bool Player::Update(float dt)
 
 
 		// Button A to clcik a button
-		if (gamepad.Controller[ACCEPT] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
+		if (gamepad.Controller[ACCEPT] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && 
+			currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
 		{
 			if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
 				(*focus)->state = UI_Element::State::LOGIC;
 		}
 
 		// Do button action
-		if (gamepad.Controller[ACCEPT] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
+		if (gamepad.Controller[ACCEPT] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING &&
+			currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
 		{
 			if (App->scene->pause && isPaused == true)
 			{
