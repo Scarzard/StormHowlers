@@ -386,6 +386,10 @@ public:
 	UI_Element* GoBack_Button_text = nullptr;
 	char GoBack_Button_label[8] = "Go Back";
 
+	UI_Element* Move_Button = nullptr;
+	UI_Element* Move_text = nullptr;
+	char Move_label[16] = "Move through UI";
+
 	UI_Element* Building_text = nullptr;
 	char Building_label[16] = "WHILE BUILDING:";
 

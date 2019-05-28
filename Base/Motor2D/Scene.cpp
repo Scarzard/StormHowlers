@@ -418,6 +418,11 @@ bool Scene::Start()
 	App->player1->NextBuilding_text->label = App->player1->NextBuilding_label;
 	App->player1->NextBuilding_text->color = { 255,255,9,255 };
 
+	App->player1->Move_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::MOVE_BUTTON, { 200 ,400 }, { 301,59 }, App->player1->Keybinds_UI, false);
+	App->player1->Move_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Move_Button, false, { false, false });
+	App->player1->Move_text->label = App->player1->Move_label;
+	App->player1->Move_text->color = { 255,255,9,255 };
+
 	App->player1->GoBack_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::GOBACK_BUTTON, { 200 ,300 }, { 301,59 }, App->player1->Keybinds_UI, false);
 	App->player1->GoBack_Button_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->GoBack_Button, false, { false, false });
 	App->player1->GoBack_Button_text->label = App->player1->GoBack_Button_label;
@@ -739,6 +744,11 @@ bool Scene::Start()
 	App->player2->NextBuilding_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->NextBuilding_Button, false, { false, false });
 	App->player2->NextBuilding_text->label = App->player2->NextBuilding_label;
 	App->player2->NextBuilding_text->color = { 255,255,9,255 };
+
+	App->player2->Move_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::MOVE_BUTTON, { 200 ,400 }, { 301,59 }, App->player2->Keybinds_UI, false);
+	App->player2->Move_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Move_Button, false, { false, false });
+	App->player2->Move_text->label = App->player2->Move_label;
+	App->player2->Move_text->color = { 255,255,9,255 };
 
 	App->player2->GoBack_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::GOBACK_BUTTON, { 200 ,300 }, { 301,59 }, App->player2->Keybinds_UI, false);
 	App->player2->GoBack_Button_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->GoBack_Button, false, { false, false });
