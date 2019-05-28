@@ -119,6 +119,7 @@ public:
 	void ShowRange(Entity::entityType type, Collider collider);
 
 	int GetKey(); //returns key pressed (-1 if none)
+	void LoadKeys(bool isPlayer1);
 	void SaveKeys(bool isPlayer1);
 
 private:
@@ -128,6 +129,7 @@ public:
 	// CONTROLS
 	int ACCEPT;
 	int CANCEL;
+	int CHANGE;
 	int CHANGEALL;
 	int MOVE_RIGHT;
 	int MOVE_LEFT;

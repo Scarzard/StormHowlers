@@ -224,6 +224,7 @@
    <controls_p1>
      <accept key="10"/> <!-- BUTTON_A -->
      <cancel key="0"/> <!-- BUTTON_B -->
+     <change key="0"/> <!-- BUTTON X-->
      <change_all key="0"/> <!-- LB -->
      <move right="0" left="0" up="0" down="0"/> <!-- LEFT JOY -->
      <ui right="0" left="0" up="0" down="0"/> <!-- RIGHT JOY -->
@@ -231,6 +232,7 @@
    <controls_p2>
      <accept key="10"/> <!-- BUTTON_A -->
      <cancel key="0"/> <!-- BUTTON_B -->
+     <change key="0"/> <!-- BUTTON X-->
      <change_all key="0"/> <!-- LB -->
      <move right="0" left="0" up="0" down="0"/> <!-- LEFT JOY -->
      <ui right="0" left="0" up="0" down="0"/> <!-- RIGHT JOY -->

@@ -37,31 +37,15 @@ Player::~Player()
 bool Player::Awake(pugi::xml_node& config) {
 	preview_rects = new vector<SDL_Rect>(Entity::entityType::WAR_HOUND, SDL_Rect({ 0,0,0,0 }));
 
-	pugi::xml_node& file = config.child("rect_previews").first_child();
+	config = config.child("rect_previews").first_child();
 	for (int i = Entity::entityType::TOWNHALL; i < Entity::entityType::WAR_HOUND; i++) 
 	{
-		preview_rects->at(i).x = file.attribute((!isPlayer1) ? "rx" : "x").as_int(0);
-		preview_rects->at(i).y = file.attribute((!isPlayer1) ? "ry" : "y").as_int(0);
-		preview_rects->at(i).w = file.attribute("w").as_int(0);
-		preview_rects->at(i).h = file.attribute("h").as_int(0);
-		file = file.next_sibling();
+		preview_rects->at(i).x = config.attribute((!isPlayer1) ? "rx" : "x").as_int(0);
+		preview_rects->at(i).y = config.attribute((!isPlayer1) ? "ry" : "y").as_int(0);
+		preview_rects->at(i).w = config.attribute("w").as_int(0);
+		preview_rects->at(i).h = config.attribute("h").as_int(0);
+		config = config.next_sibling();
 	}
-
-	ACCEPT = config.child("controls").child("accept").attribute("key").as_int(-1);
-	CANCEL = config.child("controls").child("cancel").attribute("key").as_int(-1);
-
-	CHANGEALL = config.child("controls").child("change_all").attribute("key").as_int(-1);
-	
-	MOVE_RIGHT = config.child("controls").child("move").attribute("right").as_int(-1);
-	MOVE_LEFT = config.child("controls").child("move").attribute("left").as_int(-1);
-	MOVE_UP = config.child("controls").child("move").attribute("up").as_int(-1);
-	MOVE_DOWN = config.child("controls").child("move").attribute("down").as_int(-1);
-	
-	UI_RIGHT = config.child("controls").child("ui").attribute("right").as_int(-1);
-	UI_LEFT = config.child("controls").child("ui").attribute("left").as_int(-1);
-	UI_UP = config.child("controls").child("ui").attribute("up").as_int(-1);
-	UI_DOWN = config.child("controls").child("ui").attribute("down").as_int(-1);
-
 	return true;
 }
 
@@ -1221,6 +1205,44 @@ int Player::GetKey() //returns key pressed
 	return -1;
 }
 
+void Player::LoadKeys(bool isPlayer1)
+{
+	pugi::xml_document	config_file;
+	pugi::xml_node		config;
+
+	config = App->LoadConfig(config_file);
+	config = config.child("player");
+
+	if (isPlayer1)
+		config = config.child("controls_p1");
+
+	else if (!isPlayer1)
+		config = config.child("controls_p2");
+
+	if (config != nullptr)
+	{
+		ACCEPT = config.child("accept").attribute("key").as_int(-1);
+		CANCEL = config.child("cancel").attribute("key").as_int(-1);
+
+		CHANGE = config.child("change").attribute("key").as_int(-1);
+		CHANGEALL = config.child("change_all").attribute("key").as_int(-1);
+
+		MOVE_RIGHT = config.child("move").attribute("right").as_int(-1);
+		MOVE_LEFT = config.child("move").attribute("left").as_int(-1);
+		MOVE_UP = config.child("move").attribute("up").as_int(-1);
+		MOVE_DOWN = config.child("move").attribute("down").as_int(-1);
+
+		UI_RIGHT = config.child("ui").attribute("right").as_int(-1);
+		UI_LEFT = config.child("ui").attribute("left").as_int(-1);
+		UI_UP = config.child("ui").attribute("up").as_int(-1);
+		UI_DOWN = config.child("ui").attribute("down").as_int(-1);
+	}
+	else
+	{
+		LOG("--- Error loading keys");
+	}
+}
+
 void Player::SaveKeys(bool isPlayer1)
 {
 	pugi::xml_document	config_file;
@@ -1239,6 +1261,7 @@ void Player::SaveKeys(bool isPlayer1)
 	{
 		config.child("accept").attribute("key").set_value(ACCEPT);
 		config.child("cancel").attribute("key").set_value(CANCEL);
+		config.child("change").attribute("key").set_value(CHANGE);
 		config.child("change_all").attribute("key").set_value(CHANGEALL);
 		config.child("move").attribute("right").set_value(MOVE_RIGHT);
 		config.child("move").attribute("left").set_value(MOVE_LEFT);
