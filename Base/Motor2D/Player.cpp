@@ -38,14 +38,16 @@ bool Player::Awake(pugi::xml_node& config) {
 	preview_rects = new vector<SDL_Rect>(Entity::entityType::WAR_HOUND, SDL_Rect({ 0,0,0,0 }));
 
 	config = config.child("rect_previews").first_child();
-
-	for (int i = Entity::entityType::TOWNHALL; i < Entity::entityType::WAR_HOUND; i++) {
+	for (int i = Entity::entityType::TOWNHALL; i < Entity::entityType::WAR_HOUND; i++) 
+	{
 		preview_rects->at(i).x = config.attribute((!isPlayer1) ? "rx" : "x").as_int(0);
 		preview_rects->at(i).y = config.attribute((!isPlayer1) ? "ry" : "y").as_int(0);
 		preview_rects->at(i).w = config.attribute("w").as_int(0);
 		preview_rects->at(i).h = config.attribute("h").as_int(0);
 		config = config.next_sibling();
 	}
+
+	LoadKeys(isPlayer1);
 	return true;
 }
 
@@ -172,8 +174,10 @@ bool Player::Update(float dt)
 	{
 		RectangleSelection();
 
-		if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) {
-			std::list <Troop*>::const_iterator unit = troops.begin();
+		// ---------------------------------------------------------------- // DEBUG
+		if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) 
+		{
+			list <Troop*>::const_iterator unit = troops.begin();
 			while (unit != troops.end()) {
 				if ((*unit)->isSelected) {
 					(*unit)->health = -1;
@@ -227,6 +231,7 @@ bool Player::Update(float dt)
 				In_SelectBuilding->visible = false;	
 		}
 
+
 		
 		// Button with focus changes state to HOVER 
 		if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::ENDGAME && currentUI != CURRENT_UI::CURR_WIN_SCREEN && gamepad.Controller[BUTTON_A] != KEY_REPEAT && focus._Ptr != nullptr)
@@ -274,11 +279,11 @@ bool Player::Update(float dt)
 
 		if (currentUI == CURRENT_UI::CURR_DEPLOY)
 		{
-			if (gamepad.Controller[BUTTON_X] == KEY_DOWN)
+			if (gamepad.Controller[CHANGEALL] == KEY_DOWN)
 			{
 				ChangeTroopsState();
 			}
-			else if (gamepad.Controller[BUTTON_Y] == KEY_DOWN)
+			else if (gamepad.Controller[CHANGE] == KEY_DOWN)
 			{
 				if ((*focus)->action == UI_Element::Action::ACT_DEPLOY_SOLDIER)
 				{
@@ -362,25 +367,6 @@ bool Player::Update(float dt)
 			}
 		}
 
-		// From GENERAL UI to CREATE TROOPS UI (only for barracks)
-		if (gamepad.Controller[BUTTON_X] == KEY_DOWN && currentUI == CURRENT_UI::CURR_GENERAL && (*building_selected)->type == Entity::entityType::BARRACKS )
-		{
-			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
-			troop_icon->rect = { 662, 0, 85, 81 };
-			UpdateVisibility();
-			UI_troop_type = Entity::entityType::SOLDIER;
-			
-			
-		}
-		// From GENERAL UI to CREATE ABILITIES UI (only for command center)
-		if (gamepad.Controller[BUTTON_X] == KEY_DOWN && currentUI == CURRENT_UI::CURR_GENERAL && (*building_selected)->type == Entity::entityType::COMMAND_CENTER)
-		{
-			currentUI = CURRENT_UI::CURR_CREATE_ABILITIES;
-			UpdateVisibility();
-			troop_icon->rect = { 576, 161, 85, 81 };
-			UI_troop_type = 0;
-			
-		}
 
 		//Creating TROOPS
 		if (currentUI == CURRENT_UI::CURR_CREATE_TROOPS)
@@ -447,7 +433,7 @@ bool Player::Update(float dt)
 				TroopCost = 50 * number_of_troops;
 			}
 
-			if (gamepad.Controller[BUTTON_A] == KEY_UP && gold >= TroopCost)
+			if (gamepad.Controller[ACCEPT] == KEY_UP && gold >= TroopCost)
 			{
 				CreateTroop(UI_troop_type, number_of_troops);
 				Update_troop_image(UI_troop_type);
@@ -458,7 +444,7 @@ bool Player::Update(float dt)
 		}
 
 		// ENTER TO CREATING TROOPS UI
-		if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI == CURRENT_UI::CURR_SELECTING_BUILDING && (*building_selected)->type == Entity::entityType::BARRACKS)
+		if (gamepad.Controller[ACCEPT] == KEY_UP && currentUI == CURRENT_UI::CURR_SELECTING_BUILDING && (*building_selected)->type == Entity::entityType::BARRACKS)
 		{
 			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
 			Update_troop_image(UI_troop_type);
@@ -468,14 +454,14 @@ bool Player::Update(float dt)
 		}
 		
 		// Button A to clcik a button
-		if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
+		if (gamepad.Controller[ACCEPT] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
 		{
 			if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
 				(*focus)->state = UI_Element::State::LOGIC;
 		}
 
 		// Do button action
-		if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
+		if (gamepad.Controller[ACCEPT] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
 		{
 			if (App->scene->pause && isPaused == true)
 			{
@@ -517,7 +503,7 @@ bool Player::Update(float dt)
 
 			}
 
-			if (gamepad.Controller[RIGHT] == KEY_DOWN)
+			if (gamepad.Controller[LEFT] == KEY_DOWN)
 			{
 				UI_troop_type++;
 				if (UI_troop_type > ABILITIES::ROCKET) // war_hound
@@ -559,7 +545,7 @@ bool Player::Update(float dt)
 				TroopCost = 3000 * number_of_troops;
 			}
 
-			if (gamepad.Controller[BUTTON_A] == KEY_UP && gold >= TroopCost)
+			if (gamepad.Controller[ACCEPT] == KEY_UP && gold >= TroopCost)
 			{
 				CreateAbility(UI_troop_type, number_of_troops);
 				GotoPrevWindows(currentUI);
@@ -567,8 +553,6 @@ bool Player::Update(float dt)
 			}
 
 		}
-
-		
 
 		if (currentUI == CURRENT_UI::CURR_BUILD)
 		{
@@ -592,7 +576,7 @@ bool Player::Update(float dt)
 		}
 
 		// Go back
-		if (gamepad.Controller[BUTTON_B] == KEY_DOWN && currentUI != CURRENT_UI::CURR_MAIN)
+		if (gamepad.Controller[CANCEL] == KEY_DOWN && currentUI != CURRENT_UI::CURR_MAIN)
 		{
 			if(focus._Ptr != nullptr)
 				(*focus)->state = UI_Element::State::IDLE;
@@ -667,9 +651,9 @@ bool Player::Update(float dt)
 		}
 
 		// Travel through the different buttons
-		if ((gamepad.Controller[RB] == KEY_DOWN || gamepad.Controller[RIGHT] == KEY_DOWN || gamepad.Controller[L_JOY_RIGHT] == KEY_DOWN) &&
-			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES &&
-			gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
+		if ((gamepad.Controller[UI_RIGHT] == KEY_DOWN || gamepad.Controller[RIGHT] == KEY_DOWN) &&
+			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && 
+			gamepad.Controller[ACCEPT] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			App->audio->PlayFx(CHANGE_FOCUS);
 			
@@ -689,9 +673,9 @@ bool Player::Update(float dt)
 		}
 
 		// Travel through the different buttons
-		if ((gamepad.Controller[LB] == KEY_DOWN || gamepad.Controller[LEFT] == KEY_DOWN || gamepad.Controller[L_JOY_LEFT] == KEY_DOWN) &&
+		if ((gamepad.Controller[UI_LEFT] == KEY_DOWN || gamepad.Controller[LEFT] == KEY_DOWN) &&
 			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES &&
-			gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
+			gamepad.Controller[ACCEPT] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			App->audio->PlayFx(CHANGE_FOCUS);
 			
@@ -730,6 +714,7 @@ bool Player::Update(float dt)
 				building_selected++;
 			}
 		}
+
 		//CHANGE SELECTED BARRACK
 		if (gamepad.Controller[R_JOY_LEFT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_CREATE_TROOPS)
 		{
@@ -755,7 +740,9 @@ bool Player::Update(float dt)
 		//Travel through buttons with DPAD in pause and mainmenu
 		if (App->main_menu->active || App->scene->pause)
 		{
-			if ((gamepad.Controller[UP] == KEY_DOWN || gamepad.Controller[L_JOY_UP] == KEY_DOWN) && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
+
+			if ((gamepad.Controller[UP] == KEY_DOWN || gamepad.Controller[UI_UP] == KEY_DOWN) && gamepad.Controller[ACCEPT] != KEY_REPEAT && 
+				currentUI != CURRENT_UI::NONE)
 			{
 				App->audio->PlayFx(CHANGE_FOCUS);
 				(*focus)->state = UI_Element::State::IDLE;
@@ -772,7 +759,8 @@ bool Player::Update(float dt)
 
 			}
 
-			if ((gamepad.Controller[DOWN] == KEY_DOWN || gamepad.Controller[L_JOY_DOWN] == KEY_DOWN) && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
+			if ((gamepad.Controller[DOWN] == KEY_DOWN || gamepad.Controller[UI_DOWN] == KEY_DOWN) && gamepad.Controller[ACCEPT] != KEY_REPEAT &&
+				currentUI != CURRENT_UI::NONE)
 			{
 				App->audio->PlayFx(CHANGE_FOCUS);
 				(*focus)->state = UI_Element::State::IDLE;
@@ -789,7 +777,8 @@ bool Player::Update(float dt)
 		}
 
 		// Increase or decrease volume
-		if ((gamepad.Controller[RIGHT] == KEY_DOWN || gamepad.Controller[L_JOY_RIGHT] == KEY_DOWN) && ( currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS || currentUI == CURRENT_UI::CURR_MM_SETTINGS))
+		if ((gamepad.Controller[RIGHT] == KEY_DOWN || gamepad.Controller[UI_RIGHT] == KEY_DOWN) && 
+			( currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS || currentUI == CURRENT_UI::CURR_MM_SETTINGS))
 		{
 			App->audio->PlayFx(SLIDER_UP);
 			if (((*focus) == Music_Settings || (*focus) == App->main_menu->Music_Settings) && App->audio->musicVolume < 100)
@@ -806,7 +795,8 @@ bool Player::Update(float dt)
 				App->audio->SetSfxVolume();
 			}
 		}
-		else if ((gamepad.Controller[LEFT] == KEY_DOWN || gamepad.Controller[L_JOY_LEFT] == KEY_DOWN) && (currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS || currentUI == CURRENT_UI::CURR_MM_SETTINGS))
+		else if ((gamepad.Controller[LEFT] == KEY_DOWN || gamepad.Controller[UI_LEFT] == KEY_DOWN) && 
+			(currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS || currentUI == CURRENT_UI::CURR_MM_SETTINGS))
 		{
 			App->audio->PlayFx(SLIDER_DOWN);
 			if (((*focus) == Music_Settings || (*focus) == App->main_menu->Music_Settings) && App->audio->musicVolume > 0)
@@ -823,6 +813,7 @@ bool Player::Update(float dt)
 			}
 		}
 
+		// -------------------------------------------------------------------------
 		// Just to test the LiveBar. Can only be used in GodMode (Press F10)
 		if (!App->scene->pause && gamepad.Controller[UP] == KEY_DOWN && App->scene->active && App->scene->godmode)
 		{
@@ -833,9 +824,10 @@ bool Player::Update(float dt)
 			}
 
 		}
+		// -------------------------------------------------------------------------
 	}
 	
-	if (App->scene->endgame && gamepad.Controller[BUTTON_A] == KEY_DOWN)
+	if (App->scene->endgame && gamepad.Controller[ACCEPT] == KEY_DOWN)
 	{
 		App->scene->ResetGame();
 	}
@@ -843,28 +835,67 @@ bool Player::Update(float dt)
 	//--- Building ---------------------
 	if (isBuilding && !App->scene->pause)
 	{
+		//--- Change Building
+		if (gamepad.Controller[PREV_BUILDING] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) //previous building
+		{
+			if (number <= 1)
+				number = 4;
+			else
+				number--;
+
+			ChangeBuilding(number);
+
+			// update ui focus
+			(*focus)->state = UI_Element::State::IDLE;
+			if (focus == GetUI_Element(currentUI)->children.begin())
+			{
+				focus = last_element;
+			}
+			else
+			{
+				focus--;
+			}
+		}
+		else if (gamepad.Controller[NEXT_BUILDING] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) //next building
+		{
+			if (number >= 4)
+				number = 1;
+			else
+				number++;
+
+			ChangeBuilding(number);
+
+			// update ui focus
+			(*focus)->state = UI_Element::State::IDLE;
+
+			if (focus == last_element)
+			{
+				focus = GetUI_Element(currentUI)->children.begin();
+			}
+			else
+			{
+				focus++;
+			}
+		}
+
 		//--- Movement
-		if (gamepad.Controller[L_JOY_UP] == KEY_REPEAT || gamepad.Controller[UP] == KEY_DOWN ||
-			App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT)
+
+		if (gamepad.Controller[MOVE_UP] == KEY_REPEAT || gamepad.Controller[UP] == KEY_DOWN)
 		{
 			currentTile.first--;
 			currentTile.second--;
 		}
-		else if (gamepad.Controller[L_JOY_DOWN] == KEY_REPEAT || gamepad.Controller[DOWN] == KEY_DOWN ||
-			App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
+		else if (gamepad.Controller[MOVE_DOWN] == KEY_REPEAT || gamepad.Controller[DOWN] == KEY_DOWN)
 		{
 			currentTile.first++;
 			currentTile.second++;
 		}
-
-		if (gamepad.Controller[L_JOY_RIGHT] == KEY_REPEAT || gamepad.Controller[RIGHT] == KEY_DOWN ||
-			App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
+		if (gamepad.Controller[MOVE_RIGHT] == KEY_REPEAT || gamepad.Controller[RIGHT] == KEY_DOWN)
 		{
 			currentTile.first++;
 			currentTile.second--;
 		}
-		else if (gamepad.Controller[L_JOY_LEFT] == KEY_REPEAT || gamepad.Controller[LEFT] == KEY_DOWN ||
-			App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT)
+		else if (gamepad.Controller[MOVE_LEFT] == KEY_REPEAT || gamepad.Controller[LEFT] == KEY_DOWN)
 		{
 			currentTile.first--;
 			currentTile.second++;
@@ -946,49 +977,7 @@ bool Player::Update(float dt)
 				App->render->Blit(App->entitymanager->entitiesTextures[type], collider.tiles[0].first, collider.tiles[0].second, &(preview_rects->at(type)));
 			}
 
-			if (gamepad.Controller[LB] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) //previous building
-			{
-				if (number <= 1)
-					number = 4;
-				else
-					number--;
-
-				ChangeBuilding(number);
-
-				// update ui focus
-				(*focus)->state = UI_Element::State::IDLE;
-				if (focus == GetUI_Element(currentUI)->children.begin())
-				{
-					focus = last_element;
-				}
-				else
-				{
-					focus--;
-				}
-			}
-			else if (gamepad.Controller[RB] == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) //next building
-			{
-				if (number >= 4)
-					number = 1;
-				else
-					number++;
-
-				ChangeBuilding(number);
-
-				// update ui focus
-				(*focus)->state = UI_Element::State::IDLE;
-
-				if (focus == last_element)
-				{
-					focus = GetUI_Element(currentUI)->children.begin();
-				}
-				else
-				{
-					focus++;
-				}
-			}
-
-			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+			if (gamepad.Controller[ACCEPT] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 			{
 				if (gold >= CheckCost(type))
 				{
@@ -1004,36 +993,13 @@ bool Player::Update(float dt)
 				isBuilding = false;
 			}
 		}
-		else
-		{
-			if (gamepad.Controller[BUTTON_A] == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-			{
-				if (type >= Entity::entityType::TOWNHALL && type <= Entity::entityType::BARRACKS) //if building
-				{
-					//buildings.pop_back();
-
-				}
-				else if (type > Entity::entityType::BARRACKS) //if troops
-				{
-					//troops.pop_back();
-				}
-				isBuilding = false;
-				
-				App->audio->PlayFx(WRONG);
-				//play fx (error);
-			}
-		}
 		if (type > Entity::entityType::BARRACKS) //if troops
 		{
 			if (X_spawn->visible == false)
-			{
 				X_spawn->visible = true;
-			}
 
 			if (A_spawn->visible == false)
-			{
 				A_spawn->visible = true;
-			}
 		}
 	}
 	else
@@ -1289,6 +1255,93 @@ void Player::ShowRange(Entity::entityType Type, Collider collider)
 	}
 	
 	App->render->Blit(range_tex, (collider.tiles[0].first) - (range_rect.w * 0.5f), (collider.tiles[0].second) - (range_rect.h * 0.5f), &range_rect); //Draw Range
+}
+
+int Player::GetKey() //returns key pressed
+{
+	for (int i = L_JOY_UP; i < LAST_BUTTON; ++i)
+	{
+		if ((gamepad.Controller[i] == KEY_DOWN || gamepad.Controller[i] == KEY_REPEAT) && i > L_JOY_UP)
+			return i;
+	}
+
+	return -1;
+}
+
+void Player::LoadKeys(bool isPlayer1)
+{
+	pugi::xml_document	config_file;
+	pugi::xml_node		config;
+
+	config = App->LoadConfig(config_file);
+	config = config.child("player");
+
+	if (isPlayer1)
+		config = config.child("controls_p1");
+
+	else if (!isPlayer1)
+		config = config.child("controls_p2");
+
+	if (config != nullptr)
+	{
+		ACCEPT = config.child("accept").attribute("key").as_int(-1);
+		CANCEL = config.child("cancel").attribute("key").as_int(-1);
+
+		CHANGE = config.child("change").attribute("key").as_int(-1);
+		CHANGEALL = config.child("change_all").attribute("key").as_int(-1);
+
+		MOVE_RIGHT = config.child("move").attribute("right").as_int(-1);
+		MOVE_LEFT = config.child("move").attribute("left").as_int(-1);
+		MOVE_UP = config.child("move").attribute("up").as_int(-1);
+		MOVE_DOWN = config.child("move").attribute("down").as_int(-1);
+
+		PREV_BUILDING = config.child("building_type").attribute("prev").as_int(-1);
+		NEXT_BUILDING = config.child("building_type").attribute("next").as_int(-1);
+
+		UI_RIGHT = config.child("ui").attribute("right").as_int(-1);
+		UI_LEFT = config.child("ui").attribute("left").as_int(-1);
+		UI_UP = config.child("ui").attribute("up").as_int(-1);
+		UI_DOWN = config.child("ui").attribute("down").as_int(-1);
+	}
+	else
+	{
+		LOG("--- Error loading keys");
+	}
+}
+
+void Player::SaveKeys(bool isPlayer1)
+{
+	pugi::xml_document	config_file;
+	pugi::xml_node		config;
+
+	config = App->LoadConfig(config_file);
+	config = config.child("player");
+
+	if (isPlayer1)
+		config = config.child("controls_p1");
+
+	else if (!isPlayer1)
+		config = config.child("controls_p2");
+
+	if (config != nullptr)
+	{
+		config.child("accept").attribute("key").set_value(ACCEPT);
+		config.child("cancel").attribute("key").set_value(CANCEL);
+		config.child("change").attribute("key").set_value(CHANGE);
+		config.child("change_all").attribute("key").set_value(CHANGEALL);
+		config.child("move").attribute("right").set_value(MOVE_RIGHT);
+		config.child("move").attribute("left").set_value(MOVE_LEFT);
+		config.child("move").attribute("up").set_value(MOVE_UP);
+		config.child("move").attribute("down").set_value(MOVE_DOWN);
+		config.child("ui").attribute("right").set_value(UI_RIGHT);
+		config.child("ui").attribute("left").set_value(UI_LEFT);
+		config.child("ui").attribute("up").set_value(UI_UP);
+		config.child("ui").attribute("down").set_value(UI_DOWN);
+	}
+	else
+	{
+		LOG("--- Error saving keys");
+	}
 }
 
 void Player::UpdateFocus(uint data)

@@ -922,24 +922,17 @@ bool Scene::Update(float dt)
 	pos = App->render->ScreenToWorld(pos.first, pos.second);
 	pos.first--;
 
-	//LOG("GOLD: %i", App->player1->gold);
-
 	//Enter GodMode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) //Godmode
 	{
 		godmode = !godmode;
 	}
-	//else if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) //Framerate Cap On/Off
-	//{
-	//	App->fpsCapON = !App->fpsCapON;
-	//}
 
 	//Debug functionalities that can be used anywhere
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) //Debug UI
 	{
 		App->gui->UI_Debug = !App->gui->UI_Debug;
 	}
-	
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
 		App->map->debug = !App->map->debug;
@@ -954,18 +947,10 @@ bool Scene::Update(float dt)
 	//Debug functionalities in-game. Press F10 to enter GodMode and activate said features
 	if (App->scene->active && !App->scene->pause && godmode)
 	{
-		
 		debug_text->visible = true;
+
 		//Keyboard debug
 		// Player 1 -> number / Player2 -> letter
-		/*if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		{
-			App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, {pos.first,pos.second},App->player1->collider);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-		{
-			App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, {pos.first,pos.second},App->player2->collider);
-		}*/
 		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 		{
 			App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, {pos.first,pos.second},App->player1->collider);
@@ -1025,7 +1010,7 @@ bool Scene::Update(float dt)
 		else if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
 		{
 			//App->entitymanager->AddEntity(true, Entity::entityType::INFILTRATOR, { pos.first,pos.second }, App->player1->collider);
-			//	App->entitymanager->AddEntity(true, Entity::entityType::WALLS, {pos.first,pos.second},App->player1->collider);
+			//App->entitymanager->AddEntity(true, Entity::entityType::WALLS, {pos.first,pos.second},App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 		{
