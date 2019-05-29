@@ -1230,6 +1230,11 @@ bool Scene::Update(float dt)
 	
 	App->gui->Draw();
 
+	if (!App->player1->DoNotLogic)
+		LOG("FALSE");
+	else
+		LOG("TRUE");
+
 	//DRAW LIVE BARS 
 	if (!pause)
 	{

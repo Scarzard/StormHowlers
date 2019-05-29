@@ -443,51 +443,6 @@ bool Player::Update(float dt)
 
 		}
 
-		
-		
-
-		// ENTER TO CREATING TROOPS UI
-		if (gamepad.Controller[ACCEPT] == KEY_UP && currentUI == CURRENT_UI::CURR_SELECTING_BUILDING && (*building_selected)->type == Entity::entityType::BARRACKS)
-		{
-			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
-			Update_troop_image(UI_troop_type);
-			UpdateVisibility();
-			number_of_troops = 10;
-
-		}
-		
-		// Button A to clcik a button
-		if (gamepad.Controller[ACCEPT] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
-		{
-			if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
-				(*focus)->state = UI_Element::State::LOGIC;
-		}
-
-		// Do button action
-		if (gamepad.Controller[ACCEPT] == KEY_UP && DoNotLogic == false && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
-		{
-			if (App->scene->pause && isPaused == true)
-			{
-				(*focus)->state = UI_Element::State::IDLE;
-				DoLogic((*focus));
-				if(currentUI != CURRENT_UI::CURR_PAUSE_KEYBINDS)
-					UpdateFocus(currentUI);
-			}
-			else if (!App->scene->pause)
-			{
-				if (!isBuilding)
-					(*focus)->state = UI_Element::State::IDLE;
-				if (App->scene->active)
-					DoLogic((*focus));
-				else
-					App->main_menu->DoLogic((*focus));
-
-				if ((*focus) == Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
-					UpdateFocus(currentUI);
-			}
-
-		}
-
 		//Update keybinds HERE
 		if (currentUI == CURRENT_UI::CURR_PAUSE_KEYBINDS)
 		{
@@ -501,17 +456,17 @@ bool Player::Update(float dt)
 			if (ACCEPT == -1)
 			{
 				ACCEPT = GetKey();
-				if (ACCEPT != 1)
+				if (ACCEPT != -1)
 					DoNotLogic = true;
-			}
-			else
-			{
-				DoNotLogic = false;
-			}
 
-			if (CANCEL == -1)
+				if (ACCEPT != -1 && (ACCEPT <= 11 || ACCEPT >= 20))
+					ACCEPT = BUTTON_A;
+			}
+			else if (CANCEL == -1)
 			{
 				CANCEL = GetKey();
+				if (CANCEL != -1)
+					DoNotLogic = true;
 			}
 			else if (CHANGE == -1)
 			{
@@ -532,6 +487,56 @@ bool Player::Update(float dt)
 		}
 
 
+		
+
+		// ENTER TO CREATING TROOPS UI
+		if (gamepad.Controller[ACCEPT] == KEY_UP && currentUI == CURRENT_UI::CURR_SELECTING_BUILDING && (*building_selected)->type == Entity::entityType::BARRACKS)
+		{
+			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
+			Update_troop_image(UI_troop_type);
+			UpdateVisibility();
+			number_of_troops = 10;
+
+		}
+		
+		// Button A to clcik a button
+		if (gamepad.Controller[ACCEPT] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
+		{
+			if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
+				(*focus)->state = UI_Element::State::LOGIC;
+		}
+
+		// Do button action
+		if (gamepad.Controller[ACCEPT] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
+		{
+			if (App->scene->pause && isPaused == true)
+			{
+				(*focus)->state = UI_Element::State::IDLE;
+
+				if (!DoNotLogic)
+					DoLogic((*focus));
+				else
+					DoNotLogic = false;
+
+				if(currentUI != CURRENT_UI::CURR_PAUSE_KEYBINDS)
+					UpdateFocus(currentUI);
+			}
+			else if (!App->scene->pause)
+			{
+				if (!isBuilding)
+					(*focus)->state = UI_Element::State::IDLE;
+				if (App->scene->active)
+					DoLogic((*focus));
+				else
+					App->main_menu->DoLogic((*focus));
+
+				if ((*focus) == Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
+					UpdateFocus(currentUI);
+			}
+
+		}
+
+		
 		//Creating ABILITIES
 		if (currentUI == CURRENT_UI::CURR_CREATE_ABILITIES)
 		{
@@ -641,8 +646,13 @@ bool Player::Update(float dt)
 			}
 			else if (App->scene->pause && isPaused && currentUI != CURRENT_UI::CURR_PAUSE)
 			{
-				GotoPrevWindows(currentUI);
-				UpdateFocus(currentUI);
+				if (!DoNotLogic)
+				{
+					GotoPrevWindows(currentUI);
+					UpdateFocus(currentUI);
+				}
+				else
+					DoNotLogic = false;
 			}
 			else if (!App->scene->pause)
 			{
@@ -1307,7 +1317,13 @@ int Player::GetKey() //returns key pressed
 	for (int i = L_JOY_UP; i < LAST_BUTTON; ++i)
 	{
 		if ((gamepad.Controller[i] == KEY_DOWN || gamepad.Controller[i] == KEY_REPEAT) && i >= L_JOY_UP)
-			return i;
+		{
+			if (i < 8 || i>13)
+				return i;
+			else
+				return -1;
+		}
+			
 	}
 
 	return -1;
@@ -2074,9 +2090,8 @@ void Player::DoLogic(UI_Element* data)
 		break;
 
 	case::UI_Element::Action::ACCEPT_BUTTON:
-		ACCEPT = -1;
-
-	
+		if(DoNotLogic == false)
+			ACCEPT = -1;
 		break;
 
 	case::UI_Element::Action::GOBACK_BUTTON:
