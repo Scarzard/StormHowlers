@@ -21,13 +21,9 @@ private:
 	pair<int, int>       win_size;
 
 	bool		 logo_played = false;
-	/*
-	pair<int, int>       UI_pos;
-	SDL_Rect UI_image = { 0,0,0,0 };
-	UI_Element* UI_window;*/
+	bool			finished = false;
+	
 
-	/*UI_Image*	 skip = nullptr;
-	UI_Window*	 window = nullptr;*/
 };
 
 

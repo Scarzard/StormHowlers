@@ -213,9 +213,6 @@ bool Video::Update(float dt)
 	{
 		Uint32 now = SDL_GetTicks() - baseticks;
 
-		// Skip cinematics
-		/*if (App->input->GetControllerButton(0, SDL_CONTROLLER_BUTTON_A) == KEY_UP)
-			quit = 1;*/
 
 		if (!video)
 			video = THEORAPLAY_getVideo(decoder);
@@ -223,7 +220,7 @@ bool Video::Update(float dt)
 		if ((audio = THEORAPLAY_getAudio(decoder)) != NULL)
 			queue_audio(audio);
 
-		// Setting the texture --------------------------------------------
+		
 
 		if (video && (video->playms <= now))
 		{
