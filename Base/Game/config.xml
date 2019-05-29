@@ -222,20 +222,22 @@
 
   <player>
    <controls_p1>
-     <accept key="10"/> <!-- BUTTON_A -->
-     <cancel key="0"/> <!-- BUTTON_B -->
-     <change key="0"/> <!-- BUTTON X-->
-     <change_all key="0"/> <!-- LB -->
-     <move right="0" left="0" up="0" down="0"/> <!-- LEFT JOY -->
-     <ui right="0" left="0" up="0" down="0"/> <!-- RIGHT JOY -->
+     <accept key="14"/> <!-- BUTTON_A -->
+     <cancel key="15"/> <!-- BUTTON_B -->
+     <change key="17"/> <!-- BUTTON X-->
+     <change_all key="16"/> <!-- LB -->
+     <move right="3" left="2" up="0" down="1"/> <!-- LEFT JOY -->
+     <ui right="3" left="2" up="0" down="1"/> <!-- RIGHT JOY -->
+     <building_type prev="6" next="7"/>
    </controls_p1>
    <controls_p2>
-     <accept key="10"/> <!-- BUTTON_A -->
-     <cancel key="0"/> <!-- BUTTON_B -->
-     <change key="0"/> <!-- BUTTON X-->
-     <change_all key="0"/> <!-- LB -->
-     <move right="0" left="0" up="0" down="0"/> <!-- LEFT JOY -->
-     <ui right="0" left="0" up="0" down="0"/> <!-- RIGHT JOY -->
+     <accept key="14"/> <!-- BUTTON_A -->
+     <cancel key="15"/> <!-- BUTTON_B -->
+     <change key="17"/> <!-- BUTTON X-->
+     <change_all key="16"/> <!-- LB -->
+     <move right="3" left="2" up="0" down="1"/> <!-- LEFT JOY -->
+     <ui right="3" left="2" up="0" down="1"/> <!-- RIGHT JOY -->
+     <building_type prev="6" next="7"/>
    </controls_p2>
 
    

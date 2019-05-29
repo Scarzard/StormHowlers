@@ -110,6 +110,7 @@ public:
 	void UpdateGeneralUI(Entity* building);
 	void Blit_Info();
 	void ChangeTroopsState();
+	SDL_Rect Get_ButtonIcon(int button);
 
 	// -----------------------------------------------------------------------------
 
@@ -137,21 +138,25 @@ private:
 	int number = 0;
 	
 public:
-	// CONTROLS
+	// CONTROLS------------------
 	int ACCEPT;
 	int CANCEL;
 	int CHANGE;
 	int CHANGEALL;
+
 	int MOVE_RIGHT;
 	int MOVE_LEFT;
 	int MOVE_UP;
 	int MOVE_DOWN;
+
 	int PREV_BUILDING;
 	int NEXT_BUILDING;
+
 	int UI_RIGHT;
 	int UI_LEFT;
 	int UI_UP;
 	int UI_DOWN;
+	//--------------------------
 
 	bool isBuilding = false;
 	bool isDeploying = false;
@@ -159,6 +164,8 @@ public:
 	bool isPaused = false;
 	bool inmune = false;
 	bool offensive = true;
+
+	bool DoNotLogic = false;
 
 	int timer_ref_sec = 0;
 	int timer_ref_min = 0;
@@ -408,14 +415,13 @@ public:
 	UI_Element* Accept_Button = nullptr;
 	UI_Element* Accept_Button_text = nullptr;
 	char Accept_Button_label[7] = "Accept";
+	UI_Element* Accept_Icon = nullptr;
+
 
 	UI_Element* GoBack_Button = nullptr;
 	UI_Element* GoBack_Button_text = nullptr;
 	char GoBack_Button_label[8] = "Go Back";
-
-	UI_Element* Move_Button = nullptr;
-	UI_Element* Move_text = nullptr;
-	char Move_label[16] = "Move through UI";
+	UI_Element* Back_Icon = nullptr;
 
 	UI_Element* Building_text = nullptr;
 	char Building_label[16] = "WHILE BUILDING:";
@@ -423,25 +429,25 @@ public:
 	UI_Element* NextBuilding_Button = nullptr;
 	UI_Element* NextBuilding_text = nullptr;
 	char NextBuilding_label[14] = "Next Building";
+	UI_Element* NextBuilding_Icon = nullptr;
 
 	UI_Element* PrevBuilding_Button = nullptr;
 	UI_Element* PrevBuilding_text = nullptr;
 	char PrevBuilding_label[14] = "Prev Building";
 
-	UI_Element* Build_Button = nullptr;
-	UI_Element* Build_text = nullptr;
-	char Build_label[6] = "Build";
-
 	UI_Element* Troops_text = nullptr;
 	char Troops_label[15] = "MANAGE TROOPS:";
+	UI_Element* PrevBuilding_Icon = nullptr;
 
 	UI_Element* SingleState_Button = nullptr;
 	UI_Element* SingleState_text = nullptr;
 	char SingleState_label[26] = "Change Single Troop State";
+	UI_Element* SingleState_Icon = nullptr;
 
 	UI_Element* AllState_Button = nullptr;
 	UI_Element* AllState_text = nullptr;
 	char AllState_label[24] = "Change All Troops State";
+	UI_Element* AllState_Icon = nullptr;
 
 	// Pause Abort Mission
 

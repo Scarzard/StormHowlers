@@ -5,7 +5,7 @@
 
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
-#define MAX_BUTTONS 21
+#define MAX_BUTTONS 22
 //#define LAST_KEYS_PRESSED_BUFFER 50
 
 struct SDL_Rect;
@@ -32,22 +32,22 @@ enum CONTROLLER_BUTTONS {
 	L_JOY_LEFT,
 	L_JOY_RIGHT,
 	R_JOY_UP,
-	R_JOY_DOWN,
-	R_JOY_LEFT,
+	R_JOY_DOWN, //5
+	R_JOY_LEFT, 
 	R_JOY_RIGHT,
 	UP,
-	DOWN, //5
-	LEFT,
+	DOWN, 
+	LEFT, //10
 	RIGHT,
 	START,
 	BACK,
-	BUTTON_A, //10
-	BUTTON_B,
+	BUTTON_A, 
+	BUTTON_B, //15
 	BUTTON_X,
 	BUTTON_Y,
 	LB,
-	RB, //15
-	LT,
+	RB, 
+	LT, //20
 	RT,
 	LAST_BUTTON //used for changing controls
 };

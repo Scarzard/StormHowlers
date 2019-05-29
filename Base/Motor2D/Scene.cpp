@@ -397,41 +397,44 @@ bool Scene::Start()
 	App->player1->AllState_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->AllState_Button, false, { false, false });
 	App->player1->AllState_text->label = App->player1->AllState_label;
 	App->player1->AllState_text->color = { 255,255,9,255 };
+	App->player1->AllState_Icon = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 450 , 10 }, { 39, 39 }, App->player1->AllState_Button, true);
+	App->player1->AllState_Icon->rect = { 1240, 374, 39, 39 };
 
 	App->player1->SingleState_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SINGLE_STATE_BUTTON, { 650 ,200 }, { 301,59 }, App->player1->Keybinds_UI, false);
 	App->player1->SingleState_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->SingleState_Button, false, { false, false });
 	App->player1->SingleState_text->label = App->player1->SingleState_label;
 	App->player1->SingleState_text->color = { 255,255,9,255 };
-
-	App->player1->Build_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::BUILD_BUTTON, { 200 ,750 }, { 301,59 }, App->player1->Keybinds_UI, false);
-	App->player1->Build_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Build_Button, false, { false, false });
-	App->player1->Build_text->label = App->player1->Build_label;
-	App->player1->Build_text->color = { 255,255,9,255 };
+	App->player1->SingleState_Icon = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 450 , 10 }, { 39, 39 }, App->player1->SingleState_Button, true);
+	App->player1->SingleState_Icon->rect = { 1290, 374, 39, 39 };
 
 	App->player1->PrevBuilding_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::PREV_BUILDING_BUTTON, { 200 ,650 }, { 301,59 }, App->player1->Keybinds_UI, false);
 	App->player1->PrevBuilding_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->PrevBuilding_Button, false, { false, false });
 	App->player1->PrevBuilding_text->label = App->player1->PrevBuilding_label;
 	App->player1->PrevBuilding_text->color = { 255,255,9,255 };
+	App->player1->PrevBuilding_Icon = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 350 , 10 }, { 39, 39 }, App->player1->PrevBuilding_Button, true);
+	App->player1->PrevBuilding_Icon->rect = { 1447, 531, 55, 47 };
 
 	App->player1->NextBuilding_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEXT_BUILDING_BUTTON, { 200 ,550 }, { 301,59 }, App->player1->Keybinds_UI, false);
 	App->player1->NextBuilding_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->NextBuilding_Button, false, { false, false });
 	App->player1->NextBuilding_text->label = App->player1->NextBuilding_label;
 	App->player1->NextBuilding_text->color = { 255,255,9,255 };
-
-	App->player1->Move_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::MOVE_BUTTON, { 200 ,400 }, { 301,59 }, App->player1->Keybinds_UI, false);
-	App->player1->Move_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Move_Button, false, { false, false });
-	App->player1->Move_text->label = App->player1->Move_label;
-	App->player1->Move_text->color = { 255,255,9,255 };
+	App->player1->NextBuilding_Icon = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 350 , 10 }, { 39, 39 }, App->player1->NextBuilding_Button, true);
+	App->player1->NextBuilding_Icon->rect = { 1454, 479, 55, 47 };
 
 	App->player1->GoBack_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::GOBACK_BUTTON, { 200 ,300 }, { 301,59 }, App->player1->Keybinds_UI, false);
 	App->player1->GoBack_Button_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->GoBack_Button, false, { false, false });
 	App->player1->GoBack_Button_text->label = App->player1->GoBack_Button_label;
 	App->player1->GoBack_Button_text->color = { 255,255,9,255 };
+	App->player1->Back_Icon = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 350 , 10 }, { 39, 39 }, App->player1->GoBack_Button, true);
+	App->player1->Back_Icon->rect = { 1340, 374, 39, 39 };
 
 	App->player1->Accept_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACCEPT_BUTTON, { 200 ,200 }, { 301,59 }, App->player1->Keybinds_UI, false);
 	App->player1->Accept_Button_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Accept_Button, false, { false, false });
 	App->player1->Accept_Button_text->label = App->player1->Accept_Button_label;
 	App->player1->Accept_Button_text->color = { 255,255,9,255 };
+	App->player1->Accept_Icon = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 350 , 10 }, { 39, 39 }, App->player1->Accept_Button, true);
+	App->player1->Accept_Icon->rect = { 1190, 374, 39, 39 };
+
 
 	App->player1->Controls_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { -120, -150 }, { 0, 0 }, App->player1->Accept_Button, false, { false, false });
 	App->player1->Controls_text->label = App->player1->Controls_label;
@@ -724,41 +727,43 @@ bool Scene::Start()
 	App->player2->AllState_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->AllState_Button, false, { false, false });
 	App->player2->AllState_text->label = App->player2->AllState_label;
 	App->player2->AllState_text->color = { 255,255,9,255 };
+	App->player2->AllState_Icon = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 450 , 10 }, { 39, 39 }, App->player2->AllState_Button, true);
+	App->player2->AllState_Icon->rect = { 1240, 374, 39, 39 };
 
 	App->player2->SingleState_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SINGLE_STATE_BUTTON, { 650 ,200 }, { 301,59 }, App->player2->Keybinds_UI, false);
 	App->player2->SingleState_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->SingleState_Button, false, { false, false });
 	App->player2->SingleState_text->label = App->player2->SingleState_label;
 	App->player2->SingleState_text->color = { 255,255,9,255 };
-
-	App->player2->Build_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::BUILD_BUTTON, { 200 ,750 }, { 301,59 }, App->player2->Keybinds_UI, false);
-	App->player2->Build_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Build_Button, false, { false, false });
-	App->player2->Build_text->label = App->player2->Build_label;
-	App->player2->Build_text->color = { 255,255,9,255 };
+	App->player2->SingleState_Icon = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 450 , 10 }, { 39, 39 }, App->player2->SingleState_Button, true);
+	App->player2->SingleState_Icon->rect = { 1290, 374, 39, 39 };
 
 	App->player2->PrevBuilding_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::PREV_BUILDING_BUTTON, { 200 ,650 }, { 301,59 }, App->player2->Keybinds_UI, false);
 	App->player2->PrevBuilding_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->PrevBuilding_Button, false, { false, false });
 	App->player2->PrevBuilding_text->label = App->player2->PrevBuilding_label;
 	App->player2->PrevBuilding_text->color = { 255,255,9,255 };
+	App->player2->PrevBuilding_Icon = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 350 , 10 }, { 39, 39 }, App->player2->PrevBuilding_Button, true);
+	App->player2->PrevBuilding_Icon->rect = { 1447, 531, 55, 47 };
 
 	App->player2->NextBuilding_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEXT_BUILDING_BUTTON, { 200 ,550 }, { 301,59 }, App->player2->Keybinds_UI, false);
 	App->player2->NextBuilding_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->NextBuilding_Button, false, { false, false });
 	App->player2->NextBuilding_text->label = App->player2->NextBuilding_label;
 	App->player2->NextBuilding_text->color = { 255,255,9,255 };
-
-	App->player2->Move_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::MOVE_BUTTON, { 200 ,400 }, { 301,59 }, App->player2->Keybinds_UI, false);
-	App->player2->Move_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Move_Button, false, { false, false });
-	App->player2->Move_text->label = App->player2->Move_label;
-	App->player2->Move_text->color = { 255,255,9,255 };
+	App->player2->NextBuilding_Icon = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 350 , 10 }, { 39, 39 }, App->player2->NextBuilding_Button, true);
+	App->player2->NextBuilding_Icon->rect = { 1454, 479, 55, 47 };
 
 	App->player2->GoBack_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::GOBACK_BUTTON, { 200 ,300 }, { 301,59 }, App->player2->Keybinds_UI, false);
 	App->player2->GoBack_Button_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->GoBack_Button, false, { false, false });
 	App->player2->GoBack_Button_text->label = App->player2->GoBack_Button_label;
 	App->player2->GoBack_Button_text->color = { 255,255,9,255 };
+	App->player2->Back_Icon = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 350 , 10 }, { 39, 39 }, App->player2->GoBack_Button, true);
+	App->player2->Back_Icon->rect = { 1340, 374, 39, 39 };
 
 	App->player2->Accept_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACCEPT_BUTTON, { 200 ,200 }, { 301,59 }, App->player2->Keybinds_UI, false);
 	App->player2->Accept_Button_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Accept_Button, false, { false, false });
 	App->player2->Accept_Button_text->label = App->player2->Accept_Button_label;
 	App->player2->Accept_Button_text->color = { 255,255,9,255 };
+	App->player2->Accept_Icon = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 350 , 10 }, { 39, 39 }, App->player2->Accept_Button, false);
+	App->player2->Accept_Icon->rect = { 1190, 374, 39, 39 };
 
 	App->player2->Controls_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { -120, -150 }, { 0, 0 }, App->player2->Accept_Button, false, { false, false });
 	App->player2->Controls_text->label = App->player2->Controls_label;
@@ -1224,8 +1229,6 @@ bool Scene::Update(float dt)
 	}
 	
 	App->gui->Draw();
-
-	
 
 	//DRAW LIVE BARS 
 	if (!pause)

@@ -536,15 +536,6 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 				data->rect = { 1517, 830, 200, 54 };//change to new button
 			break;
 
-		case UI_Element::Action::MOVE_BUTTON:
-			if (App->player1->Move_Button == data)
-				data->rect = { 1816, 830, 200, 54 };
-			else if (App->player2->Move_Button == data)
-				data->rect = { 1517, 830, 200, 54 };
-			else
-				data->rect = { 1517, 830, 200, 54 };//change to new button
-			break;
-
 		case UI_Element::Action::NEXT_BUILDING_BUTTON:
 			if (App->player1->NextBuilding_Button == data)
 				data->rect = { 1816, 830, 200, 54 };
@@ -558,15 +549,6 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			if (App->player1->PrevBuilding_Button == data)
 				data->rect = { 1816, 830, 200, 54 };
 			else if (App->player2->PrevBuilding_Button == data)
-				data->rect = { 1517, 830, 200, 54 };
-			else
-				data->rect = { 1517, 830, 200, 54 };//change to new button
-			break;
-
-		case UI_Element::Action::BUILD_BUTTON:
-			if (App->player1->Build_Button == data)
-				data->rect = { 1816, 830, 200, 54 };
-			else if (App->player2->Build_Button == data)
 				data->rect = { 1517, 830, 200, 54 };
 			else
 				data->rect = { 1517, 830, 200, 54 };//change to new button
@@ -803,15 +785,6 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 				data->rect = { 1517, 884, 200, 54 };//change to new button
 			break;
 
-		case UI_Element::Action::MOVE_BUTTON:
-			if (App->player1->Move_Button == data)
-				data->rect = { 1816, 884, 200, 54 };
-			else if (App->player2->Move_Button == data)
-				data->rect = { 1517, 884, 200, 54 };
-			else
-				data->rect = { 1517, 884, 200, 54 };//change to new button
-			break;
-
 		case UI_Element::Action::NEXT_BUILDING_BUTTON:
 			if (App->player1->NextBuilding_Button == data)
 				data->rect = { 1816, 884, 200, 54 };
@@ -825,15 +798,6 @@ void Gui::UpdateState(UI_Element* data) //change sprites depending on current st
 			if (App->player1->PrevBuilding_Button == data)
 				data->rect = { 1816, 884, 200, 54 };
 			else if (App->player2->PrevBuilding_Button == data)
-				data->rect = { 1517, 884, 200, 54 };
-			else
-				data->rect = { 1517, 884, 200, 54 };//change to new button
-			break;
-
-		case UI_Element::Action::BUILD_BUTTON:
-			if (App->player1->Build_Button == data)
-				data->rect = { 1816, 884, 200, 54 };
-			else if (App->player2->Build_Button == data)
 				data->rect = { 1517, 884, 200, 54 };
 			else
 				data->rect = { 1517, 884, 200, 54 };//change to new button

@@ -65,7 +65,7 @@ bool Player::Start()
 
 	UI_troop_type = Entity::entityType::SOLDIER;
 
-	isBuilding = isDeploying = gold_added = isCasting = Y_pressed = isPaused = false;
+	isBuilding = isDeploying = gold_added = isCasting = Y_pressed = isPaused = DoNotLogic = false; 
 	Soldier_Offensive = Tankman_Offensive = Engineer_Offensive = Infiltrator_Offensive = WarHound_Offensive = true;
 
 	Y_pressed = true;
@@ -443,6 +443,9 @@ bool Player::Update(float dt)
 
 		}
 
+		
+		
+
 		// ENTER TO CREATING TROOPS UI
 		if (gamepad.Controller[ACCEPT] == KEY_UP && currentUI == CURRENT_UI::CURR_SELECTING_BUILDING && (*building_selected)->type == Entity::entityType::BARRACKS)
 		{
@@ -461,7 +464,7 @@ bool Player::Update(float dt)
 		}
 
 		// Do button action
-		if (gamepad.Controller[ACCEPT] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
+		if (gamepad.Controller[ACCEPT] == KEY_UP && DoNotLogic == false && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
 		{
 			if (App->scene->pause && isPaused == true)
 			{
@@ -485,7 +488,49 @@ bool Player::Update(float dt)
 
 		}
 
-		
+		//Update keybinds HERE
+		if (currentUI == CURRENT_UI::CURR_PAUSE_KEYBINDS)
+		{
+			Accept_Icon->rect = Get_ButtonIcon(ACCEPT);
+			Back_Icon->rect = Get_ButtonIcon(CANCEL);
+			SingleState_Icon->rect = Get_ButtonIcon(CHANGE);
+			AllState_Icon->rect = Get_ButtonIcon(CHANGEALL);
+			PrevBuilding_Icon->rect = Get_ButtonIcon(PREV_BUILDING);
+			NextBuilding_Icon->rect = Get_ButtonIcon(NEXT_BUILDING);
+
+			if (ACCEPT == -1)
+			{
+				ACCEPT = GetKey();
+				if (ACCEPT != 1)
+					DoNotLogic = true;
+			}
+			else
+			{
+				DoNotLogic = false;
+			}
+
+			if (CANCEL == -1)
+			{
+				CANCEL = GetKey();
+			}
+			else if (CHANGE == -1)
+			{
+				CHANGE = GetKey();
+			}
+			else if (CHANGEALL == -1)
+			{
+				CHANGEALL = GetKey();
+			}
+			else if (PREV_BUILDING == -1)
+			{
+				PREV_BUILDING = GetKey();
+			}
+			else if (NEXT_BUILDING == -1)
+			{
+				NEXT_BUILDING = GetKey();
+			}
+		}
+
 
 		//Creating ABILITIES
 		if (currentUI == CURRENT_UI::CURR_CREATE_ABILITIES)
@@ -1261,7 +1306,7 @@ int Player::GetKey() //returns key pressed
 {
 	for (int i = L_JOY_UP; i < LAST_BUTTON; ++i)
 	{
-		if ((gamepad.Controller[i] == KEY_DOWN || gamepad.Controller[i] == KEY_REPEAT) && i > L_JOY_UP)
+		if ((gamepad.Controller[i] == KEY_DOWN || gamepad.Controller[i] == KEY_REPEAT) && i >= L_JOY_UP)
 			return i;
 	}
 
@@ -2027,6 +2072,44 @@ void Player::DoLogic(UI_Element* data)
 		UpdateFocus(currentUI);
 		App->audio->PlayFx(INGAME_CLICK);
 		break;
+
+	case::UI_Element::Action::ACCEPT_BUTTON:
+		ACCEPT = -1;
+
+	
+		break;
+
+	case::UI_Element::Action::GOBACK_BUTTON:
+
+		CANCEL = -1;
+
+		break;
+
+	case::UI_Element::Action::NEXT_BUILDING_BUTTON:
+
+		NEXT_BUILDING = -1;
+
+		break;
+
+	case::UI_Element::Action::PREV_BUILDING_BUTTON:
+
+		PREV_BUILDING = -1;
+
+		break;
+
+	case::UI_Element::Action::SINGLE_STATE_BUTTON:
+
+		CHANGE = -1;
+
+		break;
+
+	case::UI_Element::Action::ALL_STATE_BUTTON:
+		
+		CHANGEALL = -1;
+
+		break;
+
+
 	case::UI_Element::Action::ABORT_PAUSE:
 		currentUI = CURR_PAUSE_ABORT;
 		UpdateVisibility();
@@ -2437,6 +2520,60 @@ void Player::ChangeTroopsState()
 		WarHound_Deff->rect = { 1195,98,20,21 };
 		WarHound_Off->rect = { 1220,123,18,17 };
 	}
+}
+
+SDL_Rect Player::Get_ButtonIcon(int button)
+{
+	if (button == BUTTON_A)
+		return { 1190, 374, 39, 39 };
+
+	else if (button == BUTTON_B)
+		return { 1340, 374, 39, 39 };
+
+	else if (button == BUTTON_X)
+		return { 1240, 374, 39, 39 };
+
+	else if (button == BUTTON_Y)
+		return { 1290, 374, 39, 39 };
+
+	else if (button == RB)
+		return { 1334, 437, 55, 27 };
+
+	else if (button == LB)
+		return { 1269, 437, 55, 27 };
+
+	else if (button == LT)
+		return { 1180, 424, 35, 55 };
+
+	else if (button == RT)
+		return { 1219, 424, 36, 55 };
+
+	else if (button == L_JOY_RIGHT) 
+		return {1396, 479, 55, 47};
+
+	else if (button == R_JOY_RIGHT)
+		return { 1454, 479, 55, 47 };
+
+	else if (button == L_JOY_LEFT)
+		return { 1390, 531, 55, 47 };
+
+	else if (button == R_JOY_LEFT)
+		return { 1447, 531, 55, 47 };
+
+	else if (button == L_JOY_UP)
+		return { 1519, 473, 47, 53 };
+
+	else if (button == R_JOY_UP)
+		return { 1576, 473, 47, 53 };
+
+	else if (button == L_JOY_DOWN)
+		return { 1519, 531, 48, 53 };
+
+	else if (button == R_JOY_DOWN)
+		return { 1576, 531, 87, 55 };
+
+	else
+		return { 1520, 425, 46, 37 };
 }
 
 
