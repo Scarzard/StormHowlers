@@ -199,22 +199,11 @@ bool Player::Update(float dt)
 			deploy_state = DeployState::START;
 		}
 
-		//DeployTroops(Entity::entityType::SOLDIER, 9, { 0,0 });
-
-		//--- Press X (Square) To SELECT BUILDINGS
-		if (gamepad.Controller[BUTTON_X] == KEY_UP && currentUI == CURRENT_UI::CURR_MAIN)
-		{
-			building_selected = buildings.begin();
-
-			while ((*building_selected)->type == Entity::entityType::WALLS)
-				building_selected++;
-
-			currentUI = CURRENT_UI::CURR_SELECTING_BUILDING;
-		}
-		else if (gamepad.Controller[BUTTON_B] == KEY_UP && currentUI == CURRENT_UI::CURR_SELECTING_BUILDING)
+		if (gamepad.Controller[BUTTON_B] == KEY_UP && currentUI == CURRENT_UI::CURR_SELECTING_BUILDING)
 		{
 			building_selected._Ptr = nullptr;
-			currentUI = CURRENT_UI::CURR_MAIN;
+			currentUI = CURRENT_UI::CURR_DEPLOY;
+			UpdateFocus(currentUI);
 		}
 
 		// DRAW QUAD on SELECTED BUILDING 
@@ -289,6 +278,88 @@ bool Player::Update(float dt)
 			{
 				ChangeTroopsState();
 			}
+			else if (gamepad.Controller[BUTTON_Y] == KEY_DOWN)
+			{
+				if ((*focus)->action == UI_Element::Action::ACT_DEPLOY_SOLDIER)
+				{
+					Soldier_Offensive = !Soldier_Offensive;
+
+					if (Soldier_Offensive)
+					{
+						Soldier_Deff->rect = { 1219,98,20,21 };
+						Soldier_Off->rect = { 1195,123,18,17 };
+					}
+					else
+					{
+						Soldier_Deff->rect = { 1195,98,20,21 };
+						Soldier_Off->rect = { 1220,123,18,17 };
+					}
+				}
+				else if ((*focus)->action == UI_Element::Action::ACT_DEPLOY_TANKMAN)
+				{
+					Tankman_Offensive = !Tankman_Offensive;
+					if (Tankman_Offensive)
+					{
+						Tankman_Deff->rect = { 1219,98,20,21 };
+						Tankman_Off->rect = { 1195,123,18,17 };
+					}
+					else
+					{
+						Tankman_Deff->rect = { 1195,98,20,21 };
+						Tankman_Off->rect = { 1220,123,18,17 };
+
+					}
+
+				}
+				else if ((*focus)->action == UI_Element::Action::ACT_DEPLOY_INFILTRATOR)
+				{
+					Infiltrator_Offensive = !Infiltrator_Offensive;
+					if (Infiltrator_Offensive)
+					{
+						Infiltrator_Deff->rect = { 1219,98,20,21 };
+						Infiltrator_Off->rect = { 1195,123,18,17 };
+					}
+					else
+					{
+						Infiltrator_Deff->rect = { 1195,98,20,21 };
+						Infiltrator_Off->rect = { 1220,123,18,17 };
+					}
+
+
+				}
+				else if ((*focus)->action == UI_Element::Action::ACT_DEPLOY_ENGINEER)
+				{
+					Engineer_Offensive = !Engineer_Offensive;
+					if (Engineer_Offensive)
+					{
+						Engineer_Deff->rect = { 1219,98,20,21 };
+						Engineer_Off->rect = { 1195,123,18,17 };
+					}
+					else
+					{
+						Engineer_Deff->rect = { 1195,98,20,21 };
+						Engineer_Off->rect = { 1220,123,18,17 };
+					}
+
+
+				}
+				else if ((*focus)->action == UI_Element::Action::ACT_DEPLOY_WARHOUND)
+				{
+					WarHound_Offensive = !WarHound_Offensive;
+					if (WarHound_Offensive)
+					{
+						WarHound_Deff->rect = { 1219,98,20,21 };
+						WarHound_Off->rect = { 1195,123,18,17 };
+					}
+					else
+					{
+						WarHound_Deff->rect = { 1195,98,20,21 };
+						WarHound_Off->rect = { 1220,123,18,17 };
+					}
+
+
+				}
+			}
 		}
 
 		// From GENERAL UI to CREATE TROOPS UI (only for barracks)
@@ -309,42 +380,6 @@ bool Player::Update(float dt)
 			troop_icon->rect = { 576, 161, 85, 81 };
 			UI_troop_type = 0;
 			
-		}
-
-		
-
-		
-
-
-		// Button A to clcik a button
-		if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
-		{
-			if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
-				(*focus)->state = UI_Element::State::LOGIC;
-		}
-
-		// Do button action
-		if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
-		{
-			if (App->scene->pause && isPaused == true)
-			{
-				(*focus)->state = UI_Element::State::IDLE;
-				DoLogic((*focus));
-				UpdateFocus(currentUI);
-			}
-			else if (!App->scene->pause)
-			{
-				if (!isBuilding)
-					(*focus)->state = UI_Element::State::IDLE;
-				if (App->scene->active)
-					DoLogic((*focus));
-				else
-					App->main_menu->DoLogic((*focus));
-
-				if ((*focus) == Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
-					UpdateFocus(currentUI);
-			}
-
 		}
 
 		//Creating TROOPS
@@ -422,6 +457,49 @@ bool Player::Update(float dt)
 
 		}
 
+		// ENTER TO CREATING TROOPS UI
+		if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI == CURRENT_UI::CURR_SELECTING_BUILDING && (*building_selected)->type == Entity::entityType::BARRACKS)
+		{
+			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
+			Update_troop_image(UI_troop_type);
+			UpdateVisibility();
+			number_of_troops = 10;
+
+		}
+		
+		// Button A to clcik a button
+		if (gamepad.Controller[BUTTON_A] == KEY_DOWN && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
+		{
+			if (currentUI != CURRENT_UI::CURR_BUILD && currentUI != CURRENT_UI::CURR_DEPLOY && currentUI != CURRENT_UI::CURR_CAST)
+				(*focus)->state = UI_Element::State::LOGIC;
+		}
+
+		// Do button action
+		if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_SELECTING_BUILDING && currentUI != CURRENT_UI::CURR_PAUSE_SETTINGS && currentUI != CURRENT_UI::CURR_CREATE_TROOPS)
+		{
+			if (App->scene->pause && isPaused == true)
+			{
+				(*focus)->state = UI_Element::State::IDLE;
+				DoLogic((*focus));
+				UpdateFocus(currentUI);
+			}
+			else if (!App->scene->pause)
+			{
+				if (!isBuilding)
+					(*focus)->state = UI_Element::State::IDLE;
+				if (App->scene->active)
+					DoLogic((*focus));
+				else
+					App->main_menu->DoLogic((*focus));
+
+				if ((*focus) == Build_icon || (*focus) == Deploy_icon || (*focus) == Cast_icon)
+					UpdateFocus(currentUI);
+			}
+
+		}
+
+		
+
 		//Creating ABILITIES
 		if (currentUI == CURRENT_UI::CURR_CREATE_ABILITIES)
 		{
@@ -489,18 +567,7 @@ bool Player::Update(float dt)
 
 		}
 
-		// --TEST-- GENERAL UI (menu of selected building)
-		if (gamepad.Controller[BUTTON_A] == KEY_UP && currentUI == CURRENT_UI::CURR_SELECTING_BUILDING && App->scene->active)
-		{
-			currentUI = CURRENT_UI::CURR_GENERAL;
-			UpdateVisibility();
-			UpdateFocus(currentUI);
-		}
-
-		if (currentUI == CURRENT_UI::CURR_GENERAL)
-		{
-			UpdateGeneralUI((*building_selected));
-		}
+		
 
 		if (currentUI == CURRENT_UI::CURR_BUILD)
 		{
@@ -599,99 +666,95 @@ bool Player::Update(float dt)
 		}
 
 		// Travel through the different buttons
-		if ((gamepad.Controller[RB] == KEY_DOWN || gamepad.Controller[RIGHT] == KEY_DOWN || gamepad.Controller[JOY_RIGHT] == KEY_DOWN) &&
-			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && 
+		if ((gamepad.Controller[RB] == KEY_DOWN || gamepad.Controller[RIGHT] == KEY_DOWN || gamepad.Controller[L_JOY_RIGHT] == KEY_DOWN) &&
+			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES &&
 			gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			App->audio->PlayFx(CHANGE_FOCUS);
-			if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING)
+			
+			(*focus)->state = UI_Element::State::IDLE;
+
+			if (focus == last_element)
 			{
-				(*focus)->state = UI_Element::State::IDLE;
+				focus = GetUI_Element(currentUI)->children.begin();
 
-				if (focus == last_element)
-				{
-					focus = GetUI_Element(currentUI)->children.begin();
-
-				}
-				else
-				{
-					focus++;
-				}
 			}
 			else
 			{
-				last_building = buildings.end();
-				last_building--;
-
-				if (building_selected == last_building)
-				{
-					building_selected = buildings.begin();
-				}
-				else
-				{
-					building_selected++;
-										
-				}
-
-				if ((*building_selected)->type == Entity::entityType::WALLS)
-				{
-					while ((*building_selected)->type == Entity::entityType::WALLS)
-					{
-						building_selected++;
-						if (building_selected == buildings.end())
-						{
-							building_selected = buildings.begin();
-
-						}
-					}
-				}
+				focus++;
 			}
+			
+			
 		}
 
 		// Travel through the different buttons
-		if ((gamepad.Controller[LB] == KEY_DOWN || gamepad.Controller[LEFT] == KEY_DOWN || gamepad.Controller[JOY_LEFT] == KEY_DOWN) &&
-			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && 
+		if ((gamepad.Controller[LB] == KEY_DOWN || gamepad.Controller[LEFT] == KEY_DOWN || gamepad.Controller[L_JOY_LEFT] == KEY_DOWN) &&
+			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES &&
 			gamepad.Controller[BUTTON_A] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
 			App->audio->PlayFx(CHANGE_FOCUS);
-			if (currentUI != CURRENT_UI::CURR_SELECTING_BUILDING)
+			
+			(*focus)->state = UI_Element::State::IDLE;
+			if (focus == GetUI_Element(currentUI)->children.begin())
 			{
-				(*focus)->state = UI_Element::State::IDLE;
-				if (focus == GetUI_Element(currentUI)->children.begin())
-				{
-					focus = last_element;
-				}
-				else
-				{
-					focus--;
-				}
+				focus = last_element;
 			}
 			else
 			{
-				if (building_selected == buildings.begin())
-				{
-					last_building = buildings.end();
-					last_building--;
-					building_selected = last_building;
-				}
-				else
-				{
-					building_selected--;
-					if ((*building_selected)->type == Entity::entityType::WALLS)
-					{
-						while ((*building_selected)->type == Entity::entityType::WALLS)
-						{
-							building_selected--;
-						}
-					}
-				}
+				focus--;
+			}
+			
+			
+		}
+
+		//CHANGE SELECTED BARRACK
+		if (gamepad.Controller[R_JOY_RIGHT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_CREATE_TROOPS)
+		{
+			App->audio->PlayFx(CHANGE_FOCUS);
+
+			last_building = buildings.end();
+			last_building--;
+
+			if (building_selected != last_building)
+			{
+				building_selected++;
+			}
+			else
+			{
+				building_selected = buildings.begin();
+			}
+
+			while ((*building_selected)->type != Entity::entityType::BARRACKS)
+			{
+				building_selected++;
+			}
+		}
+		//CHANGE SELECTED BARRACK
+		if (gamepad.Controller[R_JOY_LEFT] == KEY_DOWN && currentUI == CURRENT_UI::CURR_CREATE_TROOPS)
+		{
+			App->audio->PlayFx(CHANGE_FOCUS);
+
+			if (building_selected == buildings.begin())
+			{
+				last_building = buildings.end();
+				last_building--;
+				building_selected = last_building;
+			}
+			else
+			{
+				building_selected--;
+			}
+
+			while ((*building_selected)->type != Entity::entityType::BARRACKS)
+			{
+				building_selected--;
 			}
 		}
 
 		//Travel through buttons with DPAD in pause and mainmenu
 		if (App->main_menu->active || App->scene->pause)
 		{
-			if ((gamepad.Controller[UP] == KEY_DOWN || gamepad.Controller[JOY_UP] == KEY_DOWN) && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
+			if ((gamepad.Controller[UP] == KEY_DOWN || gamepad.Controller[L_JOY_UP] == KEY_DOWN) && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
 			{
 				App->audio->PlayFx(CHANGE_FOCUS);
 				(*focus)->state = UI_Element::State::IDLE;
@@ -708,7 +771,7 @@ bool Player::Update(float dt)
 
 			}
 
-			if ((gamepad.Controller[DOWN] == KEY_DOWN || gamepad.Controller[JOY_DOWN] == KEY_DOWN) && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
+			if ((gamepad.Controller[DOWN] == KEY_DOWN || gamepad.Controller[L_JOY_DOWN] == KEY_DOWN) && currentUI != CURRENT_UI::NONE && gamepad.Controller[BUTTON_A] != KEY_REPEAT)
 			{
 				App->audio->PlayFx(CHANGE_FOCUS);
 				(*focus)->state = UI_Element::State::IDLE;
@@ -725,7 +788,7 @@ bool Player::Update(float dt)
 		}
 
 		// Increase or decrease volume
-		if ((gamepad.Controller[RIGHT] == KEY_DOWN || gamepad.Controller[JOY_RIGHT] == KEY_DOWN) && ( currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS || currentUI == CURRENT_UI::CURR_MM_SETTINGS))
+		if ((gamepad.Controller[RIGHT] == KEY_DOWN || gamepad.Controller[L_JOY_RIGHT] == KEY_DOWN) && ( currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS || currentUI == CURRENT_UI::CURR_MM_SETTINGS))
 		{
 			App->audio->PlayFx(SLIDER_UP);
 			if (((*focus) == Music_Settings || (*focus) == App->main_menu->Music_Settings) && App->audio->musicVolume < 100)
@@ -742,7 +805,7 @@ bool Player::Update(float dt)
 				App->audio->SetSfxVolume();
 			}
 		}
-		else if ((gamepad.Controller[LEFT] == KEY_DOWN || gamepad.Controller[JOY_LEFT] == KEY_DOWN) && (currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS || currentUI == CURRENT_UI::CURR_MM_SETTINGS))
+		else if ((gamepad.Controller[LEFT] == KEY_DOWN || gamepad.Controller[L_JOY_LEFT] == KEY_DOWN) && (currentUI == CURRENT_UI::CURR_PAUSE_SETTINGS || currentUI == CURRENT_UI::CURR_MM_SETTINGS))
 		{
 			App->audio->PlayFx(SLIDER_DOWN);
 			if (((*focus) == Music_Settings || (*focus) == App->main_menu->Music_Settings) && App->audio->musicVolume > 0)
@@ -780,26 +843,26 @@ bool Player::Update(float dt)
 	if (isBuilding && !App->scene->pause)
 	{
 		//--- Movement
-		if (gamepad.Controller[JOY_UP] == KEY_REPEAT || gamepad.Controller[UP] == KEY_DOWN ||
+		if (gamepad.Controller[L_JOY_UP] == KEY_REPEAT || gamepad.Controller[UP] == KEY_DOWN ||
 			App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT)
 		{
 			currentTile.first--;
 			currentTile.second--;
 		}
-		else if (gamepad.Controller[JOY_DOWN] == KEY_REPEAT || gamepad.Controller[DOWN] == KEY_DOWN ||
+		else if (gamepad.Controller[L_JOY_DOWN] == KEY_REPEAT || gamepad.Controller[DOWN] == KEY_DOWN ||
 			App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
 		{
 			currentTile.first++;
 			currentTile.second++;
 		}
 
-		if (gamepad.Controller[JOY_RIGHT] == KEY_REPEAT || gamepad.Controller[RIGHT] == KEY_DOWN ||
+		if (gamepad.Controller[L_JOY_RIGHT] == KEY_REPEAT || gamepad.Controller[RIGHT] == KEY_DOWN ||
 			App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
 		{
 			currentTile.first++;
 			currentTile.second--;
 		}
-		else if (gamepad.Controller[JOY_LEFT] == KEY_REPEAT || gamepad.Controller[LEFT] == KEY_DOWN ||
+		else if (gamepad.Controller[L_JOY_LEFT] == KEY_REPEAT || gamepad.Controller[LEFT] == KEY_DOWN ||
 			App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT)
 		{
 			currentTile.first--;
@@ -1329,7 +1392,7 @@ void Player::GotoPrevWindows(uint data)
 		break;
 
 	case Player::CURRENT_UI::CURR_CREATE_TROOPS:
-		currentUI = CURRENT_UI::CURR_GENERAL;
+		currentUI = CURRENT_UI::CURR_DEPLOY;
 		number_of_troops = 0;
 		UpdateVisibility();
 		break;
@@ -1737,125 +1800,98 @@ void Player::DoLogic(UI_Element* data)
 
 	case::UI_Element::Action::ACT_DEPLOY_SOLDIER:
 
-		/*{
-			App->audio->PlayFx(INGAME_CLICK);
-			isBuilding = true;
-			type = Entity::entityType::SOLDIER;
-			collider.dimensions = { 1,1 };
-		}*/
-		Soldier_Offensive = !Soldier_Offensive;
+		if ( BarracksCreated > 0)
+		{
+			building_selected = buildings.begin();
 
-		if (Soldier_Offensive)
-		{
-			Soldier_Deff->rect = { 1219,98,20,21 };
-			Soldier_Off->rect = { 1195,123,18,17 };
-		}
-		else
-		{
-			Soldier_Deff->rect = { 1195,98,20,21 };
-			Soldier_Off->rect = { 1220,123,18,17 };
+			while ((*building_selected)->type != Entity::entityType::BARRACKS)
+				building_selected++;
+
+			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
+			UI_troop_type = Entity::entityType::SOLDIER;
+			Update_troop_image(UI_troop_type);
+			UpdateVisibility();
+			number_of_troops = 10;
+			
 		}
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_TANKMAN:
-		/*{
-			App->audio->PlayFx(INGAME_CLICK);
-			isBuilding = true;
-			type = Entity::entityType::TANKMAN;
-			collider.dimensions = { 1,1 };
-		}*/
-		Tankman_Offensive = !Tankman_Offensive;
-		if (Tankman_Offensive)
+		
+		
+		if (BarracksCreated > 0)
 		{
-			Tankman_Deff->rect = { 1219,98,20,21 };
-			Tankman_Off->rect = { 1195,123,18,17 };
-		}
-		else
-		{
-			Tankman_Deff->rect = { 1195,98,20,21 };
-			Tankman_Off->rect = { 1220,123,18,17 };
+			building_selected = buildings.begin();
 
+			while ((*building_selected)->type != Entity::entityType::BARRACKS)
+				building_selected++;
+
+			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
+			UI_troop_type = Entity::entityType::TANKMAN;
+			Update_troop_image(UI_troop_type);
+			UpdateVisibility();
+			number_of_troops = 10;
+			
 		}
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_INFILTRATOR:
 
-		//
-		//if (WarHoundsCreated > 0)
-	/*	{
-			App->audio->PlayFx(INGAME_CLICK);
-			isBuilding = true;
-			type = Entity::entityType::INFILTRATOR;
-			collider.dimensions = { 1,1 };
-		}*/
+		if (BarracksCreated > 0)
+		{
+			building_selected = buildings.begin();
 
-		Infiltrator_Offensive = !Infiltrator_Offensive;
-		if (Infiltrator_Offensive)
-		{
-			Infiltrator_Deff->rect = { 1219,98,20,21 };
-			Infiltrator_Off->rect = { 1195,123,18,17 };
+			while ((*building_selected)->type != Entity::entityType::BARRACKS)
+				building_selected++;
+
+			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
+			UI_troop_type = Entity::entityType::INFILTRATOR;
+			Update_troop_image(UI_troop_type);
+			UpdateVisibility();
+			number_of_troops = 10;
+			
 		}
-		else
-		{
-			Infiltrator_Deff->rect = { 1195,98,20,21 };
-			Infiltrator_Off->rect = { 1220,123,18,17 };
-		}
-		
-		//App->audio->PlayFx(WRONG);
 
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_ENGINEER:
-		//
-		//if (WarHoundsCreated > 0)
-		Engineer_Offensive = !Engineer_Offensive;
-		if (Engineer_Offensive)
-		{
-			Engineer_Deff->rect = { 1219,98,20,21 };
-			Engineer_Off->rect = { 1195,123,18,17 };
-		}
-		else
-		{
-			Engineer_Deff->rect = { 1195,98,20,21 };
-			Engineer_Off->rect = { 1220,123,18,17 };
-		}
+		
 	
-		/*{
-			App->audio->PlayFx(INGAME_CLICK);
-			isBuilding = true;
-			type = Entity::entityType::ENGINEER;
-			collider.dimensions = { 1,1 };
-		}*/
+		if (BarracksCreated > 0)
+		{
+			building_selected = buildings.begin();
 
-	//App->audio->PlayFx(WRONG);
+			while ((*building_selected)->type != Entity::entityType::BARRACKS)
+				building_selected++;
+
+			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
+			UI_troop_type = Entity::entityType::ENGINEER;
+			Update_troop_image(UI_troop_type);
+			UpdateVisibility();
+			number_of_troops = 10;
+			
+		}
 
 	
 		break;
 
 	case::UI_Element::Action::ACT_DEPLOY_WARHOUND:
 
-		//
-		//if (WarHoundsCreated > 0)
-		WarHound_Offensive = !WarHound_Offensive;
-		if (WarHound_Offensive)
-		{
-			WarHound_Deff->rect = { 1219,98,20,21 };
-			WarHound_Off->rect = { 1195,123,18,17 };
-		}
-		else
-		{
-			WarHound_Deff->rect = { 1195,98,20,21 };
-			WarHound_Off->rect = { 1220,123,18,17 };
-		}
 
-		/*{
-			App->audio->PlayFx(INGAME_CLICK);
-			isBuilding = true;
-			type = Entity::entityType::WAR_HOUND;
-			collider.dimensions = { 1,1 };
+		if (BarracksCreated > 0)
+		{
+			building_selected = buildings.begin();
+
+			while ((*building_selected)->type != Entity::entityType::BARRACKS)
+				building_selected++;
+
+			currentUI = CURRENT_UI::CURR_CREATE_TROOPS;
+			UI_troop_type = Entity::entityType::WAR_HOUND;
+			Update_troop_image(UI_troop_type);
+			UpdateVisibility();
+			number_of_troops = 10;
+			
 		}
-		*/
-		//App->audio->PlayFx(WRONG);
 
 		break;
 

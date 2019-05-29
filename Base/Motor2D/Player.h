@@ -12,7 +12,8 @@ struct SDL_Texture;
 struct GamePad
 {
 	SDL_GameController* GameController = nullptr;
-	SDL_Joystick* joy = nullptr;
+	SDL_Joystick* left_joy = nullptr;
+	SDL_Joystick* right_joy = nullptr;
 
 	bool Connected = false;
 	bool State[MAX_BUTTONS];
@@ -22,7 +23,11 @@ struct GamePad
 	int LeftAxisX = 0;
 	int LeftAxisY = 0;
 
+	int RightAxisX = 0;
+	int RightAxisY = 0;
+
 	bool JoystickState[4] = { false, false, false ,false };
+	bool JoystickState2[4] = { false, false, false ,false };
 
 };
 
