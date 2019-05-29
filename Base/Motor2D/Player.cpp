@@ -648,6 +648,8 @@ bool Player::Update(float dt)
 			{
 				if (!DoNotLogic)
 				{
+					if (currentUI == CURRENT_UI::CURR_PAUSE_KEYBINDS)
+						SaveKeys(isPlayer1);
 					GotoPrevWindows(currentUI);
 					UpdateFocus(currentUI);
 				}
@@ -1398,11 +1400,16 @@ void Player::SaveKeys(bool isPlayer1)
 		config.child("ui").attribute("left").set_value(UI_LEFT);
 		config.child("ui").attribute("up").set_value(UI_UP);
 		config.child("ui").attribute("down").set_value(UI_DOWN);
+		config.child("building_type").attribute("prev").set_value(PREV_BUILDING);
+		config.child("building_type").attribute("next").set_value(NEXT_BUILDING);
 	}
 	else
 	{
 		LOG("--- Error saving keys");
 	}
+
+	config_file.save_file("config.xml");
+	
 }
 
 void Player::UpdateFocus(uint data)
