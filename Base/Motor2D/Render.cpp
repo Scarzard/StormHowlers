@@ -60,7 +60,6 @@ bool Render::Awake(pugi::xml_node& config)
 	}
 
 	original_camera = camera;
-
 	return ret;
 }
 
@@ -69,6 +68,7 @@ bool Render::Start()
 {
 	LOG("render start");
 	SDL_RenderGetViewport(renderer, &viewport);
+	//SDL_RenderSetLogicalSize(renderer, 1680, 1050);
 	App->render->zoom =(float) viewport.w/1680.0f;
 
 	//SDL_RenderSetLogicalSize(renderer, App->win->width, App->win->height);
@@ -76,14 +76,28 @@ bool Render::Start()
 	return true;
 }
 void Render::WindowResized() {
+
+	//Getting the new viewport
 	SDL_RenderGetViewport(renderer, &viewport);
-	App->win->width = viewport.w;
-	App->win->height = viewport.h;
-	camera.w = viewport.w;
-	camera.h = viewport.h;
-	int new_width = viewport.w - camera.w;
+
+	//Making it keep the ratio
+	int new_width =  viewport.w - camera.w;
 	int new_height = viewport.h - camera.h;
-	
+
+	//viewport.h = viewport.w / ratio;
+	App->win->width  += new_width;
+	App->win->height += new_height;
+	camera.w += new_width;
+	camera.h += new_height;
+
+	viewport.w = camera.w;
+	viewport.h = camera.h;
+
+	//SDL_RenderSetViewport(renderer, &viewport);
+	//SDL_SetWindowSize(App->win->window, viewport.w, viewport.h);
+	//SDL_glviewport
+	//SDL_UpdateWindowSurface(App->win->window);
+
 	if (App->main_menu->active) {
 		zoom = (float)viewport.w / 1680.0f;
 		/*float vw = (float)viewport.w / 1680.0f;
@@ -94,7 +108,7 @@ void Render::WindowResized() {
 	}
 	else {
 		zoom = 0.77f *(float)viewport.w / 1680.0f;
-		camera.x = 913*zoom/0.77f;    // camera.w * 1680.0f / 913.0f;
+		//camera.x = 913*zoom/0.77f;    // camera.w * 1680.0f / 913.0f;
 		/*float vw = 0.77f * (float)viewport.w / 1680.0f;
 		float vh = 0.77f * (float)viewport.h / 1050.0f;
 		App->render->zoom = (float)(vw + vh) / 2.0f;*/
@@ -110,8 +124,8 @@ void Render::WindowResized() {
 	//Readjust all the necessary things
 	if (App->player1->Main_UI != nullptr) {
 		//App->player1->Main_UI->globalpos.first = camera.x + camera.w - (App->player1->Main_UI->rect.w*zoom) - 20;
-		App->player1->Main_UI->globalpos.first += new_width;
-		//App->player1->Main_UI->globalpos.second = camera.y + camera.h;
+		//App->player1->Main_UI->globalpos.first += new_width;
+		App->player1->Main_UI->globalpos.second = (App->win->height / App->render->zoom) - 163;
 		//App->player1->Main_UI->globalpos.second = camera.y + camera.h - (App->player1->Main_UI->rect.h*zoom) - 20;
 		//App->player1->Main_UI->position.first   = camera.x + camera.w - (App->player1->Main_UI->rect.w*zoom) - 20;
 		//App->player1->Main_UI->position.second  = camera.y + camera.h - (App->player1->Main_UI->rect.h*zoom) - 20;

@@ -74,49 +74,6 @@ bool Player::Start()
 	
 	return true;
 }
-void Player::RectangleSelection()
-{
-	pair<int, int> mouse_pos;
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	mouse_pos = App->render->ScreenToWorld(x, y);
-
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
-		rectangle_origin.x = mouse_pos.first;
-		rectangle_origin.y = mouse_pos.second;
-
-	}
-
-	else if (abs(mouse_pos.first - rectangle_origin.x) >= 5 && abs(mouse_pos.second - rectangle_origin.y) >= 5 && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
-		// --- Rectangle size ---
-		rectangle_origin.w = mouse_pos.first - rectangle_origin.x;
-		rectangle_origin.h = mouse_pos.second - rectangle_origin.y;
-
-		// --- Draw Rectangle ---
-		//SDL_Rect SRect = { rectangle_origin.x, rectangle_origin.y, rectangle_origin.w, rectangle_origin.h };
-		App->render->DrawQuad(rectangle_origin, 255, 255, 255, 255, false);
-
-		// --- Once we get to the negative side of SRect numbers must be adjusted ---
-		if (rectangle_origin.w < 0) {
-			//SRect.x = mouse_pos.first;
-			rectangle_origin.w *= -1;
-		}
-		if (rectangle_origin.h < 0) {
-			//SRect.y = mouse_pos.second;
-			rectangle_origin.h *= -1;
-		}
-
-		// --- Check for Units in the rectangle, select them ---
-
-		App->move_manager->SelectEntities_inRect(rectangle_origin);
-
-		//LOG("rect is x%i y%i w%i h%i", SRect.x, SRect.y, SRect.w, SRect.h);
-	}
-
-	//else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
-	//	App->Mmanager->CreateGroup();
-
-}
 
 bool Player::DeployTroops(Entity::entityType type, int amount, pair<int,int> pos) {
 
@@ -170,7 +127,6 @@ bool Player::Update(float dt)
 
 	if (!App->scene->endgame)
 	{
-		RectangleSelection();
 
 		if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) {
 			std::list <Troop*>::const_iterator unit = troops.begin();

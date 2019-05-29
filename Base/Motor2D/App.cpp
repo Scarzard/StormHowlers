@@ -256,13 +256,14 @@ void MainApp::FinishUpdate()
 
 	pair<int, int> pos;
 	App->input->GetMousePosition(pos.first, pos.second);
+	pair<int, int> mouse = pos;
 	pos = App -> render->ScreenToWorld(pos.first, pos.second);
 	pos = App->map->WorldToMap(pos.first, pos.second);
 
 	static char title[256];
 	
-	sprintf_s(title, 256, "FPS: %i | Av.FPS: %.2f | MsLastFrame: %02u ms | Last dt: %.5f | FPS_Cap: %i | Vsync: %i | Tile: %i, %i | Time: %u:%u | Zoom %.2f |Camera x:%i y:%i w:%i h:%i | P1Troops: %i",
-		prev_last_sec_frame_count, avg_fps, last_frame_ms, dt,  fpsCapON, vsyncON,pos.first, pos.second, scene->worldminutes,scene->worldseconds, render->zoom, render->camera.x, render->camera.y, render->camera.w, render->camera.h, player1->troops.size());
+	sprintf_s(title, 256, "FPS: %i | Av.FPS: %.2f | MsLastFrame: %02u ms | Last dt: %.5f | FPS_Cap: %i | Vsync: %i | Mouse: %i, %i | Tile: %i, %i | Time: %u:%u | Zoom %.2f |Camera x:%i y:%i w:%i h:%i | P1Troops: %i",
+		prev_last_sec_frame_count, avg_fps, last_frame_ms, dt,  fpsCapON, vsyncON, mouse.first, mouse.second,pos.first,pos.second, scene->worldminutes,scene->worldseconds, render->zoom, render->camera.x, render->camera.y, render->camera.w, render->camera.h, player1->troops.size());
 
 
 	App->win->SetTitle(title);

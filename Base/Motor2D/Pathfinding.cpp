@@ -169,16 +169,26 @@ void Pathfinding::SetDirMap(uint width, uint height) {
 			}
 		}
 
+		int dir;
 		// Filling the rest of the map
 		for (int i = 20; i < 60; i++) {
-			for (int j = 0; j < App->map->data.height; j++) {
+			for (int j = 10; j < App->map->data.height-9; j++) {
 			
-
-				SetDirectionAttack(TroopDir::SOUTH, (Entity::entityType)k, true, { i, j });
-				SetDirectionAttack(TroopDir::NORTH, (Entity::entityType)k, false, { i, j });
+				if ((Entity::entityType)k == Entity::entityType::SOLDIER) {
+					SetDirectionAttack(SOUTH, (Entity::entityType)k, true, { i, j });
+					SetDirectionAttack (NORTH, (Entity::entityType)k, false, { i, j });
+					//if (j > 30) continue;
+					dir = rand() % MAX_DIR;
+					SetDirectionDefense((TroopDir)dir, (Entity::entityType)k, true, { i, j });
+					SetDirectionDefense((TroopDir)dir, (Entity::entityType)k, false, { i, j });
+				}
+				else {
+					SetDirectionAttack(TroopDir::SOUTH, (Entity::entityType)k, true, { i, j });
+					SetDirectionAttack(TroopDir::NORTH, (Entity::entityType)k, false, { i, j });
+				}
 			}
-			
-			SetDirectionDefense(TroopDir::NORTH, (Entity::entityType)k, true, { i,App->map->allyzone.up_limit.first});
+			//TODO set proper limits
+			SetDirectionDefense(TroopDir::NORTH, (Entity::entityType)k, true, { i,30});
 			SetDirectionDefense(TroopDir::SOUTH, (Entity::entityType)k, false, {i, App->map->warzone.down_limit.first});
 		}
 		
@@ -195,7 +205,7 @@ void Pathfinding::SetDirectionAttack(TroopDir direction, Entity::entityType type
 
 	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER);
 	CellInfo* cell = (fromPlayer1) ? &dirMap_p1[type][(pos.second*width) + pos.first]: &dirMap_p2[type][(pos.second*width) + pos.first];
-	cell->previousDir = cell->dir;
+	cell->previousDir.push_back(direction);
 	cell->dir = direction;
 	cell->speed = speeds[direction];
 
@@ -204,7 +214,7 @@ void Pathfinding::SetDirectionDefense(TroopDir direction, Entity::entityType typ
 
 	type = (Entity::entityType)((int)type - (int)Entity::entityType::SOLDIER +5);
 	CellInfo* cell = (fromPlayer1) ? &dirMap_p1[type][(pos.second*width) + pos.first] : &dirMap_p2[type][(pos.second*width) + pos.first];
-	cell->previousDir = cell->dir;
+	cell->previousDir.push_back(direction);
 	cell->dir = direction;
 	cell->speed = speeds[direction];
 
@@ -254,7 +264,7 @@ void Pathfinding::DrawDirMap() {
 	if (draw_attack) {
 
 		for (int i = 16; i < 64; i++) {
-			for (int j = 0; j < App->map->data.height; j++) {
+			for (int j = 10; j < App->map->data.height-9; j++) {
 				TroopDir t = GetDirAttack(i, j, (Entity::entityType)draw_type, draw_p1_map);
 				if (t == MAX_DIR) continue;
 				pair<int,int> pos = App->map->MapToWorld(i, j);
@@ -264,7 +274,7 @@ void Pathfinding::DrawDirMap() {
 	}
 	else {
 		for (int i = 16; i < 64; i++) {
-			for (int j = 0; j < App->map->data.height; j++) {
+			for (int j = 10; j < App->map->data.height-9; j++) {
 				TroopDir t = GetDirDefense(i, j, (Entity::entityType)draw_type, draw_p1_map);
 				if (t == MAX_DIR) continue;
 				pair<int, int> pos = App->map->MapToWorld(i, j);
@@ -358,16 +368,19 @@ TroopDir Pathfinding::SpeedToDirInverse(pair<int, int> speed) {
 void Pathfinding::CalculatePathsTo(pair<int, int> dest, char cell_type, Collider collider)
 {
 	int range = 15;
-
+	CellInfo* cell;
 	// Molt guarro pero funca per ara
 	if (App->entitymanager->entity_list.size() > 102) {
 
 		for (int i = 0; i < range; i++) {
 			for (int j = 0; j < range; j++) {
+
 				pair<int, int> next = { dest.first + i - range / 2,dest.second + j - range / 2 };
+
+				if (next.first < 20 || next.first > 59) continue;
+
 				pair<int, int> speed = { -(next.first - dest.first), -(next.second - dest.second )};
-
-
+				
 				for (int k = Entity::entityType::SOLDIER; k <= Entity::entityType::WAR_HOUND; k++) {
 					
 					switch (cell_type)
@@ -380,8 +393,9 @@ void Pathfinding::CalculatePathsTo(pair<int, int> dest, char cell_type, Collider
 							//SetDirectionDefense(SpeedToDirInverse(speed), (Entity::entityType)k, false, next);
 						//}
 							if ((Entity::entityType)k == Entity::entityType::ENGINEER) {
-								SetDirectionDefense(SpeedToDirInverse(speed), (Entity::entityType)k, true, next);
+								SetDirectionDefense(SpeedToDir(speed), (Entity::entityType)k, true, next);
 								SetDirectionAttack(SpeedToDir(speed), (Entity::entityType)k, false, next);
+
 							}
 							else {
 								SetDirectionDefense(SpeedToDirInverse(speed), (Entity::entityType)k, true, next);
@@ -389,24 +403,40 @@ void Pathfinding::CalculatePathsTo(pair<int, int> dest, char cell_type, Collider
 							}
 						break;
 					case P2_BUILDING:
-						//Player 2 - Repulsion
-						SetDirectionDefense(SpeedToDirInverse(speed), (Entity::entityType)k, false, next);
-						//Player 1 - Attraction
-						SetDirectionAttack(SpeedToDir(speed), (Entity::entityType)k, true, next);
+						if ((Entity::entityType)k == Entity::entityType::ENGINEER) {
+							SetDirectionDefense(SpeedToDir(speed), (Entity::entityType)k, false, next);
+							SetDirectionAttack(SpeedToDir(speed), (Entity::entityType)k, true, next);
+						}
+						else {
+							SetDirectionDefense(SpeedToDirInverse(speed), (Entity::entityType)k, false, next);
+							SetDirectionAttack(SpeedToDir(speed), (Entity::entityType)k, true, next);
+						}
 						break;
 					case WALKABLE:
 						//if (next distance to dest < range) {
 							//Default dir
-
 						// TO TEST
-						SetDirectionDefense(GetCellAttack(next, (Entity::entityType)k, true)->previousDir, (Entity::entityType)k, true, next);
-						SetDirectionDefense(GetCellAttack(next, (Entity::entityType)k, false)->previousDir, (Entity::entityType)k, false, next);
-						SetDirectionAttack(GetCellAttack(next, (Entity::entityType)k, true)->previousDir, (Entity::entityType)k, true, next);
-						SetDirectionAttack(GetCellAttack(next, (Entity::entityType)k,false)->previousDir, (Entity::entityType)k, false, next);
+						//Defense should diferentiate location and bring home troops?
+						cell = GetCellAttack(next, (Entity::entityType)k, true);
+						if (cell->previousDir.empty()) {
+							SetDirectionDefense(MAX_DIR,(Entity::entityType)k, true, next);
+							SetDirectionDefense(MAX_DIR, (Entity::entityType)k, false, next);
+							SetDirectionAttack (SOUTH,(Entity::entityType)k, true, next);
+							SetDirectionAttack (NORTH, (Entity::entityType)k, false, next);
+							/*cell->previousDir.erase();*/
+						}
+						else {
+
+						SetDirectionDefense(GetCellAttack(next, (Entity::entityType)k, true)->previousDir.back(), (Entity::entityType)k, true, next);
+						SetDirectionDefense(GetCellAttack(next, (Entity::entityType)k, false)->previousDir.back(), (Entity::entityType)k, false, next);
+						SetDirectionAttack (GetCellAttack(next, (Entity::entityType)k,  true)->previousDir.back(), (Entity::entityType)k, true, next);
+						SetDirectionAttack (GetCellAttack(next, (Entity::entityType)k, false)->previousDir.back(), (Entity::entityType)k, false, next);
+						}
 						
 
 						//}
 						break;
+
 					default:
 						break;
 					}
@@ -433,6 +463,7 @@ void Pathfinding::CalculatePathsTo(pair<int, int> dest, char cell_type, Collider
 			//dest.first += speeds[NORTH].first;
 		}
 
+		// Avoid team buildings
 		for (int k = Entity::entityType::SOLDIER; k <= Entity::entityType::WAR_HOUND; k++) {
 			pair<int, int> next = dest;
 
@@ -449,21 +480,32 @@ void Pathfinding::CalculatePathsTo(pair<int, int> dest, char cell_type, Collider
 					next.first -= collider.dimensions.first-1;
 				}
 				
+				//First go WEST, rest go EAST
 				SetDirectionAttack(WEST, (Entity::entityType)k, true, next);
 				for (int i = 1; i < collider.dimensions.first; i++) {
 					next.first++;
 					SetDirectionAttack(EAST, (Entity::entityType)k, true, next);
 
 				}
-				//SetDirectionAttack(SpeedToDir(speed), (Entity::entityType)k, true, next);
-				//SetDirectionDefense(SpeedToDirInverse(speed), (Entity::entityType)k, false, next);
-			//}
+				
 				break;
 			case P2_BUILDING:
-				//Player 2 - Repulsion
-				//SetDirectionDefense(SpeedToDirInverse(speed), (Entity::entityType)k, false, next);
-				//Player 1 - Attraction
-				//SetDirectionAttack(SpeedToDir(speed), (Entity::entityType)k, true, next);
+				if (collider.dimensions.first > 2) {
+					next.second += 2;
+					next.first += -2;
+				}
+				else {
+					next.second += 1;
+					next.first += -1;
+				}
+
+				//First go WEST, rest go EAST
+				SetDirectionAttack(WEST, (Entity::entityType)k, false, next);
+				for (int i = 1; i < collider.dimensions.first; i++) {
+					next.first++;
+					SetDirectionAttack(EAST, (Entity::entityType)k, false, next);
+
+				}
 				break;
 			case WALKABLE:
 				break;

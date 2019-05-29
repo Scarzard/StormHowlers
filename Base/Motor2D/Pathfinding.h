@@ -27,13 +27,13 @@ class CellInfo {
 
 public:
 	TroopDir dir;
-	TroopDir previousDir;
+	vector<TroopDir> previousDir;
 	//Entity* entity;
 	pair<int, int> speed;
 	bool is_axis = false;
 	bool has_path = false;
 
-	CellInfo() : dir(TroopDir::MAX_DIR), previousDir(TroopDir::MAX_DIR), speed({ 0,0 }),has_path(false) {}
+	CellInfo() : dir(TroopDir::MAX_DIR), speed({ 0,0 }),has_path(false) {}
 };
 
 class Pathfinding : public Module

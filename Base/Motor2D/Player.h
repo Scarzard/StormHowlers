@@ -75,7 +75,6 @@ public:
 	~Player();
 
 	bool Start();
-	void RectangleSelection();
 	bool DeployTroops(Entity::entityType type, int amount, pair<int, int> pos);
 	bool Awake(pugi::xml_node &config);
 	bool Update(float dt);
