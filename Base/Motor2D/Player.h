@@ -162,6 +162,7 @@ public:
 	SDL_Texture* range_tex = nullptr;
 
 	SDL_Rect LiveBar;
+	SDL_Rect* current_life_bar;
 	int health, max_health = 0;
 
 	//index for testing previews

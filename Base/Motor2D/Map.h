@@ -168,6 +168,7 @@ struct MapData
 	pair<int, int> barrack;
 	pair<int, int> barrack2;
 	pair<int, int> mid_building;
+	pair<int, int> center_tile;
 
 	list<decoration_coordinates*> decoration_list;
 	list<pair<int,int>> wall_list;

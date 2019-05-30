@@ -585,6 +585,12 @@ bool Map::LoadMap()
 					data.wall_list2.push_back(wall_pos);
 				}
 			}
+			else if (tmp == "center_tile")
+			{
+				data.center_tile.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
+				data.center_tile.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				//data.center_tile = MapToWorld(data.center_tile.first, data.center_tile.second);
+			}
 		}
 	}
 

@@ -23,7 +23,9 @@ public:
 		PUSHBUTTON,
 		SLIDER,
 		WINDOW,
-		TEXTURE
+		TEXTURE,
+		LIFEBAR_P1,
+		LIFEBAR_P2
 	};
 
 	enum Action

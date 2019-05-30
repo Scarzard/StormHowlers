@@ -101,6 +101,12 @@ UI_Element* Gui::AddUIElement(bool player1, UI_Element::UI_type type, UI_Element
 	case UI_Element::UI_type::TEXTURE:
 		UI_elem = new OtherUI(type, action, pos, size, parent, visible, dragable);
 		break;
+	case UI_Element::UI_type::LIFEBAR_P1:
+		UI_elem = new OtherUI(type, action, pos, size, parent, visible, dragable);
+		break;
+	case UI_Element::UI_type::LIFEBAR_P2:
+		UI_elem = new OtherUI(type, action, pos, size, parent, visible, dragable);
+		break;
 	}
 
 	if (UI_elem && player1 == true)
@@ -191,6 +197,22 @@ bool Gui::Draw()
 					SDL_RenderCopy(App->render->renderer, App->scene->draw_tex, NULL, &r);
 				}
 				
+
+			}
+			else if ((*UI_elem)->type == UI_Element::UI_type::LIFEBAR_P1)
+			{
+				App->player1->LiveBar.w = (340 * App->player1->health) / App->player1->max_health; // (maximum rect width * town hall live) / MAX town hall live
+
+				App->render->BlitEx(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, App->player1->current_life_bar, &App->player1->LiveBar, SDL_FLIP_NONE, 0);
+
+			}
+			else if ((*UI_elem)->type == UI_Element::UI_type::LIFEBAR_P2) 
+			{
+				// IDK why it is printed under the main_ui
+				App->player2->LiveBar.w = (340 * App->player2->health) / App->player2->max_health; // (maximum rect width * town hall live) / MAX town hall live
+
+				App->render->BlitEx(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, App->player2->current_life_bar, &App->player2->LiveBar, SDL_FLIP_NONE, 0);
+
 			}
 			else //rest of ui
 			{

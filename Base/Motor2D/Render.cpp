@@ -71,6 +71,7 @@ bool Render::Start()
 	//SDL_RenderSetLogicalSize(renderer, 1680, 1050);
 	App->render->zoom =(float) viewport.w/1680.0f;
 
+	// Easy solution to keep game intact
 	//SDL_RenderSetLogicalSize(renderer, App->win->width, App->win->height);
 
 	return true;
@@ -80,61 +81,35 @@ void Render::WindowResized() {
 	//Getting the new viewport
 	SDL_RenderGetViewport(renderer, &viewport);
 
-	//Making it keep the ratio
 	int new_width =  viewport.w - camera.w;
 	int new_height = viewport.h - camera.h;
 
-	//viewport.h = viewport.w / ratio;
 	App->win->width  += new_width;
 	App->win->height += new_height;
+
 	camera.w += new_width;
 	camera.h += new_height;
 
 	viewport.w = camera.w;
 	viewport.h = camera.h;
 
-	//SDL_RenderSetViewport(renderer, &viewport);
-	//SDL_SetWindowSize(App->win->window, viewport.w, viewport.h);
-	//SDL_glviewport
-	//SDL_UpdateWindowSurface(App->win->window);
+	//pair<int,int> camera_pos = App->map->MapToWorld(App->map->data.center_tile.first, App->map->data.center_tile.second);
+
+	//camera.x = camera_pos.first;//App->map->data.center_tile.first - camera.w/2;
+	//camera.y = camera_pos.second; //App->map->data.center_tile.second - camera.y/2;
 
 	if (App->main_menu->active) {
 		zoom = (float)viewport.w / 1680.0f;
-		/*float vw = (float)viewport.w / 1680.0f;
-		float vh = (float)viewport.h / 1050.0f;
-
-		App->render->zoom = (float)(vw + vh) / 2.0f;*/
-
 	}
 	else {
-		zoom = 0.77f *(float)viewport.w / 1680.0f;
-		//camera.x = 913*zoom/0.77f;    // camera.w * 1680.0f / 913.0f;
-		/*float vw = 0.77f * (float)viewport.w / 1680.0f;
-		float vh = 0.77f * (float)viewport.h / 1050.0f;
-		App->render->zoom = (float)(vw + vh) / 2.0f;*/
-		//App->player1->LiveBar.x = camera.w - App->player1->LiveBar.w / 2;
-		//App->player1->LiveBar.x = camera.w - App->player1->LiveBar.w / 2;
-		//	App->player2->LiveBar
-
-		
-
-		
+		zoom = 0.77f *(float)viewport.w / 1680.0f;		
 	}
 	
 	//Readjust all the necessary things
 	if (App->player1->Main_UI != nullptr) {
-		//App->player1->Main_UI->globalpos.first = camera.x + camera.w - (App->player1->Main_UI->rect.w*zoom) - 20;
-		//App->player1->Main_UI->globalpos.first += new_width;
 		App->player1->Main_UI->globalpos.second = (App->win->height / App->render->zoom) - 163;
-		//App->player1->Main_UI->globalpos.second = camera.y + camera.h - (App->player1->Main_UI->rect.h*zoom) - 20;
-		//App->player1->Main_UI->position.first   = camera.x + camera.w - (App->player1->Main_UI->rect.w*zoom) - 20;
-		//App->player1->Main_UI->position.second  = camera.y + camera.h - (App->player1->Main_UI->rect.h*zoom) - 20;
-		/*App->player1->Main_UI->collider.x		= camera.x + camera.w - (App->player1->Main_UI->rect.w*zoom) - 20;
-		App->player1->Main_UI->collider.y		= camera.y + camera.h - (App->player1->Main_UI->rect.h*zoom) - 20;
-		App->player1->Main_UI->collider.w = App->player1->Main_UI->rect.w*zoom -20;
-		App->player1->Main_UI->collider.h = App->player1->Main_UI->rect.h*zoom -20;*/
-
 	}
+
 }
 // Called each loop iteration
 bool Render::PreUpdate()
@@ -267,6 +242,51 @@ bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, S
 	}
 
 	if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, flip) != 0)
+	{
+		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+		ret = false;
+	}
+
+	return ret;
+}
+
+bool Render::BlitEx(SDL_Texture* texture, int x, int y, const SDL_Rect* section, const SDL_Rect* new_rect, SDL_RendererFlip flip, float speed, double angle, int pivot_x, int pivot_y) const
+{
+	BROFILER_CATEGORY("Blit", Profiler::Color::GreenYellow);
+
+	bool ret = true;
+	// Scale must be always positive (changed from uint to int)
+	//float scale = App->win->zoom_scale;
+	int scale = App->win->GetScale();
+
+	SDL_Rect rect;
+	rect.x = (int)(((camera.x * speed) + (int)((x * scale*zoom))));
+	rect.y = (int)(((camera.y * speed) + (int)((y * scale*zoom))));
+
+	if (new_rect != NULL)
+	{
+		rect.w = new_rect->w;
+		rect.h = new_rect->h;
+	}
+	else
+	{
+		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+	}
+
+	rect.w *= (scale*zoom);
+	rect.h *= (scale*zoom);
+
+	SDL_Point* p = NULL;
+	SDL_Point pivot;
+
+	if (pivot_x != INT_MAX && pivot_y != INT_MAX)
+	{
+		pivot.x = pivot_x;
+		pivot.y = pivot_y;
+		p = &pivot;
+	}
+
+	if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, flip) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;

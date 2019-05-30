@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="isometric" renderorder="right-down" width="80" height="90" tilewidth="60" tileheight="29" nextobjectid="610">
+<map version="1.0" orientation="isometric" renderorder="right-down" width="80" height="90" tilewidth="60" tileheight="29" nextobjectid="612">
  <tileset firstgid="1" name="Terrain" tilewidth="60" tileheight="29" tilecount="195" columns="15">
   <image source="terrain.png" width="900" height="377"/>
  </tileset>
@@ -14663,5 +14663,8 @@
  </objectgroup>
  <objectgroup name="soviet_flag">
   <object id="65" x="580" y="493" width="29" height="29"/>
+ </objectgroup>
+ <objectgroup name="center_tile">
+  <object id="611" x="1160" y="1450" width="29" height="29"/>
  </objectgroup>
 </map>

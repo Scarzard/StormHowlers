@@ -120,8 +120,15 @@ public:
 
 	//list<decoration_coordinates*> dec_coords_list; 
 
+	UI_Element* life_bar_p1;
+	UI_Element* life_bar_p2;
+
 	//testing animation
 	SDL_Texture* spritesheet123 = nullptr;
+
+	SDL_Rect life_bar_green;
+	SDL_Rect life_bar_yellow;
+	SDL_Rect life_bar_red;
 
 //timer elements
 	UI_Element* ui_timer = nullptr;
