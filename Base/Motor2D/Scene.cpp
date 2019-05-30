@@ -68,10 +68,10 @@ bool Scene::Start()
 
 
 	App->map->Load(map_names.front()->data());
+	App->render->WindowResized();
+
 	//current_track = App->audio->tracks_path.front();
 	//App->audio->PlayMusic(PATH(App->audio->folder_music.data(), current_track.data()));
-	//App->render->zoom = 0.77;
-	App->render->WindowResized();
 
 	allied_win_tex = App->tex->Load(allied_win_name.data());
 	soviet_win_tex = App->tex->Load(soviet_win_name.data());
@@ -158,12 +158,15 @@ bool Scene::Start()
 	ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, {800, 0 }, { 0, 0 }, nullptr, true, { false, false }, "Timer: 0s");
 	ui_timer->color = { 250,250,250,250 };
 
+
+
+
 	//--- PLAYER 1
 	//App->player1->Health_UI = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true);
 	//App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { x,y }, { w,h }, nullptr, true, { false,false }, "$");
 
 	
-
+	
 	App->player1->Main_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { main_ui_x ,main_ui_y }, { 566,163 }, nullptr, true);
 	App->player1->Main_UI->rect = { 0, 408, 566, 163 };
 	App->player1->Build_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_BUILD, { 241,50 }, { 79, 81 }, App->player1->Main_UI, true);
@@ -744,10 +747,16 @@ bool Scene::Start()
 	world_seconds.Start();
 	size_timer.Start();
 
+	App->player1->Info_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { main_ui_x,main_ui_y }, { 566, 163 }, nullptr, true);
+	App->player2->Info_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, true);
+	App->player1->Info_img = App->gui->AddUIElement(true, UI_Element::UI_type::INFO_P1, UI_Element::Action::NONE, { 0,0 }, { 39, 39 }, App->player1->Info_UI, true, { false,false });
+	App->player2->Info_img = App->gui->AddUIElement(false, UI_Element::UI_type::INFO_P2, UI_Element::Action::NONE, { 0,163 }, { 39, 39 }, App->player2->Info_UI, true);
+
 
 	App->player1->UpdateFocus(App->player1->currentUI);
 	App->player2->UpdateFocus(App->player2->currentUI);
 	
+	App->render->WindowResized();
 
 	return true;
 }

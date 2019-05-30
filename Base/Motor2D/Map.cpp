@@ -589,6 +589,7 @@ bool Map::LoadMap()
 			{
 				data.center_tile.first = mapIterator.child("object").attribute("x").as_int() / data.tile_height;
 				data.center_tile.second = mapIterator.child("object").attribute("y").as_int() / data.tile_height;
+				data.center_tile = App->map->MapToWorld(App->map->data.center_tile.first, App->map->data.center_tile.second);
 				//data.center_tile = MapToWorld(data.center_tile.first, data.center_tile.second);
 			}
 		}

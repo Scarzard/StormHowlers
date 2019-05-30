@@ -93,10 +93,10 @@ void Render::WindowResized() {
 	viewport.w = camera.w;
 	viewport.h = camera.h;
 
-	//pair<int,int> camera_pos = App->map->MapToWorld(App->map->data.center_tile.first, App->map->data.center_tile.second);
 
-	//camera.x = camera_pos.first;//App->map->data.center_tile.first - camera.w/2;
-	//camera.y = camera_pos.second; //App->map->data.center_tile.second - camera.y/2;
+	// Centering the camera
+	camera.x = -(App->map->data.center_tile.first*zoom - camera.w/2);
+	camera.y = -(App->map->data.center_tile.second*zoom - camera.h/2);
 
 	if (App->main_menu->active) {
 		zoom = (float)viewport.w / 1680.0f;
@@ -107,7 +107,8 @@ void Render::WindowResized() {
 	
 	//Readjust all the necessary things
 	if (App->player1->Main_UI != nullptr) {
-		App->player1->Main_UI->globalpos.second = (App->win->height / App->render->zoom) - 163;
+		App->player1->Main_UI->globalpos.second = (App->win->height / App->render->zoom) - 163*zoom;
+		//App->player1->Info_UI->globalpos.second = (App->win->height / App->render->zoom) - 75*zoom;
 	}
 
 }
@@ -201,6 +202,15 @@ pair<int, int> Render::WorldtoScreen(int x, int y) const
 	int scale = App->win->GetScale();
 	ret.first = (x + camera.x / scale);
 	ret.second = (y + camera.y / scale);
+	return ret;
+}
+
+pair<int, int> Render::WorldtoScreen(pair<int,int> pos) const
+{
+	pair<int, int> ret;
+	int scale = App->win->GetScale();
+	ret.first = (pos.first + camera.x / scale);
+	ret.second = (pos.second + camera.y / scale);
 	return ret;
 }
 

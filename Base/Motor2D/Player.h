@@ -165,6 +165,13 @@ public:
 	SDL_Rect* current_life_bar;
 	int health, max_health = 0;
 
+	//Info
+	UI_Element* Info_img;
+	UI_Element* Info_UI;
+	SDL_Rect section;
+	bool show_info = true;
+
+
 	//index for testing previews
 	int curr = 1;
 	int deploying_counter = 0;

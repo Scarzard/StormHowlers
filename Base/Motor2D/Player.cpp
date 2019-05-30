@@ -128,15 +128,11 @@ bool Player::Update(float dt)
 	if (!App->scene->endgame)
 	{
 
-		if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) {
-			std::list <Troop*>::const_iterator unit = troops.begin();
-			while (unit != troops.end()) {
-				if ((*unit)->isSelected) {
-					(*unit)->health = -1;
-				}
-				unit++;
-			}
+		if (gamepad.Controller[BACK] == KEY_DOWN)
+		{
+			show_info = !show_info;
 		}
+
 
 		//Preview all player1 entities with M
 		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) 
@@ -1388,6 +1384,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = false;
+		if (show_info) Info_UI->visible = true;
 		break;
 	case::Player::CURRENT_UI::CURR_MAIN:
 		Main_UI->visible = true;
@@ -1400,6 +1397,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = false;
+		if (show_info) Info_UI->visible = true;
 		break;
 
 	case::Player::CURRENT_UI::CURR_BUILD:
@@ -1413,6 +1411,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = false;
+		if (show_info) Info_UI->visible = true;
 		break;
 
 	case::Player::CURRENT_UI::CURR_DEPLOY:
@@ -1426,6 +1425,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = false;
+		if (show_info) Info_UI->visible = true;
 		break;
 
 	case::Player::CURRENT_UI::CURR_CAST:
@@ -1439,6 +1439,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = false;
+		if (show_info) Info_UI->visible = true;
 		break;
 
 	case::Player::CURRENT_UI::CURR_GENERAL:
@@ -1452,6 +1453,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = true;
 		Create_Troops_UI->visible = false;
+		if (show_info) Info_UI->visible = true;
 
 		break;
 
@@ -1467,6 +1469,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = true;
+		if (show_info) Info_UI->visible = true;
 
 		break;
 
@@ -1482,6 +1485,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = true;
+		if (show_info) Info_UI->visible = true;
 
 		break;
 
@@ -1496,6 +1500,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = false;
+		Info_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_PAUSE_SETTINGS:
@@ -1509,6 +1514,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = false;
+		Info_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_PAUSE_ABORT:
@@ -1522,6 +1528,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = false;
+		Info_UI->visible = false;
 		break;
 	case::Player::CURRENT_UI::CURR_WIN_SCREEN:
 		Main_UI->visible = false;
@@ -1544,6 +1551,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		SelectBuilding->visible = false;
 		In_SelectBuilding->visible = false;
 		draw_screen->visible = false;
+		Info_UI->visible = false;
 		break;
 	case::Player::CURRENT_UI::ENDGAME: //Dont show the other player win screen
 		Main_UI->visible = false;
@@ -1567,6 +1575,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		SelectBuilding->visible = false;
 		In_SelectBuilding->visible = false;
 		draw_screen->visible = false;
+		Info_UI->visible = false;
 
 	case::Player::CURRENT_UI::DRAW: //Dont show the other player win screen
 		Main_UI->visible = false;
@@ -1590,6 +1599,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		SelectBuilding->visible = false;
 		In_SelectBuilding->visible = false;
 		draw_screen->visible = true;
+		Info_UI->visible = false;
 		break;
 
 	case::Player::CURRENT_UI::CURR_MAIN_MENU:
@@ -2096,7 +2106,7 @@ void Player::UpdateGeneralUI(Entity* building)
 
 void Player::Blit_Info()
 {
-	SDL_Rect section;
+	
 	SDL_Rect sec2 = { -1079, 668, 341, 20 };
 
 	if ((*focus) == Def_AOE_icon)
@@ -2196,15 +2206,17 @@ void Player::Blit_Info()
 		
 	}
 
+	if(Info_img != nullptr)
+		Info_img->rect = section;
 	
 	if (isPlayer1)
 	{
-		App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
+		//App->render->Blit(App->gui->GetAtlas(), 470, 1590, &section);
 	}
 	else
 	{
-		App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
-		App->render->DrawQuad(sec2, 0, 0, 0, 220);
+		//App->render->Blit(App->gui->GetAtlas(), -1090, 690, &section);
+		//App->render->DrawQuad(sec2, 0, 0, 0, 220);
 	}
 
 	

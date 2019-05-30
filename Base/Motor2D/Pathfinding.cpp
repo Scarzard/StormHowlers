@@ -94,6 +94,11 @@ bool Pathfinding::Update(float dt)
 		SetInfoLabel();
 
 	}
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
+		draw_dir_map = !draw_dir_map;
+		//SetInfoLabel();
+
+	}
 	//testing
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
 		for (int i = 16; i < 64; i++) {
@@ -260,25 +265,27 @@ CellInfo* Pathfinding::GetCellDefense(pair<int, int> pos, Entity::entityType typ
 }
 void Pathfinding::DrawDirMap() {
 
+	if (draw_dir_map) {
 
-	if (draw_attack) {
+		if (draw_attack) {
 
-		for (int i = 16; i < 64; i++) {
-			for (int j = 10; j < App->map->data.height-9; j++) {
-				TroopDir t = GetDirAttack(i, j, (Entity::entityType)draw_type, draw_p1_map);
-				if (t == MAX_DIR) continue;
-				pair<int,int> pos = App->map->MapToWorld(i, j);
-				App->render->Blit(debug_tex, pos.first, pos.second, &debug_rects[t], SDL_FLIP_NONE);
+			for (int i = 16; i < 64; i++) {
+				for (int j = 10; j < App->map->data.height-9; j++) {
+					TroopDir t = GetDirAttack(i, j, (Entity::entityType)draw_type, draw_p1_map);
+					if (t == MAX_DIR) continue;
+					pair<int,int> pos = App->map->MapToWorld(i, j);
+					App->render->Blit(debug_tex, pos.first, pos.second, &debug_rects[t], SDL_FLIP_NONE);
+				}
 			}
 		}
-	}
-	else {
-		for (int i = 16; i < 64; i++) {
-			for (int j = 10; j < App->map->data.height-9; j++) {
-				TroopDir t = GetDirDefense(i, j, (Entity::entityType)draw_type, draw_p1_map);
-				if (t == MAX_DIR) continue;
-				pair<int, int> pos = App->map->MapToWorld(i, j);
-				App->render->Blit(debug_tex, pos.first, pos.second, &debug_rects[t], SDL_FLIP_NONE);
+		else {
+			for (int i = 16; i < 64; i++) {
+				for (int j = 10; j < App->map->data.height-9; j++) {
+					TroopDir t = GetDirDefense(i, j, (Entity::entityType)draw_type, draw_p1_map);
+					if (t == MAX_DIR) continue;
+					pair<int, int> pos = App->map->MapToWorld(i, j);
+					App->render->Blit(debug_tex, pos.first, pos.second, &debug_rects[t], SDL_FLIP_NONE);
+				}
 			}
 		}
 	}

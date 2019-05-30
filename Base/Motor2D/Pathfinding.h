@@ -139,6 +139,7 @@ private:
 	vector<CellInfo*> dirMap_p1;
 	vector<CellInfo*> dirMap_p2;
 
+	bool draw_dir_map = false;
 	bool draw_p1_map = true;
 	bool draw_attack = true;
 	//Entity::entityType draw_type = Entity::entityType::SOLDIER;

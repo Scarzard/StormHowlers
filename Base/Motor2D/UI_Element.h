@@ -25,7 +25,9 @@ public:
 		WINDOW,
 		TEXTURE,
 		LIFEBAR_P1,
-		LIFEBAR_P2
+		LIFEBAR_P2,
+		INFO_P1,
+		INFO_P2
 	};
 
 	enum Action
@@ -151,7 +153,7 @@ public:
 	bool visible = true;
 	bool locked = false;
 	bool dragging = false;
-
+	bool fromPlayer1;
 	UI_Element* parent;
 	list<UI_Element*> children;
 
