@@ -23,6 +23,8 @@ class Gui;
 class Player;
 class MovementManager;
 class j1TransitionManager;
+class Video;
+class IntroScene;
 
 class MainApp
 {
@@ -103,6 +105,8 @@ public:
 	Player*					player2 = NULL;
 	MovementManager*		move_manager = NULL;
 	j1TransitionManager*	transitions = NULL;
+	Video*			video_manager = NULL;
+	IntroScene*		intro = NULL;
 
 	bool			fpsCapON = true;
 	bool			vsyncON = false;

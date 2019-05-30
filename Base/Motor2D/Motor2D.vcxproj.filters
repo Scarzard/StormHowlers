@@ -124,6 +124,15 @@
     <ClCompile Include="Squares.cpp">
       <Filter>Desenvolupament  ========\Transitions</Filter>
     </ClCompile>
+    <ClCompile Include="IntroScene.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="VideoManager.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="theoraplay.c">
+      <Filter>Desenvolupament  ========</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PugiXml\src\pugiconfig.hpp">
@@ -269,6 +278,15 @@
     </ClInclude>
     <ClInclude Include="Squares.h">
       <Filter>Desenvolupament  ========\Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="VideoManager.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="theoraplay.h">
+      <Filter>Desenvolupament  ========</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

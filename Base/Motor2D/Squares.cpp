@@ -2,6 +2,7 @@
 #include "Squares.h"
 #include "Scene.h"
 #include "MainMenu.h"
+#include "IntroScene.h"
 #include "App.h"
 #include "Window.h"
 #include "Transitions.h"
@@ -68,8 +69,10 @@ void Squares::Change()
 
 	if (App->scene->active)
 		App->scenechange->SwitchScene(App->main_menu, App->scene);
-	else
+	else if(App->main_menu->active)
 		App->scenechange->SwitchScene(App->scene, App->main_menu);
+	else if (App->intro->active)
+		App->scenechange->SwitchScene(App->main_menu, App->intro);
 
 	j1Transitions::Change();
 }
