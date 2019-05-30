@@ -831,46 +831,46 @@ void Infiltrator::ChangeAnimation(TroopDir facing, bool pathfind) {
 
 void Infiltrator::LoadAnimations(bool isPlayer1, string path)
 {
-	BROFILER_CATEGORY("Infiltrator Load Animations", Profiler::Color::Blue);
-	moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
-	shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+	//BROFILER_CATEGORY("Infiltrator Load Animations", Profiler::Color::Blue);
+	//moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+	//shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
 
-	idle = idle->LoadAnimation(path.data(), (isPlayer1) ? "red_idle" : "blue_idle");
+	//idle = idle->LoadAnimation(path.data(), (isPlayer1) ? "red_idle" : "blue_idle");
 
-	moving[NORTH] = moving[NORTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_north" : "blue_north");
-	moving[SOUTH] = moving[SOUTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_south" : "blue_south");
-	moving[EAST] = moving[EAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_east" : "blue_east");
-	moving[WEST] = moving[WEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_west" : "blue_west");
-	moving[NORTHEAST] = moving[NORTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_northeast" : "blue_northeast");
-	moving[NORTHWEST] = moving[NORTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_northwest" : "blue_northwest");
-	moving[SOUTHEAST] = moving[SOUTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_southeast" : "blue_southeast");
-	moving[SOUTHWEST] = moving[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_southwest" : "blue_southwest");
+	//moving[NORTH] = moving[NORTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_north" : "blue_north");
+	//moving[SOUTH] = moving[SOUTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_south" : "blue_south");
+	//moving[EAST] = moving[EAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_east" : "blue_east");
+	//moving[WEST] = moving[WEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_west" : "blue_west");
+	//moving[NORTHEAST] = moving[NORTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_northeast" : "blue_northeast");
+	//moving[NORTHWEST] = moving[NORTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_northwest" : "blue_northwest");
+	//moving[SOUTHEAST] = moving[SOUTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_southeast" : "blue_southeast");
+	//moving[SOUTHWEST] = moving[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_southwest" : "blue_southwest");
 
-	shooting[NORTH] = shooting[NORTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_N" : "blue_shoot_N");
-	shooting[SOUTH] = shooting[SOUTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_S" : "blue_shoot_S");
-	shooting[EAST] = shooting[EAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_E" : "blue_shoot_E");
-	shooting[WEST] = shooting[WEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_W" : "blue_shoot_W");
-	shooting[NORTHEAST] = shooting[NORTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_NE" : "blue_shoot_NE");
-	shooting[NORTHWEST] = shooting[NORTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_NW" : "blue_shoot_NW");
-	shooting[SOUTHEAST] = shooting[SOUTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_SE" : "blue_shoot_SE");
-	shooting[SOUTHWEST] = shooting[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_SW" : "blue_shoot_SW");
+	//shooting[NORTH] = shooting[NORTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_N" : "blue_shoot_N");
+	//shooting[SOUTH] = shooting[SOUTH]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_S" : "blue_shoot_S");
+	//shooting[EAST] = shooting[EAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_E" : "blue_shoot_E");
+	//shooting[WEST] = shooting[WEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_W" : "blue_shoot_W");
+	//shooting[NORTHEAST] = shooting[NORTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_NE" : "blue_shoot_NE");
+	//shooting[NORTHWEST] = shooting[NORTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_NW" : "blue_shoot_NW");
+	//shooting[SOUTHEAST] = shooting[SOUTHEAST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_SE" : "blue_shoot_SE");
+	//shooting[SOUTHWEST] = shooting[SOUTHWEST]->LoadAnimation(path.data(), (isPlayer1) ? "red_shoot_SW" : "blue_shoot_SW");
 
-	for (int i = NORTH; i <= SOUTHWEST; i++) {
-		moving[i]->speed = 10;
-		shooting[i]->speed = 6;
-	}
+	//for (int i = NORTH; i <= SOUTHWEST; i++) {
+	//	moving[i]->speed = 10;
+	//	shooting[i]->speed = 6;
+	//}
 
-	idle->speed = 0;
-	if (fromPlayer1)
-	{
-		idle->SetCurrentFrame(2);
-	}
-	else
-	{
-		idle->SetCurrentFrame(6);
-	}
-	Current_Animation = moving[NORTH];
+	//idle->speed = 0;
+	//if (fromPlayer1)
+	//{
+	//	idle->SetCurrentFrame(2);
+	//}
+	//else
+	//{
+	//	idle->SetCurrentFrame(6);
+	//}
+	//Current_Animation = moving[NORTH];
 }
 
 Entity* Infiltrator::FindEntityInAttackRange(pair <int, int> pos, bool fromplayer1, int attackrange, entityType desiredtype, int zone)

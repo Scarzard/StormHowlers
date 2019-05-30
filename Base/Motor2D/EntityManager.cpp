@@ -268,6 +268,42 @@ bool EntityManager::LoadSamples() {
 
 	// END HOUND -------------
 
+	// SPY
+
+	path = "animation/infiltrator.tmx"; 
+
+	infiltrator_p1_sample.moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+	infiltrator_p1_sample.shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+
+	infiltrator_p1_sample.idle = infiltrator_p1_sample.idle->LoadAnimation(path.data(), "idle");
+
+	infiltrator_p1_sample.moving[NORTH] = infiltrator_p1_sample.moving[NORTH]->LoadAnimation(path.data(), "run_N");
+	infiltrator_p1_sample.moving[SOUTH] = infiltrator_p1_sample.moving[SOUTH]->LoadAnimation(path.data(), "run_S");
+	infiltrator_p1_sample.moving[EAST] = infiltrator_p1_sample.moving[EAST]->LoadAnimation(path.data(), "run_E");
+	infiltrator_p1_sample.moving[WEST] = infiltrator_p1_sample.moving[WEST]->LoadAnimation(path.data(), "run_W");
+	infiltrator_p1_sample.moving[NORTHEAST] = infiltrator_p1_sample.moving[NORTHEAST]->LoadAnimation(path.data(), "run_NE");
+	infiltrator_p1_sample.moving[NORTHWEST] = infiltrator_p1_sample.moving[NORTHWEST]->LoadAnimation(path.data(), "run_NW");
+	infiltrator_p1_sample.moving[SOUTHEAST] = infiltrator_p1_sample.moving[SOUTHEAST]->LoadAnimation(path.data(), "run_SE");
+	infiltrator_p1_sample.moving[SOUTHWEST] = infiltrator_p1_sample.moving[SOUTHWEST]->LoadAnimation(path.data(), "run_SW");
+
+	infiltrator_p1_sample.shooting[NORTH] = infiltrator_p1_sample.shooting[NORTH]->LoadAnimation(path.data(), "searching_N");
+	infiltrator_p1_sample.shooting[SOUTH] = infiltrator_p1_sample.shooting[SOUTH]->LoadAnimation(path.data(), "searching_S");
+	infiltrator_p1_sample.shooting[EAST] = infiltrator_p1_sample.shooting[EAST]->LoadAnimation(path.data(), "searching_E");
+	infiltrator_p1_sample.shooting[WEST] = infiltrator_p1_sample.shooting[WEST]->LoadAnimation(path.data(), "searching_W");
+	infiltrator_p1_sample.shooting[NORTHEAST] = infiltrator_p1_sample.shooting[NORTHEAST]->LoadAnimation(path.data(), "searching_N");
+	infiltrator_p1_sample.shooting[NORTHWEST] = infiltrator_p1_sample.shooting[NORTHWEST]->LoadAnimation(path.data(), "searching_N");
+	infiltrator_p1_sample.shooting[SOUTHEAST] = infiltrator_p1_sample.shooting[SOUTHEAST]->LoadAnimation(path.data(), "searching_S");
+	infiltrator_p1_sample.shooting[SOUTHWEST] = infiltrator_p1_sample.shooting[SOUTHWEST]->LoadAnimation(path.data(), "searching_S");
+
+	for (int i = NORTH; i <= SOUTHWEST; i++) {
+		infiltrator_p1_sample.moving[i]->speed = 2;
+		infiltrator_p1_sample.shooting[i]->speed = 2;
+	}
+
+	infiltrator_p1_sample.idle->speed = 0;
+	infiltrator_p1_sample.idle->SetCurrentFrame(2);
+	infiltrator_p1_sample.Current_Animation = infiltrator_p1_sample.moving[NORTH];
+
 	return true;
 }
 bool EntityManager::Start()
@@ -996,11 +1032,11 @@ void EntityManager::LoadAnimations(Troop* troop) {
 		break;
 	case Entity::entityType::TANKMAN:
 		sample = (troop->fromPlayer1) ? (Soldier*)&soldier_p2_sample : (Soldier*)&soldier_p1_sample;
-		//sample = (troop->fromPlayer1) ? (Tankman*)&soldier_p1_sample : (Tankman*)&soldier_p2_sample;
+		//sample = (troop->fromPlayer1) ? (Tankman*)&tankman_p2_sample : (Tankman*)&tankman_p2_sample;
 		break;
 	case Entity::entityType::INFILTRATOR:
-		//sample = (troop->fromPlayer1) ? (Infiltrator*)&infiltrator_p1_sample : (Infiltrator*)&infiltrator_p2_sample;
-		sample = (troop->fromPlayer1) ? (Soldier*)&soldier_p2_sample : (Soldier*)&soldier_p1_sample;
+		sample = (troop->fromPlayer1) ? (Infiltrator*)&infiltrator_p1_sample : (Infiltrator*)&infiltrator_p1_sample;
+		//sample = (troop->fromPlayer1) ? (Soldier*)&soldier_p2_sample : (Soldier*)&soldier_p1_sample;
 		break;
 	case Entity::entityType::ENGINEER:
 		sample = (troop->fromPlayer1) ? (Engineer*)&engineer_p2_sample : (Engineer*)&engineer_p1_sample;
