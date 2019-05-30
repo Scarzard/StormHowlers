@@ -11,6 +11,7 @@
 #include "Brofiler\Brofiler.h"
 #include "MainMenu.h"
 #include "IntroScene.h"
+#include "Audio.h"
 #include <math.h>
 #include "SDL\include\SDL_render.h"
 
@@ -58,6 +59,7 @@ bool Transitions::Update(float dt)
 		{
 			if (intro == true)
 			{
+				App->audio->RestartAudio();
 				/*App->audio->CleanUp();
 				App->audio->Start();*/
 				intro = false;

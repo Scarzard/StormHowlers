@@ -312,3 +312,36 @@ void Audio::FadeIn()
 	if (musicVolume >= musicVolume)
 		fading_in = false;
 }
+
+void Audio::RestartAudio()
+{
+	Mix_CloseAudio();
+	Mix_Quit();
+	SDL_CloseAudio();
+
+	SDL_QuitSubSystem(SDL_INIT_AUDIO);
+
+	LOG("Loading Audio Mixer");
+
+	if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
+	{
+		LOG("SDL_INIT_AUDIO could not initialize! SDL_Error: %s\n", SDL_GetError());
+		active = false;
+	}
+
+	int flags = MIX_INIT_OGG;
+	int init = Mix_Init(flags);
+
+	if ((init & flags) != flags)
+	{
+		LOG("Could not initialize Mixer lib. Mix_Init: %s", Mix_GetError());
+		active = false;
+	}
+
+	//Initialize SDL_mixer
+	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	{
+		LOG("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+		active = false;
+	}
+}
