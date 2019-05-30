@@ -88,6 +88,7 @@
     <ClCompile Include="Group.cpp" />
     <ClCompile Include="Hound.cpp" />
     <ClCompile Include="Infiltrator.cpp" />
+    <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="j1Color.cpp" />
     <ClCompile Include="j1TransitionManager.cpp" />
     <ClCompile Include="j1Transitions.cpp" />
@@ -112,12 +113,14 @@
     <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="Squares.cpp" />
     <ClCompile Include="Tankman.cpp" />
+    <ClCompile Include="theoraplay.c" />
     <ClCompile Include="Townhall.cpp" />
     <ClCompile Include="Transitions.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="Textures.cpp" />
+    <ClCompile Include="VideoManager.cpp" />
     <ClCompile Include="Walls.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
@@ -132,6 +135,7 @@
     <ClInclude Include="Group.h" />
     <ClInclude Include="Hound.h" />
     <ClInclude Include="Infiltrator.h" />
+    <ClInclude Include="IntroScene.h" />
     <ClInclude Include="j1Color.h" />
     <ClInclude Include="j1TransitionManager.h" />
     <ClInclude Include="j1Transitions.h" />
@@ -153,6 +157,7 @@
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="Squares.h" />
     <ClInclude Include="Tankman.h" />
+    <ClInclude Include="theoraplay.h" />
     <ClInclude Include="Townhall.h" />
     <ClInclude Include="Transitions.h" />
     <ClInclude Include="Timer.h" />
@@ -166,6 +171,7 @@
     <ClInclude Include="Render.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Troop.h" />
+    <ClInclude Include="VideoManager.h" />
     <ClInclude Include="Walls.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />

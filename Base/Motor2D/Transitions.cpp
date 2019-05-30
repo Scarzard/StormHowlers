@@ -10,6 +10,7 @@
 #include "Gui.h"
 #include "Brofiler\Brofiler.h"
 #include "MainMenu.h"
+#include "IntroScene.h"
 #include <math.h>
 #include "SDL\include\SDL_render.h"
 
@@ -46,15 +47,21 @@ bool Transitions::Update(float dt)
 	{
 		return true;
 	}
-	else if (current_step == fade_step::fade_from_black)
+	else if (current_step == fade_step::fade_from_black && to_enable == App->scene)
 	{
-		App->main_menu->menu_background->visible = false;
+		if (App->main_menu->active)
+			App->main_menu->menu_background->visible = false;
 	}
 	switch (current_step)
 	{
 		case fade_step::fade_to_black:
 		{
-	
+			if (intro == true)
+			{
+				/*App->audio->CleanUp();
+				App->audio->Start();*/
+				intro = false;
+			}
 			if (map == true)
 			{
 			
@@ -66,6 +73,20 @@ bool Transitions::Update(float dt)
 				fading = false;
 				current_step = fade_step::fade_from_black;
 			
+			}
+			else if (main_menu_in == true)
+			{
+
+				to_enable->Enable();
+				App->gui->Start();
+				to_enable->Enable();
+
+
+				App->main_menu->menu_background->visible = true;
+
+				fading = false;
+				current_step = fade_step::fade_from_black;
+				
 			}
 			else if (scene == true)
 			{
@@ -95,7 +116,6 @@ bool Transitions::Update(float dt)
 				}
 
 				current_step = fade_step::fade_from_black;
-				current_step = fade_step::fade_from_black;
 			
 			}
 			else
@@ -124,12 +144,16 @@ bool Transitions::Update(float dt)
 					main_menu = false;
 		
 			}
+			else if (main_menu_in == true)
+			{
+				
+				current_step = fade_step::none;
+				main_menu_in = false;
+				
+			}
 			else
 			{
-
-			
-					current_step = fade_step::none;
-			
+				current_step = fade_step::none;
 			}
 		}
 		break;
@@ -143,7 +167,7 @@ bool Transitions::ChangeMap(int newMap, float time)
 	bool ret = false;
 	if (newMap != -1)
 	{
-	nextMap = newMap;
+		nextMap = newMap;
 	}
 
 	//map = true;
@@ -167,6 +191,15 @@ bool Transitions::IsChanging() const
 bool Transitions::SwitchScene(Module* SceneIn, Module* SceneOut)
 {
 	bool ret = false;
+
+	if (SceneOut == App->intro)
+	{
+		intro = true;
+	}
+	if (SceneIn == App->intro)
+	{
+		scene = true;
+	}
 	if (SceneIn == App->scene)
 	{
 		scene = true;
@@ -175,6 +208,11 @@ bool Transitions::SwitchScene(Module* SceneIn, Module* SceneOut)
 	{
 		main_menu = true;
 	}
+	if (SceneIn == App->main_menu)
+	{
+		main_menu_in = true;
+	}
+
 	if (current_step == fade_step::none)
 	{
 		current_step = fade_step::fade_to_black;

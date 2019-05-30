@@ -60,6 +60,9 @@ private:
 	bool scene = false;
 	bool main_menu = false;
 
+	bool intro = false;
+	bool main_menu_in = false;
+
 };
 
 #endif // __Transitions_H__
