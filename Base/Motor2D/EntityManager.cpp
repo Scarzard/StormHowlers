@@ -119,6 +119,74 @@ bool EntityManager::LoadSamples() {
 	soldier_p2_sample.idle->SetCurrentFrame(2);
 	soldier_p2_sample.Current_Animation = soldier_p2_sample.moving[NORTH];
 
+	// Soldier 1 inmune
+
+	soldier_p1_inmune.moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+	soldier_p1_inmune.shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+
+	soldier_p1_inmune.idle = soldier_p1_inmune.idle->LoadAnimation(path.data(), "red_inv_idle");
+
+	soldier_p1_inmune.moving[NORTH] = soldier_p1_inmune.moving[NORTH]->LoadAnimation(path.data(), "red_inv_N");
+	soldier_p1_inmune.moving[SOUTH] = soldier_p1_inmune.moving[SOUTH]->LoadAnimation(path.data(), "red_inv_S");
+	soldier_p1_inmune.moving[EAST] = soldier_p1_inmune.moving[EAST]->LoadAnimation(path.data(), "red_inv_E");
+	soldier_p1_inmune.moving[WEST] = soldier_p1_inmune.moving[WEST]->LoadAnimation(path.data(), "red_inv_W");
+	soldier_p1_inmune.moving[NORTHEAST] = soldier_p1_inmune.moving[NORTHEAST]->LoadAnimation(path.data(), "red_inv_NE");
+	soldier_p1_inmune.moving[NORTHWEST] = soldier_p1_inmune.moving[NORTHWEST]->LoadAnimation(path.data(), "red_inv_NW");
+	soldier_p1_inmune.moving[SOUTHEAST] = soldier_p1_inmune.moving[SOUTHEAST]->LoadAnimation(path.data(), "red_inv_SE");
+	soldier_p1_inmune.moving[SOUTHWEST] = soldier_p1_inmune.moving[SOUTHWEST]->LoadAnimation(path.data(), "red_inv_SW");
+
+	soldier_p1_inmune.shooting[NORTH] = soldier_p1_inmune.shooting[NORTH]->LoadAnimation(path.data(), "red_inv_shoot_N");
+	soldier_p1_inmune.shooting[SOUTH] = soldier_p1_inmune.shooting[SOUTH]->LoadAnimation(path.data(), "red_inv_shoot_S");
+	soldier_p1_inmune.shooting[EAST] = soldier_p1_inmune.shooting[EAST]->LoadAnimation(path.data(), "red_inv_shoot_E");
+	soldier_p1_inmune.shooting[WEST] = soldier_p1_inmune.shooting[WEST]->LoadAnimation(path.data(), "red_inv_shoot_W");
+	soldier_p1_inmune.shooting[NORTHEAST] = soldier_p1_inmune.shooting[NORTHEAST]->LoadAnimation(path.data(), "red_inv_shoot_NE");
+	soldier_p1_inmune.shooting[NORTHWEST] = soldier_p1_inmune.shooting[NORTHWEST]->LoadAnimation(path.data(), "red_inv_shoot_NW");
+	soldier_p1_inmune.shooting[SOUTHEAST] = soldier_p1_inmune.shooting[SOUTHEAST]->LoadAnimation(path.data(), "red_inv_shoot_SE");
+	soldier_p1_inmune.shooting[SOUTHWEST] = soldier_p1_inmune.shooting[SOUTHWEST]->LoadAnimation(path.data(), "red_inv_shoot_SW");
+
+	for (int i = NORTH; i <= SOUTHWEST; i++) {
+		soldier_p1_inmune.moving[i]->speed = 2;
+		soldier_p1_inmune.shooting[i]->speed = 2;
+	}
+
+	soldier_p1_inmune.idle->speed = 0;
+	soldier_p1_inmune.idle->SetCurrentFrame(2);
+	soldier_p1_inmune.Current_Animation = soldier_p1_inmune.moving[NORTH];
+
+	//Soldier 2 inmune 
+
+	soldier_p2_inmune.moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+	soldier_p2_inmune.shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+
+	soldier_p2_inmune.idle = soldier_p2_inmune.idle->LoadAnimation(path.data(), "blue_inv_idle");
+
+	soldier_p2_inmune.moving[NORTH] = soldier_p2_inmune.moving[NORTH]->LoadAnimation(path.data(), "blue_inv_N");
+	soldier_p2_inmune.moving[SOUTH] = soldier_p2_inmune.moving[SOUTH]->LoadAnimation(path.data(), "blue_inv_S");
+	soldier_p2_inmune.moving[EAST] = soldier_p2_inmune.moving[EAST]->LoadAnimation(path.data(), "blue_inv_E");
+	soldier_p2_inmune.moving[WEST] = soldier_p2_inmune.moving[WEST]->LoadAnimation(path.data(), "blue_inv_W");
+	soldier_p2_inmune.moving[NORTHEAST] = soldier_p2_inmune.moving[NORTHEAST]->LoadAnimation(path.data(), "blue_inv_NE");
+	soldier_p2_inmune.moving[NORTHWEST] = soldier_p2_inmune.moving[NORTHWEST]->LoadAnimation(path.data(), "blue_inv_NW");
+	soldier_p2_inmune.moving[SOUTHEAST] = soldier_p2_inmune.moving[SOUTHEAST]->LoadAnimation(path.data(), "blue_inv_SE");
+	soldier_p2_inmune.moving[SOUTHWEST] = soldier_p2_inmune.moving[SOUTHWEST]->LoadAnimation(path.data(), "blue_inv_SW");
+
+	soldier_p2_inmune.shooting[NORTH] = soldier_p2_inmune.shooting[NORTH]->LoadAnimation(path.data(), "blue_inv_shoot_N");
+	soldier_p2_inmune.shooting[SOUTH] = soldier_p2_inmune.shooting[SOUTH]->LoadAnimation(path.data(), "blue_inv_shoot_S");
+	soldier_p2_inmune.shooting[EAST] = soldier_p2_inmune.shooting[EAST]->LoadAnimation(path.data(), "blue_inv_shoot_E");
+	soldier_p2_inmune.shooting[WEST] = soldier_p2_inmune.shooting[WEST]->LoadAnimation(path.data(), "blue_inv_shoot_W");
+	soldier_p2_inmune.shooting[NORTHEAST] = soldier_p2_inmune.shooting[NORTHEAST]->LoadAnimation(path.data(), "blue_inv_shoot_NE");
+	soldier_p2_inmune.shooting[NORTHWEST] = soldier_p2_inmune.shooting[NORTHWEST]->LoadAnimation(path.data(), "blue_inv_shoot_NW");
+	soldier_p2_inmune.shooting[SOUTHEAST] = soldier_p2_inmune.shooting[SOUTHEAST]->LoadAnimation(path.data(), "blue_inv_shoot_SE");
+	soldier_p2_inmune.shooting[SOUTHWEST] = soldier_p2_inmune.shooting[SOUTHWEST]->LoadAnimation(path.data(), "blue_inv_shoot_SW");
+
+	for (int i = NORTH; i <= SOUTHWEST; i++) {
+		soldier_p2_inmune.moving[i]->speed = 2;
+		soldier_p2_inmune.shooting[i]->speed = 2;
+	}
+
+	soldier_p2_inmune.idle->speed = 0;
+	soldier_p2_inmune.idle->SetCurrentFrame(2);
+	soldier_p2_inmune.Current_Animation = soldier_p2_inmune.moving[NORTH];
+
 	// END SOLDIER -------------------------
 
 	

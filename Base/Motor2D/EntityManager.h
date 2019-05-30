@@ -88,6 +88,8 @@ public:
 public:
 	Soldier			soldier_p1_sample;
 	Soldier			soldier_p2_sample;
+	Soldier			soldier_p2_inmune;
+	Soldier			soldier_p1_inumne; 
 
 	//To LoadSample
 	Tankman			tankman_p1_sample;
