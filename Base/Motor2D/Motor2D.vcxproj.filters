@@ -28,9 +28,6 @@
     <ClCompile Include="Render.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Transitions.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
@@ -112,6 +109,30 @@
     <ClCompile Include="Hound.cpp">
       <Filter>Desenvolupament  ========\Entities\Troops</Filter>
     </ClCompile>
+    <ClCompile Include="Transitions.cpp">
+      <Filter>Desenvolupament  ========\Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Color.cpp">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="j1TransitionManager.cpp">
+      <Filter>Desenvolupament  ========\Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Transitions.cpp">
+      <Filter>Desenvolupament  ========\Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="Squares.cpp">
+      <Filter>Desenvolupament  ========\Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroScene.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="VideoManager.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="theoraplay.c">
+      <Filter>Desenvolupament  ========</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PugiXml\src\pugiconfig.hpp">
@@ -148,9 +169,6 @@
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Render.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Transitions.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Textures.h">
@@ -246,6 +264,30 @@
     <ClInclude Include="Hound.h">
       <Filter>Desenvolupament  ========\Entities\Troops</Filter>
     </ClInclude>
+    <ClInclude Include="Transitions.h">
+      <Filter>Desenvolupament  ========\Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Color.h">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="j1TransitionManager.h">
+      <Filter>Desenvolupament  ========\Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Transitions.h">
+      <Filter>Desenvolupament  ========\Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="Squares.h">
+      <Filter>Desenvolupament  ========\Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="VideoManager.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="theoraplay.h">
+      <Filter>Desenvolupament  ========</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Desenvolupament  ========">
@@ -280,6 +322,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Entities\EntityMovement">
       <UniqueIdentifier>{930ee431-765f-42cb-9d5c-282fc2197d13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Transitions">
+      <UniqueIdentifier>{d5e3ad98-3c3b-4123-934f-35200c7786ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
