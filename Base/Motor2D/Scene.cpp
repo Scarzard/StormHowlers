@@ -336,15 +336,16 @@ bool Scene::Start()
 	App->player1->Abort_text->label = App->player1->abort_label;
 	App->player1->Abort_text->color = { 255,255,9,255 };
 
+	App->player1->KeyBinds_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::KEYBINDS_PAUSE, { 1291 ,632 }, { 301,59 }, App->player1->Pause_UI, false);
+	App->player1->KeyBinds_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 100, 18 }, { 0, 0 }, App->player1->KeyBinds_Button, false, { false, false });
+	App->player1->KeyBinds_text->label = App->player1->keybinds_label;
+	App->player1->KeyBinds_text->color = { 255,255,9,255 };
+
 	App->player1->Settings_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player1->Pause_UI, false);
 	App->player1->Settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player1->Settings_Button, false, { false, false });
 	App->player1->Settings_text->label = App->player1->settings_label;
 	App->player1->Settings_text->color = { 255,255,9,255 };
 
-	/*App->player1->Settings_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player1->Pause_UI, false);
-	App->player1->Settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player1->Settings_Button, false, { false, false });
-	App->player1->Settings_text->label = App->player1->settings_label;
-	App->player1->Settings_text->color = { 255,255,9,255 };*/
 
 	App->player1->Resume_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESUME_PAUSE, { 1291 ,498 }, { 301,59 }, App->player1->Pause_UI, false);
 	App->player1->Resume_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Resume_Button, false, { false, false });
@@ -386,6 +387,73 @@ bool Scene::Start()
 	App->player1->FX_Slider_text->color = { 255,255,9,255 };
 	App->player1->FX_Slider_Button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 }, App->player1->FX_Slider, false);
 	App->player1->FX_Slider_Button->rect = { 2135, 712, 29, 55 };
+
+	//------ KeyBinds Pause MENU ------
+
+	App->player1->Keybinds_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
+	App->player1->Keybinds_UI->texture = pause_alied_texture;
+	App->player1->Keybinds_UI->rect = { 0, 0, 0, App->win->height };
+
+	App->player1->AllState_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ALL_STATE_BUTTON, { 650 ,300 }, { 301,59 }, App->player1->Keybinds_UI, false);
+	App->player1->AllState_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->AllState_Button, false, { false, false });
+	App->player1->AllState_text->label = App->player1->AllState_label;
+	App->player1->AllState_text->color = { 255,255,9,255 };
+	App->player1->AllState_Icon = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 450 , 10 }, { 39, 39 }, App->player1->AllState_Button, true);
+	App->player1->AllState_Icon->rect = { 1240, 374, 39, 39 };
+
+	App->player1->SingleState_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SINGLE_STATE_BUTTON, { 650 ,200 }, { 301,59 }, App->player1->Keybinds_UI, false);
+	App->player1->SingleState_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->SingleState_Button, false, { false, false });
+	App->player1->SingleState_text->label = App->player1->SingleState_label;
+	App->player1->SingleState_text->color = { 255,255,9,255 };
+	App->player1->SingleState_Icon = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 450 , 10 }, { 39, 39 }, App->player1->SingleState_Button, true);
+	App->player1->SingleState_Icon->rect = { 1290, 374, 39, 39 };
+
+	App->player1->PrevBuilding_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::PREV_BUILDING_BUTTON, { 200 ,650 }, { 301,59 }, App->player1->Keybinds_UI, false);
+	App->player1->PrevBuilding_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->PrevBuilding_Button, false, { false, false });
+	App->player1->PrevBuilding_text->label = App->player1->PrevBuilding_label;
+	App->player1->PrevBuilding_text->color = { 255,255,9,255 };
+	App->player1->PrevBuilding_Icon = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 350 , 10 }, { 39, 39 }, App->player1->PrevBuilding_Button, true);
+	App->player1->PrevBuilding_Icon->rect = { 1447, 531, 55, 47 };
+
+	App->player1->NextBuilding_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEXT_BUILDING_BUTTON, { 200 ,550 }, { 301,59 }, App->player1->Keybinds_UI, false);
+	App->player1->NextBuilding_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->NextBuilding_Button, false, { false, false });
+	App->player1->NextBuilding_text->label = App->player1->NextBuilding_label;
+	App->player1->NextBuilding_text->color = { 255,255,9,255 };
+	App->player1->NextBuilding_Icon = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 350 , 10 }, { 39, 39 }, App->player1->NextBuilding_Button, true);
+	App->player1->NextBuilding_Icon->rect = { 1454, 479, 55, 47 };
+
+	App->player1->GoBack_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::GOBACK_BUTTON, { 200 ,300 }, { 301,59 }, App->player1->Keybinds_UI, false);
+	App->player1->GoBack_Button_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->GoBack_Button, false, { false, false });
+	App->player1->GoBack_Button_text->label = App->player1->GoBack_Button_label;
+	App->player1->GoBack_Button_text->color = { 255,255,9,255 };
+	App->player1->Back_Icon = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 350 , 10 }, { 39, 39 }, App->player1->GoBack_Button, true);
+	App->player1->Back_Icon->rect = { 1340, 374, 39, 39 };
+
+	App->player1->Accept_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACCEPT_BUTTON, { 200 ,200 }, { 301,59 }, App->player1->Keybinds_UI, false);
+	App->player1->Accept_Button_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Accept_Button, false, { false, false });
+	App->player1->Accept_Button_text->label = App->player1->Accept_Button_label;
+	App->player1->Accept_Button_text->color = { 255,255,9,255 };
+	App->player1->Accept_Icon = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 350 , 10 }, { 39, 39 }, App->player1->Accept_Button, true);
+	App->player1->Accept_Icon->rect = { 1190, 374, 39, 39 };
+
+
+	App->player1->Controls_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { -120, -150 }, { 0, 0 }, App->player1->Accept_Button, false, { false, false });
+	App->player1->Controls_text->label = App->player1->Controls_label;
+	App->player1->Controls_text->color = { 255,255,9,255 };
+
+	App->player1->General_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { -100, -70 }, { 0, 0 }, App->player1->Accept_Button, false, { false, false });
+	App->player1->General_text->label = App->player1->General_label;
+	App->player1->General_text->color = { 255,255,9,255 };
+
+	App->player1->Building_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { -100, 300 }, { 0, 0 }, App->player1->Accept_Button, false, { false, false });
+	App->player1->Building_text->label = App->player1->Building_label;
+	App->player1->Building_text->color = { 255,255,9,255 };
+
+	App->player1->Troops_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 400, -70 }, { 0, 0 }, App->player1->Accept_Button, false, { false, false });
+	App->player1->Troops_text->label = App->player1->Troops_label;
+	App->player1->Troops_text->color = { 255,255,9,255 };
+
+	
 
 	// ABORT MISSION MENU
 	App->player1->Abort_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
@@ -603,6 +671,10 @@ bool Scene::Start()
 	App->player2->Abort_text->label = App->player2->abort_label;
 	App->player2->Abort_text->color = { 255,255,9,255 };
 
+	App->player2->KeyBinds_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::KEYBINDS_PAUSE, { 1291 ,632 }, { 301,59 }, App->player2->Pause_UI, false);
+	App->player2->KeyBinds_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 100, 18 }, { 0, 0 }, App->player2->KeyBinds_Button, false, { false, false });
+	App->player2->KeyBinds_text->label = App->player2->keybinds_label;
+	App->player2->KeyBinds_text->color = { 255,255,9,255 };
 
 	App->player2->Settings_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player2->Pause_UI, false);
 	App->player2->Settings_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player2->Settings_Button, false, { false, false });
@@ -645,6 +717,70 @@ bool Scene::Start()
 	App->player2->FX_Slider_text->color = { 255,255,9,255 };
 	App->player2->FX_Slider_Button = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 325 , 3 }, { 29, 55 }, App->player2->FX_Slider, false);
 	App->player2->FX_Slider_Button->rect = { 2135, 773, 29, 55 };
+
+	//------ KeyBinds Pause MENU ------
+
+	App->player2->Keybinds_UI = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width - 400, App->win->height }, nullptr, false);
+	App->player2->Keybinds_UI->texture = pause_alied_texture;
+	App->player2->Keybinds_UI->rect = { 0, 0, 0, App->win->height };
+
+	App->player2->AllState_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ALL_STATE_BUTTON, { 650 ,300 }, { 301,59 }, App->player2->Keybinds_UI, false);
+	App->player2->AllState_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->AllState_Button, false, { false, false });
+	App->player2->AllState_text->label = App->player2->AllState_label;
+	App->player2->AllState_text->color = { 255,255,9,255 };
+	App->player2->AllState_Icon = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 450 , 10 }, { 39, 39 }, App->player2->AllState_Button, true);
+	App->player2->AllState_Icon->rect = { 1240, 374, 39, 39 };
+
+	App->player2->SingleState_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SINGLE_STATE_BUTTON, { 650 ,200 }, { 301,59 }, App->player2->Keybinds_UI, false);
+	App->player2->SingleState_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->SingleState_Button, false, { false, false });
+	App->player2->SingleState_text->label = App->player2->SingleState_label;
+	App->player2->SingleState_text->color = { 255,255,9,255 };
+	App->player2->SingleState_Icon = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 450 , 10 }, { 39, 39 }, App->player2->SingleState_Button, true);
+	App->player2->SingleState_Icon->rect = { 1290, 374, 39, 39 };
+
+	App->player2->PrevBuilding_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::PREV_BUILDING_BUTTON, { 200 ,650 }, { 301,59 }, App->player2->Keybinds_UI, false);
+	App->player2->PrevBuilding_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->PrevBuilding_Button, false, { false, false });
+	App->player2->PrevBuilding_text->label = App->player2->PrevBuilding_label;
+	App->player2->PrevBuilding_text->color = { 255,255,9,255 };
+	App->player2->PrevBuilding_Icon = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 350 , 10 }, { 39, 39 }, App->player2->PrevBuilding_Button, true);
+	App->player2->PrevBuilding_Icon->rect = { 1447, 531, 55, 47 };
+
+	App->player2->NextBuilding_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::NEXT_BUILDING_BUTTON, { 200 ,550 }, { 301,59 }, App->player2->Keybinds_UI, false);
+	App->player2->NextBuilding_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->NextBuilding_Button, false, { false, false });
+	App->player2->NextBuilding_text->label = App->player2->NextBuilding_label;
+	App->player2->NextBuilding_text->color = { 255,255,9,255 };
+	App->player2->NextBuilding_Icon = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 350 , 10 }, { 39, 39 }, App->player2->NextBuilding_Button, true);
+	App->player2->NextBuilding_Icon->rect = { 1454, 479, 55, 47 };
+
+	App->player2->GoBack_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::GOBACK_BUTTON, { 200 ,300 }, { 301,59 }, App->player2->Keybinds_UI, false);
+	App->player2->GoBack_Button_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->GoBack_Button, false, { false, false });
+	App->player2->GoBack_Button_text->label = App->player2->GoBack_Button_label;
+	App->player2->GoBack_Button_text->color = { 255,255,9,255 };
+	App->player2->Back_Icon = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 350 , 10 }, { 39, 39 }, App->player2->GoBack_Button, true);
+	App->player2->Back_Icon->rect = { 1340, 374, 39, 39 };
+
+	App->player2->Accept_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACCEPT_BUTTON, { 200 ,200 }, { 301,59 }, App->player2->Keybinds_UI, false);
+	App->player2->Accept_Button_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Accept_Button, false, { false, false });
+	App->player2->Accept_Button_text->label = App->player2->Accept_Button_label;
+	App->player2->Accept_Button_text->color = { 255,255,9,255 };
+	App->player2->Accept_Icon = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 350 , 10 }, { 39, 39 }, App->player2->Accept_Button, false);
+	App->player2->Accept_Icon->rect = { 1190, 374, 39, 39 };
+
+	App->player2->Controls_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { -120, -150 }, { 0, 0 }, App->player2->Accept_Button, false, { false, false });
+	App->player2->Controls_text->label = App->player2->Controls_label;
+	App->player2->Controls_text->color = { 255,255,9,255 };
+
+	App->player2->General_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { -100, -70 }, { 0, 0 }, App->player2->Accept_Button, false, { false, false });
+	App->player2->General_text->label = App->player2->General_label;
+	App->player2->General_text->color = { 255,255,9,255 };
+
+	App->player2->Building_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { -100, 300 }, { 0, 0 }, App->player2->Accept_Button, false, { false, false });
+	App->player2->Building_text->label = App->player2->Building_label;
+	App->player2->Building_text->color = { 255,255,9,255 };
+
+	App->player2->Troops_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 400, -70 }, { 0, 0 }, App->player2->Accept_Button, false, { false, false });
+	App->player2->Troops_text->label = App->player2->Troops_label;
+	App->player2->Troops_text->color = { 255,255,9,255 };
 
 	// ABORT MISSION MENU
 	App->player2->Abort_UI = App->gui->AddUIElement(false, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width , App->win->height }, nullptr, false);
@@ -792,24 +928,17 @@ bool Scene::Update(float dt)
 	pos = App->render->ScreenToWorld(pos.first, pos.second);
 	pos.first--;
 
-	//LOG("GOLD: %i", App->player1->gold);
-
 	//Enter GodMode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) //Godmode
 	{
 		godmode = !godmode;
 	}
-	//else if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) //Framerate Cap On/Off
-	//{
-	//	App->fpsCapON = !App->fpsCapON;
-	//}
 
 	//Debug functionalities that can be used anywhere
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) //Debug UI
 	{
 		App->gui->UI_Debug = !App->gui->UI_Debug;
 	}
-	
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
 		App->map->debug = !App->map->debug;
@@ -824,18 +953,10 @@ bool Scene::Update(float dt)
 	//Debug functionalities in-game. Press F10 to enter GodMode and activate said features
 	if (App->scene->active && !App->scene->pause && godmode)
 	{
-		
 		debug_text->visible = true;
+
 		//Keyboard debug
 		// Player 1 -> number / Player2 -> letter
-		/*if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		{
-			App->entitymanager->AddEntity(true, Entity::entityType::TOWNHALL, {pos.first,pos.second},App->player1->collider);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-		{
-			App->entitymanager->AddEntity(false, Entity::entityType::TOWNHALL, {pos.first,pos.second},App->player2->collider);
-		}*/
 		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 		{
 			App->entitymanager->AddEntity(true, Entity::entityType::MAIN_DEFENSE, {pos.first,pos.second},App->player1->collider);
@@ -895,7 +1016,7 @@ bool Scene::Update(float dt)
 		else if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
 		{
 			//App->entitymanager->AddEntity(true, Entity::entityType::INFILTRATOR, { pos.first,pos.second }, App->player1->collider);
-			//	App->entitymanager->AddEntity(true, Entity::entityType::WALLS, {pos.first,pos.second},App->player1->collider);
+			//App->entitymanager->AddEntity(true, Entity::entityType::WALLS, {pos.first,pos.second},App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 		{
@@ -1109,8 +1230,6 @@ bool Scene::Update(float dt)
 	}
 	
 	App->gui->Draw();
-
-	
 
 	//DRAW LIVE BARS 
 	if (!pause)
