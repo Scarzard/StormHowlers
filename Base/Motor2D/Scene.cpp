@@ -694,12 +694,12 @@ bool Scene::Start()
 
 	
 
-	life_bar_p1 = App->gui->AddUIElement(true, UI_Element::UI_type::LIFEBAR_P1, UI_Element::Action::NONE, { 62, 24 }, { 50, 50 }, App->player1->Main_UI, true, { false, false });
+	life_bar_p1 = App->gui->AddUIElement(true, UI_Element::UI_type::LIFEBAR_P1, UI_Element::Action::NONE, { 62, 24 }, { 50, 50 }, App->player1->Main_UI, false, { false, false });
 	life_bar_p1->rect = life_bar_green;
 	App->player1->current_life_bar = &life_bar_green;
 
 	// Gets drawn behind the UI, real y = 24 instead of 200
-	life_bar_p2 = App->gui->AddUIElement(true, UI_Element::UI_type::LIFEBAR_P2, UI_Element::Action::NONE, { 62, 200 }, { 50, 50 }, App->player2->Main_UI, true, { false, false });
+	life_bar_p2 = App->gui->AddUIElement(true, UI_Element::UI_type::LIFEBAR_P2, UI_Element::Action::NONE, { 62, 200 }, { 50, 50 }, App->player2->Main_UI, false, { false, false });
 	life_bar_p2->rect = life_bar_green;
 	App->player2->current_life_bar = &life_bar_green;
 
@@ -751,7 +751,7 @@ bool Scene::Start()
 	App->player1->Info_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { main_ui_x,main_ui_y }, { 566, 163 }, nullptr, true);
 	App->player2->Info_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, true);
 	App->player1->Info_img = App->gui->AddUIElement(true, UI_Element::UI_type::INFO_P1, UI_Element::Action::NONE, { 0,0 }, { 39, 39 }, App->player1->Info_UI, true, { false,false });
-	App->player2->Info_img = App->gui->AddUIElement(false, UI_Element::UI_type::INFO_P2, UI_Element::Action::NONE, { 0,180 }, { 39, 39 }, App->player2->Info_UI, true);
+	App->player2->Info_img = App->gui->AddUIElement(false, UI_Element::UI_type::INFO_P2, UI_Element::Action::NONE, { 0,500 }, { 39, 39 }, App->player2->Info_UI, true);
 
 
 	App->player1->UpdateFocus(App->player1->currentUI);
