@@ -27,45 +27,23 @@ The game also communicates with the players to notify them about the game state 
 
 The game is intended to be player with controllers for 2 people at a time. 
 
-## Team
+## The Team
 
 ![StormHowlers Logo](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/stormhowlers%20with%20catchphrase.png)
 
 We are an indie game development team formed by 7 students taking the bachelor's degree in Videogame design and development in the UPC.
 The game will be developed for the subject Project II. We will be making a tribute to the well-known RTS game: Command&Conquer: Red Alert 2.
 
-
 ![Team photo](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/team_photo.jpeg)
-
-- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/COMMANDO.png) **Lead:** Andrés Saladrigas
-   - [Andrés' GitHub Link](https://github.com/TheArzhel)
-   
-- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SPY.png) **Management:** Òscar Pons
-   - [Òscar's GitHub Link](https://github.com/ponspack9)
-   
-- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/G.I.png) **Code:** David Tello
-   - [David's GitHub Link](https://github.com/DavidTello1)
-   
-- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ENGNEER.png) **Art/Audio:** Joan Barduena
-   - [Joan's GitHub Link](https://github.com/JoanBarduena)
-   
-- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SABOTAGER.png) **Design:** Arnau Gallofré
-   - [Arnau's GitHub Link](https://github.com/ggaka6god)
-   
-- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ROCKETEER.png) **QA:** Víctor Chen
-   - [Victor's GitHub Link](https://github.com/Scarzard)
-   
-- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/MEDIC.png) **UI:** Josep Lleal
-   - [Josep's GitHub Link](https://github.com/JosepLleal)
 
 ## How to play
 
 As stated in the game info, each player will have one controller where they can control the UI from his faction.
 The controls of the controllers as well as debugging functions with keyboard/mouse can be found in the next section below.
 
-- Allies(Player1): Blue. Base located in the left side of the screen. UI located on the bottom-right corner
+- **Allies(Player1)**: Blue. Base located in the left side of the screen. UI located on the bottom-right corner
 
-- Soviets(Player2): Red. Base located in the left side of the screen. UI located on the top-left corner
+- **Soviets(Player2)**: Red. Base located in the left side of the screen. UI located on the top-left corner
 
 The main objective of the game is **to destroy the opponents' TownHall.**
 
@@ -77,12 +55,14 @@ Every button or window in the main UI has a decription about what it does and th
 ### Buildings and troops
 #### Buildings
 
-- Non-buildable: TownHall, CommandCenter, Tesla
-- Buildable: AoE Tower, Single-target tower, mines, barracks.
+- **Non-buildable**: TownHall, CommandCenter, Tesla
+- **Buildable**: AoE Tower, Single-target tower, mines, barracks.
 
 #### Troops 
 
 Soldier, WarHound, Engineer, Spy, Tankman
+
+For further information go to the games (wiki)[https://github.com/stormhowlers/Command_and_Conquer_WarZone/wiki/2.-GDD-(Game-Design-Document)#gameplay]
 
 ## Game controls
 ### Controller
@@ -121,15 +101,6 @@ For Debug functionalities check the Games Readme [here](https://github.com/storm
 As stated on the license, anyone can look at or modify the code of this project. 
 It can be found here: https://github.com/stormhowlers/Command_and_Conquer_WarZone
 
-## Disclosure 
-
-```
-We do not own any of the art such as animations, tilesets or music/SFX.
-
-Everything belongs to the creators of the original game: Westwood Studios
-
-However, there are some art pieces that have been made or edited by the team. 
-```
 
 ## License
 
@@ -179,28 +150,116 @@ https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases
 </html>
 
 
-## Tasks
+## Teams Rolls
 
 ### Andres
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Andres.jpg" width="150">
+
+- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/COMMANDO.png) **Lead:** Andrés Saladrigas
+   - [Andrés' GitHub Link](https://github.com/TheArzhel)
+   
+**Mission:** Guide the teams members throught the development process. 
+**Objective:** Asure to achive goals in time. 
+**Roll:** Manage objectives, ideas and features in relation with time. Make Decitions. Guide the team to deliver the final product.
+
+Main idea of the game, later developed and improved with all members. Create a PvP experience making a tribute to C&C games.
+
+**Task & Time management**
+
+Using web tools as HackNPlan and Teamup
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/HAcknPlan.PNG" width="250">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Team%20Up.PNG" width="250">
+</p>
+
+**Map Idea and Design**
+Building and players placement in an Isometric view
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Art/Sketch.png" width="250">
+  <img src="last map here" width="250">
+</p>
+
+**Buildings and Troops AI**
+Independent logic for each building and state machine update for the different troops
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/soldier%20fight.gif" width="250">
+</p>
+
+**Balancing**
+Buildings and troops stats balancing
+
+<p align="center">
+  <img src="" width="250">
+</p>
+
+**Teams Presentations**
+Deliver and make teams Presentation for investors
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/team%20presentations.PNG" width="250">
+</p>
+
+**Documentation Process**
+Guidance, struture and writting the proyects [wiki](https://github.com/stormhowlers/Command_and_Conquer_WarZone/wiki)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/wiki.PNG" width="250">
+</p>
+
+**Code zoom and time implementation**
+Global time for the game and zoom in the games textures
+
+<p align="center">
+  <img src="" width="100">
+  <img src="" width="100">
+</p>
+
+**Game Zones**
+Set actions depending on map zones for building actions and Soldiers actions
+
+
+**Video Manager**
+Introdicing a the game with a .ogv video 
+<p align="center">
+  <img src="" width="250">
+</p>
+
 
 
 ### Josep
-
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Josep.jpg" width="150" >
+![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/MEDIC.png) **UI:** Josep Lleal
+   - [Josep's GitHub Link](https://github.com/JosepLleal)
 
 ### Joan
-
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Joan.jpg" width="150" >
+![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ENGNEER.png) **Art/Audio:** Joan Barduena
+   - [Joan's GitHub Link](https://github.com/JoanBarduena)
 
 ### Victor
 
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Victor.jpg" width="150">
+![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ROCKETEER.png) **QA:** Víctor Chen
+   - [Victor's GitHub Link](https://github.com/Scarzard)
 
 ### David
 
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/David.jpg" width="150" >
+![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/G.I.png) **Code:** David Tello
+   - [David's GitHub Link](https://github.com/DavidTello1)
 
 ### Arnau
 
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Arnau.jpg" width="150">
+![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SABOTAGER.png) **Design:** Arnau Gallofré
+   - [Arnau's GitHub Link](https://github.com/ggaka6god)
 
 ### Oscar
-
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Oscar.jpg" width="150" >
+![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SPY.png) **Management:** Òscar Pons
+   - [Òscar's GitHub Link](https://github.com/ponspack9)
 
 
 
