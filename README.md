@@ -2,11 +2,15 @@
 by StormHowlers
 
 <p align="center">
-  <img  src="https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/goldstar.png" width="100">
+  <img  src="https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/goldstar.png" width="50">
+  <img  src="https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/goldstar.png" width="50">
+  <img  src="https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/goldstar.png" width="50">
 </p>
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/master/Base/Game/gui/gme%20logo.png" >
+</p>
 
-![game logo]( change1)
 
 ## Game info
 
