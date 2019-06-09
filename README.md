@@ -6,7 +6,7 @@ by StormHowlers
 </p>
 
 
-![game logo](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/WarZone_logo.png
+![game logo]( change1)
 
 ## Game info
 
@@ -33,11 +33,11 @@ The game will be developed for the subject Project II. We will be making a tribu
 
 ![Team photo](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/team_photo.jpeg)
 
-- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/COMMANDO.png) **Lead:** Andrés Saladrigas
-   - [Andrés' GitHub Link](https://github.com/TheArzhel)
+- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/COMMANDO.png) **Lead:** AndrÃ©s Saladrigas
+   - [AndrÃ©s' GitHub Link](https://github.com/TheArzhel)
    
-- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SPY.png) **Management:** Òscar Pons
-   - [Òscar's GitHub Link](https://github.com/ponspack9)
+- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SPY.png) **Management:** Ã’scar Pons
+   - [Ã’scar's GitHub Link](https://github.com/ponspack9)
    
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/G.I.png) **Code:** David Tello
    - [David's GitHub Link](https://github.com/DavidTello1)
@@ -45,10 +45,10 @@ The game will be developed for the subject Project II. We will be making a tribu
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ENGNEER.png) **Art/Audio:** Joan Barduena
    - [Joan's GitHub Link](https://github.com/JoanBarduena)
    
-- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SABOTAGER.png) **Design:** Arnau Gallofré
+- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SABOTAGER.png) **Design:** Arnau GallofrÃ©
    - [Arnau's GitHub Link](https://github.com/ggaka6god)
    
-- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ROCKETEER.png) **QA:** Víctor Chen
+- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ROCKETEER.png) **QA:** VÃ­ctor Chen
    - [Victor's GitHub Link](https://github.com/Scarzard)
    
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/MEDIC.png) **UI:** Josep Lleal
@@ -102,7 +102,7 @@ Soldier, WarHound, Engineer, Spy, Tankman
 - Left Joystick(with troop/building selected): Quick movement through the map
 - Start: Trigger pause menu
 
-For Debug functionalities check the Games Readme here(link)
+For Debug functionalities check the Games Readme [here](https://github.com/stormhowlers/Command_and_Conquer_WarZone/blob/master/README.md)
    
 ## Contact us!
 - [StormHowlers Twitter](https://twitter.com/StormHowlers)
@@ -195,7 +195,7 @@ https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases
 ### Arnau
 
 
-###Oscar
+### Oscar
 
 
 
