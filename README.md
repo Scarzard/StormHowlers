@@ -173,6 +173,7 @@ Using web tools as HackNPlan and Teamup
 </p>
 
 **Map Idea and Design**
+
 Building and players placement in an Isometric view
 
 <p align="center">
@@ -181,6 +182,7 @@ Building and players placement in an Isometric view
 </p>
 
 **Buildings and Troops AI**
+
 Independent logic for each building and state machine update for the different troops
 
 <p align="center">
@@ -188,6 +190,7 @@ Independent logic for each building and state machine update for the different t
 </p>
 
 **Balancing**
+
 Buildings and troops stats balancing
 
 <p align="center">
@@ -195,6 +198,7 @@ Buildings and troops stats balancing
 </p>
 
 **Teams Presentations**
+
 Deliver and make teams Presentation for investors
 
 <p align="center">
@@ -202,6 +206,7 @@ Deliver and make teams Presentation for investors
 </p>
 
 **Documentation Process**
+
 Guidance, struture and writting the proyects [wiki](https://github.com/stormhowlers/Command_and_Conquer_WarZone/wiki)
 
 <p align="center">
@@ -209,6 +214,7 @@ Guidance, struture and writting the proyects [wiki](https://github.com/stormhowl
 </p>
 
 **Code zoom and time implementation**
+
 Global time for the game and zoom in the games textures
 
 <p align="center">
@@ -217,10 +223,12 @@ Global time for the game and zoom in the games textures
 </p>
 
 **Game Zones**
+
 Set actions depending on map zones for building actions and Soldiers actions
 
 
 **Video Manager**
+
 Introdicing a the game with a .ogv video 
 <p align="center">
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/video.gif" width="250">
@@ -229,12 +237,14 @@ Introdicing a the game with a .ogv video
 
 
 ### Josep Leal
+
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Josep.jpg" width="150" >
 
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/MEDIC.png) **UI:** Josep Lleal
    - [Josep's GitHub Link](https://github.com/JosepLleal)
 
 ### Joan Barduena
+
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Joan.jpg" width="150" >
   
   - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ENGNEER.png) **Art/Audio:** Joan Barduena
@@ -264,6 +274,7 @@ Introdicing a the game with a .ogv video
 
 
 ### Oscar Pons
+
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Oscar.jpg" width="150" >
   
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SPY.png) **Management:** Òscar Pons
