@@ -60,6 +60,7 @@ bool Player::Start()
 	gold_persecond = 0;
 
 	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = Rocket_abilities = Tank_abilities = 0;
+	AOE_turretsCreated = SentruGunsCreated = MinesCreated = 0;
 
 	selected_texture = { 0,0, 100, 100 };
 
@@ -608,19 +609,19 @@ bool Player::Update(float dt)
 		{
 			if ((*focus) == Def_AOE_icon)
 			{
-				BuildingCost = 500;
+				BuildingCost = 500 + AOE_turretsCreated* 250;
 			}
 			else if ((*focus) == Def_Target_icon)
 			{
-				BuildingCost = 1200;
+				BuildingCost = 1200 + SentruGunsCreated*360;
 			}
 			else if ((*focus) == Mines_icon)
 			{
-				BuildingCost = 2000;
+				BuildingCost = 2000 + MinesCreated*750;
 			}
 			else if ((*focus) == Barracks_icon)
 			{
-				BuildingCost = 1000;
+				BuildingCost = 1000 + BarracksCreated*200;
 			}
 
 		}
@@ -1043,6 +1044,18 @@ bool Player::Update(float dt)
 					{
 						BarracksCreated++;
 					}
+					else if (type == Entity::entityType::MINES)
+					{
+						MinesCreated++;
+					}
+					else if (type == Entity::entityType::DEFENSE_AOE)
+					{
+						AOE_turretsCreated++;
+					}
+					else if (type == Entity::entityType::MAIN_DEFENSE)
+					{
+						SentruGunsCreated++;
+					}
 				}
 				else
 					App->audio->PlayFx(WRONG);
@@ -1225,18 +1238,18 @@ void Player::UpdateWalkabilityMap(char cell_type, Collider collider) //update wa
 
 int Player::CheckCost(Entity::entityType type)
 {
-	//
+	//here
 	if (type == Entity::entityType::BARRACKS)
-		return 1000;
+		return 1000 + BarracksCreated * 200;
 
 	else if (type == Entity::entityType::DEFENSE_AOE)
-		return 500;
+		return 500 + AOE_turretsCreated*250;
 
 	else if (type == Entity::entityType::MINES)
-		return 2000;
+		return 2000 + MinesCreated * 750;
 
 	else if (type == Entity::entityType::MAIN_DEFENSE) // Torreta single target (esta al reves?)
-		return 1200;
+		return 1200 + SentruGunsCreated * 360;
 
 	else
 		return 0;

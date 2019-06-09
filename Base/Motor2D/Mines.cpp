@@ -86,6 +86,7 @@ bool Mines::Update(float dt)
 				App->audio->PlayFx(BUILDING_EXPLOSION);
 				App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 				App->audio->PlayFx(ALLIED_MINE_D);
+				App->player1->MinesCreated--;
 			}
 
 			if (repair == true) //repair
@@ -145,6 +146,7 @@ bool Mines::Update(float dt)
 				App->audio->PlayFx(BUILDING_EXPLOSION);
 				App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 				App->audio->PlayFx(SOVIET_MINE_D);
+				App->player2->MinesCreated--;
 			}
 
 			if (repair == true) //repair

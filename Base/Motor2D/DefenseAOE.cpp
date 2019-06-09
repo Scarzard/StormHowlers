@@ -150,6 +150,7 @@ bool DefenseAoe::Update(float dt)
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 			App->audio->PlayFx(ALLIED_LASER_D);
+			App->player1->AOE_turretsCreated--;
 		}
 	}
 	else if (!fromPlayer1) // --- Player 2 ---------------------------
@@ -198,6 +199,7 @@ bool DefenseAoe::Update(float dt)
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
 			App->audio->PlayFx(SOVIET_LASER_D);
+			App->player2->AOE_turretsCreated--;
 		}
 	}
 

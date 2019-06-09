@@ -232,6 +232,10 @@ public:
 	int WarHoundsCreated = 0;
 	int BarracksCreated = 0;
 
+	int AOE_turretsCreated = 0;
+	int SentruGunsCreated = 0;
+	int MinesCreated = 0;
+
 	int Invulnerable_abilities = 0;
 	int Rocket_abilities = 0;
 	int Tank_abilities = 0;
