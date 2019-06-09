@@ -487,7 +487,10 @@ bool Player::Update(float dt)
 			}
 		}
 
-
+		if (gamepad.Controller[RT] == KEY_DOWN && App->scene->active)
+		{
+			ChangeTroopsState();
+		}
 		
 
 		// ENTER TO CREATING TROOPS UI
