@@ -1,2 +1,0 @@
-Open "index.html" inside html folder to see the result
-Edit "config" file with a text editor to modify the result
