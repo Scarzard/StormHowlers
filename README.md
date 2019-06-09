@@ -152,7 +152,7 @@ https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases
 
 ## Teams Rolls
 
-### Andres
+### Andrés Saladrigas
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Andres.jpg" width="150">
 
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/COMMANDO.png) **Lead:** Andrés Saladrigas
@@ -177,7 +177,7 @@ Building and players placement in an Isometric view
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Art/Sketch.png" width="250">
-  <img src="last map here" width="250">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/map.PNG" width="250">
 </p>
 
 **Buildings and Troops AI**
@@ -191,7 +191,7 @@ Independent logic for each building and state machine update for the different t
 Buildings and troops stats balancing
 
 <p align="center">
-  <img src="" width="250">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/balancing.gif" width="250">
 </p>
 
 **Teams Presentations**
@@ -212,8 +212,8 @@ Guidance, struture and writting the proyects [wiki](https://github.com/stormhowl
 Global time for the game and zoom in the games textures
 
 <p align="center">
-  <img src="" width="100">
-  <img src="" width="100">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/zoom.gif" width="250">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/time.gif" width="250">
 </p>
 
 **Game Zones**
@@ -223,42 +223,50 @@ Set actions depending on map zones for building actions and Soldiers actions
 **Video Manager**
 Introdicing a the game with a .ogv video 
 <p align="center">
-  <img src="" width="250">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/video.gif" width="250">
 </p>
 
 
 
-### Josep
+### Josep Leal
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Josep.jpg" width="150" >
-![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/MEDIC.png) **UI:** Josep Lleal
+
+- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/MEDIC.png) **UI:** Josep Lleal
    - [Josep's GitHub Link](https://github.com/JosepLleal)
 
-### Joan
+### Joan Barduena
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Joan.jpg" width="150" >
-![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ENGNEER.png) **Art/Audio:** Joan Barduena
+  
+  - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ENGNEER.png) **Art/Audio:** Joan Barduena
    - [Joan's GitHub Link](https://github.com/JoanBarduena)
+  
 
-### Victor
+### Victor Cheng
 
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Victor.jpg" width="150">
-![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ROCKETEER.png) **QA:** Víctor Chen
+  
+- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ROCKETEER.png) **QA:** Víctor Chen
    - [Victor's GitHub Link](https://github.com/Scarzard)
 
-### David
+### David Tello
 
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/David.jpg" width="150" >
-![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/G.I.png) **Code:** David Tello
+
+- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/G.I.png) **Code:** David Tello
    - [David's GitHub Link](https://github.com/DavidTello1)
 
-### Arnau
+### Arnau Gallofre
 
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Arnau.jpg" width="150">
-![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SABOTAGER.png) **Design:** Arnau Gallofré
+  
+- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SABOTAGER.png) **Design:** Arnau Gallofré
    - [Arnau's GitHub Link](https://github.com/ggaka6god)
 
-### Oscar
+
+### Oscar Pons
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Oscar.jpg" width="150" >
-![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SPY.png) **Management:** Òscar Pons
+  
+- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SPY.png) **Management:** Òscar Pons
    - [Òscar's GitHub Link](https://github.com/ponspack9)
 
 
