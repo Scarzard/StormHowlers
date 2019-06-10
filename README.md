@@ -236,7 +236,7 @@ Introdicing a the game with a .ogv video
 
 
 
-### Josep Leal
+### Josep Lleal
 
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Josep.jpg" width="150" >
 
@@ -274,6 +274,15 @@ Used SDL_GameController to handle game controllers and for mapping joysticks to 
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/UI/xbox_controller.jpg" width="250">
 </p>
 
+
+**Barracks selection to spawn troops:**
+
+When spawning troops you can choose in which barrack you want to spawn them.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/UI/barracks_selection.gif" width="250">
+</p>
+
 ### Joan Barduena
 
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Joan.jpg" width="150" >
@@ -282,7 +291,7 @@ Used SDL_GameController to handle game controllers and for mapping joysticks to 
    - [Joan's GitHub Link](https://github.com/JoanBarduena)
   
 
-### Victor Cheng
+### Victor Chen
 
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Victor.jpg" width="150">
   
