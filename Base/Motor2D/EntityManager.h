@@ -94,6 +94,8 @@ public:
 	//To LoadSample
 	Tankman			tankman_p1_sample;
 	Tankman			tankman_p2_sample;
+	Tankman			tankman_p1_inmune; 
+	Tankman			tankman_p2_inmune; 
 
 	//To LoadSample
 	Infiltrator		infiltrator_p1_sample;
