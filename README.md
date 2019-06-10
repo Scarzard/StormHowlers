@@ -242,6 +242,37 @@ Introdicing a the game with a .ogv video
 
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/MEDIC.png) **UI:** Josep Lleal
    - [Josep's GitHub Link](https://github.com/JosepLleal)
+   
+**Mission:** Design and code the UI of the game. 
+**Objective:** Make the UI as intuitive as possible. 
+**Roll:** Make a responsive and useful UI that works.
+
+
+**Design and code of the in-game UI:**
+
+Designed with some sprites from the original game and others created with photoshop.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/UI%20savigation.gif" width="250">
+</p>
+
+
+**Recreate the pause menu from the original game:**
+
+The pause menu has been done with the original sprites although some features have been changed.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/UI/Pause_Menu_Soviet.png" width="250">
+</p>
+
+
+**Implement the controllers inputs:**
+
+Used SDL_GameController to handle game controllers and for mapping joysticks to game controller semantics.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/UI/xbox_controller.jpg" width="250">
+</p>
 
 ### Joan Barduena
 
