@@ -62,7 +62,7 @@ Every button or window in the main UI has a decription about what it does and th
 
 Soldier, WarHound, Engineer, Spy, Tankman
 
-For further information go to the games (wiki)[https://github.com/stormhowlers/Command_and_Conquer_WarZone/wiki/2.-GDD-(Game-Design-Document)#gameplay]
+For further information go to the games [wiki](https://github.com/stormhowlers/Command_and_Conquer_WarZone/wiki/2.-GDD-(Game-Design-Document)#gameplay)
 
 ## Game controls
 ### Controller
@@ -99,20 +99,21 @@ For Debug functionalities check the Games Readme [here](https://github.com/storm
 ## Github
 
 As stated on the license, anyone can look at or modify the code of this project. 
-It can be found here: https://github.com/stormhowlers/Command_and_Conquer_WarZone
+It can be found here: 
+<https://github.com/stormhowlers/Command_and_Conquer_WarZone>
 
 
 ## License
 
 Licensed under the [MIT License](https://github.com/stormhowlers/Command_and_Conquer_WarZone/blob/master/LICENSE.md)
 
-https://github.com/stormhowlers/Command_and_Conquer_WarZone/blob/master/LICENSE.md
+<https://github.com/stormhowlers/Command_and_Conquer_WarZone/blob/master/LICENSE.md>
 
 
 
 ### Code Features
 Some special features included in the code are:
-```markdown
+
 - Entity IA: each entity manages his own depending his state and needs.
 
 - Animations Loaded from Tiled: loaded animations from xml document save from Tiled.
@@ -129,7 +130,6 @@ Some special features included in the code are:
 
 - Video managment: start the game with the teams intro.
 
-```
   
 ### Installation
 
@@ -137,7 +137,7 @@ Decompress the .zip file in any directory. Open the file directoy and double cli
 Download [Here](https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases/tag/v0.9) 
     
 or dowload the desired release here and follow the same steps:
-https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases
+<https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases>
        
 ## Game Video
 
@@ -158,8 +158,10 @@ https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/COMMANDO.png) **Lead:** Andrés Saladrigas
    - [Andrés' GitHub Link](https://github.com/TheArzhel)
    
-**Mission:** Guide the teams members throught the development process. 
-**Objective:** Asure to achive goals in time. 
+**Mission:** Guide the teams members throught the development process.
+
+**Objective:** Asure to achive goals in time.
+
 **Roll:** Manage objectives, ideas and features in relation with time. Make Decitions. Guide the team to deliver the final product.
 
 Main idea of the game, later developed and improved with all members. Create a PvP experience making a tribute to C&C games.
@@ -244,7 +246,9 @@ Introdicing a the game with a .ogv video
    - [Josep's GitHub Link](https://github.com/JosepLleal)
    
 **Mission:** Design and code the UI of the game. 
+
 **Objective:** Make the UI as intuitive as possible. 
+
 **Roll:** Make a responsive and useful UI that works.
 
 
