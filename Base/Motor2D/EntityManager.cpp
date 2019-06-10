@@ -372,6 +372,40 @@ bool EntityManager::LoadSamples() {
 	infiltrator_p1_sample.idle->SetCurrentFrame(2);
 	infiltrator_p1_sample.Current_Animation = infiltrator_p1_sample.moving[NORTH];
 
+	// Spy inmune
+
+	infiltrator_p1_inmune.moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+	infiltrator_p1_inmune.shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+
+	infiltrator_p1_inmune.idle = infiltrator_p1_inmune.idle->LoadAnimation(path.data(), "inv_idle");
+
+	infiltrator_p1_inmune.moving[NORTH] = infiltrator_p1_inmune.moving[NORTH]->LoadAnimation(path.data(), "inv_run_N");
+	infiltrator_p1_inmune.moving[SOUTH] = infiltrator_p1_inmune.moving[SOUTH]->LoadAnimation(path.data(), "inv_run_S");
+	infiltrator_p1_inmune.moving[EAST] = infiltrator_p1_inmune.moving[EAST]->LoadAnimation(path.data(), "inv_run_E");
+	infiltrator_p1_inmune.moving[WEST] = infiltrator_p1_inmune.moving[WEST]->LoadAnimation(path.data(), "inv_run_W");
+	infiltrator_p1_inmune.moving[NORTHEAST] = infiltrator_p1_inmune.moving[NORTHEAST]->LoadAnimation(path.data(), "inv_run_NE");
+	infiltrator_p1_inmune.moving[NORTHWEST] = infiltrator_p1_inmune.moving[NORTHWEST]->LoadAnimation(path.data(), "inv_run_NW");
+	infiltrator_p1_inmune.moving[SOUTHEAST] = infiltrator_p1_inmune.moving[SOUTHEAST]->LoadAnimation(path.data(), "inv_run_SE");
+	infiltrator_p1_inmune.moving[SOUTHWEST] = infiltrator_p1_inmune.moving[SOUTHWEST]->LoadAnimation(path.data(), "inv_run_SW");
+
+	infiltrator_p1_inmune.shooting[NORTH] = infiltrator_p1_inmune.shooting[NORTH]->LoadAnimation(path.data(), "inv_searching_N");
+	infiltrator_p1_inmune.shooting[SOUTH] = infiltrator_p1_inmune.shooting[SOUTH]->LoadAnimation(path.data(), "inv_searching_S");
+	infiltrator_p1_inmune.shooting[EAST] = infiltrator_p1_inmune.shooting[EAST]->LoadAnimation(path.data(), "inv_searching_E");
+	infiltrator_p1_inmune.shooting[WEST] = infiltrator_p1_inmune.shooting[WEST]->LoadAnimation(path.data(), "inv_searching_W");
+	infiltrator_p1_inmune.shooting[NORTHEAST] = infiltrator_p1_inmune.shooting[NORTHEAST]->LoadAnimation(path.data(), "inv_searching_N");
+	infiltrator_p1_inmune.shooting[NORTHWEST] = infiltrator_p1_inmune.shooting[NORTHWEST]->LoadAnimation(path.data(), "inv_searching_N");
+	infiltrator_p1_inmune.shooting[SOUTHEAST] = infiltrator_p1_inmune.shooting[SOUTHEAST]->LoadAnimation(path.data(), "inv_searching_S");
+	infiltrator_p1_inmune.shooting[SOUTHWEST] = infiltrator_p1_inmune.shooting[SOUTHWEST]->LoadAnimation(path.data(), "inv_searching_S");
+
+	for (int i = NORTH; i <= SOUTHWEST; i++) {
+		infiltrator_p1_inmune.moving[i]->speed = 2;
+		infiltrator_p1_inmune.shooting[i]->speed = 2;
+	}
+
+	infiltrator_p1_inmune.idle->speed = 0;
+	infiltrator_p1_inmune.idle->SetCurrentFrame(2);
+	infiltrator_p1_inmune.Current_Animation = infiltrator_p1_inmune.moving[NORTH];
+
 	return true;
 }
 bool EntityManager::Start()
@@ -1093,10 +1127,13 @@ void EntityManager::LoadAnimations(Troop* troop) {
 
 	Troop* sample = (troop->fromPlayer1) ? (Soldier*)&soldier_p1_sample : (Soldier*)&soldier_p2_sample;;
 
+	Troop* sample2 = nullptr; 
+
 	switch (troop->type)
 	{
 	case Entity::entityType::SOLDIER:
 		sample = (troop->fromPlayer1) ? (Soldier*)&soldier_p2_sample : (Soldier*)&soldier_p1_sample;
+		sample2 = (troop->fromPlayer1) ? (Soldier*)&soldier_p2_inmune : (Soldier*)&soldier_p2_inmune;
 		break;
 	case Entity::entityType::TANKMAN:
 		sample = (troop->fromPlayer1) ? (Soldier*)&soldier_p2_sample : (Soldier*)&soldier_p1_sample;
@@ -1104,7 +1141,7 @@ void EntityManager::LoadAnimations(Troop* troop) {
 		break;
 	case Entity::entityType::INFILTRATOR:
 		sample = (troop->fromPlayer1) ? (Infiltrator*)&infiltrator_p1_sample : (Infiltrator*)&infiltrator_p1_sample;
-		//sample = (troop->fromPlayer1) ? (Soldier*)&soldier_p2_sample : (Soldier*)&soldier_p1_sample;
+		sample2 = (troop->fromPlayer1) ? (Soldier*)&infiltrator_p1_inmune : (Soldier*)&infiltrator_p1_inmune;
 		break;
 	case Entity::entityType::ENGINEER:
 		sample = (troop->fromPlayer1) ? (Engineer*)&engineer_p2_sample : (Engineer*)&engineer_p1_sample;
@@ -1121,15 +1158,27 @@ void EntityManager::LoadAnimations(Troop* troop) {
 	troop->moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	troop->shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
+	troop->moving_inv = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+	troop->shooting_inv = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
+
 	troop->idle = sample->idle;
 	troop->idle->speed = 0;
 	troop->idle->SetCurrentFrame(2);
+
+	troop->idle_inv = sample2->idle;
+	troop->idle_inv->speed = 0;
+	troop->idle_inv->SetCurrentFrame(2);
 
 	for (int i = NORTH; i < MAX_DIR; i++) {
 		troop->moving[i] = sample->moving[i];
 		troop->shooting[i] = sample->shooting[i];
 		troop->moving[i]->speed = sample->moving[i]->speed;
 		troop->shooting[i]->speed = sample->shooting[i]->speed;
+
+		troop->moving_inv[i] = sample2->moving[i];
+		troop->shooting_inv[i] = sample2->shooting[i];
+		troop->moving_inv[i]->speed = sample2->moving[i]->speed;
+		troop->shooting_inv[i]->speed = sample2->shooting[i]->speed;
 	}
 	troop->Current_Animation = troop->moving[NORTH];
 

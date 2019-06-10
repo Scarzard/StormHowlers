@@ -65,6 +65,10 @@ public:
 	vector<Animation*> moving;
 	vector<Animation*> shooting;
 
+	Animation* idle_inv = nullptr;
+	vector<Animation*> moving_inv;
+	vector<Animation*> shooting_inv;
+
 	int curr = 0;
 
 	vector<pair<int, int>> path;

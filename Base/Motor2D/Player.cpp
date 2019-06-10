@@ -168,6 +168,9 @@ bool Player::Update(float dt)
 		inmune = false;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+		inmune = true; 
+
 	if (!App->scene->endgame)
 	{
 		RectangleSelection();
