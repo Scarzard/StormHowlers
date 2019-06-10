@@ -8,8 +8,7 @@
 #include "SDL/include/SDL.h"
 
 #define MAX_KEYS 300
-#define DEATH_ZONE 6400
-#define DEATHZONE_TWO 12800
+#define DEATH_ZONE 12800
 
 Input::Input() : Module()
 {
@@ -135,8 +134,8 @@ bool Input::PreUpdate()
 						App->player1->gamepad.State[BUTTON_Y] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_Y);
 						App->player1->gamepad.State[START] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_START);
 						App->player1->gamepad.State[BACK] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_BACK);
-						App->player1->gamepad.State[LT] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_LEFTSTICK);
-						App->player1->gamepad.State[RT] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_RIGHTSTICK);
+						App->player1->gamepad.Left_Trigger = SDL_GameControllerGetAxis(App->player1->gamepad.GameController, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
+						App->player1->gamepad.Right_Trigger = SDL_GameControllerGetAxis(App->player1->gamepad.GameController, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
 						App->player1->gamepad.State[LB] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
 						App->player1->gamepad.State[RB] = SDL_GameControllerGetButton(App->player1->gamepad.GameController, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
 					
@@ -182,8 +181,8 @@ bool Input::PreUpdate()
 						App->player2->gamepad.State[BUTTON_Y] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_Y);
 						App->player2->gamepad.State[START] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_START);
 						App->player2->gamepad.State[BACK] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_BACK);
-						App->player2->gamepad.State[LT] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_LEFTSTICK);
-						App->player2->gamepad.State[RT] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_RIGHTSTICK);
+						App->player2->gamepad.Left_Trigger = SDL_GameControllerGetAxis(App->player2->gamepad.GameController, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
+						App->player2->gamepad.Right_Trigger = SDL_GameControllerGetAxis(App->player2->gamepad.GameController, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
 						App->player2->gamepad.State[LB] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
 						App->player2->gamepad.State[RB] = SDL_GameControllerGetButton(App->player2->gamepad.GameController, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
 
@@ -385,6 +384,46 @@ bool Input::PreUpdate()
 		App->player2->gamepad.JoystickState2[1] = false;
 	}
 
+
+	//TRIGGERS P1
+	if (App->player1->gamepad.Right_Trigger > DEATH_ZONE)
+	{
+		App->player1->gamepad.RT_State = true;
+	}
+	else
+	{
+		App->player1->gamepad.RT_State = false;
+	}
+
+	if (App->player1->gamepad.Left_Trigger > DEATH_ZONE)
+	{
+		App->player1->gamepad.LT_State = true;
+	}
+	else
+	{
+		App->player1->gamepad.LT_State = false;
+	}
+
+	//TRIGGERS P2
+	if (App->player2->gamepad.Right_Trigger > DEATH_ZONE)
+	{
+		App->player2->gamepad.RT_State = true;
+	}
+	else
+	{
+		App->player2->gamepad.RT_State = false;
+	}
+
+	if (App->player2->gamepad.Left_Trigger > DEATH_ZONE)
+	{
+		App->player2->gamepad.LT_State = true;
+	}
+	else
+	{
+		App->player2->gamepad.LT_State = false;
+	}
+
+	//LEFT JOYSTICK
 	for (int i = 0; i < 4; i++)
 	{
 		if (App->player1->gamepad.JoystickState[i] == true) {
@@ -416,9 +455,11 @@ bool Input::PreUpdate()
 		}
 	}
 
+	//RIGHT JOYSTICK
 	for (int i = 0; i < 4; i++)
 	{
 		if (App->player1->gamepad.JoystickState2[i] == true) {
+			
 			if (App->player1->gamepad.Controller[i + 4] == KEY_IDLE)
 				App->player1->gamepad.Controller[i + 4] = KEY_DOWN;
 			else
@@ -446,6 +487,68 @@ bool Input::PreUpdate()
 				App->player2->gamepad.Controller[i + 4] = KEY_IDLE;
 		}
 	}
+
+	//TRIGGERS
+	//P1
+	if (App->player1->gamepad.LT_State == true) {
+		
+		if (App->player1->gamepad.Controller[LT] == KEY_IDLE)
+			App->player1->gamepad.Controller[LT] = KEY_DOWN;
+		else
+			App->player1->gamepad.Controller[LT] = KEY_REPEAT;
+	}
+	else
+	{
+		if (App->player1->gamepad.Controller[LT] == KEY_REPEAT || App->player1->gamepad.Controller[LT] == KEY_DOWN)
+			App->player1->gamepad.Controller[LT] = KEY_UP;
+		else
+			App->player1->gamepad.Controller[LT] = KEY_IDLE;
+	}
+
+	if (App->player1->gamepad.RT_State == true) {
+		if (App->player1->gamepad.Controller[RT] == KEY_IDLE)
+			App->player1->gamepad.Controller[RT] = KEY_DOWN;
+		else
+			App->player1->gamepad.Controller[RT] = KEY_REPEAT;
+	}
+	else
+	{
+		if (App->player1->gamepad.Controller[RT] == KEY_REPEAT || App->player1->gamepad.Controller[RT] == KEY_DOWN)
+			App->player1->gamepad.Controller[RT] = KEY_UP;
+		else
+			App->player1->gamepad.Controller[RT] = KEY_IDLE;
+	}
+
+	//P2
+	if (App->player2->gamepad.LT_State == true) {
+		
+		if (App->player2->gamepad.Controller[LT] == KEY_IDLE)
+			App->player2->gamepad.Controller[LT] = KEY_DOWN;
+		else
+			App->player2->gamepad.Controller[LT] = KEY_REPEAT;
+	}
+	else
+	{
+		if (App->player2->gamepad.Controller[LT] == KEY_REPEAT || App->player2->gamepad.Controller[LT] == KEY_DOWN)
+			App->player2->gamepad.Controller[LT] = KEY_UP;
+		else
+			App->player2->gamepad.Controller[LT] = KEY_IDLE;
+	}
+
+	if (App->player2->gamepad.RT_State == true) {
+		if (App->player2->gamepad.Controller[RT] == KEY_IDLE)
+			App->player2->gamepad.Controller[RT] = KEY_DOWN;
+		else
+			App->player2->gamepad.Controller[RT] = KEY_REPEAT;
+	}
+	else
+	{
+		if (App->player2->gamepad.Controller[RT] == KEY_REPEAT || App->player2->gamepad.Controller[RT] == KEY_DOWN)
+			App->player2->gamepad.Controller[RT] = KEY_UP;
+		else
+			App->player2->gamepad.Controller[RT] = KEY_IDLE;
+	}
+	
 
 	while(SDL_PollEvent(&event) != 0)
 	{

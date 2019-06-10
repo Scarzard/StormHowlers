@@ -113,6 +113,8 @@ public:
 	void FadeOut(const char* path);
 	void FadeIn();
 
+	void RestartAudio();
+
 	bool song1played = false;
 	bool song2played = false;
 	bool winscreensong = false;

@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Render.h"
+#include "Defs.h"
 
 struct SDL_Window;
 struct SDL_Surface;
@@ -32,7 +33,7 @@ public:
 	uint GetScale() const;
 
 	//tkae windows sizes
-	void GetWindowSize();
+	void ModifyWindow();
 
 public:
 	//The window we'll be rendering to

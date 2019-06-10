@@ -32,7 +32,7 @@ public:
 	bool IsChanging() const;
 
 	//Change Scene
-	bool SwitchScene(Module* SceneIn, Module* SceneOut, float time);
+	bool SwitchScene(Module* SceneIn, Module* SceneOut);
 
 	//returns true if switching
 	bool IsSwitching() const;
@@ -51,18 +51,17 @@ private:
 	current_step = fade_step::none;
 	
 	int nextMap;
-	uint start_time = 0;
-	uint total_time = 0;
 	SDL_Rect screen;
 
-	float fadetime = 1.0f;
 	Module* to_enable = nullptr;
 	Module* to_disable = nullptr;
-	Timer switchtimer;
 
 	bool map = false;
 	bool scene = false;
 	bool main_menu = false;
+
+	bool intro = false;
+	bool main_menu_in = false;
 
 };
 

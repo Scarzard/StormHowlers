@@ -7,6 +7,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Transitions.h"
+#include "j1TransitionManager.h"
 #include "Scene.h"
 #include "MainMenu.h"
 #include "Gui.h"
@@ -172,8 +173,7 @@ bool MainMenu::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		App->scenechange->ContinueGame = true;
-		App->scenechange->SwitchScene(App->scene, App->main_menu,2);
-		menu_background->visible = false;
+		App->transitions->SquaresAppearing(3, Black, 2.0f);
 	}
 
 	App->gui->Draw();	
@@ -256,7 +256,7 @@ void MainMenu::DoLogic(UI_Element* data)
 		//---- Main menu buttons
 	case::UI_Element::Action::NEW_GAME:
 		App->scenechange->ContinueGame = true;
-		App->scenechange->SwitchScene(App->scene, App->main_menu,2); //Here fadetoblack
+		App->transitions->SquaresAppearing(3, Black, 2.0f);
 		App->audio->PlayFx(PLAY);
 		break;
 	case::UI_Element::Action::SETTINGS:

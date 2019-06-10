@@ -37,7 +37,7 @@ bool Render::Awake(pugi::xml_node& config)
 	}
 
 	renderer = SDL_CreateRenderer(App->win->window, -1, flags);
-	App->win->GetWindowSize();
+	App->win->ModifyWindow();
 
 	if(renderer == NULL)
 	{
