@@ -415,23 +415,23 @@ bool Player::Update(float dt)
 
 			if (UI_troop_type == Entity::entityType::SOLDIER)
 			{
-				TroopCost = 20 * number_of_troops;
+				TroopCost = 60 * number_of_troops;
 			}
 			else if (UI_troop_type == Entity::entityType::TANKMAN)
 			{
-				TroopCost = 80 * number_of_troops;
+				TroopCost = 320 * number_of_troops;
 			}
 			else if (UI_troop_type == Entity::entityType::INFILTRATOR)
 			{
-				TroopCost = 100 * number_of_troops;
+				TroopCost = 200 * number_of_troops;
 			}
 			else if (UI_troop_type == Entity::entityType::ENGINEER)
 			{
-				TroopCost = 25 * number_of_troops;
+				TroopCost = 150 * number_of_troops;
 			}
 			else if (UI_troop_type == Entity::entityType::WAR_HOUND)
 			{
-				TroopCost = 50 * number_of_troops;
+				TroopCost = 125 * number_of_troops;
 			}
 
 			if (gamepad.Controller[ACCEPT] == KEY_UP && gold >= TroopCost)
@@ -2050,7 +2050,7 @@ void Player::DoLogic(UI_Element* data)
 
 
 	case::UI_Element::Action::ACT_CAST_INVULNERABILITY:
-		if (inmune == false && Invulnerable_abilities>0)
+		if (inmune == false && gold>=1500)
 		{
 			timer_ref_sec = App->scene->worldseconds;
 			timer_ref_min = App->scene->worldminutes;
@@ -2063,8 +2063,10 @@ void Player::DoLogic(UI_Element* data)
 				desired_second = extra;
 				desired_min++;
 			}
+			
 			inmune = true;
-			Invulnerable_abilities--;
+			gold -= 1500;
+
 		}
 		break;
 

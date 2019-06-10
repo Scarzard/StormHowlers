@@ -229,17 +229,7 @@ bool Scene::Start()
 	App->player1->Cast_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
 	App->player1->Cast_UI->rect = { 0, 573, 566, 163 };
 
-	App->player1->Cast2_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_TANKS, { 171 ,55 }, { 85, 81 }, App->player1->Cast_UI, false);
-	App->player1->tank_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 35 , 0 }, { 0, 0 }, App->player1->Cast2_icon, false, { false, false });
-	App->player1->tank_text->label = App->player1->tank_label;
-
 	App->player1->Cast3_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_INVULNERABILITY, { 273, 55 }, { 85, 81 }, App->player1->Cast_UI, false);
-	App->player1->invulnerable_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 35 , 0 }, { 0, 0 }, App->player1->Cast3_icon, false, { false, false });
-	App->player1->invulnerable_text->label = App->player1->invulnerable_label;
-
-	App->player1->Missiles_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_MISSILES, { 375, 55 }, { 85, 81 }, App->player1->Cast_UI, false);
-	App->player1->Missiles_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 35 , 0 }, { 0, 0 }, App->player1->Missiles_icon, false, { false, false });
-	App->player1->Missiles_text->label = App->player1->missiles_label;
 
 	//App->player1->General_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
 	//App->player1->Upgrade_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_UPGRADE, { x,y }, { w,h }, App->player1->General_UI, false);
@@ -569,19 +559,8 @@ bool Scene::Start()
 	App->player2->Cast_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player2->Cast_UI->rect = { 0, 573, 566, 163 };
 
-	App->player2->Cast2_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_TANKS, { 171 ,55 }, { 85, 81 }, App->player2->Cast_UI, false);
-	App->player2->tank_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 35 , 0 }, { 0, 0 }, App->player2->Cast2_icon, false, { false, false });
-	App->player2->tank_text->label = App->player2->tank_label;
 
 	App->player2->Cast3_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_INVULNERABILITY, { 273, 55 }, { 85, 81 }, App->player2->Cast_UI, false);
-	App->player2->invulnerable_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 35 , 0 }, { 0, 0 }, App->player2->Cast3_icon, false, { false, false });
-	App->player2->invulnerable_text->label = App->player2->invulnerable_label;
-
-	App->player2->Missiles_icon = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_MISSILES, { 375, 55 }, { 85, 81 }, App->player2->Cast_UI, false);
-	App->player2->Missiles_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 35 , 0 }, { 0, 0 }, App->player2->Missiles_icon, false, { false, false });
-	App->player2->Missiles_text->label = App->player2->missiles_label;
-
-
 
 	App->player2->LB_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { -5 , 70 }, { 55, 27 }, nullptr, false);
 	App->player2->LB_img->rect = { 1269, 437, 55, 27 };
