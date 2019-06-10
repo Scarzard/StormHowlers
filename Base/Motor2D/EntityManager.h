@@ -101,6 +101,8 @@ public:
 
 	Engineer		engineer_p1_sample;
 	Engineer		engineer_p2_sample;
+	Engineer		engineer_p1_inmune;
+	Engineer		engineer_p2_inmune;
 
 	Hound			hound_p1_sample;
 	Hound			hound_p2_sample;
