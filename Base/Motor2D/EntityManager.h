@@ -104,6 +104,8 @@ public:
 
 	Hound			hound_p1_sample;
 	Hound			hound_p2_sample;
+	Hound			hound_p1_inmune; 
+	Hound			hound_p2_inmune; 
 
 	string			folder;
 	string			texture_path;
