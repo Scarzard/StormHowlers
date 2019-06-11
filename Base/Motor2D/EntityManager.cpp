@@ -264,7 +264,7 @@ bool EntityManager::LoadSamples() {
 	tankman_p1_inmune.moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	tankman_p1_inmune.shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
-	tankman_p1_inmune.idle = tankman_p1_inmune.idle->LoadAnimation(path.data(), "red_inv");
+	tankman_p1_inmune.idle = tankman_p1_inmune.idle->LoadAnimation(path.data(), "red_inv_idle");
 
 	tankman_p1_inmune.moving[NORTH] = tankman_p1_inmune.moving[NORTH]->LoadAnimation(path.data(), "red_inv_N");
 	tankman_p1_inmune.moving[SOUTH] = tankman_p1_inmune.moving[SOUTH]->LoadAnimation(path.data(), "red_inv_S");
@@ -298,7 +298,7 @@ bool EntityManager::LoadSamples() {
 	tankman_p2_inmune.moving = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 	tankman_p2_inmune.shooting = vector<Animation*>(TroopDir::MAX_DIR, nullptr);
 
-	tankman_p2_inmune.idle = engineer_p2_sample.idle->LoadAnimation(path.data(), "blue_idle");
+	tankman_p2_inmune.idle = engineer_p2_sample.idle->LoadAnimation(path.data(), "blue_inv_idle");
 
 	tankman_p2_inmune.moving[NORTH] = tankman_p2_inmune.moving[NORTH]->LoadAnimation(path.data(), "blue_inv_N");
 	tankman_p2_inmune.moving[SOUTH] = tankman_p2_inmune.moving[SOUTH]->LoadAnimation(path.data(), "blue_inv_S");
@@ -1410,7 +1410,7 @@ void EntityManager::LoadAnimations(Troop* troop) {
 	{
 	case Entity::entityType::SOLDIER:
 		sample = (troop->fromPlayer1) ? (Soldier*)&soldier_p2_sample : (Soldier*)&soldier_p1_sample;
-		sample2 = (troop->fromPlayer1) ? (Soldier*)&soldier_p2_inmune : (Soldier*)&soldier_p2_inmune;
+		sample2 = (troop->fromPlayer1) ? (Soldier*)&soldier_p2_inmune : (Soldier*)&soldier_p1_inmune;
 		break;
 	case Entity::entityType::TANKMAN:
 		sample = (troop->fromPlayer1) ? (Tankman*)&tankman_p2_sample : (Tankman*)&tankman_p1_sample;
