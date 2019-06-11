@@ -309,7 +309,36 @@ Increasing gold each second by a variable amount depending on the number of mine
   
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ENGNEER.png) **Art/Audio:** Joan Barduena
 - [Joan's GitHub Link](https://github.com/JoanBarduena)
+
+**Mission:** Artistic coorelation of sprites, edition of those and fluid animations.
+
+**Objective:**  Make the sprites as intuitive as possible. 
+
+**Role:** Responsible of no animation bugs and sprite coorelation. 
   
+**Sprites and animations from XCC Mixer**
+
+Extraction of all the necessary sprites with the free program XCC Mixer. 
+
+**Sprite organitzation to export to Tiled**
+
+Used AdobePhotoshop in order to organize the sprites, so later we could load the animations with Tiled. 
+
+**Sprite change of colour**
+
+Nearly all the sprites were from the Soviets. With a Allied palette (blue colours), we changed the sprite colours to differentiate one team from the other. 
+
+**Music FadeOut** 
+
+Code implementation of a music fadeout that would not lagg the whole gamem, as it did with the previous code. 
+
+**Decorations**
+
+Code that reads the decoration coordenates from Tiled and passes them to the map.
+
+**Adding sprites**
+
+Adding invulnerable aura of all troops and building selection.
 
 ### Victor Chen
 
