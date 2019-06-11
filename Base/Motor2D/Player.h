@@ -378,6 +378,7 @@ public:
 
 	// Pause Menu
 	UI_Element* Pause_UI = nullptr;
+	UI_Element* Pause_UI_window = nullptr;
 
 	UI_Element* Resume_Button = nullptr;
 	UI_Element* Resume_text = nullptr;

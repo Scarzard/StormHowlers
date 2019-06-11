@@ -350,30 +350,34 @@ bool Scene::Start()
 
 	//------- PAUSE MENU ------
 
-	App->player1->Pause_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, false);
+	App->player1->Pause_UI_window = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, nullptr, false);
+
+	App->player1->Pause_UI = App->gui->AddUIElement(true, UI_Element::UI_type::TEXTURE, UI_Element::Action::NONE, { 0, 0 }, { App->win->width, App->win->height }, App->player1->Pause_UI_window, false);
 	App->player1->Pause_UI->texture = pause_alied_texture;
 	App->player1->Pause_UI->rect = { 0, 0, App->win->width, App->win->height };
 
-	App->player1->Abort_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ABORT_PAUSE, { 1750 ,1100 }, { 301,59 }, App->player1->Pause_UI, false);
-	App->player1->Abort_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Abort_Button, false, { false, false });
-	App->player1->Abort_text->label = App->player1->abort_label;
-	App->player1->Abort_text->color = { 255,255,9,255 };
 
-	App->player1->KeyBinds_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::KEYBINDS_PAUSE, { 1750 ,900 }, { 301,59 }, App->player1->Pause_UI, false);
+	App->player1->Resume_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESUME_PAUSE, { 1700 ,700 }, { 301,59 }, App->player1->Pause_UI_window, false);
+	App->player1->Resume_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Resume_Button, false, { false, false });
+	App->player1->Resume_text->label = App->player1->resume_label;
+	App->player1->Resume_text->color = { 255,255,9,255 };
+
+	App->player1->Settings_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1700 ,800 }, { 301,59 }, App->player1->Pause_UI_window, false);
+	App->player1->Settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player1->Settings_Button, false, { false, false });
+	App->player1->Settings_text->label = App->player1->settings_label;
+	App->player1->Settings_text->color = { 255,255,9,255 };
+	
+	App->player1->KeyBinds_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::KEYBINDS_PAUSE, { 1700 ,900 }, { 301,59 }, App->player1->Pause_UI_window, false);
 	App->player1->KeyBinds_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 100, 18 }, { 0, 0 }, App->player1->KeyBinds_Button, false, { false, false });
 	App->player1->KeyBinds_text->label = App->player1->keybinds_label;
 	App->player1->KeyBinds_text->color = { 255,255,9,255 };
 
-	App->player1->Settings_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1750 ,800 }, { 301,59 }, App->player1->Pause_UI, false);
-	App->player1->Settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player1->Settings_Button, false, { false, false });
-	App->player1->Settings_text->label = App->player1->settings_label;
-	App->player1->Settings_text->color = { 255,255,9,255 };
 
+	App->player1->Abort_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ABORT_PAUSE, { 1700 ,1100 }, { 301,59 }, App->player1->Pause_UI_window, false);
+	App->player1->Abort_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Abort_Button, false, { false, false });
+	App->player1->Abort_text->label = App->player1->abort_label;
+	App->player1->Abort_text->color = { 255,255,9,255 };
 
-	App->player1->Resume_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESUME_PAUSE, { 1750 ,700 }, { 301,59 }, App->player1->Pause_UI, false);
-	App->player1->Resume_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Resume_Button, false, { false, false });
-	App->player1->Resume_text->label = App->player1->resume_label;
-	App->player1->Resume_text->color = { 255,255,9,255 };
 
 	App->player1->LB_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { -5,70 }, { 55, 27 }, App->player1->Root_UI, false);
 	App->player1->LB_img->rect = { 1269, 437, 55, 27 };
@@ -483,16 +487,16 @@ bool Scene::Start()
 	App->player1->Abort_UI->texture = pause_alied_texture;
 	App->player1->Abort_UI->rect = { 0, 0, 0, App->win->height };
 
-	App->player1->Restart = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESTART, { 1291 ,565 }, { 301,59 }, App->player1->Abort_UI, false);
+	App->player1->Restart = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESTART, { 1000 ,450 }, { 301,59 }, App->player1->Abort_UI, false);
 	App->player1->Restart_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Restart, false, { false, false });
 	App->player1->Restart_text->label = App->player1->Restart_label;
 	App->player1->Restart_text->color = { 255,255,9,255 };
 
-	App->player1->Abort_Message = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { -850, -100 }, { 0, 0 }, App->player1->Restart, false, { false, false });
+	App->player1->Abort_Message = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { -500, 50 }, { 0, 0 }, App->player1->Restart, false, { false, false });
 	App->player1->Abort_Message->label = App->player1->Abort_message_label;
 	App->player1->Abort_Message->color = { 255,255,9,255 };
 
-	App->player1->Quit = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SURRENDER, { 1291 ,498 }, { 301,59 }, App->player1->Abort_UI, false);
+	App->player1->Quit = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SURRENDER, { 1000 ,550 }, { 301,59 }, App->player1->Abort_UI, false);
 	App->player1->Quit_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 110, 18 }, { 0, 0 }, App->player1->Quit, false, { false, false });
 	App->player1->Quit_text->label = App->player1->Quit_label;
 	App->player1->Quit_text->color = { 255,255,9,255 };

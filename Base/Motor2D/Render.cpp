@@ -114,7 +114,8 @@ void Render::WindowResized() {
 		App->player1->Create_Troops_UI->globalpos.second = (App->win->height / App->render->zoom) - 163 * zoom;
 		App->player1->General_UI->globalpos.second = (App->win->height / App->render->zoom) - 163 * zoom;
 		App->player1->Root_UI->globalpos.second = (App->win->height / App->render->zoom) - 163*zoom;
-		App->player1->Info_UI->globalpos.second = (App->win->height / App->render->zoom) - (280)*zoom;
+		App->player1->Info_UI->globalpos.second = (App->win->height / App->render->zoom) - (10)*zoom;
+		//App->player1->Pause_UI->globalpos.second = 600 * zoom/ App->win->height;
 	}
 
 }

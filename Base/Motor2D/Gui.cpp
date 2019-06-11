@@ -157,6 +157,16 @@ bool Gui::Draw()
 
 				App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
 			}
+			//else if ((*UI_elem)->type == UI_Element::UI_type::LABEL && App->scene->pause) //text
+			//{
+			//	App->tex->UnLoad((*UI_elem)->texture);
+			//	(*UI_elem)->texture = App->font->Print((*UI_elem)->label, (*UI_elem)->color, App->font->default);
+			//	int w = (*UI_elem)->rect.w / App->render->zoom;
+			//	int h = (*UI_elem)->rect.h / App->render->zoom;
+			//	App->font->CalcSize((*UI_elem)->label, w,h);
+
+			//	App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
+			//}
 			else if ((*UI_elem)->type == UI_Element::UI_type::LABEL) //text
 			{
 				App->tex->UnLoad((*UI_elem)->texture);
@@ -164,6 +174,26 @@ bool Gui::Draw()
 				App->font->CalcSize((*UI_elem)->label, (*UI_elem)->size.first, (*UI_elem)->size.second);
 
 				App->render->Blit((*UI_elem)->texture, (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, 0, SDL_FLIP_NONE, 0);
+			}
+			
+		/*	else if ((*UI_elem)->type == UI_Element::UI_type::PUSHBUTTON)
+			{
+				if (!App->scene->pause)
+					App->render->Blit(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, &(*UI_elem)->rect, SDL_FLIP_NONE, 0);
+				else {
+					SDL_Rect r = (*UI_elem)->rect;
+					r.w /= App->render->zoom;
+					r.h /= App->render->zoom;
+
+					App->render->BlitEx(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, &(*UI_elem)->rect,&r, SDL_FLIP_NONE, 0);
+				}
+
+			}*/
+			else if ((*UI_elem)->type == UI_Element::UI_type::INFO_P1)
+			{
+				if (!App->scene->pause)
+					App->render->Blit(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, &App->player1->Info_img->rect, SDL_FLIP_NONE, 0);
+
 			}
 			else if ((*UI_elem)->type == UI_Element::UI_type::LIFEBAR_P1)
 			{
