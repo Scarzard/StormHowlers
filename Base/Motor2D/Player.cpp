@@ -211,27 +211,6 @@ bool Player::Update(float dt)
 			UpdateFocus(currentUI);
 		}
 
-		// DRAW QUAD on SELECTED BUILDING 
-		if (currentUI == CURRENT_UI::CURR_SELECTING_BUILDING)
-		{
-			if (In_SelectBuilding->visible == false)
-
-				In_SelectBuilding->visible = true;			
-			
-			// Draw Range
-			if ((*building_selected)->type == Entity::entityType::DEFENSE_AOE ||
-				(*building_selected)->type == Entity::entityType::DEFENSE_TARGET ||
-				(*building_selected)->type == Entity::entityType::MAIN_DEFENSE)
-			{
-				ShowRange((*building_selected)->type, (*building_selected)->collider);
-			}
-		}
-		else
-		{
-			if(In_SelectBuilding!=nullptr && In_SelectBuilding->visible == true )
-				In_SelectBuilding->visible = false;	
-		}
-
 
 		
 		// Button with focus changes state to HOVER 
@@ -705,10 +684,10 @@ bool Player::Update(float dt)
 			if (currentUI != CURRENT_UI::CURR_GENERAL && Create_abilities != nullptr)
 				Create_abilities->visible = false;
 
-			if(currentUI == CURR_MAIN)
+			/*if(currentUI == CURR_MAIN)
 				SelectBuilding->visible = true;
 			else
-				SelectBuilding->visible = false;
+				SelectBuilding->visible = false;*/
 		}
 
 		// Travel through the different buttons
