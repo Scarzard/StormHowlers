@@ -270,6 +270,7 @@ public:
 	UI_Element* RB_img = nullptr;
 	UI_Element* LB_img = nullptr;
 	
+	UI_Element* Root_UI = nullptr;
 
 	UI_Element* Main_UI = nullptr;
 	UI_Element* Build_icon = nullptr;
