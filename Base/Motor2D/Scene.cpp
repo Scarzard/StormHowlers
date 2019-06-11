@@ -1308,7 +1308,7 @@ bool Scene::PostUpdate()
 	//--- Pause
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		pause = !pause;
+		return false;
 	}
 
 	//--- Update Player 1 GUI
