@@ -88,20 +88,28 @@ public:
 public:
 	Soldier			soldier_p1_sample;
 	Soldier			soldier_p2_sample;
+	Soldier			soldier_p2_inmune;
+	Soldier			soldier_p1_inmune; 
 
 	//To LoadSample
 	Tankman			tankman_p1_sample;
 	Tankman			tankman_p2_sample;
+	Tankman			tankman_p1_inmune; 
+	Tankman			tankman_p2_inmune; 
 
 	//To LoadSample
 	Infiltrator		infiltrator_p1_sample;
-	Infiltrator		infiltrator_p2_sample;
+	Infiltrator		infiltrator_p1_inmune;
 
 	Engineer		engineer_p1_sample;
 	Engineer		engineer_p2_sample;
+	Engineer		engineer_p1_inmune;
+	Engineer		engineer_p2_inmune;
 
 	Hound			hound_p1_sample;
 	Hound			hound_p2_sample;
+	Hound			hound_p1_inmune; 
+	Hound			hound_p2_inmune; 
 
 	string			folder;
 	string			texture_path;

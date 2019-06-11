@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="13" height="14" tilewidth="74" tileheight="72" nextobjectid="271">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="13" height="14" tilewidth="74" tileheight="72" nextobjectid="489">
  <imagelayer name="Image Layer 1">
-  <image source="war_hound_anim.png" width="1938" height="1008"/>
+  <image source="war_hound_anim.png" width="1938" height="2104"/>
  </imagelayer>
  <objectgroup name="run_N">
   <object id="35" x="592" y="0" width="74" height="72"/>
@@ -279,5 +279,281 @@
   <object id="268" x="1332" y="864" width="74" height="72"/>
   <object id="269" x="1406" y="864" width="74" height="72"/>
   <object id="270" x="1480" y="864" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_idle">
+  <object id="271" x="0" y="1008" width="74" height="72"/>
+  <object id="272" x="74" y="1008" width="74" height="72"/>
+  <object id="273" x="148" y="1008" width="74" height="72"/>
+  <object id="274" x="222" y="1008" width="74" height="72"/>
+  <object id="275" x="296" y="1008" width="74" height="72"/>
+  <object id="276" x="370" y="1008" width="74" height="72"/>
+  <object id="277" x="444" y="1008" width="74" height="72"/>
+  <object id="278" x="518" y="1008" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_N">
+  <object id="299" x="592" y="1008" width="74" height="72"/>
+  <object id="300" x="666" y="1008" width="74" height="72"/>
+  <object id="301" x="740" y="1008" width="74" height="72"/>
+  <object id="302" x="814" y="1008" width="74" height="72"/>
+  <object id="303" x="888" y="1008" width="74" height="72"/>
+  <object id="304" x="0" y="1080" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_NW">
+  <object id="286" x="74" y="1080" width="74" height="72"/>
+  <object id="287" x="148" y="1080" width="74" height="72"/>
+  <object id="288" x="222" y="1080" width="74" height="72"/>
+  <object id="289" x="296" y="1080" width="74" height="72"/>
+  <object id="290" x="370" y="1080" width="74" height="72"/>
+  <object id="291" x="444" y="1080" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_W">
+  <object id="292" x="518" y="1080" width="74" height="72"/>
+  <object id="293" x="592" y="1080" width="74" height="72"/>
+  <object id="294" x="666" y="1080" width="74" height="72"/>
+  <object id="295" x="740" y="1080" width="74" height="72"/>
+  <object id="296" x="814" y="1080" width="74" height="72"/>
+  <object id="297" x="888" y="1080" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_SW">
+  <object id="305" x="0" y="1152" width="74" height="72"/>
+  <object id="306" x="74" y="1152" width="74" height="72"/>
+  <object id="307" x="148" y="1152" width="74" height="72"/>
+  <object id="308" x="222" y="1152" width="74" height="72"/>
+  <object id="309" x="296" y="1152" width="74" height="72"/>
+  <object id="310" x="370" y="1152" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_S">
+  <object id="311" x="444" y="1152" width="74" height="72"/>
+  <object id="312" x="518" y="1152" width="74" height="72"/>
+  <object id="313" x="592" y="1152" width="74" height="72"/>
+  <object id="314" x="666" y="1152" width="74" height="72"/>
+  <object id="315" x="740" y="1152" width="74" height="72"/>
+  <object id="316" x="814" y="1152" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_SE">
+  <object id="317" x="888" y="1152" width="74" height="72"/>
+  <object id="318" x="0" y="1224" width="74" height="72"/>
+  <object id="319" x="74" y="1224" width="74" height="72"/>
+  <object id="320" x="148" y="1224" width="74" height="72"/>
+  <object id="321" x="222" y="1224" width="74" height="72"/>
+  <object id="322" x="296" y="1224" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_E">
+  <object id="323" x="370" y="1224" width="74" height="72"/>
+  <object id="324" x="444" y="1224" width="74" height="72"/>
+  <object id="325" x="518" y="1224" width="74" height="72"/>
+  <object id="326" x="592" y="1224" width="74" height="72"/>
+  <object id="327" x="666" y="1224" width="74" height="72"/>
+  <object id="328" x="740" y="1224" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_NE">
+  <object id="329" x="814" y="1224" width="74" height="72"/>
+  <object id="330" x="888" y="1224" width="74" height="72"/>
+  <object id="331" x="0" y="1296" width="74" height="72"/>
+  <object id="332" x="74" y="1296" width="74" height="72"/>
+  <object id="333" x="148" y="1296" width="74" height="72"/>
+  <object id="334" x="222" y="1296" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_attack_N">
+  <object id="335" x="888" y="1584" width="74" height="72"/>
+  <object id="336" x="0" y="1656" width="74" height="72"/>
+  <object id="337" x="74" y="1656" width="74" height="72"/>
+  <object id="338" x="148" y="1656" width="74" height="72"/>
+  <object id="339" x="222" y="1656" width="74" height="72"/>
+  <object id="340" x="296" y="1656" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_attack_NW">
+  <object id="341" x="370" y="1656" width="74" height="72"/>
+  <object id="342" x="444" y="1656" width="74" height="72"/>
+  <object id="343" x="518" y="1656" width="74" height="72"/>
+  <object id="344" x="592" y="1656" width="74" height="72"/>
+  <object id="345" x="666" y="1656" width="74" height="72"/>
+  <object id="346" x="740" y="1656" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_attack_W">
+  <object id="347" x="814" y="1656" width="74" height="72"/>
+  <object id="348" x="888" y="1656" width="74" height="72"/>
+  <object id="349" x="0" y="1728" width="74" height="72"/>
+  <object id="350" x="74" y="1728" width="74" height="72"/>
+  <object id="351" x="148" y="1728" width="74" height="72"/>
+  <object id="352" x="222" y="1728" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_attack_SW">
+  <object id="353" x="296" y="1728" width="74" height="72"/>
+  <object id="354" x="370" y="1728" width="74" height="72"/>
+  <object id="355" x="444" y="1728" width="74" height="72"/>
+  <object id="356" x="518" y="1728" width="74" height="72"/>
+  <object id="357" x="592" y="1728" width="74" height="72"/>
+  <object id="358" x="666" y="1728" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_attack_S">
+  <object id="359" x="740" y="1728" width="74" height="72"/>
+  <object id="360" x="814" y="1728" width="74" height="72"/>
+  <object id="361" x="888" y="1728" width="74" height="72"/>
+  <object id="362" x="0" y="1800" width="74" height="72"/>
+  <object id="363" x="74" y="1800" width="74" height="72"/>
+  <object id="364" x="148" y="1800" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_attack_SE">
+  <object id="365" x="222" y="1800" width="74" height="72"/>
+  <object id="366" x="296" y="1800" width="74" height="72"/>
+  <object id="367" x="370" y="1800" width="74" height="72"/>
+  <object id="368" x="444" y="1800" width="74" height="72"/>
+  <object id="369" x="518" y="1800" width="74" height="72"/>
+  <object id="370" x="592" y="1800" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_attack_E">
+  <object id="371" x="666" y="1800" width="74" height="72"/>
+  <object id="372" x="740" y="1800" width="74" height="72"/>
+  <object id="373" x="814" y="1800" width="74" height="72"/>
+  <object id="374" x="888" y="1800" width="74" height="72"/>
+  <object id="375" x="0" y="1872" width="74" height="72"/>
+  <object id="376" x="74" y="1872" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="red_inv_attack_NE">
+  <object id="377" x="148" y="1872" width="74" height="72"/>
+  <object id="378" x="222" y="1872" width="74" height="72"/>
+  <object id="379" x="296" y="1872" width="74" height="72"/>
+  <object id="380" x="370" y="1872" width="74" height="72"/>
+  <object id="381" x="444" y="1872" width="74" height="72"/>
+  <object id="382" x="518" y="1872" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_idle">
+  <object id="383" x="962" y="1008" width="74" height="72"/>
+  <object id="384" x="1036" y="1008" width="74" height="72"/>
+  <object id="385" x="1110" y="1008" width="74" height="72"/>
+  <object id="386" x="1184" y="1008" width="74" height="72"/>
+  <object id="388" x="1258" y="1008" width="74" height="72"/>
+  <object id="389" x="1332" y="1008" width="74" height="72"/>
+  <object id="390" x="1406" y="1008" width="74" height="72"/>
+  <object id="391" x="1480" y="1008" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_N">
+  <object id="392" x="1554" y="1008" width="74" height="72"/>
+  <object id="393" x="1628" y="1008" width="74" height="72"/>
+  <object id="394" x="1702" y="1008" width="74" height="72"/>
+  <object id="395" x="1776" y="1008" width="74" height="72"/>
+  <object id="396" x="1850" y="1008" width="74" height="72"/>
+  <object id="397" x="962" y="1080" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_NW">
+  <object id="398" x="1036" y="1080" width="74" height="72"/>
+  <object id="399" x="1110" y="1080" width="74" height="72"/>
+  <object id="400" x="1184" y="1080" width="74" height="72"/>
+  <object id="401" x="1258" y="1080" width="74" height="72"/>
+  <object id="402" x="1332" y="1080" width="74" height="72"/>
+  <object id="403" x="1406" y="1080" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_W">
+  <object id="404" x="1480" y="1080" width="74" height="72"/>
+  <object id="405" x="1554" y="1080" width="74" height="72"/>
+  <object id="406" x="1628" y="1080" width="74" height="72"/>
+  <object id="407" x="1702" y="1080" width="74" height="72"/>
+  <object id="408" x="1776" y="1080" width="74" height="72"/>
+  <object id="409" x="1850" y="1080" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_SW">
+  <object id="410" x="962" y="1152" width="74" height="72"/>
+  <object id="411" x="1036" y="1152" width="74" height="72"/>
+  <object id="412" x="1110" y="1152" width="74" height="72"/>
+  <object id="413" x="1184" y="1152" width="74" height="72"/>
+  <object id="414" x="1258" y="1152" width="74" height="72"/>
+  <object id="415" x="1332" y="1152" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_S">
+  <object id="416" x="1406" y="1152" width="74" height="72"/>
+  <object id="417" x="1480" y="1152" width="74" height="72"/>
+  <object id="418" x="1554" y="1152" width="74" height="72"/>
+  <object id="419" x="1628" y="1152" width="74" height="72"/>
+  <object id="420" x="1702" y="1152" width="74" height="72"/>
+  <object id="421" x="1776" y="1152" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_SE">
+  <object id="422" x="1850" y="1152" width="74" height="72"/>
+  <object id="423" x="962" y="1224" width="74" height="72"/>
+  <object id="424" x="1036" y="1224" width="74" height="72"/>
+  <object id="425" x="1110" y="1224" width="74" height="72"/>
+  <object id="426" x="1184" y="1224" width="74" height="72"/>
+  <object id="427" x="1258" y="1224" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_E">
+  <object id="428" x="1332" y="1224" width="74" height="72"/>
+  <object id="429" x="1406" y="1224" width="74" height="72"/>
+  <object id="430" x="1480" y="1224" width="74" height="72"/>
+  <object id="431" x="1554" y="1224" width="74" height="72"/>
+  <object id="432" x="1628" y="1224" width="74" height="72"/>
+  <object id="433" x="1702" y="1224" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_NE">
+  <object id="434" x="1776" y="1224" width="74" height="72"/>
+  <object id="435" x="1850" y="1224" width="74" height="72"/>
+  <object id="436" x="962" y="1296" width="74" height="72"/>
+  <object id="437" x="1036" y="1296" width="74" height="72"/>
+  <object id="438" x="1110" y="1296" width="74" height="72"/>
+  <object id="439" x="1184" y="1296" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_attack_N">
+  <object id="440" x="1850" y="1584" width="74" height="72"/>
+  <object id="441" x="962" y="1656" width="74" height="72"/>
+  <object id="442" x="1036" y="1656" width="74" height="72"/>
+  <object id="443" x="1110" y="1656" width="74" height="72"/>
+  <object id="444" x="1184" y="1656" width="74" height="72"/>
+  <object id="445" x="1258" y="1656" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_attack_NW">
+  <object id="446" x="1332" y="1656" width="74" height="72"/>
+  <object id="447" x="1406" y="1656" width="74" height="72"/>
+  <object id="448" x="1480" y="1656" width="74" height="72"/>
+  <object id="449" x="1554" y="1656" width="74" height="72"/>
+  <object id="450" x="1628" y="1656" width="74" height="72"/>
+  <object id="451" x="1702" y="1656" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_attack_W">
+  <object id="452" x="1776" y="1656" width="74" height="72"/>
+  <object id="454" x="1850" y="1656" width="74" height="72"/>
+  <object id="455" x="962" y="1728" width="74" height="72"/>
+  <object id="456" x="1036" y="1728" width="74" height="72"/>
+  <object id="457" x="1110" y="1728" width="74" height="72"/>
+  <object id="458" x="1184" y="1728" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_attack_SW">
+  <object id="459" x="1258" y="1728" width="74" height="72"/>
+  <object id="460" x="1332" y="1728" width="74" height="72"/>
+  <object id="461" x="1406" y="1728" width="74" height="72"/>
+  <object id="462" x="1480" y="1728" width="74" height="72"/>
+  <object id="463" x="1554" y="1728" width="74" height="72"/>
+  <object id="464" x="1628" y="1728" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_attack_S">
+  <object id="465" x="1702" y="1728" width="74" height="72"/>
+  <object id="466" x="1776" y="1728" width="74" height="72"/>
+  <object id="467" x="1850" y="1728" width="74" height="72"/>
+  <object id="468" x="962" y="1800" width="74" height="72"/>
+  <object id="469" x="1036" y="1800" width="74" height="72"/>
+  <object id="470" x="1110" y="1800" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_attack_SE">
+  <object id="471" x="1184" y="1800" width="74" height="72"/>
+  <object id="472" x="1258" y="1800" width="74" height="72"/>
+  <object id="473" x="1332" y="1800" width="74" height="72"/>
+  <object id="474" x="1406" y="1800" width="74" height="72"/>
+  <object id="475" x="1480" y="1800" width="74" height="72"/>
+  <object id="476" x="1554" y="1800" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_attack_E">
+  <object id="477" x="1628" y="1800" width="74" height="72"/>
+  <object id="478" x="1702" y="1800" width="74" height="72"/>
+  <object id="479" x="1776" y="1800" width="74" height="72"/>
+  <object id="480" x="1850" y="1800" width="74" height="72"/>
+  <object id="481" x="962" y="1872" width="74" height="72"/>
+  <object id="482" x="1036" y="1872" width="74" height="72"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_attack_NE">
+  <object id="483" x="1110" y="1872" width="74" height="72"/>
+  <object id="484" x="1184" y="1872" width="74" height="72"/>
+  <object id="485" x="1258" y="1872" width="74" height="72"/>
+  <object id="486" x="1332" y="1872" width="74" height="72"/>
+  <object id="487" x="1406" y="1872" width="74" height="72"/>
+  <object id="488" x="1480" y="1872" width="74" height="72"/>
  </objectgroup>
 </map>

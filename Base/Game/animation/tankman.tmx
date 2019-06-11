@@ -1,303 +1,577 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="17" tilewidth="44" tileheight="33" nextobjectid="223">
- <layer name="Capa de Patrones 1" width="16" height="17">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="21" tilewidth="66" tileheight="76" nextobjectid="419">
+ <layer name="Capa de Patrones 1" width="60" height="21">
   <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
  <imagelayer name="Capa de Imagen 1">
-  <image source="../textures/BasicSoldier_tiled.png" width="704" height="561"/>
+  <image source="tankman.png" width="4005" height="1596"/>
  </imagelayer>
  <objectgroup name="red_idle">
-  <object id="2" x="0" y="0" width="44" height="33"/>
-  <object id="3" x="44" y="0" width="44" height="33"/>
-  <object id="4" x="88" y="0" width="44" height="33"/>
-  <object id="5" x="132" y="0" width="44" height="33"/>
-  <object id="6" x="176" y="0" width="44" height="33"/>
-  <object id="7" x="220" y="0" width="44" height="33"/>
-  <object id="8" x="264" y="0" width="44" height="33"/>
-  <object id="9" x="308" y="0" width="44" height="33"/>
+  <object id="1" x="0" y="0" width="66" height="76"/>
+  <object id="2" x="66" y="0" width="66" height="76"/>
+  <object id="3" x="132" y="0" width="66" height="76"/>
+  <object id="4" x="198" y="0" width="66" height="76"/>
+  <object id="5" x="264" y="0" width="66" height="76"/>
+  <object id="6" x="330" y="0" width="66" height="76"/>
+  <object id="7" x="396" y="0" width="66" height="76"/>
+  <object id="8" x="462" y="0" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_run_N">
+  <object id="9" x="528" y="0" width="66" height="76"/>
+  <object id="10" x="594" y="0" width="66" height="76"/>
+  <object id="11" x="660" y="0" width="66" height="76"/>
+  <object id="12" x="726" y="0" width="66" height="76"/>
+  <object id="13" x="792" y="0" width="66" height="76"/>
+  <object id="14" x="858" y="0" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_run_NW">
+  <object id="15" x="924" y="0" width="66" height="76"/>
+  <object id="16" x="0" y="76" width="66" height="76"/>
+  <object id="17" x="66" y="76" width="66" height="76"/>
+  <object id="18" x="132" y="76" width="66" height="76"/>
+  <object id="19" x="198" y="76" width="66" height="76"/>
+  <object id="20" x="264" y="76" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_run_W">
+  <object id="21" x="330" y="76" width="66" height="76"/>
+  <object id="22" x="396" y="76" width="66" height="76"/>
+  <object id="23" x="462" y="76" width="66" height="76"/>
+  <object id="24" x="528" y="76" width="66" height="76"/>
+  <object id="25" x="594" y="76" width="66" height="76"/>
+  <object id="26" x="660" y="76" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_run_SW">
+  <object id="27" x="726" y="76" width="66" height="76"/>
+  <object id="28" x="792" y="76" width="66" height="76"/>
+  <object id="29" x="858" y="76" width="66" height="76"/>
+  <object id="30" x="924" y="76" width="66" height="76"/>
+  <object id="31" x="0" y="152" width="66" height="76"/>
+  <object id="32" x="66" y="152" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_run_S">
+  <object id="33" x="132" y="152" width="66" height="76"/>
+  <object id="34" x="198" y="152" width="66" height="76"/>
+  <object id="35" x="264" y="152" width="66" height="76"/>
+  <object id="36" x="330" y="152" width="66" height="76"/>
+  <object id="37" x="396" y="152" width="66" height="76"/>
+  <object id="38" x="462" y="152" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_run_SE">
+  <object id="39" x="528" y="152" width="66" height="76"/>
+  <object id="40" x="594" y="152" width="66" height="76"/>
+  <object id="41" x="660" y="152" width="66" height="76"/>
+  <object id="42" x="726" y="152" width="66" height="76"/>
+  <object id="43" x="792" y="152" width="66" height="76"/>
+  <object id="44" x="858" y="152" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_run_E">
+  <object id="45" x="924" y="152" width="66" height="76"/>
+  <object id="46" x="0" y="228" width="66" height="76"/>
+  <object id="47" x="66" y="228" width="66" height="76"/>
+  <object id="48" x="132" y="228" width="66" height="76"/>
+  <object id="49" x="198" y="228" width="66" height="76"/>
+  <object id="50" x="264" y="228" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_run_NE">
+  <object id="51" x="330" y="228" width="66" height="76"/>
+  <object id="52" x="396" y="228" width="66" height="76"/>
+  <object id="53" x="462" y="228" width="66" height="76"/>
+  <object id="54" x="528" y="228" width="66" height="76"/>
+  <object id="55" x="594" y="228" width="66" height="76"/>
+  <object id="56" x="660" y="228" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_shot_N">
+  <object id="57" x="924" y="760" width="66" height="76"/>
+  <object id="58" x="0" y="836" width="66" height="76"/>
+  <object id="59" x="66" y="836" width="66" height="76"/>
+  <object id="60" x="132" y="836" width="66" height="76"/>
+  <object id="61" x="198" y="836" width="66" height="76"/>
+  <object id="62" x="264" y="836" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_shot_NW">
+  <object id="63" x="330" y="836" width="66" height="76"/>
+  <object id="64" x="396" y="836" width="66" height="76"/>
+  <object id="65" x="462" y="836" width="66" height="76"/>
+  <object id="66" x="528" y="836" width="66" height="76"/>
+  <object id="67" x="594" y="836" width="66" height="76"/>
+  <object id="68" x="660" y="836" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_shot_W">
+  <object id="69" x="726" y="836" width="66" height="76"/>
+  <object id="70" x="792" y="836" width="66" height="76"/>
+  <object id="71" x="858" y="836" width="66" height="76"/>
+  <object id="72" x="924" y="836" width="66" height="76"/>
+  <object id="73" x="0" y="912" width="66" height="76"/>
+  <object id="74" x="66" y="912" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_shot_SW">
+  <object id="75" x="132" y="912" width="66" height="76"/>
+  <object id="76" x="198" y="912" width="66" height="76"/>
+  <object id="77" x="264" y="912" width="66" height="76"/>
+  <object id="78" x="330" y="912" width="66" height="76"/>
+  <object id="79" x="396" y="912" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_shot_S">
+  <object id="80" x="462" y="912" width="66" height="76"/>
+  <object id="81" x="528" y="912" width="66" height="76"/>
+  <object id="82" x="594" y="912" width="66" height="76"/>
+  <object id="83" x="660" y="912" width="66" height="76"/>
+  <object id="84" x="726" y="912" width="66" height="76"/>
+  <object id="85" x="792" y="912" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_shot_SE">
+  <object id="86" x="858" y="912" width="66" height="76"/>
+  <object id="87" x="924" y="912" width="66" height="76"/>
+  <object id="88" x="0" y="988" width="66" height="76"/>
+  <object id="89" x="66" y="988" width="66" height="76"/>
+  <object id="90" x="132" y="988" width="66" height="76"/>
+  <object id="91" x="198" y="988" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_shot_E">
+  <object id="92" x="264" y="988" width="66" height="76"/>
+  <object id="93" x="330" y="988" width="66" height="76"/>
+  <object id="94" x="396" y="988" width="66" height="76"/>
+  <object id="95" x="462" y="988" width="66" height="76"/>
+  <object id="96" x="528" y="988" width="66" height="76"/>
+  <object id="97" x="594" y="988" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_shot_NE">
+  <object id="98" x="660" y="988" width="66" height="76"/>
+  <object id="99" x="726" y="988" width="66" height="76"/>
+  <object id="100" x="792" y="988" width="66" height="76"/>
+  <object id="101" x="858" y="988" width="66" height="76"/>
+  <object id="102" x="924" y="988" width="66" height="76"/>
+  <object id="103" x="0" y="1064" width="66" height="76"/>
  </objectgroup>
  <objectgroup name="blue_idle">
-  <object id="13" x="352" y="0" width="44" height="33"/>
-  <object id="14" x="396" y="0" width="44" height="33"/>
-  <object id="15" x="440" y="0" width="44" height="33"/>
-  <object id="16" x="484" y="0" width="44" height="33"/>
-  <object id="17" x="528" y="0" width="44" height="33"/>
-  <object id="18" x="572" y="0" width="44" height="33"/>
-  <object id="19" x="616" y="0" width="44" height="33"/>
-  <object id="20" x="660" y="0" width="44" height="33"/>
+  <object id="104" x="990" y="0" width="66" height="76"/>
+  <object id="105" x="1056" y="0" width="66" height="76"/>
+  <object id="106" x="1122" y="0" width="66" height="76"/>
+  <object id="107" x="1188" y="0" width="66" height="76"/>
+  <object id="108" x="1254" y="0" width="66" height="76"/>
+  <object id="109" x="1320" y="0" width="66" height="76"/>
+  <object id="110" x="1386" y="0" width="66" height="76"/>
+  <object id="111" x="1452" y="0" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="red_north">
-  <object id="21" x="0" y="33" width="44" height="33"/>
-  <object id="22" x="44" y="33" width="44" height="33"/>
-  <object id="23" x="88" y="33" width="44" height="33"/>
-  <object id="24" x="132" y="33" width="44" height="33"/>
-  <object id="25" x="176" y="33" width="44" height="33"/>
-  <object id="27" x="220" y="33" width="44" height="33"/>
+ <objectgroup name="blue_run_N">
+  <object id="112" x="1518" y="0" width="66" height="76"/>
+  <object id="113" x="1584" y="0" width="66" height="76"/>
+  <object id="114" x="1650" y="0" width="66" height="76"/>
+  <object id="115" x="1716" y="0" width="66" height="76"/>
+  <object id="116" x="1782" y="0" width="66" height="76"/>
+  <object id="117" x="1848" y="0" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="red_northwest">
-  <object id="28" x="0" y="66" width="44" height="33"/>
-  <object id="29" x="44" y="66" width="44" height="33"/>
-  <object id="30" x="88" y="66" width="44" height="33"/>
-  <object id="31" x="132" y="66" width="44" height="33"/>
-  <object id="32" x="176" y="66" width="44" height="33"/>
-  <object id="33" x="220" y="66" width="44" height="33"/>
+ <objectgroup name="blue_run_NW">
+  <object id="118" x="1914" y="0" width="66" height="76"/>
+  <object id="119" x="990" y="76" width="66" height="76"/>
+  <object id="120" x="1056" y="76" width="66" height="76"/>
+  <object id="121" x="1122" y="76" width="66" height="76"/>
+  <object id="122" x="1188" y="76" width="66" height="76"/>
+  <object id="123" x="1254" y="76" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="red_shoot_N">
-  <object id="73" x="0" y="297" width="44" height="33"/>
-  <object id="74" x="44" y="297" width="44" height="33"/>
-  <object id="75" x="88" y="297" width="44" height="33"/>
-  <object id="76" x="132" y="297" width="44" height="33"/>
-  <object id="77" x="176" y="297" width="44" height="33"/>
-  <object id="78" x="220" y="297" width="44" height="33"/>
+ <objectgroup name="blue_run_W">
+  <object id="124" x="1320" y="76" width="66" height="76"/>
+  <object id="125" x="1386" y="76" width="66" height="76"/>
+  <object id="126" x="1452" y="76" width="66" height="76"/>
+  <object id="127" x="1518" y="76" width="66" height="76"/>
+  <object id="128" x="1584" y="76" width="66" height="76"/>
+  <object id="129" x="1650" y="76" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="red_shoot_NW">
-  <object id="79" x="0" y="330" width="44" height="33"/>
-  <object id="80" x="44" y="330" width="44" height="33"/>
-  <object id="81" x="88" y="330" width="44" height="33"/>
-  <object id="83" x="132" y="330" width="44" height="33"/>
-  <object id="84" x="176" y="330" width="44" height="33"/>
-  <object id="86" x="220" y="330" width="44" height="33"/>
+ <objectgroup name="blue_run_SW">
+  <object id="130" x="1716" y="76" width="66" height="76"/>
+  <object id="131" x="1782" y="76" width="66" height="76"/>
+  <object id="132" x="1848" y="76" width="66" height="76"/>
+  <object id="133" x="1914" y="76" width="66" height="76"/>
+  <object id="134" x="990" y="152" width="66" height="76"/>
+  <object id="135" x="1056" y="152" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="red_shoot_W">
-  <object id="87" x="0" y="363" width="44" height="33"/>
-  <object id="88" x="44" y="363" width="44" height="33"/>
-  <object id="89" x="88" y="363" width="44" height="33"/>
-  <object id="90" x="132" y="363" width="44" height="33"/>
-  <object id="91" x="176" y="363" width="44" height="33"/>
-  <object id="92" x="220" y="363" width="44" height="33"/>
+ <objectgroup name="blue_run_S">
+  <object id="136" x="1122" y="152" width="66" height="76"/>
+  <object id="137" x="1188" y="152" width="66" height="76"/>
+  <object id="138" x="1254" y="152" width="66" height="76"/>
+  <object id="139" x="1320" y="152" width="66" height="76"/>
+  <object id="140" x="1386" y="152" width="66" height="76"/>
+  <object id="141" x="1452" y="152" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="red_shoot_SW">
-  <object id="93" x="0" y="396" width="44" height="33"/>
-  <object id="94" x="44" y="396" width="44" height="33"/>
-  <object id="95" x="88" y="396" width="44" height="33"/>
-  <object id="96" x="132" y="396" width="44" height="33"/>
-  <object id="97" x="176" y="396" width="44" height="33"/>
-  <object id="98" x="220" y="396" width="44" height="33"/>
+ <objectgroup name="blue_run_SE">
+  <object id="142" x="1518" y="152" width="66" height="76"/>
+  <object id="143" x="1584" y="152" width="66" height="76"/>
+  <object id="144" x="1650" y="152" width="66" height="76"/>
+  <object id="145" x="1716" y="152" width="66" height="76"/>
+  <object id="146" x="1782" y="152" width="66" height="76"/>
+  <object id="147" x="1848" y="152" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="red_shoot_S">
-  <object id="99" x="0" y="429" width="44" height="33"/>
-  <object id="100" x="44" y="429" width="44" height="33"/>
-  <object id="101" x="88" y="429" width="44" height="33"/>
-  <object id="102" x="132" y="429" width="44" height="33"/>
-  <object id="103" x="176" y="429" width="44" height="33"/>
-  <object id="104" x="220" y="429" width="44" height="33"/>
+ <objectgroup name="blue_run_E">
+  <object id="148" x="1914" y="152" width="66" height="76"/>
+  <object id="149" x="990" y="228" width="66" height="76"/>
+  <object id="150" x="1056" y="228" width="66" height="76"/>
+  <object id="151" x="1122" y="228" width="66" height="76"/>
+  <object id="152" x="1188" y="228" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="red_shoot_SE">
-  <object id="105" x="0" y="462" width="44" height="33"/>
-  <object id="106" x="44" y="462" width="44" height="33"/>
-  <object id="107" x="88" y="462" width="44" height="33"/>
-  <object id="108" x="132" y="462" width="44" height="33"/>
-  <object id="109" x="176" y="462" width="44" height="33"/>
-  <object id="110" x="220" y="462" width="44" height="33"/>
+ <objectgroup name="blue_run_NE">
+  <object id="153" x="1254" y="228" width="66" height="76"/>
+  <object id="154" x="1320" y="228" width="66" height="76"/>
+  <object id="155" x="1386" y="228" width="66" height="76"/>
+  <object id="156" x="1452" y="228" width="66" height="76"/>
+  <object id="157" x="1518" y="228" width="66" height="76"/>
+  <object id="158" x="1584" y="228" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="red_shoot_E">
-  <object id="111" x="0" y="495" width="44" height="33"/>
-  <object id="112" x="44" y="495" width="44" height="33"/>
-  <object id="113" x="88" y="495" width="44" height="33"/>
-  <object id="114" x="132" y="495" width="44" height="33"/>
-  <object id="115" x="176" y="495" width="44" height="33"/>
-  <object id="116" x="220" y="495" width="44" height="33"/>
+ <objectgroup name="blue_shot_N">
+  <object id="159" x="1914" y="760" width="66" height="76"/>
+  <object id="160" x="990" y="836" width="66" height="76"/>
+  <object id="161" x="1056" y="836" width="66" height="76"/>
+  <object id="162" x="1122" y="836" width="66" height="76"/>
+  <object id="163" x="1188" y="836" width="66" height="76"/>
+  <object id="164" x="1254" y="836" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="red_shoot_NE">
-  <object id="118" x="0" y="528" width="44" height="33"/>
-  <object id="119" x="44" y="528" width="44" height="33"/>
-  <object id="120" x="88" y="528" width="44" height="33"/>
-  <object id="121" x="132" y="528" width="44" height="33"/>
-  <object id="122" x="176" y="528" width="44" height="33"/>
-  <object id="123" x="220" y="528" width="44" height="33"/>
+ <objectgroup name="blue_shot_NW">
+  <object id="165" x="1320" y="836" width="66" height="76"/>
+  <object id="166" x="1386" y="836" width="66" height="76"/>
+  <object id="167" x="1452" y="836" width="66" height="76"/>
+  <object id="168" x="1518" y="836" width="66" height="76"/>
+  <object id="169" x="1584" y="836" width="66" height="76"/>
+  <object id="170" x="1650" y="836" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="red_west">
-  <object id="34" x="0" y="99" width="44" height="33"/>
-  <object id="35" x="44" y="99" width="44" height="33"/>
-  <object id="36" x="88" y="99" width="44" height="33"/>
-  <object id="37" x="132" y="99" width="44" height="33"/>
-  <object id="38" x="176" y="99" width="44" height="33"/>
-  <object id="39" x="220" y="99" width="44" height="33"/>
+ <objectgroup name="blue_shot_W">
+  <object id="171" x="1716" y="836" width="66" height="76"/>
+  <object id="172" x="1782" y="836" width="66" height="76"/>
+  <object id="173" x="1848" y="836" width="66" height="76"/>
+  <object id="174" x="1914" y="836" width="66" height="76"/>
+  <object id="175" x="990" y="912" width="66" height="76"/>
+  <object id="176" x="1056" y="912" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="red_southwest">
-  <object id="40" x="0" y="132" width="44" height="33"/>
-  <object id="41" x="44" y="132" width="44" height="33"/>
-  <object id="42" x="88" y="132" width="44" height="33"/>
-  <object id="43" x="132" y="132" width="44" height="33"/>
-  <object id="44" x="176" y="132" width="44" height="33"/>
-  <object id="45" x="220" y="132" width="44" height="33"/>
+ <objectgroup name="blue_shot_SW">
+  <object id="177" x="1122" y="912" width="66" height="76"/>
+  <object id="178" x="1188" y="912" width="66" height="76"/>
+  <object id="179" x="1254" y="912" width="66" height="76"/>
+  <object id="180" x="1320" y="912" width="66" height="76"/>
+  <object id="181" x="1386" y="912" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="red_south">
-  <object id="46" x="0" y="165" width="44" height="33"/>
-  <object id="47" x="44" y="165" width="44" height="33"/>
-  <object id="48" x="88" y="165" width="44" height="33"/>
-  <object id="49" x="132" y="165" width="44" height="33"/>
-  <object id="50" x="176" y="165" width="44" height="33"/>
-  <object id="51" x="220" y="165" width="44" height="33"/>
+ <objectgroup name="blue_shot_S">
+  <object id="182" x="1452" y="912" width="66" height="76"/>
+  <object id="183" x="1518" y="912" width="66" height="76"/>
+  <object id="184" x="1584" y="912" width="66" height="76"/>
+  <object id="185" x="1650" y="912" width="66" height="76"/>
+  <object id="186" x="1716" y="912" width="66" height="76"/>
+  <object id="187" x="1782" y="912" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="red_southeast">
-  <object id="52" x="0" y="198" width="44" height="33"/>
-  <object id="53" x="44" y="198" width="44" height="33"/>
-  <object id="54" x="88" y="198" width="44" height="33"/>
-  <object id="55" x="132" y="198" width="44" height="33"/>
-  <object id="56" x="176" y="198" width="44" height="33"/>
-  <object id="57" x="220" y="198" width="44" height="33"/>
+ <objectgroup name="blue_shot_SE">
+  <object id="188" x="1848" y="912" width="66" height="76"/>
+  <object id="189" x="1914" y="912" width="66" height="76"/>
+  <object id="190" x="990" y="988" width="66" height="76"/>
+  <object id="191" x="1056" y="988" width="66" height="76"/>
+  <object id="192" x="1122" y="988" width="66" height="76"/>
+  <object id="193" x="1188" y="988" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="red_east">
-  <object id="58" x="0" y="231" width="44" height="33"/>
-  <object id="59" x="44" y="231" width="44" height="33"/>
-  <object id="60" x="88" y="231" width="44" height="33"/>
-  <object id="61" x="132" y="231" width="44" height="33"/>
-  <object id="62" x="176" y="231" width="44" height="33"/>
-  <object id="64" x="220" y="231" width="44" height="33"/>
+ <objectgroup name="blue_shot_E">
+  <object id="194" x="1254" y="988" width="66" height="76"/>
+  <object id="195" x="1320" y="988" width="66" height="76"/>
+  <object id="196" x="1386" y="988" width="66" height="76"/>
+  <object id="197" x="1452" y="988" width="66" height="76"/>
+  <object id="198" x="1518" y="988" width="66" height="76"/>
+  <object id="199" x="1584" y="988" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="red_northeast">
-  <object id="65" x="0" y="264" width="44" height="33"/>
-  <object id="66" x="44" y="264" width="44" height="33"/>
-  <object id="67" x="88" y="264" width="44" height="33"/>
-  <object id="68" x="132" y="264" width="44" height="33"/>
-  <object id="69" x="176" y="264" width="44" height="33"/>
-  <object id="70" x="220" y="264" width="44" height="33"/>
+ <objectgroup name="blue_shot_NE">
+  <object id="200" x="1650" y="988" width="66" height="76"/>
+  <object id="201" x="1716" y="988" width="66" height="76"/>
+  <object id="202" x="1782" y="988" width="66" height="76"/>
+  <object id="203" x="1848" y="988" width="66" height="76"/>
+  <object id="204" x="1914" y="988" width="66" height="76"/>
+  <object id="205" x="990" y="1064" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="blue_north">
-  <object id="124" x="352" y="33" width="44" height="33"/>
-  <object id="125" x="396" y="33" width="44" height="33"/>
-  <object id="126" x="440" y="33" width="44" height="33"/>
-  <object id="127" x="484" y="33" width="44" height="33"/>
-  <object id="128" x="528" y="33" width="44" height="33"/>
-  <object id="129" x="572" y="33" width="44" height="33"/>
+ <objectgroup name="red_inv_idle">
+  <object id="206" x="1980" y="0" width="66" height="76"/>
+  <object id="207" x="2046" y="0" width="66" height="76"/>
+  <object id="208" x="2112" y="0" width="66" height="76"/>
+  <object id="209" x="2178" y="0" width="66" height="76"/>
+  <object id="210" x="2244" y="0" width="66" height="76"/>
+  <object id="211" x="2310" y="0" width="66" height="76"/>
+  <object id="212" x="2376" y="0" width="66" height="76"/>
+  <object id="213" x="2442" y="0" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="blue_northwest">
-  <object id="130" x="352" y="66" width="44" height="33"/>
-  <object id="131" x="396" y="66" width="44" height="33"/>
-  <object id="132" x="440" y="66" width="44" height="33"/>
-  <object id="133" x="484" y="66" width="44" height="33"/>
-  <object id="134" x="528" y="66" width="44" height="33"/>
-  <object id="135" x="572" y="66" width="44" height="33"/>
+ <objectgroup name="red_inv_N">
+  <object id="214" x="2508" y="0" width="66" height="76"/>
+  <object id="215" x="2574" y="0" width="66" height="76"/>
+  <object id="216" x="2640" y="0" width="66" height="76"/>
+  <object id="217" x="2706" y="0" width="66" height="76"/>
+  <object id="218" x="2772" y="0" width="66" height="76"/>
+  <object id="219" x="2838" y="0" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="blue_west">
-  <object id="136" x="352" y="99" width="44" height="33"/>
-  <object id="137" x="396" y="99" width="44" height="33"/>
-  <object id="138" x="440" y="99" width="44" height="33"/>
-  <object id="139" x="484" y="99" width="44" height="33"/>
-  <object id="140" x="528" y="99" width="44" height="33"/>
-  <object id="141" x="572" y="99" width="44" height="33"/>
+ <objectgroup name="red_inv_NW">
+  <object id="220" x="2904" y="0" width="66" height="76"/>
+  <object id="221" x="1980" y="76" width="66" height="76"/>
+  <object id="222" x="2046" y="76" width="66" height="76"/>
+  <object id="223" x="2112" y="76" width="66" height="76"/>
+  <object id="224" x="2178" y="76" width="66" height="76"/>
+  <object id="225" x="2244" y="76" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="blue_southwest">
-  <object id="142" x="352" y="132" width="44" height="33"/>
-  <object id="143" x="396" y="132" width="44" height="33"/>
-  <object id="144" x="440" y="132" width="44" height="33"/>
-  <object id="145" x="484" y="132" width="44" height="33"/>
-  <object id="146" x="528" y="132" width="44" height="33"/>
-  <object id="147" x="572" y="132" width="44" height="33"/>
+ <objectgroup name="red_inv_W">
+  <object id="226" x="2310" y="76" width="66" height="76"/>
+  <object id="227" x="2376" y="76" width="66" height="76"/>
+  <object id="228" x="2442" y="76" width="66" height="76"/>
+  <object id="229" x="2508" y="76" width="66" height="76"/>
+  <object id="230" x="2574" y="76" width="66" height="76"/>
+  <object id="231" x="2640" y="76" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="blue_south">
-  <object id="148" x="352" y="165" width="44" height="33"/>
-  <object id="149" x="396" y="165" width="44" height="33"/>
-  <object id="150" x="440" y="165" width="44" height="33"/>
-  <object id="151" x="484" y="165" width="44" height="33"/>
-  <object id="152" x="528" y="165" width="44" height="33"/>
-  <object id="153" x="572" y="165" width="44" height="33"/>
+ <objectgroup name="red_inv_SW">
+  <object id="232" x="2706" y="76" width="66" height="76"/>
+  <object id="233" x="2772" y="76" width="66" height="76"/>
+  <object id="234" x="2838" y="76" width="66" height="76"/>
+  <object id="235" x="2904" y="76" width="66" height="76"/>
+  <object id="236" x="1980" y="152" width="66" height="76"/>
+  <object id="237" x="2046" y="152" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="blue_southeast">
-  <object id="154" x="352" y="198" width="44" height="33"/>
-  <object id="155" x="396" y="198" width="44" height="33"/>
-  <object id="156" x="440" y="198" width="44" height="33"/>
-  <object id="157" x="484" y="198" width="44" height="33"/>
-  <object id="158" x="528" y="198" width="44" height="33"/>
-  <object id="159" x="572" y="198" width="44" height="33"/>
+ <objectgroup name="red_inv_S">
+  <object id="238" x="2112" y="152" width="66" height="76"/>
+  <object id="239" x="2178" y="152" width="66" height="76"/>
+  <object id="240" x="2244" y="152" width="66" height="76"/>
+  <object id="241" x="2310" y="152" width="66" height="76"/>
+  <object id="242" x="2376" y="152" width="66" height="76"/>
+  <object id="243" x="2442" y="152" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="blue_east">
-  <object id="160" x="352" y="231" width="44" height="33"/>
-  <object id="161" x="396" y="231" width="44" height="33"/>
-  <object id="162" x="440" y="231" width="44" height="33"/>
-  <object id="163" x="484" y="231" width="44" height="33"/>
-  <object id="164" x="528" y="231" width="44" height="33"/>
-  <object id="165" x="572" y="231" width="44" height="33"/>
+ <objectgroup name="red_inv_SE">
+  <object id="244" x="2508" y="152" width="66" height="76"/>
+  <object id="245" x="2574" y="152" width="66" height="76"/>
+  <object id="246" x="2640" y="152" width="66" height="76"/>
+  <object id="247" x="2706" y="152" width="66" height="76"/>
+  <object id="248" x="2772" y="152" width="66" height="76"/>
+  <object id="249" x="2838" y="152" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="blue_northeast">
-  <object id="166" x="352" y="264" width="44" height="33"/>
-  <object id="167" x="396" y="264" width="44" height="33"/>
-  <object id="168" x="440" y="264" width="44" height="33"/>
-  <object id="169" x="484" y="264" width="44" height="33"/>
-  <object id="170" x="528" y="264" width="44" height="33"/>
-  <object id="171" x="572" y="264" width="44" height="33"/>
+ <objectgroup name="red_inv_E">
+  <object id="250" x="2904" y="152" width="66" height="76"/>
+  <object id="251" x="1980" y="228" width="66" height="76"/>
+  <object id="253" x="2046" y="228" width="66" height="76"/>
+  <object id="254" x="2112" y="228" width="66" height="76"/>
+  <object id="255" x="2178" y="228" width="66" height="76"/>
+  <object id="256" x="2244" y="228" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="blue_shoot_N">
-  <object id="172" x="352" y="297" width="44" height="33"/>
-  <object id="173" x="396" y="297" width="44" height="33"/>
-  <object id="174" x="440" y="297" width="44" height="33"/>
-  <object id="175" x="484" y="297" width="44" height="33"/>
-  <object id="176" x="528" y="297" width="44" height="33"/>
-  <object id="177" x="572" y="297" width="44" height="33"/>
+ <objectgroup name="red_inv_NE">
+  <object id="257" x="2310" y="228" width="66" height="76"/>
+  <object id="258" x="2376" y="228" width="66" height="76"/>
+  <object id="259" x="2442" y="228" width="66" height="76"/>
+  <object id="260" x="2508" y="228" width="66" height="76"/>
+  <object id="261" x="2574" y="228" width="66" height="76"/>
+  <object id="262" x="2640" y="228" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="blue_shoot_NW">
-  <object id="178" x="352" y="330" width="44" height="33"/>
-  <object id="179" x="396" y="330" width="44" height="33"/>
-  <object id="180" x="440" y="330" width="44" height="33"/>
-  <object id="181" x="484" y="330" width="44" height="33"/>
-  <object id="182" x="528" y="330" width="44" height="33"/>
-  <object id="183" x="572" y="330" width="44" height="33"/>
+ <objectgroup name="red_inv_shot_N">
+  <object id="263" x="2904" y="760" width="66" height="76"/>
+  <object id="264" x="1980" y="836" width="66" height="76"/>
+  <object id="265" x="2046" y="836" width="66" height="76"/>
+  <object id="266" x="2112" y="836" width="66" height="76"/>
+  <object id="267" x="2178" y="836" width="66" height="76"/>
+  <object id="268" x="2244" y="836" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="blue_shoot_W">
-  <object id="184" x="352" y="363" width="44" height="33"/>
-  <object id="185" x="396" y="363" width="44" height="33"/>
-  <object id="186" x="440" y="363" width="44" height="33"/>
-  <object id="187" x="484" y="363" width="44" height="33"/>
-  <object id="188" x="528" y="363" width="44" height="33"/>
-  <object id="189" x="572" y="363" width="44" height="33"/>
+ <objectgroup name="red_inv_shot_NW">
+  <object id="269" x="2310" y="836" width="66" height="76"/>
+  <object id="270" x="2376" y="836" width="66" height="76"/>
+  <object id="271" x="2442" y="836" width="66" height="76"/>
+  <object id="272" x="2508" y="836" width="66" height="76"/>
+  <object id="273" x="2574" y="836" width="66" height="76"/>
+  <object id="274" x="2640" y="836" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="blue_shoot_SW">
-  <object id="190" x="352" y="396" width="44" height="33"/>
-  <object id="191" x="396" y="396" width="44" height="33"/>
-  <object id="192" x="440" y="396" width="44" height="33"/>
-  <object id="193" x="484" y="396" width="44" height="33"/>
-  <object id="194" x="528" y="396" width="44" height="33"/>
-  <object id="195" x="572" y="396" width="44" height="33"/>
+ <objectgroup name="red_inv_shot_W">
+  <object id="275" x="2706" y="836" width="66" height="76"/>
+  <object id="276" x="2772" y="836" width="66" height="76"/>
+  <object id="277" x="2838" y="836" width="66" height="76"/>
+  <object id="278" x="2904" y="836" width="66" height="76"/>
+  <object id="279" x="1980" y="912" width="66" height="76"/>
+  <object id="280" x="2046" y="912" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="blue_shoot_S">
-  <object id="196" x="352" y="429" width="44" height="33"/>
-  <object id="197" x="396" y="429" width="44" height="33"/>
-  <object id="198" x="440" y="429" width="44" height="33"/>
-  <object id="199" x="484" y="429" width="44" height="33"/>
-  <object id="200" x="528" y="429" width="44" height="33"/>
-  <object id="201" x="572" y="429" width="44" height="33"/>
+ <objectgroup name="red_inv_shot_SW">
+  <object id="281" x="2112" y="912" width="66" height="76"/>
+  <object id="282" x="2178" y="912" width="66" height="76"/>
+  <object id="283" x="2244" y="912" width="66" height="76"/>
+  <object id="284" x="2310" y="912" width="66" height="76"/>
+  <object id="285" x="2376" y="912" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="blue_shoot_SE">
-  <object id="202" x="352" y="462" width="44" height="33"/>
-  <object id="203" x="396" y="462" width="44" height="33"/>
-  <object id="204" x="440" y="462" width="44" height="33"/>
-  <object id="205" x="484" y="462" width="44" height="33"/>
-  <object id="206" x="528" y="462" width="44" height="33"/>
-  <object id="207" x="572" y="462" width="44" height="33"/>
+ <objectgroup name="red_inv_shot_S">
+  <object id="286" x="2442" y="912" width="66" height="76"/>
+  <object id="287" x="2508" y="912" width="66" height="76"/>
+  <object id="288" x="2574" y="912" width="66" height="76"/>
+  <object id="289" x="2640" y="912" width="66" height="76"/>
+  <object id="290" x="2706" y="912" width="66" height="76"/>
+  <object id="291" x="2772" y="912" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="blue_shoot_E">
-  <object id="208" x="352" y="495" width="44" height="33"/>
-  <object id="212" x="396" y="495" width="44" height="33"/>
-  <object id="213" x="440" y="495" width="44" height="33"/>
-  <object id="214" x="484" y="495" width="44" height="33"/>
-  <object id="215" x="528" y="495" width="44" height="33"/>
-  <object id="216" x="572" y="495" width="44" height="33"/>
+ <objectgroup name="red_inv_shot_SE">
+  <object id="292" x="2838" y="912" width="66" height="76"/>
+  <object id="293" x="2904" y="912" width="66" height="76"/>
+  <object id="294" x="1980" y="988" width="66" height="76"/>
+  <object id="295" x="2046" y="988" width="66" height="76"/>
+  <object id="296" x="2112" y="988" width="66" height="76"/>
+  <object id="297" x="2178" y="988" width="66" height="76"/>
  </objectgroup>
- <objectgroup name="blue_shoot_NE">
-  <object id="217" x="352" y="528" width="44" height="33"/>
-  <object id="218" x="396" y="528" width="44" height="33"/>
-  <object id="219" x="440" y="528" width="44" height="33"/>
-  <object id="220" x="484" y="528" width="44" height="33"/>
-  <object id="221" x="528" y="528" width="44" height="33"/>
-  <object id="222" x="572" y="528" width="44" height="33"/>
+ <objectgroup name="red_inv_shot_E">
+  <object id="298" x="2244" y="988" width="66" height="76"/>
+  <object id="299" x="2310" y="988" width="66" height="76"/>
+  <object id="300" x="2376" y="988" width="66" height="76"/>
+  <object id="301" x="2442" y="988" width="66" height="76"/>
+  <object id="302" x="2508" y="988" width="66" height="76"/>
+  <object id="303" x="2574" y="988" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="red_inv_shot_NE">
+  <object id="304" x="2640" y="988" width="66" height="76"/>
+  <object id="305" x="2706" y="988" width="66" height="76"/>
+  <object id="306" x="2772" y="988" width="66" height="76"/>
+  <object id="307" x="2838" y="988" width="66" height="76"/>
+  <object id="308" x="2904" y="988" width="66" height="76"/>
+  <object id="310" x="1980" y="1064" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_idle">
+  <object id="311" x="2970" y="0" width="66" height="76"/>
+  <object id="312" x="3036" y="0" width="66" height="76"/>
+  <object id="313" x="3102" y="0" width="66" height="76"/>
+  <object id="314" x="3168" y="0" width="66" height="76"/>
+  <object id="315" x="3234" y="0" width="66" height="76"/>
+  <object id="316" x="3300" y="0" width="66" height="76"/>
+  <object id="317" x="3366" y="0" width="66" height="76"/>
+  <object id="318" x="3432" y="0" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_N">
+  <object id="319" x="3498" y="0" width="66" height="76"/>
+  <object id="320" x="3564" y="0" width="66" height="76"/>
+  <object id="321" x="3630" y="0" width="66" height="76"/>
+  <object id="322" x="3696" y="0" width="66" height="76"/>
+  <object id="323" x="3762" y="0" width="66" height="76"/>
+  <object id="324" x="3828" y="0" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_NW">
+  <object id="326" x="3894" y="0" width="66" height="76"/>
+  <object id="327" x="2970" y="76" width="66" height="76"/>
+  <object id="328" x="3036" y="76" width="66" height="76"/>
+  <object id="329" x="3102" y="76" width="66" height="76"/>
+  <object id="330" x="3168" y="76" width="66" height="76"/>
+  <object id="331" x="3234" y="76" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_W">
+  <object id="332" x="3300" y="76" width="66" height="76"/>
+  <object id="333" x="3366" y="76" width="66" height="76"/>
+  <object id="334" x="3432" y="76" width="66" height="76"/>
+  <object id="335" x="3498" y="76" width="66" height="76"/>
+  <object id="336" x="3564" y="76" width="66" height="76"/>
+  <object id="337" x="3630" y="76" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_SW">
+  <object id="338" x="3696" y="76" width="66" height="76"/>
+  <object id="339" x="3762" y="76" width="66" height="76"/>
+  <object id="340" x="3828" y="76" width="66" height="76"/>
+  <object id="341" x="3894" y="76" width="66" height="76"/>
+  <object id="342" x="2970" y="152" width="66" height="76"/>
+  <object id="343" x="3036" y="152" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_S">
+  <object id="344" x="3102" y="152" width="66" height="76"/>
+  <object id="345" x="3168" y="152" width="66" height="76"/>
+  <object id="346" x="3234" y="152" width="66" height="76"/>
+  <object id="347" x="3300" y="152" width="66" height="76"/>
+  <object id="348" x="3366" y="152" width="66" height="76"/>
+  <object id="349" x="3432" y="152" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_SE">
+  <object id="350" x="3498" y="152" width="66" height="76"/>
+  <object id="351" x="3564" y="152" width="66" height="76"/>
+  <object id="352" x="3630" y="152" width="66" height="76"/>
+  <object id="353" x="3696" y="152" width="66" height="76"/>
+  <object id="354" x="3762" y="152" width="66" height="76"/>
+  <object id="355" x="3828" y="152" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_E">
+  <object id="356" x="3894" y="152" width="66" height="76"/>
+  <object id="357" x="2970" y="228" width="66" height="76"/>
+  <object id="358" x="3036" y="228" width="66" height="76"/>
+  <object id="359" x="3102" y="228" width="66" height="76"/>
+  <object id="360" x="3168" y="228" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_NE">
+  <object id="361" x="3234" y="228" width="66" height="76"/>
+  <object id="362" x="3300" y="228" width="66" height="76"/>
+  <object id="364" x="3366" y="228" width="66" height="76"/>
+  <object id="365" x="3432" y="228" width="66" height="76"/>
+  <object id="366" x="3498" y="228" width="66" height="76"/>
+  <object id="367" x="3564" y="228" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_shot_N">
+  <object id="368" x="3894" y="760" width="66" height="76"/>
+  <object id="370" x="2970" y="836" width="66" height="76"/>
+  <object id="371" x="3036" y="836" width="66" height="76"/>
+  <object id="372" x="3102" y="836" width="66" height="76"/>
+  <object id="373" x="3168" y="836" width="66" height="76"/>
+  <object id="374" x="3234" y="836" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_shot_NW">
+  <object id="375" x="3300" y="836" width="66" height="76"/>
+  <object id="376" x="3366" y="836" width="66" height="76"/>
+  <object id="377" x="3432" y="836" width="66" height="76"/>
+  <object id="378" x="3498" y="836" width="66" height="76"/>
+  <object id="379" x="3564" y="836" width="66" height="76"/>
+  <object id="380" x="3630" y="836" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_shot_W">
+  <object id="381" x="3696" y="836" width="66" height="76"/>
+  <object id="382" x="3762" y="836" width="66" height="76"/>
+  <object id="383" x="3828" y="836" width="66" height="76"/>
+  <object id="384" x="3894" y="836" width="66" height="76"/>
+  <object id="386" x="2970" y="912" width="66" height="76"/>
+  <object id="387" x="3036" y="912" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_shot_SW">
+  <object id="388" x="3102" y="912" width="66" height="76"/>
+  <object id="389" x="3168" y="912" width="66" height="76"/>
+  <object id="390" x="3234" y="912" width="66" height="76"/>
+  <object id="391" x="3300" y="912" width="66" height="76"/>
+  <object id="392" x="3366" y="912" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_shot_S">
+  <object id="393" x="3432" y="912" width="66" height="76"/>
+  <object id="394" x="3498" y="912" width="66" height="76"/>
+  <object id="395" x="3564" y="912" width="66" height="76"/>
+  <object id="396" x="3630" y="912" width="66" height="76"/>
+  <object id="397" x="3696" y="912" width="66" height="76"/>
+  <object id="398" x="3762" y="912" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_shot_SE">
+  <object id="399" x="3828" y="912" width="66" height="76"/>
+  <object id="400" x="3894" y="912" width="66" height="76"/>
+  <object id="402" x="2970" y="988" width="66" height="76"/>
+  <object id="403" x="3036" y="988" width="66" height="76"/>
+  <object id="404" x="3102" y="988" width="66" height="76"/>
+  <object id="405" x="3168" y="988" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_shot_E">
+  <object id="407" x="3234" y="988" width="66" height="76"/>
+  <object id="408" x="3300" y="988" width="66" height="76"/>
+  <object id="409" x="3366" y="988" width="66" height="76"/>
+  <object id="410" x="3432" y="988" width="66" height="76"/>
+  <object id="411" x="3498" y="988" width="66" height="76"/>
+  <object id="412" x="3564" y="988" width="66" height="76"/>
+ </objectgroup>
+ <objectgroup name="blue_inv_shot_NE">
+  <object id="413" x="3630" y="988" width="66" height="76"/>
+  <object id="414" x="3696" y="988" width="66" height="76"/>
+  <object id="415" x="3762" y="988" width="66" height="76"/>
+  <object id="416" x="3828" y="988" width="66" height="76"/>
+  <object id="417" x="3894" y="988" width="66" height="76"/>
+  <object id="418" x="2970" y="1064" width="66" height="76"/>
  </objectgroup>
 </map>
