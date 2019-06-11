@@ -292,6 +292,17 @@ When spawning troops you can choose in which barrack you want to spawn them.
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/UI/barracks_selection.gif" width="250">
 </p>
 
+
+**Gold Production:**
+
+Increasing gold each second by a variable amount depending on the number of mines that are built.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/UI/production.gif" width="250">
+</p>
+
+
+
 ### Joan Barduena
 
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Joan.jpg" width="150" >
