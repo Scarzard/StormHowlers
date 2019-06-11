@@ -141,14 +141,17 @@ or dowload the desired release here and follow the same steps:
        
 ## Game Video
 
-<html>
-<body>
+### Comertial trailer
 
-<iframe width="590" height="520" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/b1AHsxDyM-Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-</body>
-</html>
+### Game trailer
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wfb3HyWqdKE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+### Gameplay
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sSNUHI5_8Dg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Teams Rolls
 
