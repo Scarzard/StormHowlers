@@ -323,8 +323,6 @@ bool Infiltrator::Update(float dt)
 
 	Troop::Update(dt);
 
-	App->render->DrawQuad({ position.first,position.second,5,5 }, 255, 255, 255, 255, false);
-
 	return true;
 }
 

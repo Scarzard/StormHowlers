@@ -712,7 +712,7 @@ bool Player::Update(float dt)
 		}
 
 		// Travel through the different buttons
-		if ((gamepad.Controller[UI_RIGHT] == KEY_DOWN || gamepad.Controller[RIGHT] == KEY_DOWN) &&
+		if ((gamepad.Controller[UI_RIGHT] == KEY_DOWN || gamepad.Controller[RIGHT] == KEY_DOWN || gamepad.Controller[RB] == KEY_DOWN) &&
 			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && 
 			gamepad.Controller[ACCEPT] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
@@ -734,7 +734,7 @@ bool Player::Update(float dt)
 		}
 
 		// Travel through the different buttons
-		if ((gamepad.Controller[UI_LEFT] == KEY_DOWN || gamepad.Controller[LEFT] == KEY_DOWN) &&
+		if ((gamepad.Controller[UI_LEFT] == KEY_DOWN || gamepad.Controller[LEFT] == KEY_DOWN || gamepad.Controller[LB] == KEY_DOWN) &&
 			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES &&
 			gamepad.Controller[ACCEPT] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
