@@ -41,9 +41,9 @@ The game will be developed for the subject Project II. We will be making a tribu
 As stated in the game info, each player will have one controller where they can control the UI from his faction.
 The controls of the controllers as well as debugging functions with keyboard/mouse can be found in the next section below.
 
-- **Allies(Player1)**: Blue. Base located in the left side of the screen. UI located on the bottom-right corner
+- **Allies (Player1)**: Blue. Base located in the left side of the screen. UI located on the bottom-right corner
 
-- **Soviets(Player2)**: Red. Base located in the left side of the screen. UI located on the top-left corner
+- **Soviets (Player2)**: Red. Base located in the left side of the screen. UI located on the top-left corner
 
 The main objective of the game is **to destroy the opponents' TownHall.**
 
@@ -114,11 +114,11 @@ Licensed under the [MIT License](https://github.com/stormhowlers/Command_and_Con
 ### Code Features
 Some special features included in the code are:
 
-- Entity IA: each entity manages his own depending his state and needs.
+- Entity AI: each entity manages his own depending his state and needs.
 
 - Animations Loaded from Tiled: loaded animations from xml document save from Tiled.
 
-- Construction system: collissions and previews to build inside your zone.
+- Construction system: collisions and previews to build inside your zone.
 
 - Entity Update Area: enemies update depending on the Zone they are, and the mode the player selects.
 
@@ -126,9 +126,11 @@ Some special features included in the code are:
 
 - UI with gamepads: UI designed for gamepads.
 
-- Entity managment: avoid destroying and creating entities by active or inactive system.
+- Entity management: avoid destroying and creating entities by active or inactive system.
 
-- Video managment: start the game with the teams intro.
+- Video management: start the game with the teams intro.
+
+- Voicelines: so that the game can communicate with the players.
 
   
 ### Installation
@@ -141,7 +143,7 @@ or dowload the desired release here and follow the same steps:
        
 ## Game Video
 
-### Comertial trailer
+### Comercial trailer
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/b1AHsxDyM-Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -153,7 +155,7 @@ or dowload the desired release here and follow the same steps:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/sSNUHI5_8Dg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## Teams Rolls
+## Teams Roles
 
 ### Andrés Saladrigas
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Andres.jpg" width="150">
@@ -163,9 +165,9 @@ or dowload the desired release here and follow the same steps:
    
 **Mission:** Guide the teams members throught the development process.
 
-**Objective:** Asure to achive goals in time.
+**Objective:** Ensure that goals are achieved in time.
 
-**Roll:** Manage objectives, ideas and features in relation with time. Make Decitions. Guide the team to deliver the final product.
+**Role:** Manage objectives, ideas and features in relation with time. Make hard decisions. Guide the team to deliver the final product.
 
 Main idea of the game, later developed and improved with all members. Create a PvP experience making a tribute to C&C games.
 
@@ -252,7 +254,7 @@ Introdicing a the game with a .ogv video
 
 **Objective:** Make the UI as intuitive as possible. 
 
-**Roll:** Make a responsive and useful UI that works.
+**Role:** Make a responsive and useful UI that works.
 
 
 **Design and code of the in-game UI:**
@@ -304,6 +306,63 @@ When spawning troops you can choose in which barrack you want to spawn them.
   
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ROCKETEER.png) **QA:** Víctor Chen
    - [Victor's GitHub Link](https://github.com/Scarzard)
+   
+**Mission:** Keep track of bugs in the game and solve them as fast as possible
+
+**Objective:** Categorize every bug in the game and assign someone to solve it.
+
+**Role:** Bug solving and code when there are no present bugs
+
+**Main menu navigation and buttons**
+
+Coded the main menu and all its buttons. Used original sprites and modified others to make the button states.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/QA/mainmenu.gif" width="500">
+</p>
+
+**Bug tracking with GitHub Issues**
+
+Used GitHub Issues to keep track of bugs and categorized them depending on which type of bug they were, assigned them a priority level, wrote down the reproduction steps, assigned it a reproducibility level and then I indicated the branch where the bug is present and the current build of the game.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/QA/ghissues.JPG" width="500">
+</p>
+
+**Win/Lose code**
+
+Coded the Win/Lose conditions for both players and added the windows and explosion animations (done by the artist Joan Barduena)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/QA/alliedwin.gif" width="500">
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/QA/sovietwin.gif" width="500">
+</p>
+
+**SFX/Voicelines**
+
+Selected the necessary SFX and put them in code in every instance they are used. I also created brand new voicelines so that the game itself can communicate with the players of the game's state.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/QA/fx_voicelines.JPG" width="500">
+</p>
+
+**Note:** the files that ends with `_fx.wav` are original SFX from Command&Conquer: Red Alert 2. The other ones are voicelines made by me.
+
+**Scene transitions**
+
+Added scene transition modules and implemented them into our code.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/QA/transition1.gif" width="500">
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/QA/transition2.gif" width="500">
+</p>
+
 
 ### David Tello
 
