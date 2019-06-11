@@ -166,7 +166,7 @@ bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("Player Update", Profiler::Color::Black);
 
-	if (inmune && App->scene->worldseconds == desired_second && App->scene->worldminutes == desired_min)
+	if (inmune && App->scene->worldseconds >= desired_second && App->scene->worldminutes >= desired_min)
 	{
 		inmune = false;
 	}
