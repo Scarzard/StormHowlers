@@ -60,12 +60,13 @@ bool Player::Start()
 	gold_persecond = 0;
 
 	SoldiersCreated = TankmansCreated = InfiltratorsCreated = EngineersCreated = WarHoundsCreated = Invulnerable_abilities = Rocket_abilities = Tank_abilities = 0;
+	AOE_turretsCreated = SentruGunsCreated = MinesCreated = 0;
 
 	selected_texture = { 0,0, 100, 100 };
 
 	UI_troop_type = Entity::entityType::SOLDIER;
 
-	isBuilding = isDeploying = gold_added = isCasting = Y_pressed = isPaused = DoNotLogic = false; 
+	isBuilding = isDeploying = gold_added = isCasting = Y_pressed = isPaused = DoNotLogic = CommandCenterDestroyed = false; 
 	Soldier_Offensive = Tankman_Offensive = Engineer_Offensive = Infiltrator_Offensive = WarHound_Offensive = true;
 
 	Y_pressed = true;
@@ -122,7 +123,7 @@ bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("Player Update", Profiler::Color::Black);
 
-	if (inmune && App->scene->worldseconds == desired_second && App->scene->worldminutes == desired_min)
+	if (inmune && App->scene->worldseconds >= desired_second && App->scene->worldminutes >= desired_min)
 	{
 		inmune = false;
 	}
@@ -161,27 +162,6 @@ bool Player::Update(float dt)
 			building_selected._Ptr = nullptr;
 			currentUI = CURRENT_UI::CURR_DEPLOY;
 			UpdateFocus(currentUI);
-		}
-
-		// DRAW QUAD on SELECTED BUILDING 
-		if (currentUI == CURRENT_UI::CURR_SELECTING_BUILDING)
-		{
-			if (In_SelectBuilding->visible == false)
-
-				In_SelectBuilding->visible = true;			
-			
-			// Draw Range
-			if ((*building_selected)->type == Entity::entityType::DEFENSE_AOE ||
-				(*building_selected)->type == Entity::entityType::DEFENSE_TARGET ||
-				(*building_selected)->type == Entity::entityType::MAIN_DEFENSE)
-			{
-				ShowRange((*building_selected)->type, (*building_selected)->collider);
-			}
-		}
-		else
-		{
-			if(In_SelectBuilding!=nullptr && In_SelectBuilding->visible == true )
-				In_SelectBuilding->visible = false;	
 		}
 
 
@@ -367,23 +347,23 @@ bool Player::Update(float dt)
 
 			if (UI_troop_type == Entity::entityType::SOLDIER)
 			{
-				TroopCost = 20 * number_of_troops;
+				TroopCost = 60 * number_of_troops;
 			}
 			else if (UI_troop_type == Entity::entityType::TANKMAN)
 			{
-				TroopCost = 80 * number_of_troops;
+				TroopCost = 320 * number_of_troops;
 			}
 			else if (UI_troop_type == Entity::entityType::INFILTRATOR)
 			{
-				TroopCost = 100 * number_of_troops;
+				TroopCost = 200 * number_of_troops;
 			}
 			else if (UI_troop_type == Entity::entityType::ENGINEER)
 			{
-				TroopCost = 25 * number_of_troops;
+				TroopCost = 150 * number_of_troops;
 			}
 			else if (UI_troop_type == Entity::entityType::WAR_HOUND)
 			{
-				TroopCost = 50 * number_of_troops;
+				TroopCost = 125 * number_of_troops;
 			}
 
 			if (gamepad.Controller[ACCEPT] == KEY_UP && gold >= TroopCost)
@@ -439,7 +419,10 @@ bool Player::Update(float dt)
 			}
 		}
 
-
+		if (gamepad.Controller[RT] == KEY_DOWN && App->scene->active)
+		{
+			ChangeTroopsState();
+		}
 		
 
 		// ENTER TO CREATING TROOPS UI
@@ -561,19 +544,19 @@ bool Player::Update(float dt)
 		{
 			if ((*focus) == Def_AOE_icon)
 			{
-				BuildingCost = 500;
+				BuildingCost = 500 + AOE_turretsCreated* 250;
 			}
 			else if ((*focus) == Def_Target_icon)
 			{
-				BuildingCost = 1200;
+				BuildingCost = 1200 + SentruGunsCreated*360;
 			}
 			else if ((*focus) == Mines_icon)
 			{
-				BuildingCost = 2000;
+				BuildingCost = 2000 + MinesCreated*750;
 			}
 			else if ((*focus) == Barracks_icon)
 			{
-				BuildingCost = 1000;
+				BuildingCost = 1000 + BarracksCreated*200;
 			}
 
 		}
@@ -654,14 +637,10 @@ bool Player::Update(float dt)
 			if (currentUI != CURRENT_UI::CURR_GENERAL && Create_abilities != nullptr)
 				Create_abilities->visible = false;
 
-			if(currentUI == CURR_MAIN)
-				SelectBuilding->visible = true;
-			else
-				SelectBuilding->visible = false;
 		}
 
 		// Travel through the different buttons
-		if ((gamepad.Controller[UI_RIGHT] == KEY_DOWN || gamepad.Controller[RIGHT] == KEY_DOWN) &&
+		if ((gamepad.Controller[UI_RIGHT] == KEY_DOWN || gamepad.Controller[RIGHT] == KEY_DOWN || gamepad.Controller[RB] == KEY_DOWN) &&
 			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES && 
 			gamepad.Controller[ACCEPT] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
@@ -677,13 +656,13 @@ bool Player::Update(float dt)
 			else
 			{
 				focus++;
+				if ((*focus) == Cast_icon && CommandCenterDestroyed)
+					focus = GetUI_Element(currentUI)->children.begin();
 			}
-			
-			
 		}
 
 		// Travel through the different buttons
-		if ((gamepad.Controller[UI_LEFT] == KEY_DOWN || gamepad.Controller[LEFT] == KEY_DOWN) &&
+		if ((gamepad.Controller[UI_LEFT] == KEY_DOWN || gamepad.Controller[LEFT] == KEY_DOWN || gamepad.Controller[LB] == KEY_DOWN) &&
 			currentUI != CURRENT_UI::NONE && currentUI != CURRENT_UI::CURR_CREATE_TROOPS && currentUI != CURRENT_UI::CURR_CREATE_ABILITIES &&
 			gamepad.Controller[ACCEPT] != KEY_REPEAT && isBuilding == false && !App->scene->pause && App->scene->active)
 		{
@@ -693,13 +672,14 @@ bool Player::Update(float dt)
 			if (focus == GetUI_Element(currentUI)->children.begin())
 			{
 				focus = last_element;
+				if ((*focus) == Cast_icon && CommandCenterDestroyed)
+					focus--;
+
 			}
 			else
 			{
 				focus--;
 			}
-			
-			
 		}
 
 		//CHANGE SELECTED BARRACK
@@ -831,6 +811,15 @@ bool Player::Update(float dt)
 			if (Townhall->health < 0)
 			{
 				Townhall->health = 0;
+			}
+
+		}
+		if (!App->scene->pause && gamepad.Controller[DOWN] == KEY_DOWN && App->scene->active && App->scene->godmode)
+		{
+			CommandCenter->health -= 1000;
+			if (CommandCenter->health < 0)
+			{
+				CommandCenter->health = 0;
 			}
 
 		}
@@ -1037,6 +1026,18 @@ bool Player::Update(float dt)
 					{
 						BarracksCreated++;
 					}
+					else if (type == Entity::entityType::MINES)
+					{
+						MinesCreated++;
+					}
+					else if (type == Entity::entityType::DEFENSE_AOE)
+					{
+						AOE_turretsCreated++;
+					}
+					else if (type == Entity::entityType::MAIN_DEFENSE)
+					{
+						SentruGunsCreated++;
+					}
 				}
 				else
 					App->audio->PlayFx(WRONG);
@@ -1223,18 +1224,18 @@ void Player::UpdateWalkabilityMap(char cell_type, Collider collider) //update wa
 
 int Player::CheckCost(Entity::entityType type)
 {
-	//
+	//here
 	if (type == Entity::entityType::BARRACKS)
-		return 1000;
+		return 1000 + BarracksCreated * 200;
 
 	else if (type == Entity::entityType::DEFENSE_AOE)
-		return 500;
+		return 500 + AOE_turretsCreated*250;
 
 	else if (type == Entity::entityType::MINES)
-		return 2000;
+		return 2000 + MinesCreated * 750;
 
 	else if (type == Entity::entityType::MAIN_DEFENSE) // Torreta single target (esta al reves?)
-		return 1200;
+		return 1200 + SentruGunsCreated * 360;
 
 	else
 		return 0;
@@ -1790,8 +1791,6 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Y_to_Main->visible = false;
 		LB_img->visible = false;
 		RB_img->visible = false;
-		SelectBuilding->visible = false;
-		In_SelectBuilding->visible = false;
 		draw_screen->visible = false;
 		Info_UI->visible = false;
 		break;
@@ -1814,8 +1813,6 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Y_to_Main->visible = false;
 		LB_img->visible = false;
 		RB_img->visible = false;
-		SelectBuilding->visible = false;
-		In_SelectBuilding->visible = false;
 		draw_screen->visible = false;
 		Info_UI->visible = false;
 
@@ -1838,8 +1835,6 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Y_to_Main->visible = false;
 		LB_img->visible = false;
 		RB_img->visible = false;
-		SelectBuilding->visible = false;
-		In_SelectBuilding->visible = false;
 		draw_screen->visible = true;
 		Info_UI->visible = false;
 		break;
@@ -2046,7 +2041,7 @@ void Player::DoLogic(UI_Element* data)
 
 
 	case::UI_Element::Action::ACT_CAST_INVULNERABILITY:
-		if (inmune == false && Invulnerable_abilities>0)
+		if (inmune == false && gold>=1500)
 		{
 			timer_ref_sec = App->scene->worldseconds;
 			timer_ref_min = App->scene->worldminutes;
@@ -2059,8 +2054,10 @@ void Player::DoLogic(UI_Element* data)
 				desired_second = extra;
 				desired_min++;
 			}
+			
 			inmune = true;
-			Invulnerable_abilities--;
+			gold -= 1500;
+
 		}
 		break;
 

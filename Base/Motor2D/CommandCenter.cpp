@@ -96,6 +96,7 @@ bool CmdCenter::Update(float dt)
 		}
 		else
 		{
+			App->player1->CommandCenterDestroyed = true;
 			App->player1->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 			App->render->Blit(App->scene->explosion_tex, position.first + 25, position.second + 25, &App->map->explosion_anim->GetCurrentFrame(dt));
@@ -148,6 +149,7 @@ bool CmdCenter::Update(float dt)
 		}
 		else
 		{
+			App->player2->CommandCenterDestroyed = true;
 			App->player2->DeleteEntity(this);
 			App->audio->PlayFx(BUILDING_EXPLOSION);
 

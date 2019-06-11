@@ -183,11 +183,10 @@ bool Scene::Start()
 	App->player1->Y_to_Main2 = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 445 , App->win->height + 192 }, { 39, 39 }, nullptr, false);
 	App->player1->Y_to_Main2->rect = { 1289, 373, 39, 39 };
 
-
-	App->player1->SelectBuilding = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 190 ,App->win->height + 152 }, { 39, 39 }, nullptr, true);
+	/*App->player1->SelectBuilding = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 190 ,App->win->height + 152 }, { 39, 39 }, nullptr, true);
 	App->player1->SelectBuilding->rect = { 1177, 488, 45, 107 };
 	App->player1->In_SelectBuilding = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 191 ,App->win->height + 152 }, { 39, 39 }, nullptr, false);
-	App->player1->In_SelectBuilding->rect = { 1276, 488, 45, 107 };
+	App->player1->In_SelectBuilding->rect = { 1276, 488, 45, 107 };*/
 
 	App->player1->Build_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { main_ui_x ,main_ui_y }, { 566, 163 }, nullptr, false);
 	App->player1->Build_UI->rect = { 569, 246, 566, 163 };
@@ -265,6 +264,8 @@ bool Scene::Start()
 	App->player1->Missiles_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 35 , 0 }, { 0, 0 }, App->player1->Missiles_icon, false, { false, false });
 	App->player1->Missiles_text->label = App->player1->missiles_label;
 
+	App->player1->Cast3_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_INVULNERABILITY, { 273, 55 }, { 85, 81 }, App->player1->Cast_UI, false);
+
 	//App->player1->General_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
 	//App->player1->Upgrade_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_UPGRADE, { x,y }, { w,h }, App->player1->General_UI, false);
 	//App->player1->Repair_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_REPAIR, { x,y }, { w,h }, App->player1->General_UI, false);
@@ -312,7 +313,7 @@ bool Scene::Start()
 
 	//-------- CREATE TROOPS MENU ------------
 
-	App->player1->Create_Troops_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { App->win->width - 145 ,App->win->height + 123 }, { 566, 163 }, nullptr, false);
+	App->player1->Create_Troops_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, {main_ui_x,main_ui_y }, { 566, 163 }, nullptr, false);
 	App->player1->Create_Troops_UI->rect = { 0, 739, 566, 163 };
 
 	App->player1->accept_button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 470 , 60 }, { 80, 31 }, App->player1->Create_Troops_UI, false);
@@ -521,11 +522,6 @@ bool Scene::Start()
 	App->player2->Y_to_Main2 = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 590 , 70 }, { 39, 39 }, nullptr, true);
 	App->player2->Y_to_Main2->rect = { 1289, 373, 39, 39 };
 
-	App->player2->SelectBuilding = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 630 , 30 }, { 39, 39 }, nullptr, true);
-	App->player2->SelectBuilding->rect = { 1226, 488, 45, 107 };
-	App->player2->In_SelectBuilding = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 630 , 30 }, { 39, 39 }, nullptr, false);
-	App->player2->In_SelectBuilding->rect = { 1326, 488, 45, 107 };
-
 
 	App->player2->Build_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player2->Build_UI->rect = { 569, 246, 566, 163 };
@@ -605,8 +601,6 @@ bool Scene::Start()
 	App->player2->Missiles_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 35 , 0 }, { 0, 0 }, App->player2->Missiles_icon, false, { false, false });
 	App->player2->Missiles_text->label = App->player2->missiles_label;
 
-
-
 	App->player2->LB_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { -5 , 70 }, { 55, 27 }, nullptr, false);
 	App->player2->LB_img->rect = { 1269, 437, 55, 27 };
 	App->player2->RB_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 520 , 70 }, { 55, 27 }, nullptr, false);
@@ -651,32 +645,32 @@ bool Scene::Start()
 	App->player2->Create_Troops_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, false);
 	App->player2->Create_Troops_UI->rect = { 0, 739, 566, 163 };
 
-	App->player2->accept_button = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 470 , 60 }, { 80, 31 }, App->player2->Create_Troops_UI, false);
+	App->player2->accept_button = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 420 , 55 }, { 80, 31 }, App->player2->Create_Troops_UI, false);
 	App->player2->accept_button->rect = { 1277, 248, 80, 31 };
 
-	App->player2->cancel_button = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 470 , 100 }, { 80, 31 }, App->player2->Create_Troops_UI, false);
+	App->player2->cancel_button = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 420 , 95 }, { 80, 31 }, App->player2->Create_Troops_UI, false);
 	App->player2->cancel_button->rect = { 1194, 250, 81, 29 };
 
-	App->player2->plus = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 390 , 50 }, { 51, 40 }, App->player2->Create_Troops_UI, false);
+	App->player2->plus = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 345 , 50 }, { 51, 40 }, App->player2->Create_Troops_UI, false);
 	App->player2->plus->rect = { 1444, 254, 51, 40 };
 
-	App->player2->minus = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 270 , 50 }, { 51, 40 }, App->player2->Create_Troops_UI, false);
+	App->player2->minus = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 240 , 50 }, { 51, 40 }, App->player2->Create_Troops_UI, false);
 	App->player2->minus->rect = { 1379, 254, 52, 40 };
 
-	App->player2->left_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 65 , 75 }, { 40, 40 }, App->player2->Create_Troops_UI, false);
+	App->player2->left_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 60 , 75 }, { 40, 40 }, App->player2->Create_Troops_UI, false);
 	App->player2->left_img->rect = { 1397, 311, 40, 40 };
 
-	App->player2->right_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 220 , 75 }, { 40, 40 }, App->player2->Create_Troops_UI, false);
+	App->player2->right_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 195 , 75 }, { 40, 40 }, App->player2->Create_Troops_UI, false);
 	App->player2->right_img->rect = { 1437, 311, 40, 40 };
 
-	App->player2->troop_icon = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 120 , 55 }, { 85, 81 }, App->player2->Create_Troops_UI, false);
+	App->player2->troop_icon = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 105 , 50 }, { 85, 81 }, App->player2->Create_Troops_UI, false);
 	App->player2->troop_icon->rect = { 662, 0, 85, 81 };
 
-	App->player2->num_troops_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 350, 65 }, { 0, 0 }, App->player2->Create_Troops_UI, false, { false, false });
+	App->player2->num_troops_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 305, 60 }, { 0, 0 }, App->player2->Create_Troops_UI, false, { false, false });
 	App->player2->num_troops_text->label = App->player2->num_troops_label;
 	App->player2->num_troops_text->color = { 255, 255, 255,255 };
 
-	App->player2->Troop_cost_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 320 , 110 }, { 0, 0 }, App->player2->Create_Troops_UI, false, { false, false });
+	App->player2->Troop_cost_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 295 , 100 }, { 0, 0 }, App->player2->Create_Troops_UI, false, { false, false });
 	App->player2->Troop_cost_text->label = App->player2->Troop_cost_label;
 	App->player2->Troop_cost_text->color = { 255, 0, 0, 255 };
 
@@ -1261,6 +1255,25 @@ bool Scene::Update(float dt)
 
 	}
 
+	if (App->player1->CommandCenterDestroyed && active)
+	{
+		App->player1->Cast_icon->visible = false;
+		if (!pause && !endgame)
+		{
+			App->player1->Cast_locked = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 478, 55 }, { 81 ,81 }, App->player1->Main_UI, false);
+			App->player1->Cast_locked->rect = { 159, 163, 77, 80 };
+		}
+	}
+	if (App->player2->CommandCenterDestroyed && active)
+	{
+		App->player2->Cast_icon->visible = false;
+		if (!pause && !endgame)
+		{
+			App->player2->Cast_locked = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 482, 55 }, { 80, 81 }, App->player2->Main_UI, false);
+			App->player2->Cast_locked->rect = { 162, 163, 75, 80 };
+		}
+	}
+
 
 	//----
 	App->map->Draw(dt);
@@ -1624,7 +1637,7 @@ void Scene::SpawnEntities()
 
 	
 	map_pos = App->map->WorldToMap(App->map->data.special_skill2.first, App->map->data.special_skill2.second);
-	App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill2, App->player2->GetCollider({ 4,3 }, { map_pos.first , map_pos.second }));
+	App->player2->CommandCenter = App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill2, App->player2->GetCollider({ 4,3 }, { map_pos.first , map_pos.second }));
 
 	map_pos = App->map->WorldToMap(App->map->data.main_tower2.first, App->map->data.main_tower2.second);
 
@@ -1649,7 +1662,7 @@ void Scene::SpawnEntities()
 	LoadWalls();
 
 	map_pos = App->map->WorldToMap(App->map->data.special_skill.first, App->map->data.special_skill.second);
-	App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill, App->player1->GetCollider({ 4,3 }, { map_pos.first, map_pos.second}));
+	App->player1->CommandCenter = App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill, App->player1->GetCollider({ 4,3 }, { map_pos.first, map_pos.second}));
 
 	map_pos = App->map->WorldToMap(App->map->data.main_tower.first, App->map->data.main_tower.second);
 	App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower, App->player1->GetCollider({ 2,2 }, { map_pos.first , map_pos.second}));

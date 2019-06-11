@@ -163,6 +163,7 @@ public:
 	bool isPaused = false;
 	bool inmune = false;
 	bool offensive = true;
+	bool CommandCenterDestroyed = false;
 
 	bool DoNotLogic = false;
 
@@ -180,6 +181,7 @@ public:
 	Entity::entityType type;
 
 	Entity* Townhall = nullptr;
+	Entity* CommandCenter = nullptr;
 
 	bool isPlayer1 = false;
 	string team;
@@ -239,6 +241,10 @@ public:
 	int WarHoundsCreated = 0;
 	int BarracksCreated = 0;
 
+	int AOE_turretsCreated = 0;
+	int SentruGunsCreated = 0;
+	int MinesCreated = 0;
+
 	int Invulnerable_abilities = 0;
 	int Rocket_abilities = 0;
 	int Tank_abilities = 0;
@@ -264,9 +270,6 @@ public:
 	UI_Element* Y_to_Main2 = nullptr;
 	bool Y_pressed = false;
 
-	UI_Element* SelectBuilding = nullptr;
-	UI_Element* In_SelectBuilding = nullptr;
-
 	UI_Element* RB_img = nullptr;
 	UI_Element* LB_img = nullptr;
 	
@@ -276,6 +279,7 @@ public:
 	UI_Element* Build_icon = nullptr;
 	UI_Element* Deploy_icon = nullptr;
 	UI_Element* Cast_icon = nullptr;
+	UI_Element* Cast_locked = nullptr;
 
 	UI_Element* Build_UI = nullptr;
 	UI_Element* Def_AOE_icon = nullptr;
