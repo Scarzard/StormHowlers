@@ -107,7 +107,8 @@ void Render::WindowResized() {
 	
 	//Readjust all the necessary things
 	if (App->player1->Main_UI != nullptr) {
-		App->player1->Main_UI->globalpos.second = (App->win->height / App->render->zoom) - 163*zoom;
+		App->player1->Main_UI->globalpos.second = (App->win->height / App->render->zoom) - 163 * zoom;
+		App->player1->Root_UI->globalpos.second = (App->win->height / App->render->zoom) - 163*zoom;
 		App->player1->Info_UI->globalpos.second = (App->win->height / App->render->zoom) - (280)*zoom;
 	}
 

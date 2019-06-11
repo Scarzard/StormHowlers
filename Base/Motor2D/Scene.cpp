@@ -374,9 +374,9 @@ bool Scene::Start()
 	App->player1->Resume_text->label = App->player1->resume_label;
 	App->player1->Resume_text->color = { 255,255,9,255 };
 
-	App->player1->LB_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 150 , App->win->height + 192 }, { 55, 27 }, nullptr, false);
+	App->player1->LB_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { -5 ,70 }, { 55, 27 }, App->player1->Root_UI, false);
 	App->player1->LB_img->rect = { 1269, 437, 55, 27 };
-	App->player1->RB_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 440 , App->win->height + 192 }, { 55, 27 }, nullptr, false);
+	App->player1->RB_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 520 , 70 }, { 55, 27 }, App->player1->Root_UI, false);
 	App->player1->RB_img->rect = { 1334, 437, 55, 27 };
 
 	//------ Settings Pause MENU ------
@@ -538,9 +538,9 @@ bool Scene::Start()
 
 
 
-	App->player2->LB_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { -5 , 70 }, { 55, 27 }, nullptr, false);
+	App->player2->LB_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { -5 , 70 }, { 55, 27 }, App->player2->Root_UI, false);
 	App->player2->LB_img->rect = { 1269, 437, 55, 27 };
-	App->player2->RB_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 520 , 70 }, { 55, 27 }, nullptr, false);
+	App->player2->RB_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 520 , 70 }, { 55, 27 }, App->player2->Root_UI, false);
 	App->player2->RB_img->rect = { 1334, 437, 55, 27 };
 
 	//------ GENERAL BUILDINGS MENU --------
