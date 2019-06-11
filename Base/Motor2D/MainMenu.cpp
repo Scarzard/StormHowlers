@@ -279,7 +279,7 @@ void MainMenu::DoLogic(UI_Element* data)
 		break;
 	case::UI_Element::Action::WEBSITE:
 		//Needs to be updated with game's website link, when it's done
-		ShellExecuteA(NULL, "open", "https://github.com/stormhowlers/Command_and_Conquer_WarZone", NULL, NULL, SW_SHOWNORMAL);
+		ShellExecuteA(NULL, "open", "https://stormhowlers.github.io/Command_and_Conquer_WarZone/", NULL, NULL, SW_SHOWNORMAL);
 		break;
 	case::UI_Element::Action::EXIT:
 		App->audio->PlayFx(EXIT);
