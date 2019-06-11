@@ -1217,16 +1217,21 @@ bool Scene::Update(float dt)
 
 	if (App->player1->CommandCenterDestroyed && active)
 	{
-		SDL_Rect sect = { 162, 163, 75, 80 };
-		//pair<int, int> tmp_pos = App->map->MapToWorld();
 		App->player1->Cast_icon->visible = false;
 		if (!pause && !endgame)
 		{
-			App->player1->Cast_locked = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 478,55 }, { 79,81 }, App->player1->Main_UI, false);
-			App->player1->Cast_locked->rect = { 162, 163, 75, 80 };
-			App->gui->Draw();
+			App->player1->Cast_locked = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 478, 55 }, { 81 ,81 }, App->player1->Main_UI, false);
+			App->player1->Cast_locked->rect = { 159, 163, 77, 80 };
 		}
-		//App->player1->Cast_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 478,55 }, { 79,81 }, App->player1->Main_UI, true);
+	}
+	if (App->player2->CommandCenterDestroyed && active)
+	{
+		App->player2->Cast_icon->visible = false;
+		if (!pause && !endgame)
+		{
+			App->player2->Cast_locked = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 482, 55 }, { 80, 81 }, App->player2->Main_UI, false);
+			App->player2->Cast_locked->rect = { 162, 163, 75, 80 };
+		}
 	}
 
 
