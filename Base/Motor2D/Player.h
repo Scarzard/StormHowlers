@@ -164,6 +164,7 @@ public:
 	bool isPaused = false;
 	bool inmune = false;
 	bool offensive = true;
+	bool CommandCenterDestroyed = false;
 
 	bool DoNotLogic = false;
 
@@ -181,6 +182,7 @@ public:
 	Entity::entityType type;
 
 	Entity* Townhall = nullptr;
+	Entity* CommandCenter = nullptr;
 
 	bool isPlayer1 = false;
 	string team;
@@ -268,6 +270,7 @@ public:
 	UI_Element* Build_icon = nullptr;
 	UI_Element* Deploy_icon = nullptr;
 	UI_Element* Cast_icon = nullptr;
+	UI_Element* Cast_locked = nullptr;
 
 	UI_Element* Build_UI = nullptr;
 	UI_Element* Def_AOE_icon = nullptr;

@@ -65,7 +65,7 @@ bool Player::Start()
 
 	UI_troop_type = Entity::entityType::SOLDIER;
 
-	isBuilding = isDeploying = gold_added = isCasting = Y_pressed = isPaused = DoNotLogic = false; 
+	isBuilding = isDeploying = gold_added = isCasting = Y_pressed = isPaused = DoNotLogic = CommandCenterDestroyed = false; 
 	Soldier_Offensive = Tankman_Offensive = Engineer_Offensive = Infiltrator_Offensive = WarHound_Offensive = true;
 
 	Y_pressed = true;
@@ -724,9 +724,9 @@ bool Player::Update(float dt)
 			else
 			{
 				focus++;
+				if ((*focus) == Cast_icon && CommandCenterDestroyed)
+					focus = GetUI_Element(currentUI)->children.begin();
 			}
-			
-			
 		}
 
 		// Travel through the different buttons
@@ -740,13 +740,14 @@ bool Player::Update(float dt)
 			if (focus == GetUI_Element(currentUI)->children.begin())
 			{
 				focus = last_element;
+				if ((*focus) == Cast_icon && CommandCenterDestroyed)
+					focus--;
+
 			}
 			else
 			{
 				focus--;
 			}
-			
-			
 		}
 
 		//CHANGE SELECTED BARRACK
@@ -878,6 +879,15 @@ bool Player::Update(float dt)
 			if (Townhall->health < 0)
 			{
 				Townhall->health = 0;
+			}
+
+		}
+		if (!App->scene->pause && gamepad.Controller[DOWN] == KEY_DOWN && App->scene->active && App->scene->godmode)
+		{
+			CommandCenter->health -= 1000;
+			if (CommandCenter->health < 0)
+			{
+				CommandCenter->health = 0;
 			}
 
 		}

@@ -1215,6 +1215,20 @@ bool Scene::Update(float dt)
 
 	}
 
+	if (App->player1->CommandCenterDestroyed && active)
+	{
+		SDL_Rect sect = { 162, 163, 75, 80 };
+		//pair<int, int> tmp_pos = App->map->MapToWorld();
+		App->player1->Cast_icon->visible = false;
+		if (!pause && !endgame)
+		{
+			App->player1->Cast_locked = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 478,55 }, { 79,81 }, App->player1->Main_UI, false);
+			App->player1->Cast_locked->rect = { 162, 163, 75, 80 };
+			App->gui->Draw();
+		}
+		//App->player1->Cast_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_GOTO_CAST, { 478,55 }, { 79,81 }, App->player1->Main_UI, true);
+	}
+
 
 	//----
 	App->map->Draw(dt);
@@ -1576,7 +1590,7 @@ void Scene::SpawnEntities()
 
 	
 	map_pos = App->map->WorldToMap(App->map->data.special_skill2.first, App->map->data.special_skill2.second);
-	App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill2, App->player2->GetCollider({ 4,3 }, { map_pos.first , map_pos.second }));
+	App->player2->CommandCenter = App->entitymanager->AddEntity(false, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill2, App->player2->GetCollider({ 4,3 }, { map_pos.first , map_pos.second }));
 
 	map_pos = App->map->WorldToMap(App->map->data.main_tower2.first, App->map->data.main_tower2.second);
 
@@ -1601,7 +1615,7 @@ void Scene::SpawnEntities()
 	LoadWalls();
 
 	map_pos = App->map->WorldToMap(App->map->data.special_skill.first, App->map->data.special_skill.second);
-	App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill, App->player1->GetCollider({ 4,3 }, { map_pos.first, map_pos.second}));
+	App->player1->CommandCenter = App->entitymanager->AddEntity(true, Entity::entityType::COMMAND_CENTER, App->map->data.special_skill, App->player1->GetCollider({ 4,3 }, { map_pos.first, map_pos.second}));
 
 	map_pos = App->map->WorldToMap(App->map->data.main_tower.first, App->map->data.main_tower.second);
 	App->entitymanager->AddEntity(true, Entity::entityType::DEFENSE_TARGET, App->map->data.main_tower, App->player1->GetCollider({ 2,2 }, { map_pos.first , map_pos.second}));
