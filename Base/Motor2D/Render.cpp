@@ -107,7 +107,13 @@ void Render::WindowResized() {
 	
 	//Readjust all the necessary things
 	if (App->player1->Main_UI != nullptr) {
-		App->player1->Main_UI->globalpos.second = (App->win->height / App->render->zoom) - 163*zoom;
+		App->player1->Main_UI->globalpos.second = (App->win->height / App->render->zoom) - 163 * zoom;
+		App->player1->Build_UI->globalpos.second = (App->win->height / App->render->zoom) - 163 * zoom;
+		App->player1->Deploy_UI->globalpos.second = (App->win->height / App->render->zoom) - 163 * zoom;
+		App->player1->Cast_UI->globalpos.second = (App->win->height / App->render->zoom) - 163 * zoom;
+		App->player1->Create_Troops_UI->globalpos.second = (App->win->height / App->render->zoom) - 163 * zoom;
+		App->player1->General_UI->globalpos.second = (App->win->height / App->render->zoom) - 163 * zoom;
+		App->player1->Root_UI->globalpos.second = (App->win->height / App->render->zoom) - 163*zoom;
 		App->player1->Info_UI->globalpos.second = (App->win->height / App->render->zoom) - (280)*zoom;
 	}
 

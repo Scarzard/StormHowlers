@@ -264,8 +264,6 @@ bool Scene::Start()
 	App->player1->Missiles_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 35 , 0 }, { 0, 0 }, App->player1->Missiles_icon, false, { false, false });
 	App->player1->Missiles_text->label = App->player1->missiles_label;
 
-	App->player1->Cast3_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_CAST_INVULNERABILITY, { 273, 55 }, { 85, 81 }, App->player1->Cast_UI, false);
-
 	//App->player1->General_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { w,h }, nullptr, false);
 	//App->player1->Upgrade_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_UPGRADE, { x,y }, { w,h }, App->player1->General_UI, false);
 	//App->player1->Repair_icon = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ACT_REPAIR, { x,y }, { w,h }, App->player1->General_UI, false);
@@ -316,32 +314,32 @@ bool Scene::Start()
 	App->player1->Create_Troops_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, {main_ui_x,main_ui_y }, { 566, 163 }, nullptr, false);
 	App->player1->Create_Troops_UI->rect = { 0, 739, 566, 163 };
 
-	App->player1->accept_button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 470 , 60 }, { 80, 31 }, App->player1->Create_Troops_UI, false);
+	App->player1->accept_button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 420 , 55 }, { 80, 31 }, App->player1->Create_Troops_UI, false);
 	App->player1->accept_button->rect = { 1277, 248, 80, 31 };
 
-	App->player1->cancel_button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 470 , 100 }, { 80, 31 }, App->player1->Create_Troops_UI, false);
+	App->player1->cancel_button = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 420 , 95 }, { 80, 31 }, App->player1->Create_Troops_UI, false);
 	App->player1->cancel_button->rect = { 1194, 250, 81, 29 };
 
-	App->player1->plus = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 390 , 50 }, { 51, 40 }, App->player1->Create_Troops_UI, false);
+	App->player1->plus = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 345 , 50 }, { 51, 40 }, App->player1->Create_Troops_UI, false);
 	App->player1->plus->rect = { 1444, 254, 51, 40 };
 
-	App->player1->minus = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 270 , 50 }, { 51, 40 }, App->player1->Create_Troops_UI, false);
+	App->player1->minus = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 240 , 50 }, { 51, 40 }, App->player1->Create_Troops_UI, false);
 	App->player1->minus->rect = { 1379, 254, 52, 40 };
 
-	App->player1->left_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 65 , 75 }, { 40, 40 }, App->player1->Create_Troops_UI, false);
+	App->player1->left_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 60 , 75 }, { 40, 40 }, App->player1->Create_Troops_UI, false);
 	App->player1->left_img->rect = { 1397, 311, 40, 40 };
 
-	App->player1->right_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 220 , 75 }, { 40, 40 }, App->player1->Create_Troops_UI, false);
+	App->player1->right_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 196 , 75 }, { 40, 40 }, App->player1->Create_Troops_UI, false);
 	App->player1->right_img->rect = { 1437, 311, 40, 40 };
 
-	App->player1->troop_icon = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 120 , 55 }, { 85, 81 }, App->player1->Create_Troops_UI, false);
+	App->player1->troop_icon = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 105 , 50 }, { 85, 81 }, App->player1->Create_Troops_UI, false);
 	App->player1->troop_icon->rect = { 662, 0, 85, 81 };
 
-	App->player1->num_troops_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 350, 65 }, { 0, 0 }, App->player1->Create_Troops_UI, false, { false, false });
+	App->player1->num_troops_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 305, 60 }, { 0, 0 }, App->player1->Create_Troops_UI, false, { false, false });
 	App->player1->num_troops_text->label = App->player1->num_troops_label;
 	App->player1->num_troops_text->color = { 255, 255, 255,255 };
 
-	App->player1->Troop_cost_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 320 , 110 }, { 0, 0 }, App->player1->Create_Troops_UI, false, { false, false });
+	App->player1->Troop_cost_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 295 , 100 }, { 0, 0 }, App->player1->Create_Troops_UI, false, { false, false });
 	App->player1->Troop_cost_text->label = App->player1->Troop_cost_label;
 	App->player1->Troop_cost_text->color = { 255, 0, 0, 255 };
 
@@ -356,30 +354,30 @@ bool Scene::Start()
 	App->player1->Pause_UI->texture = pause_alied_texture;
 	App->player1->Pause_UI->rect = { 0, 0, App->win->width, App->win->height };
 
-	App->player1->Abort_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ABORT_PAUSE, { 1291 ,868 }, { 301,59 }, App->player1->Pause_UI, false);
+	App->player1->Abort_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ABORT_PAUSE, { 1750 ,1100 }, { 301,59 }, App->player1->Pause_UI, false);
 	App->player1->Abort_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Abort_Button, false, { false, false });
 	App->player1->Abort_text->label = App->player1->abort_label;
 	App->player1->Abort_text->color = { 255,255,9,255 };
 
-	App->player1->KeyBinds_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::KEYBINDS_PAUSE, { 1291 ,632 }, { 301,59 }, App->player1->Pause_UI, false);
+	App->player1->KeyBinds_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::KEYBINDS_PAUSE, { 1750 ,900 }, { 301,59 }, App->player1->Pause_UI, false);
 	App->player1->KeyBinds_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 100, 18 }, { 0, 0 }, App->player1->KeyBinds_Button, false, { false, false });
 	App->player1->KeyBinds_text->label = App->player1->keybinds_label;
 	App->player1->KeyBinds_text->color = { 255,255,9,255 };
 
-	App->player1->Settings_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player1->Pause_UI, false);
+	App->player1->Settings_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1750 ,800 }, { 301,59 }, App->player1->Pause_UI, false);
 	App->player1->Settings_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player1->Settings_Button, false, { false, false });
 	App->player1->Settings_text->label = App->player1->settings_label;
 	App->player1->Settings_text->color = { 255,255,9,255 };
 
 
-	App->player1->Resume_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESUME_PAUSE, { 1291 ,498 }, { 301,59 }, App->player1->Pause_UI, false);
+	App->player1->Resume_Button = App->gui->AddUIElement(true, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESUME_PAUSE, { 1750 ,700 }, { 301,59 }, App->player1->Pause_UI, false);
 	App->player1->Resume_text = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player1->Resume_Button, false, { false, false });
 	App->player1->Resume_text->label = App->player1->resume_label;
 	App->player1->Resume_text->color = { 255,255,9,255 };
 
-	App->player1->LB_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width - 150 , App->win->height + 192 }, { 55, 27 }, nullptr, false);
+	App->player1->LB_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { -5,70 }, { 55, 27 }, App->player1->Root_UI, false);
 	App->player1->LB_img->rect = { 1269, 437, 55, 27 };
-	App->player1->RB_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { App->win->width + 440 , App->win->height + 192 }, { 55, 27 }, nullptr, false);
+	App->player1->RB_img = App->gui->AddUIElement(true, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 520,70 }, { 55, 27 }, App->player1->Root_UI, false);
 	App->player1->RB_img->rect = { 1334, 437, 55, 27 };
 
 	//------ Settings Pause MENU ------
@@ -684,22 +682,22 @@ bool Scene::Start()
 	App->player2->Pause_UI->texture = pause_soviet_texture;
 	App->player2->Pause_UI->rect = { 0, 0, App->win->width, App->win->height };
 
-	App->player2->Abort_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ABORT_PAUSE, { 1291 ,868 }, { 301,59 }, App->player2->Pause_UI, false);
+	App->player2->Abort_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::ABORT_PAUSE, { 1750 ,1100 }, { 301,59 }, App->player2->Pause_UI, false);
 	App->player2->Abort_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Abort_Button, false, { false, false });
 	App->player2->Abort_text->label = App->player2->abort_label;
 	App->player2->Abort_text->color = { 255,255,9,255 };
 
-	App->player2->KeyBinds_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::KEYBINDS_PAUSE, { 1291 ,632 }, { 301,59 }, App->player2->Pause_UI, false);
+	App->player2->KeyBinds_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::KEYBINDS_PAUSE, { 1750 ,900 }, { 301,59 }, App->player2->Pause_UI, false);
 	App->player2->KeyBinds_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 100, 18 }, { 0, 0 }, App->player2->KeyBinds_Button, false, { false, false });
 	App->player2->KeyBinds_text->label = App->player2->keybinds_label;
 	App->player2->KeyBinds_text->color = { 255,255,9,255 };
 
-	App->player2->Settings_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1291 ,565 }, { 301,59 }, App->player2->Pause_UI, false);
+	App->player2->Settings_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::SETTINGS_PAUSE, { 1750 ,800 }, { 301,59 }, App->player2->Pause_UI, false);
 	App->player2->Settings_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 120, 18 }, { 0, 0 }, App->player2->Settings_Button, false, { false, false });
 	App->player2->Settings_text->label = App->player2->settings_label;
 	App->player2->Settings_text->color = { 255,255,9,255 };
 
-	App->player2->Resume_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESUME_PAUSE, { 1291 ,498 }, { 301,59 }, App->player2->Pause_UI, false);
+	App->player2->Resume_Button = App->gui->AddUIElement(false, UI_Element::UI_type::PUSHBUTTON, UI_Element::Action::RESUME_PAUSE, { 1750 ,700 }, { 301,59 }, App->player2->Pause_UI, false);
 	App->player2->Resume_text = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 80, 18 }, { 0, 0 }, App->player2->Resume_Button, false, { false, false });
 	App->player2->Resume_text->label = App->player2->resume_label;
 	App->player2->Resume_text->color = { 255,255,9,255 };
