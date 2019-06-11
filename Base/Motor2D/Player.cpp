@@ -687,10 +687,6 @@ bool Player::Update(float dt)
 			if (currentUI != CURRENT_UI::CURR_GENERAL && Create_abilities != nullptr)
 				Create_abilities->visible = false;
 
-			/*if(currentUI == CURR_MAIN)
-				SelectBuilding->visible = true;
-			else
-				SelectBuilding->visible = false;*/
 		}
 
 		// Travel through the different buttons
@@ -1789,8 +1785,6 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Y_to_Main->visible = false;
 		LB_img->visible = false;
 		RB_img->visible = false;
-		SelectBuilding->visible = false;
-		In_SelectBuilding->visible = false;
 		draw_screen->visible = false;
 		break;
 	case::Player::CURRENT_UI::ENDGAME: //Dont show the other player win screen
@@ -1812,8 +1806,6 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Y_to_Main->visible = false;
 		LB_img->visible = false;
 		RB_img->visible = false;
-		SelectBuilding->visible = false;
-		In_SelectBuilding->visible = false;
 		draw_screen->visible = false;
 
 	case::Player::CURRENT_UI::DRAW: //Dont show the other player win screen
@@ -1835,8 +1827,6 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Y_to_Main->visible = false;
 		LB_img->visible = false;
 		RB_img->visible = false;
-		SelectBuilding->visible = false;
-		In_SelectBuilding->visible = false;
 		draw_screen->visible = true;
 		break;
 

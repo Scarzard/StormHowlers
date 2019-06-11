@@ -263,13 +263,9 @@ public:
 	UI_Element* Y_to_Main2 = nullptr;
 	bool Y_pressed = false;
 
-	UI_Element* SelectBuilding = nullptr;
-	UI_Element* In_SelectBuilding = nullptr;
-
 	UI_Element* RB_img = nullptr;
 	UI_Element* LB_img = nullptr;
 	
-
 	UI_Element* Main_UI = nullptr;
 	UI_Element* Build_icon = nullptr;
 	UI_Element* Deploy_icon = nullptr;
