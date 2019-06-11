@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="8" height="7" tilewidth="167" tileheight="163" nextobjectid="60">
+ <layer name="Capa de Patrones 1" width="8" height="7">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <imagelayer name="Capa de Imagen 1">
+  <image source="barracks_tiled.png" width="1738" height="1141"/>
+ </imagelayer>
+ <objectgroup name="red_constructing">
+  <object id="1" x="0" y="0" width="167" height="163"/>
+  <object id="2" x="167" y="0" width="167" height="163"/>
+  <object id="3" x="334" y="0" width="167" height="163"/>
+  <object id="4" x="501" y="0" width="167" height="163"/>
+  <object id="5" x="0" y="163" width="167" height="163"/>
+  <object id="6" x="167" y="163" width="167" height="163"/>
+  <object id="7" x="334" y="163" width="167" height="163"/>
+  <object id="8" x="501" y="163" width="167" height="163"/>
+  <object id="9" x="0" y="326" width="167" height="163"/>
+  <object id="10" x="167" y="326" width="167" height="163"/>
+  <object id="11" x="334" y="326" width="167" height="163"/>
+  <object id="12" x="501" y="326" width="167" height="163"/>
+  <object id="13" x="0" y="489" width="167" height="163"/>
+  <object id="14" x="167" y="489" width="167" height="163"/>
+  <object id="15" x="334" y="489" width="167" height="163"/>
+  <object id="16" x="501" y="489" width="167" height="163"/>
+  <object id="17" x="0" y="652" width="167" height="163"/>
+  <object id="18" x="167" y="652" width="167" height="163"/>
+  <object id="19" x="334" y="652" width="167" height="163"/>
+  <object id="20" x="501" y="652" width="167" height="163"/>
+  <object id="21" x="0" y="815" width="167" height="163"/>
+  <object id="22" x="167" y="815" width="167" height="163"/>
+  <object id="23" x="334" y="815" width="167" height="163"/>
+  <object id="24" x="501" y="815" width="167" height="163"/>
+  <object id="25" x="0" y="978" width="167" height="163"/>
+ </objectgroup>
+ <objectgroup name="blue_constructing">
+  <object id="26" x="668" y="0" width="167" height="163"/>
+  <object id="27" x="835" y="0" width="167" height="163"/>
+  <object id="28" x="1002" y="0" width="167" height="163"/>
+  <object id="29" x="1169" y="0" width="167" height="163"/>
+  <object id="30" x="668" y="163" width="167" height="163"/>
+  <object id="31" x="835" y="163" width="167" height="163"/>
+  <object id="32" x="1002" y="163" width="167" height="163"/>
+  <object id="33" x="1169" y="163" width="167" height="163"/>
+  <object id="34" x="668" y="326" width="167" height="163"/>
+  <object id="35" x="835" y="326" width="167" height="163"/>
+  <object id="36" x="1002" y="326" width="167" height="163"/>
+  <object id="37" x="1169" y="326" width="167" height="163"/>
+  <object id="38" x="668" y="489" width="167" height="163"/>
+  <object id="39" x="835" y="489" width="167" height="163"/>
+  <object id="40" x="1002" y="489" width="167" height="163"/>
+  <object id="41" x="1169" y="489" width="167" height="163"/>
+  <object id="42" x="668" y="652" width="167" height="163"/>
+  <object id="43" x="835" y="652" width="167" height="163"/>
+  <object id="44" x="1002" y="652" width="167" height="163"/>
+  <object id="45" x="1169" y="652" width="167" height="163"/>
+  <object id="46" x="668" y="815" width="167" height="163"/>
+  <object id="47" x="835" y="815" width="167" height="163"/>
+  <object id="48" x="1002" y="815" width="167" height="163"/>
+  <object id="49" x="1169" y="815" width="167" height="163"/>
+  <object id="50" x="668" y="978" width="167" height="163"/>
+ </objectgroup>
+ <objectgroup name="red_idle">
+  <object id="51" x="0" y="978" width="167" height="163"/>
+ </objectgroup>
+ <objectgroup name="blue_idle">
+  <object id="52" x="668" y="978" width="167" height="163"/>
+ </objectgroup>
+ <objectgroup name="red_glow">
+  <object id="58" x="1503" y="308" width="167" height="181"/>
+ </objectgroup>
+ <objectgroup name="blue_glow">
+  <object id="59" x="1503" y="636.667" width="167" height="178.333"/>
+ </objectgroup>
+</map>

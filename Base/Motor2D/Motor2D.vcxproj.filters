@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="PugiXml\src\pugixml.cpp">
+      <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Fonts.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Pathfinding.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Transitions.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Desenvolupament  ========</Filter>
+    </ClCompile>
+    <ClCompile Include="PerfTimer.cpp">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>Desenvolupament  ========</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleUI.cpp">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherUI.cpp">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Townhall.cpp">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="MainDefense.cpp">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandCenter.cpp">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Walls.cpp">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="DefenseAOE.cpp">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="DefenseTarget.cpp">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Mines.cpp">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Barracks.cpp">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Soldier.cpp">
+      <Filter>Desenvolupament  ========\Entities\Troops</Filter>
+    </ClCompile>
+    <ClCompile Include="Group.cpp">
+      <Filter>Desenvolupament  ========\Entities\EntityMovement</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementManager.cpp">
+      <Filter>Desenvolupament  ========\Entities\EntityMovement</Filter>
+    </ClCompile>
+    <ClCompile Include="Engineer.cpp">
+      <Filter>Desenvolupament  ========\Entities\Troops</Filter>
+    </ClCompile>
+    <ClCompile Include="Tankman.cpp">
+      <Filter>Desenvolupament  ========\Entities\Troops</Filter>
+    </ClCompile>
+    <ClCompile Include="Infiltrator.cpp">
+      <Filter>Desenvolupament  ========\Entities\Troops</Filter>
+    </ClCompile>
+    <ClCompile Include="Hound.cpp">
+      <Filter>Desenvolupament  ========\Entities\Troops</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PugiXml\src\pugiconfig.hpp">
+      <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="PugiXml\src\pugixml.hpp">
+      <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Element.h">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Desenvolupament  ========\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Fonts.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Pathfinding.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Render.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Transitions.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Textures.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Module.h">
+      <Filter>Desenvolupament  ========</Filter>
+    </ClInclude>
+    <ClInclude Include="PerfTimer.h">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Defs.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>Desenvolupament  ========</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleUI.h">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherUI.h">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Townhall.h">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="MainDefense.h">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandCenter.h">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Walls.h">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="DefenseAOE.h">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="DefenseTarget.h">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Mines.h">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Barracks.h">
+      <Filter>Desenvolupament  ========\Entities\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Soldier.h">
+      <Filter>Desenvolupament  ========\Entities\Troops</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Desenvolupament  ========\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Troop.h">
+      <Filter>Desenvolupament  ========\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Group.h">
+      <Filter>Desenvolupament  ========\Entities\EntityMovement</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementManager.h">
+      <Filter>Desenvolupament  ========\Entities\EntityMovement</Filter>
+    </ClInclude>
+    <ClInclude Include="Engineer.h">
+      <Filter>Desenvolupament  ========\Entities\Troops</Filter>
+    </ClInclude>
+    <ClInclude Include="Tankman.h">
+      <Filter>Desenvolupament  ========\Entities\Troops</Filter>
+    </ClInclude>
+    <ClInclude Include="Infiltrator.h">
+      <Filter>Desenvolupament  ========\Entities\Troops</Filter>
+    </ClInclude>
+    <ClInclude Include="Hound.h">
+      <Filter>Desenvolupament  ========\Entities\Troops</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Desenvolupament  ========">
+      <UniqueIdentifier>{cb944693-b9d0-484c-bad2-02d5a7cdbec6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Tools">
+      <UniqueIdentifier>{42c748be-4a37-49de-970f-5be811d06b38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Scenes">
+      <UniqueIdentifier>{e07660eb-d36f-4cc9-af59-324d31c2f2f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules">
+      <UniqueIdentifier>{244722d1-90ce-423d-8e7a-556211865a32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Tools\PuguiXML">
+      <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\UI">
+      <UniqueIdentifier>{083de17b-ef77-4977-990b-42b1a669d73f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Containers">
+      <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Entities">
+      <UniqueIdentifier>{8985fa2d-dc54-4a8e-9052-8e4d52a7e5e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Entities\Buildings">
+      <UniqueIdentifier>{77a8885a-ba6b-4de9-8594-dd1664db242a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Entities\Troops">
+      <UniqueIdentifier>{09b60214-5efb-46e2-bb27-876d56110c60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Entities\EntityMovement">
+      <UniqueIdentifier>{930ee431-765f-42cb-9d5c-282fc2197d13}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\config.xml">
+      <Filter>Desenvolupament  ========</Filter>
+    </Xml>
+  </ItemGroup>
+</Project>

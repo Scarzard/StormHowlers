@@ -1,0 +1,198 @@
+____________________________________________________________________________________________________________________________________________________________________
+
+EN EL MAP::AWAKE 
+
+//GOLD MINE
+	goldmine_blue_constructing = goldmine_blue_constructing->LoadAnimation("animation/goldmine.tmx", "blue_constructing");
+	goldmine_blue_constructing->speed = 10;
+	
+	goldmine_red_constructing = goldmine_red_constructing->LoadAnimation("animation/goldmine.tmx", "red_constructing");
+	goldmine_red_constructing->speed = 10;
+	
+	goldmine_blue_idle = goldmine_blue_idle->LoadAnimation("animation/goldmine.tmx", "blue_idle");
+	goldmine_blue_idle->speed = 3;
+	
+	goldmine_red_idle = goldmine_red_idle->LoadAnimation("animation/goldmine.tmx", "red_idle");
+	goldmine_red_idle->speed = 3;
+	
+	//TESLA TOWER
+	tesla_red = tesla_red->LoadAnimation("animation/tesla.tmx", "red");
+	tesla_red->speed = 10;
+
+	tesla_blue = tesla_blue->LoadAnimation("animation/tesla.tmx", "blue");
+	tesla_blue->speed = 10;
+
+	//COMMAND CENTRE
+	cc_red = cc_red->LoadAnimation("animation/commandcentre.tmx", "red");
+	cc_red->speed = 8;
+
+	cc_blue = cc_blue->LoadAnimation("animation/commandcentre.tmx", "blue");
+	cc_blue->speed = 8;
+
+	//BARRACKS
+	barracks_blue_constructing = barracks_blue_constructing->LoadAnimation("animation/barracks.tmx", "blue_constructing");
+	barracks_blue_constructing->speed = 10;
+
+	barracks_red_constructing = barracks_red_constructing->LoadAnimation("animation/barracks.tmx", "red_constructing");
+	barracks_red_constructing->speed = 10;
+
+	barracks_blue_idle = barracks_blue_idle->LoadAnimation("animation/barracks.tmx", "blue_idle");
+	barracks_blue_idle->speed = 6;
+
+	barracks_red_idle = barracks_red_idle->LoadAnimation("animation/barracks.tmx", "red_idle");
+	barracks_red_idle->speed = 6;
+
+	//SENTRYGUN
+
+	sentrygun_contructing = sentrygun_contructing->LoadAnimation("animation/sentrygun.tmx", "constructing");
+	sentrygun_contructing->speed = 10;
+
+	sentrygun_idle = sentrygun_idle->LoadAnimation("animation/sentrygun.tmx", "idle");
+	sentrygun_idle->speed = 10;
+
+	//SOVIET SOLDIER 
+	soldier_idle = soldier_idle->LoadAnimation("animation/soldier.tmx", "red_idle"); 
+	soldier_idle->speed = 1; 
+	//North
+	soldier_north = soldier_north->LoadAnimation("animation/soldier.tmx", "red_north"); 
+	soldier_north->speed = 8; 
+	//NorthWest
+	soldier_northwest = soldier_northwest->LoadAnimation("animation/soldier.tmx", "red_northwest"); 
+	soldier_northwest->speed = 8; 
+	//West
+	soldier_west = soldier_west->LoadAnimation("animation/soldier.tmx", "red_west");
+	soldier_west->speed = 8;
+	//SouthWest
+	soldier_southwest = soldier_southwest->LoadAnimation("animation/soldier.tmx", "red_southwest");
+	soldier_southwest->speed = 8;
+	//South
+	soldier_south = soldier_south->LoadAnimation("animation/soldier.tmx", "red_south");
+	soldier_south->speed = 8;
+	//SouthEast
+	soldier_southeast = soldier_southeast->LoadAnimation("animation/soldier.tmx", "red_southeast");
+	soldier_southeast->speed = 8;
+	//East
+	soldier_east = soldier_east->LoadAnimation("animation/soldier.tmx", "red_east");
+	soldier_east->speed = 8;
+	//NorthEast
+	soldier_northeast = soldier_northeast->LoadAnimation("animation/soldier.tmx", "red_northeast");
+	soldier_northeast->speed = 8;
+	//ShootingNorth
+	soldier_shooting_N = soldier_shooting_N->LoadAnimation("animation/soldier.tmx", "red_shoot_N"); 
+	soldier_shooting_N->speed = 8; 
+	//ShootingNorthWest
+	soldier_shooting_NW = soldier_shooting_NW->LoadAnimation("animation/soldier.tmx", "red_shoot_NW"); 
+	soldier_shooting_NW->speed = 8; 
+	//ShootingWest
+	soldier_shooting_W = soldier_shooting_W->LoadAnimation("animation/soldier.tmx", "red_shoot_W");
+	soldier_shooting_W->speed = 8;
+	//ShootingSouthWest
+	soldier_shooting_SW = soldier_shooting_SW->LoadAnimation("animation/soldier.tmx", "red_shoot_SW");
+	soldier_shooting_SW->speed = 8;
+	//ShootingSouth
+	soldier_shooting_S = soldier_shooting_S->LoadAnimation("animation/soldier.tmx", "red_shoot_S");
+	soldier_shooting_S->speed = 8;
+	//ShootingSouthEast
+	soldier_shooting_SE = soldier_shooting_SE->LoadAnimation("animation/soldier.tmx", "red_shoot_SE");
+	soldier_shooting_SE->speed = 8;
+	//ShootingEast
+	soldier_shooting_E = soldier_shooting_E->LoadAnimation("animation/soldier.tmx", "red_shoot_E");
+	soldier_shooting_E->speed = 8;
+	//ShootingNorthEast
+	soldier_shooting_NE = soldier_shooting_NE->LoadAnimation("animation/soldier.tmx", "red_shoot_NE");
+	soldier_shooting_NE->speed = 8;
+
+	//ALLIED SOLDIER 
+	allied_soldier_idle = allied_soldier_idle->LoadAnimation("animation/soldier.tmx", "blue_idle");
+	allied_soldier_idle->speed = 1;
+	//North
+	allied_soldier_north = allied_soldier_north->LoadAnimation("animation/soldier.tmx", "blue_north");
+	allied_soldier_north->speed = 8;
+	//NorthWest
+	allied_soldier_northwest = allied_soldier_northwest->LoadAnimation("animation/soldier.tmx", "blue_northwest");
+	allied_soldier_northwest->speed = 8;
+	//West
+	allied_soldier_west = allied_soldier_west->LoadAnimation("animation/soldier.tmx", "blue_west");
+	allied_soldier_west->speed = 8;
+	//SouthWest
+	allied_soldier_southwest = allied_soldier_southwest->LoadAnimation("animation/soldier.tmx", "blue_southwest");
+	allied_soldier_southwest->speed = 8;
+	//South
+	allied_soldier_south = allied_soldier_south->LoadAnimation("animation/soldier.tmx", "blue_south");
+	allied_soldier_south->speed = 8;
+	//SouthEast
+	allied_soldier_southeast = allied_soldier_southeast->LoadAnimation("animation/soldier.tmx", "blue_southeast");
+	allied_soldier_southeast->speed = 8;
+	//East
+	allied_soldier_east = allied_soldier_east->LoadAnimation("animation/soldier.tmx", "blue_east");
+	allied_soldier_east->speed = 8;
+	//NorthEast
+	allied_soldier_northeast = allied_soldier_northeast->LoadAnimation("animation/soldier.tmx", "blue_northeast");
+	allied_soldier_northeast->speed = 8;
+	//ShootingNorth
+	allied_soldier_shooting_N = allied_soldier_shooting_N->LoadAnimation("animation/soldier.tmx", "blue_shoot_N");
+	allied_soldier_shooting_N->speed = 8;
+	//ShootingNorthWest
+	allied_soldier_shooting_NW = allied_soldier_shooting_NW->LoadAnimation("animation/soldier.tmx", "blue_shoot_NW");
+	allied_soldier_shooting_NW->speed = 8;
+	//ShootingWest
+	allied_soldier_shooting_W = allied_soldier_shooting_W->LoadAnimation("animation/soldier.tmx", "blue_shoot_W");
+	allied_soldier_shooting_W->speed = 8;
+	//ShootingSouthWest
+	allied_soldier_shooting_SW = allied_soldier_shooting_SW->LoadAnimation("animation/soldier.tmx", "blue_shoot_SW");
+	allied_soldier_shooting_SW->speed = 8;
+	//ShootingSouth
+	allied_soldier_shooting_S = allied_soldier_shooting_S->LoadAnimation("animation/soldier.tmx", "blue_shoot_S");
+	allied_soldier_shooting_S->speed = 8;
+	//ShootingSouthEast
+	allied_soldier_shooting_SE = allied_soldier_shooting_SE->LoadAnimation("animation/soldier.tmx", "blue_shoot_SE");
+	allied_soldier_shooting_SE->speed = 8;
+	//ShootingEast
+	allied_soldier_shooting_E = allied_soldier_shooting_E->LoadAnimation("animation/soldier.tmx", "blue_shoot_E");
+	allied_soldier_shooting_E->speed = 8;
+	//ShootingNorthEast
+	allied_soldier_shooting_NE = allied_soldier_shooting_NE->LoadAnimation("animation/soldier.tmx", "blue_shoot_NE");
+	allied_soldier_shooting_NE->speed = 8;
+
+	//WALLS 
+	small_wall = small_wall->LoadAnimation("animation/walls.tmx", "small_wall"); 
+	side_wall = side_wall->LoadAnimation("animation/walls.tmx", "side_wall"); 
+	principal_wall = principal_wall->LoadAnimation("animation/walls.tmx", "principal_wall");
+	corner_west = corner_west->LoadAnimation("animation/walls.tmx", "corner_west"); 
+	corner_north = corner_north->LoadAnimation("animation/walls.tmx", "corner_north"); 
+	corner_south = corner_south->LoadAnimation("animation/walls.tmx", "corner_south"); 
+	corner_east = corner_east->LoadAnimation("animation/walls.tmx", "corner_east"); 
+
+____________________________________________________________________________________________________________________________________________________________________
+
+SCENE.H 
+
+	SDL_Texture* barracks_texture = nullptr;
+	SDL_Texture* tesla_texture = nullptr;
+	SDL_Texture* cc_texture = nullptr;
+	SDL_Texture* goldmine_texture = nullptr;
+	SDL_Texture* sentrygun_texture = nullptr;
+	SDL_Texture* soldier_texture = nullptr; 
+	SDL_Texture* walls_texture = nullptr; 
+
+SCENE.CPP 
+	if (tesla_texture == nullptr)
+		tesla_texture = App->tex->Load("textures/Tesla_anim.png");
+	if (cc_texture == nullptr)
+		cc_texture = App->tex->Load("textures/CommandCenter_anim.png");
+	if (barracks_texture == nullptr)
+		barracks_texture = App->tex->Load("textures/Barracks_anim.png");
+	if (goldmine_texture == nullptr)
+		goldmine_texture = App->tex->Load("textures/GoldMine_anim.png");
+	if (sentrygun_texture == nullptr)
+		sentrygun_texture = App->tex->Load("textures/sentrygun_anim.png");
+	if (soldier_texture == nullptr)
+		soldier_texture = App->tex->Load("textures/BasicSoldier_anim.png");
+	if (walls_texture == nullptr)
+		walls_texture = App->tex->Load("textures/Walls_anim.png"); 
+
+
+
+
+
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="2" tilewidth="65" tileheight="50" nextobjectid="10">
+ <layer name="Capa de Patrones 1" width="9" height="2">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <imagelayer name="Capa de Imagen 1">
+  <image source="../textures/Walls_tiled.png" width="585" height="100"/>
+ </imagelayer>
+ <objectgroup name="small_wall">
+  <object id="1" x="0" y="0" width="65" height="50"/>
+ </objectgroup>
+ <objectgroup name="side_wall">
+  <object id="2" x="65" y="0" width="65" height="50"/>
+ </objectgroup>
+ <objectgroup name="principal_wall">
+  <object id="3" x="130" y="0" width="65" height="50"/>
+ </objectgroup>
+ <objectgroup name="corner_west">
+  <object id="4" x="195" y="0" width="65" height="50"/>
+ </objectgroup>
+ <objectgroup name="corner_north">
+  <object id="6" x="390" y="0" width="65" height="50"/>
+ </objectgroup>
+ <objectgroup name="corner_south">
+  <object id="7" x="0" y="50" width="65" height="50"/>
+ </objectgroup>
+ <objectgroup name="corner_east">
+  <object id="9" x="195" y="50" width="65" height="50"/>
+ </objectgroup>
+</map>
