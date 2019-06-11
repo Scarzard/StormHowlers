@@ -110,7 +110,7 @@
 				<upgrade_cost ToLvl2="150" ToLvl3="300" />
 				<damage lvl1="120" lvl2="180" lvl3="240" ToLv4="0" />
 				<size width="1" height="1" />
-				<attack rate="5" targets="1" range="200" />
+				<attack rate="2" targets="1" range="200" />
 			</sentrygun>
 			<CommandCenter>
 				<health lvl1="5000" lvl2="6000" lvl3="7000" />
@@ -154,7 +154,7 @@
 				<upgrade_cost ToLvl2="1000" ToLvl3="2500" ToLv4="0" />
 				<size width="2" height="4" />
 				<capacity lvl1="100" lvl2="150" lvl3="200" />
-				<production lvl1="100" lvl2="150" lvl3="250" />
+				<production lvl1="25" lvl2="150" lvl3="250" />
 			</GoldMine>
 		</buildings>
 		<troops>
@@ -175,11 +175,11 @@
 				<speed value="1" />
 			</engineer>
 			<tankman>
-				<health lvl1="250" lvl2="280" lvl3="320" />
+				<health lvl1="300" lvl2="280" lvl3="320" />
 				<upgrade_cost ToLvl2="30" ToLvl3="50" />
 				<size width="1" height="1" />
 				<damage lvl1="40" lvl2="50" lvl3="60" />
-				<attack rate="4" targets="1" range="1" />
+				<attack rate="3" targets="1" range="1" />
 				<speed value="1" />
 			</tankman>
 			<infiltrator>
@@ -187,7 +187,7 @@
 				<upgrade_cost ToLvl2="50" ToLvl3="100" />
 				<size width="1" height="1" />
 				<damage lvl1="80" lvl2="90" lvl3="100" />
-				<attack rate="8" targets="1" range="1" />
+				<attack rate="2" targets="1" range="1" />
 				<speed value="1" />
 			</infiltrator>
 			<war_hound>
