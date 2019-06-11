@@ -143,7 +143,7 @@ or dowload the desired release here and follow the same steps:
        
 ## Game Video
 
-### Comercial trailer
+### Commercial trailer
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/b1AHsxDyM-Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -161,7 +161,7 @@ or dowload the desired release here and follow the same steps:
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Andres.jpg" width="150">
 
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/COMMANDO.png) **Lead:** Andrés Saladrigas
-   - [Andrés' GitHub Link](https://github.com/TheArzhel)
+- [Andrés' GitHub Link](https://github.com/TheArzhel)
    
 **Mission:** Guide the teams members throught the development process.
 
@@ -248,7 +248,7 @@ Introdicing a the game with a .ogv video
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Josep.jpg" width="150" >
 
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/MEDIC.png) **UI:** Josep Lleal
-   - [Josep's GitHub Link](https://github.com/JosepLleal)
+- [Josep's GitHub Link](https://github.com/JosepLleal)
    
 **Mission:** Design and code the UI of the game. 
 
@@ -296,8 +296,8 @@ When spawning troops you can choose in which barrack you want to spawn them.
 
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Joan.jpg" width="150" >
   
-  - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ENGNEER.png) **Art/Audio:** Joan Barduena
-   - [Joan's GitHub Link](https://github.com/JoanBarduena)
+- ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ENGNEER.png) **Art/Audio:** Joan Barduena
+- [Joan's GitHub Link](https://github.com/JoanBarduena)
   
 
 ### Victor Chen
@@ -305,7 +305,7 @@ When spawning troops you can choose in which barrack you want to spawn them.
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Victor.jpg" width="150">
   
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/ROCKETEER.png) **QA:** Víctor Chen
-   - [Victor's GitHub Link](https://github.com/Scarzard)
+- [Victor's GitHub Link](https://github.com/Scarzard)
    
 **Mission:** Keep track of bugs in the game and solve them as fast as possible
 
@@ -369,14 +369,14 @@ Added scene transition modules and implemented them into our code.
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/David.jpg" width="150" >
 
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/G.I.png) **Code:** David Tello
-   - [David's GitHub Link](https://github.com/DavidTello1)
+- [David's GitHub Link](https://github.com/DavidTello1)
 
 ### Arnau Gallofre
 
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Arnau.jpg" width="150">
   
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SABOTAGER.png) **Design:** Arnau Gallofré
-   - [Arnau's GitHub Link](https://github.com/ggaka6god)
+- [Arnau's GitHub Link](https://github.com/ggaka6god)
 
 
 ### Oscar Pons
@@ -384,7 +384,7 @@ Added scene transition modules and implemented them into our code.
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Oscar.jpg" width="150" >
   
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SPY.png) **Management:** Òscar Pons
-   - [Òscar's GitHub Link](https://github.com/ponspack9)
+- [Òscar's GitHub Link](https://github.com/ponspack9)
 
 
 
