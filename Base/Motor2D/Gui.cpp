@@ -214,22 +214,9 @@ bool Gui::Draw()
 				App->render->BlitEx(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, App->player1->current_life_bar, &App->player1->LiveBar, SDL_FLIP_NONE, 0);
 
 			}
-			else if ((*UI_elem)->type == UI_Element::UI_type::LIFEBAR_P2) 
-			{
-				// IDK why it is printed under the main_ui
-				App->player2->LiveBar.w = (340 * App->player2->health) / App->player2->max_health; // (maximum rect width * town hall live) / MAX town hall live
-
-				App->render->BlitEx(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, App->player2->current_life_bar, &App->player2->LiveBar, SDL_FLIP_NONE, 0);
-
-			}
 			else if ((*UI_elem)->type == UI_Element::UI_type::INFO_P1)
 			{
 				App->render->Blit(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, &App->player1->Info_img->rect, SDL_FLIP_NONE, 0);
-
-			}
-			else if ((*UI_elem)->type == UI_Element::UI_type::INFO_P2)
-			{
-				App->render->Blit(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, &App->player2->Info_img->rect, SDL_FLIP_NONE, 0);
 
 			}
 			else //rest of ui
@@ -276,6 +263,20 @@ bool Gui::Draw()
 					SDL_RenderCopy(App->render->renderer, App->scene->allied_win_tex, NULL, &r);
 				}
 			}
+			else if ((*UI_elem)->type == UI_Element::UI_type::LIFEBAR_P2)
+			{
+				// IDK why it is printed under the main_ui
+				App->player2->LiveBar.w = (340 * App->player2->health) / App->player2->max_health; // (maximum rect width * town hall live) / MAX town hall live
+
+				App->render->BlitEx(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, App->player2->current_life_bar, &App->player2->LiveBar, SDL_FLIP_NONE, 0);
+
+			}
+			else if ((*UI_elem)->type == UI_Element::UI_type::INFO_P2)
+			{
+				App->render->Blit(GetAtlas(), (*UI_elem)->globalpos.first, (*UI_elem)->globalpos.second, &App->player2->Info_img->rect, SDL_FLIP_NONE, 0);
+
+			}
+
 			else //rest of ui
 			{
 				if (!App->player1->isPaused)

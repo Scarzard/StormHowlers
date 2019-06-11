@@ -158,7 +158,11 @@ bool Scene::Start()
 	ui_timer = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, {800, 0 }, { 0, 0 }, nullptr, true, { false, false }, "Timer: 0s");
 	ui_timer->color = { 250,250,250,250 };
 
+	App->player1->Root_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { main_ui_x, main_ui_y }, { 566 , 163 }, nullptr, true);
+	App->player1->Root_UI->rect = { 0,0,0,0 };
 
+	App->player2->Root_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0, 0 }, { 566 , 163 }, nullptr, true);
+	App->player2->Root_UI->rect = { 0,0,0,0 };
 
 
 	//--- PLAYER 1
@@ -341,7 +345,7 @@ bool Scene::Start()
 
 	// ------- GOLD
 
-	App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 412, 18 }, { 0, 0 }, App->player1->Main_UI, true, { false,false }, "$ 0000");
+	App->player1->Gold_UI = App->gui->AddUIElement(true, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 412, 18 }, { 0, 0 }, App->player1->Root_UI, true, { false,false }, "$ 0000");
 	App->player1->Gold_UI->color = { 255,255,0,255 };
 
 	//------- PAUSE MENU ------
@@ -536,7 +540,7 @@ bool Scene::Start()
 
 	App->player2->LB_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { -5 , 70 }, { 55, 27 }, nullptr, false);
 	App->player2->LB_img->rect = { 1269, 437, 55, 27 };
-	App->player2->RB_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 585 , 70 }, { 55, 27 }, nullptr, false);
+	App->player2->RB_img = App->gui->AddUIElement(false, UI_Element::UI_type::IMAGE, UI_Element::Action::NONE, { 520 , 70 }, { 55, 27 }, nullptr, false);
 	App->player2->RB_img->rect = { 1334, 437, 55, 27 };
 
 	//------ GENERAL BUILDINGS MENU --------
@@ -609,7 +613,7 @@ bool Scene::Start()
 
 
 	//---- GOLD ----- 
-	App->player2->Gold_UI = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 412, 18 }, { 0, 0 }, App->player2->Main_UI, true, { false,false }, "$ 0000");
+	App->player2->Gold_UI = App->gui->AddUIElement(false, UI_Element::UI_type::LABEL, UI_Element::Action::NONE, { 412, 18 }, { 0, 0 }, App->player2->Root_UI, true, { false,false }, "$ 0000");
 	App->player2->Gold_UI->color = { 255,255,0,255 };
 
 	// ------ PAUSE MENU ------
@@ -694,12 +698,12 @@ bool Scene::Start()
 
 	
 
-	life_bar_p1 = App->gui->AddUIElement(true, UI_Element::UI_type::LIFEBAR_P1, UI_Element::Action::NONE, { 62, 24 }, { 50, 50 }, App->player1->Main_UI, false, { false, false });
+	life_bar_p1 = App->gui->AddUIElement(true, UI_Element::UI_type::LIFEBAR_P1, UI_Element::Action::NONE, { 62, 24 }, { 50, 50 }, App->player1->Root_UI, false, { false, false });
 	life_bar_p1->rect = life_bar_green;
 	App->player1->current_life_bar = &life_bar_green;
 
 	// Gets drawn behind the UI, real y = 24 instead of 200
-	life_bar_p2 = App->gui->AddUIElement(true, UI_Element::UI_type::LIFEBAR_P2, UI_Element::Action::NONE, { 62, 200 }, { 50, 50 }, App->player2->Main_UI, false, { false, false });
+	life_bar_p2 = App->gui->AddUIElement(false, UI_Element::UI_type::LIFEBAR_P2, UI_Element::Action::NONE, { 62, 24 }, { 50, 50 }, App->player2->Root_UI, false, { false, false });
 	life_bar_p2->rect = life_bar_green;
 	App->player2->current_life_bar = &life_bar_green;
 
@@ -751,7 +755,7 @@ bool Scene::Start()
 	App->player1->Info_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { main_ui_x,main_ui_y }, { 566, 163 }, nullptr, true);
 	App->player2->Info_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, true);
 	App->player1->Info_img = App->gui->AddUIElement(true, UI_Element::UI_type::INFO_P1, UI_Element::Action::NONE, { 0,0 }, { 39, 39 }, App->player1->Info_UI, true, { false,false });
-	App->player2->Info_img = App->gui->AddUIElement(false, UI_Element::UI_type::INFO_P2, UI_Element::Action::NONE, { 0,500 }, { 39, 39 }, App->player2->Info_UI, true);
+	App->player2->Info_img = App->gui->AddUIElement(false, UI_Element::UI_type::INFO_P2, UI_Element::Action::NONE, { 0,180 }, { 39, 39 }, App->player2->Info_UI, true);
 
 
 	App->player1->UpdateFocus(App->player1->currentUI);
@@ -1149,7 +1153,7 @@ bool Scene::Update(float dt)
 		App->player2->Blit_Info();
 	}
 	
-	App->gui->Draw();
+
 
 	
 
@@ -1159,7 +1163,7 @@ bool Scene::Update(float dt)
 		DrawLiveBar(App->player1);
 		DrawLiveBar(App->player2);
 	}
-
+	App->gui->Draw();
 	return true;
 }
 
