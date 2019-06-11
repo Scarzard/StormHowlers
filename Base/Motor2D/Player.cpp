@@ -1626,6 +1626,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = false;
+		Root_UI->visible = false;
 		if (show_info) Info_UI->visible = true;
 		break;
 	case::Player::CURRENT_UI::CURR_MAIN:
@@ -1639,6 +1640,8 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = false;
+		Root_UI->visible = true;
+
 		if (show_info) Info_UI->visible = true;
 		break;
 
@@ -1653,6 +1656,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = false;
+		Root_UI->visible = true;
 		if (show_info) Info_UI->visible = true;
 		break;
 
@@ -1667,6 +1671,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = false;
+		Root_UI->visible = true;
 		if (show_info) Info_UI->visible = true;
 		break;
 
@@ -1681,6 +1686,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = false;
+		Root_UI->visible = true;
 		if (show_info) Info_UI->visible = true;
 		break;
 
@@ -1695,6 +1701,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = true;
 		Create_Troops_UI->visible = false;
+		Root_UI->visible = true;
 		if (show_info) Info_UI->visible = true;
 
 		break;
@@ -1711,6 +1718,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = true;
+		Root_UI->visible = true;
 		if (show_info) Info_UI->visible = true;
 
 		break;
@@ -1727,6 +1735,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		win_screen->visible = false;
 		General_UI->visible = false;
 		Create_Troops_UI->visible = true;
+		Root_UI->visible = true;
 		if (show_info) Info_UI->visible = true;
 
 		break;
@@ -1742,6 +1751,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Abort_UI->visible = false;
 		win_screen->visible = false;
 		General_UI->visible = false;
+		Root_UI->visible = false;
 		Create_Troops_UI->visible = false;
 		Info_UI->visible = false;
 		break;
@@ -1756,6 +1766,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Abort_UI->visible = false;
 		win_screen->visible = false;
 		General_UI->visible = false;
+		Root_UI->visible = false;
 		Create_Troops_UI->visible = false;
 		Info_UI->visible = false;
 		break;
@@ -1770,6 +1781,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		Abort_UI->visible = true;
 		win_screen->visible = false;
 		General_UI->visible = false;
+		Root_UI->visible = false;
 		Create_Troops_UI->visible = false;
 		Info_UI->visible = false;
 		break;
@@ -1792,6 +1804,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		LB_img->visible = false;
 		RB_img->visible = false;
 		draw_screen->visible = false;
+		Root_UI->visible = false;
 		Info_UI->visible = false;
 		break;
 	case::Player::CURRENT_UI::ENDGAME: //Dont show the other player win screen
@@ -1814,6 +1827,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		LB_img->visible = false;
 		RB_img->visible = false;
 		draw_screen->visible = false;
+		Root_UI->visible = false;
 		Info_UI->visible = false;
 
 	case::Player::CURRENT_UI::DRAW: //Dont show the other player win screen
@@ -1836,6 +1850,7 @@ void Player::UpdateVisibility() // Update GUI Visibility
 		LB_img->visible = false;
 		RB_img->visible = false;
 		draw_screen->visible = true;
+		Root_UI->visible = false;
 		Info_UI->visible = false;
 		break;
 
@@ -2087,8 +2102,8 @@ void Player::DoLogic(UI_Element* data)
 		App->scene->pause = !App->scene->pause;
 
 		currentUI = last_currentUI;
-		UpdateVisibility();
 		UpdateFocus(currentUI);
+		UpdateVisibility();
 		break;
 	case::UI_Element::Action::SETTINGS_PAUSE:
 		// Open settings menu

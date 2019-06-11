@@ -881,10 +881,10 @@ bool Scene::Start()
 	size_timer.Start();
 
 
-	App->player1->Info_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { main_ui_x,main_ui_y }, { 566, 163 }, nullptr, true);
-	App->player2->Info_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, nullptr, true);
-	App->player1->Info_img = App->gui->AddUIElement(true, UI_Element::UI_type::INFO_P1, UI_Element::Action::NONE, { 0,0 }, { 39, 39 }, App->player1->Info_UI, true, { false,false });
-	App->player2->Info_img = App->gui->AddUIElement(false, UI_Element::UI_type::INFO_P2, UI_Element::Action::NONE, { 0,180 }, { 39, 39 }, App->player2->Info_UI, true);
+	App->player1->Info_UI = App->gui->AddUIElement(true, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, App->player1->Root_UI, true);
+	App->player2->Info_UI = App->gui->AddUIElement(false, UI_Element::UI_type::WINDOW, UI_Element::Action::NONE, { 0,0 }, { 566, 163 }, App->player2->Root_UI, true);
+	App->player1->Info_img = App->gui->AddUIElement(true, UI_Element::UI_type::INFO_P1, UI_Element::Action::NONE, { 150,-100 }, { 39, 39 }, App->player1->Info_UI, true, { false,false });
+	App->player2->Info_img = App->gui->AddUIElement(false, UI_Element::UI_type::INFO_P2, UI_Element::Action::NONE, { 40,180 }, { 39, 39 }, App->player2->Info_UI, true);
 
 
 	App->player1->UpdateFocus(App->player1->currentUI);
