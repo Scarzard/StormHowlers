@@ -7,6 +7,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Transitions.h"
+#include "j1TransitionManager.h"
 #include "Scene.h"
 #include "MainMenu.h"
 #include "Gui.h"
@@ -172,8 +173,7 @@ bool MainMenu::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		App->scenechange->ContinueGame = true;
-		App->scenechange->SwitchScene(App->scene, App->main_menu,2);
-		menu_background->visible = false;
+		App->transitions->SquaresAppearing(3, Black, 2.0f);
 	}
 
 	App->gui->Draw();	
@@ -256,7 +256,7 @@ void MainMenu::DoLogic(UI_Element* data)
 		//---- Main menu buttons
 	case::UI_Element::Action::NEW_GAME:
 		App->scenechange->ContinueGame = true;
-		App->scenechange->SwitchScene(App->scene, App->main_menu,2); //Here fadetoblack
+		App->transitions->SquaresAppearing(3, Black, 2.0f);
 		App->audio->PlayFx(PLAY);
 		break;
 	case::UI_Element::Action::SETTINGS:
@@ -279,7 +279,7 @@ void MainMenu::DoLogic(UI_Element* data)
 		break;
 	case::UI_Element::Action::WEBSITE:
 		//Needs to be updated with game's website link, when it's done
-		ShellExecuteA(NULL, "open", "https://github.com/stormhowlers/Command_and_Conquer_WarZone", NULL, NULL, SW_SHOWNORMAL);
+		ShellExecuteA(NULL, "open", "https://stormhowlers.github.io/Command_and_Conquer_WarZone/", NULL, NULL, SW_SHOWNORMAL);
 		break;
 	case::UI_Element::Action::EXIT:
 		App->audio->PlayFx(EXIT);

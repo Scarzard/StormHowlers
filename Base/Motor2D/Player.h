@@ -12,7 +12,8 @@ struct SDL_Texture;
 struct GamePad
 {
 	SDL_GameController* GameController = nullptr;
-	SDL_Joystick* joy = nullptr;
+	SDL_Joystick* left_joy = nullptr;
+	SDL_Joystick* right_joy = nullptr;
 
 	bool Connected = false;
 	bool State[MAX_BUTTONS];
@@ -22,7 +23,16 @@ struct GamePad
 	int LeftAxisX = 0;
 	int LeftAxisY = 0;
 
+	int RightAxisX = 0;
+	int RightAxisY = 0;
+
+	int Left_Trigger = 0;
+	int Right_Trigger = 0;
+
 	bool JoystickState[4] = { false, false, false ,false };
+	bool JoystickState2[4] = { false, false, false ,false };
+	bool RT_State = false;
+	bool LT_State = false;
 
 };
 
@@ -36,11 +46,13 @@ struct GeneralUI
 class Player : public Module
 {
 public:
-	enum DeployState {
+	enum DeployState
+	{
 		START,
 		DEPLOYING,
 		END
 	};
+
 	enum CURRENT_UI
 	{
 		NONE,
@@ -57,6 +69,7 @@ public:
 		CURR_CREATE_ABILITIES,
 		CURR_PAUSE,
 		CURR_PAUSE_SETTINGS,
+		CURR_PAUSE_KEYBINDS,
 		CURR_PAUSE_ABORT,
 		CURR_WIN_SCREEN,
 		ENDGAME, 
@@ -97,6 +110,7 @@ public:
 	void UpdateGeneralUI(Entity* building);
 	void Blit_Info();
 	void ChangeTroopsState();
+	SDL_Rect Get_ButtonIcon(int button);
 
 	// -----------------------------------------------------------------------------
 
@@ -116,16 +130,43 @@ public:
 	void ChangeBuilding(int num);
 	void ShowRange(Entity::entityType type, Collider collider);
 
+	int GetKey(); //returns key pressed (-1 if none)
+	void LoadKeys(bool isPlayer1);
+	void SaveKeys(bool isPlayer1);
+
 private:
 	int number = 0;
 	
 public:
+	// CONTROLS------------------
+	int ACCEPT;
+	int CANCEL;
+	int CHANGE;
+	int CHANGEALL;
+
+	int MOVE_RIGHT;
+	int MOVE_LEFT;
+	int MOVE_UP;
+	int MOVE_DOWN;
+
+	int PREV_BUILDING;
+	int NEXT_BUILDING;
+
+	int UI_RIGHT;
+	int UI_LEFT;
+	int UI_UP;
+	int UI_DOWN;
+	//--------------------------
+
 	bool isBuilding = false;
 	bool isDeploying = false;
 	bool isCasting = false;
 	bool isPaused = false;
 	bool inmune = false;
 	bool offensive = true;
+	bool CommandCenterDestroyed = false;
+
+	bool DoNotLogic = false;
 
 	int timer_ref_sec = 0;
 	int timer_ref_min = 0;
@@ -141,6 +182,7 @@ public:
 	Entity::entityType type;
 
 	Entity* Townhall = nullptr;
+	Entity* CommandCenter = nullptr;
 
 	bool isPlayer1 = false;
 	string team;
@@ -192,6 +234,10 @@ public:
 	int WarHoundsCreated = 0;
 	int BarracksCreated = 0;
 
+	int AOE_turretsCreated = 0;
+	int SentruGunsCreated = 0;
+	int MinesCreated = 0;
+
 	int Invulnerable_abilities = 0;
 	int Rocket_abilities = 0;
 	int Tank_abilities = 0;
@@ -217,17 +263,14 @@ public:
 	UI_Element* Y_to_Main2 = nullptr;
 	bool Y_pressed = false;
 
-	UI_Element* SelectBuilding = nullptr;
-	UI_Element* In_SelectBuilding = nullptr;
-
 	UI_Element* RB_img = nullptr;
 	UI_Element* LB_img = nullptr;
 	
-
 	UI_Element* Main_UI = nullptr;
 	UI_Element* Build_icon = nullptr;
 	UI_Element* Deploy_icon = nullptr;
 	UI_Element* Cast_icon = nullptr;
+	UI_Element* Cast_locked = nullptr;
 
 	UI_Element* Build_UI = nullptr;
 	UI_Element* Def_AOE_icon = nullptr;
@@ -331,6 +374,10 @@ public:
 	UI_Element* Resume_text = nullptr;
 	char resume_label[12] = "Resume Game";
 
+	UI_Element* KeyBinds_Button = nullptr;
+	UI_Element* KeyBinds_text = nullptr;
+	char keybinds_label[10] = "Key Binds";
+
 	UI_Element* Settings_Button = nullptr;
 	UI_Element* Settings_text = nullptr;
 	char settings_label[9] = "Settings";
@@ -357,6 +404,53 @@ public:
 	UI_Element* FX_Slider_text = nullptr;
 	char FX_Slider_label[5] = "0";
 	UI_Element* FX_Slider_Button = nullptr;
+
+	//Pause KeyBinds UI
+
+	UI_Element* Keybinds_UI = nullptr;
+
+	UI_Element* Controls_text = nullptr;
+	char Controls_label[9] = "CONTROLS";
+
+	UI_Element* General_text = nullptr;
+	char General_label[9] = "GENERAL:";
+
+	UI_Element* Accept_Button = nullptr;
+	UI_Element* Accept_Button_text = nullptr;
+	char Accept_Button_label[7] = "Accept";
+	UI_Element* Accept_Icon = nullptr;
+
+
+	UI_Element* GoBack_Button = nullptr;
+	UI_Element* GoBack_Button_text = nullptr;
+	char GoBack_Button_label[8] = "Go Back";
+	UI_Element* Back_Icon = nullptr;
+
+	UI_Element* Building_text = nullptr;
+	char Building_label[16] = "WHILE BUILDING:";
+
+	UI_Element* NextBuilding_Button = nullptr;
+	UI_Element* NextBuilding_text = nullptr;
+	char NextBuilding_label[14] = "Next Building";
+	UI_Element* NextBuilding_Icon = nullptr;
+
+	UI_Element* PrevBuilding_Button = nullptr;
+	UI_Element* PrevBuilding_text = nullptr;
+	char PrevBuilding_label[14] = "Prev Building";
+
+	UI_Element* Troops_text = nullptr;
+	char Troops_label[15] = "MANAGE TROOPS:";
+	UI_Element* PrevBuilding_Icon = nullptr;
+
+	UI_Element* SingleState_Button = nullptr;
+	UI_Element* SingleState_text = nullptr;
+	char SingleState_label[26] = "Change Single Troop State";
+	UI_Element* SingleState_Icon = nullptr;
+
+	UI_Element* AllState_Button = nullptr;
+	UI_Element* AllState_text = nullptr;
+	char AllState_label[24] = "Change All Troops State";
+	UI_Element* AllState_Icon = nullptr;
 
 	// Pause Abort Mission
 

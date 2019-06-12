@@ -43,6 +43,28 @@ bool Hound::Update(float dt)
 	{
 		offensive = App->player2->WarHound_Offensive;
 	}
+	if (fromPlayer1)
+	{
+		if (App->player1->inmune == true)
+		{
+			inmune = true;
+		}
+		else
+		{
+			inmune = false;
+		}
+	}
+	else
+	{
+		if (App->player2->inmune == true)
+		{
+			inmune = true;
+		}
+		else
+		{
+			inmune = false;
+		}
+	}
 
 	if (alive) {
 
@@ -330,8 +352,6 @@ bool Hound::Update(float dt)
 
 	Troop::Update(dt);
 
-	App->render->DrawQuad({ position.first,position.second,5,5 }, 255, 255, 255, 255, false);
-
 	return true;
 }
 
@@ -561,7 +581,11 @@ void Hound::SimpleMovement()
 }
 
 void Hound::ChangeAnimation(TroopDir facing, bool pathfind) {
-	Current_Animation = idle;
+	if (inmune)
+		Current_Animation = idle_inv;
+	else
+		Current_Animation = idle;
+
 	if (pathfind)
 	{
 		if (state == MOVING)
@@ -570,42 +594,66 @@ void Hound::ChangeAnimation(TroopDir facing, bool pathfind) {
 			if (Speed.first == 0 && Speed.second < 0)
 			{
 				//north
-				Current_Animation = moving[NORTH];
+				if (inmune)
+					Current_Animation = moving_inv[NORTH];
+				else
+					Current_Animation = moving[NORTH];
 			}
 			else if (Speed.first == 0 && Speed.second > 0)
 			{
 				//south
-				Current_Animation = moving[SOUTH];
+				if (inmune)
+					Current_Animation = moving_inv[SOUTH];
+				else
+					Current_Animation = moving[SOUTH];
 			}
 			else if (Speed.first < 0 && Speed.second == 0)
 			{
 				//west
-				Current_Animation = moving[WEST];
+				if (inmune)
+					Current_Animation = moving_inv[WEST];
+				else
+					Current_Animation = moving[WEST];
 			}
 			else if (Speed.first > 0 && Speed.second == 0)
 			{
 				//east
-				Current_Animation = moving[EAST];
+				if (inmune)
+					Current_Animation = moving_inv[EAST];
+				else
+					Current_Animation = moving[EAST];
 			}
 			else if (Speed.first > 0 && Speed.second < 0)
 			{
 				//north east
-				Current_Animation = moving[NORTHEAST];
+				if (inmune)
+					Current_Animation = moving_inv[NORTHEAST];
+				else
+					Current_Animation = moving[NORTHEAST];
 			}
 			else if (Speed.first > 0 && Speed.second > 0)
 			{
 				//south east
-				Current_Animation = moving[SOUTHEAST];
+				if (inmune)
+					Current_Animation = moving_inv[SOUTHEAST];
+				else
+					Current_Animation = moving[SOUTHEAST];
 			}
 			else if (Speed.first < 0 && Speed.second < 0)
 			{
 				//north west
-				Current_Animation = moving[NORTHWEST];
+				if (inmune)
+					Current_Animation = moving_inv[NORTHWEST];
+				else
+					Current_Animation = moving[NORTHWEST];
 			}
 			else if (Speed.first < 0 && Speed.second > 0)
 			{
 				//south wst
-				Current_Animation = moving[SOUTHWEST];
+				if (inmune)
+					Current_Animation = moving_inv[SOUTHWEST];
+				else
+					Current_Animation = moving[SOUTHWEST];
 			}
 		}
 		else if (state == SHOOTING)
@@ -613,32 +661,50 @@ void Hound::ChangeAnimation(TroopDir facing, bool pathfind) {
 
 			if (fromPlayer1)
 			{
-				Current_Animation = shooting[SOUTH];
+				if (inmune)
+					Current_Animation = shooting_inv[SOUTH];
+				else
+					Current_Animation = shooting[SOUTH];
 			}
 			else
 			{
-				Current_Animation = shooting[NORTH];
+				if (inmune)
+					Current_Animation = shooting_inv[NORTH];
+				else
+					Current_Animation = shooting[NORTH];
 			}
 
 			if (info.closest->position == position)
 			{
 				if (fromPlayer1)
 				{
-					Current_Animation = shooting[SOUTH];
+					if (inmune)
+						Current_Animation = shooting_inv[SOUTH];
+					else
+						Current_Animation = shooting[SOUTH];
 				}
 				else
 				{
-					Current_Animation = shooting[NORTH];
+					if (inmune)
+						Current_Animation = shooting_inv[NORTH];
+					else
+						Current_Animation = shooting[NORTH];
 				}
 			}
 			else if (info.closest->position.second <= position.second && info.closest->position.first >= position.first)
 			{
 				//noth
-				Current_Animation = shooting[NORTH];
+				if (inmune)
+					Current_Animation = shooting_inv[NORTH];
+				else
+					Current_Animation = shooting[NORTH];
 				if (info.closest->position.second == position.second)
 				{
 					//northwest
-					Current_Animation = shooting[NORTHWEST];
+					if (inmune)
+						Current_Animation = shooting_inv[NORTHWEST];
+					else
+						Current_Animation = shooting[NORTHWEST];
 				}
 				//else if (info.closest->position.second > position.second)
 				//{
@@ -648,17 +714,26 @@ void Hound::ChangeAnimation(TroopDir facing, bool pathfind) {
 				else if (info.closest->position.first == position.first)
 				{
 					//northeast
-					Current_Animation = shooting[NORTHEAST];
+					if (inmune)
+						Current_Animation = shooting_inv[NORTHEAST];
+					else
+						Current_Animation = shooting[NORTHEAST];
 				}
 			}
 			else if (info.closest->position.first >= position.first && info.closest->position.second >= position.second)
 			{
 				//south
-				Current_Animation = shooting[SOUTH];
+				if (inmune)
+					Current_Animation = shooting_inv[SOUTH];
+				else
+					Current_Animation = shooting[SOUTH];
 				if (info.closest->position.second == position.second)
 				{
 					//southwest
-					Current_Animation = shooting[SOUTHWEST];
+					if (inmune)
+						Current_Animation = shooting_inv[SOUTHWEST];
+					else
+						Current_Animation = shooting[SOUTHWEST];
 				}
 				//else if (info.closest->position.second > position.second)
 				//{
@@ -668,29 +743,43 @@ void Hound::ChangeAnimation(TroopDir facing, bool pathfind) {
 				else if (info.closest->position.first == position.first)
 				{
 					//southeast
-					Current_Animation = shooting[SOUTHEAST];
+					if (inmune)
+						Current_Animation = shooting_inv[SOUTHEAST];
+					else
+						Current_Animation = shooting[SOUTHEAST];
 				}
 			}
 			else if (info.closest->position.second > position.second && info.closest->position.first > position.first)
 			{
 				//east
-				Current_Animation = shooting[EAST];
+				if (inmune)
+					Current_Animation = shooting_inv[EAST];
+				else
+					Current_Animation = shooting[EAST];
 			}
 			else if (info.closest->position.second < position.second && info.closest->position.first < position.first)
 			{
 				//west
-				Current_Animation = shooting[WEST];
-
+				if (inmune)
+					Current_Animation = shooting_inv[WEST];
+				else
+					Current_Animation = shooting[WEST];
 			}
 			else
 			{
 				if (fromPlayer1)
 				{
-					Current_Animation = shooting[SOUTH];
+					if (inmune)
+						Current_Animation = shooting_inv[SOUTH];
+					else
+						Current_Animation = shooting[SOUTH];
 				}
 				else
 				{
-					Current_Animation = shooting[NORTH];
+					if (inmune)
+						Current_Animation = shooting_inv[NORTH];
+					else
+						Current_Animation = shooting[NORTH];
 				}
 			}
 
@@ -705,22 +794,34 @@ void Hound::ChangeAnimation(TroopDir facing, bool pathfind) {
 			if (facing == NORTH)
 			{
 				//north
-				Current_Animation = moving[NORTHEAST];
+				if (inmune)
+					Current_Animation = moving_inv[NORTHEAST];
+				else
+					Current_Animation = moving[NORTHEAST];
 			}
 			else if (facing == SOUTH)
 			{
 				//south
-				Current_Animation = moving[SOUTHWEST];
+				if (inmune)
+					Current_Animation = moving_inv[SOUTHWEST];
+				else
+					Current_Animation = moving[SOUTHWEST];
 			}
 			else if (facing == WEST)
 			{
 				//west
-				Current_Animation = moving[NORTHWEST];
+				if (inmune)
+					Current_Animation = moving_inv[NORTHWEST];
+				else
+					Current_Animation = moving[NORTHWEST];
 			}
 			else if (facing == EAST)
 			{
 				//east
-				Current_Animation = moving[SOUTHEAST];
+				if (inmune)
+					Current_Animation = moving_inv[SOUTHEAST];
+				else
+					Current_Animation = moving[SOUTHEAST];
 			}
 			//else if (Speed.first > 0 && Speed.second < 0)
 			//{
@@ -745,25 +846,36 @@ void Hound::ChangeAnimation(TroopDir facing, bool pathfind) {
 		}
 		else if (state == SHOOTING)
 		{
-
 			if (fromPlayer1)
 			{
-				Current_Animation = shooting[SOUTH];
+				if (inmune)
+					Current_Animation = shooting_inv[SOUTH];
+				else
+					Current_Animation = shooting[SOUTH];
 			}
 			else
 			{
-				Current_Animation = shooting[NORTH];
+				if (App->player2->inmune)
+					Current_Animation = shooting_inv[NORTH];
+				else
+					Current_Animation = shooting[NORTH];
 			}
 
 			if (info.closest->position == position)
 			{
 				if (fromPlayer1)
 				{
-					Current_Animation = shooting[SOUTH];
+					if (inmune)
+						Current_Animation = shooting_inv[SOUTH];
+					else
+						Current_Animation = shooting[SOUTH];
 				}
 				else
 				{
-					Current_Animation = shooting[NORTH];
+					if (App->player2->inmune)
+						Current_Animation = shooting_inv[SOUTH];
+					else
+						Current_Animation = shooting[SOUTH];
 				}
 			}
 			else if (info.closest->position.second <= position.second && info.closest->position.first >= position.first)
@@ -773,7 +885,10 @@ void Hound::ChangeAnimation(TroopDir facing, bool pathfind) {
 				if (info.closest->position.second == position.second)
 				{
 					//northwest
-					Current_Animation = shooting[NORTHWEST];
+					if (inmune)
+						Current_Animation = shooting_inv[NORTHWEST];
+					else
+						Current_Animation = shooting[NORTHWEST];
 				}
 				//else if (info.closest->position.second > position.second)
 				//{
@@ -783,7 +898,10 @@ void Hound::ChangeAnimation(TroopDir facing, bool pathfind) {
 				else if (info.closest->position.first == position.first)
 				{
 					//northeast
-					Current_Animation = shooting[NORTHEAST];
+					if (inmune)
+						Current_Animation = shooting_inv[NORTHEAST];
+					else
+						Current_Animation = shooting[NORTHEAST];
 				}
 			}
 			else if (info.closest->position.first >= position.first && info.closest->position.second >= position.second)
@@ -793,7 +911,10 @@ void Hound::ChangeAnimation(TroopDir facing, bool pathfind) {
 				if (info.closest->position.second == position.second)
 				{
 					//southwest
-					Current_Animation = shooting[SOUTHWEST];
+					if (inmune)
+						Current_Animation = shooting_inv[SOUTHWEST];
+					else
+						Current_Animation = shooting[SOUTHWEST];
 				}
 				//else if (info.closest->position.second > position.second)
 				//{
@@ -803,35 +924,48 @@ void Hound::ChangeAnimation(TroopDir facing, bool pathfind) {
 				else if (info.closest->position.first == position.first)
 				{
 					//southeast
-					Current_Animation = shooting[SOUTHEAST];
+					if (inmune)
+						Current_Animation = shooting_inv[SOUTHEAST];
+					else
+						Current_Animation = shooting[SOUTHEAST];
 				}
 			}
 			else if (info.closest->position.second > position.second && info.closest->position.first > position.first)
 			{
 				//east
-				Current_Animation = shooting[EAST];
+				if (inmune)
+					Current_Animation = shooting_inv[EAST];
+				else
+					Current_Animation = shooting[EAST];
 			}
 			else if (info.closest->position.second < position.second && info.closest->position.first < position.first)
 			{
 				//west
-				Current_Animation = shooting[WEST];
+				if (inmune)
+					Current_Animation = shooting_inv[WEST];
+				else
+					Current_Animation = shooting[WEST];
 
 			}
 			else
 			{
 				if (fromPlayer1)
 				{
-					Current_Animation = shooting[SOUTH];
+					if (inmune)
+						Current_Animation = shooting_inv[SOUTH];
+					else
+						Current_Animation = shooting[SOUTH];
 				}
 				else
 				{
-					Current_Animation = shooting[NORTH];
+					if (inmune)
+						Current_Animation = shooting_inv[NORTH];
+					else
+						Current_Animation = shooting[NORTH];
 				}
 			}
-
 		}
 	}
-
 }
 
 

@@ -20,6 +20,9 @@
 #include "Gui.h"
 #include "Player.h"
 #include "MovementManager.h"
+#include "j1TransitionManager.h"
+#include "VideoManager.h"
+#include "IntroScene.h"
 #include "App.h"
 #include "Brofiler\Brofiler.h"
 
@@ -46,6 +49,9 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	main_menu = new MainMenu();
 	scene = new Scene();
 	move_manager = new MovementManager();
+	transitions = new j1TransitionManager();
+	video_manager = new Video();
+	intro = new IntroScene();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -57,13 +63,16 @@ MainApp::MainApp(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding);
 	AddModule(font);
 	AddModule(gui);
-	AddModule(main_menu);
+	AddModule(main_menu, false);
 	AddModule(scene, false);
 	AddModule(player1);
 	AddModule(player2);
 	AddModule(scenechange);
 	AddModule(entitymanager);
 	AddModule(move_manager);
+	AddModule(transitions);
+	AddModule(video_manager);
+	AddModule(intro);
 	
 	
 	// render last to swap buffer
@@ -175,7 +184,7 @@ bool MainApp::Update()
 	bool ret = true;
 	PrepareUpdate();
 
-	if(input->GetWindowEvent(WE_QUIT) == true || input->GetKey(SDL_SCANCODE_ESCAPE))
+	if(input->GetWindowEvent(WE_QUIT) == true/* || input->GetKey(SDL_SCANCODE_ESCAPE)*/)
 		ret = false;
 
 	if(ret == true)

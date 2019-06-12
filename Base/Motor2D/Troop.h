@@ -5,6 +5,7 @@
 #include "Group.h"
 #include "Render.h"
 
+
 enum TroopDir {
 	NORTH,
 	SOUTH,
@@ -53,6 +54,8 @@ public:
 		//	App->render->DrawQuad(r, 255, 0, 0, 255,false);
 		//	//LOG("SELECTED");
 		//}
+		
+
 		return true;
 	}
 
@@ -64,6 +67,10 @@ public:
 	Animation* idle = nullptr;
 	vector<Animation*> moving;
 	vector<Animation*> shooting;
+
+	Animation* idle_inv = nullptr;
+	vector<Animation*> moving_inv;
+	vector<Animation*> shooting_inv;
 
 	int curr = 0;
 
@@ -77,6 +84,7 @@ public:
 	float time_to_awake = 2.0f;
 	bool lead = false;
 	bool pathfind = false;
+	bool inmune = false;
 
 	
 	
