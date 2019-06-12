@@ -450,7 +450,7 @@ Create the entity manager module and the first versions of the buildings modules
 
 Place and build the buildings.
 <p align="center">
-  <img src="" width="250">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/mine.gif" width="250">
 </p>
 
 **Sprite Ordering**
@@ -497,7 +497,7 @@ Show the range of a deffensive tower when building and implement a priority queu
 - Load them to Tiled
 - Charge them into the code
 
-<img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Art/anim.gif">
+<img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Art/anim.mp4">
 
 **Balancing**
 
