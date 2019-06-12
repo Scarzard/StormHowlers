@@ -965,30 +965,9 @@ bool Scene::Update(float dt)
 		{
 			App->entitymanager->AddEntity(false, Entity::entityType::DEFENSE_TARGET, {pos.first,pos.second},App->player2->collider);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
-		{
-			//App->entitymanager->AddEntity(true, Entity::entityType::ENGINEER, {pos.first,pos.second},App->player1->collider);
-		}
 		else if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 		{
 			App->entitymanager->AddEntity(false, Entity::entityType::MINES, {pos.first,pos.second},App->player2->collider);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		{
-			App->entitymanager->AddEntity(true, Entity::entityType::SOLDIER, {pos.first,pos.second},App->player1->collider);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-		{
-			App->entitymanager->AddEntity(false, Entity::entityType::SOLDIER, {pos.first,pos.second},App->player2->collider);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
-		{
-			//App->entitymanager->AddEntity(true, Entity::entityType::INFILTRATOR, { pos.first,pos.second }, App->player1->collider);
-			//App->entitymanager->AddEntity(true, Entity::entityType::WALLS, {pos.first,pos.second},App->player1->collider);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-		{
-			App->entitymanager->AddEntity(false, Entity::entityType::WALLS, {pos.first,pos.second},App->player2->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) //Movecamera Up
 		{
@@ -1021,19 +1000,15 @@ bool Scene::Update(float dt)
 		else if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
 		{
 			App->player1->offensive = !App->player1->offensive;
-			//App->entitymanager->AddEntity(false, Entity::entityType::WAR_HOUND, { pos.first,pos.second }, App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 		{
 			App->player2->offensive = !App->player2->offensive;
-			
-			//App->entitymanager->AddEntity(true, Entity::entityType::TANKMAN, { pos.first,pos.second }, App->player1->collider);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT) //View colliders
 		{
 			worldminutes = 10;
 		}
-    
 		//Timer debug
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 		{
@@ -1063,7 +1038,6 @@ bool Scene::Update(float dt)
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_UP) {
 				LOG("CLICK UP");
 				start_motion = false;
-				//App->input->GetMousePosition(camera_motion.x, camera_motion.y);
 			}
 			if (start_motion) {
 
