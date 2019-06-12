@@ -484,6 +484,26 @@ Show the range of a deffensive tower when building and implement a priority queu
 - [Arnau's GitHub Link](https://github.com/ggaka6god)
 
 
+
+**Sound Related Things**
+
+- Choosing the tracks
+- Load to the game
+- Fit into the gameplay
+
+**Building Animations**
+
+- Take the sprites
+- Load them to Tiled
+- Charge them into the code
+
+**Building Upgrades**
+
+**Trailers**
+
+**Web Page**
+
+
 ### Oscar Pons
 
   <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Home%20Page/Oscar.jpg" width="150" >
