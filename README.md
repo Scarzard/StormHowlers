@@ -170,37 +170,37 @@ It can be found here: https://github.com/stormhowlers/Command_and_Conquer_WarZon
 
 ## Version changelog
 
-- **v0.05**
+### **v0.05**
 #### Implementations
 - Simple UI for both players
 - Map basic design
 - Controller support
 
-- **v0.1**
+### **v0.1**
 #### New Implementations
 - Timer
 - Update walkability map when a building is created
 
-- **v0.2**
+### **v0.2**
 #### New Implementations
 - Fully functional resource system
 - Fully functional building system
 - Fully functional UI system
 
-- **v0.3**
+### **v0.3**
 #### New Implementations
 - Semi-functional troop unit (only solider, for now)
 - Map design
 - Art and FX implemented
 
-- **v0.4**
+### **v0.4**
 #### New Implementations
 - An improved version of 0.3. 
 - Fully functional troop unit
 - Map design
 - Art and FX implemented
 
-- **v0.5 (Vertical Slice)**
+### **v0.5 (Vertical Slice)**
 #### New implementations
 - Fully functional resource system
 - Fully functional building system
@@ -210,19 +210,19 @@ It can be found here: https://github.com/stormhowlers/Command_and_Conquer_WarZon
 - Art and FX implemented
 - Improved UI
 
-- **v0.6**
+### **v0.6**
 #### New implementations
 - Reworked troops AI
 - Major improvements in the UI
 
-- **v0.7**
+### **v0.7**
 #### New implementations
 - Auto deploy for troops
 - More improvements on troop AI
 - More work on UI manageability
 - Audio feedback on what's happening
 
-- **v0.8 (Alpha)**
+### **v0.8 (Alpha)**
 #### New implementations
 - Improved auto deploy for all troops
 - Major improvements on UI
@@ -234,7 +234,7 @@ It can be found here: https://github.com/stormhowlers/Command_and_Conquer_WarZon
 - UI windows to show information about current button/window
 - Showing tower ranges while having the building selected
 
-- **v0.9**
+### **v0.9**
 #### New implementations
 - Keybindings
 - Intro video of the team's logo
@@ -242,7 +242,7 @@ It can be found here: https://github.com/stormhowlers/Command_and_Conquer_WarZon
 - More work on UI features
 - All troops implemented!
 
-- **v0.10 (Gold)**
+### **v0.10 (Gold)**
 #### New implementations
 
 
