@@ -523,7 +523,7 @@ Show the range of a deffensive tower when building and implement a priority queu
 - Help with buildings AI
 
 <p align="center">
-<img src="https://github.com/stormhowlers/Command_and_Conquer_WarZone/blob/Wiki/Wiki%20Images/Management/qqqqq.jpg" width="250">
+<img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Management/qqqqq.jpg" width="250">
 </p>
 
 **Troops**
@@ -533,7 +533,7 @@ Show the range of a deffensive tower when building and implement a priority queu
 - Several different troop movement behaviour (pathfinding, group pathfinding, vector field)(finally discarded)
 
 <p align="center">
-<img src="https://github.com/stormhowlers/Command_and_Conquer_WarZone/blob/Wiki/Wiki%20Images/Management/wwwww.PNG" width="250">
+<img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Management/wwwww.PNG" width="250">
 </p>
 
 **Map**
@@ -541,6 +541,6 @@ Show the range of a deffensive tower when building and implement a priority queu
 - Help with building map as well as drawing optimization
 
 <p align="center">
-<img src="https://github.com/stormhowlers/Command_and_Conquer_WarZone/blob/Wiki/Wiki%20Images/Management/ssss.jpg" width="250">
+<img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Management/ssss.jpg" width="250">
 </p>
 
