@@ -497,7 +497,9 @@ Show the range of a deffensive tower when building and implement a priority queu
 - Load them to Tiled
 - Charge them into the code
 
-**Building Upgrades**
+<img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Art/anim.mp4">
+
+**Balancing**
 
 **Trailers**
 
