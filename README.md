@@ -136,7 +136,7 @@ Some special features included in the code are:
 ### Installation
 
 Decompress the .zip file in any directory. Open the file directoy and double click on the executable.
-Download [Here](https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases/tag/v0.9) 
+Download [Here](https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases/tag/v1.0) 
     
 or dowload the desired release here and follow the same steps:
 <https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases>
@@ -483,8 +483,6 @@ Show the range of a deffensive tower when building and implement a priority queu
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SABOTAGER.png) **Design:** Arnau Gallofré
 - [Arnau's GitHub Link](https://github.com/ggaka6god)
 
-
-
 **Sound Related Things**
 
 - Choosing the tracks
@@ -501,10 +499,7 @@ Show the range of a deffensive tower when building and implement a priority queu
 
 **Balancing**
 
-**Trailers**
-
-**Web Page**
-
+**Commercial Trailer**
 
 ### Oscar Pons
 
