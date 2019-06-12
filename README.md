@@ -518,8 +518,7 @@ Show the range of a deffensive tower when building and implement a priority queu
 
 **Buildings and Entities**
 
-- Final version of buidlings and entities
-- Fast load and spawn
+- Final version of buidlings and entities with fast loading and spawning
 - Optimization of memory and time
 - Help with buildings AI
 
@@ -531,7 +530,7 @@ Show the range of a deffensive tower when building and implement a priority queu
 
 - Automatically load and spawn troops
 - Help with troop AI
-- Several different AI behaviour (pathfinding, group pathfinding, vector field)(finally discarded)
+- Several different troop movement behaviour (pathfinding, group pathfinding, vector field)(finally discarded)
 
 <p align="center">
 <img src="https://github.com/stormhowlers/Command_and_Conquer_WarZone/blob/Wiki/Wiki%20Images/Management/wwwww.PNG" width="250">
@@ -539,8 +538,7 @@ Show the range of a deffensive tower when building and implement a priority queu
 
 **Map**
 
-- Help with building map
-- Map drawing optimization
+- Help with building map as well as drawing optimization
 
 <p align="center">
 <img src="https://github.com/stormhowlers/Command_and_Conquer_WarZone/blob/Wiki/Wiki%20Images/Management/ssss.jpg" width="250">
