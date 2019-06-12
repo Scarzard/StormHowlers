@@ -320,9 +320,17 @@ Increasing gold each second by a variable amount depending on the number of mine
 
 Extraction of all the necessary sprites with the free program XCC Mixer. 
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Art/xccmixer.png" width="250">
+</p>
+
 **Sprite organitzation to export to Tiled**
 
 Used AdobePhotoshop in order to organize the sprites, so later we could load the animations with Tiled. 
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Art/laser_tiled.png" width="250">
+</p>
 
 **Sprite change of colour**
 
@@ -339,6 +347,13 @@ Code that reads the decoration coordenates from Tiled and passes them to the map
 **Adding sprites**
 
 Adding invulnerable aura of all troops and building selection.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/Art/inmunetroopsgid.gif" width="250">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/stormhowlers/Command_and_Conquer_WarZone/Wiki/Wiki%20Images/UI/barracks_selection.gif" width="250">
+</p>
 
 ### Victor Chen
 
