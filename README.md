@@ -136,8 +136,8 @@ Some special features included in the code are:
 ### Installation
 
 Decompress the .zip file in any directory. Open the file directoy and double click on the executable.
-Download [Here](https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases/tag/v1.0) 
-    
+Download [Here](https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases/download/v1.0/Command.Conquer_WarZone_v1.0.Gold.zip) 
+
 or dowload the desired release here and follow the same steps:
 <https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases>
        
