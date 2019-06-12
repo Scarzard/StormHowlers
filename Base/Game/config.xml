@@ -11,8 +11,8 @@
 		<resolution width="1680" height="1050" scale="1" />
 		<fullscreen value="false" />
 		<borderless value="false" />
-		<resizable value="true" />
-		<fullscreen_window value="false" />
+		<resizable value="false" />
+		<fullscreen_window value="true" />
 	</window>
 	<audio>
 		<music>

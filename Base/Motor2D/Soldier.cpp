@@ -40,6 +40,29 @@ bool Soldier::Update(float dt)
 		offensive = App->player2->Soldier_Offensive;
 	}
 
+	if (fromPlayer1)
+	{
+		if (App->player1->inmune == true)
+		{
+			inmune = true;
+		}
+		else
+		{
+			inmune = false;
+		}
+	}
+	else
+	{
+		if (App->player2->inmune == true)
+		{
+			inmune = true;
+		}
+		else
+		{
+			inmune = false;
+		}
+	}
+
 	if (alive) {
 
 		if (lead)
@@ -551,12 +574,11 @@ void Soldier::SimpleMovement()
 }
 
 void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
-	
-	if (App->player1->inmune)
+	if (inmune)
 		Current_Animation = idle_inv;
 	else
 		Current_Animation = idle;
-	
+
 	if (pathfind)
 	{
 		if (state == MOVING)
@@ -565,66 +587,66 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			if (Speed.first == 0 && Speed.second < 0)
 			{
 				//north
-				if (App->player1->inmune)
-					Current_Animation = moving_inv[SOUTH];
-				else
-					Current_Animation = moving[SOUTH];
-			}
-			else if (Speed.first == 0 && Speed.second > 0)
-			{
-				//south
-				if (App->player1->inmune)
+				if (inmune)
 					Current_Animation = moving_inv[NORTH];
 				else
 					Current_Animation = moving[NORTH];
 			}
+			else if (Speed.first == 0 && Speed.second > 0)
+			{
+				//south
+				if (inmune)
+					Current_Animation = moving_inv[SOUTH];
+				else
+					Current_Animation = moving[SOUTH];
+			}
 			else if (Speed.first < 0 && Speed.second == 0)
 			{
 				//west
-				if (App->player1->inmune)
-					Current_Animation = moving_inv[EAST];
-				else
-					Current_Animation = moving[EAST];
-			}
-			else if (Speed.first > 0 && Speed.second == 0)
-			{
-				//east
-				if (App->player1->inmune)
+				if (inmune)
 					Current_Animation = moving_inv[WEST];
 				else
 					Current_Animation = moving[WEST];
 			}
+			else if (Speed.first > 0 && Speed.second == 0)
+			{
+				//east
+				if (inmune)
+					Current_Animation = moving_inv[EAST];
+				else
+					Current_Animation = moving[EAST];
+			}
 			else if (Speed.first > 0 && Speed.second < 0)
 			{
 				//north east
-				if (App->player1->inmune)
-					Current_Animation = moving_inv[SOUTHWEST];
+				if (inmune)
+					Current_Animation = moving_inv[NORTHEAST];
 				else
-					Current_Animation = moving[SOUTHWEST];
+					Current_Animation = moving[NORTHEAST];
 			}
 			else if (Speed.first > 0 && Speed.second > 0)
 			{
 				//south east
-				if (App->player1->inmune)
-					Current_Animation = moving_inv[NORTHWEST];
-				else
-					Current_Animation = moving[NORTHWEST];
-			}
-			else if (Speed.first < 0 && Speed.second < 0)
-			{
-				//north west
-				if (App->player1->inmune)
+				if (inmune)
 					Current_Animation = moving_inv[SOUTHEAST];
 				else
 					Current_Animation = moving[SOUTHEAST];
 			}
+			else if (Speed.first < 0 && Speed.second < 0)
+			{
+				//north west
+				if (inmune)
+					Current_Animation = moving_inv[NORTHWEST];
+				else
+					Current_Animation = moving[NORTHWEST];
+			}
 			else if (Speed.first < 0 && Speed.second > 0)
 			{
 				//south wst
-				if (App->player1->inmune)
-					Current_Animation = moving_inv[NORTHEAST];
+				if (inmune)
+					Current_Animation = moving_inv[SOUTHWEST];
 				else
-					Current_Animation = moving[NORTHEAST];
+					Current_Animation = moving[SOUTHWEST];
 			}
 		}
 		else if (state == SHOOTING)
@@ -632,14 +654,14 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 
 			if (fromPlayer1)
 			{
-				if (App->player1->inmune)
+				if (inmune)
 					Current_Animation = shooting_inv[SOUTH];
 				else
 					Current_Animation = shooting[SOUTH];
 			}
 			else
 			{
-				if (App->player1->inmune)
+				if (inmune)
 					Current_Animation = shooting_inv[NORTH];
 				else
 					Current_Animation = shooting[NORTH];
@@ -649,14 +671,14 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			{
 				if (fromPlayer1)
 				{
-					if (App->player1->inmune)
+					if (inmune)
 						Current_Animation = shooting_inv[SOUTH];
 					else
 						Current_Animation = shooting[SOUTH];
 				}
 				else
 				{
-					if (App->player1->inmune)
+					if (inmune)
 						Current_Animation = shooting_inv[NORTH];
 					else
 						Current_Animation = shooting[NORTH];
@@ -665,14 +687,14 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			else if (info.closest->position.second <= position.second && info.closest->position.first >= position.first)
 			{
 				//noth
-				if (App->player1->inmune)
+				if (inmune)
 					Current_Animation = shooting_inv[NORTH];
 				else
 					Current_Animation = shooting[NORTH];
 				if (info.closest->position.second == position.second)
 				{
 					//northwest
-					if (App->player1->inmune)
+					if (inmune)
 						Current_Animation = shooting_inv[NORTHWEST];
 					else
 						Current_Animation = shooting[NORTHWEST];
@@ -685,7 +707,7 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 				else if (info.closest->position.first == position.first)
 				{
 					//northeast
-					if (App->player1->inmune)
+					if (inmune)
 						Current_Animation = shooting_inv[NORTHEAST];
 					else
 						Current_Animation = shooting[NORTHEAST];
@@ -694,14 +716,14 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			else if (info.closest->position.first >= position.first && info.closest->position.second >= position.second)
 			{
 				//south
-				if (App->player1->inmune)
+				if (inmune)
 					Current_Animation = shooting_inv[SOUTH];
 				else
 					Current_Animation = shooting[SOUTH];
 				if (info.closest->position.second == position.second)
 				{
 					//southwest
-					if (App->player1->inmune)
+					if (inmune)
 						Current_Animation = shooting_inv[SOUTHWEST];
 					else
 						Current_Animation = shooting[SOUTHWEST];
@@ -714,7 +736,7 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 				else if (info.closest->position.first == position.first)
 				{
 					//southeast
-					if (App->player1->inmune)
+					if (inmune)
 						Current_Animation = shooting_inv[SOUTHEAST];
 					else
 						Current_Animation = shooting[SOUTHEAST];
@@ -723,7 +745,7 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			else if (info.closest->position.second > position.second && info.closest->position.first > position.first)
 			{
 				//east
-				if (App->player1->inmune)
+				if (inmune)
 					Current_Animation = shooting_inv[EAST];
 				else
 					Current_Animation = shooting[EAST];
@@ -731,7 +753,7 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			else if (info.closest->position.second < position.second && info.closest->position.first < position.first)
 			{
 				//west
-				if (App->player1->inmune)
+				if (inmune)
 					Current_Animation = shooting_inv[WEST];
 				else
 					Current_Animation = shooting[WEST];
@@ -740,20 +762,22 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			{
 				if (fromPlayer1)
 				{
-					if (App->player1->inmune)
+					if (inmune)
 						Current_Animation = shooting_inv[SOUTH];
 					else
 						Current_Animation = shooting[SOUTH];
 				}
 				else
 				{
-					if (App->player1->inmune)
+					if (inmune)
 						Current_Animation = shooting_inv[NORTH];
 					else
 						Current_Animation = shooting[NORTH];
 				}
 			}
+
 		}
+
 	}
 	else
 	{
@@ -763,7 +787,7 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			if (facing == NORTH)
 			{
 				//north
-				if(App->player1->inmune)
+				if (inmune)
 					Current_Animation = moving_inv[NORTHEAST];
 				else
 					Current_Animation = moving[NORTHEAST];
@@ -771,7 +795,7 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			else if (facing == SOUTH)
 			{
 				//south
-				if (App->player1->inmune)
+				if (inmune)
 					Current_Animation = moving_inv[SOUTHWEST];
 				else
 					Current_Animation = moving[SOUTHWEST];
@@ -779,7 +803,7 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			else if (facing == WEST)
 			{
 				//west
-				if (App->player1->inmune)
+				if (inmune)
 					Current_Animation = moving_inv[NORTHWEST];
 				else
 					Current_Animation = moving[NORTHWEST];
@@ -787,7 +811,7 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			else if (facing == EAST)
 			{
 				//east
-				if (App->player1->inmune)
+				if (inmune)
 					Current_Animation = moving_inv[SOUTHEAST];
 				else
 					Current_Animation = moving[SOUTHEAST];
@@ -817,14 +841,14 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 		{
 			if (fromPlayer1)
 			{
-				if(App->player1->inmune)
+				if (inmune)
 					Current_Animation = shooting_inv[SOUTH];
-				else 
+				else
 					Current_Animation = shooting[SOUTH];
 			}
 			else
 			{
-				if (App->player1->inmune)
+				if (App->player2->inmune)
 					Current_Animation = shooting_inv[NORTH];
 				else
 					Current_Animation = shooting[NORTH];
@@ -834,14 +858,14 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			{
 				if (fromPlayer1)
 				{
-					if (App->player1->inmune)
+					if (inmune)
 						Current_Animation = shooting_inv[SOUTH];
 					else
 						Current_Animation = shooting[SOUTH];
 				}
 				else
 				{
-					if (App->player1->inmune)
+					if (App->player2->inmune)
 						Current_Animation = shooting_inv[SOUTH];
 					else
 						Current_Animation = shooting[SOUTH];
@@ -854,7 +878,7 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 				if (info.closest->position.second == position.second)
 				{
 					//northwest
-					if (App->player1->inmune)
+					if (inmune)
 						Current_Animation = shooting_inv[NORTHWEST];
 					else
 						Current_Animation = shooting[NORTHWEST];
@@ -867,7 +891,7 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 				else if (info.closest->position.first == position.first)
 				{
 					//northeast
-					if (App->player1->inmune)
+					if (inmune)
 						Current_Animation = shooting_inv[NORTHEAST];
 					else
 						Current_Animation = shooting[NORTHEAST];
@@ -880,7 +904,7 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 				if (info.closest->position.second == position.second)
 				{
 					//southwest
-					if (App->player1->inmune)
+					if (inmune)
 						Current_Animation = shooting_inv[SOUTHWEST];
 					else
 						Current_Animation = shooting[SOUTHWEST];
@@ -893,7 +917,7 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 				else if (info.closest->position.first == position.first)
 				{
 					//southeast
-					if (App->player1->inmune)
+					if (inmune)
 						Current_Animation = shooting_inv[SOUTHEAST];
 					else
 						Current_Animation = shooting[SOUTHEAST];
@@ -902,7 +926,7 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			else if (info.closest->position.second > position.second && info.closest->position.first > position.first)
 			{
 				//east
-				if (App->player1->inmune)
+				if (inmune)
 					Current_Animation = shooting_inv[EAST];
 				else
 					Current_Animation = shooting[EAST];
@@ -910,7 +934,7 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			else if (info.closest->position.second < position.second && info.closest->position.first < position.first)
 			{
 				//west
-				if (App->player1->inmune)
+				if (inmune)
 					Current_Animation = shooting_inv[WEST];
 				else
 					Current_Animation = shooting[WEST];
@@ -920,23 +944,21 @@ void Soldier::ChangeAnimation(TroopDir facing, bool pathfind) {
 			{
 				if (fromPlayer1)
 				{
-					if (App->player1->inmune)
+					if (inmune)
 						Current_Animation = shooting_inv[SOUTH];
 					else
 						Current_Animation = shooting[SOUTH];
 				}
 				else
 				{
-					if (App->player1->inmune)
+					if (inmune)
 						Current_Animation = shooting_inv[NORTH];
 					else
 						Current_Animation = shooting[NORTH];
 				}
 			}
-
 		}
 	}
-
 }
 
 

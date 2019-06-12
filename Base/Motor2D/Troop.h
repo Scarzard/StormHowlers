@@ -5,6 +5,7 @@
 #include "Group.h"
 #include "Render.h"
 
+
 enum TroopDir {
 	NORTH,
 	SOUTH,
@@ -53,6 +54,8 @@ public:
 		//	App->render->DrawQuad(r, 255, 0, 0, 255,false);
 		//	//LOG("SELECTED");
 		//}
+		
+
 		return true;
 	}
 
@@ -81,6 +84,7 @@ public:
 	float time_to_awake = 2.0f;
 	bool lead = false;
 	bool pathfind = false;
+	bool inmune = false;
 
 	
 	
