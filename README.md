@@ -1,4 +1,4 @@
-﻿# StormHowlers
+# StormHowlers
 
 ## Objectives
 
@@ -34,15 +34,15 @@ The main objective of the game is **to destroy the opponents' TownHall.**
 In order to achieve this, the player must manage resources via gold mines, create troops via barracks and use the defensive buildings(AoE and single-target) 
 to defend all the other buildings. And more importantly, the main base which can't be built once destroyed nor repaired under any circumstance.
 
-Every button or window in the main UI has a decription about what it does and the stats for the troop/building to be build or deployed.
+Every button or window in the main UI has a description about what it does and the stats for the troop/building to be build or deployed.
 
   
 ### Installation
 
 Decompress the .zip file in any directory. Open the file directoy and double click on the executable.
-Download [Here](https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases/tag/v0.9) 
-    
-or dowload the desired release here and follow the same steps:
+Download [here](https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases/download/v1.0/Command.Conquer_WarZone_v1.0.Gold.zip) 
+
+or download the desired release here and follow the same steps:
 <https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases>
        
 
@@ -86,7 +86,7 @@ Soldier, WarHound, Engineer
 - Dpad DOWN: -1000 HP to your own Command Center.
 ### Keyboard
 #### Main menu/ingame menu
-N/A
+Space: Transition from main menu to the game
 
 #### In-game
 This functionalities can be used anytime
@@ -116,10 +116,8 @@ This functionalities can be used anytime
 - 7: Add mines from player 1 in the location of the mouse
 - U: Add mines from player 2 in the location of the mouse
 
-- 0: Add walls from player 1 in the location of the mouse
-- P: Add walls from player 2 in the location of the mouse
-
-- X: Spawn warhound from player 1 in the location of the mouse
+- 8: Change troop states for player 1
+- 9: Change troop states for player 2
 
 - Arrow keys: Move camera
 
@@ -242,9 +240,13 @@ It can be found here: https://github.com/stormhowlers/Command_and_Conquer_WarZon
 - More work on UI features
 - All troops implemented!
 
-### **v0.10 (Gold)**
+### **v1.0 (Gold)**
 #### New implementations
-
+- Option to remap controller buttons (ingame pause menu)
+- Troop state shortcut
+- Troops invincibility sprite
+- Tankman and inflitrator sprite implemented
+- Balancing!
 
 ## Disclosure 
 
