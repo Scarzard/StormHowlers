@@ -36,6 +36,16 @@ to defend all the other buildings. And more importantly, the main base which can
 
 Every button or window in the main UI has a decription about what it does and the stats for the troop/building to be build or deployed.
 
+  
+### Installation
+
+Decompress the .zip file in any directory. Open the file directoy and double click on the executable.
+Download [Here](https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases/tag/v0.9) 
+    
+or dowload the desired release here and follow the same steps:
+<https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases>
+       
+
 ### Buildings and troops implemented
 #### Buildings
 
@@ -49,26 +59,31 @@ Soldier, WarHound, Engineer
 ## Game controls
 ### Controller
 #### Main menu/ingame menu
-- Dpad: Cycle through options
-- A: Use current button
-- B: Go back to previous window
-- Dpad right(on a slider): Increase value
-- Dpad left(on a slider): Decrease value
+- Dpad: Cycle through options.
+- A: Use current button.
+- B: Go back to previous window.
+- Dpad right(on a slider): Increase value.
+- Dpad left(on a slider): Decrease value.
 
 #### In-game
-- X: Select buildings
-- RB/Right/Joystick->: Go to button/building in the right side
-- LB/Left/<-Joystick: Go to button/building in the left side
-- **Note**: To cycle between buildings, only with RB/LB
-- A: Use current button
-- A(with building selected): Place it in the current location
-- A(with a building selected with X): Show building options
-- B: Go back to previous window/options
-- Dpad(with troop/building selected): Slow movement through the map
-- Left Joystick(with troop/building selected): Quick movement through the map
+- RB/Right/Joystick->: Go to button in the right side.
+- LB/Left/<-Joystick: Go to button in the left side.
+- A: Use current button.
+- A(with building selected): Place it in the current location.
+- B: Go back to previous window/options.
+- Dpad(with building selected): Slow movement through the map.
+- Left Joystick(with building selected): Quick movement through the map.
+- Right Joystick: Change building type.
+- X (in troop menu): Change all troops states.
+- Y (in troop menu): Change the state for the selected troop.
+- A (in troop menu): Spawn selected troop.
+- RT: Shortcut to change all troop states. (Anywhere)
 - Start: Trigger pause menu
 
 ## Debug functionalities
+### Controller ingame
+- Dpad UP: -1000 HP to your own TownHall.
+- Dpad DOWN: -1000 HP to your own Command Center.
 ### Keyboard
 #### Main menu/ingame menu
 N/A
@@ -79,12 +94,9 @@ This functionalities can be used anytime
 - F8: UI Debug
 - F10: Toggle Godmode. 
 
-**Godmode must be on to access debug functionalities below**
+**Godmode must be on to access debug functionalities below with F10**
 
 - F1: Set timer to 10min
-
-- 1: Spawn soldier from player 1 in the location of the mouse
-- Q: Spawn soldier from player 2 in the location of the mouse
 
 - 2: Add main defense from player 1 in the location of the mouse
 - W: Add main defense from player 2 in the location of the mouse
@@ -122,11 +134,11 @@ This functionalities can be used anytime
 
 ## The team
    
-- **Lead:** Andrés Saladrigas
-   - [Andrés' GitHub Link](https://github.com/TheArzhel)
+- **Lead:** AndrÃ©s Saladrigas
+   - [AndrÃ©s' GitHub Link](https://github.com/TheArzhel)
    
-- **Management:** Òscar Pons
-   - [Òscar's GitHub Link](https://github.com/ponspack9)
+- **Management:** Ã’scar Pons
+   - [Ã’scar's GitHub Link](https://github.com/ponspack9)
    
 - **Code:** David Tello
    - [David's GitHub Link](https://github.com/DavidTello1)
@@ -134,10 +146,10 @@ This functionalities can be used anytime
 - **Art/Audio:** Joan Barduena
    - [Joan's GitHub Link](https://github.com/JoanBarduena)
    
-- **Design:** Arnau Gallofré
+- **Design:** Arnau GallofrÃ©
    - [Arnau's GitHub Link](https://github.com/ggaka6god)
    
-- **QA:** Víctor Chen
+- **QA:** VÃ­ctor Chen
    - [Victor's GitHub Link](https://github.com/Scarzard)
    
 - **UI:** Josep Lleal
@@ -155,6 +167,84 @@ This functionalities can be used anytime
 
 As stated on the license, anyone can look at or modify the code of this project. 
 It can be found here: https://github.com/stormhowlers/Command_and_Conquer_WarZone
+
+## Version changelog
+
+- **v0.05**
+#### Implementations
+- Simple UI for both players
+- Map basic design
+- Controller support
+
+- **v0.1**
+#### New Implementations
+- Timer
+- Update walkability map when a building is created
+
+- **v0.2**
+#### New Implementations
+- Fully functional resource system
+- Fully functional building system
+- Fully functional UI system
+
+- **v0.3**
+#### New Implementations
+- Semi-functional troop unit (only solider, for now)
+- Map design
+- Art and FX implemented
+
+- **v0.4**
+#### New Implementations
+- An improved version of 0.3. 
+- Fully functional troop unit
+- Map design
+- Art and FX implemented
+
+- **v0.5 (Vertical Slice)**
+#### New implementations
+- Fully functional resource system
+- Fully functional building system
+- Fully functional UI system
+- Fully functional troop unit
+- Map design
+- Art and FX implemented
+- Improved UI
+
+- **v0.6**
+#### New implementations
+- Reworked troops AI
+- Major improvements in the UI
+
+- **v0.7**
+#### New implementations
+- Auto deploy for troops
+- More improvements on troop AI
+- More work on UI manageability
+- Audio feedback on what's happening
+
+- **v0.8 (Alpha)**
+#### New implementations
+- Improved auto deploy for all troops
+- Major improvements on UI
+- Overhaul of troop logic
+- New states for troops
+- New troops!
+- Balancing
+- New sprites for different troops, building and UI
+- UI windows to show information about current button/window
+- Showing tower ranges while having the building selected
+
+- **v0.9**
+#### New implementations
+- Keybindings
+- Intro video of the team's logo
+- Smooth transitions between scenes
+- More work on UI features
+- All troops implemented!
+
+- **v0.10 (Gold)**
+#### New implementations
+
 
 ## Disclosure 
 
