@@ -510,9 +510,39 @@ Show the range of a deffensive tower when building and implement a priority queu
 - ![](https://raw.githubusercontent.com/Scarzard/StormHowlers/Wiki/Wiki%20Images/Home%20Page/SPY.png) **Management:** Òscar Pons
 - [Òscar's GitHub Link](https://github.com/ponspack9)
 
+**Mission:** Manage team work and balance tasks between teamates
 
+**Objective:** Properly distibute the workload while the game keeps developing towards the expected result
 
+**Role:** Code implementation, bug fixing and features optimization
 
+**Buildings and Entities**
 
+- Final version of buidlings and entities
+- Fast load and spawn
+- Optimization of memory and time
+- Help with buildings AI
 
+<p align="center">
+<img src="https://github.com/stormhowlers/Command_and_Conquer_WarZone/blob/Wiki/Wiki%20Images/Management/qqqqq.jpg" width="250">
+</p>
+
+**Troops**
+
+- Automatically load and spawn troops
+- Help with troop AI
+- Several different AI behaviour (pathfinding, group pathfinding, vector field)(finally discarded)
+
+<p align="center">
+<img src="https://github.com/stormhowlers/Command_and_Conquer_WarZone/blob/Wiki/Wiki%20Images/Management/wwwww.PNG" width="250">
+</p>
+
+**Map**
+
+- Help with building map
+- Map drawing optimization
+
+<p align="center">
+<img src="https://github.com/stormhowlers/Command_and_Conquer_WarZone/blob/Wiki/Wiki%20Images/Management/ssss.jpg" width="250">
+</p>
 
