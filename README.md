@@ -67,26 +67,28 @@ For further information go to the games [wiki](https://github.com/stormhowlers/C
 ## Game controls
 ### Controller
 #### Main menu/ingame menu
-- Dpad/Left Joystick: Cycle through options
-- A: Use current button
-- B: Go back to previous window
-- Dpad right(on a slider): Increase value
-- Dpad left(on a slider): Decrease value
+- Dpad: Cycle through options.
+- A: Use current button.
+- B: Go back to previous window.
+- Dpad right(on a slider): Increase value.
+- Dpad left(on a slider): Decrease value.
 
 #### In-game
-- X: Select buildings
-- RB/Right/Joystick->: Go to button/building in the right side
-- LB/Left/<-Joystick: Go to button/building in the left side
-- **Note**: To cycle between buildings, only with RB/LB
-- A: Use current button
-- A(with building selected): Place it in the current location
-- A(with a building selected with X): Show building options
-- B: Go back to previous window/options
-- Dpad(with troop/building selected): Slow movement through the map
-- Left Joystick(with troop/building selected): Quick movement through the map
+- RB/Right/Joystick->: Go to button in the right side.
+- LB/Left/<-Joystick: Go to button in the left side.
+- A: Use current button.
+- A(with building selected): Place it in the current location.
+- B: Go back to previous window/options.
+- Dpad(with building selected): Slow movement through the map.
+- Left Joystick(with building selected): Quick movement through the map.
+- Right Joystick: Change building type.
+- X (in troop menu): Change all troops states.
+- Y (in troop menu): Change the state for the selected troop.
+- A (in troop menu): Spawn selected troop.
+- RT: Shortcut to change all troop states. (Anywhere)
 - Start: Trigger pause menu
 
-For Debug functionalities check the Games Readme [here](https://github.com/stormhowlers/Command_and_Conquer_WarZone/blob/master/README.md)
+For Debug functionalities check the game's README [here](https://github.com/stormhowlers/Command_and_Conquer_WarZone/blob/master/README.md)
    
 ## Contact us!
 - [StormHowlers Twitter](https://twitter.com/StormHowlers)
@@ -133,10 +135,10 @@ Some special features included in the code are:
 - Voicelines: so that the game can communicate with the players.
 
   
-### Installation
+## Installation
 
-Decompress the .zip file in any directory. Open the file directoy and double click on the executable.
-Download [Here](https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases/download/v1.0/Command.Conquer_WarZone_v1.0.Gold.zip) 
+Decompress the .zip file in any directory. Open the file directory and double click on the executable (.exe).
+Download the **Gold** version (1.0) [Here](https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases/download/v1.0/Command.Conquer_WarZone_v1.0.Gold.zip) 
 
 or dowload the desired release here and follow the same steps:
 <https://github.com/stormhowlers/Command_and_Conquer_WarZone/releases>
